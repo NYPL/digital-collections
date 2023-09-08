@@ -11,10 +11,16 @@ First, install Dependencies:
 npm install
 ```
 
-Use node version 18 or higher. If you have nvm installed on your local machine, use the following command to install node 18.
+Use node version 18 or higher. If you have nvm installed on your local machine, use the following command to use node 18. 
 
 ```bash
-npm use
+nvm use
+```
+
+If you don't already have node 18 installed on your machine, you can install it using:
+
+```bash
+nvm install 18
 ```
 
 Second, run the development server:
@@ -46,8 +52,8 @@ To learn more about Next.js, take a look at the following resources:
 
 You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
 
-## Deploy on Vercel
+## Vercel
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+We use Vercel for internal purposes. Pull requests get deployed via Vercel for VQA and accessibility review. We do not formally deploy the app to qa and production using Vercel. We use Travis for this instead. 
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+If you need access to the instance, please contact someone from the NYPL team. 
