@@ -11,7 +11,11 @@ First, install Dependencies:
 npm install
 ```
 
-Use node version 16 or higher. 
+Use node version 18 or higher. If you have nvm installed on your local machine, use the following command to install node 18.
+
+```bash
+npm use
+```
 
 Second, run the development server:
 
