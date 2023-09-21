@@ -1,0 +1,15 @@
+version: "3"
+
+services:
+  app:
+    image: digital-collections
+    build:
+      context: .
+      args:
+        - NODE_ENV=local
+      dockerfile: Dockerfile
+    ports:
+      - 3000:3000
+    volumes:
+      - ./pages:/app/pages
+      - ./styles:/app/styles
