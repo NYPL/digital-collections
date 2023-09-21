@@ -3,7 +3,7 @@ This is the Repo for the Digital Collections app using the DS (internally referr
 
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
-## Getting Started
+## Getting Started With Node
 
 First, install Dependencies: 
 
@@ -42,6 +42,21 @@ You can start editing the page by modifying `pages/index.tsx`. The page auto-upd
 The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
 
 This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+
+## Getting Started With Docker
+First, install ["Docker"](https://www.docker.com/) on your local machine. 
+
+After installing docker, cd into the app directory and run the following commands:
+
+```bash 
+docker-compose build # this will build the application and install dependencies
+```
+
+```bash 
+docker-compose up # this will run the application
+```
+
+After running the above commands, the application should run on http://localhost:3000/
 
 ## Learn More
 
