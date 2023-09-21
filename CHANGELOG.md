@@ -7,4 +7,5 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## Unreleased
 
 ### Added
-- Created Next.js 13 app using NYPL Reservoir and TS 4.9.5.
+- Created Dockerfile and docker-compose.yml files. (DR-2446)
+- Created Next.js 13 app using NYPL Reservoir and TS 4.9.5. (DR-2444)
