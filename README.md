@@ -64,6 +64,90 @@ To stop the application, open a new terminal window and run:
 docker-compose down # this will stop the application
 ```
 
+
+## Docker
+
+_Note_: This application is using Docker only for production builds and not for local development. For local development, the `npm run dev` command is the way to go.
+
+### Building Docker Images
+
+To build a Docker image for this application, run:
+
+```
+$ docker build -t digital-collections .
+```
+
+This command will build an image tagged (`-t`) as `digital-collections-app` using the current directory. Any changes to the application will require a new tagged image to be created to view those changes. Either remove the existing image (copy the image ID to use in the `docker image rm` command) and run the same command above:
+
+```
+$ docker images
+REPOSITORY                  TAG       IMAGE ID       CREATED        SIZE
+digital-collections         latest    73b5032a66f4   21 hours ago   1.14GB
+
+$ docker image rm 73b5032a66f4
+$ docker build -t digital-collections  .
+```
+
+Or, create a new image:
+
+```
+$ docker build -t digital-collections-2 .
+```
+
+This will be used to build and deploy images to Docker Hub in the future.
+
+### Running a Docker Image
+
+#### docker run
+
+If you are using the `docker` CLI tool, use the following command to run an _existing_ image in a container called `mycontainer` locally:
+
+```
+$ docker run -d --name mycontainer -p 3000:3000 --env-file .env digital-collections
+```
+
+This will run an existing Docker image, such as the image built from the previous step, in the background. If you want to see the latest logs from the container, run `docker logs mycontainer`. If you want to see the full set of logs as the Docker image is being built and run, remove the detached `-d` flag. The `--env-file` flag configures the docker container to use the local `.env` file where your secret credentials to run the app should be located. This file is not used when building the image, only when running the container.
+
+To stop a Docker container, run:
+
+```
+$ docker stop mycontainer
+```
+
+#### docker-compose
+
+The application can also be used with the `docker-compose` CLI tool. This command will read the local `docker-compose.yml` file and build the container using the local `Dockerfile` file. This is similar to running both `docker build ...` and `docker run ...` except it's all encapsulated in one command. `docker-compose` is typically used to orchestrate multiple containers running together. The Digital Collections App only needs one container for Next.js but the command is still useful since you only need to remember one command.
+
+To build and run the application, run:
+
+```
+$ docker-compose up
+```
+
+To stop and remove the container run:
+
+```
+$ docker-compose down
+```
+
+If any changes are made to the application, the image needs to be built again. Stop the container and then run the following command:
+
+```
+$ docker-compose up --build
+```
+
+If you want to stop a container but not remove it, run:
+
+```
+$ docker-compose stop
+```
+
+and the following to restart the stopped container:
+
+```
+$ docker-compose start
+```
+
 ## Learn More
 
 To learn more about Next.js, take a look at the following resources:
