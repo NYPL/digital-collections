@@ -58,6 +58,12 @@ docker-compose up # this will run the application
 
 After running the above commands, the application should run on http://localhost:3000/
 
+To stop the application, open a new terminal window and run: 
+
+```bash 
+docker-compose down # this will stop the application
+```
+
 ## Learn More
 
 To learn more about Next.js, take a look at the following resources:
