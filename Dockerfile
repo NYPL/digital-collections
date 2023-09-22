@@ -7,10 +7,6 @@ ARG NYPL_HEADER_URL
 
 WORKDIR /app
 
-# Set the timezone
-# ENV TZ=America/New_York
-# RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
-
 # Install dependencies.
 COPY package.json ./
 COPY package-lock.json ./

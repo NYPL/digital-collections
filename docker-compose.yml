@@ -6,7 +6,7 @@ services:
     build:
       context: .
       args:
-        - NODE_ENV=local
+        - NODE_ENV=production
       dockerfile: Dockerfile
     ports:
       - 3000:3000
