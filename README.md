@@ -77,7 +77,7 @@ To build a Docker image for this application, run:
 $ docker build -t digital-collections .
 ```
 
-This command will build an image tagged (`-t`) as `digital-collections-app` using the current directory. Any changes to the application will require a new tagged image to be created to view those changes. Either remove the existing image (copy the image ID to use in the `docker image rm` command) and run the same command above:
+This command will build an image tagged (`-t`) as `digital-collections` using the current directory. Any changes to the application will require a new tagged image to be created to view those changes. Either remove the existing image (copy the image ID to use in the `docker image rm` command) and run the same command above:
 
 ```
 $ docker images
