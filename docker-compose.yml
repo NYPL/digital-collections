@@ -11,5 +11,5 @@ services:
     ports:
       - 3000:3000
     volumes:
-      - ./pages:/app/pages
-      - ./styles:/app/styles
+      - ./src/pages:/app/pages
+      - ./src/styles:/app/styles
