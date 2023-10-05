@@ -20,6 +20,6 @@
     "typescript": "4.9.5"
   },
   "devDependencies": {
-    "@nypl/design-system-react-components": "^2.0.0-rc"
+    "@nypl/design-system-react-components": "2.0.1"
   }
 }
