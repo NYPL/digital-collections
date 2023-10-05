@@ -28,7 +28,7 @@ const CampaignHero = () => {
       backgroundColor="var(--nypl-colors-ui-bg-default)"
       // background="ui.bg.default"
       // foregroundColor="ui.bg.default"
-      color="var(--nypl-colors-ui-typography-heading)"
+      color="ui.typography.heading"
       // textColor="black"
       heroType="campaign"
       // heading={<Heading color="black" level="one" id="campaign-hero" text="hello"/>}
