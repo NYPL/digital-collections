@@ -25,13 +25,9 @@ const CampaignHero = () => {
     <>
     <Hero
       backgroundImageSrc={imageURL("1269908")}
-      backgroundColor="var(--nypl-colors-ui-bg-default)"
-      // background="ui.bg.default"
-      // foregroundColor="ui.bg.default"
+      backgroundColor="var(--nypl-colors-ui-bg-default)" // don't know why but this still does not like ui.bg.default after upgrading the version of Reservoir.
       color="ui.typography.heading"
-      // textColor="black"
       heroType="campaign"
-      // heading={<Heading color="black" level="one" id="campaign-hero" text="hello"/>}
       heading={ <CampaignHeroHeading/>}
       imageProps={{
         alt: "Image example",
