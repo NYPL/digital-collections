@@ -21,7 +21,7 @@ const CampaignHeroHeading = () => {
     <>
     <Heading color="ui.typography.heading" level="one" id="campaign-hero">
       <>
-      Explore 863,848 items digitized from The New York Public Library's collections.
+      Explore 863,848 items digitized from The New York Public Library&apos;s collections.
       </>
     </Heading> 
 
