@@ -1,6 +1,6 @@
 
 import {
-	Link,
+	Link as DSLink,
   HorizontalRule,
 	Text,
   Spacer,
@@ -15,14 +15,13 @@ const CampaignHeroSubText = () => {
           featuring prints, photographs, maps, manuscripts, streaming video, and
           more.
         </Text>
-        {/* <br></br> */}
         <Text color="ui.typography.body">
-        Our collections include some content that may be harmful or difficult to view. <Link href="https://digitalcollections.nypl.org/about#nypl_harmful_content_statement">Learn more</Link>
+        Our collections include some content that may be harmful or difficult to view. <DSLink href="https://digitalcollections.nypl.org/about#nypl_harmful_content_statement">Learn more</DSLink>
         </Text>
         <HorizontalRule/>
         <Text color="ui.typography.body">
         Featured Image:
-        <Link color="var(--nypl-colors-ui-link-primary)" href="https://digitalcollections.nypl.org/items/510d47e0-cb17-a3d9-e040-e00a18064a99"> Momoyogusa = Flowers of a Hundred Generations. </Link>
+        <DSLink href="https://digitalcollections.nypl.org/items/510d47e0-cb17-a3d9-e040-e00a18064a99"> Momoyogusa = Flowers of a Hundred Generations. </DSLink>
         </Text>
       </>
     );
