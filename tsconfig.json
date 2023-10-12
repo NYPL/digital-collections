@@ -17,17 +17,18 @@
     "isolatedModules": true,
     "jsx": "preserve",
     "incremental": true,
+    "baseUrl": ".",
     "paths": {
-      "@/*": [
-        "./src/*"
-      ]
+      "@/*": ["src/*"],
     },
     "forceConsistentCasingInFileNames": true
   },
   "include": [
     "next-env.d.ts",
     "**/*.ts",
-    "**/*.tsx"
+    "**/*.tsx", 
+    "jest.config.mjs", 
+    "__tests__/index.test.js"  
   ],
   "exclude": [
     "node_modules"
