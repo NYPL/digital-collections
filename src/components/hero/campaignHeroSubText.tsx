@@ -20,7 +20,7 @@ const CampaignHeroSubText = () => {
         </Text>
         <HorizontalRule/>
         <Text color="ui.typography.body">
-        Featured Image:
+        Featured Image:{" "}
         <DSLink href="https://digitalcollections.nypl.org/items/510d47e0-cb17-a3d9-e040-e00a18064a99"> Momoyogusa = Flowers of a Hundred Generations. </DSLink>
         </Text>
       </>
