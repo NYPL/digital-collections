@@ -22,7 +22,6 @@ import CampaignHeroHeading from "./campaignHeroHeading";
 const CampaignHero = () => {
   
   return(
-    <>
     <Hero
       backgroundImageSrc={imageURL("1269908")}
       backgroundColor="var(--nypl-colors-ui-bg-default)" // don't know why but this still does not like ui.bg.default after upgrading the version of Reservoir.
@@ -35,7 +34,6 @@ const CampaignHero = () => {
       }}
       subHeaderText={<CampaignHeroSubText/>}
     />
-    </>
   )
 }
 
