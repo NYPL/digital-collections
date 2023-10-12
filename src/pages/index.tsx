@@ -5,7 +5,7 @@
 
 // const inter = Inter({ subsets: ['latin'] })
 
-import CampaignHero from "@/components/campaignHero"
+import CampaignHero from "@/components/hero/campaignHero"
 export default function Home() {
 
   return (
