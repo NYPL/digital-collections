@@ -1,9 +1,7 @@
 import { render, screen } from '@testing-library/react';
 import Home from '../src/pages/index';
-import { axe, toHaveNoViolations } from "jest-axe";
-import '@testing-library/jest-dom'; 
+import { axe } from "jest-axe";
 
-expect.extend(toHaveNoViolations)
 
 describe("Homepage Accessibility", () => {
   it("passes axe accessibility test", async () => {
