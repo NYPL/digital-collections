@@ -16,12 +16,12 @@ const CampaignHeroSubText = () => {
           more.
         </Text>
         <Text color="ui.typography.body">
-        Our collections include some content that may be harmful or difficult to view. <DSLink href="https://digitalcollections.nypl.org/about#nypl_harmful_content_statement">Learn more</DSLink>
+        Our collections include some content that may be harmful or difficult to view. <DSLink color="var(--nypl-colors-ui-link-primary) !important" href="https://digitalcollections.nypl.org/about#nypl_harmful_content_statement">Learn more</DSLink>
         </Text>
         <HorizontalRule/>
-        <Text color="ui.typography.body">
-        Featured Image:
-        <DSLink href="https://digitalcollections.nypl.org/items/510d47e0-cb17-a3d9-e040-e00a18064a99"> Momoyogusa = Flowers of a Hundred Generations. </DSLink>
+        <Text color="ui.typography.body" mb="0px">
+        Featured Image:{" "}
+        <DSLink color="var(--nypl-colors-ui-link-primary) !important" href="https://digitalcollections.nypl.org/items/510d47e0-cb17-a3d9-e040-e00a18064a99"> Momoyogusa = Flowers of a Hundred Generations. </DSLink>
         </Text>
       </>
     );
