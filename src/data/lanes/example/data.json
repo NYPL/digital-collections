@@ -1,33 +1,22 @@
 {
-    "example": {
-      "title": "Recently Digitized and Updated Collections",
-      "slug": "example",
-      "rank": 0,
-      "collections": [
-        {
-          "uuid": "9ccb18b0-7a74-0132-a7b1-58d385a7b928",
-          "title": "James Madison papers",
-          "url": "https://digitalcollections.nypl.org/collections/james-madison-papers#/?tab=navigation",
-          "image_id": "5234356"
-        },
-        {
-          "uuid": "9ccb18b0-7a74-0132-a7b1-58d385a7b928",
-          "title": "James Madison papers",
-          "url": "https://digitalcollections.nypl.org/collections/james-madison-papers#/?tab=navigation",
-          "image_id": "5234356"
-        },
-        {
-          "uuid": "9ccb18b0-7a74-0132-a7b1-58d385a7b928",
-          "title": "James Madison papers",
-          "url": "https://digitalcollections.nypl.org/collections/james-madison-papers#/?tab=navigation",
-          "image_id": "5234356"
-        },
-        {
-          "uuid": "9ccb18b0-7a74-0132-a7b1-58d385a7b928",
-          "title": "James Madison papers",
-          "url": "https://digitalcollections.nypl.org/collections/james-madison-papers#/?tab=navigation",
-          "image_id": "5234356"
-        }
-      ]
-    }
+  "glossary": {
+      "title": "example glossary",
+  "GlossDiv": {
+          "title": "S",
+    "GlossList": {
+              "GlossEntry": {
+                  "ID": "SGML",
+        "SortAs": "SGML",
+        "GlossTerm": "Standard Generalized Markup Language",
+        "Acronym": "SGML",
+        "Abbrev": "ISO 8879:1986",
+        "GlossDef": {
+                      "para": "A meta-markup language, used to create markup languages such as DocBook.",
+          "GlossSeeAlso": ["GML", "XML"]
+                  },
+        "GlossSee": "markup"
+              }
+          }
+      }
   }
+}

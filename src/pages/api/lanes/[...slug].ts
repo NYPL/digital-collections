@@ -6,7 +6,7 @@ export default async function handler(
   request: NextApiRequest,
   response: NextApiResponse
 ) {
-  const { slug } = request.query;
+  const slug = request.query.slug;
 
   // Find the absolute path of the json directory for the lanes/[...slug].json file
   const lanesJsonDirectory = path.join(
@@ -20,12 +20,12 @@ export default async function handler(
     "utf8"
   );
 
-  const parsedData = JSON.parse(fileContents);
-  const cleanedFileContents = JSON.stringify(parsedData);
+  const cleanedFileContents = fileContents.replace(/\\/g, '');
+  const parsedData = JSON.parse(cleanedFileContents);
 
   const { method } = request;
   if (method === "GET") {
-    response.status(200).json(cleanedFileContents);
+    response.status(200).json(parsedData);
   }
 }
 
