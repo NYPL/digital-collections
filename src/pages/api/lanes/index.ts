@@ -1,10 +1,20 @@
-import type { NextApiRequest, NextApiResponse } from 'next'
-import lanes from "@/data/lanes.json"
+import lanesData from "@/data/lanes.json";
+import type { NextApiRequest, NextApiResponse } from "next";
 
-export default function handler(
-  req: NextApiRequest,
-  res: NextApiResponse
-) {
-  res.status(200).json(lanes)
-}
+export const getLanesData = () => {
+  return lanesData;
+};
+
+const lanesDataHandler = (
+  request: NextApiRequest,
+  response: NextApiResponse
+) => {
+  const { method } = request;
+  if (method === "GET") {
+    return response.status(200).json(getLanesData());
+  }
+};
+export default lanesDataHandler;
+
+// http://localhost:3000/api/lanes
 
