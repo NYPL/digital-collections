@@ -5,7 +5,7 @@ import handler from "@/pages/api/lanes/[...slug]";
 
 jest.mock("fs/promises");
 
-describe("Swim lane API endpoint Handler", () => {
+describe("Individual swim lane API endpoints handler", () => {
   afterEach(() => {
     jest.restoreAllMocks();
   });
