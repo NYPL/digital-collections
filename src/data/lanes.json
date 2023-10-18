@@ -1,37 +1,37 @@
 {
-    "lanes": [
-      {
-        "recently-digitized-and-updated-collections": {
-          "title": "Recently Digitized and Updated Collections",
-          "slug": "recently-digitized-and-updated-collections",
-          "rank": 0,
-          "collections": [
-            {
-              "uuid": "9ccb18b0-7a74-0132-a7b1-58d385a7b928",
-              "title": "James Madison papers",
-              "url": "https://digitalcollections.nypl.org/collections/james-madison-papers#/?tab=navigation",
-              "image_id": "5234356"
-            },
-            {
-              "uuid": "9ccb18b0-7a74-0132-a7b1-58d385a7b928",
-              "title": "James Madison papers",
-              "url": "https://digitalcollections.nypl.org/collections/james-madison-papers#/?tab=navigation",
-              "image_id": "5234356"
-            },
-            {
-              "uuid": "9ccb18b0-7a74-0132-a7b1-58d385a7b928",
-              "title": "James Madison papers",
-              "url": "https://digitalcollections.nypl.org/collections/james-madison-papers#/?tab=navigation",
-              "image_id": "5234356"
-            },
-            {
-              "uuid": "9ccb18b0-7a74-0132-a7b1-58d385a7b928",
-              "title": "James Madison papers",
-              "url": "https://digitalcollections.nypl.org/collections/james-madison-papers#/?tab=navigation",
-              "image_id": "5234356"
-            }
-          ]
-        }
+  "lanes": [
+    {
+      "recently-digitized-and-updated-collections": {
+        "title": "Recently Digitized and Updated Collections",
+        "slug": "recently-digitized-and-updated-collections",
+        "rank": 0,
+        "collections": [
+          {
+            "uuid": "9ccb18b0-7a74-0132-a7b1-58d385a7b928",
+            "title": "James Madison papers",
+            "url": "https://digitalcollections.nypl.org/collections/james-madison-papers#/?tab=navigation",
+            "image_id": "5234356"
+          },
+          {
+            "uuid": "9ccb18b0-7a74-0132-a7b1-58d385a7b928",
+            "title": "James Madison papers",
+            "url": "https://digitalcollections.nypl.org/collections/james-madison-papers#/?tab=navigation",
+            "image_id": "5234356"
+          },
+          {
+            "uuid": "9ccb18b0-7a74-0132-a7b1-58d385a7b928",
+            "title": "James Madison papers",
+            "url": "https://digitalcollections.nypl.org/collections/james-madison-papers#/?tab=navigation",
+            "image_id": "5234356"
+          },
+          {
+            "uuid": "9ccb18b0-7a74-0132-a7b1-58d385a7b928",
+            "title": "James Madison papers",
+            "url": "https://digitalcollections.nypl.org/collections/james-madison-papers#/?tab=navigation",
+            "image_id": "5234356"
+          }
+        ]
       }
-    ]
-  }
+    }
+  ]
+}

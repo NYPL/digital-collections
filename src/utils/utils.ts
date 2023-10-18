@@ -9,11 +9,11 @@
  */
 
 const imageURL = (
-	imageId: any,
-	region = "full",
-	size = "!1600,1600",
-	rotation = "0",
+  imageId: any,
+  region = "full",
+  size = "!1600,1600",
+  rotation = "0"
 ) => {
-	return `https://iiif.nypl.org/iiif/2/${imageId}/${region}/${size}/${rotation}/default.jpg`;
+  return `https://iiif.nypl.org/iiif/2/${imageId}/${region}/${size}/${rotation}/default.jpg`;
 };
 export default imageURL;

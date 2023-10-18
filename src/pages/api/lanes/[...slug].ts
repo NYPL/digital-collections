@@ -20,7 +20,7 @@ export default async function handler(
     "utf8"
   );
 
-  const cleanedFileContents = fileContents.replace(/\\/g, '');
+  const cleanedFileContents = fileContents.replace(/\\/g, "");
   const parsedData = JSON.parse(cleanedFileContents);
 
   const { method } = request;
@@ -28,6 +28,5 @@ export default async function handler(
     response.status(200).json(parsedData);
   }
 }
-
 
 // http://localhost:3000/api/lanes/:slug
