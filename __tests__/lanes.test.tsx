@@ -16,7 +16,6 @@ describe("All lanes API endpoint handler", () => {
     };
 
     lanesDataHandler(request, mockResponse);
-    //testing things
 
     expect(mockResponse.status).toHaveBeenCalledWith(200);
     expect(mockResponse.json).toHaveBeenCalledWith(getLanesData());
