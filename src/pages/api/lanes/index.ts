@@ -17,4 +17,3 @@ const lanesDataHandler = (
 export default lanesDataHandler;
 
 // http://localhost:3000/api/lanes
-
