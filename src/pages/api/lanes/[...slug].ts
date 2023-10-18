@@ -8,7 +8,7 @@ export default async function handler(
 ) {
   const slug = request.query.slug;
 
-  // Find the absolute path of the json directory for the lanes/[...slug].json file Find the absolute path of the json directory for the lanes/[...slug].json file Find the absolute path of the json directory for the lanes/[...slug].json file
+  // Find the absolute path of the json directory for the lanes/[...slug].json file
   const lanesJsonDirectory = path.join(
     process.cwd(),
     "/src/data/lanes/" + slug
