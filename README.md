@@ -247,3 +247,34 @@ There is no facility in the API for the client to request a particular backgroun
 Region THEN Size THEN Rotation THEN Quality THEN Format
 
 Note: Do not need to worry about Quality or Format for this application.
+
+## Testing
+
+The Digital Collections app runs unit tests with Jest and React Testing Library.
+
+To run all tests once:
+
+```sh
+$ npm test
+```
+
+If you're actively writing or updating tests, you can run the tests in watch mode. This will wait for any changes and run when a file is saved:
+
+```sh
+$ npm run test:watch
+```
+
+If you want to run tests on only one specific file, run:
+
+```sh
+$ npm test -- src/[path/to/file]
+```
+
+## Linting and Formatting
+
+The Digital Collections app will use `eslint` and `prettier` to lint and then format code on `git commit`.
+You can lint your code independently of this by running:
+
+```sh
+$ npm run lint
+```
