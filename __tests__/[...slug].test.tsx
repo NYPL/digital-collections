@@ -42,7 +42,7 @@ describe("Individual swim lane API endpoints handler", () => {
     const request: NextApiRequest = {
       method: "POST",
       query: {
-        slug: "example", // A valid 'slug' value
+        slug: "maps", // A valid 'slug' value
       },
     } as unknown as NextApiRequest;
 

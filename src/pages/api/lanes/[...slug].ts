@@ -20,8 +20,7 @@ export default async function handler(
     "utf8"
   );
 
-  const cleanedFileContents = fileContents.replace(/\\/g, '');
-  const parsedData = JSON.parse(cleanedFileContents);
+  const parsedData = JSON.parse(fileContents);
 
   const { method } = request;
   if (method === "GET") {
