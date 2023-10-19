@@ -6,12 +6,12 @@ export default async function handler(
   request: NextApiRequest,
   response: NextApiResponse
 ) {
-  const slug = request.query.slug;
+  const { slug } = request.query;
 
   // Find the absolute path of the json directory for the lanes/[...slug].json file
   const lanesJsonDirectory = path.join(
     process.cwd(),
-    "/src/data/lanes/" + slug
+    `/src/data/lanes/${slug}`
   );
 
   // Read the json data file data.json
