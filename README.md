@@ -194,11 +194,6 @@ and the following to restart the stopped container:
 $ docker-compose start
 ```
 
-### Github Actions
-
-All pushes to this repo will be checked with `npm test` and `npm lint`.
-
-
 ## Learn More
 
 To learn more about Next.js, take a look at the following resources:
@@ -328,3 +323,7 @@ You can lint your code independently of this by running:
 ```sh
 $ npm run lint
 ```
+
+## Github Actions
+
+All pushes to this repo will be checked with `npm test` and `npm lint`.
