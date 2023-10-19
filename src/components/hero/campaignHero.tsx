@@ -15,12 +15,12 @@ import {
 	TemplateAppContainer,
 	Text,
 } from "@nypl/design-system-react-components";
-
-import imageURL from "@/utils/utils";
+import React from "react";
+import imageURL from "../../utils/utils";
 import CampaignHeroSubText from "./campaignHeroSubText";
 import CampaignHeroHeading from "./campaignHeroHeading";
-const CampaignHero = () => {
-  
+
+const CampaignHero = () => {  
   return(
     <Hero
       backgroundImageSrc={imageURL("1269908")}
@@ -29,7 +29,7 @@ const CampaignHero = () => {
       heroType="campaign"
       heading={ <CampaignHeroHeading/>}
       imageProps={{
-        alt: "Image example",
+        alt: "Momoyogusa = Flowers of a Hundred Generations.",
         src: imageURL("1269908"),
       }}
       subHeaderText={<CampaignHeroSubText/>}
