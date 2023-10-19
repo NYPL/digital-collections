@@ -5,6 +5,7 @@ import {
 	Text,
   Spacer,
 } from "@nypl/design-system-react-components";
+import React from "react";
 
 const CampaignHeroSubText = () => {
    return (  
@@ -16,7 +17,7 @@ const CampaignHeroSubText = () => {
           more.
         </Text>
         <Text color="ui.typography.body">
-        Our collections include some content that may be harmful or difficult to view. <DSLink color="var(--nypl-colors-ui-link-primary) !important" href="https://digitalcollections.nypl.org/about#nypl_harmful_content_statement">Learn more</DSLink>
+        Our collections include some content that may be harmful or difficult to view. <DSLink color="var(--nypl-colors-ui-link-primary) !important" href="https://digitalcollections.nypl.org/about#nypl_harmful_content_statement" aria-label="Learn more about harmful content" >Learn more</DSLink>
         </Text>
         <HorizontalRule/>
         <Text color="ui.typography.body" mb="0px">

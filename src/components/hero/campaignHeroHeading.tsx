@@ -15,6 +15,7 @@ import {
 	TemplateAppContainer,
 	Text,
 } from "@nypl/design-system-react-components";
+import React from "react";
 
 const CampaignHeroHeading = () => {
    return (  
