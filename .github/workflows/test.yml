@@ -1,0 +1,23 @@
+# For all pushes, this workflow will
+#     - Test
+name: Test CI
+
+on: push
+
+jobs:
+
+  test:
+    name: Test
+    runs-on: ubuntu-latest
+    env:
+      CI: true
+    steps:
+      - uses: actions/checkout@v2
+      - name: Use Node.js 18.x
+        uses: actions/setup-node@v1
+        with:
+          node-version: 18.x
+      - name: Cache and install node modules
+        uses: bahmutov/npm-install@v1
+      - name: Test
+        run: npm run test:ci
