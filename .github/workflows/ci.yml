@@ -2,7 +2,7 @@
 #     - Install deps
 #     - Lint
 #     - Test
-name: Test/Lint CI
+name: CI
 
 on: push
 
