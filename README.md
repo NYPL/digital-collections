@@ -41,6 +41,43 @@ You can start editing the page by modifying `pages/index.tsx`. The page auto-upd
 
 The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
 
+### Swim Lanes API Endpoints
+
+The following endpoints are currently available at http://localhost:3000/api/lanes/
+
+- [/books-and-periodicals](http://localhost:3000/api/lanes/books-and-periodicals)
+- [/fliers-and-ephemera](http://localhost:3000/api/lanes/fliers-and-ephemera)
+- [/manuscripts-and-correspondence](http://localhost:3000/api/lanes/manuscripts-and-correspondence)
+- [/maps](http://localhost:3000/api/lanes/maps)
+- [/photographs](http://localhost:3000/api/lanes/photographs)
+- [/prints-and-drawings](http://localhost:3000/api/lanes/prints-and-drawings)
+- [/recently-digitized-collections](http://localhost:3000/api/lanes/recently-digitized-collections)
+
+
+### Individual Lane - GET /api/lanes/[...slug]
+---
+#### Query Parameter
+ type| required | note |
+ ----------- |----------- | ----------- |
+ string      | yes | Slugified title of swim lane
+
+Example: 
+```sh
+{ slug: "books-and-periodicals" }
+```
+Returns respective JSON for that lane.
+
+### All Lanes - GET /api/lanes
+---
+Returns JSON containing all lanes' metadata.
+
+
+#### Note:
+
+These endpoints will change (as DC homepage is built out) to be dynamically generated from another source instead of getting static data. 
+
+## Fonts
+
 This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
 
 ## Getting Started With Docker
@@ -242,3 +279,4 @@ There is no facility in the API for the client to request a particular backgroun
 Region THEN Size THEN Rotation THEN Quality THEN Format
 
 Note: Do not need to worry about Quality or Format for this application.
+
