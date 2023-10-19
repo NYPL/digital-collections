@@ -2,7 +2,7 @@
 #     - Install deps
 #     - Lint
 #     - Test
-name: Lint CI
+name: Test/Lint CI
 
 on: push
 
@@ -24,3 +24,19 @@ jobs:
           useLockFile: false
       - name: Lint
         run: npm run lint
+
+  test:
+    name: Test
+    runs-on: ubuntu-latest
+    env:
+      CI: true
+    steps:
+      - uses: actions/checkout@v2
+      - name: Use Node.js 18
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18
+      - name: Cache and install node modules
+        uses: bahmutov/npm-install@v1
+      - name: Test
+        run: npm run test:ci
