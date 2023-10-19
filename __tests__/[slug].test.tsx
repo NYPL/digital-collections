@@ -1,7 +1,7 @@
 import path from "path";
 import { promises as fs } from "fs";
 import { NextApiRequest, NextApiResponse } from "next";
-import handler from "@/pages/api/lanes/[...slug]";
+import handler from "@/pages/api/lanes/[slug]";
 
 jest.mock("fs/promises");
 
@@ -42,7 +42,7 @@ describe("Individual swim lane API endpoints handler", () => {
     const request: NextApiRequest = {
       method: "POST",
       query: {
-        slug: "example", // A valid 'slug' value
+        slug: "maps", // A valid 'slug' value
       },
     } as unknown as NextApiRequest;
 
