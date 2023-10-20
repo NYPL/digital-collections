@@ -4,7 +4,6 @@ import {
   Text,
   Spacer,
 } from "@nypl/design-system-react-components";
-import React from "react";
 
 const CampaignHeroSubText = () => {
   return (

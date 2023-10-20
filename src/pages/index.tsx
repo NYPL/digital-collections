@@ -1,8 +1,5 @@
-import CampaignHero from "../components/hero/campaignHero"
-import React from "react"
+import CampaignHero from "../components/hero/campaignHero";
 
 export default function Home() {
-  return (
-    <CampaignHero />
-  )
+  return <CampaignHero />;
 }
