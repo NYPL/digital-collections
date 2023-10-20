@@ -1,0 +1,81 @@
+{
+	"lanes": {
+  "recently-digitized-collections": {
+			"id": 241,
+			"title": "Recently digitized collections",
+			"slug": "recently-digitized-collections",
+			"created_at": "2023-10-17T17:33:14.000Z",
+			"updated_at": "2023-10-17T17:33:14.000Z",
+			"rank": null,
+			"featured": false,
+			"query": null,
+			"type": "CollectionLane"
+		},
+		"photographs": {
+			"id": 242,
+			"title": "Photographs",
+			"slug": "photographs",
+			"created_at": "2023-10-17T17:33:14.000Z",
+			"updated_at": "2023-10-17T17:33:14.000Z",
+			"rank": null,
+			"featured": false,
+			"query": null,
+			"type": "CollectionLane"
+		},
+		"prints-and-drawings": {
+			"id": 243,
+			"title": "Prints and drawings",
+			"slug": "prints-and-drawings",
+			"created_at": "2023-10-17T17:33:14.000Z",
+			"updated_at": "2023-10-17T17:33:14.000Z",
+			"rank": null,
+			"featured": false,
+			"query": null,
+			"type": "CollectionLane"
+		},
+		"maps": {
+			"id": 244,
+			"title": "Maps",
+			"slug": "maps",
+			"created_at": "2023-10-17T17:33:15.000Z",
+			"updated_at": "2023-10-17T17:33:15.000Z",
+			"rank": null,
+			"featured": false,
+			"query": null,
+			"type": "CollectionLane"
+		},
+		"books-and-periodicals": {
+			"id": 245,
+			"title": "Books and periodicals",
+			"slug": "books-and-periodicals",
+			"created_at": "2023-10-17T17:33:15.000Z",
+			"updated_at": "2023-10-17T17:33:15.000Z",
+			"rank": null,
+			"featured": false,
+			"query": null,
+			"type": "CollectionLane"
+		},
+		"manuscripts-and-correspondence": {
+			"id": 246,
+			"title": "Manuscripts and correspondence",
+			"slug": "manuscripts-and-correspondence",
+			"created_at": "2023-10-17T17:33:15.000Z",
+			"updated_at": "2023-10-17T17:33:15.000Z",
+			"rank": null,
+			"featured": false,
+			"query": null,
+			"type": "CollectionLane"
+		},
+		"fliers-and-ephemera": {
+			"id": 247,
+			"title": "Fliers and ephemera",
+			"slug": "fliers-and-ephemera",
+			"created_at": "2023-10-17T17:33:15.000Z",
+			"updated_at": "2023-10-17T17:33:15.000Z",
+			"rank": null,
+			"featured": false,
+			"query": null,
+			"type": "CollectionLane"
+		}
+	}
+}

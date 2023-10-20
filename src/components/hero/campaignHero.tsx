@@ -1,28 +1,24 @@
-
-import {
-	Hero,
-	Link as DSLink,
-} from "@nypl/design-system-react-components";
+import { Hero, Link as DSLink } from "@nypl/design-system-react-components";
 import React from "react";
 import imageURL from "../../utils/utils";
 import CampaignHeroSubText from "./campaignHeroSubText";
 import CampaignHeroHeading from "./campaignHeroHeading";
 
-const CampaignHero = () => {  
-  return(
+const CampaignHero = () => {
+  return (
     <Hero
       backgroundImageSrc={imageURL("1269908")}
       backgroundColor="var(--nypl-colors-ui-bg-default)" // don't know why but this still does not like ui.bg.default after upgrading the version of Reservoir.
       color="ui.typography.heading"
       heroType="campaign"
-      heading={ <CampaignHeroHeading/>}
+      heading={<CampaignHeroHeading />}
       imageProps={{
         alt: "Momoyogusa = Flowers of a Hundred Generations.",
         src: imageURL("1269908"),
       }}
-      subHeaderText={<CampaignHeroSubText/>}
+      subHeaderText={<CampaignHeroSubText />}
     />
-  )
-}
+  );
+};
 
-export default CampaignHero
+export default CampaignHero;
