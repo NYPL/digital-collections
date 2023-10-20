@@ -79,7 +79,7 @@ Returns respective JSON for that lane.
 
 ---
 
-Returns JSON containing all lanes' metadata.
+Returns JSON containing all lanes.
 
 #### Note for future
 
