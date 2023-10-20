@@ -323,3 +323,7 @@ You can lint your code independently of this by running:
 ```sh
 $ npm run lint
 ```
+
+## Github Actions
+
+All pushes to this repo will be checked with `npm test` and `npm lint`.
