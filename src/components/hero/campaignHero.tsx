@@ -7,7 +7,7 @@ const CampaignHero = () => {
   return (
     <Hero
       backgroundImageSrc={imageURL("1269908")}
-      backgroundColor="ui.bg.default" // don't know why but this still does not like ui.bg.default after upgrading the version of Reservoir.
+      backgroundColor="ui.bg.default"
       heroType="campaign"
       heading={<CampaignHeroHeading />}
       imageProps={{
