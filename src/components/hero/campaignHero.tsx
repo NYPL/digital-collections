@@ -1,19 +1,7 @@
 
 import {
-	Box,
-	Button,
-	Card,
-	CardContent,
-	CardHeading,
-	Flex,
-	Heading,
 	Hero,
-	HorizontalRule,
 	Link as DSLink,
-	SimpleGrid,
-	Spacer,
-	TemplateAppContainer,
-	Text,
 } from "@nypl/design-system-react-components";
 import React from "react";
 import imageURL from "../../utils/utils";
