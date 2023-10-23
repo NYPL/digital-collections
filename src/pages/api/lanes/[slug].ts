@@ -6,9 +6,7 @@ export default async function slugHandler(
   response: NextApiResponse
 ) {
   const { method, query } = request;
-
   const slug = query.slug as string;
-
   const slugData = lanesData.lanes.find((lane) => lane[slug] !== undefined);
 
   if (method === "GET") {
