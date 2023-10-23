@@ -27,7 +27,7 @@ jobs:
       script:
         - eval $(aws ecr get-login --no-include-email)
         - docker build --tag "$LOCAL_TAG_NAME" .
-        - docker tag $LOCAL_TAG_NAME "$ECR_URL";
+        - docker tag "$LOCAL_TAG_NAME" "$ECR_URL";
         - docker push "$ECR_URL";
     - stage: update QA tasks
       if: (branch = qa) AND (type != pull_request)
