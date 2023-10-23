@@ -1,0 +1,42 @@
+language: minimal
+services:
+  - docker
+branches:
+  only:
+    - qa
+env:
+  global:
+    - AWS_DEFAULT_REGION=us-east-1
+    - LOCAL_TAG_NAME=dc-frontend:$TRAVIS_BRANCH-$TRAVIS_BUILD_NUMBER
+    # DOCKER_LOGIN_PASSWORD
+    - secure: "PWBKqzoehtHm6yDnQ85goSvBlnqE+N+DSesKtElIggKJGewGvHuSUWItYClBRIpbSPcm/5mn8yabhLPz37sJo7nJY/hJHQyGk8dwZtQcLBxVMSq4vMd6EbgeqZeT4oMWzQsT3TpLvESfSyEZu9MNzpKdFdxugOPKk0vUIDFTvBHpRtb+peptLqXBOXeo5czOJQta+QuQr3vd3PIUCYCoCGgx2ueoakIJXxpsNOe1/UHj97gbMlIypD+OdyCp3MQMn5etYFC/98HhTMGKrB8PI6qM/XdEzPzdw9zQjiDMq2xInQImgEFDymBwFfmIz8cEbjNiVnXxjnyfFgD5stmNHNi77rx2LF4MRlbEO7i9jZU7u1KfF+ruEnfYosZLgNKR+1JpeOr8Wvpe2yu/z7vMbeB9l1KvfGNLcRcA9M9kQigDwJJSCiIXj3d+KMoEy01Y5j8Nn18EOkEcOLSPrKBOsiH1y7zT/Ahnk17KIDkbPwiLyixwIjyhMRyVEp9FDjkBCrI93NZxYr3lyGaHSO8ZLHpi7v1NZcBxuNBlyhD+sHjkSdMZXaDBUJ73L7RVHCgdDYI2DP8PzbQ9yiM+6v2XTAbDHd6SMRW86+0K976i47mqAKKqWBLD1JuqYz01ZYTNVBR7UPkD3xS2elDlWeXJo7OKoZOgn2UrUvs4MlMY9Ko="
+    # AWS_ACCESS_KEY_ID_QA
+    - secure: "iKDmg+m+mMVs2PyGAdBThrOctyfGxaW3bDCJfHtu6nhqhQZ+aLPnv1yi8+znIcjfsnE2ewLO4cn42KNvmi7g5+x2NaQN1J2mDVeooMPXHIl5+dKJGM7AAyVvsUan+ZJho5IoQBUDLEO7ix5LgkBvfLHRHVzxBQghGo5IhFMGCQsHFaO5NF5cm6itNwlRX66v97JVC3sIYDmhcbqBH5E1tkMNdlxGSDp8k5+R2Isg59bbIv3oc343XOws+fs/Zx+TmLLflPtY6IzulGBZxV194MroGDqriE5nLlBZvG5z0vgGqQut+9DN3wAzTRZfwMTaablb/MOA2F3OjMOLxJfsbS/MRTDOT0ksEuYjIii8sat4KfLAzNLVv+o3NgDoRA9Hu3a5CtPoRBugIR09mdAvZF9I+avxSgmf/ABp7FDpTd6jPPOE9ZA57He5Xlif/duermPdO5fAx+9G9R+4Ibpl8f4vXxVCQzGOtwnHkMrLeFtLEHj3JXH0Dpis2gqk3ftYdf0zQBQZbqIKGD1MEQEanjZAnHkqgQX/BvJxG/FgvsfxaPX83ZK1IvH6hOh/szJcBTmEfm2ywWjHigu6Rd9OZYcIIlRnUxWeSozpdL6uReMBmEGL6XEyBPQ7MTN/ajtXBOBn9j60nZoH5yxLn5ptg7myP9etndsPVWY1cGvrujY="
+    # AWS_SECRET_ACCESS_KEY_QA
+    - secure: "Xvv73aiWEZruwBtgGMb3C0fUfHKU82jQCezuQHjsEk7pk+NRhnQwgvGmvTYiYiIZcuYyEMynPhtNo21xBKC3TwIdjUGfYhpqcMeuchHTpjsWIdWwLvhZ1bs5yB7X47drO0zy99x84qVZeIs/uDKbYpCYEyMC41Bw+YpR6ySlFOqY6TonWxAmZrSP+/WdqPSl+6SltIc9MmjnpzydCvWW7xWbgtZqHQi6mmTayY3rmOQ8V9F8Th/OgeyfBfuZ5Bh/vzY+yNOziu+7ra+ZWKf6TvesgAwTT7aq08pp4HV7CT3PlYTW5ttR6Zz6p/ZYgXkApIdcG3rOqH0v0W2hnHSEAEonpChfQHBM85oMIKAjDBju7eXjO7dniIefSp7rNzmWFscdMtbX1Hp90/01IlsJV/4cto/U2OLXkGCYK3XebGtQt1xNkt7mH1+/qSlDPHoKKFl6b+9R1j+Itrz7zwt68pQQX9IKQiLB4V53tx51EDB/heFeD+JgPs/+a4p+VYQHnoBow8dOYoo/GmQTqDeyWdABiJKrCCIfaiQAYwBQgglpRxhWrKelyoYDhUzPhtCXpznFsfiVZ11XA+P0rUcl6Pd9ATKMr8krMhGo+/fJTcyDBtb5eRCE2+Mg6Yh2f+BnJ4RHzP/LVl5/RrxfNKQXby4nT3SL2sBgHVIiV6D1J00="
+jobs:
+  include:
+    - stage: push QA image
+      if: (branch = qa) AND (type != pull_request)
+      env:
+        - ECR_URL=685731035297.dkr.ecr.us-east-1.amazonaws.com/dc-frontend:$TRAVIS_BRANCH-latest
+        - AWS_ACCESS_KEY_ID=$AWS_ACCESS_KEY_ID_QA
+        - AWS_SECRET_ACCESS_KEY=$AWS_SECRET_ACCESS_KEY_QA
+      install:
+        - pip install --user awscli
+      script:
+        - eval $(aws ecr get-login --no-include-email)
+        - docker build --tag "$LOCAL_TAG_NAME" .
+        - docker tag $LOCAL_TAG_NAME "$ECR_URL";
+        - docker push "$ECR_URL";
+    - stage: update QA tasks
+      if: (branch = qa) AND (type != pull_request)
+      env:
+        - AWS_ACCESS_KEY_ID=$AWS_ACCESS_KEY_ID_QA
+        - AWS_SECRET_ACCESS_KEY=$AWS_SECRET_ACCESS_KEY_QA
+        - CLUSTER_NAME=dc-frontend-qa
+        - SERVICE_NAME=dc-frontend-qa
+      install:
+        - pip install --user awscli
+      script:
+        - aws ecs update-service --cluster $CLUSTER_NAME --service $SERVICE_NAME --force-new-deployment
