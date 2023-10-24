@@ -1,4 +1,4 @@
-import itemsData from "@/data/featured/featured-items.json";
+import itemsData from "@/data/featureditems.json";
 import type { NextApiRequest, NextApiResponse } from "next";
 
 export const getItemsData = () => {
@@ -16,4 +16,4 @@ const itemsDataHandler = (
 };
 export default itemsDataHandler;
 
-// http://localhost:3000/api/lanes/items
+// http://localhost:3000/api/featuredItems

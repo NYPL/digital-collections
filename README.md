@@ -82,7 +82,7 @@ Returns respective JSON for that lane.
 
 Returns JSON containing all lanes' metadata.
 
-### Featured Items - GET /api/lanes/items
+### Featured Items - GET /api/featuredItems
 
 ---
 

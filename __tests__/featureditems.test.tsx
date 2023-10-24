@@ -1,5 +1,5 @@
-import { getItemsData } from "@/pages/api/lanes/items";
-import itemsDataHandler from "@/pages/api/lanes/items";
+import { getItemsData } from "@/pages/api/featuredItems";
+import itemsDataHandler from "@/pages/api/featuredItems";
 import { NextApiRequest } from "next";
 
 describe("Featured items API endpoint handler", () => {
