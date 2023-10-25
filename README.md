@@ -334,3 +334,46 @@ $ npm run lint
 ## Github Actions
 
 All pushes to this repo will be checked with `npm test` and `npm lint`.
+
+## Git Workflow
+
+Our branches (in order or stability are):
+
+| Branch     | Environment | AWS Account   | Link To Application                                                               |
+|:-----------|:------------|:--------------|:----------------------------------------------------------------------------------|
+| main       | development |               | [localhost:3000](http://localhost:3000)                                           |
+| qa         | qa          | nypl-dams-dev | [https://qa-dcfrontend.nypl.org/](https://qa-dcfrontend.nypl.org/)          |
+                                                                               |
+| production | production  | nypl-dams-prod | []()                |
+
+## Contributing
+
+1.  Feature branches are cut from `develop` using 
+
+    `git checkout -b feature/DR-123-feature-name`.
+
+2.  Add your changes to the CHANGELOG.md file under `## [Unreleased]`. See [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) for formatting docs.
+3.  Create a pull request of the `feature` branch _into_ `main`. 
+4.  After a feature branch has approved accessibility review and VQA, merge `feature` branch into `main`, then merge `main` branch into `qa` for testing.
+5.  After QA has tested and approved cut a `release` branch off of `qa` using [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
+
+   `git checkout -b release/x.y.z`.
+
+(see tagged releases or changelog for last version)
+
+5. Update CHANGELOG.md in release branch by moving updates from unreleased into the new release section.
+
+    ie. `## [2.4.13] - 2021-04-21`
+
+6. Commit and push changes to release branch.
+8. Merge `release` branch to `production` and push the changes. This will deploy through Travis if all goes well.
+10. Immediately after merging release to production, finish the release and backmerge release to `qa` and `main`
+    
+    `$ git tag -a x.y.z` 
+    
+    `$ git push origin --tags`
+
+
+## Deployment
+
+Deployment: [Via Travis](https://travis-ci.com/github/NYPL)  
