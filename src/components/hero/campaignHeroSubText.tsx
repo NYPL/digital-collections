@@ -15,11 +15,20 @@ const CampaignHeroSubText = () => {
         more.
       </Text>
       <Text color="ui.typography.body">
-        Our collections include some content that may be harmful or difficult to
-        view.{" "}
+        Our collections include some content that may be harmful or difficult to{" "}
+        <br /> view.{" "}
         <DSLink
           color="var(--nypl-colors-ui-link-primary) !important"
+          __css={{
+            _hover: {
+              color: "var(--nypl-colors-ui-link-secondary) !important",
+            },
+            _visited: {
+              color: "var(--nypl-colors-ui-link-tertiary) !important",
+            },
+          }}
           href="https://digitalcollections.nypl.org/about#nypl_harmful_content_statement"
+          aria-label="Learn more about harmful content"
         >
           Learn more
         </DSLink>
@@ -29,6 +38,14 @@ const CampaignHeroSubText = () => {
         Featured Image:{" "}
         <DSLink
           color="var(--nypl-colors-ui-link-primary) !important"
+          __css={{
+            _hover: {
+              color: "var(--nypl-colors-ui-link-secondary) !important",
+            },
+            _visited: {
+              color: "var(--nypl-colors-ui-link-tertiary) !important",
+            },
+          }}
           href="https://digitalcollections.nypl.org/items/510d47e0-cb17-a3d9-e040-e00a18064a99"
         >
           {" "}
