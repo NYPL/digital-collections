@@ -27,7 +27,7 @@ export default function Home() {
           <p>First swim lane</p>
           <p>Featured Content</p>
           <p>Rest of swim lanes</p>
-          <p>Explore further and links</p>
+          <p>Explore further links</p>
         </TemplateContent>
         <TemplateFooter>
           <p> Footer </p>
