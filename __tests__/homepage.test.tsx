@@ -25,7 +25,7 @@ describe("Home", () => {
     expect(getByText("First swim lane")).toBeInTheDocument();
     expect(getByText("Featured Content")).toBeInTheDocument();
     expect(getByText("Rest of swim lanes")).toBeInTheDocument();
-    expect(getByText("Explore further and links")).toBeInTheDocument();
+    expect(getByText("Explore further links")).toBeInTheDocument();
     expect(getByText("Footer")).toBeInTheDocument();
   });
 });
