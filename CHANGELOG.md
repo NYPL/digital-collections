@@ -19,3 +19,4 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Added spider block script (DR-2518)
 - Created Dockerfile and docker-compose.yml files. (DR-2446)
 - Created Next.js 13 app using NYPL Reservoir and TS 4.9.5. (DR-2444)
+- Set up travis script to build and deploy to QA (DR-2448)
