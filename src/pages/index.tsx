@@ -1,38 +1,24 @@
 import CampaignHero from "../components/hero/campaignHero";
 import {
   SkipNavigation,
-  Template,
-  TemplateAboveHeader,
-  TemplateBreakout,
-  TemplateContent,
-  TemplateFooter,
-  TemplateHeader,
+  TemplateAppContainer,
 } from "@nypl/design-system-react-components";
 
 export default function Home() {
   return (
-    <>
-      <SkipNavigation />
-      <Template>
-        <TemplateBreakout>
-          <TemplateAboveHeader>
-            <p> Notification banner </p>
-          </TemplateAboveHeader>
-          <TemplateHeader>
-            <p> Header </p>
-          </TemplateHeader>
-          <CampaignHero />
-        </TemplateBreakout>
-        <TemplateContent>
+    <TemplateAppContainer
+      aboveHeader={<p> Notification banner </p>}
+      header={<p> Header </p>}
+      breakout={<CampaignHero />}
+      contentPrimary={
+        <>
           <p>First swim lane</p>
           <p>Featured Content</p>
           <p>Rest of swim lanes</p>
           <p>Explore further links</p>
-        </TemplateContent>
-        <TemplateFooter>
-          <p> Footer </p>
-        </TemplateFooter>
-      </Template>
-    </>
+        </>
+      }
+      renderSkipNavigation={true}
+    />
   );
 }
