@@ -54,3 +54,27 @@ jobs:
         - docker tag "$LOCAL_TAG_NAME" "$ECR_URL";
         - docker push "$ECR_URL";
         - aws ecs update-service --cluster $CLUSTER_NAME --service $SERVICE_NAME --force-new-deployment
+    - stage: push production image
+      if: branch = DR-2564-production-travis #(branch = production) AND (type != pull_request)
+      env:
+        - ECR_URL=557492996044.dkr.ecr.us-east-1.amazonaws.com/dc-frontend:latest
+        - AWS_ACCESS_KEY_ID=$AWS_ACCESS_KEY_ID_PRODUCTION
+        - AWS_SECRET_ACCESS_KEY=$AWS_SECRET_ACCESS_KEY_PRODUCTION
+      install:
+        - pip install --user awscli
+      script:
+        - eval $(aws ecr get-login --no-include-email)
+        - docker build --tag "$LOCAL_TAG_NAME" .
+        - docker tag "$LOCAL_TAG_NAME" "$ECR_URL";
+        - docker push "$ECR_URL";
+    - stage: update production tasks
+      if: (branch = production) AND (type != pull_request)
+      env:
+        - AWS_ACCESS_KEY_ID=$AWS_ACCESS_KEY_ID_PRODUCTION
+        - AWS_SECRET_ACCESS_KEY=$AWS_SECRET_ACCESS_KEY_PRODUCTION
+        - CLUSTER_NAME=dc-frontend
+        - SERVICE_NAME=dc-frontend
+      install:
+        - pip install --user awscli
+      script:
+        - aws ecs update-service --cluster $CLUSTER_NAME --service $SERVICE_NAME --force-new-deployment
