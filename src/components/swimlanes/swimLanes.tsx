@@ -31,7 +31,7 @@ const SwimLanes = () => {
             </Heading>
             <Spacer />
             <DSLink
-              href={lane.collections[0].url}
+              href={lane.collections.url}
               id={`row-see-more-${lane.slug}`}
               type="standalone"
             >
@@ -48,7 +48,7 @@ const SwimLanes = () => {
                   imageProps={{
                     alt: collection.title,
                     aspectRatio: "twoByOne",
-                    src: collection.image_id,
+                    src: `https://iiif.nypl.org/iiif/2/${collection.image_id}/full/288,/0/default.jpg`,
                   }}
                 >
                   <CardHeading
