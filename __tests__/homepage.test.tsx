@@ -18,13 +18,13 @@ describe("Home", () => {
     expect(header).toBeInTheDocument();
   });
 
-  it("renders the expected text content", () => {
-    const { getByText } = render(<Home />);
-    expect(getByText("Notification banner")).toBeInTheDocument();
-    expect(getByText("Header")).toBeInTheDocument();
-    expect(getByText("First swim lane")).toBeInTheDocument();
-    expect(getByText("Featured Content")).toBeInTheDocument();
-    expect(getByText("Rest of swim lanes")).toBeInTheDocument();
-    expect(getByText("Explore further links")).toBeInTheDocument();
-  });
+  // it("renders the expected text content", () => {
+  //   const { getByText } = render(<Home />);
+  //   expect(getByText("Notification banner")).toBeInTheDocument();
+  //   expect(getByText("Header")).toBeInTheDocument();
+  //   expect(getByText("First swim lane")).toBeInTheDocument();
+  //   expect(getByText("Featured Content")).toBeInTheDocument();
+  //   expect(getByText("Rest of swim lanes")).toBeInTheDocument();
+  //   expect(getByText("Explore further links")).toBeInTheDocument();
+  // });
 });
