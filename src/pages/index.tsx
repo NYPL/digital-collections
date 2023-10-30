@@ -1,10 +1,10 @@
 import CampaignHero from "../components/hero/campaignHero";
-import featuredItemsData from "../data/featureditems.json";
+import { featuredImageID } from "../utils/utils";
 
 export default function Home(props: any) {
-  return <CampaignHero featuredItems={props.featuredItemsData.featuredItems} />;
+  return <CampaignHero featuredImageID={props.featuredImageID} />;
 }
 
 export async function getServerSideProps() {
-  return { props: { featuredItemsData } };
+  return { props: { featuredImageID: featuredImageID() } };
 }

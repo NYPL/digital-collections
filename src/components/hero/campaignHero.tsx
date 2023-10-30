@@ -1,21 +1,18 @@
 import { Hero, Link as DSLink } from "@nypl/design-system-react-components";
-import imageURL from "../../utils/utils";
+import { imageURL } from "../../utils/utils";
 import CampaignHeroSubText from "./campaignHeroSubText";
 import CampaignHeroHeading from "./campaignHeroHeading";
 
-const CampaignHero = ({ featuredItems }: any) => {
-  const randomIndex = Math.floor(Math.random() * featuredItems.images.length);
-  const imageID = featuredItems.images[randomIndex].split(".")[0];
-
+const CampaignHero = ({ featuredImageID }: any) => {
   return (
     <Hero
-      backgroundImageSrc={imageURL(imageID)}
+      backgroundImageSrc={imageURL(featuredImageID)}
       backgroundColor="ui.bg.default"
       heroType="campaign"
       heading={<CampaignHeroHeading />}
       imageProps={{
         alt: "Momoyogusa = Flowers of a Hundred Generations.",
-        src: imageURL(imageID),
+        src: imageURL(featuredImageID),
       }}
       subHeaderText={<CampaignHeroSubText />}
     />
