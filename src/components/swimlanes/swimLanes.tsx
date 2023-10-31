@@ -24,7 +24,7 @@ const SwimLanes = () => {
           mb="var(--nypl-space-l)"
         >
           <Flex alignItems="baseline">
-            <Heading id={`row-heading-${lane.slug}`} level="h2" size="h3">
+            <Heading id={`row-heading-${lane.slug}`} level="h2" size="heading3">
               {lane.title}
             </Heading>
             <Spacer />
@@ -52,7 +52,7 @@ const SwimLanes = () => {
                   <CardHeading
                     id={`row-card-heading-${key}-${index}`}
                     level="h3"
-                    size="h4"
+                    size="heading4"
                     url={collection.url}
                     style={{
                       display: "-webkit-box",
