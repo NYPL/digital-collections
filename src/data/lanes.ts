@@ -1,7 +1,7 @@
 const lanesData = {
   lanes: [
     {
-      title: "Recently Digitized Collections",
+      title: "Recently digitized collections",
       slug: "recently-digitized-collections",
       rank: 0,
       collections: [
@@ -63,7 +63,7 @@ const lanesData = {
       ],
     },
     {
-      title: "Prints and Drawings",
+      title: "Prints and drawings",
       slug: "prints-and-drawings",
       rank: 2,
       collections: [
@@ -125,7 +125,7 @@ const lanesData = {
       ],
     },
     {
-      title: "Books and Periodicals",
+      title: "Books and periodicals",
       slug: "books-and-periodicals",
       rank: 4,
       collections: [
@@ -157,7 +157,7 @@ const lanesData = {
       ],
     },
     {
-      title: "Manuscripts and Correspondence",
+      title: "Manuscripts and correspondence",
       slug: "manuscripts-and-correspondence",
       rank: 5,
       collections: [
@@ -188,7 +188,7 @@ const lanesData = {
       ],
     },
     {
-      title: "Fliers and Ephemera",
+      title: "Fliers and ephemera",
       slug: "fliers-and-ephemera",
       rank: 6,
       collections: [
