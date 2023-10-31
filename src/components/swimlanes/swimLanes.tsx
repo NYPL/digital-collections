@@ -1,18 +1,17 @@
 import {
   Box,
-  Button,
   Card,
   CardContent,
   CardHeading,
   Flex,
   Heading,
-  Hero,
   HorizontalRule,
-  Link as DSLink,
   SimpleGrid,
   Spacer,
   Text,
+  Link,
 } from "@nypl/design-system-react-components";
+import React from "react";
 import data from "@/data/lanes";
 
 const SwimLanes = () => {
@@ -30,13 +29,14 @@ const SwimLanes = () => {
               {lane.title}
             </Heading>
             <Spacer />
-            <DSLink
-              href={lane.collections.url}
+            <Link
               id={`row-see-more-${lane.slug}`}
               type="standalone"
+              href={lane.collections[0].url}
+              aria-label="See more digitized materials"
             >
               See more
-            </DSLink>
+            </Link>
           </Flex>
           <HorizontalRule mt="0" />
           {lane.collections.length > 0 && (
