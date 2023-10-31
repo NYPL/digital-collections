@@ -5,7 +5,6 @@ import {
   CardHeading,
   Flex,
   Heading,
-  HorizontalRule,
   SimpleGrid,
   Spacer,
   Text,
@@ -25,20 +24,19 @@ const SwimLanes = () => {
           mb="var(--nypl-space-l)"
         >
           <Flex alignItems="baseline">
-            <Heading id={`row-heading-${lane.slug}`} level="h3">
+            <Heading id={`row-heading-${lane.slug}`} level="h2" size="h3">
               {lane.title}
             </Heading>
             <Spacer />
             <Link
               id={`row-see-more-${lane.slug}`}
               type="standalone"
-              href={lane.collections[0].url}
+              href={"https://digitalcollections.nypl.org/search/index?"}
               aria-label="See more digitized materials"
             >
               See more
             </Link>
           </Flex>
-          <HorizontalRule mt="0" />
           {lane.collections.length > 0 && (
             <SimpleGrid columns={4} id={`grid-${key}`}>
               {lane.collections.map((collection, index) => (
@@ -53,9 +51,16 @@ const SwimLanes = () => {
                 >
                   <CardHeading
                     id={`row-card-heading-${key}-${index}`}
-                    level="h4"
+                    level="h3"
+                    size="h4"
                     url={collection.url}
-                    style={{ maxHeight: "4em", overflow: "hidden" }}
+                    style={{
+                      display: "-webkit-box",
+                      WebkitLineClamp: 3,
+                      WebkitBoxOrient: "vertical",
+                      overflow: "hidden",
+                      whiteSpace: "pre-wrap",
+                    }}
                   >
                     {collection.title}
                   </CardHeading>
