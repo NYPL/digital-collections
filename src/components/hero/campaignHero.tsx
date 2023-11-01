@@ -1,18 +1,18 @@
 import { Hero, Link as DSLink } from "@nypl/design-system-react-components";
-import imageURL from "../../utils/utils";
+import { imageURL } from "../../utils/utils";
 import CampaignHeroSubText from "./campaignHeroSubText";
 import CampaignHeroHeading from "./campaignHeroHeading";
 
-const CampaignHero = () => {
+const CampaignHero = ({ featuredImageID }: any) => {
   return (
     <Hero
-      backgroundImageSrc={imageURL("1269908")}
+      backgroundImageSrc={imageURL(featuredImageID)}
       backgroundColor="ui.bg.default"
       heroType="campaign"
       heading={<CampaignHeroHeading />}
       imageProps={{
         alt: "Momoyogusa = Flowers of a Hundred Generations.",
-        src: imageURL("1269908"),
+        src: imageURL(featuredImageID),
       }}
       subHeaderText={<CampaignHeroSubText />}
     />
