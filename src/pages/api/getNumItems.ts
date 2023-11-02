@@ -1,4 +1,3 @@
-import axios from "axios";
 import type { NextApiRequest, NextApiResponse } from "next";
 
 const getNumItems = async (req: NextApiRequest, res: NextApiResponse) => {
@@ -8,15 +7,14 @@ const getNumItems = async (req: NextApiRequest, res: NextApiResponse) => {
     const apiKey = process.env.AUTH_TOKEN;
 
     try {
-      const response = await axios.get(apiUrl, {
+      const response = await fetch(apiUrl, {
         headers: {
           Authorization: `Token token=${apiKey}`,
         },
       });
 
-      console.log(response.data);
       if (response.status === 200) {
-        const data = response.data;
+        const data = await response.json();
         const numItems = data.nyplAPI.response.numItems;
         res.status(200).json({ numItems });
       } else {
