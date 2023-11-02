@@ -1,5 +1,5 @@
 import { Hero, Link as DSLink } from "@nypl/design-system-react-components";
-import imageURL from "../../utils/utils";
+import { imageURL } from "../../utils/utils";
 import CampaignHeroSubText from "./campaignHeroSubText";
 import CampaignHeroHeading from "./campaignHeroHeading";
 
