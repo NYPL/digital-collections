@@ -11,18 +11,12 @@ import {
   Link,
 } from "@nypl/design-system-react-components";
 import React from "react";
-import data from "@/data/lanes";
 
-const SwimLanes = () => {
-  const { lanes } = data;
+const SwimLanes = ({ lanesWithNumItems }) => {
   return (
     <>
-      {lanes.map((lane, key) => (
-        <Box
-          data-testid={`${lane.slug}`}
-          key={lane.rank}
-          mb="var(--nypl-space-l)"
-        >
+      {lanesWithNumItems.map((lane, key) => (
+        <Box data-testid={lane.slug} key={lane.rank} mb="var(--nypl-space-l)">
           <Flex alignItems="baseline">
             <Heading id={`row-heading-${lane.slug}`} level="h2" size="heading3">
               {lane.title}
@@ -37,7 +31,7 @@ const SwimLanes = () => {
               See more
             </Link>
           </Flex>
-          {lane.collections.length > 0 && (
+          {lane.collections && lane.collections.length > 0 && (
             <SimpleGrid columns={4} id={`grid-${key}`}>
               {lane.collections.map((collection, index) => (
                 <Card
@@ -65,7 +59,7 @@ const SwimLanes = () => {
                     {collection.title}
                   </CardHeading>
                   <CardContent>
-                    <Text size="tag"># of items</Text>
+                    <Text role="subtitle2">{collection.numItems} items</Text>
                   </CardContent>
                 </Card>
               ))}

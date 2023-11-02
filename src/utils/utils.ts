@@ -8,7 +8,7 @@
  * @param {string} rotation - optional param for the height of an image, default is "0"
  */
 
-const imageURL = (
+export const imageURL = (
   imageId: any,
   region = "full",
   size = "!1600,1600",
@@ -16,4 +16,3 @@ const imageURL = (
 ) => {
   return `https://iiif.nypl.org/iiif/2/${imageId}/${region}/${size}/${rotation}/default.jpg`;
 };
-export default imageURL;
