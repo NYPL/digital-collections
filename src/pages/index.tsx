@@ -2,15 +2,15 @@ import CampaignHero from "../components/hero/campaignHero";
 import SwimLanes from "../components/swimlanes/swimLanes";
 import { TemplateAppContainer } from "@nypl/design-system-react-components";
 import data from "@/data/lanes";
-import { getNumItems } from "@/utils/utils";
+import { getNumItems, featuredImageID } from "@/utils/utils";
 
-export default function Home({ lanesWithNumItems }) {
+export default function Home(props: any) {
   return (
     <TemplateAppContainer
       aboveHeader={<p> Notification banner </p>}
       header={<p> Header </p>}
-      breakout={<CampaignHero />}
-      contentPrimary={<SwimLanes lanesWithNumItems={lanesWithNumItems} />}
+      breakout={<CampaignHero featuredImageID={props.featuredImageID} />}
+      contentPrimary={<SwimLanes lanesWithNumItems={props.lanesWithNumItems} />}
       renderSkipNavigation={true}
     />
   );
@@ -38,6 +38,7 @@ export async function getServerSideProps() {
   return {
     props: {
       lanesWithNumItems,
+      featuredImageID: featuredImageID(),
     },
   };
 }
