@@ -2,6 +2,7 @@ import CampaignHero from "../components/hero/campaignHero";
 import SwimLanes from "../components/swimlanes/swimLanes";
 import { TemplateAppContainer } from "@nypl/design-system-react-components";
 import data from "@/data/lanes";
+import { getNumItems } from "@/utils/utils";
 
 export default function Home({ lanesWithNumItems }) {
   return (
@@ -21,21 +22,15 @@ export async function getServerSideProps() {
     lanes.map(async (lane) => {
       const updatedCollections = await Promise.all(
         lane.collections.map(async (collection) => {
-          const apiUrl = `/api/getNumItems/?uuid=${collection.uuid}`;
           try {
-            const response = await fetch(apiUrl);
-            if (response.status === 200) {
-              const { numItems } = await response.json();
-              console.log(numItems);
-              return { ...collection, numItems };
-            } else {
-              return { ...collection, numItems: 0 };
-            }
+            const numItems = await getNumItems(collection.uuid);
+            return { ...collection, numItems };
           } catch (error) {
             return { ...collection, numItems: 0 };
           }
         })
       );
+
       return { ...lane, collections: updatedCollections };
     })
   );
