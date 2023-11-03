@@ -59,7 +59,9 @@ const SwimLanes = ({ lanesWithNumItems }) => {
                     {collection.title}
                   </CardHeading>
                   <CardContent>
-                    <Text role="subtitle2">{collection.numItems} items</Text>
+                    <Text role="heading" aria-level="4" size="subtitle2">
+                      {collection.numItems} items
+                    </Text>
                   </CardContent>
                 </Card>
               ))}

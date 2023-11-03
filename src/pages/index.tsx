@@ -18,26 +18,30 @@ export default function Home(props: any) {
 
 export async function getServerSideProps() {
   const lanes = data.lanes;
-  const lanesWithNumItems = await Promise.all(
-    lanes.map(async (lane) => {
-      const updatedCollections = await Promise.all(
-        lane.collections.map(async (collection) => {
-          try {
-            const numItems = await getNumItems(collection.uuid);
-            return { ...collection, numItems };
-          } catch (error) {
-            return { ...collection, numItems: 0 };
-          }
-        })
-      );
-
-      return { ...lane, collections: updatedCollections };
+  const flatCollections = [].concat(...lanes.map((lane) => lane.collections));
+  const collectionsWithNumItems = await Promise.allSettled(
+    flatCollections.map(async (collection) => {
+      try {
+        const numItems = await getNumItems(collection.uuid);
+        return { ...collection, numItems };
+      } catch (error) {
+        return { ...collection, numItems: 0 };
+      }
     })
   );
+  const updatedLanes = lanes.map((lane) => {
+    const updatedCollections = lane.collections.map(() => {
+      const result = collectionsWithNumItems.shift();
+      return result.status === "fulfilled"
+        ? result.value
+        : { ...result, value: 0 };
+    });
+    return { ...lane, collections: updatedCollections };
+  });
 
   return {
     props: {
-      lanesWithNumItems,
+      lanesWithNumItems: updatedLanes,
       featuredImageID: featuredImageID(),
     },
   };
