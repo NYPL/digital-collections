@@ -71,7 +71,7 @@ const lanesData = {
           uuid: "54e9cab0-c6ce-012f-957e-58d385a7bc34",
           title: "Works on paper collection",
           url: "https://digitalcollections.nypl.org/collections/works-on-paper-collection#/?tab=about",
-          image_id: "58755283",
+          image_id: "58734720",
         },
         {
           uuid: "239b09e0-ea66-013a-39ba-0242ac110003",
@@ -196,7 +196,7 @@ const lanesData = {
           uuid: "24fc78e0-988f-0138-b354-7557849ba9de",
           title: "ACT UP New York records",
           url: "https://digitalcollections.nypl.org/collections/act-up-new-york-records#/?tab=navigation",
-          image_id: "58498722",
+          image_id: "1577406",
         },
         {
           uuid: "79d4a650-c52e-012f-67ad-58d385a7bc34",
