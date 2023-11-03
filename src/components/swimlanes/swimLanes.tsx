@@ -11,12 +11,13 @@ import {
   Link,
 } from "@nypl/design-system-react-components";
 import React from "react";
+import { imageURL } from "@/utils/utils";
 
 const SwimLanes = ({ lanesWithNumItems }) => {
   return (
     <>
       {lanesWithNumItems.map((lane, key) => (
-        <Box data-testid={lane.slug} key={lane.rank} mb="var(--nypl-space-l)">
+        <Box data-testid={lane.slug} key={lane.rank} mb="l">
           <Flex alignItems="baseline">
             <Heading id={`row-heading-${lane.slug}`} level="h2" size="heading3">
               {lane.title}
@@ -26,7 +27,7 @@ const SwimLanes = ({ lanesWithNumItems }) => {
               id={`row-see-more-${lane.slug}`}
               type="standalone"
               href={"https://digitalcollections.nypl.org/search/index?"}
-              aria-label="See more digitized materials"
+              aria-label={`See more ${lane.title}`}
             >
               See more
             </Link>
@@ -40,7 +41,7 @@ const SwimLanes = ({ lanesWithNumItems }) => {
                   imageProps={{
                     alt: collection.title,
                     aspectRatio: "twoByOne",
-                    src: `https://iiif.nypl.org/iiif/2/${collection.image_id}/full/288,/0/default.jpg`,
+                    src: imageURL(collection.image_id, "full", "288,", "0"),
                   }}
                 >
                   <CardHeading
@@ -59,9 +60,7 @@ const SwimLanes = ({ lanesWithNumItems }) => {
                     {collection.title}
                   </CardHeading>
                   <CardContent>
-                    <Text role="heading" aria-level="4" size="subtitle2">
-                      {collection.numItems} items
-                    </Text>
+                    <Text size="subtitle2">{collection.numItems} items</Text>
                   </CardContent>
                 </Card>
               ))}

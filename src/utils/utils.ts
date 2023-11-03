@@ -29,6 +29,11 @@ export const imageURL = (
   return `https://iiif.nypl.org/iiif/2/${imageId}/${region}/${size}/${rotation}/default.jpg`;
 };
 
+/**
+ * Returns the total number of items in the collection.
+ * @param {string} uuid - the collection ID
+ */
+
 export const getNumItems = async (uuid: string) => {
   const apiUrl = `https://api.repo.nypl.org/api/v2/collections/${uuid}/items`;
   const apiKey = process.env.AUTH_TOKEN;
