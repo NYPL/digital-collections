@@ -34,7 +34,7 @@ export async function getServerSideProps() {
       const result = collectionsWithNumItems.shift();
       return result.status === "fulfilled"
         ? result.value
-        : { ...result, value: 0 };
+        : { ...result, value: {} };
     });
     return { ...lane, collections: updatedCollections };
   });
