@@ -3,12 +3,13 @@ import SwimLanes from "../components/swimlanes/swimLanes";
 import { TemplateAppContainer } from "@nypl/design-system-react-components";
 import data from "@/data/lanes";
 import { getNumItems, featuredImageID } from "@/utils/utils";
+import Header from "@/components/header/header";
 
 export default function Home(props: any) {
   return (
     <TemplateAppContainer
       aboveHeader={<p> Notification banner </p>}
-      header={<p> Header </p>}
+      header={<Header />}
       breakout={<CampaignHero featuredImageID={props.featuredImageID} />}
       contentPrimary={<SwimLanes lanesWithNumItems={props.lanesWithNumItems} />}
       renderSkipNavigation={true}
