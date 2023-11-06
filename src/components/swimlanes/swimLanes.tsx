@@ -10,6 +10,7 @@ import {
   Text,
   Link,
 } from "@nypl/design-system-react-components";
+import styles from "./Swimlanes.module.css";
 import React from "react";
 import { imageURL } from "@/utils/utils";
 
@@ -26,7 +27,7 @@ const SwimLanes = ({ lanesWithNumItems }) => {
             <Link
               id={`row-see-more-${lane.slug}`}
               type="standalone"
-              href={"https://digitalcollections.nypl.org/search/index?"}
+              href={`${process.env.DC_URL}collections/lane/${lane.slug}`}
               aria-label={`See more ${lane.title}`}
             >
               See more
@@ -39,7 +40,7 @@ const SwimLanes = ({ lanesWithNumItems }) => {
                   key={index}
                   id={`card-${key}-${index}`}
                   imageProps={{
-                    alt: collection.title,
+                    alt: "",
                     aspectRatio: "twoByOne",
                     src: imageURL(collection.image_id, "full", "288,", "0"),
                   }}
@@ -48,13 +49,15 @@ const SwimLanes = ({ lanesWithNumItems }) => {
                     id={`row-card-heading-${key}-${index}`}
                     level="h3"
                     size="heading4"
+                    className={styles.collectiontitle}
                     url={collection.url}
                     style={{
                       display: "-webkit-box",
                       WebkitLineClamp: 3,
+                      lineClamp: 3,
                       WebkitBoxOrient: "vertical",
-                      overflow: "hidden",
-                      whiteSpace: "pre-wrap",
+                      boxOrient: "vertical",
+                      overflow: "clip",
                     }}
                   >
                     {collection.title}
