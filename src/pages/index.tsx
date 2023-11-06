@@ -3,6 +3,7 @@ import SwimLanes from "../components/swimlanes/swimLanes";
 import { TemplateAppContainer } from "@nypl/design-system-react-components";
 import data from "@/data/lanes";
 import { getNumItems, featuredImageID } from "@/utils/utils";
+import Header from "@/components/header/header";
 
 export default function Home(props: any) {
   return (
