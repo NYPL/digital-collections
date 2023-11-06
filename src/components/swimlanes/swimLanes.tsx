@@ -28,7 +28,7 @@ const SwimLanes = ({ lanesWithNumItems }) => {
               id={`row-see-more-${lane.slug}`}
               type="standalone"
               href={`${process.env.DC_URL}collections/lane/${lane.slug}`}
-              aria-label={`See more ${lane.title}`}
+              aria-label={`See more ${lane.title.toLowerCase()}`}
             >
               See more
             </Link>
