@@ -54,7 +54,7 @@ const SwimLanes = ({ lanesWithNumItems }) => {
                   <CardHeading
                     id={`row-card-heading-${key}-${index}`}
                     level="h3"
-                    size="heading5"
+                    size="heading4"
                     className={styles.collectiontitle}
                     url={collection.url}
                     style={{
