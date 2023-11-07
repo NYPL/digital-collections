@@ -54,7 +54,7 @@ const SwimLanes = ({ lanesWithNumItems }) => {
                   <CardHeading
                     id={`row-card-heading-${key}-${index}`}
                     level="h3"
-                    size="heading4"
+                    size="heading5"
                     className={styles.collectiontitle}
                     url={collection.url}
                     style={{
@@ -88,7 +88,6 @@ const SwimLanes = ({ lanesWithNumItems }) => {
             type="standalone"
             href={`${appConfig.DC_URL}collections/lane/${lane.slug}`}
             aria-label={`See more ${lane.title.toLowerCase()} mobile`}
-            className="smlink"
             sx={{
               display: { sm: "flex", md: "none" },
               fontWeight: "500",
