@@ -58,7 +58,7 @@ const SwimLanes = ({ lanesWithNumItems }) => {
                   <CardHeading
                     id={`row-card-heading-${key}-${index}`}
                     level="h3"
-                    size="heading4"
+                    size="heading5"
                     className={styles.collectiontitle}
                     url={collection.url}
                     style={{
@@ -77,7 +77,6 @@ const SwimLanes = ({ lanesWithNumItems }) => {
                       size="subtitle2"
                       sx={{
                         fontWeight: "400",
-                        display: { sm: "none", md: "inline" },
                       }}
                     >
                       {collection.numItems} items
@@ -91,17 +90,12 @@ const SwimLanes = ({ lanesWithNumItems }) => {
             id={`row-see-more-${lane.slug}-mobile`}
             type="standalone"
             href={`${appConfig.DC_URL}collections/lane/${lane.slug}`}
-            aria-label={`See more ${lane.title.toLowerCase()}`}
-            className="smlink"
+            aria-label={`See more ${lane.title.toLowerCase()} mobile`}
             sx={{
               display: { sm: "flex", md: "none" },
               fontWeight: "500",
               justifyContent: "flex-end",
-              marginTop: "s",
               alignItems: "center",
-              "& svg": {
-                marginTop: "1px",
-              },
             }}
           >
             See more
