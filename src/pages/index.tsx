@@ -9,7 +9,10 @@ export default function Home(props: any) {
   return (
     <TemplateAppContainer
       aboveHeader={<p> Notification banner </p>}
-      header={<Header />}
+      header={<p> Header </p>}
+      /**
+       * @TODO: Correct spacing below hero/above swimlanes
+       */
       breakout={<CampaignHero featuredImageID={props.featuredImageID} />}
       contentPrimary={<SwimLanes lanesWithNumItems={props.lanesWithNumItems} />}
       renderSkipNavigation={true}
