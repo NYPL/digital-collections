@@ -13,6 +13,7 @@ import {
 import styles from "./Swimlanes.module.css";
 import React from "react";
 import { imageURL } from "@/utils/utils";
+import appConfig from "appConfig";
 
 const SwimLanes = ({ lanesWithNumItems }) => {
   return (
@@ -27,7 +28,7 @@ const SwimLanes = ({ lanesWithNumItems }) => {
             <Link
               id={`row-see-more-${lane.slug}`}
               type="standalone"
-              href={`${process.env.DC_URL}collections/lane/${lane.slug}`}
+              href={`${appConfig.DC_URL}collections/lane/${lane.slug}`}
               aria-label={`See more ${lane.title.toLowerCase()}`}
             >
               See more
