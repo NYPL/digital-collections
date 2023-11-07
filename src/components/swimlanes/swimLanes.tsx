@@ -19,7 +19,7 @@ const SwimLanes = ({ lanesWithNumItems }) => {
   return (
     <>
       {lanesWithNumItems.map((lane, key) => (
-        <Box data-testid={lane.slug} key={lane.rank} mb="l">
+        <Box data-testid={lane.slug} key={lane.rank} mb="xxl">
           <Flex alignItems="baseline">
             <Heading id={`row-heading-${lane.slug}`} level="h2" size="heading3">
               {lane.title}
@@ -30,6 +30,11 @@ const SwimLanes = ({ lanesWithNumItems }) => {
               type="standalone"
               href={`${appConfig.DC_URL}collections/lane/${lane.slug}`}
               aria-label={`See more ${lane.title.toLowerCase()}`}
+              sx={{
+                display: { sm: "none", md: "inline" },
+                fontWeight: "500",
+                alignItems: "center",
+              }}
             >
               See more
             </Link>
@@ -49,7 +54,7 @@ const SwimLanes = ({ lanesWithNumItems }) => {
                   <CardHeading
                     id={`row-card-heading-${key}-${index}`}
                     level="h3"
-                    size="heading4"
+                    size="heading5"
                     className={styles.collectiontitle}
                     url={collection.url}
                     style={{
@@ -64,12 +69,33 @@ const SwimLanes = ({ lanesWithNumItems }) => {
                     {collection.title}
                   </CardHeading>
                   <CardContent>
-                    <Text size="subtitle2">{collection.numItems} items</Text>
+                    <Text
+                      size="subtitle2"
+                      sx={{
+                        fontWeight: "400",
+                      }}
+                    >
+                      {collection.numItems} items
+                    </Text>
                   </CardContent>
                 </Card>
               ))}
             </SimpleGrid>
           )}
+          <Link
+            id={`row-see-more-${lane.slug}-mobile`}
+            type="standalone"
+            href={`${appConfig.DC_URL}collections/lane/${lane.slug}`}
+            aria-label={`See more ${lane.title.toLowerCase()} mobile`}
+            sx={{
+              display: { sm: "flex", md: "none" },
+              fontWeight: "500",
+              justifyContent: "flex-end",
+              alignItems: "center",
+            }}
+          >
+            See more
+          </Link>
         </Box>
       ))}
     </>
