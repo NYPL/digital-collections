@@ -1,6 +1,7 @@
 import { render, screen, within } from "@testing-library/react";
 import SwimLanes from "@/components/swimlanes/swimLanes";
 import { props } from "../../../__tests__/data/homepageProps";
+import appConfig from "appConfig";
 
 describe("Swim Lanes component renders with expected props", () => {
   it("renders the first row", () => {
