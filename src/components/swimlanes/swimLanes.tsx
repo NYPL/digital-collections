@@ -65,6 +65,17 @@ const SwimLanes = ({ lanesWithNumItems }) => {
                       boxOrient: "vertical",
                       overflow: "clip",
                     }}
+                    subtitle={
+                      <Text
+                        size="subtitle2"
+                        sx={{
+                          fontWeight: "400",
+                          display: { sm: "none", md: "inline" },
+                        }}
+                      >
+                        {collection.numItems} items
+                      </Text>
+                    }
                   >
                     {collection.title}
                   </CardHeading>
@@ -88,6 +99,7 @@ const SwimLanes = ({ lanesWithNumItems }) => {
             type="standalone"
             href={`${appConfig.DC_URL}collections/lane/${lane.slug}`}
             aria-label={`See more ${lane.title.toLowerCase()} mobile`}
+            className="smlink"
             sx={{
               display: { sm: "flex", md: "none" },
               fontWeight: "500",
