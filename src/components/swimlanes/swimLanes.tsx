@@ -65,20 +65,20 @@ const SwimLanes = ({ lanesWithNumItems }) => {
                       boxOrient: "vertical",
                       overflow: "clip",
                     }}
-                    subtitle={
-                      <Text
-                        size="subtitle2"
-                        sx={{
-                          fontWeight: "400",
-                          display: { sm: "none", md: "inline" },
-                        }}
-                      >
-                        {collection.numItems} items
-                      </Text>
-                    }
                   >
                     {collection.title}
                   </CardHeading>
+                  <CardContent>
+                    <Text
+                      size="subtitle2"
+                      sx={{
+                        fontWeight: "400",
+                        display: { sm: "none", md: "inline" },
+                      }}
+                    >
+                      {collection.numItems} items
+                    </Text>
+                  </CardContent>
                 </Card>
               ))}
             </SimpleGrid>
