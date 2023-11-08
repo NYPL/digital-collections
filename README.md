@@ -53,7 +53,6 @@ The following endpoints are currently available at http://localhost:3000/api/lan
 - [/photographs](http://localhost:3000/api/lanes/photographs)
 - [/prints-and-drawings](http://localhost:3000/api/lanes/prints-and-drawings)
 - [/recently-digitized-collections](http://localhost:3000/api/lanes/recently-digitized-collections)
-- [/items](http://localhost:3000/api/lanes/items)
 
 ### Individual Lane - GET /api/lanes/[...slug]
 
