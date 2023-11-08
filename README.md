@@ -341,20 +341,19 @@ Our branches (in order or stability are):
 | Branch     | Environment | AWS Account   | Link To Application                                                               |
 |:-----------|:------------|:--------------|:----------------------------------------------------------------------------------|
 | main       | development |               | [localhost:3000](http://localhost:3000)                                           |
-| qa         | qa          | nypl-dams-dev | [https://qa-dcfrontend.nypl.org/](https://qa-dcfrontend.nypl.org/)          |
-                                                                               |
-| production | production  | nypl-dams-prod | []()                |
+| qa         | qa          | nypl-dams-dev | [https://qa-dcfrontend.nypl.org/](https://qa-dcfrontend.nypl.org/)                |
+| production | production  | nypl-dams-prod| [https://dcfrontend.nypl.org/](https://dcfrontend.nypl.org/)                      |
 
 ## Contributing
 
-1.  Feature branches are cut from `develop` using 
+1.  Feature branches are cut from `main` using 
 
-    `git checkout -b feature/DR-123-feature-name`.
+    `git checkout -b feature/DR-123/feature-name`.
 
 2.  Add your changes to the CHANGELOG.md file under `## [Unreleased]`. See [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) for formatting docs.
 3.  Create a pull request of the `feature` branch _into_ `main`. 
 4.  After a feature branch has approved accessibility review and VQA, merge `feature` branch into `main`, then merge `main` branch into `qa` for testing.
-5.  After QA has tested and approved cut a `release` branch off of `qa` using [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
+5.  After QA has tested and approved cut a `release` branch off of `qa` using [Semantic Versioning](https://semver.org/spec/v2.0.0.html). Please see Release Strategy for details on how we plan to number our releases during the initial rollout of this project.
 
    `git checkout -b release/x.y.z`.
 
@@ -372,6 +371,8 @@ Our branches (in order or stability are):
     
     `$ git push origin --tags`
 
+### Release Strategy 
+### Phases
 
 ## Deployment
 
