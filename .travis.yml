@@ -22,22 +22,10 @@ env:
     - secure: "SJ7p2aTIE3UOSXQvC5kOQWIz9VnWdSVSy6y0br/yc0JEpB4Fiw72X5hJWxIZe67qPGsS5H5BW0COfzJwpqiC8dA8ys2dbiJBsDhQfTUf/QnFZvuRgEp6cT4uME2bEB8wnNNZPAv0jUZ1vfW134pqZNnfmvvViDCaiBWpa6XUKC3wVPxDVzcyEDdORmOptamwcgxFYbTH+hJMmg8Zhvssgvcdiimfn6yTEUPUb3AaJarqLycGiLYSjEasIFI0baKA6nshaWYCj9NzSrgIu4GGWCpuevrhNWZULmkMD8a9x+hF6sivaDtr6zMvZjMCtNs3+la4Oo/AboJWLuVf0L5GJQAWUt5scpHsyGHUKnImcE5npfUtVo0IJOC+cN1sPzT1SYWa/4/xBPuKAQJORnMWBlEAWSxHzHrGK1TCR15POSyO05fVG5BcCY6v4Ww3VELkiZ1OWGYiZuzMIEfrrC6auLG7j45aROhg78YmfxfldvCcjJAoenFrhzbSAEUPBFu5+4yJav4jAPy4SJPAF45ZhiomyWI2lJcXeyJPXpC2+17IWyWk+KDGvKIryqfM+g7ijMSHLsT8BMPAryY1XXo/JscLtby9pKpx7xsQUjBtWPEKSD5lh287Ekty+fTbeer8DnXMpLZX4Iw5yTl04d2nKarAq9MkSpHBOjYZFgSpBLI="
 jobs:
   include:
-    - stage: push QA image
+    - stage: deploy QA
       if: (branch = qa) AND (type != pull_request)
       env:
         - ECR_URL=685731035297.dkr.ecr.us-east-1.amazonaws.com/dc-frontend:$TRAVIS_BRANCH-latest
-        - AWS_ACCESS_KEY_ID=$AWS_ACCESS_KEY_ID_QA
-        - AWS_SECRET_ACCESS_KEY=$AWS_SECRET_ACCESS_KEY_QA
-      install:
-        - pip install --user awscli
-      script:
-        - eval $(aws ecr get-login --no-include-email)
-        - docker build --tag "$LOCAL_TAG_NAME" .
-        - docker tag "$LOCAL_TAG_NAME" "$ECR_URL";
-        - docker push "$ECR_URL";
-    - stage: update QA tasks
-      if: (branch = qa) AND (type != pull_request)
-      env:
         - AWS_ACCESS_KEY_ID=$AWS_ACCESS_KEY_ID_QA
         - AWS_SECRET_ACCESS_KEY=$AWS_SECRET_ACCESS_KEY_QA
         - CLUSTER_NAME=dc-frontend-qa
@@ -45,23 +33,15 @@ jobs:
       install:
         - pip install --user awscli
       script:
-        - aws ecs update-service --cluster $CLUSTER_NAME --service $SERVICE_NAME --force-new-deployment
-    - stage: push production image
-      if: branch = DR-2564-production-travis #(branch = production) AND (type != pull_request)
-      env:
-        - ECR_URL=557492996044.dkr.ecr.us-east-1.amazonaws.com/dc-frontend:latest
-        - AWS_ACCESS_KEY_ID=$AWS_ACCESS_KEY_ID_PRODUCTION
-        - AWS_SECRET_ACCESS_KEY=$AWS_SECRET_ACCESS_KEY_PRODUCTION
-      install:
-        - pip install --user awscli
-      script:
         - eval $(aws ecr get-login --no-include-email)
         - docker build --tag "$LOCAL_TAG_NAME" .
         - docker tag "$LOCAL_TAG_NAME" "$ECR_URL";
         - docker push "$ECR_URL";
-    - stage: update production tasks
+        - aws ecs update-service --cluster $CLUSTER_NAME --service $SERVICE_NAME --force-new-deployment
+    - stage: deploy production
       if: (branch = production) AND (type != pull_request)
       env:
+        - ECR_URL=557492996044.dkr.ecr.us-east-1.amazonaws.com/dc-frontend:latest
         - AWS_ACCESS_KEY_ID=$AWS_ACCESS_KEY_ID_PRODUCTION
         - AWS_SECRET_ACCESS_KEY=$AWS_SECRET_ACCESS_KEY_PRODUCTION
         - CLUSTER_NAME=dc-frontend
@@ -69,4 +49,8 @@ jobs:
       install:
         - pip install --user awscli
       script:
+        - eval $(aws ecr get-login --no-include-email)
+        - docker build --tag "$LOCAL_TAG_NAME" .
+        - docker tag "$LOCAL_TAG_NAME" "$ECR_URL";
+        - docker push "$ECR_URL";
         - aws ecs update-service --cluster $CLUSTER_NAME --service $SERVICE_NAME --force-new-deployment
