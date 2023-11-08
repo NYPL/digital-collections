@@ -1,4 +1,4 @@
-import lanesData from "@/data/lanes.json";
+import lanesData from "@/data/lanes";
 import type { NextApiRequest, NextApiResponse } from "next";
 
 export default async function slugHandler(
@@ -7,7 +7,7 @@ export default async function slugHandler(
 ) {
   const { method, query } = request;
   const slug = query.slug as string;
-  const slugData = lanesData.lanes.find((lane) => lane[slug] !== undefined);
+  const slugData = lanesData.lanes.find((lane) => lane.slug === slug);
 
   if (method === "GET") {
     if (slugData) {
