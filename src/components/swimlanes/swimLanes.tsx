@@ -62,7 +62,7 @@ const SwimLanes = ({ lanesWithNumItems }) => {
                       <Text
                         size="subtitle2"
                         sx={{
-                          fontWeight: "510",
+                          fontWeight: "400",
                           display: { sm: "none", md: "inline" },
                         }}
                       >
