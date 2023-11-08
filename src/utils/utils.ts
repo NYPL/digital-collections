@@ -36,24 +36,8 @@ export const imageURL = (
 
 export const getNumItems = async (uuid: string) => {
   const apiUrl = `https://api.repo.nypl.org/api/v2/collections/${uuid}/items`;
-  const apiKey = process.env.AUTH_TOKEN;
-  try {
-    const response = await fetch(apiUrl, {
-      headers: {
-        Authorization: `Token token=${apiKey}`,
-      },
-    });
-
-    if (response.status === 200) {
-      const data = await response.json();
-      const numItems = data.nyplAPI.response.numItems;
-      return numItems;
-    } else {
-      return 0;
-    }
-  } catch (error) {
-    return 0;
-  }
+  const res = await apiCall(apiUrl);
+  return res.numItems || 0;
 };
 
 /**
