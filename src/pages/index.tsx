@@ -54,7 +54,7 @@ export async function getServerSideProps() {
     imageID: imageID,
     uuid: apiUri.uuid,
     title: dataFromUri.mods.titleInfo.title,
-    href: `https://digitalcollections.nypl.org/items/${apiUri.uuid}`,
+    href: `${process.env.DC_URL}/items/${apiUri.uuid}`,
   };
   return {
     props: {
