@@ -10,14 +10,16 @@ import {
   Text,
   Link,
 } from "@nypl/design-system-react-components";
+import styles from "./Swimlanes.module.css";
 import React from "react";
 import { imageURL } from "@/utils/utils";
+import appConfig from "appConfig";
 
 const SwimLanes = ({ lanesWithNumItems }) => {
   return (
     <>
       {lanesWithNumItems.map((lane, key) => (
-        <Box data-testid={lane.slug} key={lane.rank} mb="l">
+        <Box data-testid={lane.slug} key={lane.rank} mt="xxl">
           <Flex alignItems="baseline">
             <Heading id={`row-heading-${lane.slug}`} level="h2" size="heading3">
               {lane.title}
@@ -26,8 +28,13 @@ const SwimLanes = ({ lanesWithNumItems }) => {
             <Link
               id={`row-see-more-${lane.slug}`}
               type="standalone"
-              href={"https://digitalcollections.nypl.org/search/index?"}
-              aria-label={`See more ${lane.title}`}
+              href={`${appConfig.DC_URL}collections/lane/${lane.slug}`}
+              aria-label={`See more ${lane.title.toLowerCase()}`}
+              sx={{
+                display: { sm: "none", md: "inline" },
+                fontWeight: "500",
+                alignItems: "center",
+              }}
             >
               See more
             </Link>
@@ -39,33 +46,66 @@ const SwimLanes = ({ lanesWithNumItems }) => {
                   key={index}
                   id={`card-${key}-${index}`}
                   imageProps={{
-                    alt: collection.title,
+                    alt: "",
                     aspectRatio: "twoByOne",
                     src: imageURL(collection.image_id, "full", "288,", "0"),
                   }}
                 >
+                  {/**
+                   * @TODO: refactor so subtitle can be included in CardHeading,
+                   * without losing the 3 line cutoff and tabbable focus for titles
+                   * */}
                   <CardHeading
                     id={`row-card-heading-${key}-${index}`}
                     level="h3"
                     size="heading4"
+                    className={styles.collectiontitle}
                     url={collection.url}
                     style={{
                       display: "-webkit-box",
                       WebkitLineClamp: 3,
+                      lineClamp: 3,
                       WebkitBoxOrient: "vertical",
-                      overflow: "hidden",
-                      whiteSpace: "pre-wrap",
+                      boxOrient: "vertical",
+                      overflow: "clip",
                     }}
                   >
                     {collection.title}
                   </CardHeading>
                   <CardContent>
-                    <Text size="subtitle2">{collection.numItems} items</Text>
+                    <Text
+                      size="subtitle2"
+                      sx={{
+                        fontWeight: "400",
+                        display: { sm: "none", md: "inline" },
+                      }}
+                    >
+                      {collection.numItems} items
+                    </Text>
                   </CardContent>
                 </Card>
               ))}
             </SimpleGrid>
           )}
+          <Link
+            id={`row-see-more-${lane.slug}-mobile`}
+            type="standalone"
+            href={`${appConfig.DC_URL}collections/lane/${lane.slug}`}
+            aria-label={`See more ${lane.title.toLowerCase()}`}
+            className="smlink"
+            sx={{
+              display: { sm: "flex", md: "none" },
+              fontWeight: "500",
+              justifyContent: "flex-end",
+              marginTop: "s",
+              alignItems: "center",
+              "& svg": {
+                marginTop: "1px",
+              },
+            }}
+          >
+            See more
+          </Link>
         </Box>
       ))}
     </>

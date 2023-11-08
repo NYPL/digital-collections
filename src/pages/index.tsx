@@ -14,6 +14,9 @@ export default function Home(props: any) {
     <TemplateAppContainer
       aboveHeader={<p> Notification banner </p>}
       header={<p> Header </p>}
+      /**
+       * @TODO: Correct spacing below hero/above swimlanes
+       */
       breakout={<CampaignHero featuredItem={props.featuredItem} />}
       contentPrimary={<SwimLanes lanesWithNumItems={props.lanesWithNumItems} />}
       renderSkipNavigation={true}
