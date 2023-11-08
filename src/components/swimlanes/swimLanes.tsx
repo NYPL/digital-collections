@@ -51,10 +51,6 @@ const SwimLanes = ({ lanesWithNumItems }) => {
                     src: imageURL(collection.image_id, "full", "288,", "0"),
                   }}
                 >
-                  {/**
-                   * @TODO: refactor so subtitle can be included in CardHeading,
-                   * without losing the 3 line cutoff and tabbable focus for titles
-                   * */}
                   <CardHeading
                     id={`row-card-heading-${key}-${index}`}
                     level="h3"
