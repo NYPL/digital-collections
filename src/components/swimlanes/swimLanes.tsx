@@ -9,7 +9,6 @@ import {
   Spacer,
   Text,
   Link,
-  useNYPLBreakpoints,
 } from "@nypl/design-system-react-components";
 import styles from "./Swimlanes.module.css";
 import React from "react";
@@ -17,7 +16,6 @@ import { imageURL } from "@/utils/utils";
 import appConfig from "appConfig";
 
 const SwimLanes = ({ lanesWithNumItems }) => {
-  const { isLargerThanMobile } = useNYPLBreakpoints();
   return (
     <>
       {lanesWithNumItems.map((lane, key) => (
@@ -32,7 +30,6 @@ const SwimLanes = ({ lanesWithNumItems }) => {
               type="standalone"
               href={`${appConfig.DC_URL}collections/lane/${lane.slug}`}
               aria-label={`See more ${lane.title.toLowerCase()}`}
-              aria-hidden={isLargerThanMobile ? "false" : "true"}
               sx={{
                 display: { sm: "none", md: "inline" },
                 fontWeight: "500",
@@ -96,7 +93,6 @@ const SwimLanes = ({ lanesWithNumItems }) => {
             href={`${appConfig.DC_URL}collections/lane/${lane.slug}`}
             aria-label={`See more ${lane.title.toLowerCase()}`}
             className="smlink"
-            aria-hidden={isLargerThanMobile ? "true" : "false"}
             sx={{
               display: { sm: "flex", md: "none" },
               fontWeight: "500",
