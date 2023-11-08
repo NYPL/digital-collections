@@ -37,7 +37,6 @@ export const imageURL = (
 export const getNumItems = async (uuid: string) => {
   const apiUrl = `https://api.repo.nypl.org/api/v2/collections/${uuid}/items`;
   const apiKey = process.env.AUTH_TOKEN;
-
   try {
     const response = await fetch(apiUrl, {
       headers: {
@@ -49,6 +48,53 @@ export const getNumItems = async (uuid: string) => {
       const data = await response.json();
       const numItems = data.nyplAPI.response.numItems;
       return numItems;
+    } else {
+      return 0;
+    }
+  } catch (error) {
+    return 0;
+  }
+};
+
+/**
+ * Calls Repo API collectins/uuid/items endpoint
+ * @param {string} uuid - collection uuid
+ */
+
+export const getItemsFromUUID = async (uuid: string) => {
+  const apiUrl = `https://api.repo.nypl.org/api/v2/collections/${uuid}/items`;
+  return apiCall(apiUrl);
+};
+
+/**
+ * Returns the uuid, API uri, and numResults of an item given an identifier type and identifier value.
+ * @param {string} identifierType - the identifier type
+ * @param {string} identifier - the identifier value
+ */
+
+export const getAPIUri = async (identifierType: string, identifier: string) => {
+  const apiUrl = `https://api.repo.nypl.org/api/v2/items/${identifierType}/${identifier}`;
+  return apiCall(apiUrl);
+};
+
+/**
+ * Returns Repo API response.
+ * @param {string} apiUrl - the url to make a request to
+ */
+
+export const apiCall = async (apiUrl: string) => {
+  const apiKey = process.env.AUTH_TOKEN;
+  try {
+    const response = await fetch(apiUrl, {
+      headers: {
+        Authorization: `Token token=${apiKey}`,
+      },
+    });
+
+    if (response.status === 200) {
+      const data = await response.json();
+      const responseData = data.nyplAPI.response;
+      return responseData;
     } else {
       return 0;
     }

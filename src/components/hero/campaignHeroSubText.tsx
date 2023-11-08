@@ -5,7 +5,8 @@ import {
   Spacer,
 } from "@nypl/design-system-react-components";
 
-const CampaignHeroSubText = () => {
+const CampaignHeroSubText = ({ featuredItem }: any) => {
+  console.log("featuredItem in CampaignHeroSubText is: ", featuredItem);
   return (
     <>
       {/* To Do: make the link color blue: */}
@@ -29,6 +30,7 @@ const CampaignHeroSubText = () => {
           }}
           href="https://digitalcollections.nypl.org/about#nypl_harmful_content_statement"
           aria-label="Learn more about harmful content"
+          target="_blank"
         >
           Learn more
         </DSLink>
@@ -46,10 +48,10 @@ const CampaignHeroSubText = () => {
               color: "var(--nypl-colors-ui-link-tertiary) !important",
             },
           }}
-          href="https://digitalcollections.nypl.org/items/510d47e0-cb17-a3d9-e040-e00a18064a99"
+          href={featuredItem.href}
         >
           {" "}
-          Momoyogusa = Flowers of a Hundred Generations.{" "}
+          {featuredItem.title.$}{" "}
         </DSLink>
       </Text>
     </>
