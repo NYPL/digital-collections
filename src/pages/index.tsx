@@ -9,7 +9,7 @@ export default function Home(props: any) {
   return (
     <TemplateAppContainer
       aboveHeader={<p> Notification banner </p>}
-      header={<p> Header </p>}
+      header={<Header />}
       /**
        * @TODO: Correct spacing below hero/above swimlanes
        */
