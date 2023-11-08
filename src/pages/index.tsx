@@ -2,14 +2,19 @@ import CampaignHero from "../components/hero/campaignHero";
 import SwimLanes from "../components/swimlanes/swimLanes";
 import { TemplateAppContainer } from "@nypl/design-system-react-components";
 import data from "@/data/lanes";
-import { getNumItems, featuredImageID } from "@/utils/utils";
+import {
+  getNumItems,
+  featuredImageID,
+  getAPIUri,
+  apiCall,
+} from "@/utils/utils";
 
 export default function Home(props: any) {
   return (
     <TemplateAppContainer
       aboveHeader={<p> Notification banner </p>}
       header={<p> Header </p>}
-      breakout={<CampaignHero featuredImageID={props.featuredImageID} />}
+      breakout={<CampaignHero featuredItem={props.featuredItem} />}
       contentPrimary={<SwimLanes lanesWithNumItems={props.lanesWithNumItems} />}
       renderSkipNavigation={true}
     />
@@ -39,10 +44,19 @@ export async function getServerSideProps() {
     return { ...lane, collections: updatedCollections };
   });
 
+  const imageID = featuredImageID();
+  const apiUri = await getAPIUri("local_image_id", imageID);
+  const dataFromUri = await apiCall(apiUri.apiUri);
+  const featuredItemObject = {
+    imageID: imageID,
+    uuid: apiUri.uuid,
+    title: dataFromUri.mods.titleInfo.title,
+    href: `https://digitalcollections.nypl.org/items/${apiUri.uuid}`,
+  };
   return {
     props: {
       lanesWithNumItems: updatedLanes,
-      featuredImageID: featuredImageID(),
+      featuredItem: featuredItemObject,
     },
   };
 }
