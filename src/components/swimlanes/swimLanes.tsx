@@ -54,15 +54,15 @@ const SwimLanes = ({ lanesWithNumItems }) => {
                   <CardHeading
                     id={`row-card-heading-${key}-${index}`}
                     level="h3"
-                    size="heading4"
+                    size="heading5"
                     className={styles.collectiontitle}
                     url={collection.url}
                     noOfLines={3}
                     subtitle={
                       <Text
                         size="subtitle2"
+                        fontWeight="400"
                         sx={{
-                          fontWeight: "400",
                           display: { sm: "none", md: "inline" },
                         }}
                       >
