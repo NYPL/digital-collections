@@ -1,8 +1,25 @@
 import { Box, HStack, VStack } from "@nypl/design-system-react-components";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import DCLogo from "../logo/logo";
 
 const Header = () => {
+  const [isScrolled, setIsScrolled] = useState(true);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      if (window.scrollY > 100) {
+        setIsScrolled(false);
+      } else {
+        setIsScrolled(true);
+      }
+    };
+
+    window.addEventListener("scroll", handleScroll);
+
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, []);
   return (
     <Box position="sticky" top={0} zIndex={10} bgColor="white">
       <HStack
@@ -24,8 +41,13 @@ const Header = () => {
         >
           <DCLogo />
           <VStack py="16px">
-            <p> I am the nav links! </p>
-            <p> I am the search bar and filter! </p>
+            <Box display={{ sm: "none", md: isScrolled ? "flex" : "none" }}>
+              I am nav links
+            </Box>
+            <Box display={{ sm: "flex", md: "none" }}>I am hamburger menu</Box>
+            <Box display={{ sm: isScrolled ? "flex" : "none", md: "flex" }}>
+              I am search/filter
+            </Box>
           </VStack>
         </HStack>
       </HStack>
