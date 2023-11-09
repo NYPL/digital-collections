@@ -21,13 +21,7 @@ const Header = () => {
     };
   }, []);
   return (
-    <Box
-      position="sticky"
-      top={0}
-      py="s"
-      zIndex={10}
-      bgColor="var(--nypl-colors-ui-white)"
-    >
+    <Box position="sticky" top={0} py="s" zIndex={10} bgColor="ui.white">
       <HStack
         justify="center"
         align="center"
@@ -39,14 +33,14 @@ const Header = () => {
         <HStack
           justify="space-between"
           align="center"
-          mx="16px"
+          mx="s"
           sx={{
             display: "flex",
             width: "1280px",
           }}
         >
           <DCLogo />
-          <VStack py="16px">
+          <VStack py="s">
             <Box display={{ sm: "none", md: isScrolled ? "flex" : "none" }}>
               I am nav links
             </Box>
