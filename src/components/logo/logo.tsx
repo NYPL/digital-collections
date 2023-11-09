@@ -32,7 +32,7 @@ const DCLogo = () => {
               mt="0"
               size="heading6"
               sx={{
-                color: "#504E49",
+                color: "var(--nypl-colors-ui-gray-dark)",
                 fontWeight: "700",
                 lineHeight: 0.8,
                 fontSize: "xl",
@@ -49,7 +49,6 @@ const DCLogo = () => {
               sx={{
                 fontWeight: "700",
                 lineHeight: 0.8,
-                m: "0px",
                 fontSize: "4xl",
               }}
             >
