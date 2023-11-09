@@ -21,7 +21,12 @@ const Header = () => {
     };
   }, []);
   return (
-    <Box position="sticky" top={0} zIndex={10} bgColor="white">
+    <Box
+      position="sticky"
+      top={0}
+      zIndex={10}
+      bgColor="var(--nypl-colors-ui-white)"
+    >
       <HStack
         justify="center"
         align="center"
@@ -33,7 +38,7 @@ const Header = () => {
         <HStack
           justify="space-between"
           align="center"
-          px="16px"
+          mx="16px"
           sx={{
             display: "flex",
             width: "1280px",
