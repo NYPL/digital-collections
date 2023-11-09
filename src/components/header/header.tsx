@@ -24,6 +24,7 @@ const Header = () => {
     <Box
       position="sticky"
       top={0}
+      py="s"
       zIndex={10}
       bgColor="var(--nypl-colors-ui-white)"
     >
