@@ -376,7 +376,7 @@ This project is in the beginning phases of it's development. We will use a custo
 
 ### Versioning system:
 MAJOR: all of the Phases are complete 
-MINOR: phase, set of features required to meet the mvp of a Phase as defined in the Product Brief.
+MINOR: phase, set of features required to meet the mvp of a Phase as defined in the Product Brief or TAD.
 PATCH: feature or hotfix that supports a component or section of the mvp of a Phase
 
 Format: MAJOR.MINOR.PATCH
@@ -401,16 +401,11 @@ These page types are:
 - [Collection Landing Page](https://digitalcollections.nypl.org/collections/the-green-book#/?tab=navigation)
 
 #### 4. Item Page
-
 ##### 4a. Video and Audio Page
-
 ##### 4b. Images
-
 ##### 4d. PDFs
-
 ##### 5. About Page
 
 
 ## Deployment
-
 Deployment: [Via Travis](https://travis-ci.com/github/NYPL)  
