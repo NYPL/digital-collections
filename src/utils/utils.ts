@@ -35,7 +35,7 @@ export const imageURL = (
  */
 
 export const getNumItems = async (uuid: string) => {
-  const apiUrl = `https://api.repo.nypl.org/api/v2/collections/${uuid}/items`;
+  const apiUrl = `${process.env.API_URL}/api/v2/collections/${uuid}/items`;
   const res = await apiCall(apiUrl);
   return res.numItems || 0;
 };
@@ -46,7 +46,7 @@ export const getNumItems = async (uuid: string) => {
  */
 
 export const getItemsFromUUID = async (uuid: string) => {
-  const apiUrl = `https://api.repo.nypl.org/api/v2/collections/${uuid}/items`;
+  const apiUrl = `${process.env.API_URL}/api/v2/collections/${uuid}/items`;
   return apiCall(apiUrl);
 };
 
@@ -57,7 +57,7 @@ export const getItemsFromUUID = async (uuid: string) => {
  */
 
 export const getAPIUri = async (identifierType: string, identifier: string) => {
-  const apiUrl = `https://api.repo.nypl.org/api/v2/items/${identifierType}/${identifier}`;
+  const apiUrl = `${process.env.API_URL}/api/v2/items/${identifierType}/${identifier}`;
   return apiCall(apiUrl);
 };
 

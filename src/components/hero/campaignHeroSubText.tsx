@@ -41,6 +41,7 @@ const CampaignHeroSubText = ({ featuredItem }: any) => {
         <DSLink
           color="var(--nypl-colors-ui-link-primary) !important"
           __css={{
+            display: "inline !important",
             _hover: {
               color: "var(--nypl-colors-ui-link-secondary) !important",
             },
