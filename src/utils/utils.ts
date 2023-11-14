@@ -30,6 +30,17 @@ export const imageURL = (
 };
 
 /**
+ * Returns the number of digitized items in repo api.
+ */
+
+export const getNumDigitizedItems = async () => {
+  const apiUrl = `${process.env.API_URL}/api/v2/items/total`;
+  const res = await apiCall(apiUrl);
+  return addCommas(res.count.$) || 0;
+  // return apiCall(apiUrl);
+};
+
+/**
  * Returns the total number of items in the collection.
  * @param {string} uuid - the collection ID
  */
@@ -78,6 +89,9 @@ export const apiCall = async (apiUrl: string) => {
     if (response.status === 200) {
       const data = await response.json();
       const responseData = data.nyplAPI.response;
+      // if (apiUrl.includes('api/v2/items/total')) {
+      //   console.log("responseData for api/v2/items/total", responseData)
+      // }
       return responseData;
     } else {
       return 0;
@@ -86,3 +100,18 @@ export const apiCall = async (apiUrl: string) => {
     return 0;
   }
 };
+
+function addCommas(number) {
+  // Convert the number to a string
+  let numberString = number.toString();
+
+  // Use a regular expression to add commas to the string
+  numberString = numberString.replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+
+  // Return the formatted number
+  return numberString;
+}
+
+// Example usage:
+let numberWithCommas = addCommas(1234567);
+console.log(numberWithCommas); // Output: "1,234,567"

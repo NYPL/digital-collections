@@ -3,13 +3,15 @@ import { imageURL } from "../../utils/utils";
 import CampaignHeroSubText from "./campaignHeroSubText";
 import CampaignHeroHeading from "./campaignHeroHeading";
 
-const CampaignHero = ({ featuredItem }: any) => {
+const CampaignHero = ({ featuredItem, numberOfDigitizedItems }: any) => {
   return (
     <Hero
       backgroundImageSrc={imageURL(featuredItem.imageID)}
       backgroundColor="ui.bg.default"
       heroType="campaign"
-      heading={<CampaignHeroHeading />}
+      heading={
+        <CampaignHeroHeading numberOfDigitizedItems={numberOfDigitizedItems} />
+      }
       imageProps={{
         alt: featuredItem.title,
         src: imageURL(featuredItem.imageID),
