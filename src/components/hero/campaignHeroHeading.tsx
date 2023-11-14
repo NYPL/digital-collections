@@ -1,6 +1,7 @@
 import { Heading } from "@nypl/design-system-react-components";
 
-const CampaignHeroHeading = () => {
+const CampaignHeroHeading = ({ numberOfDigitizedItems }: any) => {
+  console.log("numberOfDigitizedItems", numberOfDigitizedItems);
   return (
     <Heading
       color="ui.typography.heading"
@@ -9,11 +10,13 @@ const CampaignHeroHeading = () => {
       size="heading2"
     >
       <>
-        Explore 863,848 items digitized from The New York Public Library&apos;s
-        collections.
+        Explore {numberOfDigitizedItems} items digitized from The New York
+        Public Library&apos;s collections.
       </>
     </Heading>
   );
 };
 
 export default CampaignHeroHeading;
+
+//863,848
