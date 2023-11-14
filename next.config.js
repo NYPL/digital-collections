@@ -2,7 +2,7 @@
 const nextConfig = {
   reactStrictMode: true,
   env: {
-    DC_URL: "https://qa-digitalcollections.nypl.org/",
+    DC_URL: "https://qa-digitalcollections.nypl.org",
   },
 };
 
