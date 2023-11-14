@@ -1,31 +1,17 @@
 import { Box, HStack, VStack } from "@nypl/design-system-react-components";
-import React, { useEffect, useState } from "react";
+import React from "react";
 import DCLogo from "../logo/logo";
+import { useScrolled } from "@/utils/useScrolled";
 
 const Header = () => {
-  const [isScrolled, setIsScrolled] = useState(true);
-
-  useEffect(() => {
-    const handleScroll = () => {
-      if (window.scrollY > 100) {
-        setIsScrolled(false);
-      } else {
-        setIsScrolled(true);
-      }
-    };
-
-    window.addEventListener("scroll", handleScroll);
-
-    return () => {
-      window.removeEventListener("scroll", handleScroll);
-    };
-  }, []);
+  const isScrolled = useScrolled("header");
   return (
     <Box
       position="sticky"
+      id="header"
       top={0}
       py={{ sm: "xs", md: "s" }}
-      zIndex={10}
+      zIndex={999}
       bgColor="ui.white"
     >
       <HStack
