@@ -21,7 +21,13 @@ const Header = () => {
     };
   }, []);
   return (
-    <Box position="sticky" top={0} py="s" zIndex={10} bgColor="ui.white">
+    <Box
+      position="sticky"
+      top={0}
+      py={{ sm: "xs", md: "s" }}
+      zIndex={10}
+      bgColor="ui.white"
+    >
       <HStack
         justify="center"
         align="center"
