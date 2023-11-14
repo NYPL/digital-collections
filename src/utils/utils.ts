@@ -1,13 +1,50 @@
 import featuredItemsData from "../data/featureditems.json";
+let featuredItemArray = [];
+
+/**
+ * Sets global featuredItemArray so other functions can use it.
+ **/
+export const setFeaturedItemArray = () => {
+  let itemsArray = [];
+  for (let i = 0; i < featuredItemsData.featuredItems.images.length; i++) {
+    itemsArray.push(featuredItemsData.featuredItems.images[i].split(".")[0]);
+  }
+  // set featuredItemArray
+  if (featuredItemArray.length === 0) {
+    featuredItemArray = itemsArray;
+  }
+  return itemsArray;
+};
+
+/**
+ * Returns a valid featured imageID.
+ * Checks if an imageID passed by as a query parameter is included in the pre-approved list of image IDs for featured items.
+ * If the imageID is not valid, the function returns a random imageID.
+ * @param {string} imageID - optional imageID to check against list of image IDs for featured items.
+ */
+export const featuredImageID = (imageID = "") => {
+  if (featuredItemArray.length === 0) {
+    setFeaturedItemArray();
+  }
+
+  if (imageID !== "") {
+    return featuredItemArray.includes(imageID)
+      ? imageID
+      : generateRandomImageID();
+  } else {
+    return generateRandomImageID();
+  }
+};
 
 /**
  * Returns a random image ID from the list of featured items.
  */
-export const featuredImageID = () => {
+const generateRandomImageID = () => {
+  console.log("featured imageID is not valid, generating random imageID ");
   const randomIndex = Math.floor(
     Math.random() * featuredItemsData.featuredItems.images.length
   );
-  return featuredItemsData.featuredItems.images[randomIndex].split(".")[0];
+  return featuredItemsData.featuredItems.images[randomIndex].split(".")[0]; // TO DO: get this to use itemsArray, but first wanted to make sure this logic was sound.
 };
 
 /**
@@ -38,16 +75,6 @@ export const getNumItems = async (uuid: string) => {
   const apiUrl = `${process.env.API_URL}/api/v2/collections/${uuid}/items`;
   const res = await apiCall(apiUrl);
   return res.numItems || 0;
-};
-
-/**
- * Calls Repo API collectins/uuid/items endpoint
- * @param {string} uuid - collection uuid
- */
-
-export const getItemsFromUUID = async (uuid: string) => {
-  const apiUrl = `${process.env.API_URL}/api/v2/collections/${uuid}/items`;
-  return apiCall(apiUrl);
 };
 
 /**
