@@ -24,7 +24,7 @@ export default function Home(props: any) {
   );
 }
 
-export async function getServerSideProps() {
+export async function getServerSideProps(context: any) {
   const lanes = data.lanes;
   const flatCollections = [].concat(...lanes.map((lane) => lane.collections));
   const collectionsWithNumItems = await Promise.allSettled(
@@ -47,7 +47,12 @@ export async function getServerSideProps() {
     return { ...lane, collections: updatedCollections };
   });
 
-  const imageID = featuredImageID();
+  //pass query param to featuredImageID functio to check if it is legit
+  const imageID = context.query.imageID
+    ? featuredImageID(context.query.imageID)
+    : featuredImageID();
+
+  console.log("imageID is: ", imageID);
   const apiUri = await getAPIUri("local_image_id", imageID);
   const dataFromUri = await apiCall(apiUri.apiUri);
   const featuredItemObject = {

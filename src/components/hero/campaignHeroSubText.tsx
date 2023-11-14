@@ -6,7 +6,6 @@ import {
 } from "@nypl/design-system-react-components";
 
 const CampaignHeroSubText = ({ featuredItem }: any) => {
-  console.log("featuredItem in CampaignHeroSubText is: ", featuredItem);
   return (
     <>
       {/* To Do: make the link color blue: */}
