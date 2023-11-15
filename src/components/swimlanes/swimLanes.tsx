@@ -1,7 +1,6 @@
 import {
   Box,
   Card,
-  CardContent,
   CardHeading,
   Flex,
   Heading,
