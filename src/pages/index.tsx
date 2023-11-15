@@ -47,7 +47,7 @@ export async function getServerSideProps(context: any) {
     return { ...lane, collections: updatedCollections };
   });
 
-  //pass query param to featuredImageID functio to check if it is legit
+  //pass query param to featuredImageID function to check if it is legit
   const imageID = context.query.imageID
     ? featuredImageID(context.query.imageID)
     : featuredImageID();

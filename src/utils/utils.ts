@@ -17,6 +17,17 @@ export const setFeaturedItemArray = () => {
 };
 
 /**
+ * Returns a random image ID from the list of featured items.
+ */
+const generateRandomImageID = () => {
+  console.log("featured imageID is not valid, generating random imageID ");
+  const randomIndex = Math.floor(
+    Math.random() * featuredItemsData.featuredItems.images.length
+  );
+  return featuredItemsData.featuredItems.images[randomIndex].split(".")[0]; // TO DO: get this to use itemsArray, but first wanted to make sure this logic was sound.
+};
+
+/**
  * Returns a valid featured imageID.
  * Checks if an imageID passed by as a query parameter is included in the pre-approved list of image IDs for featured items.
  * If the imageID is not valid, the function returns a random imageID.
@@ -34,17 +45,6 @@ export const featuredImageID = (imageID = "") => {
   } else {
     return generateRandomImageID();
   }
-};
-
-/**
- * Returns a random image ID from the list of featured items.
- */
-const generateRandomImageID = () => {
-  console.log("featured imageID is not valid, generating random imageID ");
-  const randomIndex = Math.floor(
-    Math.random() * featuredItemsData.featuredItems.images.length
-  );
-  return featuredItemsData.featuredItems.images[randomIndex].split(".")[0]; // TO DO: get this to use itemsArray, but first wanted to make sure this logic was sound.
 };
 
 /**
