@@ -51,7 +51,7 @@ const CampaignHeroSubText = ({ featuredItem }: any) => {
           href={featuredItem.href}
         >
           {" "}
-          {featuredItem.title.$}{" "}
+          {featuredItem.title}{" "}
         </DSLink>
       </Text>
     </>

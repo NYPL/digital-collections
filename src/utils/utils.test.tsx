@@ -97,7 +97,7 @@ describe("featuredImageID()", () => {
 describe("getAPIUri()", () => {
   it("should not be undefined", async () => {
     const apiUriData = await getAPIUri("local_image_id", "105180");
-    expect(apiUriData).toBeDefined();
+    expect(apiUriData.apiUri).toBeDefined();
   });
 });
 
