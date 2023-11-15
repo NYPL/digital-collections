@@ -1,10 +1,10 @@
 import { Box, HStack, VStack } from "@nypl/design-system-react-components";
 import React from "react";
 import DCLogo from "../logo/logo";
-import { useScrolledHeader } from "@/utils/useScrolledHeader";
+import { useScrolled } from "@/utils/useScrolled";
 
 const Header = () => {
-  const isScrolled = useScrolledHeader();
+  const isScrolled = useScrolled("header");
   return (
     <Box
       position="sticky"

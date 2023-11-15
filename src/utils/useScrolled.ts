@@ -1,14 +1,14 @@
 import { useState, useEffect } from "react";
 
-/* Returns if page is scrolled past the header. */
-export function useScrolledHeader() {
+/* Returns if page is scrolled past given element. */
+export function useScrolled(elementId) {
   const [isScrolled, setIsScrolled] = useState(true);
 
   useEffect(() => {
     function handleScroll() {
-      const header = document.getElementById("header");
-      if (header) {
-        const offset = header.offsetHeight;
+      const element = document.getElementById(elementId);
+      if (element) {
+        const offset = element.offsetHeight;
         if (window.scrollY > offset) {
           setIsScrolled(false);
         } else {
@@ -22,6 +22,6 @@ export function useScrolledHeader() {
     return () => {
       window.removeEventListener("scroll", handleScroll);
     };
-  }, []);
+  }, [elementId]);
   return isScrolled;
 }

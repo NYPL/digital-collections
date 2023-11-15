@@ -21,16 +21,18 @@ const DCLogo = () => {
           name="nyplLionBlack"
           sizeBasedOn="height"
           height="40px"
+          aria-label="NYPL Lion Logo"
           sx={{
-            display: { sm: "block", md: "none" },
+            display: { sm: "block", md: "none", lg: "none" },
           }}
         />
         <Logo
           name="digitalCollectionsBlack"
+          aria-label="NYPL Digital Collections Logo"
           sizeBasedOn="height"
           height="64px"
           sx={{
-            display: { sm: "none", md: "block" },
+            display: { sm: "none", md: "block", lg: "block" },
           }}
         />
       </HStack>
