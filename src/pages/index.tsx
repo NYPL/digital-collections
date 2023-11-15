@@ -3,28 +3,19 @@ import SwimLanes from "../components/swimlanes/swimLanes";
 import { TemplateAppContainer } from "@nypl/design-system-react-components";
 import data from "@/data/lanes";
 import { getNumItems, featuredImageID } from "@/utils/utils";
-import Header from "@/components/header/header";
 
 export default function Home(props: any) {
   return (
-    <>
-      {/**
-       * * @TODO: Header will need to be pulled into a reusable Layout component (DC Facelift phase 2)
-       * * Let this be @7emansell 's problem if possible
-       * */}
-      <p> Notification banner </p>
-      <Header />
-      <TemplateAppContainer
-        /**
-         * @TODO: Correct spacing below hero/above swimlanes
-         */
-        breakout={<CampaignHero featuredImageID={props.featuredImageID} />}
-        contentPrimary={
-          <SwimLanes lanesWithNumItems={props.lanesWithNumItems} />
-        }
-        renderSkipNavigation={true}
-      />
-    </>
+    <TemplateAppContainer
+      aboveHeader={<p> Notification banner </p>}
+      header={<p> Header </p>}
+      /**
+       * @TODO: Correct spacing below hero/above swimlanes
+       */
+      breakout={<CampaignHero featuredImageID={props.featuredImageID} />}
+      contentPrimary={<SwimLanes lanesWithNumItems={props.lanesWithNumItems} />}
+      renderSkipNavigation={true}
+    />
   );
 }
 
