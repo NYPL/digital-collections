@@ -53,12 +53,16 @@ export async function getServerSideProps(context: any) {
     : featuredImageID();
 
   console.log("imageID is: ", imageID);
+  // TO DO: merge these two await calls into one
   const apiUri = await getAPIUri("local_image_id", imageID);
   const dataFromUri = await apiCall(apiUri.apiUri);
+  console.log("dataFromUri is: ", dataFromUri);
+  console.log("dataFromUri.mods.titleInfo is: ", dataFromUri.mods.titleInfo);
+
   const featuredItemObject = {
     imageID: imageID,
     uuid: apiUri.uuid,
-    title: dataFromUri.mods.titleInfo.title,
+    title: dataFromUri.mods.titleInfo.title.$,
     href: `${process.env.DC_URL}/items/${apiUri.uuid}`,
   };
   return {

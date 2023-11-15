@@ -19,7 +19,7 @@ export const setFeaturedItemArray = () => {
 /**
  * Returns a random image ID from the list of featured items.
  */
-const generateRandomImageID = () => {
+export const generateRandomImageID = () => {
   console.log("featured imageID is not valid, generating random imageID ");
   const randomIndex = Math.floor(
     Math.random() * featuredItemsData.featuredItems.images.length
