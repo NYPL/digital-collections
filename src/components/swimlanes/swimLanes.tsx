@@ -28,7 +28,7 @@ const SwimLanes = ({ lanesWithNumItems }) => {
             <Link
               id={`row-see-more-${lane.slug}`}
               type="standalone"
-              href={`${appConfig.DC_URL}collections/lane/${lane.slug}`}
+              href={`${appConfig.DC_URL}/collections/lane/${lane.slug}`}
               aria-label={`See more ${lane.title.toLowerCase()}`}
               sx={{
                 display: { sm: "none", md: "inline" },
