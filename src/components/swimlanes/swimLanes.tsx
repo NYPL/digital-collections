@@ -57,19 +57,17 @@ const SwimLanes = ({ lanesWithNumItems }) => {
                     className={styles.collectiontitle}
                     url={collection.url}
                     noOfLines={3}
-                    subtitle={
-                      <Text
-                        size="subtitle2"
-                        fontWeight="400"
-                        sx={{
-                          display: { sm: "none", md: "inline" },
-                        }}
-                      >
-                        {collection.numItems} items
-                      </Text>
-                    }
                   >
                     {collection.title}
+                  </CardHeading>
+                  <CardHeading
+                    size="subtitle2"
+                    fontWeight="400"
+                    sx={{
+                      display: { sm: "none", md: "inline" },
+                    }}
+                  >
+                    <> {collection.numItems} items </>
                   </CardHeading>
                 </Card>
               ))}
