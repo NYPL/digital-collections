@@ -8,6 +8,7 @@ import {
   getAPIUri,
   apiCall,
 } from "@/utils/utils";
+import appConfig from "appConfig";
 
 export default function Home(props: any) {
   return (
