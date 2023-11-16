@@ -66,7 +66,6 @@ const SwimLanes = ({ lanesWithNumItems }) => {
                     size="subtitle2"
                     sx={{
                       display: { sm: "none", md: "inline" },
-                      letterSpacing: "0em",
                     }}
                   >
                     <> {collection.numItems} items </>
