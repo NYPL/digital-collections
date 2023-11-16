@@ -1,6 +1,11 @@
 import { useEffect } from "react";
 
-/* Prevents focused elements from being obscured by sticky header. */
+/* Code taken from https://www.tpgi.com/prevent-focused-elements-from-being-obscured-by-sticky-headers/.
+Requires data attribute (data-sticky-header) on header, and could be refactored to work for sticky footer as well.  
+applyStickyMargin() checks whether a focused element needs a sticky margin by calculating boundary interactions, then 
+applies that margin (pushing page up) accordingly. applyStickyMargin() is called by a focus event on any page element or a 
+ResizeObserver event on the header. */
+
 export function useStickyMargin() {
   useEffect(() => {
     const applyStickyMargin = (entries, observer, sticky) => {
@@ -74,9 +79,7 @@ export function useStickyMargin() {
 
     if (sticky.media) {
       const query = window.matchMedia(sticky.media);
-
       matches = query.matches;
-
       query.addEventListener("change", (e) => {
         if ((matches = e.matches)) {
           enableStickyMonitors();
