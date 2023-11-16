@@ -7,6 +7,8 @@ import {
   apiCall,
 } from "@/utils/utils";
 
+import appConfig from "appConfig";
+
 // test that this data returned in dataFromUri is valid:
 describe("featuredImageID Object", () => {
   it("should return a defined imageID, uuid, title, and href if query param image id is not valid", async () => {
@@ -17,7 +19,7 @@ describe("featuredImageID Object", () => {
       imageID: imageID,
       uuid: apiUri.uuid,
       title: dataFromUri.mods.titleInfo.title,
-      href: `${process.env.DC_URL}/items/${apiUri.uuid}`,
+      href: `${appConfig.DC_URL}/items/${apiUri.uuid}`,
     };
     expect(featuredItemObject.imageID).toBeDefined();
     expect(featuredItemObject.uuid).toBeDefined();
@@ -33,7 +35,7 @@ describe("featuredImageID Object", () => {
       imageID: imageID,
       uuid: apiUri.uuid,
       title: dataFromUri.mods.titleInfo.title.$,
-      href: `${process.env.DC_URL}/items/${apiUri.uuid}`,
+      href: `${appConfig.DC_URL}/items/${apiUri.uuid}`,
     };
     expect(featuredItemObject.imageID).toBeDefined();
     expect(featuredItemObject.uuid).toBeDefined();
@@ -49,7 +51,7 @@ describe("featuredImageID Object", () => {
       imageID: imageID,
       uuid: apiUri.uuid,
       title: dataFromUri.mods.titleInfo.title.$,
-      href: `${process.env.DC_URL}/items/${apiUri.uuid}`,
+      href: `${appConfig.DC_URL}/items/${apiUri.uuid}`,
     };
     expect(featuredItemObject.imageID).toBeDefined();
     expect(featuredItemObject.uuid).toBeDefined();

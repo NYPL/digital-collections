@@ -63,7 +63,7 @@ export async function getServerSideProps(context: any) {
     imageID: imageID,
     uuid: apiUri.uuid,
     title: dataFromUri.mods.titleInfo.title.$,
-    href: `${process.env.DC_URL}/items/${apiUri.uuid}`,
+    href: `${appConfig.DC_URL}/items/${apiUri.uuid}`,
   };
   return {
     props: {
