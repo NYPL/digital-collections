@@ -61,12 +61,12 @@ const SwimLanes = ({ lanesWithNumItems }) => {
                   >
                     {collection.title}
                   </CardHeading>
+                  {/*TODO: Check Dec 7 2023 with React release that this subtitle
+                   ** style will now appear as intended */}
                   <CardHeading
                     size="subtitle2"
-                    fontWeight="400"
                     sx={{
                       display: { sm: "none", md: "inline" },
-                      letterSpacing: "-0.01em",
                     }}
                   >
                     <> {collection.numItems} items </>
