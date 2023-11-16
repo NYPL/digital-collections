@@ -20,11 +20,11 @@ export const setFeaturedItemArray = () => {
  * Returns a random image ID from the list of featured items.
  */
 export const generateRandomImageID = () => {
-  console.log("featured imageID is not valid, generating random imageID ");
+  console.log("generating random imageID");
   const randomIndex = Math.floor(
     Math.random() * featuredItemsData.featuredItems.images.length
   );
-  return featuredItemsData.featuredItems.images[randomIndex].split(".")[0]; // TO DO: get this to use itemsArray, but first wanted to make sure this logic was sound.
+  return featuredItemArray[randomIndex];
 };
 
 /**
@@ -112,4 +112,13 @@ export const apiCall = async (apiUrl: string) => {
   } catch (error) {
     return 0;
   }
+};
+
+export const getItemDataFromImageID = async (imageID: string) => {
+  const apiUri = await getAPIUri("local_image_id", imageID);
+  const data = await apiCall(apiUri.apiUri);
+  return {
+    uuid: apiUri.uuid,
+    title: data.mods.titleInfo.title.$,
+  };
 };

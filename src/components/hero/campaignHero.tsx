@@ -6,13 +6,13 @@ import CampaignHeroHeading from "./campaignHeroHeading";
 const CampaignHero = ({ featuredItem }: any) => {
   return (
     <Hero
-      backgroundImageSrc={imageURL(featuredItem.imageID)}
+      backgroundImageSrc={featuredItem.imageSrc}
       backgroundColor="ui.bg.default"
       heroType="campaign"
       heading={<CampaignHeroHeading />}
       imageProps={{
         alt: featuredItem.title,
-        src: imageURL(featuredItem.imageID),
+        src: featuredItem.imageSrc,
       }}
       subHeaderText={<CampaignHeroSubText featuredItem={featuredItem} />}
     />

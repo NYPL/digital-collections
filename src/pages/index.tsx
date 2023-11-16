@@ -7,8 +7,10 @@ import {
   featuredImageID,
   getAPIUri,
   apiCall,
+  getItemDataFromImageID,
 } from "@/utils/utils";
 import appConfig from "appConfig";
+import { imageURL } from "@/utils/utils";
 
 export default function Home(props: any) {
   return (
@@ -53,19 +55,16 @@ export async function getServerSideProps(context: any) {
     ? featuredImageID(context.query.imageID)
     : featuredImageID();
 
-  console.log("imageID is: ", imageID);
-  // TO DO: merge these two await calls into one
-  const apiUri = await getAPIUri("local_image_id", imageID);
-  const dataFromUri = await apiCall(apiUri.apiUri);
-  console.log("dataFromUri is: ", dataFromUri);
-  console.log("dataFromUri.mods.titleInfo is: ", dataFromUri.mods.titleInfo);
+  const dataFromUri = await getItemDataFromImageID(imageID);
 
   const featuredItemObject = {
     imageID: imageID,
-    uuid: apiUri.uuid,
-    title: dataFromUri.mods.titleInfo.title.$,
-    href: `${appConfig.DC_URL}/items/${apiUri.uuid}`,
+    imageSrc: imageURL(imageID),
+    uuid: dataFromUri.uuid,
+    title: dataFromUri.title,
+    href: `${appConfig.DC_URL}/items/${dataFromUri.uuid}`,
   };
+
   return {
     props: {
       lanesWithNumItems: updatedLanes,
