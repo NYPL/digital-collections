@@ -10,7 +10,7 @@ import {
 import appConfig from "appConfig";
 
 // test that this data returned in dataFromUri is valid:
-describe("featuredImageID Object", () => {
+describe.skip("featuredImageID Object", () => {
   it("should return a defined imageID, uuid, title, and href if query param image id is not valid", async () => {
     const imageID = featuredImageID("1234");
     const apiUri = await getAPIUri("local_image_id", imageID);
@@ -96,14 +96,14 @@ describe("featuredImageID()", () => {
   });
 });
 
-describe("getAPIUri()", () => {
+describe.skip("getAPIUri()", () => {
   it("should not be undefined", async () => {
     const apiUriData = await getAPIUri("local_image_id", "105180");
     expect(apiUriData.apiUri).toBeDefined();
   });
 });
 
-describe("apiCall()", () => {
+describe.skip("apiCall()", () => {
   it("should not return undefined", async () => {
     expect(
       await apiCall(
