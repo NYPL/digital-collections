@@ -8,7 +8,10 @@ import featuredContentData from "@/data/featuredContentData";
 import { FeaturedContentData } from "@/types/FeaturedContentData";
 
 const FeaturedContentComponent = ({ testRandomNumber }) => {
-  const randomNumber = testRandomNumber || (Math.random() < 0.5 ? 0 : 1);
+  const randomNumber =
+    testRandomNumber !== undefined
+      ? testRandomNumber
+      : Math.floor(Math.random() * 2);
   const data: FeaturedContentData = featuredContentData[randomNumber];
   return (
     <FeaturedContent
