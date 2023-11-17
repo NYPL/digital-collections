@@ -5,12 +5,14 @@ import {
 } from "@nypl/design-system-react-components";
 import React from "react";
 import featuredContentData from "@/data/featuredContentData";
+import { FeaturedContentData } from "@/types/FeaturedContentData";
 
-const FeaturedContentComponent = () => {
-  var randomNumber = Math.random() < 0.5 ? 0 : 1;
-  var data = featuredContentData.data[randomNumber];
+const FeaturedContentComponent = ({ testRandomNumber }) => {
+  const randomNumber = testRandomNumber || (Math.random() < 0.5 ? 0 : 1);
+  const data: FeaturedContentData = featuredContentData[randomNumber];
   return (
     <FeaturedContent
+      data-testid={`featured-content-${randomNumber}`}
       isFullWidth={true}
       textContent={
         <div>
