@@ -3,6 +3,7 @@ import SwimLanes from "../components/swimlanes/swimLanes";
 import { TemplateAppContainer } from "@nypl/design-system-react-components";
 import data from "@/data/lanes";
 import { getNumItems, featuredImageID } from "@/utils/utils";
+import HomePageMainContent from "@/components/homePageMainContent/homePageMainContent";
 
 export default function Home(props: any) {
   return (
@@ -13,7 +14,12 @@ export default function Home(props: any) {
        * @TODO: Correct spacing below hero/above swimlanes
        */
       breakout={<CampaignHero featuredImageID={props.featuredImageID} />}
-      contentPrimary={<SwimLanes lanesWithNumItems={props.lanesWithNumItems} />}
+      contentPrimary={
+        <HomePageMainContent
+          testRandomNumber={props.testRandomNumber}
+          lanesWithNumItems={props.lanesWithNumItems}
+        />
+      }
       renderSkipNavigation={true}
     />
   );

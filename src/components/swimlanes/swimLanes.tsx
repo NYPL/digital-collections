@@ -13,13 +13,10 @@ import {
 import styles from "./Swimlanes.module.css";
 import { imageURL } from "@/utils/utils";
 import appConfig from "appConfig";
-import FeaturedContentComponent from "../featuredContent/featuredContent";
 
 const SwimLanes = ({ lanesWithNumItems }) => {
-  let hasRendered = false;
-
-  const swimLanesElements = lanesWithNumItems.map((lane, key) => [
-    <Box data-testid={lane.slug} mt={hasRendered ? "xxl" : "s"} key={key}>
+  return lanesWithNumItems.map((lane, key) => [
+    <Box className={styles.lane} data-testid={lane.slug} mt="xxl" key={key}>
       <Flex alignItems="baseline">
         <Heading id={`row-heading-${lane.slug}`} level="h2" size="heading3">
           {lane.title}
@@ -40,11 +37,11 @@ const SwimLanes = ({ lanesWithNumItems }) => {
         </Link>
       </Flex>
       {lane.collections && lane.collections.length > 0 && (
-        <SimpleGrid columns={4} id={`grid-${key}`}>
+        <SimpleGrid columns={4} id={`grid-${lane.slug}`}>
           {lane.collections.map((collection, index) => (
             <Card
               key={index}
-              id={`card-${key}-${index}`}
+              id={`card-${lane.slug}-${index}`}
               imageProps={{
                 alt: "",
                 aspectRatio: "twoByOne",
@@ -52,7 +49,7 @@ const SwimLanes = ({ lanesWithNumItems }) => {
               }}
             >
               <CardHeading
-                id={`row-card-heading-${key}-${index}`}
+                id={`row-card-heading-${lane.slug}-${index}`}
                 level="h3"
                 size="heading5"
                 className={styles.collectiontitle}
@@ -96,10 +93,7 @@ const SwimLanes = ({ lanesWithNumItems }) => {
         See more
       </Link>
     </Box>,
-    !hasRendered && (hasRendered = true) && <FeaturedContentComponent />,
   ]);
-
-  return <>{swimLanesElements}</>;
 };
 
 export default SwimLanes;
