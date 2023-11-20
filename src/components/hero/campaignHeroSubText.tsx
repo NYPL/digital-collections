@@ -35,7 +35,7 @@ const CampaignHeroSubText = ({ featuredItem }: any) => {
         </DSLink>
       </Text>
       <HorizontalRule />
-      <Text color="ui.typography.body" mb="0px" noOfLines={2}>
+      <Text color="ui.typography.body" mb="0px">
         Featured Image:{" "}
         <DSLink
           color="var(--nypl-colors-ui-link-primary) !important"
