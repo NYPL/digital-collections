@@ -1,8 +1,8 @@
 import { Box, HStack, VStack } from "@nypl/design-system-react-components";
 import React from "react";
 import DCLogo from "../logo/logo";
-import { useScrolled } from "@/utils/useScrolled";
-import { useStickyMargin } from "@/utils/useStickyMargin";
+import { useScrolled } from "@/hooks/useScrolled";
+import { useStickyMargin } from "@/hooks/useStickyMargin";
 
 const Header = () => {
   useStickyMargin();
