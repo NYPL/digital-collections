@@ -21,9 +21,10 @@ export const setFeaturedItemArray = () => {
  */
 export const generateRandomImageID = () => {
   console.log("generating random imageID");
-  const randomIndex = Math.floor(
-    Math.random() * featuredItemsData.featuredItems.images.length
-  );
+  if (featuredItemArray.length === 0) {
+    setFeaturedItemArray();
+  }
+  const randomIndex = Math.floor(Math.random() * featuredItemArray.length);
   return featuredItemArray[randomIndex];
 };
 
