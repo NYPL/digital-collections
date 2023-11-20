@@ -8,7 +8,7 @@ export function useScrolled(elementId) {
     function handleScroll() {
       const element = document.getElementById(elementId);
       if (element) {
-        const offset = element.offsetHeight;
+        const offset = element.offsetHeight + 300;
         if (window.scrollY > offset) {
           setIsScrolled(false);
         } else {

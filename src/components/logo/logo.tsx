@@ -21,7 +21,7 @@ const DCLogo = () => {
         <Logo
           name="digitalCollectionsBlack"
           sizeBasedOn="height"
-          height="64px"
+          height="50px"
           sx={{
             display: { sm: "none", md: "block" },
           }}
