@@ -3,7 +3,7 @@ import FeaturedContentComponent from "./featuredContent";
 
 describe("Featured Content component renders with expected props", () => {
   it("renders public domain content", async () => {
-    render(<FeaturedContentComponent testRandomNumber={0} />);
+    render(<FeaturedContentComponent randomNumber={0} />);
     const component = screen.getByTestId("featured-content-0");
     await waitFor(() => {
       expect(
@@ -24,7 +24,7 @@ describe("Featured Content component renders with expected props", () => {
   });
 
   it("renders Digital Collections store content", async () => {
-    render(<FeaturedContentComponent testRandomNumber={1} />);
+    render(<FeaturedContentComponent randomNumber={1} />);
     const component = screen.getByTestId("featured-content-1");
     await waitFor(() => {
       expect(
