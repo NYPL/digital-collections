@@ -47,50 +47,50 @@ const SwimLanes = ({ lanesWithNumItems }) => {
                 src: imageURL(collection.image_id, "full", "288,", "0"),
               }}
             >
-                  <CardHeading
-                    id={`row-card-heading-${key}-${index}`}
-                    level="h3"
-                    size="heading5"
-                    className={styles.collectiontitle}
-                    url={collection.url}
-                    noOfLines={3}
-                  >
-                    {collection.title}
-                  </CardHeading>
-                  {/*TODO: Check Dec 7 2023 with React release that this subtitle
-                   ** style will now appear as intended */}
-                  <CardHeading
-                    size="subtitle2"
-                    sx={{
-                      display: { sm: "none", md: "inline" },
-                    }}
-                  >
-                    <> {collection.numItems} items </>
-                  </CardHeading>
-                </Card>
-              ))}
-            </SimpleGrid>
-          )}
-          <Link
-            id={`row-see-more-${lane.slug}-mobile`}
-            type="standalone"
-            href={`${appConfig.DC_URL}/collections/lane/${lane.slug}`}
-            aria-label={`See more ${lane.title.toLowerCase()}`}
-            className="smlink"
-            sx={{
-              display: { sm: "flex", md: "none" },
-              fontWeight: "500",
-              justifyContent: "flex-end",
-              marginTop: "s",
-              alignItems: "center",
-              "& svg": {
-                marginTop: "1px",
-              },
-            }}
-          >
-            See more
-          </Link>
-        </Box>
+              <CardHeading
+                id={`row-card-heading-${lane.slug}-${index}`}
+                level="h3"
+                size="heading5"
+                className={styles.collectiontitle}
+                url={collection.url}
+                noOfLines={3}
+              >
+                {collection.title}
+              </CardHeading>
+              {/*TODO: Check Dec 7 2023 with React release that this subtitle
+               ** style will now appear as intended */}
+              <CardHeading
+                size="subtitle2"
+                sx={{
+                  display: { sm: "none", md: "inline" },
+                }}
+              >
+                <> {collection.numItems} items </>
+              </CardHeading>
+            </Card>
+          ))}
+        </SimpleGrid>
+      )}
+      <Link
+        id={`row-see-more-${lane.slug}-mobile`}
+        type="standalone"
+        href={`${appConfig.DC_URL}/collections/lane/${lane.slug}`}
+        aria-label={`See more ${lane.title.toLowerCase()}`}
+        className="smlink"
+        sx={{
+          display: { sm: "flex", md: "none" },
+          fontWeight: "500",
+          justifyContent: "flex-end",
+          marginTop: "s",
+          alignItems: "center",
+          "& svg": {
+            marginTop: "1px",
+          },
+        }}
+      >
+        See more
+      </Link>
+    </Box>
   ));
 };
 
