@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 
-/* Returns if page is scrolled past given element. */
+/* Returns if page is scrolled past header, could be refactored for other elements. */
 export function useScrolled(elementId) {
   const [isScrolled, setIsScrolled] = useState(true);
   const DELAY_STICKY_TRANSITION = 300;
