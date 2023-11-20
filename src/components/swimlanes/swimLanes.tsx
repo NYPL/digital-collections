@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import {
   Box,
   Card,
@@ -7,7 +7,6 @@ import {
   Heading,
   SimpleGrid,
   Spacer,
-  Text,
   Link,
 } from "@nypl/design-system-react-components";
 import styles from "./Swimlanes.module.css";
@@ -48,51 +47,50 @@ const SwimLanes = ({ lanesWithNumItems }) => {
                 src: imageURL(collection.image_id, "full", "288,", "0"),
               }}
             >
-              <CardHeading
-                id={`row-card-heading-${lane.slug}-${index}`}
-                level="h3"
-                size="heading5"
-                className={styles.collectiontitle}
-                url={collection.url}
-                noOfLines={3}
-                subtitle={
-                  <Text
+                  <CardHeading
+                    id={`row-card-heading-${key}-${index}`}
+                    level="h3"
+                    size="heading5"
+                    className={styles.collectiontitle}
+                    url={collection.url}
+                    noOfLines={3}
+                  >
+                    {collection.title}
+                  </CardHeading>
+                  {/*TODO: Check Dec 7 2023 with React release that this subtitle
+                   ** style will now appear as intended */}
+                  <CardHeading
                     size="subtitle2"
-                    fontWeight="400"
                     sx={{
                       display: { sm: "none", md: "inline" },
                     }}
                   >
-                    {collection.numItems} items
-                  </Text>
-                }
-              >
-                {collection.title}
-              </CardHeading>
-            </Card>
-          ))}
-        </SimpleGrid>
-      )}
-      <Link
-        id={`row-see-more-${lane.slug}-mobile`}
-        type="standalone"
-        href={`${appConfig.DC_URL}/collections/lane/${lane.slug}`}
-        aria-label={`See more ${lane.title.toLowerCase()}`}
-        className="smlink"
-        sx={{
-          display: { sm: "flex", md: "none" },
-          fontWeight: "500",
-          justifyContent: "flex-end",
-          margin: "s",
-          alignItems: "center",
-          "& svg": {
-            marginTop: "1px",
-          },
-        }}
-      >
-        See more
-      </Link>
-    </Box>
+                    <> {collection.numItems} items </>
+                  </CardHeading>
+                </Card>
+              ))}
+            </SimpleGrid>
+          )}
+          <Link
+            id={`row-see-more-${lane.slug}-mobile`}
+            type="standalone"
+            href={`${appConfig.DC_URL}/collections/lane/${lane.slug}`}
+            aria-label={`See more ${lane.title.toLowerCase()}`}
+            className="smlink"
+            sx={{
+              display: { sm: "flex", md: "none" },
+              fontWeight: "500",
+              justifyContent: "flex-end",
+              marginTop: "s",
+              alignItems: "center",
+              "& svg": {
+                marginTop: "1px",
+              },
+            }}
+          >
+            See more
+          </Link>
+        </Box>
   ));
 };
 
