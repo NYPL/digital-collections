@@ -97,6 +97,12 @@ This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-opti
 
 ## Tests
 
+To run tests, run
+
+```
+npm run test
+```
+
 ## Getting Started With Docker
 
 First, install ["Docker"](https://www.docker.com/) on your local machine.
