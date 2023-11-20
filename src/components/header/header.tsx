@@ -29,7 +29,8 @@ const Header = () => {
         <HStack
           justify="space-between"
           align="center"
-          mx="s"
+          paddingLeft="9px"
+          paddingRight="16px"
           sx={{
             display: "flex",
             width: "1280px",
