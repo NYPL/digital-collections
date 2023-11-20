@@ -28,7 +28,7 @@ const SwimLanes = ({ lanesWithNumItems }) => {
             <Link
               id={`row-see-more-${lane.slug}`}
               type="standalone"
-              href={`${appConfig.DC_URL}collections/lane/${lane.slug}`}
+              href={`${appConfig.DC_URL}/collections/lane/${lane.slug}`}
               aria-label={`See more ${lane.title.toLowerCase()}`}
               sx={{
                 display: { sm: "none", md: "inline" },
@@ -51,38 +51,26 @@ const SwimLanes = ({ lanesWithNumItems }) => {
                     src: imageURL(collection.image_id, "full", "288,", "0"),
                   }}
                 >
-                  {/**
-                   * @TODO: refactor so subtitle can be included in CardHeading,
-                   * without losing the 3 line cutoff and tabbable focus for titles
-                   * */}
                   <CardHeading
                     id={`row-card-heading-${key}-${index}`}
                     level="h3"
-                    size="heading4"
+                    size="heading5"
                     className={styles.collectiontitle}
                     url={collection.url}
-                    style={{
-                      display: "-webkit-box",
-                      WebkitLineClamp: 3,
-                      lineClamp: 3,
-                      WebkitBoxOrient: "vertical",
-                      boxOrient: "vertical",
-                      overflow: "clip",
-                    }}
+                    noOfLines={3}
                   >
                     {collection.title}
                   </CardHeading>
-                  <CardContent>
-                    <Text
-                      size="subtitle2"
-                      sx={{
-                        fontWeight: "400",
-                        display: { sm: "none", md: "inline" },
-                      }}
-                    >
-                      {collection.numItems} items
-                    </Text>
-                  </CardContent>
+                  {/*TODO: Check Dec 7 2023 with React release that this subtitle
+                   ** style will now appear as intended */}
+                  <CardHeading
+                    size="subtitle2"
+                    sx={{
+                      display: { sm: "none", md: "inline" },
+                    }}
+                  >
+                    <> {collection.numItems} items </>
+                  </CardHeading>
                 </Card>
               ))}
             </SimpleGrid>

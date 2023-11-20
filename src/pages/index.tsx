@@ -8,7 +8,10 @@ import {
   featuredImageID,
   getAPIUri,
   apiCall,
+  getItemDataFromImageID,
 } from "@/utils/utils";
+import appConfig from "appConfig";
+import { imageURL } from "@/utils/utils";
 
 export default function Home(props: any) {
   return (
@@ -30,7 +33,7 @@ export default function Home(props: any) {
   );
 }
 
-export async function getServerSideProps() {
+export async function getServerSideProps(context: any) {
   const lanes = data.lanes;
   const flatCollections = [].concat(...lanes.map((lane) => lane.collections));
   const collectionsWithNumItems = await Promise.allSettled(
@@ -53,17 +56,21 @@ export async function getServerSideProps() {
     return { ...lane, collections: updatedCollections };
   });
 
-  const imageID = featuredImageID();
-  const apiUri = await getAPIUri("local_image_id", imageID);
-  const dataFromUri = await apiCall(apiUri.apiUri);
+  //pass query param to featuredImageID function to check if it is legit
+  const imageID = context.query.imageID
+    ? featuredImageID(context.query.imageID)
+    : featuredImageID();
+
+  const dataFromUri = await getItemDataFromImageID(imageID);
   const numDigitizedItems = await getNumDigitizedItems();
-  console.log("numDigitizedItems", numDigitizedItems);
   const featuredItemObject = {
     imageID: imageID,
-    uuid: apiUri.uuid,
-    title: dataFromUri.mods.titleInfo.title,
-    href: `${process.env.DC_URL}/items/${apiUri.uuid}`,
+    imageSrc: imageURL(imageID),
+    uuid: dataFromUri.uuid,
+    title: dataFromUri.title,
+    href: `${appConfig.DC_URL}/items/${dataFromUri.uuid}`,
   };
+
   return {
     props: {
       lanesWithNumItems: updatedLanes,
