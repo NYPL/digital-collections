@@ -1,13 +1,51 @@
 import featuredItemsData from "../data/featureditems.json";
+let featuredItemArray = [];
+
+/**
+ * Sets global featuredItemArray so other functions can use it.
+ **/
+export const setFeaturedItemArray = () => {
+  let itemsArray = [];
+  for (let i = 0; i < featuredItemsData.featuredItems.images.length; i++) {
+    itemsArray.push(featuredItemsData.featuredItems.images[i].split(".")[0]);
+  }
+  // set featuredItemArray
+  if (featuredItemArray.length === 0) {
+    featuredItemArray = itemsArray;
+  }
+  return itemsArray;
+};
 
 /**
  * Returns a random image ID from the list of featured items.
  */
-export const featuredImageID = () => {
-  const randomIndex = Math.floor(
-    Math.random() * featuredItemsData.featuredItems.images.length
-  );
-  return featuredItemsData.featuredItems.images[randomIndex].split(".")[0];
+export const generateRandomImageID = () => {
+  console.log("generating random imageID");
+  if (featuredItemArray.length === 0) {
+    setFeaturedItemArray();
+  }
+  const randomIndex = Math.floor(Math.random() * featuredItemArray.length);
+  return featuredItemArray[randomIndex];
+};
+
+/**
+ * Returns a valid featured imageID.
+ * Checks if an imageID passed by as a query parameter is included in the pre-approved list of image IDs for featured items.
+ * If the imageID is not valid, the function returns a random imageID.
+ * @param {string} imageID - optional imageID to check against list of image IDs for featured items.
+ */
+export const featuredImageID = (imageID = "") => {
+  if (featuredItemArray.length === 0) {
+    setFeaturedItemArray();
+  }
+
+  if (imageID !== "") {
+    return featuredItemArray.includes(imageID)
+      ? imageID
+      : generateRandomImageID();
+  } else {
+    return generateRandomImageID();
+  }
 };
 
 /**
@@ -52,16 +90,6 @@ export const getNumItems = async (uuid: string) => {
 };
 
 /**
- * Calls Repo API collectins/uuid/items endpoint
- * @param {string} uuid - collection uuid
- */
-
-export const getItemsFromUUID = async (uuid: string) => {
-  const apiUrl = `${process.env.API_URL}/api/v2/collections/${uuid}/items`;
-  return apiCall(apiUrl);
-};
-
-/**
  * Returns the uuid, API uri, and numResults of an item given an identifier type and identifier value.
  * @param {string} identifierType - the identifier type
  * @param {string} identifier - the identifier value
@@ -101,6 +129,15 @@ export const apiCall = async (apiUrl: string) => {
   }
 };
 
+export const getItemDataFromImageID = async (imageID: string) => {
+  const apiUri = await getAPIUri("local_image_id", imageID);
+  const data = await apiCall(apiUri.apiUri);
+  return {
+    uuid: apiUri.uuid,
+    title: data.mods.titleInfo.title.$,
+  };
+};
+
 function addCommas(number) {
   // Convert the number to a string
   let numberString = number.toString();
@@ -111,7 +148,3 @@ function addCommas(number) {
   // Return the formatted number
   return numberString;
 }
-
-// Example usage:
-let numberWithCommas = addCommas(1234567);
-console.log(numberWithCommas); // Output: "1,234,567"

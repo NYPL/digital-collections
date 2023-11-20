@@ -95,6 +95,8 @@ These endpoints will change (as DC homepage is built out) to be dynamically gene
 
 This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
 
+## Tests
+
 ## Getting Started With Docker
 
 First, install ["Docker"](https://www.docker.com/) on your local machine.
