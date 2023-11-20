@@ -2,7 +2,7 @@ import { render, screen, waitFor, within } from "@testing-library/react";
 import FeaturedContentComponent from "./featuredContent";
 
 describe("Featured Content component renders with expected props", () => {
-  it("renders Digital Collections store content", async () => {
+  it("renders public domain content", async () => {
     render(<FeaturedContentComponent testRandomNumber={0} />);
     const component = screen.getByTestId("featured-content-0");
     await waitFor(() => {
@@ -18,9 +18,8 @@ describe("Featured Content component renders with expected props", () => {
         "Public Domain banner"
       );
 
-      const button = within(component).getByRole("button");
-      const link = button.parentElement;
-      expect(link).toHaveAttribute("href", "https://publicdomain.nypl.org");
+      const button = within(component).getByTestId("featured-learn-more");
+      expect(button).toHaveAttribute("href", "https://publicdomain.nypl.org");
     });
   });
 
@@ -40,9 +39,8 @@ describe("Featured Content component renders with expected props", () => {
         "Service Artehouse banner"
       );
 
-      const button = within(component).getByRole("button");
-      const link = button.parentElement;
-      expect(link).toHaveAttribute(
+      const button = within(component).getByTestId("featured-visit-store");
+      expect(button).toHaveAttribute(
         "href",
         "https://nypl.artehouse.com/perl/home.pl"
       );

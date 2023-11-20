@@ -1,6 +1,6 @@
 import {
   FeaturedContent,
-  Button,
+  Link,
   Heading,
 } from "@nypl/design-system-react-components";
 import React from "react";
@@ -23,12 +23,17 @@ const FeaturedContentComponent = ({ testRandomNumber }) => {
             {data.heading}
           </Heading>
           <p>{data.text}</p>
-
-          <a href={data.link} target="_blank" rel="noopener noreferrer">
-            <Button id={data.buttonId} aria-label={data.ariaLabel}>
-              {data.buttonText}
-            </Button>
-          </a>
+          <Link
+            href={data.link}
+            id={data.buttonId}
+            data-testid={data.buttonId}
+            isUnderlined={false}
+            target="_blank"
+            aria-label={data.ariaLabel}
+            type="buttonPrimary"
+          >
+            {data.buttonText}
+          </Link>
         </div>
       }
       imageProps={{
