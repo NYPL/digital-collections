@@ -3,12 +3,13 @@ import { useState, useEffect } from "react";
 /* Returns if page is scrolled past given element. */
 export function useScrolled(elementId) {
   const [isScrolled, setIsScrolled] = useState(true);
+  const DELAY_STICKY_TRANSITION = 300;
 
   useEffect(() => {
     function handleScroll() {
       const element = document.getElementById(elementId);
       if (element) {
-        const offset = element.offsetHeight + 300;
+        const offset = element.offsetHeight + DELAY_STICKY_TRANSITION;
         if (window.scrollY > offset) {
           setIsScrolled(false);
         } else {
