@@ -16,7 +16,7 @@ export default function Home(props: any) {
       breakout={<CampaignHero featuredImageID={props.featuredImageID} />}
       contentPrimary={
         <HomePageMainContent
-          testRandomNumber={props.testRandomNumber}
+          randomNumber={props.randomNumber}
           lanesWithNumItems={props.lanesWithNumItems}
         />
       }
@@ -47,9 +47,11 @@ export async function getServerSideProps() {
     });
     return { ...lane, collections: updatedCollections };
   });
+  const randomNumber = Math.floor(Math.random() * 2);
 
   return {
     props: {
+      randomNumber,
       lanesWithNumItems: updatedLanes,
       featuredImageID: featuredImageID(),
     },
