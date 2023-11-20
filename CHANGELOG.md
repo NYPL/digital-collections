@@ -16,6 +16,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Update version of NYPL Reservoir to 2.0.1
 - Updated image in Hero Component to change on reload. (DR-2565)
 - Updated number in Hero Component to use a live number in Repo API. (DR-2543)
+- Updated featured item link in Hero Component to change on reload using the featured item imageID. (DR-2547)
 
 ### Added
 
