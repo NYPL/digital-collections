@@ -15,7 +15,7 @@ import { imageURL } from "@/utils/utils";
 import appConfig from "appConfig";
 
 const SwimLanes = ({ lanesWithNumItems }) => {
-  return lanesWithNumItems.map((lane, key) => [
+  return lanesWithNumItems.map((lane, key) => (
     <Box className={styles.lane} data-testid={lane.slug} mt="xxl" key={key}>
       <Flex alignItems="baseline">
         <Heading id={`row-heading-${lane.slug}`} level="h2" size="heading3">
@@ -92,8 +92,8 @@ const SwimLanes = ({ lanesWithNumItems }) => {
       >
         See more
       </Link>
-    </Box>,
-  ]);
+    </Box>
+  ));
 };
 
 export default SwimLanes;
