@@ -38,19 +38,19 @@ const Header = () => {
           }}
         >
           <DCLogo />
-          <VStack py="s">
+          <VStack width="40%" py="s">
             <Box display={{ sm: "none", md: isScrolled ? "flex" : "none" }}>
               I am nav links
             </Box>
             <Box display={{ sm: "flex", md: "none" }}>I am hamburger menu</Box>
-            <Box display={{ sm: "none", md: "block" }} width="100%">
+            <Box display={{ sm: "none", md: "inline" }} width="100%">
               <Search />
             </Box>
           </VStack>
         </HStack>
       </HStack>
       <Box
-        display={{ sm: "flex", md: "none" }}
+        display={{ sm: isScrolled ? "inline" : "none", md: "none" }}
         justifyContent="center"
         alignItems="center"
         width="100%"

@@ -16,6 +16,7 @@ const Search = () => {
   return (
     <SearchBar
       id="searchBar-id"
+      sx={{ pl: "s", pt: "s", pr: { sm: "s", md: 0 } }}
       invalidText="Could not find the item"
       labelText="SearchBar Label"
       onSubmit={(event) => handleSubmit(event, router)}
