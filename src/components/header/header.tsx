@@ -3,6 +3,7 @@ import React from "react";
 import DCLogo from "../logo/logo";
 import { useScrolled } from "@/hooks/useScrolled";
 import { useStickyMargin } from "@/hooks/useStickyMargin";
+import Search from "../search/search";
 
 const Header = () => {
   useStickyMargin();
@@ -42,12 +43,20 @@ const Header = () => {
               I am nav links
             </Box>
             <Box display={{ sm: "flex", md: "none" }}>I am hamburger menu</Box>
-            <Box display={{ sm: isScrolled ? "flex" : "none", md: "flex" }}>
-              I am search/filter
+            <Box display={{ sm: "none", md: "block" }} width="100%">
+              <Search />
             </Box>
           </VStack>
         </HStack>
       </HStack>
+      <Box
+        display={{ sm: "flex", md: "none" }}
+        justifyContent="center"
+        alignItems="center"
+        width="100%"
+      >
+        <Search />
+      </Box>
     </Box>
   );
 };
