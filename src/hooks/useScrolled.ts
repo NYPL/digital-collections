@@ -1,11 +1,12 @@
 import { useState, useEffect } from "react";
 
-/* Returns if page is scrolled past header, could be refactored for other elements. */
+/* Returns if the page is scrolled past the header, could be refactored for other elements. */
 export function useScrolled(elementId) {
   const [isScrolled, setIsScrolled] = useState(true);
-  const DELAY_STICKY_TRANSITION = 300;
 
   useEffect(() => {
+    let DELAY_STICKY_TRANSITION = window.innerWidth < 768 ? 700 : 300;
+
     function handleScroll() {
       const element = document.getElementById(elementId);
       if (element) {
@@ -17,12 +18,22 @@ export function useScrolled(elementId) {
         }
       }
     }
+    function handleScreenSize() {
+      const newDelay = window.innerWidth < 768 ? 740 : 400;
+      if (newDelay !== DELAY_STICKY_TRANSITION) {
+        setIsScrolled(true);
+        DELAY_STICKY_TRANSITION = newDelay;
+      }
+    }
 
     window.addEventListener("scroll", handleScroll);
+    window.addEventListener("resize", handleScreenSize);
 
     return () => {
       window.removeEventListener("scroll", handleScroll);
+      window.removeEventListener("resize", handleScreenSize);
     };
   }, [elementId]);
+
   return isScrolled;
 }
