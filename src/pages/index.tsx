@@ -1,5 +1,5 @@
 import CampaignHero from "../components/hero/campaignHero";
-import SwimLanes from "../components/swimLanes/swimLanes";
+import SwimLanes from "../components/swimlanes/swimLanes";
 import { TemplateAppContainer } from "@nypl/design-system-react-components";
 import data from "@/data/lanes";
 import { getNumItems, featuredImageID } from "@/utils/utils";
