@@ -1,5 +1,5 @@
 import { render, screen, within } from "@testing-library/react";
-import SwimLanes from "@/components/swimlanes/swimLanes";
+import SwimLanes from "@/components/swimLanes/swimLanes";
 import { props } from "../../../__tests__/data/homepageProps";
 import appConfig from "appConfig";
 
