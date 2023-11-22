@@ -15,7 +15,7 @@ const mockRouter = {
 describe("Search component", () => {
   it("renders Search component", () => {
     const { getByLabelText, getByPlaceholderText } = render(<Search />);
-    expect(getByLabelText("Searchbar Label")).toBeInTheDocument();
+    expect(getByLabelText("Search Digital Collections")).toBeInTheDocument();
     expect(getByPlaceholderText("Search keyword(s)")).toBeInTheDocument();
   });
 
@@ -24,20 +24,13 @@ describe("Search component", () => {
     fireEvent.change(getByPlaceholderText("Search keyword(s)"), {
       target: { value: "test word" },
     });
-    fireEvent.submit(getByLabelText("Searchbar Label"));
+    fireEvent.submit(getByLabelText("Search Digital Collections"));
     expect(mockRouter.push).toHaveBeenCalledWith(
       "https://digitalcollections.nypl.org/search/index?keywords=test%20word"
     );
   });
 
   it("applies filter correctly", () => {
-    const { getByLabelText, getByPlaceholderText } = render(<Search />);
-    fireEvent.change(getByPlaceholderText("Search keyword(s)"), {
-      target: { value: "test word" },
-    });
-    fireEvent.submit(getByLabelText("Searchbar Label"));
-    expect(mockRouter.push).toHaveBeenCalledWith(
-      "https://digitalcollections.nypl.org/search/index?keywords=test%20word"
-    );
+    //TODO
   });
 });
