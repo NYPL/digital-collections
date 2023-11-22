@@ -1,28 +1,34 @@
-import React from "react";
+import React, { useState } from "react";
 import { SearchBar } from "@nypl/design-system-react-components";
 import { useRouter } from "next/router";
 
-const handleSubmit = (event, router) => {
-  event.preventDefault();
-  const keywords = event.target.textInputName.value;
-  const searchUrl = `https://digitalcollections.nypl.org/search/index?keywords=${encodeURIComponent(
-    keywords
-  )}`;
-  router.push(searchUrl);
-};
-
 const Search = () => {
   const router = useRouter();
+  const [keywords, setKeywords] = useState("");
+
+  const handleSubmit = (event, router) => {
+    event.preventDefault();
+    const searchUrl = `https://digitalcollections.nypl.org/search/index?keywords=${encodeURIComponent(
+      keywords
+    )}`;
+    router.push(searchUrl);
+  };
+
+  const handleChange = (event) => {
+    setKeywords(event.target.value);
+  };
+
   return (
     <SearchBar
       id="searchBar-id"
-      sx={{ pl: "s", pt: "s", pr: { sm: "s", md: 0 } }}
       invalidText="Could not find the item"
-      labelText="SearchBar Label"
+      labelText="Searchbar Label"
       onSubmit={(event) => handleSubmit(event, router)}
       textInputProps={{
         labelText: "Item Search",
         name: "textInputName",
+        onChange: handleChange,
+        value: keywords,
         placeholder: "Search keyword(s)",
       }}
     />
