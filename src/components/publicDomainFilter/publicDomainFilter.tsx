@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Checkbox, Link } from "@nypl/design-system-react-components";
 
-const PublicDomainFilter = ({ onCheckChange, uniqueId }) => {
+const PublicDomainFilter = ({ onCheckChange }) => {
   const [isChecked, setIsChecked] = useState(false);
 
   const text = (
@@ -21,7 +21,7 @@ const PublicDomainFilter = ({ onCheckChange, uniqueId }) => {
 
   return (
     <Checkbox
-      id={`checkbox-${uniqueId}`}
+      id="checkbox"
       labelText={text}
       name="pd_filter"
       showLabel
