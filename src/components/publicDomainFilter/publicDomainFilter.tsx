@@ -23,6 +23,7 @@ const PublicDomainFilter = ({ onCheckChange }) => {
     <Checkbox
       id="pd-checkbox"
       data-testid="pd-checkbox"
+      aria-label="Public Domain Only checkbox"
       labelText={text}
       name="pd_filter"
       showLabel
