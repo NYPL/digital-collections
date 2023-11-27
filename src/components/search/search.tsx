@@ -3,7 +3,7 @@ import { SearchBar } from "@nypl/design-system-react-components";
 import { useRouter } from "next/router";
 import PublicDomainFilter from "../publicDomainFilter/publicDomainFilter";
 
-const Search = ({ uniqueId }) => {
+const Search = () => {
   const router = useRouter();
   const [keywords, setKeywords] = useState("");
   const [publicDomainOnly, setPublicDomainOnly] = useState(false);
@@ -29,7 +29,7 @@ const Search = ({ uniqueId }) => {
   return (
     <>
       <SearchBar
-        id={`searchbar-${uniqueId}`}
+        id="searchbar"
         invalidText="Could not find the item"
         labelText="Search Digital Collections"
         onSubmit={(event) => handleSubmit(event, router)}
@@ -41,10 +41,7 @@ const Search = ({ uniqueId }) => {
           placeholder: "Search keyword(s)",
         }}
       />
-      <PublicDomainFilter
-        uniqueId={uniqueId}
-        onCheckChange={handleCheckChange}
-      />
+      <PublicDomainFilter onCheckChange={handleCheckChange} />
     </>
   );
 };
