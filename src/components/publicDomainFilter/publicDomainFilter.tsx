@@ -6,7 +6,7 @@ const PublicDomainFilter = ({ onCheckChange }) => {
 
   const text = (
     <>
-      Search only public domain{" "}
+      Search only public domain.{" "}
       <Link href="https://digitalcollections.nypl.org/about">
         What is public domain?
       </Link>
