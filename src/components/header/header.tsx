@@ -44,7 +44,7 @@ const Header = () => {
             </Box>
             <Box display={{ sm: "flex", md: "none" }}>I am hamburger menu</Box>
             <Box display={{ sm: "none", md: "inline" }} width="100%">
-              <Search />
+              <Search uniqueId={"desktop"} />
             </Box>
           </VStack>
         </HStack>
@@ -55,7 +55,7 @@ const Header = () => {
         alignItems="center"
         width="100%"
       >
-        <Search />
+        <Search uniqueId={"mobile"} />
       </Box>
     </Box>
   );

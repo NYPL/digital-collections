@@ -14,13 +14,17 @@ const mockRouter = {
 
 describe("Search component", () => {
   it("renders Search component", () => {
-    const { getByLabelText, getByPlaceholderText } = render(<Search />);
+    const { getByLabelText, getByPlaceholderText } = render(
+      <Search uniqueId={"desktop"} />
+    );
     expect(getByLabelText("Search Digital Collections")).toBeInTheDocument();
     expect(getByPlaceholderText("Search keyword(s)")).toBeInTheDocument();
   });
 
   it("handles form submission correctly", () => {
-    const { getByLabelText, getByPlaceholderText } = render(<Search />);
+    const { getByLabelText, getByPlaceholderText } = render(
+      <Search uniqueId={"desktop"} />
+    );
     fireEvent.change(getByPlaceholderText("Search keyword(s)"), {
       target: { value: "test word" },
     });
