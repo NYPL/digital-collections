@@ -23,7 +23,6 @@ const Search = () => {
 
   const handleCheckChange = (isChecked) => {
     setPublicDomainOnly(isChecked);
-    console.log(publicDomainOnly);
   };
 
   return (
