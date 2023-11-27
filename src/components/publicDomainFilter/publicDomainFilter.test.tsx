@@ -7,10 +7,7 @@ describe("Public Domain Filter component", () => {
   it("renders and handles checkbox changes", () => {
     const onCheckChangeMock = jest.fn();
     const { getByLabelText } = render(
-      <PublicDomainFilter
-        uniqueId={"desktop"}
-        onCheckChange={onCheckChangeMock}
-      />
+      <PublicDomainFilter onCheckChange={onCheckChangeMock} />
     );
     const checkbox = getByLabelText(/Search only public domain/i);
     expect(checkbox).toBeInTheDocument();

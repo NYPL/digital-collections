@@ -3,12 +3,12 @@ import {
   HStack,
   VStack,
   Text,
-  Logo,
 } from "@nypl/design-system-react-components";
 import React from "react";
 import { useScrolled } from "@/hooks/useScrolled";
 import { useStickyMargin } from "@/hooks/useStickyMargin";
 import Search from "../search/search";
+import DCLogo from "../logo/logo";
 
 const Header = () => {
   useStickyMargin();
@@ -31,47 +31,31 @@ const Header = () => {
             justifyContent: "space-between",
             alignContent: "center",
           }}
+          pl="9px"
         >
-          <Logo
-            name="nyplLionBlack"
-            sizeBasedOn="height"
-            height="40px"
-            sx={{
-              display: { sm: "block", md: "none" },
-            }}
-          />
+          <DCLogo isMobile={true} />
           <Box
             sx={{
               display: { sm: "block", md: "none" },
-              mb: 0,
             }}
           >
             <Text>I am hamburger</Text>
           </Box>
         </HStack>
         <HStack justify="space-between">
-          <Logo
-            name="digitalCollectionsBlack"
-            sizeBasedOn="height"
-            height="50px"
-            sx={{
-              display: { sm: "none", md: "inline" },
-            }}
-          />
+          <DCLogo isMobile={false} />
           <VStack width={{ sm: "100%", md: "40%" }}>
             <Box
               sx={{
                 display: {
                   sm: "none",
-                  md: isScrolled ? "inline" : "none",
+                  md: isScrolled ? "block" : "none",
                 },
               }}
             >
               <Text>I am desktop nav links</Text>
             </Box>
             <Box
-              justifyContent="center"
-              alignItems="center"
               width="100%"
               pt="s"
               sx={{

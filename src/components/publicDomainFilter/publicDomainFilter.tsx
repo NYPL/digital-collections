@@ -21,7 +21,8 @@ const PublicDomainFilter = ({ onCheckChange }) => {
 
   return (
     <Checkbox
-      id="checkbox"
+      id="pd-checkbox"
+      data-testid="pd-checkbox"
       labelText={text}
       name="pd_filter"
       showLabel
