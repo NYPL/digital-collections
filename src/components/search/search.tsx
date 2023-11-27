@@ -33,7 +33,7 @@ const Search = () => {
         labelText="Search Digital Collections"
         onSubmit={(event) => handleSubmit(event, router)}
         textInputProps={{
-          labelText: "Item Search",
+          labelText: "Search keyword(s)",
           name: "textInputName",
           onChange: handleTextChange,
           value: keywords,
