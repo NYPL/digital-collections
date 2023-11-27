@@ -44,13 +44,13 @@ describe("Search component", () => {
     expect(
       screen.getByPlaceholderText("Search keyword(s)")
     ).toBeInTheDocument();
-    expect(screen.getByTestId("pd-checkbox")).toBeInTheDocument();
 
     fireEvent.change(screen.getByPlaceholderText("Search keyword(s)"), {
       target: { value: "test words" },
     });
 
-    const checkbox = screen.getByTestId("pd-checkbox");
+    const checkbox = screen.getByLabelText(/Search only public domain/i);
+
     fireEvent.click(checkbox);
 
     fireEvent.submit(screen.getByLabelText("Search Digital Collections"));
