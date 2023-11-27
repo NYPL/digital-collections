@@ -44,7 +44,7 @@ const Header = () => {
         </HStack>
         <HStack justify="space-between">
           <DCLogo isMobile={false} />
-          <VStack width={{ sm: "100%", md: "40%" }}>
+          <VStack width={{ sm: "100%", md: "36%" }}>
             <Box
               sx={{
                 display: {
