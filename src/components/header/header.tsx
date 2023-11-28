@@ -9,6 +9,7 @@ import { useScrolled } from "@/hooks/useScrolled";
 import { useStickyMargin } from "@/hooks/useStickyMargin";
 import Search from "../search/search";
 import DCLogo from "../logo/logo";
+import NavMenu from "../navMenu/navMenu";
 
 const Header = () => {
   useStickyMargin();
@@ -50,19 +51,10 @@ const Header = () => {
         <HStack justify="space-between">
           <DCLogo isMobile={false} />
           <VStack width={{ sm: "100%", md: "36%" }}>
-            <Box
-              sx={{
-                display: {
-                  sm: "none",
-                  md: isScrolled ? "block" : "none",
-                },
-              }}
-            >
-              <Text>I am desktop nav links</Text>
-            </Box>
+            <NavMenu isMobile={false} isScrolled={isScrolled} />
             <Box
               width="100%"
-              pt="s"
+              pt="xs"
               sx={{
                 display: { sm: isScrolled ? "inline" : "none", md: "inline" },
               }}
