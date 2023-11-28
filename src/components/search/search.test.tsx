@@ -1,14 +1,9 @@
 import React from "react";
-import {
-  render,
-  fireEvent,
-  screen,
-  getByLabelText,
-  getAllByTestId,
-} from "@testing-library/react";
+import { render, fireEvent, screen } from "@testing-library/react";
 import "@testing-library/jest-dom";
 import Search from "@/components/search/search";
 import { useRouter } from "next/router";
+import appConfig from "../../../__tests__/data/appConfig";
 
 jest.mock("next/router", () => ({
   useRouter: jest.fn(),
@@ -32,18 +27,12 @@ describe("Search component", () => {
     });
     fireEvent.submit(getByLabelText("Search Digital Collections"));
     expect(mockRouter.push).toHaveBeenCalledWith(
-      "https://digitalcollections.nypl.org/search/index?keywords=test%20word"
+      appConfig.DC_URL + `/search/index?keywords=test%20word`
     );
   });
 
   it("applies filter correctly", () => {
     render(<Search />);
-    expect(
-      screen.getByLabelText("Search Digital Collections")
-    ).toBeInTheDocument();
-    expect(
-      screen.getByPlaceholderText("Search keyword(s)")
-    ).toBeInTheDocument();
 
     fireEvent.change(screen.getByPlaceholderText("Search keyword(s)"), {
       target: { value: "test words" },
@@ -56,7 +45,8 @@ describe("Search component", () => {
     fireEvent.submit(screen.getByLabelText("Search Digital Collections"));
 
     expect(mockRouter.push).toHaveBeenCalledWith(
-      "https://digitalcollections.nypl.org/search/index?filters%5Brights%5D=pd&keywords=test%20words"
+      appConfig.DC_URL +
+        `/search/index?utf8=✓&filters%5Brights%5D=pd&keywords=test%20words`
     );
   });
 });

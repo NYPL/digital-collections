@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { SearchBar } from "@nypl/design-system-react-components";
 import { useRouter } from "next/router";
 import PublicDomainFilter from "../publicDomainFilter/publicDomainFilter";
+import appConfig from "appConfig";
 
 const Search = () => {
   const router = useRouter();
@@ -11,8 +12,9 @@ const Search = () => {
   const handleSubmit = (event, router) => {
     event.preventDefault();
     const searchUrl =
-      `https://digitalcollections.nypl.org/search/index?` +
-      (publicDomainOnly ? `filters%5Brights%5D=pd&` : ``) +
+      appConfig.DC_URL +
+      `/search/index?` +
+      (publicDomainOnly ? `utf8=✓&filters%5Brights%5D=pd&` : ``) +
       `keywords=${encodeURIComponent(keywords)}`;
     router.push(searchUrl);
   };
@@ -21,7 +23,7 @@ const Search = () => {
     setKeywords(event.target.value);
   };
 
-  const handleCheckChange = (isChecked) => {
+  const handleCheckChange = (isChecked): void => {
     setPublicDomainOnly(isChecked);
   };
 

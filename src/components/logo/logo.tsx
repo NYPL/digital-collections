@@ -1,8 +1,9 @@
 import { Logo, Link } from "@nypl/design-system-react-components";
 import React from "react";
 import appConfig from "appConfig";
+import { DCLogoProps } from "@/types/DCLogoProps";
 
-const DCLogo = ({ isMobile }) => {
+const DCLogo = ({ isMobile = false }: DCLogoProps) => {
   return (
     <Link
       isUnderlined={false}
