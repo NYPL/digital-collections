@@ -38,7 +38,12 @@ const FeaturedContentComponent = ({ randomNumber }) => {
         position: "end",
         src: data.imgSrc,
       }}
-      sx={{ mt: "xxl" }}
+      sx={{
+        mt: "xxl",
+        "[data-testid='featuredcontent-bg-image']": {
+          backgroundPosition: "top",
+        },
+      }}
     />
   );
 };
