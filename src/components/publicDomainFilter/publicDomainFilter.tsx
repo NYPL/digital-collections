@@ -1,7 +1,8 @@
 import React, { useState } from "react";
 import { Checkbox, Link } from "@nypl/design-system-react-components";
+import { PublicDomainFilterProps } from "@/types/PublicDomainFilterProps";
 
-const PublicDomainFilter = ({ onCheckChange }) => {
+const PublicDomainFilter = ({ onCheckChange }: PublicDomainFilterProps) => {
   const [isChecked, setIsChecked] = useState(false);
 
   const text = (
@@ -25,7 +26,6 @@ const PublicDomainFilter = ({ onCheckChange }) => {
       data-testid="pd-checkbox"
       labelText={text}
       name="pd_filter"
-      showLabel
       isChecked={isChecked}
       onChange={handleCheckChange}
       sx={{ py: "s" }}

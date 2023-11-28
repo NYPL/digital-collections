@@ -25,7 +25,12 @@ const Header = () => {
       zIndex={999}
       bgColor="ui.white"
     >
-      <Box alignItems="center" maxWidth="1250px" mx="auto">
+      <Box
+        alignItems="center"
+        maxWidth="1280px"
+        padding={{ md: "0 15px" }}
+        mx="auto"
+      >
         <HStack
           sx={{
             justifyContent: "space-between",
