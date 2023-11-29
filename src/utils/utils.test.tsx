@@ -152,3 +152,7 @@ describe.skip("apiCall()", () => {
 // if rotation is not a string
 // if rotation is not supplied
 // if rotation is a string & not default
+
+//// Example usage:
+// let numberWithCommas = addCommas(1234567);
+// console.log(numberWithCommas); // Output: "1,234,567"
