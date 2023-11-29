@@ -4,6 +4,7 @@ import { TemplateAppContainer } from "@nypl/design-system-react-components";
 import data from "@/data/lanes";
 import {
   getNumItems,
+  getNumDigitizedItems,
   featuredImageID,
   getAPIUri,
   apiCall,
@@ -20,7 +21,12 @@ export default function Home(props: any) {
       /**
        * @TODO: Correct spacing below hero/above swimlanes
        */
-      breakout={<CampaignHero featuredItem={props.featuredItem} />}
+      breakout={
+        <CampaignHero
+          featuredItem={props.featuredItem}
+          numberOfDigitizedItems={props.numberOfDigitizedItems}
+        />
+      }
       contentPrimary={<SwimLanes lanesWithNumItems={props.lanesWithNumItems} />}
       renderSkipNavigation={true}
     />
@@ -56,7 +62,7 @@ export async function getServerSideProps(context: any) {
     : featuredImageID();
 
   const dataFromUri = await getItemDataFromImageID(imageID);
-
+  const numDigitizedItems = await getNumDigitizedItems();
   const featuredItemObject = {
     imageID: imageID,
     imageSrc: imageURL(imageID),
@@ -69,6 +75,7 @@ export async function getServerSideProps(context: any) {
     props: {
       lanesWithNumItems: updatedLanes,
       featuredItem: featuredItemObject,
+      numberOfDigitizedItems: numDigitizedItems,
     },
   };
 }

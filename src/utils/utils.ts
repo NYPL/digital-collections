@@ -68,6 +68,18 @@ export const imageURL = (
 };
 
 /**
+ * Returns the number of digitized items in repo api.
+ */
+
+export const getNumDigitizedItems = async () => {
+  const apiUrl = `${process.env.API_URL}/api/v2/items/total`;
+  const res = await apiCall(apiUrl);
+  const fallbackCount = 863848;
+  const totalItems = res.count.$ || fallbackCount;
+  return addCommas(totalItems);
+};
+
+/**
  * Returns the total number of items in the collection.
  * @param {string} uuid - the collection ID
  */
@@ -106,6 +118,9 @@ export const apiCall = async (apiUrl: string) => {
     if (response.status === 200) {
       const data = await response.json();
       const responseData = data.nyplAPI.response;
+      // if (apiUrl.includes('api/v2/items/total')) {
+      //   console.log("responseData for api/v2/items/total", responseData)
+      // }
       return responseData;
     } else {
       return 0;
@@ -123,3 +138,8 @@ export const getItemDataFromImageID = async (imageID: string) => {
     title: data.mods.titleInfo.title.$,
   };
 };
+
+function addCommas(number) {
+  // Return the formatted number
+  return Number(number).toLocaleString("en-US");
+}
