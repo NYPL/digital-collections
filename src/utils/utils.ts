@@ -74,8 +74,9 @@ export const imageURL = (
 export const getNumDigitizedItems = async () => {
   const apiUrl = `${process.env.API_URL}/api/v2/items/total`;
   const res = await apiCall(apiUrl);
-  return addCommas(res.count.$) || 0;
-  // return apiCall(apiUrl);
+  const fallbackCount = 863848;
+  const totalItems = res.count.$ || fallbackCount;
+  return addCommas(totalItems);
 };
 
 /**
@@ -139,12 +140,6 @@ export const getItemDataFromImageID = async (imageID: string) => {
 };
 
 function addCommas(number) {
-  // Convert the number to a string
-  let numberString = number.toString();
-
-  // Use a regular expression to add commas to the string
-  numberString = numberString.replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-
   // Return the formatted number
-  return numberString;
+  return Number(number).toLocaleString("en-US");
 }
