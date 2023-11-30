@@ -7,7 +7,7 @@ const DCLogo = () => {
     <Link
       isUnderlined={false}
       aria-label={"Digital Collections Homepage"}
-      href={`${appConfig.DC_URL}`}
+      href={`/`}
     >
       <HStack>
         <Logo
