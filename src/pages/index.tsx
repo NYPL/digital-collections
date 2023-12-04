@@ -1,9 +1,9 @@
 import CampaignHero from "../components/hero/campaignHero";
-import SwimLanes from "../components/swimlanes/swimLanes";
 import { TemplateAppContainer } from "@nypl/design-system-react-components";
 import data from "@/data/lanes";
 import { getNumItems, featuredImageID } from "@/utils/utils";
 import Header from "@/components/header/header";
+import HomePageMainContent from "@/components/homePageMainContent/homePageMainContent";
 
 export default function Home(props: any) {
   return (
@@ -14,14 +14,13 @@ export default function Home(props: any) {
       <p> Notification banner </p>
       <Header />
       <TemplateAppContainer
-        /**
-         * @TODO: Correct spacing below hero/above swimlanes
-         */
         breakout={<CampaignHero featuredImageID={props.featuredImageID} />}
         contentPrimary={
-          <SwimLanes lanesWithNumItems={props.lanesWithNumItems} />
+          <HomePageMainContent
+            randomNumber={props.randomNumber}
+            lanesWithNumItems={props.lanesWithNumItems}
+          />
         }
-        renderSkipNavigation={true}
       />
     </>
   );
@@ -49,9 +48,11 @@ export async function getServerSideProps() {
     });
     return { ...lane, collections: updatedCollections };
   });
+  const randomNumber = Math.floor(Math.random() * 2);
 
   return {
     props: {
+      randomNumber,
       lanesWithNumItems: updatedLanes,
       featuredImageID: featuredImageID(),
     },
