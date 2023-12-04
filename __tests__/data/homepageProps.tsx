@@ -72,4 +72,5 @@ export const props = {
     },
   ],
   featuredImageID: "5273165.jpg",
+  randomNumber: 1,
 };

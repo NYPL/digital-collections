@@ -1,8 +1,14 @@
-import { Box, HStack, VStack } from "@nypl/design-system-react-components";
+import {
+  Box,
+  HStack,
+  VStack,
+  Text,
+} from "@nypl/design-system-react-components";
 import React from "react";
-import DCLogo from "../logo/logo";
 import { useScrolled } from "@/hooks/useScrolled";
 import { useStickyMargin } from "@/hooks/useStickyMargin";
+import Search from "../search/search";
+import DCLogo from "../logo/logo";
 
 const Header = () => {
   useStickyMargin();
@@ -15,39 +21,57 @@ const Header = () => {
       id="header"
       top={0}
       py={{ sm: "xs", md: "s" }}
+      px="s"
       zIndex={999}
       bgColor="ui.white"
     >
-      <HStack
-        justify="center"
-        align="center"
-        sx={{
-          display: "flex",
-          alignSelf: "stretch",
-        }}
+      <Box
+        alignItems="center"
+        maxWidth="1280px"
+        padding={{ md: "0 15px" }}
+        mx="auto"
       >
         <HStack
-          justify="space-between"
-          align="center"
-          paddingLeft={{ sm: "16px", md: "9px" }}
-          paddingRight="16px"
           sx={{
-            display: "flex",
-            width: "1280px",
+            justifyContent: "space-between",
+            alignContent: "center",
           }}
+          pl="9px"
         >
-          <DCLogo />
-          <VStack py="s">
-            <Box display={{ sm: "none", md: isScrolled ? "flex" : "none" }}>
-              I am nav links
+          <DCLogo isMobile={true} />
+          <Box
+            sx={{
+              display: { sm: "block", md: "none" },
+            }}
+          >
+            <Text>I am hamburger</Text>
+          </Box>
+        </HStack>
+        <HStack justify="space-between">
+          <DCLogo isMobile={false} />
+          <VStack width={{ sm: "100%", md: "36%" }}>
+            <Box
+              sx={{
+                display: {
+                  sm: "none",
+                  md: isScrolled ? "block" : "none",
+                },
+              }}
+            >
+              <Text>I am desktop nav links</Text>
             </Box>
-            <Box display={{ sm: "flex", md: "none" }}>I am hamburger menu</Box>
-            <Box display={{ sm: isScrolled ? "flex" : "none", md: "flex" }}>
-              I am search/filter
+            <Box
+              width="100%"
+              pt="s"
+              sx={{
+                display: { sm: isScrolled ? "inline" : "none", md: "inline" },
+              }}
+            >
+              <Search />
             </Box>
           </VStack>
         </HStack>
-      </HStack>
+      </Box>
     </Box>
   );
 };
