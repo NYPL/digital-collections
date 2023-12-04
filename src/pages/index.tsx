@@ -1,5 +1,4 @@
 import CampaignHero from "../components/hero/campaignHero";
-import SwimLanes from "../components/swimlanes/swimLanes";
 import { TemplateAppContainer } from "@nypl/design-system-react-components";
 import data from "@/data/lanes";
 import { getNumItems, featuredImageID } from "@/utils/utils";
@@ -14,17 +13,15 @@ export default function Home(props: any) {
        * * Let this be @7emansell 's problem if possible **/}
       <p> Notification banner </p>
       <Header />
-      {/**
-       * @TODO: Correct spacing below hero/above swimlanes
-       */}
-      breakout={<CampaignHero featuredImageID={props.featuredImageID} />}
-      contentPrimary=
-      {
-        <HomePageMainContent
-          randomNumber={props.randomNumber}
-          lanesWithNumItems={props.lanesWithNumItems}
-        />
-      }
+      <TemplateAppContainer
+        breakout={<CampaignHero featuredImageID={props.featuredImageID} />}
+        contentPrimary={
+          <HomePageMainContent
+            randomNumber={props.randomNumber}
+            lanesWithNumItems={props.lanesWithNumItems}
+          />
+        }
+      />
     </>
   );
 }
