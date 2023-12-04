@@ -41,6 +41,12 @@ const Search = () => {
           value: keywords,
           placeholder: "Search keyword(s)",
         }}
+        sx={{
+          flexFlow: "column nowrap",
+          "@media (min-width: 480px)": {
+            flexFlow: "row nowrap",
+          },
+        }}
       />
       <PublicDomainFilter onCheckChange={handleCheckChange} />
     </>
