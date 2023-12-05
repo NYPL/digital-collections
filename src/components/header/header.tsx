@@ -30,10 +30,10 @@ const Header = () => {
         mx="auto"
         padding="0 16px"
         sx={{
-          [`@media screen and (min-width: ${headerBreakpoints.lgTablet})`]: {
+          [`@media screen and (min-width: ${headerBreakpoints.smTablet})`]: {
             display: "block",
           },
-          [`@media screen and (min-width: ${headerBreakpoints.desktop})`]: {
+          [`@media screen and (min-width: ${headerBreakpoints.lgTablet})`]: {
             display: "flex",
             justifyContent: "space-between",
           },
@@ -57,9 +57,10 @@ const Header = () => {
                 {
                   display: isScrolled ? "block" : "none",
                 },
-              [`@media screen and (min-width: ${headerBreakpoints.desktop})`]: {
-                display: "none",
-              },
+              [`@media screen and (min-width: ${headerBreakpoints.lgTablet})`]:
+                {
+                  display: "none",
+                },
             }}
           >
             <Text>I am desktop nav links</Text>
@@ -79,7 +80,7 @@ const Header = () => {
         </HStack>
         <VStack
           sx={{
-            [`@media screen and (min-width: ${headerBreakpoints.desktop})`]: {
+            [`@media screen and (min-width: ${headerBreakpoints.lgTablet})`]: {
               width: "36%",
             },
           }}
@@ -87,9 +88,10 @@ const Header = () => {
           <Box
             sx={{
               display: "none",
-              [`@media screen and (min-width: ${headerBreakpoints.desktop})`]: {
-                display: isScrolled ? "block" : "none",
-              },
+              [`@media screen and (min-width: ${headerBreakpoints.lgTablet})`]:
+                {
+                  display: isScrolled ? "block" : "none",
+                },
             }}
           >
             <Text>I am desktop nav links</Text>
