@@ -11,6 +11,7 @@ import Search from "../search/search";
 import DCLogo from "../logo/logo";
 import NavMenu from "../navMenu/navMenu";
 import MobileNavMenu from "../navMenu/mobileNavMenu";
+import { headerBreakpoints } from "@/utils/breakpoints";
 
 const Header = () => {
   useStickyMargin();
@@ -31,10 +32,10 @@ const Header = () => {
         mx="auto"
         padding="0 16px"
         sx={{
-          "@media screen and (min-width: 1024px)": {
+          [`@media screen and (min-width: ${headerBreakpoints.lgTablet})`]: {
             display: "block",
           },
-          "@media screen and (min-width: 1280px)": {
+          [`@media screen and (min-width: ${headerBreakpoints.desktop})`]: {
             display: "flex",
             justifyContent: "space-between",
           },
@@ -43,8 +44,9 @@ const Header = () => {
         <HStack
           justify="space-between"
           sx={{
-            "@media screen and (max-width: 768px)": {
-              display: "none",
+            display: "none",
+            [`@media screen and (min-width: ${headerBreakpoints.smTablet})`]: {
+              display: "flex",
             },
           }}
         >
@@ -52,8 +54,12 @@ const Header = () => {
           <Box
             sx={{
               display: "none",
-              "@media screen and (max-width: 1280px)": {
-                display: isScrolled ? "block" : "none",
+              [`@media screen and (min-width: ${headerBreakpoints.smTablet})`]:
+                {
+                  display: isScrolled ? "block" : "none",
+                },
+              [`@media screen and (min-width: ${headerBreakpoints.desktop})`]: {
+                display: "none",
               },
             }}
           >
@@ -62,7 +68,7 @@ const Header = () => {
         </HStack>
         <HStack
           sx={{
-            "@media screen and (min-width: 768px)": {
+            [`@media screen and (min-width: ${headerBreakpoints.smTablet})`]: {
               display: "none",
             },
             justifyContent: "space-between",
@@ -74,7 +80,7 @@ const Header = () => {
         <VStack
           align="end"
           sx={{
-            "@media screen and (min-width: 1280px)": {
+            [`@media screen and (min-width: ${headerBreakpoints.desktop})`]: {
               width: "36%",
             },
           }}
@@ -82,7 +88,7 @@ const Header = () => {
           <Box
             sx={{
               display: "none",
-              "@media screen and (min-width: 1280px)": {
+              [`@media screen and (min-width: ${headerBreakpoints.desktop})`]: {
                 display: isScrolled ? "block" : "none",
               },
             }}
