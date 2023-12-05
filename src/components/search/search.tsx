@@ -1,10 +1,12 @@
 import React, { useState } from "react";
-import { SearchBar } from "@nypl/design-system-react-components";
+import { Box, SearchBar } from "@nypl/design-system-react-components";
 import { useRouter } from "next/router";
 import PublicDomainFilter from "../publicDomainFilter/publicDomainFilter";
 import appConfig from "appConfig";
+import { useScrolled } from "@/hooks/useScrolled";
 
 const Search = () => {
+  const isScrolled = useScrolled("header");
   const router = useRouter();
   const [keywords, setKeywords] = useState("");
   const [publicDomainOnly, setPublicDomainOnly] = useState(false);
@@ -29,26 +31,36 @@ const Search = () => {
 
   return (
     <>
-      <SearchBar
-        id="searchbar"
-        invalidText="Could not find the item"
-        labelText="Search Digital Collections"
-        onSubmit={(event) => handleSubmit(event, router)}
-        textInputProps={{
-          labelText: "Search keyword(s)",
-          name: "textInputName",
-          onChange: handleTextChange,
-          value: keywords,
-          placeholder: "Search keyword(s)",
-        }}
+      <Box
+        id="search-wrapper"
         sx={{
-          flexFlow: "column nowrap",
-          "@media (min-width: 480px)": {
-            flexFlow: "row nowrap",
+          alignItems: "start",
+          width: "100%",
+          "@media screen and (max-width: 768px)": {
+            pt: "xs",
           },
         }}
-      />
-      <PublicDomainFilter onCheckChange={handleCheckChange} />
+      >
+        <SearchBar
+          id="searchbar"
+          invalidText="Could not find the item"
+          labelText="Search Digital Collections"
+          onSubmit={(event) => handleSubmit(event, router)}
+          textInputProps={{
+            labelText: "Search keyword(s)",
+            name: "textInputName",
+            onChange: handleTextChange,
+            value: keywords,
+            placeholder: "Search keyword(s)",
+          }}
+          sx={{
+            "@media screen and (max-width: 768px)": {
+              flexFlow: "column nowrap",
+            },
+          }}
+        />
+        <PublicDomainFilter onCheckChange={handleCheckChange} />
+      </Box>
     </>
   );
 };
