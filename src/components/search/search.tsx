@@ -6,7 +6,7 @@ import appConfig from "appConfig";
 import { useScrolled } from "@/hooks/useScrolled";
 
 const Search = () => {
-  const isScrolled = useScrolled("header");
+  const isScrolled = useScrolled("header", true);
   const router = useRouter();
   const [keywords, setKeywords] = useState("");
   const [publicDomainOnly, setPublicDomainOnly] = useState(false);
@@ -36,9 +36,7 @@ const Search = () => {
         sx={{
           alignItems: "start",
           width: "100%",
-          "@media screen and (max-width: 768px)": {
-            pt: "xs",
-          },
+          pt: "xs",
         }}
       >
         <SearchBar

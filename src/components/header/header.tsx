@@ -10,10 +10,11 @@ import { useStickyMargin } from "@/hooks/useStickyMargin";
 import Search from "../search/search";
 import DCLogo from "../logo/logo";
 import NavMenu from "../navMenu/navMenu";
+import MobileNavMenu from "../navMenu/mobileNavMenu";
 
 const Header = () => {
   useStickyMargin();
-  const isScrolled = useScrolled("header");
+  const isScrolled = useScrolled("header", false);
   return (
     <Box
       data-sticky-header
@@ -37,7 +38,6 @@ const Header = () => {
             display: "flex",
             justifyContent: "space-between",
           },
-          alignItems: "center",
         }}
       >
         <HStack
@@ -57,7 +57,7 @@ const Header = () => {
               },
             }}
           >
-            <Text>I am desktop nav links</Text>
+            <NavMenu />
           </Box>
         </HStack>
         <HStack
@@ -66,13 +66,13 @@ const Header = () => {
               display: "none",
             },
             justifyContent: "space-between",
-            alignContent: "center",
           }}
         >
           <DCLogo isMobile={true} />
-          <Text>I am hamburger</Text>
+          <MobileNavMenu />
         </HStack>
         <VStack
+          align="end"
           sx={{
             "@media screen and (min-width: 1280px)": {
               width: "36%",
@@ -87,7 +87,7 @@ const Header = () => {
               },
             }}
           >
-            <Text>I am desktop nav links</Text>
+            <NavMenu />
           </Box>
           <Search />
         </VStack>
