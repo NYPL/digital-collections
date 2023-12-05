@@ -15,7 +15,7 @@ import { headerBreakpoints } from "@/utils/breakpoints";
 
 const Header = () => {
   useStickyMargin();
-  const isScrolled = useScrolled("header");
+  const isScrolled = useScrolled("header", false);
   return (
     <Box
       data-sticky-header

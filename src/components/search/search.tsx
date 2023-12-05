@@ -7,7 +7,7 @@ import { headerBreakpoints } from "@/utils/breakpoints";
 import { useScrolled } from "@/hooks/useScrolled";
 
 const Search = () => {
-  const isScrolled = useScrolled("header");
+  const isScrolled = useScrolled("header", true);
   const router = useRouter();
   const [keywords, setKeywords] = useState("");
   const [publicDomainOnly, setPublicDomainOnly] = useState(false);
