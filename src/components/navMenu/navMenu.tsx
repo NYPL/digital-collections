@@ -16,10 +16,6 @@ const NavMenu = ({ isScrolled }: NavMenuProps) => {
     <HStack
       sx={{
         gap: "m",
-        display: {
-          sm: "none",
-          md: isScrolled ? "flex" : "none",
-        },
       }}
     >
       {listItems}

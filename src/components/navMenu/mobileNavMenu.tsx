@@ -7,9 +7,10 @@ import {
   Button,
   useCloseDropDown,
 } from "@nypl/design-system-react-components";
-import React, { useEffect, useRef, useState } from "react";
+import React, { useRef, useState } from "react";
 import FocusLock from "@chakra-ui/focus-lock";
 import { Box, chakra } from "@chakra-ui/react";
+import { useScrolled } from "@/hooks/useScrolled";
 
 const listItems = dcNavLinks.map(({ href, text }) => (
   <Link isUnderlined={false} href={href} key={text}>
@@ -19,15 +20,12 @@ const listItems = dcNavLinks.map(({ href, text }) => (
   </Link>
 ));
 
-/**
- * This is the button that will render the navigational list of links
- * when it is clicked and keep focus trapped within the menu.
- */
 const MobileNavMenu = chakra(() => {
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const ref = useRef<HTMLDivElement>(null);
 
   useCloseDropDown(setIsOpen, ref);
+  const isScrolled = useScrolled("header", false);
 
   return (
     <Box ref={ref}>
@@ -41,6 +39,17 @@ const MobileNavMenu = chakra(() => {
           onClick={() => {
             setIsOpen(!isOpen);
           }}
+          sx={{
+            border: "none",
+            color: "ui.black",
+            ":hover": {
+              color: "ui.black",
+              bgColor: "ui.white",
+            },
+            ":not([disabled]):focus": {
+              outline: "none",
+            },
+          }}
         >
           <Icon name={isOpen ? "close" : "utilityHamburger"} size="large" />
         </Button>
@@ -53,8 +62,8 @@ const MobileNavMenu = chakra(() => {
               width: "100%",
               height: "auto",
               left: 0,
-              paddingLeft: "10px",
-              marginTop: "10px",
+              padding: "24px 16px",
+              marginTop: isScrolled ? "auto" : "-32px",
               zIndex: 999,
               backgroundColor: "ui.white",
               alignItems: "flex-start",
