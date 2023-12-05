@@ -33,6 +33,9 @@ const Header = () => {
         padding="0 16px"
         sx={{
           [`@media screen and (min-width: ${headerBreakpoints.lgTablet})`]: {
+            display: "block",
+          },
+          [`@media screen and (min-width: ${headerBreakpoints.desktop})`]: {
             display: "flex",
             justifyContent: "space-between",
           },
@@ -55,10 +58,9 @@ const Header = () => {
                 {
                   display: isScrolled ? "block" : "none",
                 },
-              [`@media screen and (min-width: ${headerBreakpoints.lgTablet})`]:
-                {
-                  display: "none",
-                },
+              [`@media screen and (min-width: ${headerBreakpoints.desktop})`]: {
+                display: "none",
+              },
             }}
           >
             <NavMenu render={0} />
@@ -89,7 +91,7 @@ const Header = () => {
         <VStack
           align="end"
           sx={{
-            [`@media screen and (min-width: ${headerBreakpoints.lgTablet})`]: {
+            [`@media screen and (min-width: ${headerBreakpoints.desktop})`]: {
               width: "36%",
             },
           }}
@@ -97,10 +99,9 @@ const Header = () => {
           <Box
             sx={{
               display: "none",
-              [`@media screen and (min-width: ${headerBreakpoints.lgTablet})`]:
-                {
-                  display: isScrolled ? "block" : "none",
-                },
+              [`@media screen and (min-width: ${headerBreakpoints.desktop})`]: {
+                display: isScrolled ? "block" : "none",
+              },
             }}
           >
             <NavMenu render={1} />
