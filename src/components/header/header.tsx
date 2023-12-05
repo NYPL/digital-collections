@@ -20,57 +20,76 @@ const Header = () => {
       position="sticky"
       id="header"
       top={0}
-      py={{ sm: "xs", md: "s" }}
-      px="s"
       zIndex={999}
       bgColor="ui.white"
+      pt="xs"
     >
       <Box
-        alignItems="center"
         maxWidth="1280px"
-        padding={{ md: "0 15px" }}
         mx="auto"
+        padding="0 16px"
+        sx={{
+          "@media screen and (min-width: 1024px)": {
+            display: "block",
+          },
+          "@media screen and (min-width: 1280px)": {
+            display: "flex",
+            justifyContent: "space-between",
+          },
+          alignItems: "center",
+        }}
       >
         <HStack
+          justify="space-between"
           sx={{
+            "@media screen and (max-width: 768px)": {
+              display: "none",
+            },
+          }}
+        >
+          <DCLogo isMobile={false} />
+          <Box
+            sx={{
+              display: "none",
+              "@media screen and (max-width: 1280px)": {
+                display: isScrolled ? "block" : "none",
+              },
+            }}
+          >
+            <Text>I am desktop nav links</Text>
+          </Box>
+        </HStack>
+        <HStack
+          sx={{
+            "@media screen and (min-width: 768px)": {
+              display: "none",
+            },
             justifyContent: "space-between",
             alignContent: "center",
           }}
-          pl="9px"
         >
           <DCLogo isMobile={true} />
+          <Text>I am hamburger</Text>
+        </HStack>
+        <VStack
+          sx={{
+            "@media screen and (min-width: 1280px)": {
+              width: "36%",
+            },
+          }}
+        >
           <Box
             sx={{
-              display: { sm: "block", md: "none" },
+              display: "none",
+              "@media screen and (min-width: 1280px)": {
+                display: isScrolled ? "block" : "none",
+              },
             }}
           >
-            <Text>I am hamburger</Text>
+            <Text>I am desktop nav links</Text>
           </Box>
-        </HStack>
-        <HStack justify="space-between">
-          <DCLogo isMobile={false} />
-          <VStack width={{ sm: "100%", md: "36%" }}>
-            <Box
-              sx={{
-                display: {
-                  sm: "none",
-                  md: isScrolled ? "block" : "none",
-                },
-              }}
-            >
-              <Text>I am desktop nav links</Text>
-            </Box>
-            <Box
-              width="100%"
-              pt="s"
-              sx={{
-                display: { sm: isScrolled ? "inline" : "none", md: "inline" },
-              }}
-            >
-              <Search />
-            </Box>
-          </VStack>
-        </HStack>
+          <Search />
+        </VStack>
       </Box>
     </Box>
   );
