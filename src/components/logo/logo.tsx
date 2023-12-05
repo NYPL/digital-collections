@@ -11,22 +11,12 @@ const DCLogo = ({ isMobile = false }: DCLogoProps) => {
       href={`/`}
     >
       {isMobile ? (
-        <Logo
-          name="nyplLionBlack"
-          sizeBasedOn="height"
-          height="40px"
-          sx={{
-            display: { sm: "inline", md: "none" },
-          }}
-        />
+        <Logo name="nyplLionBlack" sizeBasedOn="height" height="40px" />
       ) : (
         <Logo
           name="digitalCollectionsBlack"
           sizeBasedOn="height"
           height="50px"
-          sx={{
-            display: { sm: "none", md: "inline" },
-          }}
         />
       )}
     </Link>
