@@ -3,10 +3,9 @@ import { Box, SearchBar } from "@nypl/design-system-react-components";
 import { useRouter } from "next/router";
 import PublicDomainFilter from "../publicDomainFilter/publicDomainFilter";
 import appConfig from "appConfig";
-import { useScrolled } from "@/hooks/useScrolled";
+import { headerBreakpoints } from "@/utils/breakpoints";
 
 const Search = () => {
-  const isScrolled = useScrolled("header");
   const router = useRouter();
   const [keywords, setKeywords] = useState("");
   const [publicDomainOnly, setPublicDomainOnly] = useState(false);
@@ -36,8 +35,11 @@ const Search = () => {
         sx={{
           alignItems: "start",
           width: "100%",
-          "@media screen and (max-width: 768px)": {
+          [`@media screen and (min-width: ${headerBreakpoints.lgMobile})`]: {
             pt: "xs",
+          },
+          [`@media screen and (min-width: ${headerBreakpoints.smTablet})`]: {
+            pt: "0px",
           },
         }}
       >
@@ -54,8 +56,11 @@ const Search = () => {
             placeholder: "Search keyword(s)",
           }}
           sx={{
-            "@media screen and (max-width: 768px)": {
+            [`@media screen and (min-width: ${headerBreakpoints.lgMobile})`]: {
               flexFlow: "column nowrap",
+            },
+            [`@media screen and (min-width: ${headerBreakpoints.smTablet})`]: {
+              flexFlow: "row nowrap",
             },
           }}
         />
