@@ -41,6 +41,9 @@ const Search = () => {
           [`@media screen and (min-width: ${headerBreakpoints.smTablet})`]: {
             pt: "0px",
           },
+          "#searchbar-form-searchbar": {
+            marginBottom: "0px",
+          },
         }}
       >
         <SearchBar
