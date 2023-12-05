@@ -135,11 +135,17 @@ export const getItemDataFromImageID = async (imageID: string) => {
   const data = await apiCall(apiUri.apiUri);
   return {
     uuid: apiUri.uuid,
-    title: data.mods.titleInfo.title.$,
+    title: getTitleFromRepoAPIResponseData(data) || "",
   };
 };
 
 function addCommas(number) {
   // Return the formatted number
   return Number(number).toLocaleString("en-US");
+}
+
+function getTitleFromRepoAPIResponseData(data) {
+  // if titleInfo is an array of objects, use the first object. if titleInfo is a hash, return the title.
+  const titleInfo = data.mods.titleInfo;
+  return Array.isArray(titleInfo) ? titleInfo[0].title.$ : titleInfo.title.$;
 }
