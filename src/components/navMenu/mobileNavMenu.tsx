@@ -46,7 +46,7 @@ const MobileNavMenu = chakra(() => {
               color: "ui.black",
               bgColor: "ui.white",
             },
-            ":not([disabled]):focus": {
+            "not:([disabled]):focus": {
               outline: "none",
             },
           }}
@@ -63,7 +63,7 @@ const MobileNavMenu = chakra(() => {
               height: "auto",
               left: 0,
               padding: "24px 16px",
-              marginTop: isScrolled ? "auto" : "-32px",
+              marginTop: "10px",
               zIndex: 999,
               backgroundColor: "ui.white",
               alignItems: "flex-start",
