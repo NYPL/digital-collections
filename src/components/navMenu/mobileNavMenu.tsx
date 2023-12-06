@@ -19,11 +19,11 @@ const listItems = dcNavLinks.map(({ href, text }) => (
     key={text}
     sx={{
       display: "block",
-      fontSize: "16px",
+      fontSize: "s",
       fontWeight: "510",
       lineHeight: "150%",
-      paddingBottom: "24px",
-      marginInlineStart: "8px",
+      paddingBottom: "m",
+      marginInlineStart: "xs",
       width: "auto",
       color: "ui.black",
       ":hover": {
@@ -80,11 +80,13 @@ const MobileNavMenu = chakra(() => {
               alignItems: "left",
               position: "fixed",
               width: "100%",
-              paddingTop: "24px",
-              paddingLeft: "8px",
+              paddingTop: "m",
+              paddingLeft: "xs",
+              marginTop: isScrolled ? "4px" : "-36px",
               left: 0,
               zIndex: 999,
               backgroundColor: "ui.white",
+              borderTop: "1px solid var(--ui-border-default, #BDBDBD) ",
             }}
           >
             {listItems}
