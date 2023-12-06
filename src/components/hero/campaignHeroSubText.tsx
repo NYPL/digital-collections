@@ -37,10 +37,11 @@ const CampaignHeroSubText = ({ featuredItem }: any) => {
         </DSLink>
       </Text>
       <HorizontalRule />
-      <Tooltip content={featuredItem.title}>
+      <Tooltip content={featuredItem.title} shouldWrapChildren>
         <Box>
           <Text color="ui.typography.body" mb="0px" noOfLines={2}>
             Featured Image:{" "}
+            {/* <Tooltip content={featuredItem.title} shouldWrapChildren> */}
             <DSLink
               color="var(--nypl-colors-ui-link-primary) !important"
               __css={{
@@ -57,6 +58,7 @@ const CampaignHeroSubText = ({ featuredItem }: any) => {
               {" "}
               {featuredItem.title}{" "}
             </DSLink>
+            {/* </Tooltip> */}
           </Text>
         </Box>
       </Tooltip>

@@ -10,10 +10,14 @@ describe("Campaign Hero", () => {
     href: `https://qa-digitalcollections.nypl.org/items/3a2cced0-12ca-0133-7a6d-58d385a7bbd0`,
   };
   it("renders the Campaign Hero", () => {
-    render(<CampaignHero featuredItem={featuredItem} />);
-    const header = screen.getByRole("heading", {
-      name: "Explore 863,848 items digitized from The New York Public Library's collections.",
-    });
-    expect(header).toBeInTheDocument();
+    render(
+      <CampaignHero
+        featuredItem={featuredItem}
+        numberOfDigitizedItems="863,848"
+      />
+    );
+    expect(screen.getByRole("heading")).toHaveTextContent(
+      "Explore 863,848 items digitized from The New York Public Library's collections."
+    );
   });
 });
