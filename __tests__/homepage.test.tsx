@@ -8,7 +8,7 @@ class ResizeObserver {
   disconnect() {}
 }
 
-describe.skip("Homepage Accessibility", () => {
+describe("Homepage Accessibility", () => {
   it("passes axe accessibility test", async () => {
     window.ResizeObserver = ResizeObserver;
     const { container } = render(<Home {...props} />);
