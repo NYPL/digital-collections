@@ -16,6 +16,7 @@ const listItems = dcNavLinks.map(({ href, text }) => (
     href={href}
     aria-label={text}
     key={text}
+    aria-label={text}
     sx={{
       display: "block",
       paddingBottom: "m",
