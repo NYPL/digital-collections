@@ -13,10 +13,28 @@ import { Box, chakra } from "@chakra-ui/react";
 import { useScrolled } from "@/hooks/useScrolled";
 
 const listItems = dcNavLinks.map(({ href, text }) => (
-  <Link isUnderlined={false} href={href} key={text}>
-    <Text mb="0px" size="subtitle2" color="black">
-      {text}
-    </Text>
+  <Link
+    isUnderlined={false}
+    href={href}
+    key={text}
+    sx={{
+      display: "block",
+      fontSize: "16px",
+      fontWeight: "510",
+      lineHeight: "150%",
+      paddingBottom: "24px",
+      marginInlineStart: "8px",
+      width: "auto",
+      color: "ui.black",
+      ":hover": {
+        textDecoration: "none",
+      },
+      ":visited": {
+        color: "ui.black",
+      },
+    }}
+  >
+    {text}
   </Link>
 ));
 
@@ -57,16 +75,16 @@ const MobileNavMenu = chakra(() => {
           <HStack
             id="mobile-menu"
             sx={{
-              display: "block",
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "left",
               position: "fixed",
               width: "100%",
-              height: "auto",
+              paddingTop: "24px",
+              paddingLeft: "8px",
               left: 0,
-              padding: "24px 16px",
-              marginTop: "10px",
               zIndex: 999,
               backgroundColor: "ui.white",
-              alignItems: "flex-start",
             }}
           >
             {listItems}
