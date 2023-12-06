@@ -9,6 +9,7 @@ import { useScrolled } from "@/hooks/useScrolled";
 import { useStickyMargin } from "@/hooks/useStickyMargin";
 import Search from "../search/search";
 import DCLogo from "../logo/logo";
+import { headerBreakpoints } from "@/utils/breakpoints";
 
 const Header = () => {
   useStickyMargin();
@@ -20,57 +21,83 @@ const Header = () => {
       position="sticky"
       id="header"
       top={0}
-      py={{ sm: "xs", md: "s" }}
-      px="s"
       zIndex={999}
       bgColor="ui.white"
+      pt="xs"
     >
       <Box
-        alignItems="center"
         maxWidth="1280px"
-        padding={{ md: "0 15px" }}
         mx="auto"
+        padding="0 16px"
+        sx={{
+          [`@media screen and (min-width: ${headerBreakpoints.smTablet})`]: {
+            display: "block",
+          },
+          [`@media screen and (min-width: ${headerBreakpoints.lgTablet})`]: {
+            display: "flex",
+            justifyContent: "space-between",
+          },
+          alignItems: "center",
+        }}
       >
         <HStack
+          justify="space-between"
           sx={{
+            display: "none",
+            [`@media screen and (min-width: ${headerBreakpoints.smTablet})`]: {
+              display: "flex",
+            },
+          }}
+        >
+          <DCLogo isMobile={false} />
+          <Box
+            sx={{
+              display: "none",
+              [`@media screen and (min-width: ${headerBreakpoints.smTablet})`]:
+                {
+                  display: isScrolled ? "block" : "none",
+                },
+              [`@media screen and (min-width: ${headerBreakpoints.lgTablet})`]:
+                {
+                  display: "none",
+                },
+            }}
+          >
+            <Text>I am desktop nav links</Text>
+          </Box>
+        </HStack>
+        <HStack
+          sx={{
+            [`@media screen and (min-width: ${headerBreakpoints.smTablet})`]: {
+              display: "none",
+            },
             justifyContent: "space-between",
             alignContent: "center",
           }}
-          pl="9px"
         >
           <DCLogo isMobile={true} />
+          <Text>I am hamburger</Text>
+        </HStack>
+        <VStack
+          sx={{
+            [`@media screen and (min-width: ${headerBreakpoints.lgTablet})`]: {
+              width: "36%",
+            },
+          }}
+        >
           <Box
             sx={{
-              display: { sm: "block", md: "none" },
+              display: "none",
+              [`@media screen and (min-width: ${headerBreakpoints.lgTablet})`]:
+                {
+                  display: isScrolled ? "block" : "none",
+                },
             }}
           >
-            <Text>I am hamburger</Text>
+            <Text>I am desktop nav links</Text>
           </Box>
-        </HStack>
-        <HStack justify="space-between">
-          <DCLogo isMobile={false} />
-          <VStack width={{ sm: "100%", md: "36%" }}>
-            <Box
-              sx={{
-                display: {
-                  sm: "none",
-                  md: isScrolled ? "block" : "none",
-                },
-              }}
-            >
-              <Text>I am desktop nav links</Text>
-            </Box>
-            <Box
-              width="100%"
-              pt="s"
-              sx={{
-                display: { sm: isScrolled ? "inline" : "none", md: "inline" },
-              }}
-            >
-              <Search />
-            </Box>
-          </VStack>
-        </HStack>
+          <Search />
+        </VStack>
       </Box>
     </Box>
   );
