@@ -1,7 +1,6 @@
 import { Heading } from "@nypl/design-system-react-components";
 
 const CampaignHeroHeading = ({ numberOfDigitizedItems }: any) => {
-  console.log("numberOfDigitizedItems", numberOfDigitizedItems);
   return (
     <Heading
       color="ui.typography.heading"
