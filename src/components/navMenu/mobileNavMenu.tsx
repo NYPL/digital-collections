@@ -17,6 +17,7 @@ const listItems = dcNavLinks.map(({ href, text }) => (
     isUnderlined={false}
     href={href}
     key={text}
+    aria-label={text}
     sx={{
       display: "block",
       fontSize: "s",
