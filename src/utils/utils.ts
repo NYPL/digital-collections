@@ -5,15 +5,20 @@ let featuredItemArray = [];
  * Sets global featuredItemArray so other functions can use it.
  **/
 export const setFeaturedItemArray = () => {
+  if (featuredItemArray.length !== 0) {
+    // The global array already has what it needs.
+    return;
+  }
+
+  // If it's empty, now is the time to generate and update the array.
   let itemsArray = [];
   for (let i = 0; i < featuredItemsData.featuredItems.images.length; i++) {
     itemsArray.push(featuredItemsData.featuredItems.images[i].split(".")[0]);
   }
   // set featuredItemArray
-  if (featuredItemArray.length === 0) {
-    featuredItemArray = itemsArray;
-  }
-  return itemsArray;
+  featuredItemArray = itemsArray;
+
+  return featuredItemArray;
 };
 
 /**
