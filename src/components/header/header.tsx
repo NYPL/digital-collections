@@ -12,6 +12,7 @@ import DCLogo from "../logo/logo";
 import NavMenu from "../navMenu/navMenu";
 import MobileNavMenu from "../navMenu/mobileNavMenu";
 import { headerBreakpoints } from "@/utils/breakpoints";
+import { Divider } from "@chakra-ui/react";
 
 const Header = () => {
   useStickyMargin();
