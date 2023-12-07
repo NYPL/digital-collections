@@ -147,15 +147,19 @@ function addCommas(number) {
 
 function getTitleFromRepoAPIResponseData(data) {
   // If titleInfo is an array of objects, use the title whose usage is primary. If titleInfo is a hash, return the title.
-  const titleInfo = data.mods.titleInfo;
-  var title = "";
-  if (Array.isArray(titleInfo)) {
-    var result = titleInfo.find((titleObj) => {
-      return titleObj.usage === "primary";
-    });
-    title = result.title.$;
+  if (!data) {
+    return "";
   } else {
-    title = titleInfo.title.$;
+    const titleInfo = data.mods.titleInfo;
+    let title = "";
+    if (Array.isArray(titleInfo)) {
+      const result = titleInfo.find((titleObj) => {
+        return titleObj.usage === "primary";
+      });
+      title = result.title.$;
+    } else {
+      title = titleInfo.title.$;
+    }
+    return title;
   }
-  return title;
 }
