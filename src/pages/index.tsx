@@ -4,6 +4,7 @@ import data from "@/data/lanes";
 import { getNumItems, featuredImageID } from "@/utils/utils";
 import Header from "@/components/header/header";
 import HomePageMainContent from "@/components/homePageMainContent/homePageMainContent";
+import ExploreFurther from "@/components/exploreFurther/exploreFurther";
 
 export default function Home(props: any) {
   return (
@@ -22,6 +23,7 @@ export default function Home(props: any) {
           />
         }
       />
+      <ExploreFurther />
     </>
   );
 }
