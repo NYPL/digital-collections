@@ -6,6 +6,7 @@ import {
   Icon,
   Button,
   useCloseDropDown,
+  List,
 } from "@nypl/design-system-react-components";
 import React, { useRef, useState } from "react";
 import FocusLock from "@chakra-ui/focus-lock";
@@ -16,17 +17,13 @@ const listItems = dcNavLinks.map(({ href, text }) => (
   <Link
     isUnderlined={false}
     href={href}
-    key={text}
     aria-label={text}
+    key={text}
     sx={{
       display: "block",
-      fontSize: "s",
-      fontWeight: "510",
-      lineHeight: "150%",
       paddingBottom: "m",
-      marginInlineStart: "xs",
-      width: "auto",
-      color: "ui.black",
+      paddingLeft: "16px",
+      width: "100%",
       ":hover": {
         textDecoration: "none",
       },
@@ -35,7 +32,9 @@ const listItems = dcNavLinks.map(({ href, text }) => (
       },
     }}
   >
-    {text}
+    <Text size="subtitle2" sx={{ marginBottom: "unset" }}>
+      {text}
+    </Text>
   </Link>
 ));
 
@@ -73,25 +72,28 @@ const MobileNavMenu = chakra(() => {
           <Icon name={isOpen ? "close" : "utilityHamburger"} size="large" />
         </Button>
         {isOpen && (
-          <HStack
+          <nav
             id="mobile-menu"
-            sx={{
+            style={{
               display: "flex",
               flexDirection: "column",
               alignItems: "left",
-              position: "fixed",
+              position: "absolute",
               width: "100%",
+              marginTop: "4px",
               paddingTop: "m",
-              paddingLeft: "xs",
-              marginTop: isScrolled ? "4px" : "-36px",
               left: 0,
               zIndex: 999,
-              backgroundColor: "ui.white",
-              borderTop: "1px solid var(--ui-border-default, #BDBDBD) ",
             }}
           >
-            {listItems}
-          </HStack>
+            <List
+              id="header-mobile-nav"
+              listItems={listItems}
+              noStyling
+              type="ul"
+              sx={{ backgroundColor: "ui.white", paddingTop: "m" }}
+            />
+          </nav>
         )}
       </FocusLock>
     </Box>
