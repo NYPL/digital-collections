@@ -39,25 +39,23 @@ const CampaignHeroSubText = ({ featuredItem }: any) => {
       <HorizontalRule />
       <Box>
         <Text color="ui.typography.body" mb="0px" noOfLines={2}>
-          Featured Image:{" "}
-          <Tooltip content={featuredItem.title}>
-            <DSLink
-              color="var(--nypl-colors-ui-link-primary) !important"
-              __css={{
-                display: "inline !important",
-                _hover: {
-                  color: "var(--nypl-colors-ui-link-secondary) !important",
-                },
-                _visited: {
-                  color: "var(--nypl-colors-ui-link-tertiary) !important",
-                },
-              }}
-              href={featuredItem.href}
-            >
-              {" "}
-              {featuredItem.title}{" "}
-            </DSLink>
-          </Tooltip>
+          Featured Image:
+          <DSLink
+            color="var(--nypl-colors-ui-link-primary) !important"
+            __css={{
+              display: "inline !important",
+              _hover: {
+                color: "var(--nypl-colors-ui-link-secondary) !important",
+              },
+              _visited: {
+                color: "var(--nypl-colors-ui-link-tertiary) !important",
+              },
+            }}
+            href={featuredItem.href}
+          >
+            {" "}
+            {featuredItem.title}{" "}
+          </DSLink>
         </Text>
       </Box>
     </>
