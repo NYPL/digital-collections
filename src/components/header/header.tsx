@@ -3,6 +3,7 @@ import {
   HStack,
   VStack,
   Text,
+  Spacer,
 } from "@nypl/design-system-react-components";
 import React from "react";
 import { useScrolled } from "@/hooks/useScrolled";
@@ -12,6 +13,7 @@ import DCLogo from "../logo/logo";
 import NavMenu from "../navMenu/navMenu";
 import MobileNavMenu from "../navMenu/mobileNavMenu";
 import { headerBreakpoints } from "@/utils/breakpoints";
+import { Divider } from "@chakra-ui/react";
 
 const Header = () => {
   useStickyMargin();
@@ -78,6 +80,17 @@ const Header = () => {
           <DCLogo isMobile={true} />
           <MobileNavMenu />
         </HStack>
+        <Divider
+          sx={{
+            borderTopWidth: "0px",
+            borderBottom: "1px solid var(--ui-border-default, #BDBDBD)",
+            margin: "0 -15px",
+            width: "auto",
+            [`@media screen and (min-width: ${headerBreakpoints.smTablet})`]: {
+              display: "none",
+            },
+          }}
+        />
         <VStack
           align="end"
           sx={{
