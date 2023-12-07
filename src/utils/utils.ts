@@ -117,16 +117,12 @@ export const apiCall = async (apiUrl: string) => {
 
     if (response.status === 200) {
       const data = await response.json();
-      const responseData = data.nyplAPI.response;
-      // if (apiUrl.includes('api/v2/items/total')) {
-      //   console.log("responseData for api/v2/items/total", responseData)
-      // }
-      return responseData;
+      return data.nyplAPI.response;
     } else {
-      return 0;
+      return undefined;
     }
   } catch (error) {
-    return 0;
+    return undefined;
   }
 };
 
@@ -145,7 +141,16 @@ function addCommas(number) {
 }
 
 function getTitleFromRepoAPIResponseData(data) {
-  // if titleInfo is an array of objects, use the first object. if titleInfo is a hash, return the title.
+  // If titleInfo is an array of objects, use the title whose usage is primary. If titleInfo is a hash, return the title.
   const titleInfo = data.mods.titleInfo;
-  return Array.isArray(titleInfo) ? titleInfo[0].title.$ : titleInfo.title.$;
+  var title = "";
+  if (Array.isArray(titleInfo)) {
+    var result = titleInfo.find((titleObj) => {
+      return titleObj.usage === "primary";
+    });
+    title = result.title.$;
+  } else {
+    title = titleInfo.title.$;
+  }
+  return title;
 }
