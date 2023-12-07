@@ -1,6 +1,5 @@
 import { dcNavLinks } from "@/data/dcNavLinks";
 import {
-  HStack,
   Text,
   Link,
   Icon,
@@ -43,7 +42,6 @@ const MobileNavMenu = chakra(() => {
   const ref = useRef<HTMLDivElement>(null);
 
   useCloseDropDown(setIsOpen, ref);
-  const isScrolled = useScrolled("header", false);
 
   return (
     <Box ref={ref}>
