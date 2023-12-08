@@ -2,6 +2,7 @@ import { render } from "@testing-library/react";
 import Home from "../src/pages/index";
 import { axe } from "jest-axe";
 import { props } from "./data/homepageProps";
+import { imageURL } from "@/utils/utils";
 class ResizeObserver {
   observe() {}
   unobserve() {}
