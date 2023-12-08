@@ -16,6 +16,7 @@ const NavMenu = () => {
     <HStack
       sx={{
         gap: "m",
+        paddingBottom: "xs",
       }}
     >
       {listItems}
