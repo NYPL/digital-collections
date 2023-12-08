@@ -1,8 +1,9 @@
 import React, { useState } from "react";
-import { SearchBar } from "@nypl/design-system-react-components";
+import { Box, SearchBar } from "@nypl/design-system-react-components";
 import { useRouter } from "next/router";
 import PublicDomainFilter from "../publicDomainFilter/publicDomainFilter";
 import appConfig from "appConfig";
+import { headerBreakpoints } from "@/utils/breakpoints";
 
 const Search = () => {
   const router = useRouter();
@@ -29,20 +30,45 @@ const Search = () => {
 
   return (
     <>
-      <SearchBar
-        id="searchbar"
-        invalidText="Could not find the item"
-        labelText="Search Digital Collections"
-        onSubmit={(event) => handleSubmit(event, router)}
-        textInputProps={{
-          labelText: "Search keyword(s)",
-          name: "textInputName",
-          onChange: handleTextChange,
-          value: keywords,
-          placeholder: "Search keyword(s)",
+      <Box
+        id="search-wrapper"
+        sx={{
+          alignItems: "start",
+          width: "100%",
+          [`@media screen and (min-width: ${headerBreakpoints.lgMobile})`]: {
+            pt: "xs",
+          },
+          [`@media screen and (min-width: ${headerBreakpoints.smTablet})`]: {
+            pt: "0px",
+          },
+          "#searchbar-form-searchbar": {
+            marginBottom: "0px",
+          },
         }}
-      />
-      <PublicDomainFilter onCheckChange={handleCheckChange} />
+      >
+        <SearchBar
+          id="searchbar"
+          invalidText="Could not find the item"
+          labelText="Search Digital Collections"
+          onSubmit={(event) => handleSubmit(event, router)}
+          textInputProps={{
+            labelText: "Search keyword(s)",
+            name: "textInputName",
+            onChange: handleTextChange,
+            value: keywords,
+            placeholder: "Search keyword(s)",
+          }}
+          sx={{
+            [`@media screen and (min-width: ${headerBreakpoints.lgMobile})`]: {
+              flexFlow: "column nowrap",
+            },
+            [`@media screen and (min-width: ${headerBreakpoints.smTablet})`]: {
+              flexFlow: "row nowrap",
+            },
+          }}
+        />
+        <PublicDomainFilter onCheckChange={handleCheckChange} />
+      </Box>
     </>
   );
 };
