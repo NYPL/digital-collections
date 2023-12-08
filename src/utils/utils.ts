@@ -158,7 +158,8 @@ function getTitleFromRepoAPIResponseData(data) {
       return titleObj.usage === "primary";
     });
     title = result.title.$;
+  } else {
+    title = titleInfo.title.$;
   }
-  title = titleInfo.title.$;
   return title;
 }
