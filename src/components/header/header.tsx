@@ -61,7 +61,7 @@ const Header = () => {
                 },
             }}
           >
-            <NavMenu />
+            <NavMenu render={0} />
           </Box>
         </HStack>
         <HStack
@@ -103,7 +103,7 @@ const Header = () => {
                 },
             }}
           >
-            <NavMenu />
+            <NavMenu render={1} />
           </Box>
           <Search />
         </VStack>
