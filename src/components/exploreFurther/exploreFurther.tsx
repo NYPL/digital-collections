@@ -27,8 +27,9 @@ const ExploreFurther = () => {
           flexDirection: "column",
           maxWidth: "1280px",
           mx: "auto",
-          alignItems: "center",
-          paddingX: "s",
+          alignContent: "center",
+          paddingLeft: "s",
+          paddingRight: "s",
           paddingTop: "xxl",
           [`@media screen and (min-width: 0px)`]: {
             paddingBottom: "l",
@@ -75,7 +76,14 @@ const ExploreFurther = () => {
               level="h3"
               subtitle={item.description}
             >
-              <Link href={item.url} sx={{ textDecoration: "none !important" }}>
+              <Link
+                href={item.url}
+                target="_blank"
+                rel="noreferrer noopener"
+                sx={{
+                  textDecoration: "none !important",
+                }}
+              >
                 {item.title}
               </Link>
             </CardHeading>
