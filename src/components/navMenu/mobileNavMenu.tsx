@@ -1,16 +1,14 @@
 import { dcNavLinks } from "@/data/dcNavLinks";
 import {
-  Text,
   Link,
   Icon,
   Button,
   useCloseDropDown,
   List,
+  Box,
 } from "@nypl/design-system-react-components";
 import React, { useRef, useState } from "react";
 import FocusLock from "@chakra-ui/focus-lock";
-import { Box, chakra } from "@chakra-ui/react";
-import { useScrolled } from "@/hooks/useScrolled";
 
 const listItems = dcNavLinks.map(({ href, text }) => (
   <Link
@@ -23,6 +21,8 @@ const listItems = dcNavLinks.map(({ href, text }) => (
       paddingBottom: "m",
       paddingLeft: "16px",
       width: "100%",
+      marginBottom: "unset",
+      fontWeight: "510",
       ":hover": {
         textDecoration: "none",
       },
@@ -31,13 +31,11 @@ const listItems = dcNavLinks.map(({ href, text }) => (
       },
     }}
   >
-    <Text size="subtitle2" sx={{ marginBottom: "unset" }}>
-      {text}
-    </Text>
+    {text}
   </Link>
 ));
 
-const MobileNavMenu = chakra(() => {
+const MobileNavMenu = () => {
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const ref = useRef<HTMLDivElement>(null);
 
@@ -72,6 +70,7 @@ const MobileNavMenu = chakra(() => {
         {isOpen && (
           <nav
             id="mobile-menu"
+            aria-label="Mobile header links"
             style={{
               display: "flex",
               flexDirection: "column",
@@ -85,7 +84,7 @@ const MobileNavMenu = chakra(() => {
             }}
           >
             <List
-              id="header-mobile-nav"
+              id="header-mobile-links"
               listItems={listItems}
               noStyling
               type="ul"
@@ -96,6 +95,6 @@ const MobileNavMenu = chakra(() => {
       </FocusLock>
     </Box>
   );
-});
+};
 
 export default MobileNavMenu;
