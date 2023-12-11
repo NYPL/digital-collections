@@ -12,11 +12,10 @@ import DCLogo from "../logo/logo";
 import NavMenu from "../navMenu/navMenu";
 import MobileNavMenu from "../navMenu/mobileNavMenu";
 import { headerBreakpoints } from "@/utils/breakpoints";
-import { Divider } from "@chakra-ui/react";
 
 const Header = () => {
   useStickyMargin();
-  const isScrolled = useScrolled("header", false);
+  const isScrolled = useScrolled("header");
   return (
     <Box
       data-sticky-header
@@ -33,9 +32,6 @@ const Header = () => {
         mx="auto"
         padding="0 16px"
         sx={{
-          [`@media screen and (min-width: ${headerBreakpoints.smTablet})`]: {
-            display: "block",
-          },
           [`@media screen and (min-width: ${headerBreakpoints.lgTablet})`]: {
             display: "flex",
             justifyContent: "space-between",
