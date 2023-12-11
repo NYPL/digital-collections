@@ -26,19 +26,19 @@ describe("Mobile nav menu component", () => {
     fireEvent.click(screen.getByLabelText("Open Navigation"));
     expect(screen.getByLabelText("Items")).toHaveAttribute(
       "href",
-      appConfig.DC_URL + `/search/index?utf8=%E2%9C%93&keywords=`
+      `${appConfig.DC_URL}/search/index?utf8=%E2%9C%93&keywords=`
     );
     expect(screen.getByLabelText("Divisions")).toHaveAttribute(
       "href",
-      appConfig.DC_URL + `/divisions`
+      `${appConfig.DC_URL}/divisions`
     );
     expect(screen.getByLabelText("Collections")).toHaveAttribute(
       "href",
-      appConfig.DC_URL + `/collections`
+      `${appConfig.DC_URL}/collections`
     );
     expect(screen.getByLabelText("About")).toHaveAttribute(
       "href",
-      appConfig.DC_URL + `/about`
+      `${appConfig.DC_URL}/about`
     );
   });
 });
