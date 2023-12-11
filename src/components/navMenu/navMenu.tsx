@@ -2,7 +2,7 @@ import { dcNavLinks } from "@/data/dcNavLinks";
 import { Link, List } from "@nypl/design-system-react-components";
 import React from "react";
 
-const NavMenu = () => {
+const NavMenu = ({ render }) => {
   const listItems = dcNavLinks.map(({ href, text }) => (
     <Link
       isUnderlined={false}
@@ -33,7 +33,7 @@ const NavMenu = () => {
       }}
     >
       <List
-        id="header-links"
+        id={`header-links-${render}`}
         listItems={listItems}
         inline={true}
         noStyling
