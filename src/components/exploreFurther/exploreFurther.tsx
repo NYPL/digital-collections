@@ -17,7 +17,7 @@ const ExploreFurther = () => {
     <Box
       sx={{
         marginTop: "xxl",
-        backgroundColor: "var(--ui-bg-default, #F5F5F5)",
+        backgroundColor: "var(--nypl-colors-ui-bg-default)",
       }}
     >
       <Box
@@ -31,12 +31,7 @@ const ExploreFurther = () => {
           paddingLeft: "s",
           paddingRight: "s",
           paddingTop: "xxl",
-          [`@media screen and (min-width: 0px)`]: {
-            paddingBottom: "l",
-          },
-          [`@media screen and (min-width: 600px)`]: {
-            paddingBottom: "xxl",
-          },
+          paddingBottom: { base: "l", md: "xxl" },
         }}
       >
         <Box sx={{ paddingBottom: "s" }}>
@@ -61,6 +56,7 @@ const ExploreFurther = () => {
             }}
             layout="row"
             sx={{
+              alignItems: "center",
               [`@media screen and (min-width: 0px)`]: {
                 paddingBottom: "s",
               },
