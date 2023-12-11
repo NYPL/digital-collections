@@ -21,6 +21,7 @@ const ExploreFurther = () => {
       }}
     >
       <Box
+        data-testid="explore-further"
         sx={{
           display: "flex",
           flexDirection: "column",
@@ -32,7 +33,7 @@ const ExploreFurther = () => {
             paddingTop: "xxl",
             paddingX: "s",
           },
-          [`@media screen and (min-width: ${headerBreakpoints.smTablet})`]: {
+          [`@media screen and (min-width: 600px)`]: {
             paddingBottom: "xxl",
             paddingTop: "xxl",
             paddingX: "s",
@@ -72,7 +73,8 @@ const ExploreFurther = () => {
           >
             <CardHeading
               id={`main-heading-${index}`}
-              level="h5"
+              size="h5"
+              level="h3"
               subtitle={item.description}
             >
               <Link href={item.url} sx={{ textDecoration: "none !important" }}>
