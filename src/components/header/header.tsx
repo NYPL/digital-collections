@@ -2,8 +2,7 @@ import {
   Box,
   HStack,
   VStack,
-  Text,
-  Spacer,
+  HorizontalRule,
 } from "@nypl/design-system-react-components";
 import React from "react";
 import { useScrolled } from "@/hooks/useScrolled";
@@ -16,7 +15,7 @@ import MobileNavMenu from "../navMenu/mobileNavMenu";
 
 const Header = () => {
   useStickyMargin();
-  const isScrolled = useScrolled("header", false);
+  const isScrolled = useScrolled("header");
   return (
     <Box
       data-sticky-header
@@ -33,9 +32,6 @@ const Header = () => {
         mx="auto"
         padding="0 16px"
         sx={{
-          [`@media screen and (min-width: ${headerBreakpoints.smTablet})`]: {
-            display: "block",
-          },
           [`@media screen and (min-width: ${headerBreakpoints.lgTablet})`]: {
             display: "flex",
             justifyContent: "space-between",
@@ -79,12 +75,12 @@ const Header = () => {
           <DCLogo isMobile={true} />
           <MobileNavMenu />
         </HStack>
-        <Divider
+        <HorizontalRule
+          height="1px"
+          width="auto"
           sx={{
-            borderTopWidth: "0px",
-            borderBottom: "1px solid var(--ui-border-default, #BDBDBD)",
+            borderColor: "var(--nypl-colors-ui-border-default)",
             margin: "0 -15px",
-            width: "auto",
             [`@media screen and (min-width: ${headerBreakpoints.smTablet})`]: {
               display: "none",
             },
@@ -113,7 +109,7 @@ const Header = () => {
         <HStack justify="space-between">
           <DCLogo isMobile={false} />
           <VStack width={{ sm: "100%", md: "36%" }}>
-            <NavMenu isMobile={false} isScrolled={isScrolled} />
+            <NavMenu />
             <Box
               width="100%"
               pt="xs"
