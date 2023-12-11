@@ -27,16 +27,14 @@ const ExploreFurther = () => {
           flexDirection: "column",
           maxWidth: "1280px",
           mx: "auto",
-          alignIitems: "center",
+          alignItems: "center",
+          paddingX: "s",
+          paddingTop: "xxl",
           [`@media screen and (min-width: 0px)`]: {
             paddingBottom: "l",
-            paddingTop: "xxl",
-            paddingX: "s",
           },
           [`@media screen and (min-width: 600px)`]: {
             paddingBottom: "xxl",
-            paddingTop: "xxl",
-            paddingX: "s",
           },
         }}
       >
