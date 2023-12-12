@@ -3,14 +3,8 @@ import { Link, Notification, Text } from "@nypl/design-system-react-components";
 const NotificationBanner = () => {
   return (
     <Notification
-      id="banner"
-      sx={{
-        margin: "0px !important",
-        borderRadius: "0px !important",
-        " > div ": {
-          justifyContent: "center",
-        },
-      }}
+      noMargin={true}
+      isCentered={true}
       notificationContent={
         <Text
           sx={{
