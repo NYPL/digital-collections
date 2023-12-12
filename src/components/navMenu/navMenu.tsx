@@ -28,6 +28,7 @@ const NavMenu = ({ render }) => {
 
   return (
     <nav
+      aria-label="Header links"
       style={{
         paddingBottom: "xs",
       }}
