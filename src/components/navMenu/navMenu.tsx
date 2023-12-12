@@ -13,7 +13,7 @@ const NavMenu = ({ render }) => {
         mb: "0px",
         fontWeight: "510",
         color: "ui.black",
-        paddingLeft: "m",
+        marginLeft: "m",
         ":visited": {
           color: "ui.black",
         },
