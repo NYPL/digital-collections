@@ -6,6 +6,7 @@ import {
   CardHeading,
   Link,
   Text,
+  CardContent,
 } from "@nypl/design-system-react-components";
 import { ExploreFurtherData } from "@/types/ExploreFurtherData";
 import exploreFurtherData from "@/data/exploreFurtherData";
@@ -90,18 +91,19 @@ const ExploreFurther = () => {
               >
                 {item.title}
               </Link>
+            </CardHeading>
+            <CardContent>
               <Text
                 sx={{
                   fontSize: "16px",
                   lineHeight: "140%",
                   fontWeight: "400",
                   color: "ui.typography-body",
-                  paddingTop: "xs",
                 }}
               >
                 {item.description}
               </Text>
-            </CardHeading>
+            </CardContent>
           </Card>
         ))}
       </Box>
