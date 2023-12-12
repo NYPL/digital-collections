@@ -45,7 +45,6 @@ const MobileNavMenu = () => {
     <Box ref={ref}>
       <FocusLock isDisabled={!isOpen}>
         <Button
-          aria-haspopup="true"
           aria-label={isOpen ? "Close Navigation" : "Open Navigation"}
           aria-expanded={isOpen ? true : null}
           buttonType="text"
