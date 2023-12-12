@@ -5,6 +5,7 @@ import {
   Card,
   CardHeading,
   Link,
+  Text,
 } from "@nypl/design-system-react-components";
 import { ExploreFurtherData } from "@/types/ExploreFurtherData";
 import exploreFurtherData from "@/data/exploreFurtherData";
@@ -35,18 +36,26 @@ const ExploreFurther = () => {
         }}
       >
         <Box sx={{ paddingBottom: "s" }}>
-          <Heading
-            size="heading3"
-            text="Explore further"
-            subtitle="Here are some other ways you can access and engage with digital content at NYPL and beyond:"
-          />
+          <Heading size="heading3" text="Explore further" />
+          <Text
+            sx={{
+              fontSize: "16px",
+              lineHeight: "140%",
+              fontWeight: "400",
+              color: "ui.typography-body",
+              marginTop: "-xs",
+            }}
+          >
+            Here are some other ways you can access and engage with digital
+            content at NYPL and beyond:
+          </Text>
         </Box>
         {data.map((item, index) => (
           <Card
             id={`card-id-${index}`}
             key={`card-key-${index}`}
             imageProps={{
-              alt: `${item.imgAlt}`,
+              alt: "",
               aspectRatio: "sixteenByNine",
               component: undefined,
               isAtEnd: false,
@@ -57,31 +66,41 @@ const ExploreFurther = () => {
             layout="row"
             sx={{
               alignItems: "center",
-              [`@media screen and (min-width: 0px)`]: {
-                paddingBottom: "s",
-              },
+              paddingBottom: "s",
+              paddingRight: "m",
               [`@media screen and (min-width: ${headerBreakpoints.smTablet})`]:
                 {
                   paddingBottom: "l",
                 },
             }}
           >
-            <CardHeading
-              id={`main-heading-${index}`}
-              size="h5"
-              level="h3"
-              subtitle={item.description}
-            >
+            <CardHeading id={`main-heading-${index}`} size="h5" level="h3">
               <Link
                 href={item.url}
                 target="_blank"
                 rel="noreferrer noopener"
+                color="#0069BF"
                 sx={{
+                  color: "#0069BF !important",
+                  ":visited": {
+                    color: "var(--nypl-colors-ui-link-tertiary) !important",
+                  },
                   textDecoration: "none !important",
                 }}
               >
                 {item.title}
               </Link>
+              <Text
+                sx={{
+                  fontSize: "16px",
+                  lineHeight: "140%",
+                  fontWeight: "400",
+                  color: "ui.typography-body",
+                  paddingTop: "xs",
+                }}
+              >
+                {item.description}
+              </Text>
             </CardHeading>
           </Card>
         ))}
