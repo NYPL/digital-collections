@@ -14,7 +14,7 @@ const FeaturedContentComponent = ({ randomNumber }) => {
       data-testid={`featured-content-${randomNumber}`}
       isFullWidth={true}
       textContent={
-        <div>
+        <div style={{ paddingLeft: "32px" }}>
           <Heading level="h2" overline={data.overline}>
             {data.heading}
           </Heading>
