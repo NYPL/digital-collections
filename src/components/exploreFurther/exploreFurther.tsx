@@ -33,7 +33,7 @@ const ExploreFurther = () => {
           paddingLeft: "s",
           paddingRight: "s",
           paddingTop: "xxl",
-          paddingBottom: { base: "l", md: "xxl" },
+          paddingBottom: { base: "s", md: "l" },
         }}
       >
         <Box sx={{ paddingBottom: "s" }}>
