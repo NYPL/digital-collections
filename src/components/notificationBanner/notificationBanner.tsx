@@ -3,8 +3,8 @@ import { Link, Notification, Text } from "@nypl/design-system-react-components";
 const NotificationBanner = () => {
   return (
     <Notification
-      noMargin={true}
-      isCentered={true}
+      noMargin
+      isCentered
       notificationContent={
         <Text
           sx={{
@@ -12,9 +12,8 @@ const NotificationBanner = () => {
             fontWeight: "400",
           }}
         >
-          Digital Collections is getting a new look. Return to original
+          Digital Collections is getting a new look. Return to original{" "}
           <Link href="https://digitalcollections.nypl.org/">
-            {" "}
             Digital Collections
           </Link>
           .
