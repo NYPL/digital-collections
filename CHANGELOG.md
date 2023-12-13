@@ -25,3 +25,4 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Created Next.js 13 app using NYPL Reservoir and TS 4.9.5. (DR-2444)
 - Set up travis script to build and deploy to QA (DR-2448)
 - Add Query Param to root to test image ID in the header component ie. http://localhost:3001/?imageID=12345.
+- Added global footer (DR-2591)
