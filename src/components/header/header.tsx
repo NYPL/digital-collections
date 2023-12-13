@@ -23,7 +23,7 @@ const Header = () => {
       top={0}
       zIndex={999}
       bgColor="ui.white"
-      pt="xs"
+      pt="s"
     >
       <Box
         maxWidth="1280px"
