@@ -12,7 +12,8 @@ const NotificationBanner = () => {
             fontWeight: "400",
           }}
         >
-          Digital Collections is getting a new look. Return to original{" "}
+          Digital Collections is getting a new look. Prefer the former version?
+          Return to the previous{" "}
           <Link href="https://digitalcollections.nypl.org/">
             Digital Collections
           </Link>
