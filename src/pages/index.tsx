@@ -11,6 +11,7 @@ import {
 } from "@/utils/utils";
 import Header from "@/components/header/header";
 import HomePageMainContent from "@/components/homePageMainContent/homePageMainContent";
+import ExploreFurther from "@/components/exploreFurther/exploreFurther";
 import appConfig from "appConfig";
 import { imageURL } from "@/utils/utils";
 
@@ -36,6 +37,7 @@ export default function Home(props: any) {
           />
         }
       />
+      <ExploreFurther />
     </>
   );
 }
