@@ -40,10 +40,11 @@ export const generateRandomImageID = () => {
  * @param {string} imageID - optional imageID to check against list of image IDs for featured items.
  */
 export const featuredImageID = (imageID = "") => {
+  console.log("featuredImageID");
   if (featuredItemArray.length === 0) {
     setFeaturedItemArray();
   }
-
+  console.log("featuredItemArray is: ", featuredItemArray);
   if (imageID !== "") {
     return featuredItemArray.includes(imageID)
       ? imageID

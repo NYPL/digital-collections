@@ -9,26 +9,30 @@ import { FeedbackBoxProvider } from "../context/FeedbackBoxContext";
 import React, { useEffect, useState, useContext } from "react";
 import { FeedbackBoxContext } from "../../src/context/FeedbackBoxContext";
 
-// const [view, setView] = React.useState("form");
+// const [formObject, setFormObject] = useState({
+//   category="",
+
+// });
 
 // const apiEndpoint = "...";
-// const onSubmit = (values) => {
-//   fetch(apiEndpoint, {
-//     method: "POST",
-//     body: JSON.stringify(values),
-//   })
-//     .then((response) => {
-//       if (response.ok) {
-//         // ...
-//         setView("view");
-//       }
-//     })
-//     .catch((error) => {
-//       // Reject the promise according to your application.
-//       // And then call:
-//       setView("error");
-//     });
-// };
+const onSubmit = (values) => {
+  console.log("values are: ", values);
+  // fetch(apiEndpoint, {
+  //   method: "POST",
+  //   body: JSON.stringify(values),
+  // })
+  //   .then((response) => {
+  //     if (response.ok) {
+  //       // ...
+  //       setView("view");
+  //     }
+  //   })
+  //   .catch((error) => {
+  //     // Reject the promise according to your application.
+  //     // And then call:
+  //     setView("error");
+  //   });
+};
 
 export default function App({ Component, pageProps }: AppProps) {
   const { onOpen, isOpen, onClose, FeedbackBox } = useFeedbackBox();
@@ -44,12 +48,12 @@ export default function App({ Component, pageProps }: AppProps) {
         <FeedbackBox
           showCategoryField
           // showEmailField
-          // onSubmit={onSubmit}
+          onSubmit={onSubmit}
           isOpen={isOpen}
           onClose={onClose}
           onOpen={onOpen}
           title="Feedback"
-          view={view}
+          // view={view}
 
           // {...otherProps}
         />
