@@ -33,7 +33,7 @@ const ExploreFurther = () => {
           paddingLeft: "s",
           paddingRight: "s",
           paddingTop: "xxl",
-          paddingBottom: { base: "l", md: "xxl" },
+          paddingBottom: { base: "s", md: "l" },
         }}
       >
         <Box sx={{ paddingBottom: "s" }}>
@@ -61,11 +61,10 @@ const ExploreFurther = () => {
             layout="row"
             sx={{
               alignItems: "center",
-              paddingBottom: "s",
-              paddingRight: "m",
+              paddingBottom: "l",
               [`@media screen and (min-width: ${headerBreakpoints.smTablet})`]:
                 {
-                  paddingBottom: "l",
+                  paddingRight: "m",
                 },
             }}
           >
