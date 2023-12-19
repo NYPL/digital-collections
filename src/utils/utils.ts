@@ -78,7 +78,12 @@ export const imageURL = (
 
 export const getNumDigitizedItems = async () => {
   const apiUrl = `${process.env.API_URL}/api/v2/items/total`;
+  let start_time = new Date().getTime();
   const res = await apiCall(apiUrl);
+  console.log(
+    "getNumDigitizedItems Response time:",
+    new Date().getTime() - start_time
+  );
   const fallbackCount = 863848;
   const totalItems = res.count.$ || fallbackCount;
   return addCommas(totalItems);
@@ -102,8 +107,11 @@ export const getNumItems = async (uuid: string) => {
  */
 
 export const getAPIUri = async (identifierType: string, identifier: string) => {
+  const start_time = new Date().getTime();
   const apiUrl = `${process.env.API_URL}/api/v2/items/${identifierType}/${identifier}`;
-  return apiCall(apiUrl);
+  const apiCallValue = apiCall(apiUrl);
+  console.log("getAPIUri Response time:", new Date().getTime() - start_time);
+  return apiCallValue;
 };
 
 /**
@@ -121,7 +129,10 @@ export const apiCall = async (apiUrl: string) => {
     });
 
     if (response.status === 200) {
+      const start_time = new Date().getTime();
       const data = await response.json();
+      console.log({ apiUrl });
+      console.log("apiCall Response time:", new Date().getTime() - start_time);
       return data.nyplAPI.response;
     } else {
       return undefined;
