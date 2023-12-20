@@ -25,7 +25,12 @@ const Header = () => {
       top={0}
       zIndex={999}
       bgColor="ui.white"
-      pt="s"
+      sx={{
+        [`@media screen and (min-width: ${headerBreakpoints.smTablet})`]: {
+          pt: "s",
+        },
+        alignItems: "center",
+      }}
     >
       <Box
         maxWidth="1280px"
@@ -44,6 +49,7 @@ const Header = () => {
             display: "none",
             [`@media screen and (min-width: ${headerBreakpoints.smTablet})`]: {
               display: "flex",
+              pt: "2px",
             },
           }}
         >
@@ -70,6 +76,8 @@ const Header = () => {
               display: "none",
             },
             justifyContent: "space-between",
+            paddingTop: "xs",
+            paddingBottom: "xs",
           }}
         >
           <DCLogo isMobile={true} />
@@ -92,6 +100,7 @@ const Header = () => {
             [`@media screen and (min-width: ${headerBreakpoints.lgTablet})`]: {
               width: "36%",
             },
+            pt: "xs",
           }}
         >
           <Box
@@ -108,6 +117,18 @@ const Header = () => {
           <Search />
         </VStack>
       </Box>
+      <HorizontalRule
+        height="1px"
+        width="auto"
+        sx={{
+          borderColor: "var(--nypl-colors-ui-border-default)",
+          margin: "0px",
+          display: "none",
+          [`@media screen and (min-width: ${headerBreakpoints.smTablet})`]: {
+            display: "block",
+          },
+        }}
+      />
     </Box>
   );
 };
