@@ -76,7 +76,7 @@ const MobileNavMenu = () => {
               alignItems: "left",
               position: "absolute",
               width: "100%",
-              marginTop: "4px",
+              marginTop: "11px",
               paddingTop: "m",
               left: 0,
               zIndex: 999,
