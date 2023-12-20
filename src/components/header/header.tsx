@@ -27,7 +27,7 @@ const Header = () => {
       bgColor="ui.white"
       sx={{
         [`@media screen and (min-width: ${headerBreakpoints.smTablet})`]: {
-          pt: "s",
+          pt: "xs",
         },
         alignItems: "center",
       }}
