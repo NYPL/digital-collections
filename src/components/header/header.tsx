@@ -100,7 +100,6 @@ const Header = () => {
             [`@media screen and (min-width: ${headerBreakpoints.lgTablet})`]: {
               width: "36%",
             },
-            pt: "xs",
           }}
         >
           <Box
