@@ -37,12 +37,11 @@ const ExploreFurther = () => {
         }}
       >
         <Box sx={{ paddingBottom: "s" }}>
-          <Heading
-            size="heading3"
-            text="Explore further"
-            subtitle="Here are some other ways you can access and engage with digital
-            content at NYPL and beyond:"
-          />
+          <Heading size="heading3" text="Explore further" />
+          <Text size="subtitle2">
+            Here are some other ways you can access and engage with digital
+            content at NYPL and beyond:
+          </Text>
         </Box>
         {data.map((item, index) => (
           <Card
@@ -68,12 +67,7 @@ const ExploreFurther = () => {
                 },
             }}
           >
-            <CardHeading
-              id={`main-heading-${index}`}
-              size="h5"
-              level="h3"
-              subtitle={item.description}
-            >
+            <CardHeading id={`main-heading-${index}`} size="h5" level="h3">
               <Link
                 href={item.url}
                 target="_blank"
@@ -90,6 +84,9 @@ const ExploreFurther = () => {
                 {item.title}
               </Link>
             </CardHeading>
+            <CardContent>
+              <Text size="subtitle2"> {item.description} </Text>
+            </CardContent>
           </Card>
         ))}
       </Box>

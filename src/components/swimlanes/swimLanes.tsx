@@ -7,7 +7,9 @@ import {
   Heading,
   SimpleGrid,
   Spacer,
+  Text,
   Link,
+  CardContent,
 } from "@nypl/design-system-react-components";
 import styles from "./Swimlanes.module.css";
 import { imageURL } from "@/utils/utils";
@@ -55,15 +57,17 @@ const SwimLanes = ({ lanesWithNumItems }) => {
                 className={styles.collectiontitle}
                 url={collection.url}
                 noOfLines={3}
-                subtitle={`${collection.numItems} items`}
-                sx={{
-                  "+ p": {
-                    display: { sm: "none", md: "inline" },
-                  },
-                }}
               >
                 {collection.title}
               </CardHeading>
+              <CardContent>
+                <Text
+                  size="subtitle2"
+                  sx={{
+                    display: { sm: "none", md: "inline" },
+                  }}
+                >{`${collection.numItems} items`}</Text>
+              </CardContent>
             </Card>
           ))}
         </SimpleGrid>
