@@ -49,8 +49,8 @@ const Header = () => {
             display: "none",
             [`@media screen and (min-width: ${headerBreakpoints.smTablet})`]: {
               display: "flex",
-              pt: "2px",
             },
+            pb: "xs",
           }}
         >
           <DCLogo isMobile={false} />
