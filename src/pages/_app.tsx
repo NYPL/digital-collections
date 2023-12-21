@@ -5,33 +5,17 @@ import {
   DSProvider,
   useFeedbackBox,
 } from "@nypl/design-system-react-components";
-import { FeedbackBoxProvider } from "../context/FeedbackBoxContext";
-import React, { useEffect, useState, useContext } from "react";
-import { FeedbackBoxContext } from "../../src/context/FeedbackBoxContext";
+import React from "react";
 
-// const [formObject, setFormObject] = useState({
-//   category="",
-
-// });
-
-// const apiEndpoint = "...";
-const onSubmit = (values) => {
-  console.log("values are: ", values);
-  // fetch(apiEndpoint, {
-  //   method: "POST",
-  //   body: JSON.stringify(values),
-  // })
-  //   .then((response) => {
-  //     if (response.ok) {
-  //       // ...
-  //       setView("view");
-  //     }
-  //   })
-  //   .catch((error) => {
-  //     // Reject the promise according to your application.
-  //     // And then call:
-  //     setView("error");
-  //   });
+const onSubmit = async (values) => {
+  const response = await fetch("/api/feedback", {
+    method: "POST",
+    headers: {
+      Accept: "application/json",
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(values),
+  });
 };
 
 export default function App({ Component, pageProps }: AppProps) {
@@ -42,20 +26,14 @@ export default function App({ Component, pageProps }: AppProps) {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
       </Head>
       <DSProvider>
-        {/* <FeedbackBoxProvider onOpen={onOpen} FeedbackBox={FeedbackBox}> */}
         <Component {...pageProps} />
-        {/* </FeedbackBoxProvider> */}
         <FeedbackBox
           showCategoryField
-          // showEmailField
           onSubmit={onSubmit}
           isOpen={isOpen}
           onClose={onClose}
           onOpen={onOpen}
           title="Feedback"
-          // view={view}
-
-          // {...otherProps}
         />
       </DSProvider>
     </>
