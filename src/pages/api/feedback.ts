@@ -15,9 +15,9 @@ export default async function feedbackFormHandler(
   }
 
   // Values to pass to spreadsheet
+  const body = request.body;
   const type = body.category;
   const feedbackText = body.comment;
-  const body = request.body;
   // timestamp: date
   const currentDate = new Date();
   const currentDayOfMonth = currentDate.getDate();
