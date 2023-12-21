@@ -46,6 +46,10 @@ export default async function feedbackFormHandler(
 
   try {
     //prepare auth
+    console.log("GOOGLE_SHEETS_CLIENT_EMAIL:");
+    console.log(process.env.GOOGLE_SHEETS_CLIENT_EMAIL);
+    console.log("GOOGLE_SHEETS_PRIVATE_KEY:");
+    console.log(process.env.GOOGLE_SHEETS_PRIVATE_KEY);
     const auth = new google.auth.GoogleAuth({
       credentials: {
         client_email: process.env.GOOGLE_SHEETS_CLIENT_EMAIL,
