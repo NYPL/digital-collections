@@ -2,6 +2,7 @@ import {
   FeaturedContent,
   Link,
   Heading,
+  Box,
 } from "@nypl/design-system-react-components";
 import React from "react";
 import featuredContentData from "@/data/featuredContentData";
@@ -14,7 +15,13 @@ const FeaturedContentComponent = ({ randomNumber }) => {
       data-testid={`featured-content-${randomNumber}`}
       isFullWidth={true}
       textContent={
-        <div style={{ paddingLeft: "32px" }}>
+        <Box
+          sx={{
+            [`@media screen and (min-width: 600px`]: {
+              paddingLeft: "32px",
+            },
+          }}
+        >
           <Heading level="h2" overline={data.overline}>
             {data.heading}
           </Heading>
@@ -30,7 +37,7 @@ const FeaturedContentComponent = ({ randomNumber }) => {
           >
             {data.buttonText}
           </Link>
-        </div>
+        </Box>
       }
       imageProps={{
         alt: data.imgAlt,
