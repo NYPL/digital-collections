@@ -87,6 +87,8 @@ export default async function feedbackFormHandler(
       },
     });
 
+    console.log("googleResponse is:");
+    console.log(googleResponse);
     return response.status(200).json({
       data: googleResponse.data,
     });
