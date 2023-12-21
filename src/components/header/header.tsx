@@ -2,13 +2,15 @@ import {
   Box,
   HStack,
   VStack,
-  Text,
+  HorizontalRule,
 } from "@nypl/design-system-react-components";
 import React from "react";
 import { useScrolled } from "@/hooks/useScrolled";
 import { useStickyMargin } from "@/hooks/useStickyMargin";
 import Search from "../search/search";
 import DCLogo from "../logo/logo";
+import NavMenu from "../navMenu/navMenu";
+import MobileNavMenu from "../navMenu/mobileNavMenu";
 import { headerBreakpoints } from "@/utils/breakpoints";
 
 const Header = () => {
@@ -30,14 +32,10 @@ const Header = () => {
         mx="auto"
         padding="0 16px"
         sx={{
-          [`@media screen and (min-width: ${headerBreakpoints.smTablet})`]: {
-            display: "block",
-          },
           [`@media screen and (min-width: ${headerBreakpoints.lgTablet})`]: {
             display: "flex",
             justifyContent: "space-between",
           },
-          alignItems: "center",
         }}
       >
         <HStack
@@ -63,7 +61,7 @@ const Header = () => {
                 },
             }}
           >
-            <Text>I am desktop nav links</Text>
+            <NavMenu render={0} />
           </Box>
         </HStack>
         <HStack
@@ -72,13 +70,24 @@ const Header = () => {
               display: "none",
             },
             justifyContent: "space-between",
-            alignContent: "center",
           }}
         >
           <DCLogo isMobile={true} />
-          <Text>I am hamburger</Text>
+          <MobileNavMenu />
         </HStack>
+        <HorizontalRule
+          height="1px"
+          width="auto"
+          sx={{
+            borderColor: "var(--nypl-colors-ui-border-default)",
+            margin: "0 -15px",
+            [`@media screen and (min-width: ${headerBreakpoints.smTablet})`]: {
+              display: "none",
+            },
+          }}
+        />
         <VStack
+          align="end"
           sx={{
             [`@media screen and (min-width: ${headerBreakpoints.lgTablet})`]: {
               width: "36%",
@@ -94,7 +103,7 @@ const Header = () => {
                 },
             }}
           >
-            <Text>I am desktop nav links</Text>
+            <NavMenu render={1} />
           </Box>
           <Search />
         </VStack>

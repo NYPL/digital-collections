@@ -38,7 +38,7 @@ const Search = () => {
           [`@media screen and (min-width: ${headerBreakpoints.lgMobile})`]: {
             pt: "xs",
           },
-          [`@media screen and (min-width: ${headerBreakpoints.smTablet})`]: {
+          [`@media screen and (min-width: ${headerBreakpoints.lgTablet})`]: {
             pt: "0px",
           },
           "#searchbar-form-searchbar": {
