@@ -6,6 +6,7 @@ import {
   useCloseDropDown,
   List,
   Box,
+  HorizontalRule,
 } from "@nypl/design-system-react-components";
 import React, { useRef, useState } from "react";
 import FocusLock from "@chakra-ui/focus-lock";
@@ -23,8 +24,10 @@ const listItems = dcNavLinks.map(({ href, text }) => (
       width: "100%",
       marginBottom: "unset",
       fontWeight: "510",
+      color: "ui.black",
       ":hover": {
         textDecoration: "none",
+        color: "ui.black",
       },
       ":visited": {
         color: "ui.black",
@@ -67,29 +70,41 @@ const MobileNavMenu = () => {
           <Icon name={isOpen ? "close" : "utilityHamburger"} size="large" />
         </Button>
         {isOpen && (
-          <nav
-            id="mobile-menu"
-            aria-label="Mobile header links"
-            style={{
-              display: "flex",
-              flexDirection: "column",
-              alignItems: "left",
-              position: "absolute",
-              width: "100%",
-              marginTop: "11px",
-              paddingTop: "m",
-              left: 0,
-              zIndex: 999,
-            }}
-          >
-            <List
-              id="header-mobile-links"
-              listItems={listItems}
-              noStyling
-              type="ul"
-              sx={{ backgroundColor: "ui.white", paddingTop: "m" }}
-            />
-          </nav>
+          <>
+            <nav
+              id="mobile-menu"
+              aria-label="Mobile header links"
+              style={{
+                display: "flex",
+                flexDirection: "column",
+                alignItems: "left",
+                position: "absolute",
+                width: "100%",
+                marginTop: "11px",
+                paddingTop: "m",
+                left: 0,
+                zIndex: 999,
+              }}
+            >
+              <List
+                id="header-mobile-links"
+                listItems={listItems}
+                noStyling
+                type="ul"
+                sx={{ backgroundColor: "ui.white", paddingTop: "m" }}
+              />
+              <HorizontalRule
+                height="1px"
+                width="auto"
+                sx={{
+                  borderColor: "var(--nypl-colors-ui-border-default)",
+                  marginLeft: "0px",
+                  marginRight: "0px",
+                  marginTop: "-16px",
+                }}
+              />
+            </nav>
+          </>
         )}
       </FocusLock>
     </Box>

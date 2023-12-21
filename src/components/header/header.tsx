@@ -35,7 +35,7 @@ const Header = () => {
       <Box
         maxWidth="1280px"
         mx="auto"
-        padding="0 16px"
+        padding="0 16px !important"
         sx={{
           [`@media screen and (min-width: ${headerBreakpoints.lgTablet})`]: {
             display: "flex",
