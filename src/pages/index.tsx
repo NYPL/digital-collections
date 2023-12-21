@@ -11,8 +11,10 @@ import {
 } from "@/utils/utils";
 import Header from "@/components/header/header";
 import HomePageMainContent from "@/components/homePageMainContent/homePageMainContent";
+import ExploreFurther from "@/components/exploreFurther/exploreFurther";
 import appConfig from "appConfig";
 import { imageURL } from "@/utils/utils";
+import NotificationBanner from "@/components/notificationBanner/notificationBanner";
 
 export default function Home(props: any) {
   return (
@@ -20,7 +22,7 @@ export default function Home(props: any) {
       {/**
        * * @TODO: Header will need to be pulled into a reusable Layout component (DC Facelift phase 2)
        * * Let this be @7emansell 's problem if possible **/}
-      <p> Notification banner </p>
+      <NotificationBanner />
       <Header />
       <TemplateAppContainer
         breakout={
@@ -36,6 +38,7 @@ export default function Home(props: any) {
           />
         }
       />
+      <ExploreFurther />
     </>
   );
 }
