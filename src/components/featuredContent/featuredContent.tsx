@@ -17,7 +17,7 @@ const FeaturedContentComponent = ({ randomNumber }) => {
       textContent={
         <Box
           sx={{
-            [`@media screen and (min-width: 600px`]: {
+            [`@media screen and (min-width: 600px)`]: {
               paddingLeft: "32px",
             },
           }}
