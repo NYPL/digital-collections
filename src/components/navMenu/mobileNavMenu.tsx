@@ -70,7 +70,6 @@ const MobileNavMenu = () => {
           <Icon name={isOpen ? "close" : "utilityHamburger"} size="large" />
         </Button>
         {isOpen && (
-          <>
             <nav
               id="mobile-menu"
               aria-label="Mobile header links"
@@ -104,7 +103,6 @@ const MobileNavMenu = () => {
                 }}
               />
             </nav>
-          </>
         )}
       </FocusLock>
     </Box>
