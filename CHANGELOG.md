@@ -14,6 +14,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Update
 - Update version of NYPL Reservoir to 2.0.1
 - Updated image in Hero Component to change on reload. (DR-2565)
+- Updated travis deployer keys after rotation (DR-2722)
 
 ### Added
 - Added spider block script (DR-2518)
