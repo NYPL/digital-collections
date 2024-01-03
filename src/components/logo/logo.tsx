@@ -8,6 +8,7 @@ const DCLogo = ({ isMobile = false }: DCLogoProps) => {
       isUnderlined={false}
       aria-label={"Digital Collections Homepage"}
       href={`/`}
+      sx={{ fontSize: "0px" }}
     >
       {isMobile ? (
         <Logo name="nyplLionBlack" sizeBasedOn="height" height="40px" />
