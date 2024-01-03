@@ -15,13 +15,7 @@ const FeaturedContentComponent = ({ randomNumber }) => {
       data-testid={`featured-content-${randomNumber}`}
       isFullWidth={true}
       textContent={
-        <Box
-          sx={{
-            [`@media screen and (min-width: 600px)`]: {
-              paddingLeft: "32px",
-            },
-          }}
-        >
+        <Box>
           <Heading level="h2" overline={data.overline}>
             {data.heading}
           </Heading>
