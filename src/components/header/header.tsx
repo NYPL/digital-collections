@@ -27,7 +27,7 @@ const Header = () => {
       bgColor="ui.white"
       sx={{
         [`@media screen and (min-width: ${headerBreakpoints.smTablet})`]: {
-          pt: "s",
+          pt: "xs",
         },
         alignItems: "center",
       }}
@@ -49,6 +49,7 @@ const Header = () => {
             display: "none",
             [`@media screen and (min-width: ${headerBreakpoints.smTablet})`]: {
               display: "flex",
+              pt: "2px",
             },
             pb: "xs",
           }}
@@ -100,6 +101,7 @@ const Header = () => {
             [`@media screen and (min-width: ${headerBreakpoints.lgTablet})`]: {
               width: "36%",
             },
+            pt: "xs",
           }}
         >
           <Box
@@ -122,7 +124,10 @@ const Header = () => {
         sx={{
           borderColor: "var(--nypl-colors-ui-border-default)",
           margin: "0px",
-          display: "block",
+          display: "none",
+          [`@media screen and (min-width: ${headerBreakpoints.smTablet})`]: {
+            display: "block",
+          },
         }}
       />
     </Box>
