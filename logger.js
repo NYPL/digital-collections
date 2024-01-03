@@ -1,4 +1,4 @@
-import winston from "winston";
+const winston = require("winston");
 // Supress error handling
 winston.emitErrs = false;
 // Set default NYPL agreed upon log levels
@@ -71,7 +71,7 @@ const formatter = (options) => {
 
 const loggerTransports = [
   new winston.transports.File({
-    filename: "./log/discovery-ui.log",
+    filename: "???",
     // winston should not attempt to catch and log uncaught exceptions when
     // running test suite, as that causes them to be hidden (and causes mocha
     // to return exit code 0, causing the test suite to appear as passed).
