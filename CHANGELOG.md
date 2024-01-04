@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+## [0.1.0] 2024-01-04
+
 ### Created
 
 - Created a campaign hero component and other child components for the featured item data. (DR-2464)
