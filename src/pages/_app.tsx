@@ -7,19 +7,41 @@ import {
 } from "@nypl/design-system-react-components";
 import React from "react";
 
-const onSubmit = async (values) => {
-  const response = await fetch("/api/feedback", {
-    method: "POST",
-    headers: {
-      Accept: "application/json",
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify(values),
-  });
-};
+// const onSubmit = async (values) => {
+//   const response = await fetch("/api/feedback", {
+//     method: "POST",
+//     headers: {
+//       Accept: "application/json",
+//       "Content-Type": "application/json",
+//     },
+//     body: JSON.stringify(values),
+//   });
+// };
 
 export default function App({ Component, pageProps }: AppProps) {
+  const [view, setView] = React.useState("form");
   const { onOpen, isOpen, onClose, FeedbackBox } = useFeedbackBox();
+  const onSubmit = async (values) => {
+    const response = await fetch("/api/feedback", {
+      method: "POST",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(values),
+    })
+      .then((response) => {
+        if (response.ok) {
+          // ...
+          setView("confirmation");
+        }
+      })
+      .catch((error) => {
+        // Reject the promise according to your application.
+        // And then call:
+        setView("error");
+      });
+  };
   return (
     <>
       <Head>
@@ -34,6 +56,7 @@ export default function App({ Component, pageProps }: AppProps) {
           onClose={onClose}
           onOpen={onOpen}
           title="Feedback"
+          view="form"
         />
       </DSProvider>
     </>
