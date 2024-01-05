@@ -81,16 +81,14 @@ export default async function feedbackFormHandler(
     console.log(googleResponse);
     return response.status(200).json({
       text: "successful feedback form submission",
-      //data: googleResponse.data,
     });
   } catch (e) {
     console.log("error: ", e);
-    return response
-      .status(500)
-      .send({
-        message:
-          "something went wrong submitting the feedback form values to the google spreadsheet",
-      });
+    return response.status(500).send({
+      message:
+        "Something went wrong submitting the feedback form values to the google spreadsheet",
+      error: "Internal Server Error",
+    });
   }
 }
 // http://localhost:3000/api/feedback
