@@ -17,8 +17,8 @@ export default async function feedbackFormHandler(
 
   // Values to pass to spreadsheet
   const body = request.body;
-  const type = body.category;
-  const feedbackText = body.comment;
+  const { category: type, comment: feedbackText } = body;
+
   // timetamp
   const timestamp = getCustomTimestamp();
   // page (route)
