@@ -7,17 +7,6 @@ import {
 } from "@nypl/design-system-react-components";
 import React from "react";
 
-// const onSubmit = async (values) => {
-//   const response = await fetch("/api/feedback", {
-//     method: "POST",
-//     headers: {
-//       Accept: "application/json",
-//       "Content-Type": "application/json",
-//     },
-//     body: JSON.stringify(values),
-//   });
-// };
-
 export default function App({ Component, pageProps }: AppProps) {
   const [view, setView] = React.useState("form");
   const { onOpen, isOpen, onClose, FeedbackBox } = useFeedbackBox();
@@ -31,10 +20,13 @@ export default function App({ Component, pageProps }: AppProps) {
       body: JSON.stringify(values),
     })
       .then((response) => {
+        console.log("response is: ", response);
+
         if (response.ok) {
           // ...
-          console.log("response is: ", response);
           setView("confirmation");
+        } else {
+          setView("error");
         }
       })
       .catch((error) => {
@@ -58,7 +50,7 @@ export default function App({ Component, pageProps }: AppProps) {
           onClose={onClose}
           onOpen={onOpen}
           title="Feedback"
-          view="form"
+          view={view}
         />
       </DSProvider>
     </>
