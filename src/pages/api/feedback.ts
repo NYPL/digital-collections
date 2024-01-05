@@ -2,6 +2,7 @@ import type { NextApiRequest, NextApiResponse } from "next";
 import { google } from "googleapis";
 import requestIp from "request-ip";
 import { UAParser } from "ua-parser-js";
+import { getCustomTimestamp } from "@/utils/utils";
 
 export default async function feedbackFormHandler(
   request: NextApiRequest,
@@ -18,19 +19,8 @@ export default async function feedbackFormHandler(
   const body = request.body;
   const type = body.category;
   const feedbackText = body.comment;
-  // timestamp: date
-  const currentDate = new Date();
-  const currentDayOfMonth = currentDate.getDate();
-  const currentMonth = currentDate.getMonth(); // Be careful! January is 0, not 1
-  const currentYear = currentDate.getFullYear();
-  const dateString =
-    currentYear + "-" + (currentMonth + 1) + "-" + currentDayOfMonth;
-  // timestamp: time
-  const hh = currentDate.getUTCHours();
-  const mm = currentDate.getUTCMinutes();
-  const ss = currentDate.getSeconds();
-  const timeString = hh + ":" + mm + ":" + ss;
-  const timestamp = dateString + " " + timeString;
+  // timetamp
+  const timestamp = getCustomTimestamp();
   // page (route)
   const referrer = request.headers.referer;
   const origin = request.headers.origin;
