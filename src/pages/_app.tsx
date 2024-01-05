@@ -33,12 +33,14 @@ export default function App({ Component, pageProps }: AppProps) {
       .then((response) => {
         if (response.ok) {
           // ...
+          console.log("response is: ", response);
           setView("confirmation");
         }
       })
       .catch((error) => {
         // Reject the promise according to your application.
         // And then call:
+        console.log("error is: ", error);
         setView("error");
       });
   };
