@@ -15,6 +15,7 @@ import ExploreFurther from "@/components/exploreFurther/exploreFurther";
 import appConfig from "appConfig";
 import { imageURL } from "@/utils/utils";
 import NotificationBanner from "@/components/notificationBanner/notificationBanner";
+const logger = require("logger");
 
 export default function Home(props: any) {
   return (
@@ -44,6 +45,8 @@ export default function Home(props: any) {
 }
 
 export async function getServerSideProps(context: any) {
+  logger.info("This is an message that does not appear in Docker logs");
+  console.log("This is a message that does appear in Docker logs");
   const lanes = data.lanes;
   const flatCollections = [].concat(...lanes.map((lane) => lane.collections));
   const collectionsWithNumItems = await Promise.allSettled(
