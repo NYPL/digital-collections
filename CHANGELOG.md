@@ -22,6 +22,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Updated featured item link in Hero Component to change on reload using the featured item imageID. (DR-2547)
 - Updated travis deployer keys after rotation (DR-2722)
 - Updated version of NYPL Reservoir to 2.1.3 (DR-2683)
+- Updated travis deployer keys after rotation (DR-2722)
 
 ### Added
 
