@@ -15,7 +15,7 @@ import ExploreFurther from "@/components/exploreFurther/exploreFurther";
 import appConfig from "appConfig";
 import { imageURL } from "@/utils/utils";
 import NotificationBanner from "@/components/notificationBanner/notificationBanner";
-const logger = require("logger");
+import logger from "logger";
 
 export default function Home(props: any) {
   return (
@@ -45,8 +45,6 @@ export default function Home(props: any) {
 }
 
 export async function getServerSideProps(context: any) {
-  logger.info("This is an message that does not appear in Docker logs");
-  console.log("This is a message that does appear in Docker logs");
   const lanes = data.lanes;
   const flatCollections = [].concat(...lanes.map((lane) => lane.collections));
   const collectionsWithNumItems = await Promise.allSettled(
@@ -71,6 +69,7 @@ export async function getServerSideProps(context: any) {
   const randomNumber = Math.floor(Math.random() * 2);
 
   //pass query param to featuredImageID function to check if it is legit
+  logger.info("Generating featured image ID");
   const imageID = context.query.imageID
     ? featuredImageID(context.query.imageID)
     : featuredImageID();

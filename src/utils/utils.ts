@@ -25,7 +25,6 @@ export const setFeaturedItemArray = () => {
  * Returns a random image ID from the list of featured items.
  */
 export const generateRandomImageID = () => {
-  console.log("generating random imageID");
   if (featuredItemArray.length === 0) {
     setFeaturedItemArray();
   }
