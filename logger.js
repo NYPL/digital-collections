@@ -15,27 +15,40 @@ const nyplLogLevels = {
 };
 
 const getLogLevelCode = (levelString) => {
-  if (levelString === "info") {
-    console.log(typeof levelString);
-    console.log(levelString);
-    return 6;
+  switch (levelString) {
+    case "emergency":
+      return 0;
+    case "alert":
+      return 1;
+    case "critical":
+      return 2;
+    case "error":
+      return 3;
+    case "warning":
+      return 4;
+    case "notice":
+      return 5;
+    case "info":
+      return 6;
+    case "debug":
+      return 7;
+    default:
+      return "n/a";
   }
 };
 
 const { combine, timestamp, printf, colorize } = winston.format;
 
 const formatter = printf((info) => {
-  return `[${info.timestamp}] pid: ${process.pid} ${
+  return `[${info.timestamp}] pid: ${process.pid} levelCode: ${getLogLevelCode(
     info.level
-  } ${getLogLevelCode(info.level)}: ${info.message}`;
+  )} level: ${info.level} message: ${info.message}`;
 });
 
 const logger = winston.createLogger({
   levels: nyplLogLevels,
   level: process.env.LOG_LEVEL || "info",
-  // Console format colorized
   format: combine(
-    colorize({ all: true }),
     timestamp({
       format: "YYYY-MM-DD hh:mm:ss.SSS A",
     }),
@@ -45,7 +58,7 @@ const logger = winston.createLogger({
     new winston.transports.Console(),
     new winston.transports.File({
       filename: "./log/dc.log",
-      // Log format uncolorized and space limited
+      // Log format space limited
       format: combine(winston.format.uncolorize(), formatter),
       maxsize: 5242880,
       maxFiles: 5,
