@@ -38,15 +38,7 @@ const ExploreFurther = () => {
       >
         <Box sx={{ paddingBottom: "s" }}>
           <Heading size="heading3" text="Explore further" />
-          <Text
-            sx={{
-              fontSize: "16px",
-              lineHeight: "140%",
-              fontWeight: "400",
-              color: "ui.typography-body",
-              marginTop: "-xs",
-            }}
-          >
+          <Text size="subtitle2">
             Here are some other ways you can access and engage with digital
             content at NYPL and beyond:
           </Text>
@@ -55,6 +47,7 @@ const ExploreFurther = () => {
           <Card
             id={`card-id-${index}`}
             key={`card-key-${index}`}
+            data-testid={`test-id-${index}`}
             imageProps={{
               alt: "",
               aspectRatio: "sixteenByNine",
@@ -92,16 +85,7 @@ const ExploreFurther = () => {
               </Link>
             </CardHeading>
             <CardContent>
-              <Text
-                sx={{
-                  fontSize: "16px",
-                  lineHeight: "140%",
-                  fontWeight: "400",
-                  color: "ui.typography-body",
-                }}
-              >
-                {item.description}
-              </Text>
+              <Text size="subtitle2"> {item.description} </Text>
             </CardContent>
           </Card>
         ))}
