@@ -37,12 +37,18 @@ const getLogLevelCode = (levelString) => {
   }
 };
 
-const { combine, timestamp, printf, colorize } = winston.format;
+const { combine, timestamp, printf } = winston.format;
 
 const formatter = printf((info) => {
-  return `[${info.timestamp}] pid: ${process.pid} levelCode: ${getLogLevelCode(
-    info.level
-  )} level: ${info.level} message: ${info.message}`;
+  const timestamp = new Date().toISOString();
+  const logObject = {
+    timestamp,
+    pid: process.pid,
+    level: info.level,
+    levelCode: getLogLevelCode(info.level),
+    message: info.message,
+  };
+  return JSON.stringify(logObject);
 });
 
 const logger = winston.createLogger({
