@@ -25,7 +25,8 @@
     "**/*.tsx",
     "jest.config.ts",
     "__tests__/**/*.test.ts",
-    "__tests__/**/*.test.tsx"
+    "__tests__/**/*.test.tsx",
+    "__tests__/__mocks__/next/logger.js"
   ],
   "exclude": ["node_modules"]
 }
