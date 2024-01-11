@@ -64,9 +64,15 @@ const SwimLanes = ({ lanesWithNumItems }) => {
                 <Text
                   size="subtitle2"
                   sx={{
-                    display: { sm: "none", md: "inline" },
+                    display: "none",
+                    [`@media screen and (min-width: 600px)`]: {
+                      display: "inline",
+                    },
                   }}
-                >{`${collection.numItems} items`}</Text>
+                >
+                  {" "}
+                  {`${collection.numItems} items`}{" "}
+                </Text>
               </CardContent>
             </Card>
           ))}

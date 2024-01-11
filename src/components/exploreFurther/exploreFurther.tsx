@@ -72,12 +72,7 @@ const ExploreFurther = () => {
                 href={item.url}
                 target="_blank"
                 rel="noreferrer noopener"
-                color="#0069BF"
                 sx={{
-                  color: "#0069BF !important",
-                  ":visited": {
-                    color: "var(--nypl-colors-ui-link-tertiary) !important",
-                  },
                   textDecoration: "none !important",
                 }}
               >
