@@ -11,31 +11,39 @@ export default function App({ Component, pageProps }: AppProps) {
   const [view, setView] = React.useState("form");
   const { onOpen, isOpen, onClose, FeedbackBox } = useFeedbackBox();
   const onSubmit = async (values) => {
-    const response = await fetch("/api/feedback", {
-      method: "POST",
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(values),
-    })
-      .then((response) => {
-        console.log("response is: ", response);
-
-        if (response.ok) {
-          // ...
-          setView("confirmation");
-        } else {
-          setView("error");
-        }
-      })
-      .catch((error) => {
-        // Reject the promise according to your application.
-        // And then call:
-        console.log("error is: ", error);
-        setView("error");
+    try {
+      const response = await fetch("/api/feedback", {
+        method: "POST",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(values),
       });
+
+      console.log("response is: ", response);
+
+      if (response.ok) {
+        // ...
+        setView("confirmation");
+      } else {
+        setView("error");
+      }
+    } catch (error) {
+      // Reject the promise according to your application.
+      // And then call:
+      console.log("error is: ", error);
+      setView("error");
+    }
   };
+
+  const onFormClose = () => {
+    if (isOpen) {
+      onClose();
+      setView("form");
+    }
+  };
+
   return (
     <>
       <Head>
@@ -46,9 +54,7 @@ export default function App({ Component, pageProps }: AppProps) {
         <FeedbackBox
           showCategoryField
           onSubmit={onSubmit}
-          isOpen={isOpen}
-          onClose={onClose}
-          onOpen={onOpen}
+          onClose={onFormClose}
           title="Feedback"
           view={view}
         />
