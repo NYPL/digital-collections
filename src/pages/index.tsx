@@ -68,12 +68,14 @@ export async function getServerSideProps(context: any) {
   const randomNumber = Math.floor(Math.random() * 2);
 
   //pass query param to featuredImageID function to check if it is legit
-  const imageID = context.query.imageID
-    ? featuredImageID(context.query.imageID)
-    : featuredImageID();
+  const imageID = "105180";
+  // context.query.imageID
+  //   ? featuredImageID(context.query.imageID)
+  //   : featuredImageID();
 
   const dataFromUri = await getItemDataFromImageID(imageID);
   const numDigitizedItems = await getNumDigitizedItems();
+
   const featuredItemObject = {
     imageID: imageID,
     imageSrc: imageURL(imageID),

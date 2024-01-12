@@ -78,9 +78,10 @@ export const imageURL = (
 
 export const getNumDigitizedItems = async () => {
   const apiUrl = `${process.env.API_URL}/api/v2/items/total`;
-  const res = await apiCall(apiUrl);
+  // const res = await apiCall(apiUrl);
   const fallbackCount = 863848;
-  const totalItems = res.count.$ || fallbackCount;
+  // const totalItems = res.count.$ || fallbackCount;
+  const totalItems = fallbackCount;
   return addCommas(totalItems);
 };
 
@@ -91,8 +92,8 @@ export const getNumDigitizedItems = async () => {
 
 export const getNumItems = async (uuid: string) => {
   const apiUrl = `${process.env.API_URL}/api/v2/collections/${uuid}/items`;
-  const res = await apiCall(apiUrl);
-  return res.numItems || 0;
+  // const res = await apiCall(apiUrl);
+  return 0; //res.numItems || 0;
 };
 
 /**
@@ -133,10 +134,14 @@ export const apiCall = async (apiUrl: string) => {
 
 export const getItemDataFromImageID = async (imageID: string) => {
   const apiUri = await getAPIUri("local_image_id", imageID);
-  const data = await apiCall(apiUri.apiUri);
+  // const data = await apiCall(apiUri.apiUri);
+  // return {
+  //   uuid: apiUri.uuid,
+  //   title: getTitleFromRepoAPIResponseData(data) || "",
+  // };
   return {
     uuid: apiUri.uuid,
-    title: getTitleFromRepoAPIResponseData(data) || "",
+    title: "",
   };
 };
 
