@@ -15,6 +15,7 @@ import ExploreFurther from "@/components/exploreFurther/exploreFurther";
 import appConfig from "appConfig";
 import { imageURL } from "@/utils/utils";
 import NotificationBanner from "@/components/notificationBanner/notificationBanner";
+import logger from "logger";
 
 export default function Home(props: any) {
   return (
@@ -68,6 +69,7 @@ export async function getServerSideProps(context: any) {
   const randomNumber = Math.floor(Math.random() * 2);
 
   //pass query param to featuredImageID function to check if it is legit
+  logger.info("Generating featured image ID");
   const imageID = context.query.imageID
     ? featuredImageID(context.query.imageID)
     : featuredImageID();
