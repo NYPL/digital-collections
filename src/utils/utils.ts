@@ -133,14 +133,14 @@ export const apiCall = async (apiUrl: string) => {
 };
 
 export const getItemDataFromImageID = async (imageID: string) => {
-  const apiUri = await getAPIUri("local_image_id", imageID);
+  // const apiUri = await getAPIUri("local_image_id", imageID);
   // const data = await apiCall(apiUri.apiUri);
   // return {
   //   uuid: apiUri.uuid,
   //   title: getTitleFromRepoAPIResponseData(data) || "",
   // };
   return {
-    uuid: apiUri.uuid,
+    uuid: "6265a5c0-c5ef-012f-687c-58d385a7bc34", //apiUri.uuid,
     title: "",
   };
 };
