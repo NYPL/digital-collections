@@ -64,6 +64,7 @@ const SwimLanes = ({ lanesWithNumItems }) => {
                 <Text
                   size="subtitle2"
                   sx={{
+                    fontWeight: "400",
                     display: "none",
                     [`@media screen and (min-width: 600px)`]: {
                       display: "inline",
