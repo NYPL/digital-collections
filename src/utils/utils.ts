@@ -141,7 +141,7 @@ export const getItemDataFromImageID = async (imageID: string) => {
   // };
   return {
     uuid: "6265a5c0-c5ef-012f-687c-58d385a7bc34", //apiUri.uuid,
-    title: "",
+    title: "Greetings from Staten Island",
   };
 };
 
