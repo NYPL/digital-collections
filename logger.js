@@ -51,7 +51,7 @@ const formatter = printf((info) => {
   return JSON.stringify(logObject);
 });
 
-// An attempt
+// API workaround for creating log directory in Vercel
 import axios from "axios";
 
 const logDirCreationEndpoint =

@@ -12,7 +12,7 @@ export default async function handler(req, res) {
       res.status(200).json({ message: "Log directory already exists" });
     } else {
       console.error("Error creating log directory", error);
-      res.status(500).json({ message: "ISE" });
+      res.status(500).json({ message: "Internal server error" });
     }
   }
 }
