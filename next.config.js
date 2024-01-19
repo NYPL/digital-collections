@@ -4,7 +4,7 @@ const nextConfig = {
   env: {
     DC_URL: "https://qa-digitalcollections.nypl.org",
   },
-  output: "standalone",
+  experimental: { nftTracing: true },
 };
 
 module.exports = nextConfig;
