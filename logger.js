@@ -1,5 +1,5 @@
 const winston = require("winston");
-import path from "path";
+//import path from "path";
 winston.exceptions.handle = () => {};
 
 // Set default NYPL agreed upon log levels
@@ -63,10 +63,7 @@ const logger = winston.createLogger({
   transports: [
     new winston.transports.Console(),
     new winston.transports.File({
-      filename: path.resolve(
-        process.cwd(),
-        process.env.LOG_PATH || "log/dc.log"
-      ),
+      filename: "/log/dc.log",
       // Log format space limited
       format: combine(winston.format.uncolorize(), formatter),
       maxsize: 5242880,
