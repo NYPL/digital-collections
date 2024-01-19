@@ -63,7 +63,7 @@ const logger = winston.createLogger({
   transports: [
     new winston.transports.Console(),
     new winston.transports.File({
-      filename: "./log/dc.log",
+      filename: process.cwd() + "/log/dc.log",
       // Log format space limited
       format: combine(winston.format.uncolorize(), formatter),
       maxsize: 5242880,
@@ -71,5 +71,7 @@ const logger = winston.createLogger({
     }),
   ],
 });
+
+console.log(`Current directory: ${process.cwd()}`);
 
 export default logger;
