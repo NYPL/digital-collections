@@ -1,4 +1,5 @@
 const winston = require("winston");
+import path from "path";
 
 winston.exceptions.handle = () => {};
 
@@ -63,7 +64,7 @@ const logger = winston.createLogger({
   transports: [
     new winston.transports.Console(),
     new winston.transports.File({
-      filename: process.cwd() + "/log/dc.log",
+      filename: path.join(process.cwd(), "/log/dc.log"),
       // Log format space limited
       format: combine(winston.format.uncolorize(), formatter),
       maxsize: 5242880,
