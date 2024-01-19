@@ -4,6 +4,7 @@ const nextConfig = {
   env: {
     DC_URL: "https://qa-digitalcollections.nypl.org",
   },
+  output: "standalone",
 };
 
 module.exports = nextConfig;
