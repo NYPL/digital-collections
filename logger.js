@@ -1,5 +1,5 @@
 const winston = require("winston");
-//import path from "path";
+import path from "path";
 winston.exceptions.handle = () => {};
 
 // Set default NYPL agreed upon log levels
@@ -51,6 +51,16 @@ const formatter = printf((info) => {
   return JSON.stringify(logObject);
 });
 
+// An attempt
+import axios from "axios";
+
+const logDirCreationEndpoint =
+  "https://digital-collections-git-feature-dr-2715logging-nypl.vercel.app/api/createLogDir";
+
+await axios.get(logDirCreationEndpoint).catch((error) => {
+  console.error("Error", error.message);
+});
+
 const logger = winston.createLogger({
   levels: nyplLogLevels,
   level: process.env.LOG_LEVEL || "info",
@@ -63,7 +73,7 @@ const logger = winston.createLogger({
   transports: [
     new winston.transports.Console(),
     new winston.transports.File({
-      filename: "./log/dc.log",
+      filename: path.resolve(process.cwd(), "log", "dc.log"),
       // Log format space limited
       format: combine(winston.format.uncolorize(), formatter),
       maxsize: 5242880,
