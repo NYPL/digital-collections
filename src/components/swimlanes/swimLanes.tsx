@@ -7,7 +7,9 @@ import {
   Heading,
   SimpleGrid,
   Spacer,
+  Text,
   Link,
+  CardContent,
 } from "@nypl/design-system-react-components";
 import styles from "./Swimlanes.module.css";
 import { imageURL } from "@/utils/utils";
@@ -43,6 +45,7 @@ const SwimLanes = ({ lanesWithNumItems }) => {
               id={`card-${lane.slug}-${index}`}
               imageProps={{
                 alt: "",
+                isLazy: true,
                 aspectRatio: "twoByOne",
                 src: imageURL(collection.image_id, "full", "288,", "0"),
               }}
@@ -57,16 +60,21 @@ const SwimLanes = ({ lanesWithNumItems }) => {
               >
                 {collection.title}
               </CardHeading>
-              {/*TODO: Check Dec 7 2023 with React release that this subtitle
-               ** style will now appear as intended */}
-              <CardHeading
-                size="subtitle2"
-                sx={{
-                  display: { sm: "none", md: "inline" },
-                }}
-              >
-                <> {collection.numItems} items </>
-              </CardHeading>
+              <CardContent>
+                <Text
+                  size="subtitle2"
+                  sx={{
+                    fontWeight: "400",
+                    display: "none",
+                    [`@media screen and (min-width: 600px)`]: {
+                      display: "inline",
+                    },
+                  }}
+                >
+                  {" "}
+                  {`${collection.numItems} items`}{" "}
+                </Text>
+              </CardContent>
             </Card>
           ))}
         </SimpleGrid>

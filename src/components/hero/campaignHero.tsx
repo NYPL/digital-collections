@@ -8,6 +8,7 @@ const CampaignHero = ({ featuredItem, numberOfDigitizedItems }: any) => {
     <Hero
       backgroundImageSrc={featuredItem.imageSrc}
       backgroundColor="ui.bg.default"
+      isDarkBackgroundImage
       heroType="campaign"
       heading={
         <CampaignHeroHeading numberOfDigitizedItems={numberOfDigitizedItems} />
