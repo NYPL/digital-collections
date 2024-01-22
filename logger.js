@@ -77,6 +77,8 @@ const initializeLogger = () => {
   });
 };
 
-const logger = initializeLogger();
+const logger = process.env.NEXT_PUBLIC_DISABLE_LOGGER
+  ? initializeLogger()
+  : console;
 
 export default logger;
