@@ -1,9 +1,7 @@
 import path from "path";
 import winston from "winston";
-let logger;
 
-// Check if logging should be enabled
-if (process.env.NEXT_PUBLIC_DISABLE_SOMETHING !== "true") {
+const initializeLogger = () => {
   winston.exceptions.handle = () => {};
 
   // Set default NYPL agreed upon log levels
@@ -55,7 +53,18 @@ if (process.env.NEXT_PUBLIC_DISABLE_SOMETHING !== "true") {
     return JSON.stringify(logObject);
   });
 
-  logger = winston.createLogger({
+  const transports = [
+    new winston.transports.Console(),
+    new winston.transports.File({
+      filename: path.resolve(process.cwd(), "log", "dc.log"),
+      // Log format space limited
+      format: combine(winston.format.uncolorize(), formatter),
+      maxsize: 5242880,
+      maxFiles: 5,
+    }),
+  ];
+
+  return winston.createLogger({
     levels: nyplLogLevels,
     level: process.env.LOG_LEVEL || "info",
     format: combine(
@@ -64,20 +73,11 @@ if (process.env.NEXT_PUBLIC_DISABLE_SOMETHING !== "true") {
       }),
       formatter
     ),
-    transports: [
-      new winston.transports.Console(),
-      new winston.transports.File({
-        filename: path.resolve(process.cwd(), "log", "dc.log"),
-        // Log format space limited
-        format: combine(winston.format.uncolorize(), formatter),
-        maxsize: 5242880,
-        maxFiles: 5,
-      }),
-    ],
+    transports,
   });
-} else {
-  logger = winston.createLogger({
-    silent: true,
-  });
-}
+};
+
+const logger =
+  process.env.NEXT_PUBLIC_DISABLE_LOGGER !== "true" ? initializeLogger() : null;
+
 export default logger;
