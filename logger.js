@@ -77,6 +77,9 @@ const initializeLogger = () => {
   });
 };
 
+if (process.env.NEXT_PUBLIC_DISABLE_LOGGER) {
+  console.log("Running on Vercel");
+}
 const logger = process.env.NEXT_PUBLIC_DISABLE_LOGGER
   ? initializeLogger()
   : console;
