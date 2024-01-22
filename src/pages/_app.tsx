@@ -28,6 +28,22 @@ export default function App({ Component, pageProps }: AppProps) {
         />
         <meta property="og:type" content="website" />
         <meta property="og:site_name" content="NYPL Digital Collections" />
+        <meta
+          name="twitter:url"
+          content="https://digitalcollections.nypl.org/"
+        />
+        <meta name="twitter:title" content="NYPL Digital Collections" />
+        <meta
+          name="twitter:description"
+          content="Explore hundreds of thousands of digital items from The New York Public Library."
+        />
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta
+          name="twitter:image"
+          content="https://digitalcollections.nypl.org/featured_items/ps_mss_831.jpg"
+        />
+        <meta name="twitter:site" content="@nypl" />
+        <meta name="twitter:creator" content="@nypl" />
       </Head>
       <DSProvider>
         <Component {...pageProps} />
