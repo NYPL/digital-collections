@@ -77,11 +77,10 @@ const initializeLogger = () => {
   });
 };
 
-if (process.env.NEXT_PUBLIC_DISABLE_LOGGER) {
+const isRunningOnVercel = process.env.VERCEL === "1";
+if (isRunningOnVercel) {
   console.log("Running on Vercel");
 }
-const logger = process.env.NEXT_PUBLIC_DISABLE_LOGGER
-  ? initializeLogger()
-  : console;
+const logger = isRunningOnVercel ? console : initializeLogger();
 
 export default logger;
