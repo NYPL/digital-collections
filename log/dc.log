@@ -13,3 +13,10 @@
 {"timestamp":"2024-01-22T18:34:14.392Z","pid":57278,"level":"info","levelCode":6,"message":"Generating featured image ID"}
 {"timestamp":"2024-01-22T18:34:17.893Z","pid":57278,"level":"info","levelCode":6,"message":"Generating featured image ID"}
 {"timestamp":"2024-01-22T19:21:42.589Z","pid":74712,"level":"info","levelCode":6,"message":"Generating featured image id"}
+{"timestamp":"2024-01-22T19:23:04.239Z","pid":76403,"level":"info","levelCode":6,"message":"Generating featured image id"}
+{"timestamp":"2024-01-22T19:23:16.933Z","pid":76403,"level":"info","levelCode":6,"message":"Generating featured image id"}
+{"timestamp":"2024-01-22T19:24:03.397Z","pid":76403,"level":"info","levelCode":6,"message":"Generating featured image id"}
+{"timestamp":"2024-01-22T19:24:15.904Z","pid":77023,"level":"info","levelCode":6,"message":"Generating featured image id"}
+{"timestamp":"2024-01-22T19:24:50.260Z","pid":77325,"level":"info","levelCode":6,"message":"Generating featured image id"}
+{"timestamp":"2024-01-22T19:25:16.080Z","pid":77325,"level":"info","levelCode":6,"message":"Generating featured image id"}
+{"timestamp":"2024-01-22T19:25:16.081Z","pid":77325,"level":"error","levelCode":3,"message":"Just testing"}
