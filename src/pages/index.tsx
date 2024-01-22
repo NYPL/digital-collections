@@ -70,7 +70,6 @@ export async function getServerSideProps(context: any) {
 
   //pass query param to featuredImageID function to check if it is legit
   logger.info("Generating featured image id");
-  logger.error("Just testing");
   const imageID = context.query.imageID
     ? featuredImageID(context.query.imageID)
     : featuredImageID();

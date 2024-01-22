@@ -78,9 +78,7 @@ const initializeLogger = () => {
 };
 
 const isRunningOnVercel = process.env.VERCEL === "1";
-if (isRunningOnVercel) {
-  console.log("Running on Vercel");
-}
+
 const logger = isRunningOnVercel ? console : initializeLogger();
 
 export default logger;
