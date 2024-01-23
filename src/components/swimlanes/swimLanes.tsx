@@ -49,6 +49,9 @@ const SwimLanes = ({ lanesWithNumItems }) => {
                 isLazy: true,
                 aspectRatio: "twoByOne",
                 src: imageURL(collection.image_id, "full", "288,", "0"),
+                // TODO: *IF* we want to use the Nextjs Image component, this
+                // is how we would do it. It's suppose to be better for
+                // performance but it's not visibly noticeable.
                 // component: (
                 //   <Image
                 //     src={imageURL(collection.image_id, "full", "288,", "0")}
