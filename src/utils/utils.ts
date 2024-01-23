@@ -42,7 +42,6 @@ export const featuredImageID = (imageID = "") => {
   if (featuredItemArray.length === 0) {
     setFeaturedItemArray();
   }
-
   if (imageID !== "") {
     return featuredItemArray.includes(imageID)
       ? imageID
@@ -161,4 +160,23 @@ function getTitleFromRepoAPIResponseData(data) {
     title = titleInfo.title.$;
   }
   return title;
+}
+
+export function getCustomTimestamp() {
+  // Return the formatted number
+  // timestamp: date
+  const currentDate = new Date();
+  const currentDayOfMonth = currentDate.getDate();
+  const currentMonth = currentDate.getMonth(); // Be careful! January is 0, not 1
+  const currentYear = currentDate.getFullYear();
+  const dateString =
+    currentYear + "-" + (currentMonth + 1) + "-" + currentDayOfMonth;
+  // timestamp: time
+  const hh = currentDate.getUTCHours();
+  const mm = currentDate.getUTCMinutes();
+  const ss = currentDate.getSeconds();
+  const timeString = hh + ":" + mm + ":" + ss;
+  const timestamp = dateString + " " + timeString;
+
+  return timestamp;
 }
