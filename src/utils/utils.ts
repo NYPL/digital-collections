@@ -76,7 +76,10 @@ export const imageURL = (
 
 export const getNumDigitizedItems = async () => {
   const apiUrl = `${process.env.API_URL}/api/v2/items/total`;
+  console.log(`getNumDigitizedItems: About to fetch ${apiUrl}`);
+  console.log(`getNumDigitizedItems calls apiCall function internally`);
   const res = await apiCall(apiUrl);
+
   const fallbackCount = 863848;
   const totalItems = res.count.$ || fallbackCount;
   return addCommas(totalItems);
@@ -89,6 +92,8 @@ export const getNumDigitizedItems = async () => {
 
 export const getNumItems = async (uuid: string) => {
   const apiUrl = `${process.env.API_URL}/api/v2/collections/${uuid}/items`;
+  console.log(`getNumItems: About to fetch ${apiUrl}`);
+  console.log(`getNumItems calls apiCall function internally`);
   const res = await apiCall(apiUrl);
   return res.numItems || 0;
 };
@@ -101,7 +106,10 @@ export const getNumItems = async (uuid: string) => {
 
 export const getAPIUri = async (identifierType: string, identifier: string) => {
   const apiUrl = `${process.env.API_URL}/api/v2/items/${identifierType}/${identifier}`;
-  return apiCall(apiUrl);
+  console.log(`getAPIUri: About to fetch ${apiUrl}`);
+  console.log(`getAPIUri calls apiCall function internally`);
+  const apiCallValue = apiCall(apiUrl);
+  return apiCallValue;
 };
 
 /**
@@ -112,6 +120,7 @@ export const getAPIUri = async (identifierType: string, identifier: string) => {
 export const apiCall = async (apiUrl: string) => {
   const apiKey = process.env.AUTH_TOKEN;
   try {
+    const startTime = new Date().getTime();
     const response = await fetch(apiUrl, {
       headers: {
         Authorization: `Token token=${apiKey}`,
@@ -120,6 +129,8 @@ export const apiCall = async (apiUrl: string) => {
 
     if (response.status === 200) {
       const data = await response.json();
+      console.log(`apiCall: called ${apiUrl}`);
+      console.log(`Response time: ${new Date().getTime() - startTime}`);
       return data.nyplAPI.response;
     } else {
       return undefined;
@@ -130,6 +141,9 @@ export const apiCall = async (apiUrl: string) => {
 };
 
 export const getItemDataFromImageID = async (imageID: string) => {
+  console.log(
+    `getItemDataFromImageID: About call getAPIUri and apiCall for image id: ${imageID}`
+  );
   const apiUri = await getAPIUri("local_image_id", imageID);
   const data = await apiCall(apiUri.apiUri);
   return {

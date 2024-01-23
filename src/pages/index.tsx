@@ -74,6 +74,7 @@ export async function getServerSideProps(context: any) {
     ? featuredImageID(context.query.imageID)
     : featuredImageID();
 
+  console.log("Timer 1: Calls getItemDataFromImageID and getNumDigitizedItems");
   console.time("timer1");
   const dataFromUri = await getItemDataFromImageID(imageID);
   const numDigitizedItems = await getNumDigitizedItems();
