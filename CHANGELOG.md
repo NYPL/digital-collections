@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+- Added feedback button and logic for form to submit to google spreadsheet (DR-2595)
+
 ## [0.1.0] 2024-01-08
 
 ### Created
@@ -26,7 +28,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
-- Added feedback button and logic for form to submit to google spreadsheet (DR-2595)
 - Added spider block script (DR-2518)
 - Created Dockerfile and docker-compose.yml files. (DR-2446)
 - Created Next.js 13 app using NYPL Reservoir and TS 4.9.5. (DR-2444)
