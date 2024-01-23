@@ -14,6 +14,8 @@ import HomePageMainContent from "@/components/homePageMainContent/homePageMainCo
 import ExploreFurther from "@/components/exploreFurther/exploreFurther";
 import appConfig from "appConfig";
 import { imageURL } from "@/utils/utils";
+import NotificationBanner from "@/components/notificationBanner/notificationBanner";
+import logger from "logger";
 
 export default function Home(props: any) {
   return (
@@ -21,7 +23,7 @@ export default function Home(props: any) {
       {/**
        * * @TODO: Header will need to be pulled into a reusable Layout component (DC Facelift phase 2)
        * * Let this be @7emansell 's problem if possible **/}
-      <p> Notification banner </p>
+      <NotificationBanner />
       <Header />
       <TemplateAppContainer
         breakout={
@@ -67,12 +69,16 @@ export async function getServerSideProps(context: any) {
   const randomNumber = Math.floor(Math.random() * 2);
 
   //pass query param to featuredImageID function to check if it is legit
+  logger.info("Generating featured image id");
   const imageID = context.query.imageID
     ? featuredImageID(context.query.imageID)
     : featuredImageID();
 
+  console.time("timer1");
   const dataFromUri = await getItemDataFromImageID(imageID);
   const numDigitizedItems = await getNumDigitizedItems();
+  console.timeEnd("timer1");
+
   const featuredItemObject = {
     imageID: imageID,
     imageSrc: imageURL(imageID),

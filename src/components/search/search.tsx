@@ -35,9 +35,8 @@ const Search = () => {
         sx={{
           alignItems: "start",
           width: "100%",
-          [`@media screen and (min-width: ${headerBreakpoints.lgMobile})`]: {
-            pt: "xs",
-          },
+          marginTop: "0px !important",
+          pt: "xs",
           [`@media screen and (min-width: ${headerBreakpoints.lgTablet})`]: {
             pt: "0px",
           },
