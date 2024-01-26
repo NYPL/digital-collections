@@ -84,6 +84,11 @@ export default function App({ Component, pageProps }: AppProps) {
         />
         <meta name="twitter:site" content="@nypl" />
         <meta name="twitter:creator" content="@nypl" />
+        <meta
+          name="google-site-verification"
+          content="_shbOK1otHA_eFNFgJsOwITZrWQwRg4wr8nmrJPNVDM"
+        />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
       </Head>
       <DSProvider>
         <Component {...pageProps} />
