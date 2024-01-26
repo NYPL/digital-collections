@@ -49,10 +49,6 @@ export default function App({ Component, pageProps }: AppProps) {
           content="_shbOK1otHA_eFNFgJsOwITZrWQwRg4wr8nmrJPNVDM"
         />
         <meta name="csrf-param" content="authenticity_token" />
-        <meta
-          name="csrf-token"
-          content="YGD90UPAnu6p7nAVRLc7kYIQ9hBGSuLSphWaMZdj/r/pv9PTpDmiEQwEpy0Cv6CN7emeN6vjQOprMKv/+q3WeA=="
-        />
         <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
       </Head>
       <DSProvider>
