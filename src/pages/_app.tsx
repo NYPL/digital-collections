@@ -48,7 +48,6 @@ export default function App({ Component, pageProps }: AppProps) {
           name="google-site-verification"
           content="_shbOK1otHA_eFNFgJsOwITZrWQwRg4wr8nmrJPNVDM"
         />
-        <meta name="csrf-param" content="authenticity_token" />
         <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
       </Head>
       <DSProvider>
