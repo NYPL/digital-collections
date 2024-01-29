@@ -7,6 +7,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+### Updated
+
+- Updated favicon.ico
+- Added feedback button and logic for form to submit to google spreadsheet (DR-2595)
+
 ## [0.1.0] 2024-01-08
 
 ### Created

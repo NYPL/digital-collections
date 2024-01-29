@@ -70,39 +70,39 @@ const MobileNavMenu = () => {
           <Icon name={isOpen ? "close" : "utilityHamburger"} size="large" />
         </Button>
         {isOpen && (
-            <nav
-              id="mobile-menu"
-              aria-label="Mobile header links"
-              style={{
-                display: "flex",
-                flexDirection: "column",
-                alignItems: "left",
-                position: "absolute",
-                width: "100%",
-                marginTop: "11px",
-                paddingTop: "m",
-                left: 0,
-                zIndex: 999,
+          <nav
+            id="mobile-menu"
+            aria-label="Mobile header links"
+            style={{
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "left",
+              position: "absolute",
+              width: "100%",
+              marginTop: "11px",
+              paddingTop: "m",
+              left: 0,
+              zIndex: 999,
+            }}
+          >
+            <List
+              id="header-mobile-links"
+              listItems={listItems}
+              noStyling
+              type="ul"
+              sx={{ backgroundColor: "ui.white", paddingTop: "m" }}
+            />
+            <HorizontalRule
+              height="1px"
+              width="auto"
+              sx={{
+                borderColor: "var(--nypl-colors-ui-border-default)",
+                marginLeft: "0px",
+                marginRight: "0px",
+                marginTop: "-16px",
               }}
-            >
-              <List
-                id="header-mobile-links"
-                listItems={listItems}
-                noStyling
-                type="ul"
-                sx={{ backgroundColor: "ui.white", paddingTop: "m" }}
-              />
-              <HorizontalRule
-                height="1px"
-                width="auto"
-                sx={{
-                  borderColor: "var(--nypl-colors-ui-border-default)",
-                  marginLeft: "0px",
-                  marginRight: "0px",
-                  marginTop: "-16px",
-                }}
-              />
-            </nav>
+            />
+          </nav>
         )}
       </FocusLock>
     </Box>

@@ -15,6 +15,7 @@ import ExploreFurther from "@/components/exploreFurther/exploreFurther";
 import appConfig from "appConfig";
 import { imageURL } from "@/utils/utils";
 import NotificationBanner from "@/components/notificationBanner/notificationBanner";
+import logger from "logger";
 
 export default function Home(props: any) {
   return (
@@ -73,8 +74,11 @@ export async function getServerSideProps(context: any) {
   //   ? featuredImageID(context.query.imageID)
   //   : featuredImageID();
 
+  console.log("Timer 1: Calls getItemDataFromImageID and getNumDigitizedItems");
+  console.time("timer1");
   const dataFromUri = await getItemDataFromImageID(imageID);
   const numDigitizedItems = await getNumDigitizedItems();
+  console.timeEnd("timer1");
 
   const featuredItemObject = {
     imageID: imageID,
