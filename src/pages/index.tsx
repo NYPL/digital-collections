@@ -16,8 +16,34 @@ import appConfig from "appConfig";
 import { imageURL } from "@/utils/utils";
 import NotificationBanner from "@/components/notificationBanner/notificationBanner";
 import logger from "logger";
+import { useEffect, useState } from "react";
 
-export default function Home(props: any) {
+export default function Home(props: any = {}) {
+  console.log("props", props);
+  // const [homepagedata, setHomepagedata] = useState<any>({});
+  // const [heroData, setheroData] = useState<any>({});
+  // console.log("home");
+  // const imageID = featuredImageID();
+
+  // useEffect(() => {
+  //   console.log("useffect swimlanes");
+  //   const fetchData = async () => {
+  //     const response = await fetch("/api/homepagedata");
+  //     const data = await response.json();
+  //     console.log(data);
+  //     setHomepagedata(data);
+  //   };
+  //   const fetchHeroData = async () => {
+  //     console.log("imageID", imageID);
+  //     const response = await fetch(`/api/featuredHero?imageID=${imageID}`);
+  //     const data = await response.json();
+  //     console.log(data);
+  //     setheroData(data);
+  //   };
+  //   fetchHeroData();
+  //   fetchData();
+  // }, []);
+
   return (
     <>
       {/**
@@ -46,54 +72,61 @@ export default function Home(props: any) {
 
 export async function getServerSideProps(context: any) {
   const lanes = data.lanes;
-  const flatCollections = [].concat(...lanes.map((lane) => lane.collections));
-  const collectionsWithNumItems = await Promise.allSettled(
-    flatCollections.map(async (collection) => {
-      try {
-        const numItems = await getNumItems(collection.uuid);
-        return { ...collection, numItems };
-      } catch (error) {
-        return { ...collection, numItems: 0 };
-      }
-    })
-  );
-  const updatedLanes = lanes.map((lane) => {
-    const updatedCollections = lane.collections.map(() => {
-      const result = collectionsWithNumItems.shift();
-      return result.status === "fulfilled"
-        ? result.value
-        : { ...result, value: {} };
-    });
-    return { ...lane, collections: updatedCollections };
-  });
   const randomNumber = Math.floor(Math.random() * 2);
+  //   const flatCollections = [].concat(...lanes.map((lane) => lane.collections));
+  //   const collectionsWithNumItems = await Promise.allSettled(
+  //     flatCollections.map(async (collection) => {
+  //       try {
+  //         const numItems = await getNumItems(collection.uuid);
+  //         return { ...collection, numItems };
+  //       } catch (error) {
+  //         return { ...collection, numItems: 0 };
+  //       }
+  //     })
+  //   );
+  //   const updatedLanes = lanes.map((lane) => {
+  //     const updatedCollections = lane.collections.map(() => {
+  //       const result = collectionsWithNumItems.shift();
+  //       return result.status === "fulfilled"
+  //         ? result.value
+  //         : { ...result, value: {} };
+  //     });
+  //     return { ...lane, collections: updatedCollections };
+  //   });
 
-  //pass query param to featuredImageID function to check if it is legit
-  logger.info("Generating featured image id");
-  const imageID = context.query.imageID
-    ? featuredImageID(context.query.imageID)
-    : featuredImageID();
+  //   //pass query param to featuredImageID function to check if it is legit
+  //   logger.info("Generating featured image id");
+  //   const imageID = context.query.imageID
+  //     ? featuredImageID(context.query.imageID)
+  //     : featuredImageID();
 
-  console.log("Timer 1: Calls getItemDataFromImageID and getNumDigitizedItems");
-  console.time("timer1");
-  const dataFromUri = await getItemDataFromImageID(imageID);
-  const numDigitizedItems = await getNumDigitizedItems();
-  console.timeEnd("timer1");
+  //   console.log("Timer 1: Calls getItemDataFromImageID and getNumDigitizedItems");
+  //   console.time("timer1");
+  //   const dataFromUri = await getItemDataFromImageID(imageID);
+  //   const numDigitizedItems = await getNumDigitizedItems();
+  //   console.timeEnd("timer1");
 
-  const featuredItemObject = {
-    imageID: imageID,
-    imageSrc: imageURL(imageID),
-    uuid: dataFromUri.uuid,
-    title: dataFromUri.title,
-    href: `${appConfig.DC_URL}/items/${dataFromUri.uuid}`,
-  };
+  //   const featuredItemObject = {
+  //     imageID: imageID,
+  //     imageSrc: imageURL(imageID),
+  //     uuid: dataFromUri.uuid,
+  //     title: dataFromUri.title,
+  //     href: `${appConfig.DC_URL}/items/${dataFromUri.uuid}`,
+  //   };
 
   return {
     props: {
       randomNumber,
-      lanesWithNumItems: updatedLanes,
-      featuredItem: featuredItemObject,
-      numberOfDigitizedItems: numDigitizedItems,
+      lanesWithNumItems: lanes,
+      featuredItem: {
+        href: "https://qa-digitalcollections.nypl.org/items/3b2a61a0-c6cf-012f-b70d-58d385a7bc34",
+        imageID: "433221",
+        imageSrc:
+          "https://iiif.nypl.org/iiif/2/433221/full/!1600,1600/0/default.jpg",
+        title: "An oasis in the Badlands",
+        uuid: "3b2a61a0-c6cf-012f-b70d-58d385a7bc34",
+      },
+      numberOfDigitizedItems: "863,848",
     },
   };
 }
