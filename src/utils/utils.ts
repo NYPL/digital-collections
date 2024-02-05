@@ -198,7 +198,7 @@ export function getCustomTimestamp() {
 import {
   ADOBE_ANALYTICS_SITE_SECTION,
   ADOBE_ANALYTICS_PAGE_NAMES,
-  ADOBE_ANALYTICS_RC_PREFIX,
+  ADOBE_ANALYTICS_DC_PREFIX,
   BASE_URL,
 } from "../config/constants";
 
@@ -214,7 +214,6 @@ const adobeAnalyticsParam = (param = "") => {
 export const adobeAnalyticsRouteToPageName = (route = "", queryParams = "") => {
   // parse additional route attributes
   let pageName = "";
-  console.log("route is: ", route);
 
   switch (route) {
     case route.match(/^\/?(\?.+)?$/)?.input:
@@ -225,7 +224,7 @@ export const adobeAnalyticsRouteToPageName = (route = "", queryParams = "") => {
       break;
   }
 
-  return ADOBE_ANALYTICS_RC_PREFIX + pageName;
+  return ADOBE_ANALYTICS_DC_PREFIX + pageName;
 };
 
 /**

@@ -159,7 +159,7 @@ describe.skip("apiCall()", () => {
 
 import { adobeAnalyticsRouteToPageName } from "../utils/utils";
 import {
-  ADOBE_ANALYTICS_RC_PREFIX,
+  ADOBE_ANALYTICS_DC_PREFIX,
   ADOBE_ANALYTICS_PAGE_NAMES,
 } from "../config/constants";
 
@@ -167,10 +167,10 @@ describe("appUtils", () => {
   describe("adobeAnalyticsRouteToPageName", () => {
     it("should return the appropriate page name for a given route", () => {
       expect(adobeAnalyticsRouteToPageName("/")).toBe(
-        `${ADOBE_ANALYTICS_RC_PREFIX}${ADOBE_ANALYTICS_PAGE_NAMES.HOME}`
+        `${ADOBE_ANALYTICS_DC_PREFIX}${ADOBE_ANALYTICS_PAGE_NAMES.HOME}`
       );
       expect(adobeAnalyticsRouteToPageName("")).toBe(
-        `${ADOBE_ANALYTICS_RC_PREFIX}${ADOBE_ANALYTICS_PAGE_NAMES.HOME}`
+        `${ADOBE_ANALYTICS_DC_PREFIX}${ADOBE_ANALYTICS_PAGE_NAMES.HOME}`
       );
     });
   });
