@@ -17,31 +17,31 @@ const itemsDataHandler = async (
   const { method } = request;
   if (method === "GET") {
     const lanes = data.lanes;
-    // const flatCollections = [].concat(...lanes.map((lane) => lane.collections));
-    // const collectionsWithNumItems = await Promise.allSettled(
-    //   flatCollections.map(async (collection) => {
-    //     try {
-    //       const numItems = await getNumItems(collection.uuid);
-    //       return { ...collection, numItems };
-    //     } catch (error) {
-    //       return { ...collection, numItems: 0 };
-    //     }
-    //   })
-    // );
-    // const updatedLanes = lanes.map((lane) => {
-    //   const updatedCollections = lane.collections.map(() => {
-    //     const result = collectionsWithNumItems.shift();
-    //     return result.status === "fulfilled"
-    //       ? result.value
-    //       : { ...result, value: {} };
-    //   });
-    //   return { ...lane, collections: updatedCollections };
-    // });
+    const flatCollections = [].concat(...lanes.map((lane) => lane.collections));
+    const collectionsWithNumItems = await Promise.allSettled(
+      flatCollections.map(async (collection) => {
+        try {
+          const numItems = await getNumItems(collection.uuid);
+          return { ...collection, numItems };
+        } catch (error) {
+          return { ...collection, numItems: 0 };
+        }
+      })
+    );
+    const updatedLanes = lanes.map((lane) => {
+      const updatedCollections = lane.collections.map(() => {
+        const result = collectionsWithNumItems.shift();
+        return result.status === "fulfilled"
+          ? result.value
+          : { ...result, value: {} };
+      });
+      return { ...lane, collections: updatedCollections };
+    });
     const randomNumber = Math.floor(Math.random() * 2);
 
     return response.status(200).json({
       randomNumber,
-      lanesWithNumItems: lanes,
+      lanesWithNumItems: updatedLanes,
     });
   }
 };
