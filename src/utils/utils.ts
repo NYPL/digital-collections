@@ -194,3 +194,56 @@ export function getCustomTimestamp() {
 
   return timestamp;
 }
+
+import {
+  ADOBE_ANALYTICS_SITE_SECTION,
+  ADOBE_ANALYTICS_PAGE_NAMES,
+  ADOBE_ANALYTICS_DC_PREFIX,
+  BASE_URL,
+} from "../config/constants";
+
+/**
+ * adobeAnalyticsParam
+ * Utility function that builds a param string as expected by the Adobe Analytics dashboard
+ */
+const adobeAnalyticsParam = (param = "") => {
+  return param.length ? `|${param}` : "";
+};
+
+// Maps routes to the appropriate page name for Adobe Analytics.
+export const adobeAnalyticsRouteToPageName = (route = "", queryParams = "") => {
+  // parse additional route attributes
+  let pageName = "";
+
+  switch (route) {
+    case route.match(/^\/?(\?.+)?$/)?.input:
+      pageName = ADOBE_ANALYTICS_PAGE_NAMES.HOME;
+      break;
+    default:
+      pageName = `UNREGISTERED ROUTE: ${route}`;
+      break;
+  }
+
+  return ADOBE_ANALYTICS_DC_PREFIX + pageName;
+};
+
+/**
+ * Tracks a virtual page view to Adobe Analytics on page navigation.
+ */
+export const trackVirtualPageView = (pathname = "") => {
+  const adobeDataLayer = window["adobeDataLayer"] || [];
+  const route = pathname.toLowerCase().replace(BASE_URL, "");
+  const queryIndex = route.indexOf("?");
+  const path = route.substring(0, queryIndex);
+  const queryParams = route.slice(queryIndex);
+
+  adobeDataLayer.push({
+    page_name: null,
+    site_section: null,
+  });
+  adobeDataLayer.push({
+    event: "virtual_page_view",
+    page_name: adobeAnalyticsRouteToPageName(path, queryParams),
+    site_section: ADOBE_ANALYTICS_SITE_SECTION,
+  });
+};
