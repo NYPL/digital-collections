@@ -6,8 +6,14 @@ import {
   useFeedbackBox,
 } from "@nypl/design-system-react-components";
 import React from "react";
+import { useEffect } from "react";
+import { useRouter } from "next/router";
+import Script from "next/script";
+import { trackVirtualPageView } from "../utils/utils";
+import appConfig from "../../appConfig";
 
 export default function App({ Component, pageProps }: AppProps) {
+  const router = useRouter();
   const [view, setView] = React.useState("form");
   const { onOpen, isOpen, onClose, FeedbackBox } = useFeedbackBox();
   const onSubmit = async (values) => {
@@ -44,8 +50,24 @@ export default function App({ Component, pageProps }: AppProps) {
     }
   };
 
+  // Track page view events to Adobe Analytics
+  useEffect(() => {
+    trackVirtualPageView(router.asPath);
+  });
+
   return (
     <>
+      <Script async src={appConfig.adobeEmbedUrl[appConfig.environment]} />
+      <Script id="adobeDataLayerDefinition">
+        {`
+              // First define the global variable for the entire data layer array
+              window.adobeDataLayer = window.adobeDataLayer || [];
+              // Then push in the variables required in the Initial Data Layer Definition
+              window.adobeDataLayer.push({
+                disable_page_view: true
+              });
+           `}
+      </Script>
       <Head>
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <title>NYPL Digital Collections</title>
