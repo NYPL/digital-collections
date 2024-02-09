@@ -236,6 +236,8 @@ export const trackVirtualPageView = (pathname = "") => {
   const queryIndex = route.indexOf("?");
   const path = route.substring(0, queryIndex);
   const queryParams = route.slice(queryIndex);
+  console.log("ADOBE_EMBED_URL: ", process.env.ADOBE_EMBED_URL);
+
   adobeDataLayer.push({
     page_name: null,
     site_section: null,
