@@ -14,6 +14,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
+- Added Optinmonster embed code (DR-2744)
 - Added AA Data Layer on the home page (DR-2700)
 
 ## [0.1.0] 2024-01-08
