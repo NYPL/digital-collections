@@ -236,7 +236,6 @@ export const trackVirtualPageView = (pathname = "") => {
   const queryIndex = route.indexOf("?");
   const path = route.substring(0, queryIndex);
   const queryParams = route.slice(queryIndex);
-
   adobeDataLayer.push({
     page_name: null,
     site_section: null,
