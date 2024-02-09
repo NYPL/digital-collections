@@ -52,7 +52,6 @@ export default function App({ Component, pageProps }: AppProps) {
 
   // Track page view events to Adobe Analytics
   useEffect(() => {
-    console.log("ADOBE_EMBED_URL: ", process.env.ADOBE_EMBED_URL);
     console.log("appConfig.adobeEmbedUrl: ", appConfig.adobeEmbedUrl);
     console.log("appConfig.environment", appConfig.environment);
     trackVirtualPageView(router.asPath);
