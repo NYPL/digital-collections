@@ -52,9 +52,27 @@ export default function App({ Component, pageProps }: AppProps) {
 
   // Track page view events to Adobe Analytics
   useEffect(() => {
+    console.log("from _app.tsx");
     console.log("appConfig is: ", appConfig);
     console.log("appConfig.adobeEmbedUrl: ", appConfig.adobeEmbedUrl);
     console.log("appConfig.environment", appConfig.environment);
+    console.log("loading from process.env: ");
+    console.log(
+      "Loading next NEXT_PUBLIC_ANOTHER_TEST",
+      process?.env?.NEXT_PUBLIC_ANOTHER_TEST
+    );
+    console.log(
+      "Loading next NEXT_PUBLIC_ONLY",
+      process?.env?.NEXT_PUBLIC_ONLY
+    );
+    console.log(
+      "Loading next NEXT_PUBLIC_CONFIG_MANUAL_TEST",
+      process?.env?.NEXT_PUBLIC_CONFIG_MANUAL_TEST
+    );
+    console.log(
+      "Loading next NEXT_PUBLIC_ONLY_MANUAL_TEST",
+      process?.env?.NEXT_PUBLIC_ONLY_MANUAL_TEST
+    );
     trackVirtualPageView(router.asPath);
   });
 
