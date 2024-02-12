@@ -5,8 +5,6 @@ import {
   getNumItems,
   getNumDigitizedItems,
   featuredImageID,
-  getAPIUri,
-  apiCall,
   getItemDataFromImageID,
 } from "@/utils/utils";
 import Header from "@/components/header/header";
@@ -16,8 +14,19 @@ import appConfig from "appConfig";
 import { imageURL } from "@/utils/utils";
 import NotificationBanner from "@/components/notificationBanner/notificationBanner";
 import logger from "logger";
+import { useEffect } from "react";
 
 export default function Home(props: any) {
+  console.log("Home props", props);
+  console.log("envVars", props.envVars);
+
+  // Track page view events to Adobe Analytics
+  useEffect(() => {
+    console.log("from index.tsx");
+    console.log("appConfig is: ", appConfig);
+    console.log("appConfig.adobeEmbedUrl: ", appConfig.adobeEmbedUrl);
+    console.log("appConfig.environment", appConfig.environment);
+  });
   return (
     <>
       {/**
@@ -94,6 +103,11 @@ export async function getServerSideProps(context: any) {
       lanesWithNumItems: updatedLanes,
       featuredItem: featuredItemObject,
       numberOfDigitizedItems: numDigitizedItems,
+      envVars: {
+        testEnvVar: process.env.TEST_ENV_VAR,
+        nextPublicAnotherTest: process.env.NEXT_PUBLIC_ANOTHER_TEST,
+        nextPublicOnly: process.env.NEXT_PUBLIC_ONLY,
+      },
     },
   };
 }
