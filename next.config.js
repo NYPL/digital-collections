@@ -6,6 +6,7 @@ const nextConfig = {
     ADOBE_EMBED_URL: process.env.ADOBE_EMBED_URL,
     APP_ENV: process.env.APP_ENV,
     NEXT_PUBLIC_ANOTHER_TEST: process.env.NEXT_PUBLIC_ANOTHER_TEST,
+    NEXT_PUBLIC_CONFIG_MANUAL_TEST: process.env.NEXT_PUBLIC_CONFIG_MANUAL_TEST,
   },
   images: {
     remotePatterns: [

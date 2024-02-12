@@ -17,8 +17,7 @@ import logger from "logger";
 import { useEffect } from "react";
 
 export default function Home(props: any) {
-  console.log("Home props", props);
-  console.log("envVars", props.envVars);
+  console.log("Home props envVars", props.envVars);
 
   // Track page view events to Adobe Analytics
   useEffect(() => {
@@ -26,6 +25,7 @@ export default function Home(props: any) {
     console.log("appConfig is: ", appConfig);
     console.log("appConfig.adobeEmbedUrl: ", appConfig.adobeEmbedUrl);
     console.log("appConfig.environment", appConfig.environment);
+    console.log("loading from process.env: ");
     console.log(
       "Loading next NEXT_PUBLIC_ANOTHER_TEST",
       process?.env?.NEXT_PUBLIC_ANOTHER_TEST
@@ -33,6 +33,14 @@ export default function Home(props: any) {
     console.log(
       "Loading next NEXT_PUBLIC_ONLY",
       process?.env?.NEXT_PUBLIC_ONLY
+    );
+    console.log(
+      "Loading next NEXT_PUBLIC_CONFIG_MANUAL_TEST",
+      process?.env?.NEXT_PUBLIC_CONFIG_MANUAL_TEST
+    );
+    console.log(
+      "Loading next NEXT_PUBLIC_ONLY_MANUAL_TEST",
+      process?.env?.NEXT_PUBLIC_ONLY_MANUAL_TEST
     );
   });
   return (

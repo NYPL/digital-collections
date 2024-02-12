@@ -20,6 +20,8 @@ COPY . .
 ENV NYPL_HEADER_URL=${NYPL_HEADER_URL}
 ENV NEXT_PUBLIC_ANOTHER_TEST=${NEXT_PUBLIC_ANOTHER_TEST}
 ENV NEXT_PUBLIC_ONLY=${NEXT_PUBLIC_ONLY}
+ENV NEXT_PUBLIC_CONFIG_MANUAL_TEST="this is a manual test env set through config"
+ENV NEXT_PUBLIC_ONLY_MANUAL_TEST="this is a manual test env"
 
 # Set environment variables. NODE_ENV is set early because we
 # want to use it when running `npm install` and `npm run build`.
