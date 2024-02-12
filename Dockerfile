@@ -4,6 +4,7 @@ FROM node:18-alpine AS production
 #RUN apt-get upgrade -y
 
 ARG NYPL_HEADER_URL
+ARG TEST_ENV_VAR
 
 WORKDIR /app
 
@@ -16,6 +17,7 @@ RUN npm install
 COPY . .
 
 ENV NYPL_HEADER_URL=${NYPL_HEADER_URL}
+ENV TEST_ENV_VAR=${TEST_ENV_VAR}
 
 # Set environment variables. NODE_ENV is set early because we
 # want to use it when running `npm install` and `npm run build`.
