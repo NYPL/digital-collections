@@ -26,6 +26,14 @@ export default function Home(props: any) {
     console.log("appConfig is: ", appConfig);
     console.log("appConfig.adobeEmbedUrl: ", appConfig.adobeEmbedUrl);
     console.log("appConfig.environment", appConfig.environment);
+    console.log(
+      "Loading next NEXT_PUBLIC_ANOTHER_TEST",
+      process?.env?.NEXT_PUBLIC_ANOTHER_TEST
+    );
+    console.log(
+      "Loading next NEXT_PUBLIC_ONLY",
+      process?.env?.NEXT_PUBLIC_ONLY
+    );
   });
   return (
     <>
