@@ -10,6 +10,8 @@ const appConfig = {
       "https://assets.adobedtm.com/1a9376472d37/8519dfce636d/launch-672b7e7f98ee.min.js",
   },
   TEST_ENV_VAR: process.env.TEST_ENV_VAR,
+  NEXT_PUBLIC_ANOTHER_TEST: process.env.NEXT_PUBLIC_ANOTHER_TEST,
+  NEXT_PUBLIC_ONLY: process.env.NEXT_PUBLIC_ONLY,
 };
 
 export default appConfig;
