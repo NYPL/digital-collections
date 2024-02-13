@@ -26,6 +26,7 @@ jobs:
         - AWS_SECRET_ACCESS_KEY=$AWS_SECRET_ACCESS_KEY_QA
         - CLUSTER_NAME=dc-frontend-qa
         - SERVICE_NAME=dc-frontend-qa
+        - APP_ENV=qa
       install:
         - pip install --user awscli
       script:
@@ -42,11 +43,12 @@ jobs:
         - AWS_SECRET_ACCESS_KEY=$AWS_SECRET_ACCESS_KEY_PRODUCTION
         - CLUSTER_NAME=dc-frontend
         - SERVICE_NAME=dc-frontend
+        - APP_ENV=production
       install:
         - pip install --user awscli
       script:
         - eval $(aws ecr get-login --no-include-email)
-        - docker build --tag "$LOCAL_TAG_NAME" .
+        - docker build --build-arg APP_ENV="$APP_ENV" --tag "$LOCAL_TAG_NAME" .
         - docker tag "$LOCAL_TAG_NAME" "$ECR_URL";
         - docker push "$ECR_URL";
         - aws ecs update-service --cluster $CLUSTER_NAME --service $SERVICE_NAME --force-new-deployment
