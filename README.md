@@ -48,9 +48,43 @@ A quick note on environment variables
 
 Use `.env.local` for local development.
 
+### Server Side Environment Variables
+
+If a variable is required ONLY on the SERVER side (ie. in an api endpoint), then the variable can be declared in `.env.local.`
+
+SERVER side methods in Next.js read environments at RUN TIME, which means they have access to environment variables on the server - these can be found by running `env` or referenced within the app as `process.env.ENV`. These variables can/should be managed in QA and Production environments by updating the Task Definition and/or Cloud Formation Templates.
+
 SERVER side references of environment variables can use `process.env.ENV`
 
-If you are referencing an environment variable on the CLIENT, the environment variable needs to be added to `nextConfig.env` in `next.config.js.` Please use the process.env.ENV reference for the variable.
+### Client Side Environment Variables
+
+If a variable is required ONLY on the CLIENT, the environment variable needs to be declared in `appConfig.ts`.
+
+CLIENT side methods in Next.js only have access to environment variables that are declared at BUILD TIME, which means they DO NOT have access to environment variables on the server and thus do not have access to `process.env.ENV`. These variables should be managed in QA and Production environments by either hard coding them in `appConfig.ts` AND/OR declaring them in the Dockerfile and travis.yml.
+
+Currently, the only CLIENT side environment variable that we use is APP_ENV. APP_ENV drives the logic to choose between several env variables that are hard coded in `appConfig.ts`.
+
+Example:
+
+```
+const appConfig = {
+  environment: process.env.APP_ENV || "development",
+  DC_URL: {
+    development: "https://qa-digitalcollections.nypl.org",
+    qa: "https://qa-digitalcollections.nypl.org",
+    production: "https://digitalcollections.nypl.org",
+  },
+  adobeEmbedUrl: {
+    development:
+      "https://assets.adobedtm.com/1a9376472d37/8519dfce636d/launch-bf8436264b01-development.min.js",
+    qa: "https://assets.adobedtm.com/1a9376472d37/8519dfce636d/launch-bf8436264b01-development.min.js",
+    production:
+      "https://assets.adobedtm.com/1a9376472d37/8519dfce636d/launch-672b7e7f98ee.min.js",
+  },
+};
+```
+
+In the future we may want to create a /config endpoint to pass environment variables from SERVER to CLIENT.
 
 ### Swim Lanes API Endpoints
 
