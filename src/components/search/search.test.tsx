@@ -27,7 +27,8 @@ describe("Search component", () => {
     });
     fireEvent.submit(getByLabelText("Search Digital Collections"));
     expect(mockRouter.push).toHaveBeenCalledWith(
-      appConfig.DC_URL + `/search/index?keywords=test%20word`
+      appConfig.DC_URL[appConfig.environment] +
+        `/search/index?keywords=test%20word`
     );
   });
 
@@ -45,7 +46,7 @@ describe("Search component", () => {
     fireEvent.submit(screen.getByLabelText("Search Digital Collections"));
 
     expect(mockRouter.push).toHaveBeenCalledWith(
-      appConfig.DC_URL +
+      appConfig.DC_URL[appConfig.environment] +
         `/search/index?utf8=✓&filters%5Brights%5D=pd&keywords=test%20words`
     );
   });
