@@ -15,6 +15,7 @@ import { imageURL } from "@/utils/utils";
 import NotificationBanner from "@/components/notificationBanner/notificationBanner";
 import logger from "logger";
 import { useEffect } from "react";
+import { ADOBE_EMBED_URL, DC_URL } from "../config/constants";
 
 export default function Home(props: any) {
   console.log("Home props envVars", props.envVars);
@@ -23,25 +24,17 @@ export default function Home(props: any) {
   useEffect(() => {
     console.log("from index.tsx");
     console.log("appConfig is: ", appConfig);
-    console.log("appConfig.adobeEmbedUrl: ", appConfig.adobeEmbedUrl);
     console.log("appConfig.environment", appConfig.environment);
-    console.log("loading from process.env: ");
     console.log(
-      "Loading next NEXT_PUBLIC_ANOTHER_TEST",
-      process?.env?.NEXT_PUBLIC_ANOTHER_TEST
+      "appConfig.DC_URL is: ",
+      appConfig.DC_URL[appConfig.environment]
     );
     console.log(
-      "Loading next NEXT_PUBLIC_ONLY",
-      process?.env?.NEXT_PUBLIC_ONLY
+      "appConfig.adobeEmbedUrl: ",
+      appConfig.adobeEmbedUrl[appConfig.environment]
     );
-    console.log(
-      "Loading next NEXT_PUBLIC_CONFIG_MANUAL_TEST",
-      process?.env?.NEXT_PUBLIC_CONFIG_MANUAL_TEST
-    );
-    console.log(
-      "Loading next NEXT_PUBLIC_ONLY_MANUAL_TEST",
-      process?.env?.NEXT_PUBLIC_ONLY_MANUAL_TEST
-    );
+    console.log("DC_URL CONSTANT is: ", DC_URL);
+    console.log("ADOBE_EMBED_URL CONSTANT IS: ", ADOBE_EMBED_URL);
   });
   return (
     <>
@@ -110,7 +103,7 @@ export async function getServerSideProps(context: any) {
     imageSrc: imageURL(imageID),
     uuid: dataFromUri.uuid,
     title: dataFromUri.title,
-    href: `${appConfig.DC_URL}/items/${dataFromUri.uuid}`,
+    href: `${DC_URL}/items/${dataFromUri.uuid}`,
   };
 
   return {
@@ -119,11 +112,6 @@ export async function getServerSideProps(context: any) {
       lanesWithNumItems: updatedLanes,
       featuredItem: featuredItemObject,
       numberOfDigitizedItems: numDigitizedItems,
-      envVars: {
-        testEnvVar: process.env.TEST_ENV_VAR,
-        nextPublicAnotherTest: process.env.NEXT_PUBLIC_ANOTHER_TEST,
-        nextPublicOnly: process.env.NEXT_PUBLIC_ONLY,
-      },
     },
   };
 }
