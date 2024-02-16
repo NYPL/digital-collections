@@ -48,21 +48,27 @@ A quick note on environment variables
 
 Use `.env.local` for local development.
 
-### Server Side Environment Variables
+### Local development
 
-If a variable is required ONLY on the SERVER side (ie. in an api endpoint), then the variable can be declared in `.env.local.`
+All variables should be declared in `.env.local` for local development. For local development, we don't have to worry about Server and Client env vars and where they come from.
 
-SERVER side methods in Next.js read environments at RUN TIME, which means they have access to environment variables on the server - these can be found by running `env` or referenced within the app as `process.env.ENV`. These variables can/should be managed in QA and Production environments by updating the Task Definition and/or Cloud Formation Templates.
+### QA/Production environments
+
+#### Server Side Environment Variables
+
+If a variable is required ONLY on the SERVER side (ie. in an api endpoint), then the variable can be declared in the AWS Task Definition.
+
+SERVER side methods in Next.js read environments at RUN TIME, which means they have access to environment variables on the server - these can be found by running `env` in the bash terminal or referenced within the app as `process.env.ENV`. These variables can/should be managed in QA and Production environments by updating the Task Definition and/or Cloud Formation Templates.
 
 SERVER side references of environment variables can use `process.env.ENV`
 
-### Client Side Environment Variables
+#### Client Side Environment Variables
 
 If a variable is required ONLY on the CLIENT, the environment variable needs to be declared in `appConfig.ts`.
 
 CLIENT side methods in Next.js only have access to environment variables that are declared at BUILD TIME, which means they DO NOT have access to environment variables on the server and thus do not have access to `process.env.ENV`. These variables should be managed in QA and Production environments by either hard coding them in `appConfig.ts` AND/OR declaring them in the Dockerfile and travis.yml.
 
-Currently, the only CLIENT side environment variable that we use is APP_ENV. APP_ENV drives the logic to choose between several env variables that are hard coded in `appConfig.ts`.
+Currently, the only CLIENT side environment variable that we use is `APP_ENV`. APP_ENV drives the logic to choose between several env variables that are hard coded in `appConfig.ts`.
 
 Example:
 
