@@ -13,8 +13,8 @@ import {
 } from "@nypl/design-system-react-components";
 import styles from "./Swimlanes.module.css";
 import { imageURL } from "@/utils/utils";
-import appConfig from "appConfig";
 import Image from "next/image";
+import { DC_URL } from "../../config/constants";
 
 const SwimLanes = ({ lanesWithNumItems }) => {
   return lanesWithNumItems.map((lane, key) => (
@@ -27,7 +27,7 @@ const SwimLanes = ({ lanesWithNumItems }) => {
         <Link
           id={`row-see-more-${lane.slug}`}
           type="standalone"
-          href={`${appConfig.DC_URL}/collections/lane/${lane.slug}`}
+          href={`${DC_URL}/collections/lane/${lane.slug}`}
           aria-label={`See more ${lane.title.toLowerCase()}`}
           sx={{
             display: { sm: "none", md: "inline" },
@@ -95,7 +95,7 @@ const SwimLanes = ({ lanesWithNumItems }) => {
       <Link
         id={`row-see-more-${lane.slug}-mobile`}
         type="standalone"
-        href={`${appConfig.DC_URL}/collections/lane/${lane.slug}`}
+        href={`${DC_URL}/collections/lane/${lane.slug}`}
         aria-label={`See more ${lane.title.toLowerCase()}`}
         className="smlink"
         sx={{

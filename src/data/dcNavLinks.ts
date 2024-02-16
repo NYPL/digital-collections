@@ -1,20 +1,20 @@
-import appConfig from "appConfig";
+import { DC_URL } from "../config/constants";
 
 export const dcNavLinks = [
   {
-    href: `${appConfig.DC_URL}/search/index?utf8=%E2%9C%93&keywords=`,
+    href: `${DC_URL}/search/index?utf8=%E2%9C%93&keywords=`,
     text: "Items",
   },
   {
-    href: `${appConfig.DC_URL}/collections`,
+    href: `${DC_URL}/collections`,
     text: "Collections",
   },
   {
-    href: `${appConfig.DC_URL}/divisions`,
+    href: `${DC_URL}/divisions`,
     text: "Divisions",
   },
   {
-    href: `${appConfig.DC_URL}/about`,
+    href: `${DC_URL}/about`,
     text: "About",
   },
 ];

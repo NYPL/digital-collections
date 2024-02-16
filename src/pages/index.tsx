@@ -5,8 +5,6 @@ import {
   getNumItems,
   getNumDigitizedItems,
   featuredImageID,
-  getAPIUri,
-  apiCall,
   getItemDataFromImageID,
 } from "@/utils/utils";
 import Header from "@/components/header/header";
@@ -17,6 +15,7 @@ import { imageURL } from "@/utils/utils";
 import NotificationBanner from "@/components/notificationBanner/notificationBanner";
 import logger from "logger";
 import { useEffect, useState } from "react";
+import { ADOBE_EMBED_URL, DC_URL } from "../config/constants";
 
 export default function Home(props: any = {}) {
   console.log("props", props);
@@ -26,6 +25,22 @@ export default function Home(props: any = {}) {
   const imageID = featuredImageID();
 
   useEffect(() => {
+    // Track page view events to Adobe Analytics
+
+    console.log("from index.tsx");
+    console.log("appConfig is: ", appConfig);
+    console.log("appConfig.environment", appConfig.environment);
+    console.log(
+      "appConfig.DC_URL is: ",
+      appConfig.DC_URL[appConfig.environment]
+    );
+    console.log(
+      "appConfig.adobeEmbedUrl: ",
+      appConfig.adobeEmbedUrl[appConfig.environment]
+    );
+    console.log("DC_URL CONSTANT is: ", DC_URL);
+    console.log("ADOBE_EMBED_URL CONSTANT IS: ", ADOBE_EMBED_URL);
+
     console.log("useffect swimlanes");
     const fetchData = async () => {
       const response = await fetch("/api/homepagedata");
@@ -43,6 +58,8 @@ export default function Home(props: any = {}) {
     fetchHeroData();
     fetchData();
   }, []);
+
+  console.log("Home props envVars", props.envVars);
 
   return (
     <>
@@ -115,7 +132,7 @@ export async function getServerSideProps(context: any) {
   //   imageSrc: imageURL(imageID),
   //   uuid: dataFromUri.uuid,
   //   title: dataFromUri.title,
-  //   href: `${appConfig.DC_URL}/items/${dataFromUri.uuid}`,
+  //   href: `${DC_URL}/items/${dataFromUri.uuid}`,
   // };
 
   return {

@@ -17,19 +17,20 @@ describe("Nav menu component", () => {
     const { getByLabelText } = render(<NavMenu render={1} />);
     expect(getByLabelText("Items")).toHaveAttribute(
       "href",
-      appConfig.DC_URL + `/search/index?utf8=%E2%9C%93&keywords=`
+      appConfig.DC_URL[appConfig.environment] +
+        `/search/index?utf8=%E2%9C%93&keywords=`
     );
     expect(getByLabelText("Divisions")).toHaveAttribute(
       "href",
-      appConfig.DC_URL + `/divisions`
+      appConfig.DC_URL[appConfig.environment] + `/divisions`
     );
     expect(getByLabelText("Collections")).toHaveAttribute(
       "href",
-      appConfig.DC_URL + `/collections`
+      appConfig.DC_URL[appConfig.environment] + `/collections`
     );
     expect(getByLabelText("About")).toHaveAttribute(
       "href",
-      appConfig.DC_URL + `/about`
+      appConfig.DC_URL[appConfig.environment] + `/about`
     );
   });
 });
