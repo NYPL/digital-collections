@@ -37,3 +37,4 @@ next-env.d.ts
 # logs
  /log
  /log/dc.log
+ log/
