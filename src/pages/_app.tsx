@@ -6,8 +6,15 @@ import {
   useFeedbackBox,
 } from "@nypl/design-system-react-components";
 import React from "react";
+import { useEffect } from "react";
+import { useRouter } from "next/router";
+import Script from "next/script";
+import { trackVirtualPageView } from "../utils/utils";
+import appConfig from "../../appConfig";
+import { ADOBE_EMBED_URL, DC_URL } from "../config/constants";
 
 export default function App({ Component, pageProps }: AppProps) {
+  const router = useRouter();
   const [view, setView] = React.useState("form");
   const { onOpen, isOpen, onClose, FeedbackBox } = useFeedbackBox();
   const onSubmit = async (values) => {
@@ -44,8 +51,55 @@ export default function App({ Component, pageProps }: AppProps) {
     }
   };
 
+  // Track page view events to Adobe Analytics
+  useEffect(() => {
+    console.log("from _app.tsx");
+    console.log("appConfig is: ", appConfig);
+    console.log("appConfig.adobeEmbedUrl: ", appConfig.adobeEmbedUrl);
+    console.log("appConfig.environment", appConfig.environment);
+    console.log("DC_URL CONSTANT is: ", DC_URL);
+    console.log("ADOBE_EMBED_URL CONSTANT IS: ", ADOBE_EMBED_URL);
+    console.log("loading from process.env: ");
+    console.log(
+      "Loading next NEXT_PUBLIC_ANOTHER_TEST",
+      process?.env?.NEXT_PUBLIC_ANOTHER_TEST
+    );
+    console.log(
+      "Loading next NEXT_PUBLIC_ONLY",
+      process?.env?.NEXT_PUBLIC_ONLY
+    );
+    console.log(
+      "Loading next NEXT_PUBLIC_CONFIG_MANUAL_TEST",
+      process?.env?.NEXT_PUBLIC_CONFIG_MANUAL_TEST
+    );
+    console.log(
+      "Loading next NEXT_PUBLIC_ONLY_MANUAL_TEST",
+      process?.env?.NEXT_PUBLIC_ONLY_MANUAL_TEST
+    );
+    trackVirtualPageView(router.asPath);
+  });
+
   return (
     <>
+      {/* <!-- This site is converting visitors into subscribers and customers with OptinMonster - https://optinmonster.com --> */}
+      <script
+        dangerouslySetInnerHTML={{
+          __html:
+            "(function(d,u,ac){var s=d.createElement('script');s.type='text/javascript';s.src='https://a.omappapi.com/app/js/api.min.js';s.async=true;s.dataset.user=u;s.dataset.account=ac;d.getElementsByTagName('head')[0].appendChild(s);})(document,12468,1044);",
+        }}
+      />
+      {/* <!-- / OptinMonster --> */}
+      <Script async src={ADOBE_EMBED_URL} />
+      <Script id="adobeDataLayerDefinition">
+        {`
+              // First define the global variable for the entire data layer array
+              window.adobeDataLayer = window.adobeDataLayer || [];
+              // Then push in the variables required in the Initial Data Layer Definition
+              window.adobeDataLayer.push({
+                disable_page_view: true
+              });
+           `}
+      </Script>
       <Head>
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <title>NYPL Digital Collections</title>
