@@ -103,6 +103,7 @@ export default function App({ Component, pageProps }: AppProps) {
       <Head>
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <title>NYPL Digital Collections</title>
+        <link rel="canonical" href="https://digitalcollections.nypl.org/" />
         <meta
           name="description"
           content="NYPL's Digital Collections is a living database featuring prints, photographs, maps, manuscripts, video, and more unique research materials."
