@@ -29,4 +29,4 @@ RUN npm run build
 EXPOSE 3000
 
 # CMD is the default command when running the docker container.
-CMD [ "npm", "start" ]
+CMD [ "npm", "start:newrelic" ]
