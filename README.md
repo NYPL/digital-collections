@@ -42,6 +42,16 @@ You can start editing the page by modifying `pages/index.tsx`. The page auto-upd
 
 The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
 
+## Environment Variables
+
+A quick note on environment variables
+
+Use `.env.local` for local development.
+
+SERVER side references of environment variables can use `process.env.ENV`
+
+If you are referencing an environment variable on the CLIENT, the environment variable needs to be added to `nextConfig.env` in `next.config.js.` Please use the process.env.ENV reference for the variable.
+
 ### Swim Lanes API Endpoints
 
 The following endpoints are currently available at http://localhost:3000/api/lanes/
@@ -94,6 +104,14 @@ These endpoints will change (as DC homepage is built out) to be dynamically gene
 ## Fonts
 
 This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+
+## Tests
+
+To run tests, run
+
+```
+npm run test
+```
 
 ## Getting Started With Docker
 

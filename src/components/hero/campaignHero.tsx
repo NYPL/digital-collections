@@ -3,18 +3,21 @@ import { imageURL } from "../../utils/utils";
 import CampaignHeroSubText from "./campaignHeroSubText";
 import CampaignHeroHeading from "./campaignHeroHeading";
 
-const CampaignHero = ({ featuredImageID }: any) => {
+const CampaignHero = ({ featuredItem, numberOfDigitizedItems }: any) => {
   return (
     <Hero
-      backgroundImageSrc={imageURL(featuredImageID)}
+      backgroundImageSrc={featuredItem.imageSrc}
       backgroundColor="ui.bg.default"
+      isDarkBackgroundImage
       heroType="campaign"
-      heading={<CampaignHeroHeading />}
+      heading={
+        <CampaignHeroHeading numberOfDigitizedItems={numberOfDigitizedItems} />
+      }
       imageProps={{
-        alt: "Momoyogusa = Flowers of a Hundred Generations.",
-        src: imageURL(featuredImageID),
+        alt: featuredItem.title,
+        src: featuredItem.imageSrc,
       }}
-      subHeaderText={<CampaignHeroSubText />}
+      subHeaderText={<CampaignHeroSubText featuredItem={featuredItem} />}
     />
   );
 };
