@@ -354,76 +354,92 @@ All pushes to this repo will be checked with `npm test` and `npm lint`.
 
 ## Git Workflow
 
-Our branches (in order or stability are):
+Our branches (in order of stability are):
 
-| Branch     | Environment | AWS Account   | Link To Application                                                               |
-|:-----------|:------------|:--------------|:----------------------------------------------------------------------------------|
-| main       | development |               | [localhost:3000](http://localhost:3000)                                           |
-| qa         | qa          | nypl-dams-dev | [https://qa-dcfrontend.nypl.org/](https://qa-dcfrontend.nypl.org/)                |
-| production | production  | nypl-dams-prod| [https://dcfrontend.nypl.org/](https://dcfrontend.nypl.org/)                      |
+| Branch     | Environment | AWS Account    | Link To Application                                                                        |
+| :--------- | :---------- | :------------- | :----------------------------------------------------------------------------------------- |
+| main       | development |                | [localhost:3000](http://localhost:3000)                                                    |
+| qa         | qa          | nypl-dams-dev  | [https://qa-new-digitalcollections.nypl.org/](https://qa-new-digitalcollections.nypl.org/) |
+| production | production  | nypl-dams-prod | [https://new-digitalcollections.nypl.org/](https://new-digitalcollections.nypl.org/)       |
 
 ## Contributing
 
-1.  Feature branches are cut from `main` using 
+1.  Feature branches are cut from `main` using
 
     `git checkout -b feature/DR-123/feature-name`.
 
 2.  Add your changes to the CHANGELOG.md file under `## [Unreleased]`. See [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) for formatting docs.
-3.  Create a pull request of the `feature` branch _into_ `main`. 
+3.  Create a pull request of the `feature` branch _into_ `main`.
 4.  After a feature branch has approved accessibility review and VQA, merge `feature` branch into `main`, then merge `main` branch into `qa` for testing.
 5.  After QA has tested and approved cut a `release` branch off of `qa` using our Release Naming Strategy. Please see Release Naming Strategy for details on how we plan to number our releases during the initial rollout of this project.
 
-   `git checkout -b release/x.y.z`.
+`git checkout -b release/x.y.z`.
 
 (see tagged releases or changelog for last version)
 
-5. Update CHANGELOG.md in release branch by moving updates from unreleased into the new release section.
+6. Update CHANGELOG.md in release branch by moving updates from unreleased into the new release section.
 
-    ie. `## [2.4.13] - 04-21-2023`
+   ie. `## [2.4.13] - 04-21-2023`
 
-6. Commit and push changes to release branch.
+7. Commit and push changes to release branch.
 8. Merge `release` branch to `production` and push the changes. This will deploy through Travis if all goes well.
-10. Immediately after merging release to production, finish the release and backmerge release to `qa` and `main`
-    
-    `$ git tag -a x.y.z` 
-    
-    `$ git push origin --tags`
+9. Immediately after merging release to production, finish the release and backmerge release to `qa` and `main`
 
-### Release Naming Strategy 
-This project is in the beginning phases of it's development. We will use a custom versioning system inspired by Semantic Versioning while we migrate the functionality of the digitalreadingroom app to this app. Once all of the initial Phase (as defined in the [Product Brief](https://docs.google.com/document/d/187LA6VjOaDdXA6xRZYv_gqgNzJcAyuSPIZoenVH2L3w)) are complete, this repo will use [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
+   `$ git tag -a x.y.z`
+
+   `$ git push origin --tags`
+
+### Release Naming Strategy
+
+This project is in the beginning phases of its development. We will use a custom versioning system inspired by Semantic Versioning while we migrate the functionality of the digitalreadingroom app to this app. Once all of the initial Phase (as defined in the [Product Brief](https://docs.google.com/document/d/187LA6VjOaDdXA6xRZYv_gqgNzJcAyuSPIZoenVH2L3w)) is complete, this repo will use [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ### Versioning system:
-MAJOR: all of the Phases are complete 
+
+MAJOR: all of the Phases are complete
 MINOR: phase, set of features required to meet the mvp of a Phase as defined in the Product Brief or TAD.
 PATCH: feature or hotfix that supports a component or section of the mvp of a Phase
 
 Format: MAJOR.MINOR.PATCH
 
 ### Summary of Phases (to be removed later?)
+
 #### 1. Home Page
+
 [TAD](https://docs.google.com/document/d/1qw9qTM-6AB-I9XQR7CH3vBa5ZmtqNxtmDhixej_7H8U/edit#heading=h.kutc298lyner)
 [Designs](https://www.figma.com/file/NpjG47HqZG9GknfijGqJri/DC-Facelift-Homepage?type=design&node-id=3966-5868&mode=design&t=qHZ2TudJ2NDw13ux-0)
 
 #### 2. Top Level Category Pages
+
 These page types are:
+
 - [All Divisions](https://digitalcollections.nypl.org/divisions)
 - [All Collections](https://digitalcollections.nypl.org/collections)
 - [Swim Lane Landing Pages](https://digitalcollections.nypl.org/collections/lane/gay-lesbian-history)
 
 #### 3. Search-Based Pages
-- Search Landing 
-    - [Basic with no search keywords](https://digitalcollections.nypl.org/search/index?utf8=%E2%9C%93&keywords=#) (This view is also used as the “All Items” page in site navigation)
-    - [With keyword](https://digitalcollections.nypl.org/search/index?utf8=%E2%9C%93&keywords=puppy)
-    - [With suggested collections](https://digitalcollections.nypl.org/search/index?utf8=%E2%9C%93&keywords=maps)
-    - [No results](https://digitalcollections.nypl.org/search/index?utf8=%E2%9C%93&keywords=puppy&year_begin=1995&year_end=2020&)
+
+- Search Landing
+  - [Basic with no search keywords](https://digitalcollections.nypl.org/search/index?utf8=%E2%9C%93&keywords=#) (This view is also used as the “All Items” page in site navigation)
+  - [With keyword](https://digitalcollections.nypl.org/search/index?utf8=%E2%9C%93&keywords=puppy)
+  - [With suggested collections](https://digitalcollections.nypl.org/search/index?utf8=%E2%9C%93&keywords=maps)
+  - [No results](https://digitalcollections.nypl.org/search/index?utf8=%E2%9C%93&keywords=puppy&year_begin=1995&year_end=2020&)
 - [Collection Landing Page](https://digitalcollections.nypl.org/collections/the-green-book#/?tab=navigation)
 
 #### 4. Item Page
+
 ##### 4a. Video and Audio Page
+
 ##### 4b. Images
+
 ##### 4d. PDFs
+
 ##### 5. About Page
 
-
 ## Deployment
-Deployment: [Via Travis](https://travis-ci.com/github/NYPL)  
+
+Deployment:
+PR previews and `main` are all deployed to Vercel. Merges to `main` trigger automatic deployments to Vercel.
+
+QA deployments are automatically triggered by pushing changes to the `qa` branch. `qa` is deployed to AWS [Via Travis](https://travis-ci.com/github/NYPL).
+
+Production deployments for this repo require a PR to the `production` branch. Once merged, `production` is deployed to AWS [Via Travis](https://travis-ci.com/github/NYPL).
