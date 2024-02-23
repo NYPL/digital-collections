@@ -1,5 +1,10 @@
 import CampaignHero from "../components/hero/campaignHero";
-import { TemplateAppContainer } from "@nypl/design-system-react-components";
+import {
+  TemplateAppContainer,
+  SkeletonLoader,
+  SkeletonLoaderImageRatios,
+  SimpleGrid,
+} from "@nypl/design-system-react-components";
 import data from "@/data/lanes";
 import {
   getNumItems,
@@ -19,14 +24,16 @@ import { ADOBE_EMBED_URL, DC_URL } from "../config/constants";
 
 export default function Home(props: any = {}) {
   console.log("props", props);
-  const [homepagedata, setHomepagedata] = useState<any>({});
-  const [heroData, setheroData] = useState<any>({});
+  const [homepageData, setHomepageData] = useState<any>({});
+  const [heroData, setHeroData] = useState<any>({});
+  const [isFeaturedItemLoading, setIsFeaturedItemLoading] = useState(false);
+  const [isSwimLaneLoading, setIsSwimLaneLoading] = useState(false);
+
   console.log("home");
   const imageID = featuredImageID();
 
   useEffect(() => {
     // Track page view events to Adobe Analytics
-
     console.log("from index.tsx");
     console.log("appConfig is: ", appConfig);
     console.log("appConfig.environment", appConfig.environment);
@@ -40,21 +47,31 @@ export default function Home(props: any = {}) {
     );
     console.log("DC_URL CONSTANT is: ", DC_URL);
     console.log("ADOBE_EMBED_URL CONSTANT IS: ", ADOBE_EMBED_URL);
-
     console.log("useffect swimlanes");
+    const isFeaturedItemLoading = setIsFeaturedItemLoading(true);
+    const isSwimLaneLoading = setIsSwimLaneLoading(true);
+    console.log("isFeaturedItemLoading  IS: ", isFeaturedItemLoading);
+    console.log("isSwimLaneLoading IS: ", isSwimLaneLoading);
     const fetchData = async () => {
-      const response = await fetch("/api/homepagedata");
+      const response = await fetch("/api/homepageData");
       const data = await response.json();
+      const isSwimLaneLoading = setIsSwimLaneLoading(false);
+      console.log("isSwimLaneLoading IS: ", isSwimLaneLoading);
       console.log(data);
-      setHomepagedata(data);
+      setHomepageData(data);
     };
+
     const fetchHeroData = async () => {
       console.log("imageID", imageID);
       const response = await fetch(`/api/featuredHero?imageID=${imageID}`);
       const data = await response.json();
+      const isFeaturedItemLoading = setIsFeaturedItemLoading(false);
+      console.log("isFeaturedItemLoading  IS: ", isFeaturedItemLoading);
+
       console.log(data);
-      setheroData(data);
+      setHeroData(data);
     };
+
     fetchHeroData();
     fetchData();
   }, []);
@@ -70,20 +87,74 @@ export default function Home(props: any = {}) {
       <Header />
       <TemplateAppContainer
         breakout={
+          // isFeaturedItemLoading ? (
+          //   <SkeletonLoader
+          //   // featuredItem={heroData.featuredItem}
+          //   // numberOfDigitizedItems={heroData.numberOfDigitizedItems}
+          //   />
+          // ) : (
+          //   <CampaignHero
+          //     featuredItem={heroData.featuredItem}
+          //     numberOfDigitizedItems={heroData.numberOfDigitizedItems}
+          //   />
+          // )
           heroData?.featuredItem ? (
             <CampaignHero
               featuredItem={heroData.featuredItem}
               numberOfDigitizedItems={heroData.numberOfDigitizedItems}
             />
-          ) : null
+          ) : (
+            <SkeletonLoader
+            // featuredItem={heroData.featuredItem}
+            // numberOfDigitizedItems={heroData.numberOfDigitizedItems}
+            />
+          )
         }
         contentPrimary={
-          homepagedata?.lanesWithNumItems ? (
+          // isSwimLaneLoading ? (
+          //   <SkeletonLoader
+          //   // featuredItem={heroData.featuredItem}
+          //   // numberOfDigitizedItems={heroData.numberOfDigitizedItems}
+          //   />
+          // ) : (
+          //   <HomePageMainContent
+          //     randomNumber={homepageData.randomNumber}
+          //     lanesWithNumItems={homepageData.lanesWithNumItems}
+          //   />
+          // )
+          homepageData?.lanesWithNumItems ? (
             <HomePageMainContent
-              randomNumber={homepagedata.randomNumber}
-              lanesWithNumItems={homepagedata.lanesWithNumItems}
+              randomNumber={homepageData.randomNumber}
+              lanesWithNumItems={homepageData.lanesWithNumItems}
             />
-          ) : null
+          ) : (
+            <SimpleGrid columns={4}>
+              <SkeletonLoader imageAspectRatio="landscape" isBordered />
+              <SkeletonLoader imageAspectRatio="landscape" isBordered />
+              <SkeletonLoader imageAspectRatio="landscape" isBordered />
+              <SkeletonLoader imageAspectRatio="landscape" isBordered />
+
+              <SkeletonLoader imageAspectRatio="landscape" isBordered />
+              <SkeletonLoader imageAspectRatio="landscape" isBordered />
+              <SkeletonLoader imageAspectRatio="landscape" isBordered />
+              <SkeletonLoader imageAspectRatio="landscape" isBordered />
+
+              <SkeletonLoader imageAspectRatio="landscape" isBordered />
+              <SkeletonLoader imageAspectRatio="landscape" isBordered />
+              <SkeletonLoader imageAspectRatio="landscape" isBordered />
+              <SkeletonLoader imageAspectRatio="landscape" isBordered />
+
+              <SkeletonLoader imageAspectRatio="landscape" isBordered />
+              <SkeletonLoader imageAspectRatio="landscape" isBordered />
+              <SkeletonLoader imageAspectRatio="landscape" isBordered />
+              <SkeletonLoader imageAspectRatio="landscape" isBordered />
+
+              <SkeletonLoader imageAspectRatio="landscape" isBordered />
+              <SkeletonLoader imageAspectRatio="landscape" isBordered />
+              <SkeletonLoader imageAspectRatio="landscape" isBordered />
+              <SkeletonLoader imageAspectRatio="landscape" isBordered />
+            </SimpleGrid>
+          )
         }
       />
       <ExploreFurther />
