@@ -87,10 +87,10 @@ export async function getServerSideProps(context: any) {
   const randomNumber = Math.floor(Math.random() * 2);
 
   //pass query param to featuredImageID function to check if it is legit
-  logger.info("Generating featured image id");
-  const imageID = context.query.imageID
-    ? featuredImageID(context.query.imageID)
-    : featuredImageID();
+  const imageID = "105180";
+  // context.query.imageID
+  //   ? featuredImageID(context.query.imageID)
+  //   : featuredImageID();
 
   console.log("Timer 1: Calls getItemDataFromImageID and getNumDigitizedItems");
   console.time("timer1");
