@@ -4,39 +4,51 @@ services:
 branches:
   only:
     - qa
+    - production
+    - DR-2564-production-travis
 env:
   global:
     - AWS_DEFAULT_REGION=us-east-1
     - LOCAL_TAG_NAME=dc-frontend:$TRAVIS_BRANCH-$TRAVIS_BUILD_NUMBER
     # DOCKER_LOGIN_PASSWORD
-    - secure: "PWBKqzoehtHm6yDnQ85goSvBlnqE+N+DSesKtElIggKJGewGvHuSUWItYClBRIpbSPcm/5mn8yabhLPz37sJo7nJY/hJHQyGk8dwZtQcLBxVMSq4vMd6EbgeqZeT4oMWzQsT3TpLvESfSyEZu9MNzpKdFdxugOPKk0vUIDFTvBHpRtb+peptLqXBOXeo5czOJQta+QuQr3vd3PIUCYCoCGgx2ueoakIJXxpsNOe1/UHj97gbMlIypD+OdyCp3MQMn5etYFC/98HhTMGKrB8PI6qM/XdEzPzdw9zQjiDMq2xInQImgEFDymBwFfmIz8cEbjNiVnXxjnyfFgD5stmNHNi77rx2LF4MRlbEO7i9jZU7u1KfF+ruEnfYosZLgNKR+1JpeOr8Wvpe2yu/z7vMbeB9l1KvfGNLcRcA9M9kQigDwJJSCiIXj3d+KMoEy01Y5j8Nn18EOkEcOLSPrKBOsiH1y7zT/Ahnk17KIDkbPwiLyixwIjyhMRyVEp9FDjkBCrI93NZxYr3lyGaHSO8ZLHpi7v1NZcBxuNBlyhD+sHjkSdMZXaDBUJ73L7RVHCgdDYI2DP8PzbQ9yiM+6v2XTAbDHd6SMRW86+0K976i47mqAKKqWBLD1JuqYz01ZYTNVBR7UPkD3xS2elDlWeXJo7OKoZOgn2UrUvs4MlMY9Ko="
-    # AWS_ACCESS_KEY_ID_QA
-    - secure: "iKDmg+m+mMVs2PyGAdBThrOctyfGxaW3bDCJfHtu6nhqhQZ+aLPnv1yi8+znIcjfsnE2ewLO4cn42KNvmi7g5+x2NaQN1J2mDVeooMPXHIl5+dKJGM7AAyVvsUan+ZJho5IoQBUDLEO7ix5LgkBvfLHRHVzxBQghGo5IhFMGCQsHFaO5NF5cm6itNwlRX66v97JVC3sIYDmhcbqBH5E1tkMNdlxGSDp8k5+R2Isg59bbIv3oc343XOws+fs/Zx+TmLLflPtY6IzulGBZxV194MroGDqriE5nLlBZvG5z0vgGqQut+9DN3wAzTRZfwMTaablb/MOA2F3OjMOLxJfsbS/MRTDOT0ksEuYjIii8sat4KfLAzNLVv+o3NgDoRA9Hu3a5CtPoRBugIR09mdAvZF9I+avxSgmf/ABp7FDpTd6jPPOE9ZA57He5Xlif/duermPdO5fAx+9G9R+4Ibpl8f4vXxVCQzGOtwnHkMrLeFtLEHj3JXH0Dpis2gqk3ftYdf0zQBQZbqIKGD1MEQEanjZAnHkqgQX/BvJxG/FgvsfxaPX83ZK1IvH6hOh/szJcBTmEfm2ywWjHigu6Rd9OZYcIIlRnUxWeSozpdL6uReMBmEGL6XEyBPQ7MTN/ajtXBOBn9j60nZoH5yxLn5ptg7myP9etndsPVWY1cGvrujY="
-    # AWS_SECRET_ACCESS_KEY_QA
-    - secure: "Xvv73aiWEZruwBtgGMb3C0fUfHKU82jQCezuQHjsEk7pk+NRhnQwgvGmvTYiYiIZcuYyEMynPhtNo21xBKC3TwIdjUGfYhpqcMeuchHTpjsWIdWwLvhZ1bs5yB7X47drO0zy99x84qVZeIs/uDKbYpCYEyMC41Bw+YpR6ySlFOqY6TonWxAmZrSP+/WdqPSl+6SltIc9MmjnpzydCvWW7xWbgtZqHQi6mmTayY3rmOQ8V9F8Th/OgeyfBfuZ5Bh/vzY+yNOziu+7ra+ZWKf6TvesgAwTT7aq08pp4HV7CT3PlYTW5ttR6Zz6p/ZYgXkApIdcG3rOqH0v0W2hnHSEAEonpChfQHBM85oMIKAjDBju7eXjO7dniIefSp7rNzmWFscdMtbX1Hp90/01IlsJV/4cto/U2OLXkGCYK3XebGtQt1xNkt7mH1+/qSlDPHoKKFl6b+9R1j+Itrz7zwt68pQQX9IKQiLB4V53tx51EDB/heFeD+JgPs/+a4p+VYQHnoBow8dOYoo/GmQTqDeyWdABiJKrCCIfaiQAYwBQgglpRxhWrKelyoYDhUzPhtCXpznFsfiVZ11XA+P0rUcl6Pd9ATKMr8krMhGo+/fJTcyDBtb5eRCE2+Mg6Yh2f+BnJ4RHzP/LVl5/RrxfNKQXby4nT3SL2sBgHVIiV6D1J00="
+    - secure: "dakVONjXxf4CoE002f8VSIS7lhKhxbxlu2e3TUsjp73Yyl54lGtdcMptOlHWkPqsCtkdilewI7INbRaX8Rg8W5IvOwiGX+V+QyHGn2ZS8n6r1Ndds4m6Cq7gpv5rCENDwRZtT0IJOBInscCFk7jkK6ZByt3ad2JuwSjnzc48JYnEXuWOoPGw2cvQom/UYpo+QsKxisNbW9V9+fHa2LxD5CgbusMdB1Y7MAR4YtWS2s2yBlYYDHD+MekgjtxRFqA5VRjDbKOQ8p8ZT/vyUBCOAe0/AnneEogczDM6y7EGPp9CsLwbahrd6Dz2BqliFyx3BoWY2ZkZ2md1pGAqw9FcXhtHsx5ujKQhX6BfVkMko5mFPs0FPFt+hYDzLFe7xLep3Ulkp8XVB6tLlR4iP/8k+WU1Y7aPv4md+hh4TPuPiiWYfJRrzvb/bkN0P7COfYkyozVisqj552mgShXBPnr/v8rbNKGtKYujCO0zO6F8dqs7y2cNZkiLEcVlXTrUdszd640dN2FbqmojKeQYEwCyg4sTxb0Ly1s4dIQsGmZq3LBy97KtiqSjf1RatFmW3hbC8y011r+HU7AgLO2vMk7bV8fQDApOyeHRVgJ/m/fprzvlix61uKehpK5khEeQhsugWc1KWRWv6iZtHyCSR/ijKLcecT+Eyk3Lr/BRqCP/ARQ=" # AWS_ACCESS_KEY_ID_QA nypl-dams-dev 20240131
+    - secure: "H24HHe3YySqveGcSwghLyUxlbf4PjYc+tpSL9JJvglsZc2KD9CFraqrlolvDK2xoG9NJbrHigW2+cZT0ZcU47X7t2Z1EewITvzvvi9OD4C12O3Jxy2k0QmYzSnfT1GPREF2PLBONVyZg029QSx/p0jGJ3pSuo+BQ+bFIZo7fXbA5spPUADTtzZD3dcl+WfsAoDATQ1h+8H98YnvfaH5b6uYon7pPv8Y1JiqlTKrKQqRDXGu00xtUNnW0YZ64hGAtQUDlJEpLewLQ+A5UaZeaMVA0cEqe2YIbJMHzNkU1jUXm8ukCTfSUK1u7NLaHLmDFdPe6q4qBXH+DAmVMGPpbO9L79iss2PhMu6Q+RewjPYyqQVU1IiYYRlZXB/L/JJQz6kFdlXUzxFkOCCNKgVbPZSeF4qVEc5g0coz2v4Nptp+5DXKK1SyI8LIiM+gy8C0QVvfNC2u6rz2V+a/lwXS/D4gG771DKbvqhnU3ahnU2vYM21FIkrYvkjqmBxSA5+mv1osJVj7zTBdR4iderN74whHV3Itshj7f6/eI/cB0hg82/Qp+qCPgvs2yeeJfh/09McWS7r6AZBBPEemIk8Gt4QH0Q0/4fNaT84QkLXy5LpFDfNnzqKY1sk634q/54qhbUu/plNKKCh85BkjdMurBOpZK9fcvsyN8zWWvbBgGO5E=" # AWS_SECRET_ACCESS_KEY_QA nypl-dams-dev 20240131
+    - secure: "cV4Uv5PfndO+lOej51e3RTwBUCOdOG/dVFApyJiFr/xfHHNdbNxI7Yk0tI1SteJcXFkiGxP3RFah9vxya+eCv3lXuAE1xZAbhf8ZjTMMrIqWBt9jpejMHedfQCgKFXDrYhDruGm8u/ZR5KxagtSdOBspXSj8gIBaMILRcFu0t22FxAaK5TDugO3axDys5I8QXLFsNSs20rlvyd9CjJ/9LZao5B4/R6+u4eeW4y5MKcdxr0UcyIiTbehoiaISs6AzuJuvlGn9OZfnwg8BprcMUU2kUkXocjBjHhYJgGFvD1+OeLMZPFfYKjpLki0cCx2oPDMr4b0QFnZ+uc+haiAT5LDbCILpGBSJyAnFiPmE3a3ID784rZ/frqSNHpLuWBFocTYff/QFit/NVxquAz3cq/BYBX1Hp7tM9LKmk6pduJ/zjOiPWwMFroyGHedd5/sbykm8tcNtTUaydmAs3xDScVblJy/dyNGti9ElCbyCw9F96BXx8WEZXBmfLRmFimgZ6yANmiGkcaDgct0t24570eMkXQt9j+27mlH+KmIbAyqaNN2da1OkMoRQPvmmA0U8deEt9Rws5Yd7U9+zN+DP1FRsE5BKYKhcWzdxvZFfA0vmNhccoLKLnzQUWZKv1fU4fp1ilOlWaXc7voAYnL91Z1VJbgQtuXaovzBMSBbwErk=" # AWS_ACCESS_KEY_ID_PRODUCTION nypl-dams-prod 20240131
+    - secure: "KOTjWmqbVBruqfArEpWUWEXrARGfMgLMP9c+K9F2V3nku42SocEqmn/fzz9j9flkkyrmej4+V7koMPct80gK8lF9GAXRSzv8Whvd9G6tmBO6b3gzK2+27BSc3q6XbPKcHbRflNlpKkb5mrsNqpVbzQu3oUanc+BCMzLa4yzU8s4cjeQx/YRuORyj0I5YRbKiqQSG1HRvS0douHR7iXZuuhzeLNoyWsGpOTUUO3Jh6e3923DvsNh7aFZcWxy0UJoEkuiN+7PBuQfiXav6I8+mZv4LWTuYQpJ03inOa7XGnyDvNW8uLaJ9qHjO8uDQruDv3qzjgcrvQ4Nwi9ZXu9zirDH1cXULvJ5/KnQ3Hp0OgWCLGGRBAxDgV+PXao/I1lqxaZOR9kE/gwXI8BYvrzBgDAfc7XRIS9moc8Ymz25maUpx2/Mt/QhEGfwwAqXntAQEwjGLhVqZlp1lm+wi1oV+aYokoo6pAsthUvdcZbFpFaEelH3shhkEM5tEvv+BCL7KikcDf1PXQmAwXMWt+nKd6PX1eSJTJbzgDW9T7NIQGiUF4+hJ7YYgKrkC52ED2TDFLijzXUyt8caZTSefEaThWAvH1Xp3iGRuq7jJl5oSJJLTJULdXC+kBgLoxvV5UjgO7Ma0TM8jV3NlmAs6bW2jZ+2eEBx5F5woCLBJEZvXOtI=" # AWS_SECRET_ACCESS_KEY_PRODUCTION nypl-dams-prod 20240131
+    - secure: "UnlYqYBdutWVV00V03djajabghAg9ZpryG3cUYeBfTIrhzGitLmXzSUgLdUKMRe/dlevAHOdYQrmilKzMk/ldcJ4H7n0kXZ7LtQG89BRlUXTK+gZ3qHM0XHVB/LFQA0EFxn31uNGdJ3taEg3vwOA5DrV/iSbRJn86vpwt+4FuocAjU2rHpQWDvfX/CGmV6gLdzaRe2HVpumjnvEBr7KX/I4eKLTIiKtNAlBv09EorQGYFpiJUY3S+ii3KcE9gJZVm7A4IWSgc+O5lUhOnpS2OGZ/altxUJdFPWAtUfIQoDLUQAZRCIZm/ixzFr1azue0dCxDJr40JOmSCkqBnhIGNDvyO9OelaGM1wmG29IWNTxdbtTWl288P5Ni5hhfbhSKBgPA2IdAFa2HwX2czL+7/3aPzHoiNf1qvHOe2tS2XGsfdpWz29NKJ+4UVT2rqpL1mDBv4fOiT8Y1k3gQcMgHFu6xzGet/bdmLo8Xr/wC/O6D/PUTlCeAxXz9Cv3q4v37q8FLTSL1fOEuTFQROpHAqRV/sqPNNaobdRRZPjaA1mp96JoPEEHbqoLt82GSeTzYBFC8HagEdQvF+9YqEr+/ydTF9ysQbOcFNqZQX3q0/O5byd6JZzaFcZaq75HsT9vi911RR66GYPfMQGqZsNTBsSNCvXx0KCS9KraN4kg1ck4="
 jobs:
   include:
-    - stage: push QA image
+    - stage: deploy QA
       if: (branch = qa) AND (type != pull_request)
       env:
         - ECR_URL=685731035297.dkr.ecr.us-east-1.amazonaws.com/dc-frontend:$TRAVIS_BRANCH-latest
         - AWS_ACCESS_KEY_ID=$AWS_ACCESS_KEY_ID_QA
         - AWS_SECRET_ACCESS_KEY=$AWS_SECRET_ACCESS_KEY_QA
+        - CLUSTER_NAME=dc-frontend-qa
+        - SERVICE_NAME=dc-frontend-qa
+        - APP_ENV=qa
       install:
         - pip install --user awscli
       script:
         - eval $(aws ecr get-login --no-include-email)
-        - docker build --tag "$LOCAL_TAG_NAME" .
+        - docker build --build-arg APP_ENV="$APP_ENV" --tag "$LOCAL_TAG_NAME" .
         - docker tag "$LOCAL_TAG_NAME" "$ECR_URL";
         - docker push "$ECR_URL";
-    - stage: update QA tasks
-      if: (branch = qa) AND (type != pull_request)
+        - aws ecs update-service --cluster $CLUSTER_NAME --service $SERVICE_NAME --force-new-deployment
+    - stage: deploy production
+      if: (branch = production) AND (type != pull_request)
       env:
-        - AWS_ACCESS_KEY_ID=$AWS_ACCESS_KEY_ID_QA
-        - AWS_SECRET_ACCESS_KEY=$AWS_SECRET_ACCESS_KEY_QA
-        - CLUSTER_NAME=dc-frontend-qa
-        - SERVICE_NAME=dc-frontend-qa
+        - ECR_URL=557492996044.dkr.ecr.us-east-1.amazonaws.com/dc-frontend:latest
+        - AWS_ACCESS_KEY_ID=$AWS_ACCESS_KEY_ID_PRODUCTION
+        - AWS_SECRET_ACCESS_KEY=$AWS_SECRET_ACCESS_KEY_PRODUCTION
+        - CLUSTER_NAME=dc-frontend
+        - SERVICE_NAME=dc-frontend
+        - APP_ENV=production
       install:
         - pip install --user awscli
       script:
+        - eval $(aws ecr get-login --no-include-email)
+        - docker build --build-arg APP_ENV="$APP_ENV" --tag "$LOCAL_TAG_NAME" .
+        - docker tag "$LOCAL_TAG_NAME" "$ECR_URL";
+        - docker push "$ECR_URL";
         - aws ecs update-service --cluster $CLUSTER_NAME --service $SERVICE_NAME --force-new-deployment
