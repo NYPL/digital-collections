@@ -1,39 +1,52 @@
 import { Hero, Link as DSLink } from "@nypl/design-system-react-components";
-import { imageURL } from "../../utils/utils";
 import CampaignHeroSubText from "./campaignHeroSubText";
 import CampaignHeroHeading from "./campaignHeroHeading";
 import CampaignHeroLoading from "./campaignHeroLoading";
 import { useEffect, useState } from "react";
 
-const CampaignHero = ({ featuredItem, numberOfDigitizedItems }: any) => {
-  // useEffect(() => {
-  //   const fetchHeroData = async () => {
-  //     console.log("imageID", imageID);
-  //     const response = await fetch(`/api/featuredHero?imageID=${imageID}`);
-  //     const data = await response.json();
-  //     const isFeaturedItemLoading = setIsFeaturedItemLoading(false);
-  //     console.log("isFeaturedItemLoading  IS: ", isFeaturedItemLoading);
+const CampaignHero = ({ imageID }) => {
+  console.log(imageID);
+  // const [isFeaturedItemLoading, setIsFeaturedItemLoading] = useState(false);
+  const [data, setData] = useState<any>({});
 
-  //     console.log(data);
-  //     setHeroData(data);
-  //   };
-  // });
+  useEffect(() => {
+    // setIsFeaturedItemLoading(true);
+    // console.log(
+    //   "isFeaturedItemLoading before FETCH IS: ",
+    //   isFeaturedItemLoading
+    // );
 
-  return (
+    const fetchData = async () => {
+      const response = await fetch(`/api/featuredHero?imageID=${imageID}`);
+      const responseData = await response.json();
+      console.log(responseData);
+      setData(responseData);
+      // setIsFeaturedItemLoading(false);
+    };
+
+    console.log("fetching hero data");
+    fetchData();
+  });
+
+  return data?.featuredItem ? (
     <Hero
-      backgroundImageSrc={featuredItem.imageSrc}
+      backgroundImageSrc={data.featuredItem.imageSrc}
       backgroundColor="ui.bg.default"
       isDarkBackgroundImage
       heroType="campaign"
       heading={
-        <CampaignHeroHeading numberOfDigitizedItems={numberOfDigitizedItems} />
+        <CampaignHeroHeading
+          numberOfDigitizedItems={data.numberOfDigitizedItems}
+        />
       }
       imageProps={{
-        alt: featuredItem.title,
-        src: featuredItem.imageSrc,
+        alt: data.featuredItem.title,
+        src: data.featuredItem.imageSrc,
       }}
-      subHeaderText={<CampaignHeroSubText featuredItem={featuredItem} />}
+      subHeaderText={<CampaignHeroSubText featuredItem={data.featuredItem} />}
     />
+  ) : (
+    <CampaignHeroLoading />
   );
 };
 
