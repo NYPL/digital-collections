@@ -18,17 +18,20 @@ const itemsDataHandler = async (
   if (method === "GET") {
     //pass query param to featuredImageID function to check if it is legit
     // logger.info("Generating featured image id");
-    const imageID = (request.query.imageID as string)
-      ? featuredImageID(request.query.imageID as string)
-      : featuredImageID();
 
-    console.log(
-      "Timer 1: Calls getItemDataFromImageID and getNumDigitizedItems"
-    );
-    console.time("timer1");
+    // const imageID = (request.query.imageID as string)
+    //   ? featuredImageID(request.query.imageID as string)
+    //   : featuredImageID();
+
+    const imageID = request.query.imageID as string;
+
+    // console.log(
+    //   "Timer 1: Calls getItemDataFromImageID and getNumDigitizedItems"
+    // );
+    // console.time("timer1");
     const dataFromUri = await getItemDataFromImageID(imageID);
     const numDigitizedItems = await getNumDigitizedItems();
-    console.timeEnd("timer1");
+    // console.timeEnd("timer1");
 
     const featuredItemObject = {
       imageID: imageID,
