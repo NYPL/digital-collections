@@ -21,6 +21,8 @@ import NotificationBanner from "@/components/notificationBanner/notificationBann
 import logger from "logger";
 import { useEffect, useState } from "react";
 import { ADOBE_EMBED_URL, DC_URL } from "../config/constants";
+import SwimLanesLoading from "@/components/swimlanes/swimLanesLoading";
+import CampaignHeroLoading from "@/components/hero/campaignHeroLoading";
 
 export default function Home(props: any = {}) {
   console.log("props", props);
@@ -34,49 +36,52 @@ export default function Home(props: any = {}) {
 
   useEffect(() => {
     // Track page view events to Adobe Analytics
-    console.log("from index.tsx");
-    console.log("appConfig is: ", appConfig);
-    console.log("appConfig.environment", appConfig.environment);
-    console.log(
-      "appConfig.DC_URL is: ",
-      appConfig.DC_URL[appConfig.environment]
-    );
-    console.log(
-      "appConfig.adobeEmbedUrl: ",
-      appConfig.adobeEmbedUrl[appConfig.environment]
-    );
-    console.log("DC_URL CONSTANT is: ", DC_URL);
-    console.log("ADOBE_EMBED_URL CONSTANT IS: ", ADOBE_EMBED_URL);
+    // console.log("from index.tsx");
+    // console.log("appConfig is: ", appConfig);
+    // console.log("appConfig.environment", appConfig.environment);
+    // console.log(
+    //   "appConfig.DC_URL is: ",
+    //   appConfig.DC_URL[appConfig.environment]
+    // );
+    // console.log(
+    //   "appConfig.adobeEmbedUrl: ",
+    //   appConfig.adobeEmbedUrl[appConfig.environment]
+    // );
+    // console.log("DC_URL CONSTANT is: ", DC_URL);
+    // console.log("ADOBE_EMBED_URL CONSTANT IS: ", ADOBE_EMBED_URL);
+
     console.log("useffect swimlanes");
-    const isFeaturedItemLoading = setIsFeaturedItemLoading(true);
-    const isSwimLaneLoading = setIsSwimLaneLoading(true);
-    console.log("isFeaturedItemLoading  IS: ", isFeaturedItemLoading);
-    console.log("isSwimLaneLoading IS: ", isSwimLaneLoading);
+    setIsFeaturedItemLoading(true);
+    setIsSwimLaneLoading(true);
+    console.log(
+      "isFeaturedItemLoading before FETCH IS: ",
+      isFeaturedItemLoading
+    );
+    console.log("isSwimLaneLoading before FETCH IS: ", isSwimLaneLoading);
+
     const fetchData = async () => {
-      const response = await fetch("/api/homepageData");
+      const response = await fetch("/api/homepagedata");
       const data = await response.json();
-      const isSwimLaneLoading = setIsSwimLaneLoading(false);
-      console.log("isSwimLaneLoading IS: ", isSwimLaneLoading);
       console.log(data);
       setHomepageData(data);
+      setIsSwimLaneLoading(false);
     };
 
     const fetchHeroData = async () => {
       console.log("imageID", imageID);
       const response = await fetch(`/api/featuredHero?imageID=${imageID}`);
       const data = await response.json();
-      const isFeaturedItemLoading = setIsFeaturedItemLoading(false);
-      console.log("isFeaturedItemLoading  IS: ", isFeaturedItemLoading);
-
       console.log(data);
       setHeroData(data);
+      setIsFeaturedItemLoading(false);
     };
-
+    console.log("fetching hero data");
     fetchHeroData();
+    console.log("fetching swim lane data");
     fetchData();
   }, []);
 
-  console.log("Home props envVars", props.envVars);
+  // console.log("Home props envVars", props.envVars);
 
   return (
     <>
@@ -88,72 +93,41 @@ export default function Home(props: any = {}) {
       <TemplateAppContainer
         breakout={
           // isFeaturedItemLoading ? (
-          //   <SkeletonLoader
-          //   // featuredItem={heroData.featuredItem}
-          //   // numberOfDigitizedItems={heroData.numberOfDigitizedItems}
-          //   />
+          //   <SkeletonLoader showContent={false} showHeading={false} />
           // ) : (
           //   <CampaignHero
           //     featuredItem={heroData.featuredItem}
           //     numberOfDigitizedItems={heroData.numberOfDigitizedItems}
           //   />
           // )
+
+          // using the heroData?.featuredItem? to conditionally render the skeleton loader because using isFeaturedItemLoading does not insure that the data is returned, so I get errors.
           heroData?.featuredItem ? (
             <CampaignHero
               featuredItem={heroData.featuredItem}
               numberOfDigitizedItems={heroData.numberOfDigitizedItems}
             />
           ) : (
-            <SkeletonLoader
-            // featuredItem={heroData.featuredItem}
-            // numberOfDigitizedItems={heroData.numberOfDigitizedItems}
-            />
+            <CampaignHeroLoading />
           )
         }
         contentPrimary={
           // isSwimLaneLoading ? (
-          //   <SkeletonLoader
-          //   // featuredItem={heroData.featuredItem}
-          //   // numberOfDigitizedItems={heroData.numberOfDigitizedItems}
-          //   />
+          // <SwimLanesLoading />
           // ) : (
           //   <HomePageMainContent
           //     randomNumber={homepageData.randomNumber}
           //     lanesWithNumItems={homepageData.lanesWithNumItems}
           //   />
           // )
+
           homepageData?.lanesWithNumItems ? (
             <HomePageMainContent
               randomNumber={homepageData.randomNumber}
               lanesWithNumItems={homepageData.lanesWithNumItems}
             />
           ) : (
-            <SimpleGrid columns={4}>
-              <SkeletonLoader imageAspectRatio="landscape" isBordered />
-              <SkeletonLoader imageAspectRatio="landscape" isBordered />
-              <SkeletonLoader imageAspectRatio="landscape" isBordered />
-              <SkeletonLoader imageAspectRatio="landscape" isBordered />
-
-              <SkeletonLoader imageAspectRatio="landscape" isBordered />
-              <SkeletonLoader imageAspectRatio="landscape" isBordered />
-              <SkeletonLoader imageAspectRatio="landscape" isBordered />
-              <SkeletonLoader imageAspectRatio="landscape" isBordered />
-
-              <SkeletonLoader imageAspectRatio="landscape" isBordered />
-              <SkeletonLoader imageAspectRatio="landscape" isBordered />
-              <SkeletonLoader imageAspectRatio="landscape" isBordered />
-              <SkeletonLoader imageAspectRatio="landscape" isBordered />
-
-              <SkeletonLoader imageAspectRatio="landscape" isBordered />
-              <SkeletonLoader imageAspectRatio="landscape" isBordered />
-              <SkeletonLoader imageAspectRatio="landscape" isBordered />
-              <SkeletonLoader imageAspectRatio="landscape" isBordered />
-
-              <SkeletonLoader imageAspectRatio="landscape" isBordered />
-              <SkeletonLoader imageAspectRatio="landscape" isBordered />
-              <SkeletonLoader imageAspectRatio="landscape" isBordered />
-              <SkeletonLoader imageAspectRatio="landscape" isBordered />
-            </SimpleGrid>
+            <SwimLanesLoading />
           )
         }
       />
