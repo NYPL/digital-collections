@@ -39,4 +39,4 @@ const itemsDataHandler = async (
 };
 export default itemsDataHandler;
 
-// http://localhost:3000/api/featuredItems
+// http://localhost:3000/api/homepagedata

@@ -5,18 +5,14 @@ import { useEffect, useState } from "react";
 import SwimLanesLoading from "../swimlanes/swimLanesLoading";
 
 const HomePageMainContent = () => {
-  // const [isSwimLaneLoading, setIsSwimLaneLoading] = useState(false);
   const [data, setData] = useState<any>({});
 
   useEffect(() => {
-    // setIsSwimLaneLoading(true);
-    // console.log("isSwimLaneLoading before FETCH IS: ", isSwimLaneLoading);
     const fetchData = async () => {
       const response = await fetch("/api/homepagedata");
       const responseData = await response.json();
       console.log(responseData);
       setData(responseData);
-      // setIsSwimLaneLoading(false);
     };
 
     console.log("fetching swim lane data");
