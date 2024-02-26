@@ -6,22 +6,14 @@ import { useEffect, useState } from "react";
 
 const CampaignHero = ({ imageID }) => {
   console.log(imageID);
-  // const [isFeaturedItemLoading, setIsFeaturedItemLoading] = useState(false);
   const [data, setData] = useState<any>({});
 
   useEffect(() => {
-    // setIsFeaturedItemLoading(true);
-    // console.log(
-    //   "isFeaturedItemLoading before FETCH IS: ",
-    //   isFeaturedItemLoading
-    // );
-
     const fetchData = async () => {
       const response = await fetch(`/api/featuredHero?imageID=${imageID}`);
       const responseData = await response.json();
       console.log(responseData);
       setData(responseData);
-      // setIsFeaturedItemLoading(false);
     };
 
     console.log("fetching hero data");
