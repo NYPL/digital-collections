@@ -1,10 +1,7 @@
-import itemsData from "@/data/featureditems.json";
-import data from "@/data/lanes";
 import {
   featuredImageID,
   getItemDataFromImageID,
   getNumDigitizedItems,
-  getNumItems,
   imageURL,
 } from "@/utils/utils";
 import appConfig from "appConfig";
