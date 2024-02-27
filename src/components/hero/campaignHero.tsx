@@ -5,20 +5,17 @@ import CampaignHeroLoading from "./campaignHeroLoading";
 import { useEffect, useState } from "react";
 
 const CampaignHero = ({ imageID }) => {
-  console.log(imageID);
   const [data, setData] = useState<any>({});
 
   useEffect(() => {
     const fetchData = async () => {
       const response = await fetch(`/api/featuredHero?imageID=${imageID}`);
       const responseData = await response.json();
-      console.log(responseData);
       setData(responseData);
     };
 
-    console.log("fetching hero data");
     fetchData();
-  });
+  }, [imageID]);
 
   return data?.featuredItem ? (
     <Hero
