@@ -11,11 +11,9 @@ const HomePageMainContent = () => {
     const fetchData = async () => {
       const response = await fetch("/api/homepagedata");
       const responseData = await response.json();
-      console.log(responseData);
       setData(responseData);
     };
 
-    console.log("fetching swim lane data");
     fetchData();
   }, []);
   return data?.lanesWithNumItems ? (
