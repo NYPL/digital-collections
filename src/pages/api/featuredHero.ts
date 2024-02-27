@@ -28,7 +28,9 @@ const itemsDataHandler = async (
       imageSrc: imageURL(imageID),
       uuid: dataFromUri.uuid,
       title: dataFromUri.title,
-      href: `${appConfig.DC_URL}/items/${dataFromUri.uuid}`,
+      href: `${appConfig.DC_URL[appConfig.environment]}/items/${
+        dataFromUri.uuid
+      }`,
     };
 
     return response.status(200).json({
