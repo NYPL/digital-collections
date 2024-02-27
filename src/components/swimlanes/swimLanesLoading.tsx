@@ -10,11 +10,7 @@ const SwimLanesLoading = () => {
     <>
       <Box>
         <Flex>
-          <SkeletonLoader
-            imageAspectRatio="landscape"
-            contentSize={0}
-            showImage={false}
-          />
+          <SkeletonLoader contentSize={0} showImage={false} headingSize={1} />
         </Flex>
         <SimpleGrid columns={4}>
           <SkeletonLoader imageAspectRatio="landscape" contentSize={1} />
@@ -25,11 +21,7 @@ const SwimLanesLoading = () => {
       </Box>
       <Box>
         <Flex>
-          <SkeletonLoader
-            imageAspectRatio="landscape"
-            contentSize={0}
-            showImage={false}
-          />
+          <SkeletonLoader contentSize={0} showImage={false} headingSize={1} />
         </Flex>
         <SimpleGrid columns={4}>
           <SkeletonLoader imageAspectRatio="landscape" contentSize={1} />
@@ -40,11 +32,7 @@ const SwimLanesLoading = () => {
       </Box>
       <Box>
         <Flex>
-          <SkeletonLoader
-            imageAspectRatio="landscape"
-            contentSize={0}
-            showImage={false}
-          />
+          <SkeletonLoader contentSize={0} showImage={false} headingSize={1} />
         </Flex>
         <SimpleGrid columns={4}>
           <SkeletonLoader imageAspectRatio="landscape" contentSize={1} />
@@ -55,11 +43,7 @@ const SwimLanesLoading = () => {
       </Box>
       <Box>
         <Flex>
-          <SkeletonLoader
-            imageAspectRatio="landscape"
-            contentSize={0}
-            showImage={false}
-          />
+          <SkeletonLoader contentSize={0} showImage={false} headingSize={1} />
         </Flex>
         <SimpleGrid columns={4}>
           <SkeletonLoader imageAspectRatio="landscape" contentSize={1} />
