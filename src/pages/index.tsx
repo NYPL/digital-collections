@@ -7,8 +7,6 @@ import NotificationBanner from "@/components/notificationBanner/notificationBann
 import { featuredImageID } from "@/utils/utils";
 
 export default function Home(props: any = {}) {
-  console.log("props", props);
-  // const imageID = featuredImageID();
   return (
     <>
       {/**
