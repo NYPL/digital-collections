@@ -9,7 +9,7 @@ import {
   HorizontalRule,
 } from "@nypl/design-system-react-components";
 import React, { useRef, useState } from "react";
-import FocusLock from "@chakra-ui/focus-lock";
+import { FocusLock } from "@chakra-ui/react";
 
 const listItems = dcNavLinks.map(({ href, text }) => (
   <Link
