@@ -17,6 +17,7 @@ RUN npm install
 COPY . .
 
 ENV APP_ENV=${APP_ENV}
+ENV NEW_RELIC_LICENSE_KEY=${NEW_RELIC_LICENSE_KEY}
 
 # Set environment variables. NODE_ENV is set early because we
 # want to use it when running `npm install` and `npm run build`.
