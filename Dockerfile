@@ -4,6 +4,7 @@ FROM node:18-alpine AS production
 #RUN apt-get upgrade -y
 
 ARG APP_ENV
+ARG NEW_RELIC_LICENSE_KEY
 
 WORKDIR /app
 
