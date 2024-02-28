@@ -4,6 +4,7 @@ FROM node:18-alpine AS production
 #RUN apt-get upgrade -y
 
 ARG APP_ENV
+ARG NEW_RELIC_LICENSE_KEY
 
 WORKDIR /app
 
@@ -16,6 +17,7 @@ RUN npm install
 COPY . .
 
 ENV APP_ENV=${APP_ENV}
+ENV NEW_RELIC_LICENSE_KEY=${NEW_RELIC_LICENSE_KEY}
 
 # Set environment variables. NODE_ENV is set early because we
 # want to use it when running `npm install` and `npm run build`.
