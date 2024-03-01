@@ -2,7 +2,7 @@ import data from "@/data/lanes";
 import { getNumItems } from "@/utils/utils";
 import type { NextApiRequest, NextApiResponse } from "next";
 
-const itemsDataHandler = async (
+const homepageHandler = async (
   request: NextApiRequest,
   response: NextApiResponse
 ) => {
@@ -37,6 +37,6 @@ const itemsDataHandler = async (
     });
   }
 };
-export default itemsDataHandler;
+export default homepageHandler;
 
-// http://localhost:3000/api/homepagedata
+// http://localhost:3000/api/homepage

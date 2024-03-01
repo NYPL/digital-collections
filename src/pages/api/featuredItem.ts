@@ -7,7 +7,7 @@ import {
 import appConfig from "appConfig";
 import type { NextApiRequest, NextApiResponse } from "next";
 
-const itemsDataHandler = async (
+const featuredItemDataHandler = async (
   request: NextApiRequest,
   response: NextApiResponse
 ) => {
@@ -39,5 +39,5 @@ const itemsDataHandler = async (
     });
   }
 };
-export default itemsDataHandler;
-// http://localhost:3000/api/featuredHero
+export default featuredItemDataHandler;
+// http://localhost:3000/api/featuredItem
