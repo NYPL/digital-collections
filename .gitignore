@@ -38,3 +38,4 @@ next-env.d.ts
  /log
  /log/dc.log
  log/
+newrelic_agent.log
