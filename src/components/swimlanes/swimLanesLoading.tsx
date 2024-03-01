@@ -8,7 +8,7 @@ import {
 const SwimLanesLoading = () => {
   return (
     <>
-      <Box>
+      <Box data-testid="swimlane-skeleton-loader-1">
         <Flex>
           <SkeletonLoader contentSize={0} showImage={false} headingSize={1} />
         </Flex>
@@ -19,7 +19,7 @@ const SwimLanesLoading = () => {
           <SkeletonLoader imageAspectRatio="landscape" contentSize={1} />
         </SimpleGrid>
       </Box>
-      <Box>
+      <Box data-testid="swimlane-skeleton-loader-2">
         <Flex>
           <SkeletonLoader contentSize={0} showImage={false} headingSize={1} />
         </Flex>
@@ -30,7 +30,7 @@ const SwimLanesLoading = () => {
           <SkeletonLoader imageAspectRatio="landscape" contentSize={1} />
         </SimpleGrid>
       </Box>
-      <Box>
+      <Box data-testid="swimlane-skeleton-loader-3">
         <Flex>
           <SkeletonLoader contentSize={0} showImage={false} headingSize={1} />
         </Flex>
@@ -41,7 +41,7 @@ const SwimLanesLoading = () => {
           <SkeletonLoader imageAspectRatio="landscape" contentSize={1} />
         </SimpleGrid>
       </Box>
-      <Box>
+      <Box data-testid="swimlane-skeleton-loader-4">
         <Flex>
           <SkeletonLoader contentSize={0} showImage={false} headingSize={1} />
         </Flex>
