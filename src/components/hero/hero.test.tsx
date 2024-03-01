@@ -1,7 +1,5 @@
 import CampaignHero from "@/components/hero/campaignHero";
 import { render, screen } from "@testing-library/react";
-import { props } from "../../../__tests__/data/homepageProps";
-import { imageURL } from "@/utils/utils";
 describe("Campaign Hero", () => {
   it("renders the SkeletonLoader component instead of the Campaign Hero", () => {
     (global as any).fetch = jest.fn(() =>
@@ -13,7 +11,7 @@ describe("Campaign Hero", () => {
 
     const { container } = render(<CampaignHero imageID="5273165" />);
 
-    expect(container.classList.contains("chakra-skeleton"));
+    expect(screen.getByTestId("hero-skeleton-loader")).toBeTruthy();
   });
 
   // it("renders the Campaign Hero", () => {

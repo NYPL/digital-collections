@@ -1,6 +1,4 @@
-import { render, screen, within } from "@testing-library/react";
-import { props } from "../../../__tests__/data/swimlaneProps";
-import appConfig from "appConfig";
+import { render, screen } from "@testing-library/react";
 import HomePageMainContent from "./homePageMainContent";
 
 describe("homePageMainContent", () => {
@@ -8,12 +6,15 @@ describe("homePageMainContent", () => {
     (global as any).fetch = jest.fn(() =>
       Promise.resolve({
         status: 200,
-        json: () => Promise.resolve({ props }),
+        json: () => Promise.resolve(),
       })
     ) as jest.Mock;
 
     const { container } = render(<HomePageMainContent />);
 
-    expect(container.classList.contains("chakra-skeleton"));
+    expect(screen.getByTestId("swimlane-skeleton-loader-1")).toBeTruthy();
+    expect(screen.getByTestId("swimlane-skeleton-loader-2")).toBeTruthy();
+    expect(screen.getByTestId("swimlane-skeleton-loader-3")).toBeTruthy();
+    expect(screen.getByTestId("swimlane-skeleton-loader-4")).toBeTruthy();
   });
 });
