@@ -2,9 +2,7 @@ import {
   Link as DSLink,
   HorizontalRule,
   Text,
-  Spacer,
   Box,
-  Tooltip,
 } from "@nypl/design-system-react-components";
 
 const CampaignHeroSubText = ({ featuredItem }: any) => {

@@ -76,8 +76,8 @@ export const imageURL = (
 
 export const getNumDigitizedItems = async () => {
   const apiUrl = `${process.env.API_URL}/api/v2/items/total`;
-  console.log(`getNumDigitizedItems: About to fetch ${apiUrl}`);
-  console.log(`getNumDigitizedItems calls apiCall function internally`);
+  // console.log(`getNumDigitizedItems: About to fetch ${apiUrl}`);
+  // console.log(`getNumDigitizedItems calls apiCall function internally`);
   const res = await apiCall(apiUrl);
 
   const fallbackCount = 863848;
@@ -92,8 +92,8 @@ export const getNumDigitizedItems = async () => {
 
 export const getNumItems = async (uuid: string) => {
   const apiUrl = `${process.env.API_URL}/api/v2/collections/${uuid}/items`;
-  console.log(`getNumItems: About to fetch ${apiUrl}`);
-  console.log(`getNumItems calls apiCall function internally`);
+  // console.log(`getNumItems: About to fetch ${apiUrl}`);
+  // console.log(`getNumItems calls apiCall function internally`);
   const res = await apiCall(apiUrl);
   return res.numItems || 0;
 };
@@ -106,8 +106,8 @@ export const getNumItems = async (uuid: string) => {
 
 export const getAPIUri = async (identifierType: string, identifier: string) => {
   const apiUrl = `${process.env.API_URL}/api/v2/items/${identifierType}/${identifier}`;
-  console.log(`getAPIUri: About to fetch ${apiUrl}`);
-  console.log(`getAPIUri calls apiCall function internally`);
+  // console.log(`getAPIUri: About to fetch ${apiUrl}`);
+  // console.log(`getAPIUri calls apiCall function internally`);
   const apiCallValue = apiCall(apiUrl);
   return apiCallValue;
 };
@@ -129,8 +129,8 @@ export const apiCall = async (apiUrl: string) => {
 
     if (response.status === 200) {
       const data = await response.json();
-      console.log(`apiCall: called ${apiUrl}`);
-      console.log(`Response time: ${new Date().getTime() - startTime}`);
+      // console.log(`apiCall: called ${apiUrl}`);
+      // console.log(`Response time: ${new Date().getTime() - startTime}`);
       return data.nyplAPI.response;
     } else {
       return undefined;
