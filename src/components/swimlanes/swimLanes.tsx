@@ -85,7 +85,7 @@ const SwimLanes = ({ lanesWithNumItems }) => {
                   }}
                 >
                   {" "}
-                  {`${collection.numItems} items`}{" "}
+                  {`${collection.numItems || 0} items`}{" "}
                 </Text>
               </CardContent>
             </Card>
