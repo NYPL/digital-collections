@@ -48,9 +48,49 @@ A quick note on environment variables
 
 Use `.env.local` for local development.
 
+### Local development
+
+All variables should be declared in `.env.local` for local development. For local development, we don't have to worry about Server and Client env vars and where they come from.
+
+### QA/Production environments
+
+#### Server Side Environment Variables
+
+If a variable is required ONLY on the SERVER side (ie. in an api endpoint), then the variable can be declared in the AWS Task Definition.
+
+SERVER side methods in Next.js read environments at RUN TIME, which means they have access to environment variables on the server - these can be found by running `env` in the bash terminal or referenced within the app as `process.env.ENV`. These variables can/should be managed in QA and Production environments by updating the Task Definition and/or Cloud Formation Templates.
+
 SERVER side references of environment variables can use `process.env.ENV`
 
-If you are referencing an environment variable on the CLIENT, the environment variable needs to be added to `nextConfig.env` in `next.config.js.` Please use the process.env.ENV reference for the variable.
+#### Client Side Environment Variables
+
+If a variable is required ONLY on the CLIENT, the environment variable needs to be declared in `appConfig.ts`.
+
+CLIENT side methods in Next.js only have access to environment variables that are declared at BUILD TIME, which means they DO NOT have access to environment variables on the server and thus do not have access to `process.env.ENV`. These variables should be managed in QA and Production environments by either hard coding them in `appConfig.ts` AND/OR declaring them in the Dockerfile and travis.yml.
+
+Currently, the only CLIENT side environment variable that we use is `APP_ENV`. APP_ENV drives the logic to choose between several env variables that are hard coded in `appConfig.ts`.
+
+Example:
+
+```
+const appConfig = {
+  environment: process.env.APP_ENV || "development",
+  DC_URL: {
+    development: "https://qa-digitalcollections.nypl.org",
+    qa: "https://qa-digitalcollections.nypl.org",
+    production: "https://digitalcollections.nypl.org",
+  },
+  adobeEmbedUrl: {
+    development:
+      "https://assets.adobedtm.com/1a9376472d37/8519dfce636d/launch-bf8436264b01-development.min.js",
+    qa: "https://assets.adobedtm.com/1a9376472d37/8519dfce636d/launch-bf8436264b01-development.min.js",
+    production:
+      "https://assets.adobedtm.com/1a9376472d37/8519dfce636d/launch-672b7e7f98ee.min.js",
+  },
+};
+```
+
+In the future we may want to create a /config endpoint to pass environment variables from SERVER to CLIENT.
 
 ### Swim Lanes API Endpoints
 
@@ -352,3 +392,93 @@ $ npm run lint
 
 All pushes to this repo will be checked with `npm test` and `npm lint`.
 
+## Git Workflow
+
+Our branches (in order of stability are):
+
+| Branch     | Environment | AWS Account    | Link To Application                                                                        |
+| :--------- | :---------- | :------------- | :----------------------------------------------------------------------------------------- |
+| main       | development |                | [localhost:3000](http://localhost:3000)                                                    |
+| qa         | qa          | nypl-dams-dev  | [https://qa-new-digitalcollections.nypl.org/](https://qa-new-digitalcollections.nypl.org/) |
+| production | production  | nypl-dams-prod | [https://new-digitalcollections.nypl.org/](https://new-digitalcollections.nypl.org/)       |
+
+## Contributing
+
+1.  Feature branches are cut from `main` using
+
+    `git checkout -b feature/DR-123/feature-name`.
+
+2.  Add your changes to the CHANGELOG.md file under `## [Unreleased]`. See [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) for formatting docs.
+3.  Create a pull request of the `feature` branch _into_ `main`.
+4.  After a feature branch has approved accessibility review and VQA, merge `feature` branch into `main`, then merge `main` branch into `qa` for testing. Merging can be done manually or with a pull request. Pushing the changes to the remote branch will automatically trigger a deployment to the `qa` environment via Travis.
+5.  After QA has tested and approved cut a `release` branch off of `qa` using our Release Naming Strategy. Please see Release Naming Strategy for details on how we plan to number our releases during the initial rollout of this project.
+
+`git checkout -b release/x.y.z`.
+
+(see tagged releases or changelog for last version)
+
+6. Update CHANGELOG.md in release branch by moving updates from unreleased into the new release section.
+
+   ie. `## [2.4.13] - 04-21-2023`
+
+7. Commit and push changes to release branch.
+8. The `production` branch is protected. When the release is ready, create a pull request to merge `release` branch to `production`/ Merging in the release will deploy through Travis.
+9. Immediately after merging release to production, finish the release. This is done by backmerging the release to `qa` and `main` followed by creating the tags/release on github using these commands:
+
+   `$ git tag -a x.y.z`
+   `$ git push origin --tags`
+
+### Release Naming Strategy
+
+This project is in the beginning phases of its development. We will use a custom versioning system inspired by Semantic Versioning while we migrate the functionality of the digitalreadingroom app to this app. Once all of the initial Phase (as defined in the [Product Brief](https://docs.google.com/document/d/187LA6VjOaDdXA6xRZYv_gqgNzJcAyuSPIZoenVH2L3w)) is complete, this repo will use [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
+
+### Versioning system:
+
+MAJOR: all of the Phases are complete
+MINOR: phase, set of features required to meet the mvp of a Phase as defined in the Product Brief or TAD.
+PATCH: feature or hotfix that supports a component or section of the mvp of a Phase
+
+Format: MAJOR.MINOR.PATCH
+
+### Summary of Phases (to be removed later?)
+
+#### 1. Home Page
+
+[TAD](https://docs.google.com/document/d/1qw9qTM-6AB-I9XQR7CH3vBa5ZmtqNxtmDhixej_7H8U/edit#heading=h.kutc298lyner)
+[Designs](https://www.figma.com/file/NpjG47HqZG9GknfijGqJri/DC-Facelift-Homepage?type=design&node-id=3966-5868&mode=design&t=qHZ2TudJ2NDw13ux-0)
+
+#### 2. Top Level Category Pages
+
+These page types are:
+
+- [All Divisions](https://digitalcollections.nypl.org/divisions)
+- [All Collections](https://digitalcollections.nypl.org/collections)
+- [Swim Lane Landing Pages](https://digitalcollections.nypl.org/collections/lane/gay-lesbian-history)
+
+#### 3. Search-Based Pages
+
+- Search Landing
+  - [Basic with no search keywords](https://digitalcollections.nypl.org/search/index?utf8=%E2%9C%93&keywords=#) (This view is also used as the “All Items” page in site navigation)
+  - [With keyword](https://digitalcollections.nypl.org/search/index?utf8=%E2%9C%93&keywords=puppy)
+  - [With suggested collections](https://digitalcollections.nypl.org/search/index?utf8=%E2%9C%93&keywords=maps)
+  - [No results](https://digitalcollections.nypl.org/search/index?utf8=%E2%9C%93&keywords=puppy&year_begin=1995&year_end=2020&)
+- [Collection Landing Page](https://digitalcollections.nypl.org/collections/the-green-book#/?tab=navigation)
+
+#### 4. Item Page
+
+##### 4a. Video and Audio Page
+
+##### 4b. Images
+
+##### 4d. PDFs
+
+##### 5. About Page
+
+## Deployment
+
+Deployment:
+PR previews and `main` are all deployed to Vercel. Merges to `main` trigger automatic deployments to Vercel.
+
+QA deployments are automatically triggered by pushing changes to the `qa` branch. `qa` is deployed to AWS [Via Travis](https://travis-ci.com/github/NYPL).
+
+Production deployments for this repo require a PR to the `production` branch. Once merged, `production` is deployed to AWS [Via Travis](https://travis-ci.com/github/NYPL).
