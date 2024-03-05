@@ -410,7 +410,7 @@ Our branches (in order of stability are):
 
 2.  Add your changes to the CHANGELOG.md file under `## [Unreleased]`. See [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) for formatting docs.
 3.  Create a pull request of the `feature` branch _into_ `main`.
-4.  After a feature branch has approved accessibility review and VQA, merge `feature` branch into `main`, then merge `main` branch into `qa` for testing.
+4.  After a feature branch has approved accessibility review and VQA, merge `feature` branch into `main`, then merge `main` branch into `qa` for testing. Merging can be done manually or with a pull request. Pushing the changes to the remote branch will automatically trigger a deployment to the `qa` environment via Travis.
 5.  After QA has tested and approved cut a `release` branch off of `qa` using our Release Naming Strategy. Please see Release Naming Strategy for details on how we plan to number our releases during the initial rollout of this project.
 
 `git checkout -b release/x.y.z`.
@@ -422,11 +422,10 @@ Our branches (in order of stability are):
    ie. `## [2.4.13] - 04-21-2023`
 
 7. Commit and push changes to release branch.
-8. Merge `release` branch to `production` and push the changes. This will deploy through Travis if all goes well.
-9. Immediately after merging release to production, finish the release and backmerge release to `qa` and `main`
+8. The `production` branch is protected. When the release is ready, create a pull request to merge `release` branch to `production`/ Merging in the release will deploy through Travis.
+9. Immediately after merging release to production, finish the release. This is done by backmerging the release to `qa` and `main` followed by creating the tags/release on github using these commands:
 
    `$ git tag -a x.y.z`
-
    `$ git push origin --tags`
 
 ### Release Naming Strategy
