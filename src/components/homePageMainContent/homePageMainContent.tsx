@@ -1,7 +1,8 @@
 import React from "react";
+import { useEffect, useState } from "react";
+
 import FeaturedContentComponent from "../featuredContent/featuredContent";
 import SwimLanes from "../swimlanes/swimLanes";
-import { useEffect, useState } from "react";
 import SwimLanesLoading from "../swimlanes/swimLanesLoading";
 
 const HomePageMainContent = () => {
@@ -9,13 +10,14 @@ const HomePageMainContent = () => {
 
   useEffect(() => {
     const fetchData = async () => {
-      const response = await fetch("/api/homepage");
+      const response = await fetch("/api/homepage", { cache: "force-cache" });
       const responseData = await response.json();
       setData(responseData);
     };
 
     fetchData();
   }, []);
+
   return data?.lanesWithNumItems ? (
     <>
       <SwimLanes lanesWithNumItems={[data.lanesWithNumItems[0]]} />
