@@ -21,7 +21,7 @@ const featuredItemDataHandler = async (
       ? featuredImageID(request.query.imageID as string)
       : featuredImageID();
 
-    const dataFromUri = await getFeaturedImage(); //getItemDataFromImageID(imageID);
+    const dataFromUri = await getFeaturedImage();
     const numDigitizedItems = await getNumDigitizedItems();
 
     const featuredItemObject = {
