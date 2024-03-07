@@ -2,6 +2,7 @@ import {
   featuredImageID,
   getItemDataFromImageID,
   getNumDigitizedItems,
+  getFeaturedImage,
   imageURL,
 } from "@/utils/utils";
 import appConfig from "appConfig";
@@ -20,7 +21,7 @@ const featuredItemDataHandler = async (
       ? featuredImageID(request.query.imageID as string)
       : featuredImageID();
 
-    const dataFromUri = await getItemDataFromImageID(imageID);
+    const dataFromUri = await getFeaturedImage(); //getItemDataFromImageID(imageID);
     const numDigitizedItems = await getNumDigitizedItems();
 
     const featuredItemObject = {
