@@ -25,8 +25,8 @@ const featuredItemDataHandler = async (
     const numDigitizedItems = await getNumDigitizedItems();
 
     const featuredItemObject = {
-      imageID: imageID,
-      imageSrc: imageURL(imageID),
+      imageID: dataFromUri.imageID,
+      imageSrc: imageURL(dataFromUri.imageID),
       uuid: dataFromUri.uuid,
       title: dataFromUri.title,
       href: `${appConfig.DC_URL[appConfig.environment]}/items/${
@@ -40,5 +40,6 @@ const featuredItemDataHandler = async (
     });
   }
 };
+
 export default featuredItemDataHandler;
 // http://localhost:3000/api/featuredItem
