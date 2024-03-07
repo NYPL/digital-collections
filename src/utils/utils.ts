@@ -104,11 +104,15 @@ export const getNumItems = async (uuid: string) => {
  * @param {string} identifier - the identifier value
  */
 
-export const getAPIUri = async (identifierType: string, identifier: string) => {
+export const getAPIUri = async (
+  identifierType: string,
+  identifier: string,
+  param?: { [key: string]: any }
+) => {
   const apiUrl = `${process.env.API_URL}/api/v2/items/${identifierType}/${identifier}`;
   // console.log(`getAPIUri: About to fetch ${apiUrl}`);
   // console.log(`getAPIUri calls apiCall function internally`);
-  const apiCallValue = apiCall(apiUrl);
+  const apiCallValue = apiCall(apiUrl, param);
   return apiCallValue;
 };
 
@@ -117,8 +121,14 @@ export const getAPIUri = async (identifierType: string, identifier: string) => {
  * @param {string} apiUrl - the url to make a request to
  */
 
-export const apiCall = async (apiUrl: string) => {
+export const apiCall = async (
+  apiUrl: string,
+  param?: { [key: string]: any }
+) => {
   const apiKey = process.env.AUTH_TOKEN;
+  const queryString = param ? "?" + new URLSearchParams(param).toString() : "";
+  apiUrl += queryString;
+
   try {
     const startTime = new Date().getTime();
     const response = await fetch(apiUrl, {
@@ -149,6 +159,19 @@ export const getItemDataFromImageID = async (imageID: string) => {
   return {
     uuid: apiUri.uuid,
     title: getTitleFromRepoAPIResponseData(data) || "",
+  };
+};
+
+export const getFeaturedImage = async () => {
+  console.log(`getFeaturedImage: About call getAPIUri`);
+  const apiUri = await getAPIUri("featured", "", { random: "true" });
+  console.log(
+    "API response from /v2/items/featured call: Value of apiUri: ",
+    apiUri
+  );
+  return {
+    uuid: apiUri.capture.uuid,
+    title: apiUri.capture.title,
   };
 };
 
