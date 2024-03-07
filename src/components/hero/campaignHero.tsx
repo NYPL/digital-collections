@@ -10,9 +10,7 @@ const CampaignHero = ({ imageID }) => {
 
   useEffect(() => {
     const fetchData = async () => {
-      const response = await fetch(`/api/featuredItem?imageID=${imageID}`, {
-        cache: "force-cache",
-      });
+      const response = await fetch(`/api/featuredItem?imageID=${imageID}`);
       const responseData = await response.json();
       setData(responseData);
     };

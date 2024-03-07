@@ -10,7 +10,7 @@ const HomePageMainContent = () => {
 
   useEffect(() => {
     const fetchData = async () => {
-      const response = await fetch("/api/homepage", { cache: "force-cache" });
+      const response = await fetch("/api/homepage");
       const responseData = await response.json();
       setData(responseData);
     };
