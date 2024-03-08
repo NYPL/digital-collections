@@ -1,8 +1,9 @@
-import { Hero, Link as DSLink } from "@nypl/design-system-react-components";
+import { Hero } from "@nypl/design-system-react-components";
+import { useEffect, useState } from "react";
+
 import CampaignHeroSubText from "./campaignHeroSubText";
 import CampaignHeroHeading from "./campaignHeroHeading";
 import CampaignHeroLoading from "./campaignHeroLoading";
-import { useEffect, useState } from "react";
 
 const CampaignHero = ({ imageID }) => {
   const [data, setData] = useState<any>({});

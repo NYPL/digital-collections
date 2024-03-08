@@ -31,12 +31,15 @@ const homepageHandler = async (
     });
     const randomNumber = Math.floor(Math.random() * 2);
 
+    // 24 hour cache
+    response.setHeader("Cache-Control", "s-maxage=86400");
+
     return response.status(200).json({
       randomNumber,
       lanesWithNumItems: updatedLanes,
     });
   }
 };
-export default homepageHandler;
 
+export default homepageHandler;
 // http://localhost:3000/api/homepage
