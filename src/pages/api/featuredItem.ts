@@ -1,6 +1,7 @@
 import {
+  featuredImageID,
+  getItemDataFromImageID,
   getNumDigitizedItems,
-  getFeaturedImage,
   imageURL,
 } from "@/utils/utils";
 import appConfig from "appConfig";
@@ -15,27 +16,20 @@ const featuredItemDataHandler = async (
     //pass query param to featuredImageID function to check if it is legit
     // logger.info("Generating featured image id");
 
-    const featuredImageData = await getFeaturedImage();
+    const imageID = (request.query.imageID as string)
+      ? featuredImageID(request.query.imageID as string)
+      : featuredImageID();
+
+    const dataFromUri = await getItemDataFromImageID(imageID);
     const numDigitizedItems = await getNumDigitizedItems();
 
     const featuredItemObject = {
-      imageID: featuredImageData.imageID,
-      backgroundImageSrc: imageURL(
-        featuredImageData.imageID,
-        "full",
-        "!900,900",
-        "0"
-      ),
-      foregroundImageSrc: imageURL(
-        featuredImageData.imageID,
-        "full",
-        "!1100,1100",
-        "0"
-      ),
-      uuid: featuredImageData.uuid,
-      title: featuredImageData.title,
+      imageID: imageID,
+      imageSrc: imageURL(imageID),
+      uuid: dataFromUri.uuid,
+      title: dataFromUri.title,
       href: `${appConfig.DC_URL[appConfig.environment]}/items/${
-        featuredImageData.uuid
+        dataFromUri.uuid
       }`,
     };
 

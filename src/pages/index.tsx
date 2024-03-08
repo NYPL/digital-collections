@@ -4,6 +4,7 @@ import Header from "@/components/header/header";
 import HomePageMainContent from "@/components/homePageMainContent/homePageMainContent";
 import ExploreFurther from "@/components/exploreFurther/exploreFurther";
 import NotificationBanner from "@/components/notificationBanner/notificationBanner";
+import { featuredImageID } from "@/utils/utils";
 
 export default function Home(props: any = {}) {
   return (
@@ -20,4 +21,16 @@ export default function Home(props: any = {}) {
       <ExploreFurther />
     </>
   );
+}
+
+export async function getServerSideProps(context: any) {
+  const imageID = context.query.imageID
+    ? featuredImageID(context.query.imageID)
+    : featuredImageID();
+
+  return {
+    props: {
+      imageID: imageID,
+    },
+  };
 }

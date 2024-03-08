@@ -12,7 +12,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Updated favicon.ico
 - Skeleton load the campaign hero (DR-2787)
 - Skeleton load the swim lanes (DR-2788)
-- Use Repo API v2/items/featured endpoint when loading images for hero component (DR-2801)
 
 ### Added
 
