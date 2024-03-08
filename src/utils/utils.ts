@@ -67,7 +67,9 @@ export const imageURL = (
   size = "!1600,1600",
   rotation = "0"
 ) => {
-  return `${process.env.IIIF_URL}/iiif/2/${imageId}/${region}/${size}/${rotation}/default.jpg`;
+  return `${
+    appConfig.IIIF_URL[appConfig.environment]
+  }/iiif/2/${imageId}/${region}/${size}/${rotation}/default.jpg`;
 };
 
 /**
@@ -203,6 +205,7 @@ import {
   ADOBE_ANALYTICS_DC_PREFIX,
   BASE_URL,
 } from "../config/constants";
+import appConfig from "../../appConfig";
 
 /**
  * adobeAnalyticsParam
