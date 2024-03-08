@@ -1,4 +1,5 @@
 import featuredItemsData from "../data/featureditems.json";
+import appConfig from "../../appConfig";
 let featuredItemArray = [];
 
 /**
@@ -67,7 +68,9 @@ export const imageURL = (
   size = "!1600,1600",
   rotation = "0"
 ) => {
-  return `${process.env.IIIF_URL}/iiif/2/${imageId}/${region}/${size}/${rotation}/default.jpg`;
+  return `${
+    appConfig.IIIF_URL[appConfig.environment]
+  }/iiif/2/${imageId}/${region}/${size}/${rotation}/default.jpg`;
 };
 
 /**
