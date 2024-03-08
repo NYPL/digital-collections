@@ -15,27 +15,27 @@ const featuredItemDataHandler = async (
     //pass query param to featuredImageID function to check if it is legit
     // logger.info("Generating featured image id");
 
-    const dataFromUri = await getFeaturedImage();
+    const featuredImageData = await getFeaturedImage();
     const numDigitizedItems = await getNumDigitizedItems();
 
     const featuredItemObject = {
-      imageID: dataFromUri.imageID,
+      imageID: featuredImageData.imageID,
       backgroundImageSrc: imageURL(
-        dataFromUri.imageID,
+        featuredImageData.imageID,
         "full",
         "!900,900",
         "0"
       ),
       foregroundImageSrc: imageURL(
-        dataFromUri.imageID,
+        featuredImageData.imageID,
         "full",
         "!1100,1100",
         "0"
       ),
-      uuid: dataFromUri.uuid,
-      title: dataFromUri.title,
+      uuid: featuredImageData.uuid,
+      title: featuredImageData.title,
       href: `${appConfig.DC_URL[appConfig.environment]}/items/${
-        dataFromUri.uuid
+        featuredImageData.uuid
       }`,
     };
 
