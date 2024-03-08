@@ -20,18 +20,8 @@ const featuredItemDataHandler = async (
 
     const featuredItemObject = {
       imageID: dataFromUri.imageID,
-      backgroundImageSrc: imageURL(
-        dataFromUri.imageID,
-        "full",
-        "!700,700",
-        "0"
-      ),
-      foregroundImageSrc: imageURL(
-        dataFromUri.imageID,
-        "full",
-        "!900,900",
-        "0"
-      ),
+      backgroundImageSrc: imageURL(dataFromUri.imageID),
+      foregroundImageSrc: imageURL(dataFromUri.imageID),
       uuid: dataFromUri.uuid,
       title: dataFromUri.title,
       href: `${appConfig.DC_URL[appConfig.environment]}/items/${
