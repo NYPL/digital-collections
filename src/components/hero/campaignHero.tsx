@@ -19,7 +19,7 @@ const CampaignHero = ({ imageID }) => {
 
   return data?.featuredItem ? (
     <Hero
-      backgroundImageSrc={data.featuredItem.imageSrc}
+      backgroundImageSrc={data.featuredItem.backgroundImageSrc}
       backgroundColor="ui.bg.default"
       isDarkBackgroundImage
       heroType="campaign"
@@ -30,7 +30,7 @@ const CampaignHero = ({ imageID }) => {
       }
       imageProps={{
         alt: data.featuredItem.title,
-        src: data.featuredItem.smallImageSrc,
+        src: data.featuredItem.foregroundImageSrc,
       }}
       subHeaderText={<CampaignHeroSubText featuredItem={data.featuredItem} />}
     />
