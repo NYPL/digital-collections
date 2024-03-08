@@ -1,6 +1,5 @@
 import {
   featuredImageID,
-  getItemDataFromImageID,
   getNumDigitizedItems,
   getFeaturedImage,
   imageURL,
