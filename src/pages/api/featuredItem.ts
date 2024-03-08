@@ -1,5 +1,4 @@
 import {
-  featuredImageID,
   getNumDigitizedItems,
   getFeaturedImage,
   imageURL,
@@ -15,10 +14,6 @@ const featuredItemDataHandler = async (
   if (method === "GET") {
     //pass query param to featuredImageID function to check if it is legit
     // logger.info("Generating featured image id");
-
-    const imageID = (request.query.imageID as string)
-      ? featuredImageID(request.query.imageID as string)
-      : featuredImageID();
 
     const dataFromUri = await getFeaturedImage();
     const numDigitizedItems = await getNumDigitizedItems();
