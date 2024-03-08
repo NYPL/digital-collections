@@ -51,7 +51,7 @@ export const getNumItems = async (uuid: string) => {
  * @param {string} identifier - the identifier value
  */
 
-export const getAPIUri = async (
+export const getAPIResponse = async (
   identifierType: string,
   identifier: string,
   urlParam?: { [key: string]: any }
@@ -100,12 +100,12 @@ export const apiCall = async (
 };
 
 export const getFeaturedImage = async () => {
-  console.log(`getFeaturedImage: About call getAPIUri`);
-  const apiUri = await getAPIUri("featured", "", { random: "true" });
+  console.log(`getFeaturedImage: About call getAPIResponse`);
+  const apiResponse = await getAPIResponse("featured", "", { random: "true" });
   return {
-    uuid: apiUri.capture.uuid,
-    title: apiUri.capture.title || "",
-    imageID: apiUri.capture.imageID,
+    uuid: apiResponse.capture.uuid,
+    title: apiResponse.capture.title || "",
+    imageID: apiResponse.capture.imageID,
   };
 };
 
