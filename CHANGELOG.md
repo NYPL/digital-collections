@@ -20,6 +20,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Added feedback button and logic for form to submit to google spreadsheet (DR-2595)
 - Added newrelic agent (DR-2772)
 - Added canonical link (DR-2784)
+- Added caching to API routes for `/api/featuredItem ` and `/api/homepage` as well as from the client side (DR-2785)
 
 ## [0.1.0] 2024-01-08
 

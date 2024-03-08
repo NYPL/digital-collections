@@ -122,6 +122,8 @@ export const apiCall = async (apiUrl: string) => {
   try {
     const startTime = new Date().getTime();
     const response = await fetch(apiUrl, {
+      // aggressively cache Repo API?
+      // cache: "force-cache",
       headers: {
         Authorization: `Token token=${apiKey}`,
       },

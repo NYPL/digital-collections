@@ -33,11 +33,15 @@ const featuredItemDataHandler = async (
       }`,
     };
 
+    // 24 hour cache
+    response.setHeader("Cache-Control", "s-maxage=86400");
+
     return response.status(200).json({
       featuredItem: featuredItemObject,
       numberOfDigitizedItems: numDigitizedItems,
     });
   }
 };
+
 export default featuredItemDataHandler;
 // http://localhost:3000/api/featuredItem
