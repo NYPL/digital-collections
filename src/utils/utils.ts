@@ -14,7 +14,7 @@ export const imageURL = (
   size = "!1600,1600",
   rotation = "0"
 ) => {
-  return `https://iiif.nypl.org/iiif/2/${imageId}/${region}/${size}/${rotation}/default.jpg`;
+  return `${process.env.IIIF_URL}/iiif/2/${imageId}/${region}/${size}/${rotation}/default.jpg`;
 };
 
 /**
@@ -81,6 +81,8 @@ export const apiCall = async (
   try {
     const startTime = new Date().getTime();
     const response = await fetch(apiUrl, {
+      // aggressively cache Repo API?
+      // cache: "force-cache",
       headers: {
         Authorization: `Token token=${apiKey}`,
       },
