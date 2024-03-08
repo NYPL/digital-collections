@@ -53,7 +53,7 @@ const CampaignHero = ({ imageID }) => {
       }
       imageProps={{
         alt: data.featuredItem.title,
-        src: data.featuredItem.imageSrc + `?retry=${retryCount}`, // Adding a query parameter to force the browser to retry loading the image
+        src: data.featuredItem.smallImageSrc + `?retry=${retryCount}`, // Adding a query parameter to force the browser to retry loading the image
       }}
       subHeaderText={<CampaignHeroSubText featuredItem={data.featuredItem} />}
     />
