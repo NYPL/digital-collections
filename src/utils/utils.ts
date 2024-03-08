@@ -67,11 +67,6 @@ export const imageURL = (
   size = "!1600,1600",
   rotation = "0"
 ) => {
-  console.log("imageId: ", imageId);
-  console.log(
-    "****** url: ",
-    `https://iiif.nypl.org/iiif/2/${imageId}/${region}/${size}/${rotation}/default.jpg`
-  );
   return `https://iiif.nypl.org/iiif/2/${imageId}/${region}/${size}/${rotation}/default.jpg`;
 };
 

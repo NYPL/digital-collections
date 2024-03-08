@@ -45,7 +45,10 @@ const CampaignHero = ({ imageID }) => {
       if (retryCount < maxRetries) {
         const newRetryCount = retryCount + 1;
         setRetryCount(newRetryCount);
+        console.log(`Retrying image load (${newRetryCount}/${maxRetries})`);
+        console.log(`Original URL: ${url}`);
         const newUrl = updateImageUrl(url, newRetryCount);
+        console.log(`New URL: ${newUrl}`);
         attemptLoadImage(newUrl, setRetryCount, newRetryCount, setImageUrl);
       } else {
         console.log("Image failed to load after maximum retries.");
