@@ -152,18 +152,6 @@ export const apiCall = async (
   }
 };
 
-export const getItemDataFromImageID = async (imageID: string) => {
-  console.log(
-    `getItemDataFromImageID: About call getAPIUri and apiCall for image id: ${imageID}`
-  );
-  const apiUri = await getAPIUri("local_image_id", imageID);
-  const data = await apiCall(apiUri.apiUri);
-  return {
-    uuid: apiUri.uuid,
-    title: getTitleFromRepoAPIResponseData(data) || "",
-  };
-};
-
 export const getFeaturedImage = async () => {
   console.log(`getFeaturedImage: About call getAPIUri`);
   const apiUri = await getAPIUri("featured", "", { random: "true" });
