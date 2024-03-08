@@ -157,7 +157,7 @@ export const getFeaturedImage = async () => {
   const apiUri = await getAPIUri("featured", "", { random: "true" });
   return {
     uuid: apiUri.capture.uuid,
-    title: apiUri.capture.title,
+    title: apiUri.capture.title || "",
     imageID: apiUri.capture.imageID,
   };
 };
