@@ -107,12 +107,12 @@ export const getNumItems = async (uuid: string) => {
 export const getAPIUri = async (
   identifierType: string,
   identifier: string,
-  param?: { [key: string]: any }
+  urlParam?: { [key: string]: any }
 ) => {
   const apiUrl = `${process.env.API_URL}/api/v2/items/${identifierType}/${identifier}`;
   // console.log(`getAPIUri: About to fetch ${apiUrl}`);
   // console.log(`getAPIUri calls apiCall function internally`);
-  const apiCallValue = apiCall(apiUrl, param);
+  const apiCallValue = apiCall(apiUrl, urlParam);
   return apiCallValue;
 };
 
@@ -123,10 +123,12 @@ export const getAPIUri = async (
 
 export const apiCall = async (
   apiUrl: string,
-  param?: { [key: string]: any }
+  urlParam?: { [key: string]: any }
 ) => {
   const apiKey = process.env.AUTH_TOKEN;
-  const queryString = param ? "?" + new URLSearchParams(param).toString() : "";
+  const queryString = urlParam
+    ? "?" + new URLSearchParams(urlParam).toString()
+    : "";
   apiUrl += queryString;
 
   try {
@@ -165,10 +167,6 @@ export const getItemDataFromImageID = async (imageID: string) => {
 export const getFeaturedImage = async () => {
   console.log(`getFeaturedImage: About call getAPIUri`);
   const apiUri = await getAPIUri("featured", "", { random: "true" });
-  console.log(
-    "API response from /v2/items/featured call: Value of apiUri: ",
-    apiUri
-  );
   return {
     uuid: apiUri.capture.uuid,
     title: apiUri.capture.title,
