@@ -114,25 +114,6 @@ function addCommas(number) {
   return Number(number).toLocaleString("en-US");
 }
 
-function getTitleFromRepoAPIResponseData(data) {
-  // If titleInfo is an array of objects, use the title whose usage is primary. If titleInfo is a hash, return the title.
-  if (!data) {
-    return "";
-  }
-
-  const titleInfo = data.mods.titleInfo;
-  let title = "";
-  if (Array.isArray(titleInfo)) {
-    const result = titleInfo.find((titleObj) => {
-      return titleObj.usage === "primary";
-    });
-    title = result.title.$;
-  } else {
-    title = titleInfo.title.$;
-  }
-  return title;
-}
-
 export function getCustomTimestamp() {
   // Return the formatted number
   // timestamp: date
