@@ -1,4 +1,5 @@
 import featuredItemsData from "../data/featureditems.json";
+import appConfig from "../../appConfig";
 let featuredItemArray = [];
 
 /**
@@ -205,7 +206,6 @@ import {
   ADOBE_ANALYTICS_DC_PREFIX,
   BASE_URL,
 } from "../config/constants";
-import appConfig from "../../appConfig";
 
 /**
  * adobeAnalyticsParam
