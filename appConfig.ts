@@ -3,7 +3,7 @@ const appConfig = {
   DC_URL: {
     development: "https://qa-digitalcollections.nypl.org",
     qa: "https://qa-digitalcollections.nypl.org",
-    production: "https://digitalcollections.nypl.org",
+    s: "https://digitalcollections.nypl.org",
   },
   adobeEmbedUrl: {
     development:
