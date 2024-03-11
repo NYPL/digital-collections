@@ -10,7 +10,7 @@ const CampaignHero = ({ imageID }) => {
 
   useEffect(() => {
     const fetchData = async () => {
-      const response = await fetch(`/api/featuredItem?imageID=${imageID}`);
+      const response = await fetch(`/api/featuredItem`);
       const responseData = await response.json();
       setData(responseData);
     };
@@ -20,7 +20,7 @@ const CampaignHero = ({ imageID }) => {
 
   return data?.featuredItem ? (
     <Hero
-      backgroundImageSrc={data.featuredItem.imageSrc}
+      backgroundImageSrc={data.featuredItem.backgroundImageSrc}
       backgroundColor="ui.bg.default"
       isDarkBackgroundImage
       heroType="campaign"
@@ -31,7 +31,7 @@ const CampaignHero = ({ imageID }) => {
       }
       imageProps={{
         alt: data.featuredItem.title,
-        src: data.featuredItem.imageSrc,
+        src: data.featuredItem.foregroundImageSrc,
       }}
       subHeaderText={<CampaignHeroSubText featuredItem={data.featuredItem} />}
     />
