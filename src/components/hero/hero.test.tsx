@@ -11,7 +11,7 @@ describe("Campaign Hero", () => {
       })
     ) as jest.Mock;
 
-    const { container } = render(<CampaignHero imageID="5273165" />);
+    render(<CampaignHero imageID="5273165" />);
 
     expect(screen.getByTestId("hero-skeleton-loader")).toBeTruthy();
   });
