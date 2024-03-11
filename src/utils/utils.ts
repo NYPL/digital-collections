@@ -1,57 +1,3 @@
-import featuredItemsData from "../data/featureditems.json";
-import appConfig from "../../appConfig";
-let featuredItemArray = [];
-
-/**
- * Sets global featuredItemArray so other functions can use it.
- **/
-export const setFeaturedItemArray = () => {
-  if (featuredItemArray.length !== 0) {
-    // The global array already has what it needs.
-    return;
-  }
-
-  // If it's empty, now is the time to generate and update the array.
-  let itemsArray = [];
-  for (let i = 0; i < featuredItemsData.featuredItems.images.length; i++) {
-    itemsArray.push(featuredItemsData.featuredItems.images[i].split(".")[0]);
-  }
-  // set featuredItemArray
-  featuredItemArray = itemsArray;
-
-  return featuredItemArray;
-};
-
-/**
- * Returns a random image ID from the list of featured items.
- */
-export const generateRandomImageID = () => {
-  if (featuredItemArray.length === 0) {
-    setFeaturedItemArray();
-  }
-  const randomIndex = Math.floor(Math.random() * featuredItemArray.length);
-  return featuredItemArray[randomIndex];
-};
-
-/**
- * Returns a valid featured imageID.
- * Checks if an imageID passed by as a query parameter is included in the pre-approved list of image IDs for featured items.
- * If the imageID is not valid, the function returns a random imageID.
- * @param {string} imageID - optional imageID to check against list of image IDs for featured items.
- */
-export const featuredImageID = (imageID = "") => {
-  if (featuredItemArray.length === 0) {
-    setFeaturedItemArray();
-  }
-  if (imageID !== "") {
-    return featuredItemArray.includes(imageID)
-      ? imageID
-      : generateRandomImageID();
-  } else {
-    return generateRandomImageID();
-  }
-};
-
 /**
  * Represents a IIIF Image API URL, which will be used globally throughout the application.
  * IIIF Image API has several params, the ones we are the most concerned about are Region, Size, and Rotation.
@@ -61,6 +7,7 @@ export const featuredImageID = (imageID = "") => {
  * @param {string} size - optional param for the height of an image, default is "!1600,1600"
  * @param {string} rotation - optional param for the height of an image, default is "0"
  */
+import appConfig from "../../appConfig";
 
 export const imageURL = (
   imageId: any,
@@ -107,11 +54,15 @@ export const getNumItems = async (uuid: string) => {
  * @param {string} identifier - the identifier value
  */
 
-export const getAPIUri = async (identifierType: string, identifier: string) => {
+export const getAPIResponse = async (
+  identifierType: string,
+  identifier: string,
+  urlParam?: { [key: string]: any }
+) => {
   const apiUrl = `${process.env.API_URL}/api/v2/items/${identifierType}/${identifier}`;
   // console.log(`getAPIUri: About to fetch ${apiUrl}`);
   // console.log(`getAPIUri calls apiCall function internally`);
-  const apiCallValue = apiCall(apiUrl);
+  const apiCallValue = apiCall(apiUrl, urlParam);
   return apiCallValue;
 };
 
@@ -120,8 +71,16 @@ export const getAPIUri = async (identifierType: string, identifier: string) => {
  * @param {string} apiUrl - the url to make a request to
  */
 
-export const apiCall = async (apiUrl: string) => {
+export const apiCall = async (
+  apiUrl: string,
+  urlParam?: { [key: string]: any }
+) => {
   const apiKey = process.env.AUTH_TOKEN;
+  const queryString = urlParam
+    ? "?" + new URLSearchParams(urlParam).toString()
+    : "";
+  apiUrl += queryString;
+
   try {
     const startTime = new Date().getTime();
     const response = await fetch(apiUrl, {
@@ -145,40 +104,19 @@ export const apiCall = async (apiUrl: string) => {
   }
 };
 
-export const getItemDataFromImageID = async (imageID: string) => {
-  console.log(
-    `getItemDataFromImageID: About call getAPIUri and apiCall for image id: ${imageID}`
-  );
-  const apiUri = await getAPIUri("local_image_id", imageID);
-  const data = await apiCall(apiUri.apiUri);
+export const getFeaturedImage = async () => {
+  console.log(`getFeaturedImage: About call getAPIResponse`);
+  const apiResponse = await getAPIResponse("featured", "", { random: "true" });
   return {
-    uuid: apiUri.uuid,
-    title: getTitleFromRepoAPIResponseData(data) || "",
+    uuid: apiResponse.capture.uuid,
+    title: apiResponse.capture.title || "",
+    imageID: apiResponse.capture.imageID,
   };
 };
 
 function addCommas(number) {
   // Return the formatted number
   return Number(number).toLocaleString("en-US");
-}
-
-function getTitleFromRepoAPIResponseData(data) {
-  // If titleInfo is an array of objects, use the title whose usage is primary. If titleInfo is a hash, return the title.
-  if (!data) {
-    return "";
-  }
-
-  const titleInfo = data.mods.titleInfo;
-  let title = "";
-  if (Array.isArray(titleInfo)) {
-    const result = titleInfo.find((titleObj) => {
-      return titleObj.usage === "primary";
-    });
-    title = result.title.$;
-  } else {
-    title = titleInfo.title.$;
-  }
-  return title;
 }
 
 export function getCustomTimestamp() {
