@@ -7,6 +7,7 @@
  * @param {string} size - optional param for the height of an image, default is "!1600,1600"
  * @param {string} rotation - optional param for the height of an image, default is "0"
  */
+import appConfig from "../../appConfig";
 
 export const imageURL = (
   imageId: any,
@@ -14,7 +15,9 @@ export const imageURL = (
   size = "!1600,1600",
   rotation = "0"
 ) => {
-  return `${process.env.IIIF_URL}/iiif/2/${imageId}/${region}/${size}/${rotation}/default.jpg`;
+  return `${
+    appConfig.IIIF_URL[appConfig.environment]
+  }/iiif/2/${imageId}/${region}/${size}/${rotation}/default.jpg`;
 };
 
 /**
