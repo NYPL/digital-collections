@@ -1,11 +1,13 @@
-import { getAPIUri, apiCall } from "@/utils/utils";
-
-describe.skip("getAPIUri()", () => {
-  it("should not be undefined", async () => {
-    const apiUriData = await getAPIUri("local_image_id", "105180");
-    expect(apiUriData.apiUri).toBeDefined();
-  });
-});
+import {
+  adobeAnalyticsRouteToPageName,
+  apiCall,
+  apiPOSTCall,
+  getItemsCountFromUUIDs,
+} from "../utils/utils";
+import {
+  ADOBE_ANALYTICS_DC_PREFIX,
+  ADOBE_ANALYTICS_PAGE_NAMES,
+} from "../config/constants";
 
 describe.skip("apiCall()", () => {
   it("should not return undefined", async () => {
@@ -19,6 +21,30 @@ describe.skip("apiCall()", () => {
         "http://api.repo.nypl.org/api/v2/mods/6265a5c0-c5ef-012f-687c-58d385a7bc34"
       )
     ).toBeDefined();
+  });
+});
+
+describe.skip("apiPOSTCall()", () => {
+  it("should not return undefined", async () => {
+    expect(
+      await apiPOSTCall(
+        "https://api.repo.nypl.org/api/v2/items/local_image_id/105180",
+        { uuid: ["uuid1", "uuid2"] }
+      )
+    ).toBeDefined();
+    expect(
+      await apiPOSTCall(
+        "http://api.repo.nypl.org/api/v2/mods/6265a5c0-c5ef-012f-687c-58d385a7bc34",
+        { uuid: ["uuid1", "uuid2"] }
+      )
+    ).toBeDefined();
+  });
+});
+
+describe.skip("getItemsCountFromUUIDs()", () => {
+  it("should not return undefined", async () => {
+    const data = ["uuid1", "uuid2"];
+    expect(await getItemsCountFromUUIDs(data)).toBeDefined();
   });
 });
 
@@ -60,12 +86,6 @@ describe.skip("apiCall()", () => {
 //// Example usage:
 // let numberWithCommas = addCommas(1234567);
 // console.log(numberWithCommas); // Output: "1,234,567"
-
-import { adobeAnalyticsRouteToPageName } from "../utils/utils";
-import {
-  ADOBE_ANALYTICS_DC_PREFIX,
-  ADOBE_ANALYTICS_PAGE_NAMES,
-} from "../config/constants";
 
 describe("appUtils", () => {
   describe("adobeAnalyticsRouteToPageName", () => {
