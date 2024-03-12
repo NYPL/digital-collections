@@ -40,11 +40,13 @@ export const getNumDigitizedItems = async () => {
  */
 export const getItemsCountFromUUIDs = async (uuids: string[]) => {
   const apiUrl = `${process.env.API_URL}/api/v2/items/counts`;
-  const { counts } = await apiPOSTCall(apiUrl, { uuids });
+  const response = await apiPOSTCall(apiUrl, { uuids });
 
-  if (!counts?.count?.length) {
+  if (!response?.counts?.count?.length) {
     return {};
   }
+
+  const counts = response.counts;
 
   // The response is an array of objects:
   // [
