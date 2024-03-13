@@ -1,0 +1,10 @@
+{
+  "functions": {
+    "src/pages/index.tsx": {
+      "maxDuration": 60
+    },
+    "pages/api/*.js": {
+      "maxDuration": 60
+    }
+  }
+}

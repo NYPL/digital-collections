@@ -38,7 +38,7 @@ const ExploreFurther = () => {
       >
         <Box sx={{ paddingBottom: "s" }}>
           <Heading size="heading3" text="Explore further" />
-          <Text size="subtitle2">
+          <Text size="subtitle2" sx={{ fontWeight: "400" }}>
             Here are some other ways you can access and engage with digital
             content at NYPL and beyond:
           </Text>
@@ -72,12 +72,7 @@ const ExploreFurther = () => {
                 href={item.url}
                 target="_blank"
                 rel="noreferrer noopener"
-                color="#0069BF"
                 sx={{
-                  color: "#0069BF !important",
-                  ":visited": {
-                    color: "var(--nypl-colors-ui-link-tertiary) !important",
-                  },
                   textDecoration: "none !important",
                 }}
               >
@@ -85,7 +80,10 @@ const ExploreFurther = () => {
               </Link>
             </CardHeading>
             <CardContent>
-              <Text size="subtitle2"> {item.description} </Text>
+              <Text size="subtitle2" sx={{ fontWeight: "400" }}>
+                {" "}
+                {item.description}{" "}
+              </Text>
             </CardContent>
           </Card>
         ))}

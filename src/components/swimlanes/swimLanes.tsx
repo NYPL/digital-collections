@@ -13,7 +13,8 @@ import {
 } from "@nypl/design-system-react-components";
 import styles from "./Swimlanes.module.css";
 import { imageURL } from "@/utils/utils";
-import appConfig from "appConfig";
+import Image from "next/image";
+import { DC_URL } from "../../config/constants";
 
 const SwimLanes = ({ lanesWithNumItems }) => {
   return lanesWithNumItems.map((lane, key) => (
@@ -26,7 +27,7 @@ const SwimLanes = ({ lanesWithNumItems }) => {
         <Link
           id={`row-see-more-${lane.slug}`}
           type="standalone"
-          href={`${appConfig.DC_URL}/collections/lane/${lane.slug}`}
+          href={`${DC_URL}/collections/lane/${lane.slug}`}
           aria-label={`See more ${lane.title.toLowerCase()}`}
           sx={{
             display: { sm: "none", md: "inline" },
@@ -48,6 +49,18 @@ const SwimLanes = ({ lanesWithNumItems }) => {
                 isLazy: true,
                 aspectRatio: "twoByOne",
                 src: imageURL(collection.image_id, "full", "288,", "0"),
+                // TODO: *IF* we want to use the Nextjs Image component, this
+                // is how we would do it. It's suppose to be better for
+                // performance but it's not visibly noticeable.
+                // component: (
+                //   <Image
+                //     src={imageURL(collection.image_id, "full", "288,", "0")}
+                //     alt=""
+                //     width={100}
+                //     height={100}
+                //     objectFit="cover"
+                //   />
+                // ),
               }}
             >
               <CardHeading
@@ -64,9 +77,16 @@ const SwimLanes = ({ lanesWithNumItems }) => {
                 <Text
                   size="subtitle2"
                   sx={{
-                    display: { sm: "none", md: "inline" },
+                    fontWeight: "400",
+                    display: "none",
+                    [`@media screen and (min-width: 600px)`]: {
+                      display: "inline",
+                    },
                   }}
-                >{`${collection.numItems} items`}</Text>
+                >
+                  {" "}
+                  {`${collection.numItems || 0} items`}{" "}
+                </Text>
               </CardContent>
             </Card>
           ))}
@@ -75,7 +95,7 @@ const SwimLanes = ({ lanesWithNumItems }) => {
       <Link
         id={`row-see-more-${lane.slug}-mobile`}
         type="standalone"
-        href={`${appConfig.DC_URL}/collections/lane/${lane.slug}`}
+        href={`${DC_URL}/collections/lane/${lane.slug}`}
         aria-label={`See more ${lane.title.toLowerCase()}`}
         className="smlink"
         sx={{
