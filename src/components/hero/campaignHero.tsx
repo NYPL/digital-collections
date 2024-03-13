@@ -1,23 +1,42 @@
-import { Hero, Link as DSLink } from "@nypl/design-system-react-components";
-import { imageURL } from "../../utils/utils";
+import { Hero } from "@nypl/design-system-react-components";
+import { useEffect, useState } from "react";
+
 import CampaignHeroSubText from "./campaignHeroSubText";
 import CampaignHeroHeading from "./campaignHeroHeading";
+import CampaignHeroLoading from "./campaignHeroLoading";
 
-const CampaignHero = ({ featuredItem, numberOfDigitizedItems }: any) => {
-  return (
+const CampaignHero = ({ imageID }) => {
+  const [data, setData] = useState<any>({});
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const response = await fetch(`/api/featuredItem`);
+      const responseData = await response.json();
+      setData(responseData);
+    };
+
+    fetchData();
+  }, [imageID]);
+
+  return data?.featuredItem ? (
     <Hero
-      backgroundImageSrc={featuredItem.imageSrc}
+      backgroundImageSrc={data.featuredItem.backgroundImageSrc}
       backgroundColor="ui.bg.default"
+      isDarkBackgroundImage
       heroType="campaign"
       heading={
-        <CampaignHeroHeading numberOfDigitizedItems={numberOfDigitizedItems} />
+        <CampaignHeroHeading
+          numberOfDigitizedItems={data.numberOfDigitizedItems}
+        />
       }
       imageProps={{
-        alt: featuredItem.title,
-        src: featuredItem.imageSrc,
+        alt: data.featuredItem.title,
+        src: data.featuredItem.foregroundImageSrc,
       }}
-      subHeaderText={<CampaignHeroSubText featuredItem={featuredItem} />}
+      subHeaderText={<CampaignHeroSubText featuredItem={data.featuredItem} />}
     />
+  ) : (
+    <CampaignHeroLoading />
   );
 };
 

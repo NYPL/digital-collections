@@ -1,100 +1,4 @@
-import featuredItemsData from "../data/featureditems.json";
-import {
-  generateRandomImageID,
-  getNumItems,
-  featuredImageID,
-  getAPIUri,
-  apiCall,
-} from "@/utils/utils";
-
-import appConfig from "appConfig";
-
-// test that this data returned in dataFromUri is valid:
-describe.skip("featuredImageID Object", () => {
-  it("should return a defined imageID, uuid, title, and href if query param image id is not valid", async () => {
-    const imageID = featuredImageID("1234");
-    const apiUri = await getAPIUri("local_image_id", imageID);
-    const dataFromUri = await apiCall(apiUri.apiUri);
-    let featuredItemObject = {
-      imageID: imageID,
-      uuid: apiUri.uuid,
-      title: dataFromUri.mods.titleInfo.title,
-      href: `${appConfig.DC_URL}/items/${apiUri.uuid}`,
-    };
-    expect(featuredItemObject.imageID).toBeDefined();
-    expect(featuredItemObject.uuid).toBeDefined();
-    expect(featuredItemObject.title).toBeDefined();
-    expect(featuredItemObject.href).toBeDefined();
-  });
-
-  it("should return a defined imageID, uuid, title, and href if query param image id is not supplied", async () => {
-    const imageID = featuredImageID();
-    const apiUri = await getAPIUri("local_image_id", imageID);
-    const dataFromUri = await apiCall(apiUri.apiUri);
-    let featuredItemObject = {
-      imageID: imageID,
-      uuid: apiUri.uuid,
-      title: dataFromUri.mods.titleInfo.title.$,
-      href: `${appConfig.DC_URL}/items/${apiUri.uuid}`,
-    };
-    expect(featuredItemObject.imageID).toBeDefined();
-    expect(featuredItemObject.uuid).toBeDefined();
-    expect(featuredItemObject.title).toBeDefined();
-    expect(featuredItemObject.href).toBeDefined();
-  });
-
-  it("should return a defined imageID, uuid, title, and href if query param image id is valid", async () => {
-    const imageID = featuredImageID("105180");
-    const apiUri = await getAPIUri("local_image_id", imageID);
-    const dataFromUri = await apiCall(apiUri.apiUri);
-    let featuredItemObject = {
-      imageID: imageID,
-      uuid: apiUri.uuid,
-      title: dataFromUri.mods.titleInfo.title.$,
-      href: `${appConfig.DC_URL}/items/${apiUri.uuid}`,
-    };
-    expect(featuredItemObject.imageID).toBeDefined();
-    expect(featuredItemObject.uuid).toBeDefined();
-    expect(featuredItemObject.title).toBeDefined();
-    expect(featuredItemObject.href).toBeDefined();
-  });
-  // TO DO: it("should return an imageID that is included in featuredItemsData", () => {});
-});
-
-describe("generateRandomImageID()", () => {
-  it("should return an imageID", () => {
-    expect(generateRandomImageID()).toBeDefined();
-  });
-});
-
-describe("featuredImageID()", () => {
-  let featuredItemsImageIDArray = [];
-  for (let i = 0; i < featuredItemsData.featuredItems.images.length; i++) {
-    featuredItemsImageIDArray.push(
-      featuredItemsData.featuredItems.images[i].split(".")[0]
-    );
-  }
-
-  it("should return an imageID if an imageID is NOT passed in as an argument", () => {
-    expect(featuredImageID()).toBeDefined();
-  });
-
-  it("should return an imageID if an imageID IS passed in as an argument", () => {
-    expect(featuredImageID("1234")).toBeDefined();
-  });
-
-  it("should return an imageID that is included in featuredItemsData if an imageID is NOT passed in as an argument", () => {
-    expect(featuredItemsImageIDArray).toContain(featuredImageID());
-  });
-
-  it("should return an imageID that is included in featuredItemsData if a non-featured imageID is passed in as anargument", () => {
-    expect(featuredItemsImageIDArray).toContain(featuredImageID("1234"));
-  });
-
-  it("should return an imageID that is included in featuredItemsData if a valid featured imageID is passed in as anargument", () => {
-    expect(featuredItemsImageIDArray).toContain(featuredImageID("105180"));
-  });
-});
+import { getAPIUri, apiCall } from "@/utils/utils";
 
 describe.skip("getAPIUri()", () => {
   it("should not be undefined", async () => {
@@ -156,3 +60,22 @@ describe.skip("apiCall()", () => {
 //// Example usage:
 // let numberWithCommas = addCommas(1234567);
 // console.log(numberWithCommas); // Output: "1,234,567"
+
+import { adobeAnalyticsRouteToPageName } from "../utils/utils";
+import {
+  ADOBE_ANALYTICS_DC_PREFIX,
+  ADOBE_ANALYTICS_PAGE_NAMES,
+} from "../config/constants";
+
+describe("appUtils", () => {
+  describe("adobeAnalyticsRouteToPageName", () => {
+    it("should return the appropriate page name for a given route", () => {
+      expect(adobeAnalyticsRouteToPageName("/")).toBe(
+        `${ADOBE_ANALYTICS_DC_PREFIX}${ADOBE_ANALYTICS_PAGE_NAMES.HOME}`
+      );
+      expect(adobeAnalyticsRouteToPageName("")).toBe(
+        `${ADOBE_ANALYTICS_DC_PREFIX}${ADOBE_ANALYTICS_PAGE_NAMES.HOME}`
+      );
+    });
+  });
+});

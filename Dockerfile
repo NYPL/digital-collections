@@ -3,7 +3,8 @@ FROM node:18-alpine AS production
 #RUN apt-get update
 #RUN apt-get upgrade -y
 
-ARG NYPL_HEADER_URL
+ARG APP_ENV
+ARG NEW_RELIC_LICENSE_KEY
 
 WORKDIR /app
 
@@ -15,7 +16,8 @@ RUN npm install
 # Copy the app files.
 COPY . .
 
-ENV NYPL_HEADER_URL=${NYPL_HEADER_URL}
+ENV APP_ENV=${APP_ENV}
+ENV NEW_RELIC_LICENSE_KEY=${NEW_RELIC_LICENSE_KEY}
 
 # Set environment variables. NODE_ENV is set early because we
 # want to use it when running `npm install` and `npm run build`.

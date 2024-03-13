@@ -2,7 +2,8 @@ import { render } from "@testing-library/react";
 import Home from "../src/pages/index";
 import { axe } from "jest-axe";
 import { props } from "./data/homepageProps";
-import { imageURL } from "@/utils/utils";
+import logger from "./__mocks__/logger";
+
 class ResizeObserver {
   observe() {}
   unobserve() {}
@@ -10,6 +11,12 @@ class ResizeObserver {
 }
 
 describe("Homepage Accessibility", () => {
+  (global as any).fetch = jest.fn(() =>
+    Promise.resolve({
+      status: 200,
+      json: () => Promise.resolve({}),
+    })
+  ) as jest.Mock;
   it("passes axe accessibility test", async () => {
     window.ResizeObserver = ResizeObserver;
     const { container } = render(<Home {...props} />);
