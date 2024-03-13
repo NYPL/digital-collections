@@ -36,10 +36,6 @@ export default async function feedbackFormHandler(
 
   try {
     //prepare auth
-    console.log("GOOGLE_SHEETS_CLIENT_EMAIL:");
-    console.log(process.env.GOOGLE_SHEETS_CLIENT_EMAIL);
-    console.log("GOOGLE_SHEETS_PRIVATE_KEY:");
-    console.log(process.env.GOOGLE_SHEETS_PRIVATE_KEY);
     const auth = new google.auth.GoogleAuth({
       credentials: {
         client_email: process.env.GOOGLE_SHEETS_CLIENT_EMAIL,
@@ -77,13 +73,10 @@ export default async function feedbackFormHandler(
       },
     });
 
-    console.log("googleResponse is:");
-    console.log(googleResponse);
     return response.status(200).json({
       text: "successful feedback form submission",
     });
   } catch (e) {
-    console.log("error: ", e);
     return response.status(500).send({
       message:
         "Something went wrong submitting the feedback form values to the google spreadsheet",
