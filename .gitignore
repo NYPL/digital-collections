@@ -36,7 +36,7 @@ yarn-error.log*
 next-env.d.ts
 
 # logs
- /log
- /log/dc.log
- log/
+/log
+/log/dc.log
+log/
 newrelic_agent.log
