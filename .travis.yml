@@ -50,7 +50,8 @@ jobs:
         - pip install --user awscli
       script:
         - eval $(aws ecr get-login --no-include-email)
-        - docker build --build-arg APP_ENV="$APP_ENV" --tag "$LOCAL_TAG_NAME" .
+        - docker build --build-arg APP_ENV="$APP_ENV" --build-arg NEW_RELIC_LICENSE_KEY="$NEW_RELIC_LICENSE_KEY"
+          --tag "$LOCAL_TAG_NAME" .
         - docker tag "$LOCAL_TAG_NAME" "$ECR_URL";
         - docker push "$ECR_URL";
         - aws ecs update-service --cluster $CLUSTER_NAME --service $SERVICE_NAME --force-new-deployment
