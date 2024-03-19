@@ -44,7 +44,7 @@
     "winston": "3.9.0"
   },
   "devDependencies": {
-    "@jwplayer/jwplayer-react": "^1.1.3",
+    "@jwplayer/jwplayer-react": "1.1.3",
     "@nypl/design-system-react-components": "2.1.3",
     "@testing-library/jest-dom": "6.1.4",
     "@testing-library/react": "14.0.0",
