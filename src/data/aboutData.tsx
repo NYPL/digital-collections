@@ -4,6 +4,7 @@ import {
   List,
   Heading,
   Accordion,
+  Box,
 } from "@nypl/design-system-react-components";
 import JWPlayer from "@jwplayer/jwplayer-react";
 
@@ -40,26 +41,26 @@ const aboutData = [
   {
     heading: <Heading level="h4"> Download items </Heading>,
     body: (
-      <>
-        <Text sx={{ marginBottom: "xxl", marginTop: "s" }}>
+      <Box sx={{ marginBottom: "xxl" }}>
+        <Text sx={{ marginTop: "s" }}>
           To download, navigate to the Download Options section under each item.
           Simply click on your preferred file size and check your browser&apos;s
           download folder for the image.{" "}
         </Text>
         <JWPlayer
-          playerId="myPlayer"
-          library="../utils/video.js"
+          playerId="KRF3T2Kr"
+          library="https://cdn.jwplayer.com/libraries/KRF3T2Kr.js"
           file={
             "https://digitalcollections-prod.s3.amazonaws.com/assets/pd_download-f4513d03a49cd6a20013cd7a6b73e8a1.mp4"
           }
         />
-      </>
+      </Box>
     ),
   },
   {
     heading: <Heading level="h4">Find items</Heading>,
     body: (
-      <>
+      <Box sx={{ marginBottom: "xxl" }}>
         <Text sx={{ marginTop: "s" }}>
           {" "}
           Looking for something? Start with a{" "}
@@ -82,7 +83,7 @@ const aboutData = [
           </Link>
           .
         </Text>
-        <Text sx={{ marginBottom: "xxl" }}>
+        <Text>
           {" "}
           Looking for images you can reuse freely? You can{" "}
           <Link href="https://digitalcollections.nypl.org/search/index?filters%5Brights%5D=pd&keywords=">
@@ -94,7 +95,14 @@ const aboutData = [
           and off with the Show Only Public Domain button in the upper left
           corner of the page.
         </Text>
-      </>
+        <JWPlayer
+          playerId="KRF3T2Kr"
+          library="https://cdn.jwplayer.com/libraries/KRF3T2Kr.js"
+          file={
+            "https://digitalcollections-prod.s3.amazonaws.com/assets/pd_browse-f8b759aeef3ef78c396e2e27b5498528.mp4"
+          }
+        />
+      </Box>
     ),
   },
   {
