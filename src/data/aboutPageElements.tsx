@@ -20,7 +20,6 @@ const aboutData = [
     ),
     body: (
       <Text sx={{ marginBottom: "xxl", marginTop: "s" }}>
-        {" "}
         The New York Public Library (NYPL) Digital Collections platform is the
         primary portal for engaging with our digitized collections and their
         descriptions, over 922,495 items and counting. While that is a small
@@ -60,6 +59,7 @@ const aboutData = [
       </Box>
     ),
   },
+  // TO-DO: Replace all DC links to be self-referential
   {
     heading: <Heading level="h2" size="heading4" text="Find items" />,
     body: (
