@@ -50,11 +50,8 @@ const aboutData = [
           download folder for the image.{" "}
         </Text>
         <JWPlayer
-          playerId="KRF3T2Kr"
           library="https://cdn.jwplayer.com/libraries/KRF3T2Kr.js"
-          file={
-            "https://digitalcollections-prod.s3.amazonaws.com/assets/pd_download-f4513d03a49cd6a20013cd7a6b73e8a1.mp4"
-          }
+          playlist="https://cdn.jwplayer.com/v2/playlists/98xxWmQh"
         />
       </Box>
     ),
@@ -101,9 +98,7 @@ const aboutData = [
         <JWPlayer
           playerId="KRF3T2Kr"
           library="https://cdn.jwplayer.com/libraries/KRF3T2Kr.js"
-          file={
-            "https://digitalcollections-prod.s3.amazonaws.com/assets/pd_browse-f8b759aeef3ef78c396e2e27b5498528.mp4"
-          }
+          playlist="https://cdn.jwplayer.com/v2/playlists/pI8XNpSc"
         />
       </Box>
     ),
