@@ -482,4 +482,3 @@ PR previews and `main` are all deployed to Vercel. Merges to `main` trigger auto
 QA deployments are automatically triggered by pushing changes to the `qa` branch. `qa` is deployed to AWS [Via Travis](https://travis-ci.com/github/NYPL).
 
 Production deployments for this repo require a PR to the `production` branch. Once merged, `production` is deployed to AWS [Via Travis](https://travis-ci.com/github/NYPL).
- 
