@@ -7,6 +7,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+## [0.1.2] 2024-03-20
+
+- Remove etags
+- Update image dimensions of foreground and background images in hero component
+- Fix typo in changelog
+
 ## [0.1.1] 2024-03-13
 
 ### Updated
@@ -23,7 +29,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Added feedback button and logic for form to submit to google spreadsheet (DR-2595)
 - Added newrelic agent (DR-2772)
 - Added canonical link (DR-2784)
-- Added caching to API routes for `/api/featuredItem ` and `/api/homepage` as well as from the client side (DR-2785)
+- Added caching to API routes for `/api/featuredItem ` and `/api/homepage` (DR-2814)
 
 ## [0.1.0] 2024-01-08
 
