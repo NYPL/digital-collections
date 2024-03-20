@@ -14,7 +14,7 @@ export const dcNavLinks = [
     text: "Divisions",
   },
   {
-    href: `${DC_URL}/about`,
+    href: `/about`,
     text: "About",
   },
 ];
