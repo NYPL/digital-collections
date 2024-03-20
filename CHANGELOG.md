@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+- Remove etags
+- Update image dimensions of foreground and background images in hero component
+- Fix typo in changelog
+
 ## [0.1.1] 2024-03-13
 
 ### Updated
