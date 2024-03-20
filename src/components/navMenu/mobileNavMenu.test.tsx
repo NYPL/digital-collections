@@ -38,9 +38,6 @@ describe("Mobile nav menu component", () => {
       "href",
       `${appConfig.DC_URL[appConfig.environment]}/collections`
     );
-    expect(screen.getByLabelText("About")).toHaveAttribute(
-      "href",
-      `${appConfig.DC_URL[appConfig.environment]}/about`
-    );
+    expect(screen.getByLabelText("About")).toHaveAttribute("href", `/about`);
   });
 });
