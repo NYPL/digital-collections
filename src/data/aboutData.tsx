@@ -11,9 +11,12 @@ import JWPlayer from "@jwplayer/jwplayer-react";
 const aboutData = [
   {
     heading: (
-      <Heading sx={{ marginTop: "xxl" }} level="h1">
-        About NYPL Digital Collections
-      </Heading>
+      <Heading
+        sx={{ marginTop: "xxl" }}
+        level="h1"
+        size="heading1"
+        text="About NYPL Digital Collections"
+      />
     ),
     body: (
       <Text sx={{ marginBottom: "xxl", marginTop: "s" }}>
@@ -28,7 +31,7 @@ const aboutData = [
     ),
   },
   {
-    heading: <Heading level="h4">Items & permissions</Heading>,
+    heading: <Heading level="h2" size="heading4" text="Items & permissions" />,
     body: (
       <Text sx={{ marginBottom: "xxl", marginTop: "s" }}>
         {" "}
@@ -39,7 +42,7 @@ const aboutData = [
     ),
   },
   {
-    heading: <Heading level="h4"> Download items </Heading>,
+    heading: <Heading level="h2" size="heading4" text="Download items" />,
     body: (
       <Box sx={{ marginBottom: "xxl" }}>
         <Text sx={{ marginTop: "s" }}>
@@ -58,7 +61,7 @@ const aboutData = [
     ),
   },
   {
-    heading: <Heading level="h4">Find items</Heading>,
+    heading: <Heading level="h2" size="heading4" text="Find items" />,
     body: (
       <Box sx={{ marginBottom: "xxl" }}>
         <Text sx={{ marginTop: "s" }}>
@@ -106,7 +109,7 @@ const aboutData = [
     ),
   },
   {
-    heading: <Heading level="h4">How to</Heading>,
+    heading: <Heading level="h2" size="heading4" text="How to" />,
     body: (
       <Text sx={{ marginBottom: "xxl", marginTop: "s" }}>
         Discover and download NYPL items spanning research subjects and
@@ -115,7 +118,7 @@ const aboutData = [
     ),
   },
   {
-    heading: <Heading level="h4">Acknowledgements</Heading>,
+    heading: <Heading level="h2" size="heading4" text="Acknowledgements" />,
     body: (
       <Text sx={{ marginBottom: "xxl", marginTop: "s" }}>
         {" "}
@@ -130,7 +133,7 @@ const aboutData = [
     ),
   },
   {
-    heading: <Heading level="h4">Contact</Heading>,
+    heading: <Heading level="h2" size="heading4" text="Contact" />,
     body: (
       <Text sx={{ marginBottom: "xxl", marginTop: "s" }}>
         If you have comments, suggestions, or questions, please email{" "}
@@ -143,9 +146,12 @@ const aboutData = [
   },
   {
     heading: (
-      <Heading sx={{ marginTop: "xxl" }} level="h2">
-        NYPL&apos;s statement on potentially harmful content
-      </Heading>
+      <Heading
+        sx={{ marginTop: "xxl" }}
+        size="heading2"
+        level="h1"
+        text="NYPL's statement on potentially harmful content"
+      />
     ),
     body: (
       <Text sx={{ marginTop: "s" }}>
@@ -161,7 +167,9 @@ const aboutData = [
     ),
   },
   {
-    heading: <Heading level="h4">Frequently asked questions</Heading>,
+    heading: (
+      <Heading level="h2" size="heading4" text="Frequently asked questions" />
+    ),
     body: (
       <Accordion
         sx={{ marginBottom: "xxl", marginTop: "s" }}
@@ -348,7 +356,7 @@ const aboutData = [
     ),
   },
   {
-    heading: <Heading level="h4">Accessibility</Heading>,
+    heading: <Heading level="h2" size="heading4" text="Accessibility" />,
     body: (
       <Text sx={{ marginBottom: "xxl", marginTop: "s" }}>
         To learn more about the accessibility of NYPL websites and mobile
@@ -360,7 +368,7 @@ const aboutData = [
     ),
   },
   {
-    heading: <Heading level="h4">Platform</Heading>,
+    heading: <Heading level="h2" size="heading4" text="Platform" />,
     body: (
       <Text sx={{ marginBottom: "xxl", marginTop: "s" }}>
         NYPL uses Fedora Commons software for our repository, while our
@@ -377,7 +385,7 @@ const aboutData = [
     ),
   },
   {
-    heading: <Heading level="h4">Available metadata</Heading>,
+    heading: <Heading level="h2" size="heading4" text="Available metadata" />,
     body: (
       <>
         <Text sx={{ marginTop: "s" }}>
@@ -422,7 +430,7 @@ const aboutData = [
     ),
   },
   {
-    heading: <Heading level="h4">Linked projects</Heading>,
+    heading: <Heading level="h2" size="heading4" text="Linked projects" />,
     body: (
       <>
         <Text sx={{ marginTop: "s" }}>
@@ -454,7 +462,7 @@ const aboutData = [
     ),
   },
   {
-    heading: <Heading level="h4">Data</Heading>,
+    heading: <Heading level="h2" size="heading4" text="Data" />,
     body: (
       <Text sx={{ marginBottom: "xxl", marginTop: "s" }}>
         Digital Collections is at the core of NYPL&apos;s efforts to enable new
@@ -463,7 +471,13 @@ const aboutData = [
     ),
   },
   {
-    heading: <Heading level="h4">Audio and Moving Image Materials</Heading>,
+    heading: (
+      <Heading
+        level="h2"
+        size="heading4"
+        text="Audio and Moving Image Materials"
+      />
+    ),
     body: (
       <Text sx={{ marginBottom: "xxl", marginTop: "s" }}>
         For more information about the Library&apos;s Audio and Moving Image
@@ -475,7 +489,9 @@ const aboutData = [
     ),
   },
   {
-    heading: <Heading level="h4">Copyright status undefined</Heading>,
+    heading: (
+      <Heading level="h2" size="heading4" text="Copyright status undefined" />
+    ),
     body: (
       <>
         <Text sx={{ marginTop: "s" }}>
@@ -528,9 +544,11 @@ const aboutData = [
   },
   {
     heading: (
-      <Heading level="h4">
-        Copyright held or managed by The New York Public Library
-      </Heading>
+      <Heading
+        level="h2"
+        size="heading4"
+        text="Copyright held or managed by The New York Public Library"
+      />
     ),
     body: (
       <Text sx={{ marginBottom: "xxl", marginTop: "s" }}>
@@ -545,10 +563,12 @@ const aboutData = [
   },
   {
     heading: (
-      <Heading level="h4">
-        Is there a difference between &quot;Public Domain&quot; & &quot;no known
-        U.S. copyright restrictions&quot;?
-      </Heading>
+      <Heading
+        level="h2"
+        size="heading4"
+        text="Is there a difference between 'Public Domain' & 'no known
+        U.S. copyright restrictions'?"
+      />
     ),
     body: (
       <>
@@ -574,9 +594,11 @@ const aboutData = [
   },
   {
     heading: (
-      <Heading level="h4">
-        Public Domain / no known U.S. copyright restrictions
-      </Heading>
+      <Heading
+        level="h2"
+        size="heading4"
+        text="Public Domain / no known U.S. copyright restrictions"
+      />
     ),
     body: (
       <>
