@@ -23,7 +23,7 @@ const featuredItemDataHandler = async (
       backgroundImageSrc: imageURL(
         featuredImageData.imageID,
         "full",
-        "!1100,1100",
+        "!1600,1600",
         "0"
       ),
       foregroundImageSrc: imageURL(
