@@ -181,7 +181,14 @@ const aboutData = [
             panel: (
               <Text>
                 Some items may:{" "}
-                <List type="ul">
+                <List
+                  type="ul"
+                  sx={{
+                    "li::before": {
+                      color: "ui.border.hover",
+                    },
+                  }}
+                >
                   <li>
                     reflect white supremacist and American imperialist
                     ideologies, which include racist, sexist,
@@ -224,7 +231,14 @@ const aboutData = [
             label:
               "How is this material described, and why are some of the terms used in the descriptions harmful?",
             panel: (
-              <List type="ul">
+              <List
+                type="ul"
+                sx={{
+                  "li::before": {
+                    color: "ui.border.hover",
+                  },
+                }}
+              >
                 <li>
                   {" "}
                   Librarians, cataloguers, and archivists choose what language
@@ -267,7 +281,14 @@ const aboutData = [
             panel: (
               <Text>
                 Examples include:{" "}
-                <List type="ul">
+                <List
+                  type="ul"
+                  sx={{
+                    "li::before": {
+                      color: "ui.border.hover",
+                    },
+                  }}
+                >
                   <li>
                     Working directly with misrepresented and underrepresented
                     communities to improve the ways they are represented.{" "}
@@ -323,7 +344,14 @@ const aboutData = [
                   include:{" "}
                 </Text>
                 <Text>
-                  <List type="ul">
+                  <List
+                    type="ul"
+                    sx={{
+                      "li::before": {
+                        color: "ui.border.hover",
+                      },
+                    }}
+                  >
                     <li> a link to the item on Digital Collections</li>
                     <li>
                       {" "}
@@ -395,7 +423,14 @@ const aboutData = [
           </Link>
           .
         </Text>
-        <List type="ul">
+        <List
+          type="ul"
+          sx={{
+            "li::before": {
+              color: "ui.border.hover",
+            },
+          }}
+        >
           <li>
             Bulk metadata download: In addition to the full metadata output
             available via API, we&apos;ve added simplified metadata for the{" "}
