@@ -1,8 +1,8 @@
 import { render } from "@testing-library/react";
-import Home from "../src/pages/index";
+import Home from "../../src/pages/index";
 import { axe } from "jest-axe";
-import { props } from "./data/homepageProps";
-import logger from "./__mocks__/logger";
+import { props } from "../data/homepageProps";
+import logger from "../__mocks__/logger";
 
 class ResizeObserver {
   observe() {}
