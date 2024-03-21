@@ -36,16 +36,33 @@ export const getNumDigitizedItems = async () => {
 };
 
 /**
- * Returns the total number of items in the collection.
- * @param {string} uuid - the collection ID
+ * Returns a map of uuids to its item count.
  */
+export const getItemsCountFromUUIDs = async (uuids: string[]) => {
+  const apiUrl = `${process.env.API_URL}/api/v2/items/counts`;
+  const response = await apiPOSTCall(apiUrl, { uuids });
 
-export const getNumItems = async (uuid: string) => {
-  const apiUrl = `${process.env.API_URL}/api/v2/collections/${uuid}/items`;
-  // console.log(`getNumItems: About to fetch ${apiUrl}`);
-  // console.log(`getNumItems calls apiCall function internally`);
-  const res = await apiCall(apiUrl);
-  return res.numItems || 0;
+  if (!response?.counts?.count?.length) {
+    return {};
+  }
+
+  const counts = response.counts;
+
+  // The response is an array of objects:
+  // [
+  //   { uuid: { $: 'uuid1' }, count_value: { $: 'count1' }}
+  // ]
+  // We want to convert it to an object:
+  // {
+  //   uuid1: count1
+  //
+  const uuidCounts = counts?.count || [];
+  const cleanCounts = uuidCounts.reduce((acc, count) => {
+    acc[count.uuid["$"]] = count.count_value["$"];
+    return acc;
+  }, {});
+
+  return cleanCounts ? cleanCounts : {};
 };
 
 /**
@@ -96,6 +113,33 @@ export const apiCall = async (
       // console.log(`apiCall: called ${apiUrl}`);
       // console.log(`Response time: ${new Date().getTime() - startTime}`);
       return data.nyplAPI.response;
+    } else {
+      return undefined;
+    }
+  } catch (error) {
+    return undefined;
+  }
+};
+
+/**
+ * Makes a POST request to Repo API.
+ */
+export const apiPOSTCall = async (apiUrl: string, postData: any) => {
+  const apiKey = process.env.AUTH_TOKEN;
+
+  try {
+    const response = await fetch(apiUrl, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Token token=${apiKey}`,
+      },
+      body: JSON.stringify(postData),
+    });
+
+    if (response.status === 200) {
+      const data = await response.json();
+      return data?.nyplAPI?.response;
     } else {
       return undefined;
     }

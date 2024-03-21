@@ -1,5 +1,5 @@
 import data from "@/data/lanes";
-import { getNumItems } from "@/utils/utils";
+import { getItemsCountFromUUIDs } from "@/utils/utils";
 import type { NextApiRequest, NextApiResponse } from "next";
 
 const homepageHandler = async (
@@ -8,28 +8,23 @@ const homepageHandler = async (
 ) => {
   const { method } = request;
   if (method === "GET") {
+    const randomNumber = Math.floor(Math.random() * 2);
     const lanes = data.lanes;
-    const flatCollections = [].concat(...lanes.map((lane) => lane.collections));
-    const collectionsWithNumItems = await Promise.allSettled(
-      flatCollections.map(async (collection) => {
-        try {
-          const numItems = await getNumItems(collection.uuid);
-          return { ...collection, numItems };
-        } catch (error) {
-          return { ...collection, numItems: 0 };
-        }
-      })
-    );
+    // Get all the UUIDs from the collections
+    const allCollectionUUIDs = lanes.reduce((acc, lane) => {
+      return acc.concat(lane.collections.map((collection) => collection.uuid));
+    }, []);
+    const uuidtoItemCountMap = await getItemsCountFromUUIDs(allCollectionUUIDs);
+    // Update the collections for each lane with the number of items
     const updatedLanes = lanes.map((lane) => {
-      const updatedCollections = lane.collections.map(() => {
-        const result = collectionsWithNumItems.shift();
-        return result.status === "fulfilled"
-          ? result.value
-          : { ...result, value: {} };
+      const updatedCollections = lane.collections.map((collection) => {
+        return {
+          ...collection,
+          numItems: uuidtoItemCountMap[collection.uuid] || "0",
+        };
       });
       return { ...lane, collections: updatedCollections };
     });
-    const randomNumber = Math.floor(Math.random() * 2);
 
     // 24 hour cache
     response.setHeader("Cache-Control", "s-maxage=86400");
