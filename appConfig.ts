@@ -2,7 +2,7 @@ const appConfig = {
   environment: process.env.APP_ENV || "development",
   DC_URL: {
     development: "https://qa-digitalcollections.nypl.org",
-    qa: "https://qa-digitalcollections.nypl.org",
+    qa: "https://digitalcollections.nypl.org",
     production: "https://digitalcollections.nypl.org",
   },
   IIIF_URL: {
