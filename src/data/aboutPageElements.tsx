@@ -56,7 +56,7 @@ const aboutData = [
       </Box>
     ),
   },
-  // TO-DO: Replace all DC links to be self-referential
+  // TODO: Replace all DC links to be self-referential
   {
     heading: <Heading level="h2" size="heading4" text="Find items" />,
     body: (
@@ -445,7 +445,7 @@ const aboutData = [
         <Text sx={{ marginBottom: "xxl" }}>
           Digital Collections metadata records are also available for bulk
           download via the{" "}
-          <Link href="https://dp.la/guides/for-developers">
+          <Link href="https://pro.dp.la/developers/bulk-download">
             Digital Public Library of America (DPLA)
           </Link>
           . This includes all publicly available record descriptions for items
