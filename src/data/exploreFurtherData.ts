@@ -18,12 +18,12 @@ const exploreFurtherData: ExploreFurtherData[] = [
     imgAlt: "Service Archives",
   },
   {
-    title: "Prints & Photographs Catalog",
+    title: "NYPL Research Catalog",
     description:
-      "The online catalog of The Miriam and Ira D. Wallach Division of Art, Prints and Photographs.",
-    url: "http://wallachprintsandphotos.nypl.org/",
+      "Discover NYPL's world-renowned research collections, featuring more than 46 million items. Plus, access materials from library collections at Columbia University, Harvard University, and Princeton University.",
+    url: "https://www.nypl.org/research/research-catalog/ ",
     image: "service-wallach.jpg",
-    imgAlt: "Service Wallach",
+    imgAlt: "NYPL Research Catalog",
   },
   {
     title: "NYPL Digital Collections API",
