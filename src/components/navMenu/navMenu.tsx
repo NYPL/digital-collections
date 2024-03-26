@@ -19,6 +19,7 @@ const NavMenu = ({ render }) => {
         },
         _hover: {
           textDecoration: "none !important",
+          color: "unset",
         },
       }}
     >
