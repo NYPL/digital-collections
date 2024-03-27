@@ -22,7 +22,7 @@ const exploreFurtherData: ExploreFurtherData[] = [
     description:
       "Discover NYPL's world-renowned research collections, featuring more than 46 million items. Plus, access materials from library collections at Columbia University, Harvard University, and Princeton University.",
     url: "https://www.nypl.org/research/research-catalog/ ",
-    image: "ResearchCatalogThumbnail.jpg",
+    image: "ResearchCatalogThumbnail_v2.jpg",
     imgAlt: "NYPL Research Catalog",
   },
   {
