@@ -9,10 +9,29 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [0.1.3] 2024-03-28
 
+### Updated
+
+- update links to legacy dc in qa to point to https://digitalcollections.nypl.org (DR-2858)
+- Reenable underline hover state on 'Explore further' card titles (DR-2834)
+- Use Repo API v2/items/counts endpoint in DC Facelift (DR-2824)
+
+### Removed
+
+- Remove extra spacing on links (DR-2833)
+- Remove Wallach Prints and Photos from "Explore further" (DR-2871)
+
 ## [0.1.2] 2024-03-20
 
+### Removed
+
 - Remove etags
+
+### Updated
+
 - Update image dimensions of foreground and background images in hero component
+
+### Fixed
+
 - Fix typo in changelog
 
 ## [0.1.1] 2024-03-13
