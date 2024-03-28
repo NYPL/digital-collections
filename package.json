@@ -26,6 +26,7 @@
   },
   "dependencies": {
     "@newrelic/next": "^0.7.0",
+    "@samvera/clover-iiif": "^2.6.1",
     "@types/node": "20.5.9",
     "@types/react": "18.2.21",
     "@types/react-dom": "18.2.7",
