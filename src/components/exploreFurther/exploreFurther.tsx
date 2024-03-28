@@ -74,6 +74,7 @@ const ExploreFurther = () => {
                 rel="noreferrer noopener"
                 sx={{
                   textDecoration: "none !important",
+                  _hover: { textDecoration: "underline 1px dotted !important" },
                 }}
               >
                 {item.title}
