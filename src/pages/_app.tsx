@@ -10,8 +10,36 @@ import { useEffect } from "react";
 import { useRouter } from "next/router";
 import Script from "next/script";
 import { trackVirtualPageView } from "../utils/utils";
-import appConfig from "../../appConfig";
 import { ADOBE_EMBED_URL, DC_URL } from "../config/constants";
+
+// From https://optinmonster.com/docs/using-the-optinmonster-api-with-single-page-applications/#NextJS
+const OptinMonsterEmbed = () => {
+  const router = useRouter();
+  useEffect(() => {
+    const handleRouteChange = (url, { shallow }) => {
+      if ((window as any).om1044_12468) {
+        (window as any).om1044_12468.reset();
+      }
+    };
+
+    router.events.on("routeChangeComplete", handleRouteChange);
+
+    // If the component is unmounted, unsubscribe
+    // from the event with the `off` method:
+    return () => {
+      router.events.off("routeChangeComplete", handleRouteChange);
+    };
+  }, [router]);
+
+  return (
+    <script
+      dangerouslySetInnerHTML={{
+        __html:
+          "(function(d,u,ac){var s=d.createElement('script');s.type='text/javascript';s.src='https://a.omappapi.com/app/js/api.min.js';s.async=true;s.dataset.user=u;s.dataset.account=ac;d.getElementsByTagName('head')[0].appendChild(s);})(document,12468,1044);",
+      }}
+    />
+  );
+};
 
 export default function App({ Component, pageProps }: AppProps) {
   const router = useRouter();
@@ -56,12 +84,13 @@ export default function App({ Component, pageProps }: AppProps) {
   return (
     <>
       {/* <!-- This site is converting visitors into subscribers and customers with OptinMonster - https://optinmonster.com --> */}
-      <script
+      {/* <script
         dangerouslySetInnerHTML={{
           __html:
             "(function(d,u,ac){var s=d.createElement('script');s.type='text/javascript';s.src='https://a.omappapi.com/app/js/api.min.js';s.async=true;s.dataset.user=u;s.dataset.account=ac;d.getElementsByTagName('head')[0].appendChild(s);})(document,12468,1044);",
         }}
-      />
+      /> */}
+      {<OptinMonsterEmbed />}
       {/* <!-- / OptinMonster --> */}
       <Script async src={ADOBE_EMBED_URL} />
       <Script id="adobeDataLayerDefinition">
