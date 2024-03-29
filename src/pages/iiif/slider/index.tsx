@@ -1,4 +1,6 @@
 import dynamic from "next/dynamic";
+import Header from "@/components/header/header";
+import { Box } from "@nypl/design-system-react-components";
 import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
@@ -30,12 +32,17 @@ const MyCustomSlider = () => {
   };
 
   return (
-    <Slider
-      iiifContent={iiifContent}
-      options={{
-        breakpoints: customBreakpoints,
-      }}
-    />
+    <>
+      <Header />
+      {/* <Box h="1000px"> */}
+      <Slider
+        iiifContent={iiifContent}
+        options={{
+          breakpoints: customBreakpoints,
+        }}
+      />
+      {/* </Box> */}
+    </>
   );
 };
 

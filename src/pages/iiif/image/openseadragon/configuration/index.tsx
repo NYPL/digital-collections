@@ -10,13 +10,17 @@ const Image: any = dynamic(
 );
 
 const MyCustomImage = () => {
+  const openSeadragonConfig = {
+    showNavigator: false,
+    showRotationControl: true,
+    // ... other OpenSeadragon options
+  };
+
   return (
-    <>
-      <Header />
-      <Box h="500px">
-        <Image src="https://ids.lib.harvard.edu/ids/iiif/18772291/full/full/0/default.jpg" />
-      </Box>
-    </>
+    <Image
+      src="https://ids.lib.harvard.edu/ids/iiif/18772291/full/full/0/default.jpg"
+      openSeadragonConfig={openSeadragonConfig}
+    />
   );
 };
 export default MyCustomImage;

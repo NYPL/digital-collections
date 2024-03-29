@@ -14,7 +14,10 @@ const MyCustomImage = () => {
     <>
       <Header />
       <Box h="500px">
-        <Image src="https://ids.lib.harvard.edu/ids/iiif/18772291/full/full/0/default.jpg" />
+        <Image
+          src="https://iiif.dc.library.northwestern.edu/iiif/2/6ca016c5-de7f-4373-ae8f-7047fecf6ace"
+          isTiledImage={true}
+        />
       </Box>
     </>
   );
