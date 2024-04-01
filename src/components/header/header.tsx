@@ -3,7 +3,6 @@ import {
   HStack,
   VStack,
   HorizontalRule,
-  SkipNavigation,
 } from "@nypl/design-system-react-components";
 import React from "react";
 import { useScrolled } from "@/hooks/useScrolled";
@@ -33,7 +32,6 @@ const Header = () => {
         alignItems: "center",
       }}
     >
-      <SkipNavigation />
       <Box
         maxWidth="1280px"
         mx="auto"
