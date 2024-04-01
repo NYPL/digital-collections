@@ -40,22 +40,6 @@ const aboutData = [
       </Text>
     ),
   },
-  {
-    heading: <Heading level="h2" size="heading4" text="Download items" />,
-    body: (
-      <Box sx={{ marginBottom: "xxl" }}>
-        <Text sx={{ marginTop: "s" }}>
-          To download, navigate to the Download Options section under each item.
-          Simply click on your preferred file size and check your browser&apos;s
-          download folder for the image.{" "}
-        </Text>
-        <JWPlayer
-          library="https://cdn.jwplayer.com/libraries/KRF3T2Kr.js"
-          playlist="https://cdn.jwplayer.com/v2/playlists/98xxWmQh"
-        />
-      </Box>
-    ),
-  },
   // TODO: Replace all DC links to be self-referential
   {
     heading: <Heading level="h2" size="heading4" text="Find items" />,
@@ -99,6 +83,22 @@ const aboutData = [
           playerId="KRF3T2Kr"
           library="https://cdn.jwplayer.com/libraries/KRF3T2Kr.js"
           playlist="https://cdn.jwplayer.com/v2/playlists/pI8XNpSc"
+        />
+      </Box>
+    ),
+  },
+  {
+    heading: <Heading level="h2" size="heading4" text="Download items" />,
+    body: (
+      <Box sx={{ marginBottom: "xxl" }}>
+        <Text sx={{ marginTop: "s" }}>
+          To download, navigate to the Download Options section under each item.
+          Simply click on your preferred file size and check your browser&apos;s
+          download folder for the image.{" "}
+        </Text>
+        <JWPlayer
+          library="https://cdn.jwplayer.com/libraries/KRF3T2Kr.js"
+          playlist="https://cdn.jwplayer.com/v2/playlists/98xxWmQh"
         />
       </Box>
     ),
@@ -149,7 +149,7 @@ const aboutData = [
       />
     ),
     body: (
-      <Text sx={{ marginTop: "s" }}>
+      <Text sx={{ marginTop: "s", marginBottom: "l" }}>
         The Digital Collections platform contains some content that may be
         harmful or difficult to view. We collect materials from many cultures
         and time periods to preserve and make available the historical record.
@@ -179,6 +179,7 @@ const aboutData = [
                 <List
                   type="ul"
                   sx={{
+                    paddingLeft: "s",
                     "li::before": {
                       color: "ui.border.hover",
                     },
@@ -198,7 +199,7 @@ const aboutData = [
                     include graphic content of historical events such as violent
                     death, medical procedures, crime, post mortem photography,
                     wars/terrorist acts, natural disasters and more.
-                  </li>{" "}
+                  </li>
                   <li>
                     demonstrate bias and exclusion in institutional collecting
                     and digitization policies.
@@ -229,40 +230,36 @@ const aboutData = [
               <List
                 type="ul"
                 sx={{
+                  paddingLeft: "s",
                   "li::before": {
                     color: "ui.border.hover",
                   },
                 }}
               >
                 <li>
-                  {" "}
                   Librarians, cataloguers, and archivists choose what language
                   to use when describing materials. Some of these descriptions
                   were written many years ago, using language that was accepted
                   at the time.{" "}
                 </li>
                 <li>
-                  {" "}
                   Librarians, cataloguers, and archivists often re-use language
                   provided by creators or former owners of the material. This
                   can provide important context, but can also reflect biases and
                   prejudices.{" "}
                 </li>
                 <li>
-                  {" "}
                   Librarians, cataloguers, and archivists often use a
                   standardized set of terms, such as the Library of Congress
                   Subject Headings, to describe materials. Some of these terms
-                  are outdated, offensive, or insensitive.{" "}
+                  are outdated, offensive, or insensitive.
                 </li>
                 <li>
-                  {" "}
                   Communities with less access to and privilege within libraries
                   and archives have had less control over how they are
                   represented and described.
                 </li>
                 <li>
-                  {" "}
                   NYPL is committed to working with its staff and patrons to
                   assess and update descriptions that are harmful.
                 </li>
@@ -279,6 +276,7 @@ const aboutData = [
                 <List
                   type="ul"
                   sx={{
+                    paddingLeft: "s",
                     "li::before": {
                       color: "ui.border.hover",
                     },
@@ -286,11 +284,11 @@ const aboutData = [
                 >
                   <li>
                     Working directly with misrepresented and underrepresented
-                    communities to improve the ways they are represented.{" "}
+                    communities to improve the ways they are represented.
                   </li>
                   <li>
                     Informing users about the presence and origin of harmful
-                    content and providing context.{" "}
+                    content and providing context.
                   </li>
                   <li>
                     Revising descriptions and standardized sets of descriptive
@@ -299,18 +297,15 @@ const aboutData = [
                     creating new standardized terms to describe materials.
                   </li>
                   <li>
-                    {" "}
                     Researching the problem, listening to patrons, experimenting
                     with solutions, and sharing our findings with each other.
                   </li>
                   <li>
-                    {" "}
                     Evaluating existing collecting and digitization policies for
                     exclusionary practices and institutional biases that
                     prioritize one culture and/or group over another.{" "}
                   </li>
                   <li>
-                    {" "}
                     Making an institutional commitment to DEIA (diversity,
                     equity, inclusion, and accessibility).
                   </li>
@@ -330,7 +325,6 @@ const aboutData = [
                   alter the content of original research material.{" "}
                 </Text>
                 <Text>
-                  {" "}
                   You can help us by reporting potentially harmful language that
                   you see in item descriptions in Digital Collections.
                 </Text>
@@ -342,18 +336,18 @@ const aboutData = [
                   <List
                     type="ul"
                     sx={{
+                      paddingLeft: "s",
                       "li::before": {
                         color: "ui.border.hover",
                       },
                     }}
                   >
-                    <li> a link to the item on Digital Collections</li>
+                    <li>a link to the item on Digital Collections</li>
                     <li>
-                      {" "}
                       the specific language you feel is harmful and the metadata
                       field name where it can be found (title, topic, genre,
                       etc.)
-                    </li>{" "}
+                    </li>
                     <li>a suggested alternative if you have one</li>
                   </List>
                   NYPL will determine whether or not we will change or remove
@@ -421,6 +415,7 @@ const aboutData = [
         <List
           type="ul"
           sx={{
+            paddingLeft: "s",
             "li::before": {
               color: "ui.border.hover",
             },
