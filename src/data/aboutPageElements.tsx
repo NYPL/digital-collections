@@ -174,8 +174,8 @@ const aboutData = [
             label:
               "What harmful or difficult content may be found in NYPL's Digital Collections?",
             panel: (
-              <Text>
-                Some items may:{" "}
+              <>
+                <Text sx={{ marginBottom: "xs" }}>Some items may: </Text>
                 <List
                   type="ul"
                   sx={{
@@ -205,7 +205,7 @@ const aboutData = [
                     and digitization policies.
                   </li>
                 </List>
-              </Text>
+              </>
             ),
           },
           {
@@ -271,8 +271,8 @@ const aboutData = [
             label:
               "How are librarians, cataloguers, and archivists working to address this problem and help users better understand such content?",
             panel: (
-              <Text>
-                Examples include:{" "}
+              <>
+                <Text sx={{ marginBottom: "xs" }}>Examples include: </Text>
                 <List
                   type="ul"
                   sx={{
@@ -310,7 +310,7 @@ const aboutData = [
                     equity, inclusion, and accessibility).
                   </li>
                 </List>
-              </Text>
+              </>
             ),
           },
           {
@@ -328,9 +328,9 @@ const aboutData = [
                   You can help us by reporting potentially harmful language that
                   you see in item descriptions in Digital Collections.
                 </Text>
-                <Text>
+                <Text sx={{ marginBottom: "xs" }}>
                   Click the feedback form button at the bottom of this page and
-                  include:{" "}
+                  include:
                 </Text>
                 <Text>
                   <List

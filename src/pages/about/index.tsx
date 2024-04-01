@@ -20,6 +20,11 @@ export default function About() {
       <Header />
       <Head>
         <title>About NYPL Digital Collections</title>
+        <meta
+          property="og:title"
+          content="About NYPL Digital Collections"
+          key="title"
+        />
       </Head>
       <Box
         sx={{
