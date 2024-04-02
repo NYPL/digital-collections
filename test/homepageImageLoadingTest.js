@@ -19,7 +19,7 @@ function parseArgs(args) {
   const parsedArgs = parseArgs(args);
   //console.log('Parsed command line arguments:', parsedArgs);
 
-  const browser = await puppeteer.launch();
+  const browser = await puppeteer.launch({ headless: true });
   const page = await browser.newPage();
 
   await page.setRequestInterception(true);
