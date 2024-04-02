@@ -20,6 +20,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Remove extra spacing on links (DR-2833)
 - Remove Wallach Prints and Photos from "Explore further" (DR-2871)
 
+### Added
+- Added homepage images loading test script (DR-2872)
+
 ## [0.1.2] 2024-03-20
 
 ### Removed
