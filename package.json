@@ -10,7 +10,8 @@
     "lint": "next lint",
     "test": "jest",
     "test:ci": "jest --ci --config=jest.config.ts",
-    "prepare": "husky install"
+    "prepare": "husky install",
+    "hompageImageLoadingTest": "node test/homepageImageLoadingTest.js"
   },
   "lint-staged": {
     "*.{js,jsx,ts,tsx}": [
@@ -56,6 +57,7 @@
     "jest-axe": "8.0.0",
     "jest-environment-jsdom": "29.7.0",
     "lint-staged": "15.0.1",
-    "prettier": "3.0.3"
+    "prettier": "3.0.3",
+    "puppeteer": "^22.6.2"
   }
 }
