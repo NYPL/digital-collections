@@ -153,6 +153,23 @@ To run tests, run
 npm run test
 ```
 
+## Test Scripts
+
+To run the homepage swimlane image loading test script against the qa environment, run
+
+```
+npm run hompageImageLoadingTest
+```
+(requires accessination with nypl-dams-dev)
+
+To run the same test script against the production environment, run
+```
+npm run hompageImageLoadingTest --prod
+```
+
+The test waits for the 24 swim lane images to load, including the 12 that load after scrolling, and has succeeded if it does not time out. It simulates a single user loading the homepage one time.
+
+
 ## Getting Started With Docker
 
 First, install ["Docker"](https://www.docker.com/) on your local machine.
