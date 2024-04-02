@@ -27,6 +27,7 @@ export default function About() {
         />
       </Head>
       <Box
+        id="mainContent"
         sx={{
           maxWidth: "820px",
           margin: "s",
