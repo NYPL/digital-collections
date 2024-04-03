@@ -7,6 +7,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+### Added
+- Added NewRelic client-side monitoring (DR-2893)
+
 ## [0.1.3] 2024-03-28
 
 ### Updated
