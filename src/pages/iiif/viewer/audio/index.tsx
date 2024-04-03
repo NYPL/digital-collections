@@ -9,14 +9,21 @@ const Viewer = dynamic(
   }
 );
 
+const options = {
+  informationPanel: {
+    open: false,
+    renderToggle: true,
+  },
+};
+
 const MyCustomViewer = () => {
   const iiifContent =
-    "https://api.dc.library.northwestern.edu/api/v2/collections/c373ecd2-2c45-45f2-9f9e-52dc244870bd?as=iiif";
+    "https://iiif.io/api/cookbook/recipe/0002-mvm-audio/manifest.json";
 
   return (
     <>
       <Header />
-      <Viewer iiifContent={iiifContent} />
+      <Viewer iiifContent={iiifContent} options={options} />
     </>
   );
 };
