@@ -1,4 +1,4 @@
-import { Box } from "@nypl/design-system-react-components";
+import { Box, SkipNavigation } from "@nypl/design-system-react-components";
 import Header from "@/components/header/header";
 import NotificationBanner from "@/components/notificationBanner/notificationBanner";
 import aboutPageElements from "@/data/aboutPageElements";
@@ -16,6 +16,7 @@ export default function About() {
 
   return (
     <>
+      <SkipNavigation />
       <NotificationBanner />
       <Header />
       <Head>
