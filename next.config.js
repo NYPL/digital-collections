@@ -6,6 +6,7 @@ const nextConfig = {
     IIIF_URL: process.env.IIIF_URL,
     ADOBE_EMBED_URL: process.env.ADOBE_EMBED_URL,
     APP_ENV: process.env.APP_ENV,
+    NEW_RELIC_LICENSE_KEY: process.env.NEW_RELIC_LICENSE_KEY,
     NEXT_PUBLIC_ANOTHER_TEST: process.env.NEXT_PUBLIC_ANOTHER_TEST,
     NEXT_PUBLIC_CONFIG_MANUAL_TEST: process.env.NEXT_PUBLIC_CONFIG_MANUAL_TEST,
   },
