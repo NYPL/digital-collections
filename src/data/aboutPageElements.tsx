@@ -6,7 +6,6 @@ import {
   Accordion,
   Box,
 } from "@nypl/design-system-react-components";
-import JWPlayer from "@jwplayer/jwplayer-react";
 
 const aboutData = [
   {
@@ -79,11 +78,12 @@ const aboutData = [
           and off with the Show Only Public Domain button in the upper left
           corner of the page.
         </Text>
-        <JWPlayer
-          playerId="KRF3T2Kr"
-          library="https://cdn.jwplayer.com/libraries/KRF3T2Kr.js"
-          playlist="https://cdn.jwplayer.com/v2/playlists/pI8XNpSc"
-        />
+        <video style={{ width: "100%", height: "100%" }} controls>
+          <source
+            src="https://digitalcollections-prod.s3.amazonaws.com/assets/pd_browse-f8b759aeef3ef78c396e2e27b5498528.mp4"
+            type="video/mp4"
+          />
+        </video>
       </Box>
     ),
   },
@@ -96,10 +96,12 @@ const aboutData = [
           Simply click on your preferred file size and check your browser&apos;s
           download folder for the image.{" "}
         </Text>
-        <JWPlayer
-          library="https://cdn.jwplayer.com/libraries/KRF3T2Kr.js"
-          playlist="https://cdn.jwplayer.com/v2/playlists/98xxWmQh"
-        />
+        <video style={{ width: "100%", height: "100%" }} controls>
+          <source
+            src="https://digitalcollections-prod.s3.amazonaws.com/assets/pd_download-f4513d03a49cd6a20013cd7a6b73e8a1.mp4"
+            type="video/mp4"
+          />
+        </video>
       </Box>
     ),
   },
