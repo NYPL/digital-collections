@@ -6,5 +6,5 @@ describe("About page accessibility", () => {
   it("passes axe accessibility test", async () => {
     const { container } = render(<About />);
     expect(await axe(container)).toHaveNoViolations();
-  });
+  }, 15000);
 });

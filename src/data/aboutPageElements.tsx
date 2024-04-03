@@ -29,13 +29,11 @@ const aboutData = [
     ),
   },
   {
-    heading: <Heading level="h2" size="heading4" text="Items & permissions" />,
+    heading: <Heading level="h2" size="heading4" text="How to" />,
     body: (
       <Text sx={{ marginBottom: "xxl", marginTop: "s" }}>
-        {" "}
-        We actively review and label materials in Digital Collections with
-        statements that indicate how you may reuse items, and what sort of
-        permission, if any, you need to do so.
+        Discover and download NYPL items spanning research subjects and
+        historical eras.
       </Text>
     ),
   },
@@ -106,38 +104,299 @@ const aboutData = [
     ),
   },
   {
-    heading: <Heading level="h2" size="heading4" text="How to" />,
-    body: (
-      <Text sx={{ marginBottom: "xxl", marginTop: "s" }}>
-        Discover and download NYPL items spanning research subjects and
-        historical eras.
-      </Text>
-    ),
-  },
-  {
-    heading: <Heading level="h2" size="heading4" text="Acknowledgements" />,
+    heading: <Heading level="h2" size="heading4" text="Items & permissions" />,
     body: (
       <Text sx={{ marginBottom: "xxl", marginTop: "s" }}>
         {" "}
-        The New York Public Library Digital Collections was made possible by
-        leadership support from The Robert W. Wilson Charitable Trust. Other
-        major funding has been provided by The Atlantic Philanthropies, with
-        additional support from the Stavros Niarchos Foundation, Time Warner
-        Inc., the Miriam and Ira D. Wallach Foundation, The Polonsky Foundation,
-        The Brown Foundation, Inc., of Houston, Mr. and Mrs. Alberto Vitale, The
-        Prospect Hill Foundation, and the Toshiba International Foundation.
+        We actively review and label materials in Digital Collections with
+        statements that indicate how you may reuse items, and what sort of
+        permission, if any, you need to do so.
       </Text>
     ),
   },
   {
-    heading: <Heading level="h2" size="heading4" text="Contact" />,
+    heading: (
+      <Heading
+        level="h2"
+        size="heading4"
+        text="Public Domain / no known U.S. copyright restrictions"
+      />
+    ),
+    body: (
+      <>
+        <Text sx={{ marginTop: "s" }}>
+          To date, there are{" "}
+          <Link href="https://digitalcollections.nypl.org/search/index?filters%5Brights%5D=pd&keywords=">
+            296,687 public domain items
+          </Link>{" "}
+          in Digital Collections, and that number grows every day. You do not
+          need NYPL&apos;s permission to use these items and there are no known
+          restrictions on their use. However, these items may be subject to
+          rights of privacy, publicity, or other restrictions depending on the
+          format of the materials and what the items depict. It is your
+          responsibility to respect these rights.{" "}
+        </Text>
+        <Text>
+          Though it is not required, please credit public domain items with,
+          &quot;From The New York Public Library,&quot; and provide a link back
+          to each item on the Digital Collections website. Doing so helps us
+          track how our collection is used, as well as justify releasing even
+          more content in the future.{" "}
+        </Text>
+        <Text sx={{ marginBottom: "xxl" }}>
+          For more information about NYPL&apos;s public domain materials and
+          projects, see &quot;
+          <Link href="https://www.nypl.org/blog/2016/01/05/share-public-domain-collections">
+            Free for All: NYPL Enhances Public Domain Collections for Sharing
+            and Reuse.
+          </Link>
+          &quot;
+        </Text>
+      </>
+    ),
+  },
+  {
+    heading: (
+      <Heading
+        level="h2"
+        size="heading4"
+        text="Is there a difference between 'Public Domain' & 'no known
+        U.S. copyright restrictions'?"
+      />
+    ),
+    body: (
+      <>
+        <Text sx={{ marginTop: "s" }}>
+          Unless you are a lawyer and/or outside of the United States, there
+          isn&apos;t really a difference. The term &quot;public domain&quot; is
+          not consistently used largely because it means different things in
+          different places around the world. And as a U.S.-based library, NYPL
+          limits the legal statements it makes about materials to the
+          jurisdictions in which it operates.{" "}
+        </Text>
+        <Text sx={{ marginBottom: "xxl" }}>
+          But what does that really mean? When we describe the rights allowances
+          or restrictions for a specific item in our collections, we use
+          &quot;no known U.S. copyright restrictions.&quot; However, when we are
+          speaking more generally—on our websites, blog posts, and in other
+          modes of communication with users—we often use &quot;public
+          domain,&quot; by which we mean the aggregate collection of items we
+          offer to the public without copyright restrictions on reuse.
+        </Text>
+      </>
+    ),
+  },
+  {
+    heading: (
+      <Heading
+        level="h2"
+        size="heading4"
+        text="Copyright held or managed by The New York Public Library"
+      />
+    ),
     body: (
       <Text sx={{ marginBottom: "xxl", marginTop: "s" }}>
-        If you have comments, suggestions, or questions, please email{" "}
-        <Link href="mailto:digitalcollections@nypl.org">
-          digitalcollections@nypl.org
+        NYPL holds or manages copyright for some items. If you need information
+        about reusing these items, please contact{" "}
+        <Link href="https://www.nypl.org/help/get-what-you-need/photographic-services/obtaining-images">
+          Permissions and Reproductions
         </Link>
         .
+      </Text>
+    ),
+  },
+  {
+    heading: (
+      <Heading level="h2" size="heading4" text="Copyright status undefined" />
+    ),
+    body: (
+      <>
+        <Text sx={{ marginTop: "s" }}>
+          Not all Digital Collections items have been formally reviewed for
+          copyright status. For unmarked items, we do not grant or deny
+          permission for reuse. You may want to look into resources that can
+          help you determine on your own whether the items are in the public
+          domain—and therefore free of copyright restrictions—including &quot;
+          <Link href="https://www.copyright.gov/circs/circ22.pdf">
+            How to Investigate the Copyright Status of a Work [PDF]
+          </Link>
+          &quot; from the United States Copyright Office and the{" "}
+          <Link href="https://guides.library.cornell.edu/copyright">
+            public domain determination chart
+          </Link>{" "}
+          made available by the Cornell Copyright Information Center.{" "}
+        </Text>
+        <Text>
+          If materials are not in the public domain, it is your responsibility
+          to determine and satisfy copyright or other use restrictions when
+          publishing or otherwise using the materials. You are solely
+          responsible for determining whether your use of any digital object
+          requires the permission of any other person or entity, or determining
+          whether you can exercise fair use rights. You can learn more about
+          fair use on{" "}
+          <Link href="https://en.wikipedia.org/wiki/Fair_use">Wikipedia</Link>,
+          or review{" "}
+          <Link href="https://copyright.columbia.edu/basics/fair-use.html">
+            fair use basics
+          </Link>{" "}
+          and a{" "}
+          <Link href="https://copyright.columbia.edu/basics/fair-use/fair-use-checklist.html">
+            fair use checklist
+          </Link>{" "}
+          from Columbia University&apos;s Copyright Advisory Office.{" "}
+        </Text>
+        <Text sx={{ marginBottom: "xxl" }}>
+          Meanwhile, every day we review and update the copyright status of
+          Digital Collections items. At this time, we are not able to take
+          requests about which items are at the top of our queue for review. If
+          you need more information about reusing items in Digital Collections,
+          please contact{" "}
+          <Link href="https://www.nypl.org/help/get-what-you-need/photographic-services/obtaining-images">
+            Permissions and Reproductions
+          </Link>
+          .
+        </Text>
+      </>
+    ),
+  },
+  {
+    heading: (
+      <Heading
+        level="h2"
+        size="heading4"
+        text="Audio and Moving Image Materials"
+      />
+    ),
+    body: (
+      <Text sx={{ marginBottom: "xxl", marginTop: "s" }}>
+        For more information about the Library&apos;s Audio and Moving Image
+        materials, please see our{" "}
+        <Link href="https://www.nypl.org/help/get-what-you-need/audio-video-files">
+          Audio and Moving Image Preservation and Access Initiative.
+        </Link>
+      </Text>
+    ),
+  },
+  {
+    heading: <Heading level="h2" size="heading4" text="Data" />,
+    body: (
+      <Text sx={{ marginBottom: "xxl", marginTop: "s" }}>
+        Digital Collections is at the core of NYPL&apos;s efforts to enable new
+        uses of items, collections, and data.
+      </Text>
+    ),
+  },
+  {
+    heading: <Heading level="h2" size="heading4" text="Linked projects" />,
+    body: (
+      <>
+        <Text sx={{ marginTop: "s" }}>
+          Whenever possible, we link items in Digital Collections to other
+          places where you may be able to find out more about them. Some of the
+          places we link to include the{" "}
+          <Link href="https://www.nypl.org/research/research-catalog?originalUrl=https%3A%2F%2Fcatalog.nypl.org%2F">
+            NYPL Catalog
+          </Link>
+          , <Link href="https://archives.nypl.org/">NYPL Archives Portal</Link>,
+          and{" "}
+          <Link href="https://dp.la/">Digital Public Library of America</Link>.
+        </Text>
+        <Text sx={{ marginBottom: "xxl" }}>
+          Meanwhile, we also extract data from historical sources and materials,
+          and have incorporated links to those data extraction experiments
+          wherever possible. Some of those projects include{" "}
+          <Link href="https://wayback.archive-it.org/13216/20210520171637/http://maps.nypl.org/warper/">
+            Map Warper
+          </Link>
+          ,{" "}
+          <Link href="http://buildinginspector.nypl.org/">
+            Building Inspector
+          </Link>
+          , <Link href="https://stereo.nypl.org/">Stereogranimator</Link>, and{" "}
+          <Link href="https://menus.nypl.org/">What&apos;s on the Menu</Link>.
+        </Text>
+      </>
+    ),
+  },
+  {
+    heading: <Heading level="h2" size="heading4" text="Available metadata" />,
+    body: (
+      <>
+        <Text sx={{ marginTop: "s" }}>
+          NYPL metadata published via the sources below is released under a{" "}
+          <Link href="https://creativecommons.org/publicdomain/zero/1.0/">
+            Creative Commons CC0 1.0 Universal Public Domain Dedication
+          </Link>
+          .
+        </Text>
+        <List
+          type="ul"
+          sx={{
+            paddingLeft: "s",
+            "li::before": {
+              color: "ui.border.hover",
+            },
+          }}
+        >
+          <li>
+            Bulk metadata download: In addition to the full metadata output
+            available via API, we&apos;ve added simplified metadata for the{" "}
+            <Link href="https://github.com/NYPL-publicdomain/data-and-utilities">
+              public domain portion of Digital Collections on GitHub
+            </Link>
+            , available in CSV and JSON formats.
+          </li>
+          <li>
+            Metadata API: All Digital Collections metadata is available via{" "}
+            <Link href="https://api.repo.nypl.org/">
+              The New York Public Library Digital Collections API
+            </Link>
+            . This data is available in XML and JSON.
+          </li>
+        </List>
+        <Text sx={{ marginBottom: "xxl" }}>
+          Digital Collections metadata records are also available for bulk
+          download via the{" "}
+          <Link href="https://pro.dp.la/developers/bulk-download">
+            Digital Public Library of America (DPLA)
+          </Link>
+          . This includes all publicly available record descriptions for items
+          on this site. The metadata standard we use is{" "}
+          <Link href="https://en.wikipedia.org/wiki/Metadata_Object_Description_Schema">
+            MODS
+          </Link>
+          , and the bulk data offered through DPLA is stored in JSON. The bulk
+          download data is refreshed roughly every other month.
+        </Text>
+      </>
+    ),
+  },
+  {
+    heading: <Heading level="h2" size="heading4" text="Platform" />,
+    body: (
+      <Text sx={{ marginBottom: "xxl", marginTop: "s" }}>
+        NYPL uses Fedora Commons software for our repository, while our
+        bibliographic, technical, and rights metadata is managed by a custom
+        Ruby on Rails app we call—appropriately enough—the Metadata Management
+        System. The Digital Collections platform itself is also a Rails
+        application, but uses a lot of JavaScript (including libraries such as
+        the{" "}
+        <Link href="https://openlibrary.org/dev/docs/bookreader">
+          Internet Archive&apos;s BookReader
+        </Link>
+        ).
+      </Text>
+    ),
+  },
+  {
+    heading: <Heading level="h2" size="heading4" text="Accessibility" />,
+    body: (
+      <Text sx={{ marginBottom: "xxl", marginTop: "s" }}>
+        To learn more about the accessibility of NYPL websites and mobile
+        applications, see our{" "}
+        <Link href="https://www.nypl.org/policies/web-mobile-accessibility">
+          Web & Mobile Accessibility Policy.
+        </Link>
       </Text>
     ),
   },
@@ -375,289 +634,30 @@ const aboutData = [
     ),
   },
   {
-    heading: <Heading level="h2" size="heading4" text="Accessibility" />,
+    heading: <Heading level="h2" size="heading4" text="Contact" />,
     body: (
       <Text sx={{ marginBottom: "xxl", marginTop: "s" }}>
-        To learn more about the accessibility of NYPL websites and mobile
-        applications, see our{" "}
-        <Link href="https://www.nypl.org/policies/web-mobile-accessibility">
-          Web & Mobile Accessibility Policy.
-        </Link>
-      </Text>
-    ),
-  },
-  {
-    heading: <Heading level="h2" size="heading4" text="Platform" />,
-    body: (
-      <Text sx={{ marginBottom: "xxl", marginTop: "s" }}>
-        NYPL uses Fedora Commons software for our repository, while our
-        bibliographic, technical, and rights metadata is managed by a custom
-        Ruby on Rails app we call—appropriately enough—the Metadata Management
-        System. The Digital Collections platform itself is also a Rails
-        application, but uses a lot of JavaScript (including libraries such as
-        the{" "}
-        <Link href="https://openlibrary.org/dev/docs/bookreader">
-          Internet Archive&apos;s BookReader
-        </Link>
-        ).
-      </Text>
-    ),
-  },
-  {
-    heading: <Heading level="h2" size="heading4" text="Available metadata" />,
-    body: (
-      <>
-        <Text sx={{ marginTop: "s" }}>
-          NYPL metadata published via the sources below is released under a{" "}
-          <Link href="https://creativecommons.org/publicdomain/zero/1.0/">
-            Creative Commons CC0 1.0 Universal Public Domain Dedication
-          </Link>
-          .
-        </Text>
-        <List
-          type="ul"
-          sx={{
-            paddingLeft: "s",
-            "li::before": {
-              color: "ui.border.hover",
-            },
-          }}
-        >
-          <li>
-            Bulk metadata download: In addition to the full metadata output
-            available via API, we&apos;ve added simplified metadata for the{" "}
-            <Link href="https://github.com/NYPL-publicdomain/data-and-utilities">
-              public domain portion of Digital Collections on GitHub
-            </Link>
-            , available in CSV and JSON formats.
-          </li>
-          <li>
-            Metadata API: All Digital Collections metadata is available via{" "}
-            <Link href="https://api.repo.nypl.org/">
-              The New York Public Library Digital Collections API
-            </Link>
-            . This data is available in XML and JSON.
-          </li>
-        </List>
-        <Text sx={{ marginBottom: "xxl" }}>
-          Digital Collections metadata records are also available for bulk
-          download via the{" "}
-          <Link href="https://pro.dp.la/developers/bulk-download">
-            Digital Public Library of America (DPLA)
-          </Link>
-          . This includes all publicly available record descriptions for items
-          on this site. The metadata standard we use is{" "}
-          <Link href="https://en.wikipedia.org/wiki/Metadata_Object_Description_Schema">
-            MODS
-          </Link>
-          , and the bulk data offered through DPLA is stored in JSON. The bulk
-          download data is refreshed roughly every other month.
-        </Text>
-      </>
-    ),
-  },
-  {
-    heading: <Heading level="h2" size="heading4" text="Linked projects" />,
-    body: (
-      <>
-        <Text sx={{ marginTop: "s" }}>
-          Whenever possible, we link items in Digital Collections to other
-          places where you may be able to find out more about them. Some of the
-          places we link to include the{" "}
-          <Link href="https://www.nypl.org/research/research-catalog?originalUrl=https%3A%2F%2Fcatalog.nypl.org%2F">
-            NYPL Catalog
-          </Link>
-          , <Link href="https://archives.nypl.org/">NYPL Archives Portal</Link>,
-          and{" "}
-          <Link href="https://dp.la/">Digital Public Library of America</Link>.
-        </Text>
-        <Text sx={{ marginBottom: "xxl" }}>
-          Meanwhile, we also extract data from historical sources and materials,
-          and have incorporated links to those data extraction experiments
-          wherever possible. Some of those projects include{" "}
-          <Link href="https://wayback.archive-it.org/13216/20210520171637/http://maps.nypl.org/warper/">
-            Map Warper
-          </Link>
-          ,{" "}
-          <Link href="http://buildinginspector.nypl.org/">
-            Building Inspector
-          </Link>
-          , <Link href="https://stereo.nypl.org/">Stereogranimator</Link>, and{" "}
-          <Link href="https://menus.nypl.org/">What&apos;s on the Menu</Link>.
-        </Text>
-      </>
-    ),
-  },
-  {
-    heading: <Heading level="h2" size="heading4" text="Data" />,
-    body: (
-      <Text sx={{ marginBottom: "xxl", marginTop: "s" }}>
-        Digital Collections is at the core of NYPL&apos;s efforts to enable new
-        uses of items, collections, and data.
-      </Text>
-    ),
-  },
-  {
-    heading: (
-      <Heading
-        level="h2"
-        size="heading4"
-        text="Audio and Moving Image Materials"
-      />
-    ),
-    body: (
-      <Text sx={{ marginBottom: "xxl", marginTop: "s" }}>
-        For more information about the Library&apos;s Audio and Moving Image
-        materials, please see our{" "}
-        <Link href="https://www.nypl.org/help/get-what-you-need/audio-video-files">
-          Audio and Moving Image Preservation and Access Initiative.
-        </Link>
-      </Text>
-    ),
-  },
-  {
-    heading: (
-      <Heading level="h2" size="heading4" text="Copyright status undefined" />
-    ),
-    body: (
-      <>
-        <Text sx={{ marginTop: "s" }}>
-          Not all Digital Collections items have been formally reviewed for
-          copyright status. For unmarked items, we do not grant or deny
-          permission for reuse. You may want to look into resources that can
-          help you determine on your own whether the items are in the public
-          domain—and therefore free of copyright restrictions—including &quot;
-          <Link href="https://www.copyright.gov/circs/circ22.pdf">
-            How to Investigate the Copyright Status of a Work [PDF]
-          </Link>
-          &quot; from the United States Copyright Office and the{" "}
-          <Link href="https://guides.library.cornell.edu/copyright">
-            public domain determination chart
-          </Link>{" "}
-          made available by the Cornell Copyright Information Center.{" "}
-        </Text>
-        <Text>
-          If materials are not in the public domain, it is your responsibility
-          to determine and satisfy copyright or other use restrictions when
-          publishing or otherwise using the materials. You are solely
-          responsible for determining whether your use of any digital object
-          requires the permission of any other person or entity, or determining
-          whether you can exercise fair use rights. You can learn more about
-          fair use on{" "}
-          <Link href="https://en.wikipedia.org/wiki/Fair_use">Wikipedia</Link>,
-          or review{" "}
-          <Link href="https://copyright.columbia.edu/basics/fair-use.html">
-            fair use basics
-          </Link>{" "}
-          and a{" "}
-          <Link href="https://copyright.columbia.edu/basics/fair-use/fair-use-checklist.html">
-            fair use checklist
-          </Link>{" "}
-          from Columbia University&apos;s Copyright Advisory Office.{" "}
-        </Text>
-        <Text sx={{ marginBottom: "xxl" }}>
-          Meanwhile, every day we review and update the copyright status of
-          Digital Collections items. At this time, we are not able to take
-          requests about which items are at the top of our queue for review. If
-          you need more information about reusing items in Digital Collections,
-          please contact{" "}
-          <Link href="https://www.nypl.org/help/get-what-you-need/photographic-services/obtaining-images">
-            Permissions and Reproductions
-          </Link>
-          .
-        </Text>
-      </>
-    ),
-  },
-  {
-    heading: (
-      <Heading
-        level="h2"
-        size="heading4"
-        text="Copyright held or managed by The New York Public Library"
-      />
-    ),
-    body: (
-      <Text sx={{ marginBottom: "xxl", marginTop: "s" }}>
-        NYPL holds or manages copyright for some items. If you need information
-        about reusing these items, please contact{" "}
-        <Link href="https://www.nypl.org/help/get-what-you-need/photographic-services/obtaining-images">
-          Permissions and Reproductions
+        If you have comments, suggestions, or questions, please email{" "}
+        <Link href="mailto:digitalcollections@nypl.org">
+          digitalcollections@nypl.org
         </Link>
         .
       </Text>
     ),
   },
   {
-    heading: (
-      <Heading
-        level="h2"
-        size="heading4"
-        text="Is there a difference between 'Public Domain' & 'no known
-        U.S. copyright restrictions'?"
-      />
-    ),
+    heading: <Heading level="h2" size="heading4" text="Acknowledgements" />,
     body: (
-      <>
-        <Text sx={{ marginTop: "s" }}>
-          Unless you are a lawyer and/or outside of the United States, there
-          isn&apos;t really a difference. The term &quot;public domain&quot; is
-          not consistently used largely because it means different things in
-          different places around the world. And as a U.S.-based library, NYPL
-          limits the legal statements it makes about materials to the
-          jurisdictions in which it operates.{" "}
-        </Text>
-        <Text sx={{ marginBottom: "xxl" }}>
-          But what does that really mean? When we describe the rights allowances
-          or restrictions for a specific item in our collections, we use
-          &quot;no known U.S. copyright restrictions.&quot; However, when we are
-          speaking more generally—on our websites, blog posts, and in other
-          modes of communication with users—we often use &quot;public
-          domain,&quot; by which we mean the aggregate collection of items we
-          offer to the public without copyright restrictions on reuse.
-        </Text>
-      </>
-    ),
-  },
-  {
-    heading: (
-      <Heading
-        level="h2"
-        size="heading4"
-        text="Public Domain / no known U.S. copyright restrictions"
-      />
-    ),
-    body: (
-      <>
-        <Text sx={{ marginTop: "s" }}>
-          To date, there are{" "}
-          <Link href="https://digitalcollections.nypl.org/search/index?filters%5Brights%5D=pd&keywords=">
-            296,687 public domain items
-          </Link>{" "}
-          in Digital Collections, and that number grows every day. You do not
-          need NYPL&apos;s permission to use these items and there are no known
-          restrictions on their use. However, these items may be subject to
-          rights of privacy, publicity, or other restrictions depending on the
-          format of the materials and what the items depict. It is your
-          responsibility to respect these rights.{" "}
-        </Text>
-        <Text>
-          Though it is not required, please credit public domain items with,
-          &quot;From The New York Public Library,&quot; and provide a link back
-          to each item on the Digital Collections website. Doing so helps us
-          track how our collection is used, as well as justify releasing even
-          more content in the future.{" "}
-        </Text>
-        <Text sx={{ marginBottom: "xxl" }}>
-          For more information about NYPL&apos;s public domain materials and
-          projects, see &quot;
-          <Link href="https://www.nypl.org/blog/2016/01/05/share-public-domain-collections">
-            Free for All: NYPL Enhances Public Domain Collections for Sharing
-            and Reuse.
-          </Link>
-          &quot;
-        </Text>
-      </>
+      <Text sx={{ marginBottom: "xxl", marginTop: "s" }}>
+        {" "}
+        The New York Public Library Digital Collections was made possible by
+        leadership support from The Robert W. Wilson Charitable Trust. Other
+        major funding has been provided by The Atlantic Philanthropies, with
+        additional support from the Stavros Niarchos Foundation, Time Warner
+        Inc., the Miriam and Ira D. Wallach Foundation, The Polonsky Foundation,
+        The Brown Foundation, Inc., of Houston, Mr. and Mrs. Alberto Vitale, The
+        Prospect Hill Foundation, and the Toshiba International Foundation.
+      </Text>
     ),
   },
 ];
