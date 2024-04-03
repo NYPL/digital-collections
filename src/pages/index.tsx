@@ -11,7 +11,7 @@ import NotificationBanner from "@/components/notificationBanner/notificationBann
 export default function Home(props: any = {}) {
   return (
     <>
-      <SkipNavigation />
+      <SkipNavigation target="#campaign-hero" />
       {/**
        * * @TODO: Header will need to be pulled into a reusable Layout component (DC Facelift phase 2)
        * * Let this be @7emansell 's problem if possible **/}
