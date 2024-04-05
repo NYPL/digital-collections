@@ -407,6 +407,7 @@ const aboutData = [
         size="heading2"
         level="h1"
         text="NYPL's statement on potentially harmful content"
+        id="nypl_harmful_content_statement"
       />
     ),
     body: (
