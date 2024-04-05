@@ -11,14 +11,18 @@ import NotificationBanner from "@/components/notificationBanner/notificationBann
 export default function Home(props: any = {}) {
   return (
     <>
-      <SkipNavigation target="#campaign-hero" />
+      <SkipNavigation target="#hero" />
       {/**
        * * @TODO: Header will need to be pulled into a reusable Layout component (DC Facelift phase 2)
        * * Let this be @7emansell 's problem if possible **/}
       <NotificationBanner />
       <Header />
       <TemplateAppContainer
-        breakout={<CampaignHero imageID={props.imageID} />}
+        breakout={
+          <div id="hero">
+            <CampaignHero imageID={props.imageID} />
+          </div>
+        }
         contentPrimary={<HomePageMainContent />}
       />
       <ExploreFurther />
