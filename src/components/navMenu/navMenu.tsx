@@ -14,11 +14,12 @@ const NavMenu = ({ render }) => {
         fontWeight: "510",
         color: "ui.black",
         marginLeft: "m",
-        ":visited": {
+        _visited: {
           color: "ui.black",
         },
-        ":hover": {
+        _hover: {
           textDecoration: "none !important",
+          color: "unset",
         },
       }}
     >
