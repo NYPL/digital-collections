@@ -13,6 +13,7 @@ export const dcNavLinks = [
     href: `${DC_URL}/divisions`,
     text: "Divisions",
   },
+  // TO DO: make this link self-referential
   {
     href: `${DC_URL}/about`,
     text: "About",
