@@ -14,6 +14,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - update links to legacy dc in qa to point to https://digitalcollections.nypl.org (DR-2858)
 - Reenable underline hover state on 'Explore further' card titles (DR-2834)
 - Use Repo API v2/items/counts endpoint in DC Facelift (DR-2824)
+- Enable GitHub Actions to run homepage swimlanes test automatically (DR-2912)
 
 ### Removed
 
