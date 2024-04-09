@@ -158,13 +158,13 @@ npm run test
 To run the homepage swimlane image loading test script against the qa environment, run
 
 ```
-npm run hompageImageLoadingTest
+npm run hompageImageLoadingTestQa
 ```
 (requires accessination with nypl-dams-dev)
 
 To run the same test script against the production environment, run
 ```
-npm run hompageImageLoadingTest --prod
+npm run hompageImageLoadingTestProd
 ```
 
 The test waits for the 24 swim lane images to load, including the 12 that load after scrolling, and has succeeded if it does not time out. It simulates a single user loading the homepage one time.
