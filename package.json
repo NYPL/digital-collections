@@ -11,7 +11,8 @@
     "test": "jest",
     "test:ci": "jest --ci --config=jest.config.ts",
     "prepare": "husky install",
-    "hompageImageLoadingTest": "node test/homepageImageLoadingTest.js"
+    "hompageImageLoadingTestQa": "node test/homepageImageLoadingTest.js",
+    "hompageImageLoadingTestProd": "node test/homepageImageLoadingTest.js --prod"
   },
   "lint-staged": {
     "*.{js,jsx,ts,tsx}": [
