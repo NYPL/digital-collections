@@ -16,5 +16,5 @@ jobs:
         run: npm install
 
       - name: Run Puppeteer script
-        run: npm run homepageImageloadingTestProd
+        run: npm run homepageImageLoadingTestProd
 
