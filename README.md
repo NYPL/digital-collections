@@ -252,25 +252,23 @@ $ docker-compose start
 
 ## Next.js
 
-Next.js is a "BFF" (backend for frontend) framework with server-side rendering.
+Next.js is a frontend Javascript framework with server-side rendering.
 
 ### Structure and routing
 
-This is a Next.js 13 app that uses the Pages router. This is a basic project using that structure:
+This is a Next.js 13 app that uses the Pages router. This is a basic example project using that structure:
 
 ```
 project/
 │
 ├── pages/
 │   ├── index.js
-│   ├── about.js
 │   ├── contact.js
-│   ├── posts/
-│   │   ├── index.js
-│   │   └── [slug].js
-│   └── users/
-│       ├── index.js
-│       └── [id].js
+│   ├── about/
+│   │   └── me.js
+│   └── posts/
+│      ├── index.js
+│      └── [id].js
 │
 └── components/
     ├── Header.js
@@ -278,16 +276,13 @@ project/
 
 ```
 
-Files directly represent routes, so `index` files will be routed to the root of the directory, and a nested file structure will create a nested route (`pages/blog/first-post.js` → `/blog/first-post`). Dynamic routes are created with brackets: (`pages/posts/[id].js` → `posts/1`, `posts/2`, etc.).
+Files directly represent routes, so `index` files will be routed to the root of the directory, and a nested file structure will create a nested route (`pages/about/me.js` → `/about/me`). Dynamic routes are created with brackets: (`pages/posts/[id].js` → `posts/1`, `posts/2`, etc.).
 
 ### Rendering and data fetching
 
 In general, rendering will happen one of three ways: server-side rendering, client-side rendering, and static site generation ("pre-rendering").
 
-Server-side data on a page can be fetched through `getStaticProps` (Next.js will pre-render the page at build time using the props returned) or `getServerSideProps` (server will call on every request).
-
-You should use `getServerSideProps` if you need to render a page that relies on personalized user data, or information that can only be known at request time.
-If you do not need to fetch the data at request time, or would prefer to cache the data and pre-rendered HTML, use `getStaticProps`.
+Server-side data on a page can be fetched through `getStaticProps` (Next.js will pre-render the page at build time) or `getServerSideProps` (server will call on every request).
 
 ## Learn More
 
