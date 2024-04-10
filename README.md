@@ -252,6 +252,8 @@ $ docker-compose start
 
 ## Next.js
 
+Next.js is a "BFF" (backend for frontend) framework with server-side rendering.
+
 ### Structure and routing
 
 This is a Next.js 13 app that uses the Pages router. This is a basic project using that structure:
