@@ -104,30 +104,22 @@ The following endpoints are currently available at http://localhost:3000/api/lan
 - [/prints-and-drawings](http://localhost:3000/api/lanes/prints-and-drawings)
 - [/recently-digitized-collections](http://localhost:3000/api/lanes/recently-digitized-collections)
 
-### Individual Lane - GET /api/lanes/[...slug]
-
----
-
-#### Query Parameter\*\*
-
-\*\* Note: What would usually be a query parameter is really a route parameter with Next.js, so in Next `api/lanes/example`
+\*\* Note: What would usually be a query parameter is really a route parameter with Next, so `api/lanes/example`
 is equivalent to `api/lanes/?slug=example`.
 
-| type   | required | note                         |
-| ------ | -------- | ---------------------------- |
-| string | yes      | Slugified title of swim lane |
+### Individual lane
 
-Example:
+| Request method | Route                                  |
+| -------------- | -------------------------------------- |
+| GET            | ex. `/api/lanes/books-and-periodicals` |
 
-```sh
-api/lanes/books-and-periodicals
-```
+Path is slugified lane title. Returns respective JSON for that lane.
 
-Returns respective JSON for that lane.
+### All lanes
 
-### All Lanes - GET /api/lanes
-
----
+| Request method | Route        |
+| -------------- | ------------ |
+| GET            | `/api/lanes` |
 
 Returns JSON containing all lanes.
 
@@ -274,6 +266,40 @@ and the following to restart the stopped container:
 ```
 $ docker-compose start
 ```
+
+## Next.js
+
+Next.js is a frontend Javascript framework with server-side rendering.
+
+### Structure and routing
+
+This is a Next.js 13 app that uses the Pages router. This is a basic example project using that structure:
+
+```
+project/
+│
+├── pages/
+│   ├── index.js
+│   ├── contact.js
+│   ├── about/
+│   │   └── me.js
+│   └── posts/
+│      ├── index.js
+│      └── [id].js
+│
+└── components/
+    ├── Header.js
+    └── Footer.js
+
+```
+
+Files directly represent routes, so `index` files will be routed to the root of the directory, and a nested file structure will create a nested route (`pages/about/me.js` → `/about/me`). Dynamic routes are created with brackets: (`pages/posts/[id].js` → `posts/1`, `posts/2`, etc.).
+
+### Rendering and data fetching
+
+In general, rendering will happen one of three ways: server-side rendering, client-side rendering, and static site generation ("pre-rendering").
+
+Server-side data on a page can be fetched through `getStaticProps` (Next.js will pre-render the page at build time) or `getServerSideProps` (server will call on every request).
 
 ## Learn More
 
