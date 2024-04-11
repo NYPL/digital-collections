@@ -73,8 +73,8 @@ const aboutData = [
           . When searching, select the Search only public domain items option to
           filter your results to items with no known U.S. copyright
           restrictions. On the Browse page, you can easily turn this filter on
-          and off with the Show Only Public Domain button in the upper left
-          corner of the page.
+          and off with the &quot;Show Only Public Domain&quot; button in the
+          upper left corner of the page.
         </Text>
         <video style={{ width: "100%", height: "100%" }} controls>
           <source
@@ -339,19 +339,19 @@ const aboutData = [
           }}
         >
           <li>
+            Metadata API: All Digital Collections metadata is available via{" "}
+            <Link href="https://api.repo.nypl.org/">
+              The New York Public Library Digital Collections API
+            </Link>
+            . This data is available in XML and JSON.
+          </li>
+          <li>
             Bulk metadata download: In addition to the full metadata output
             available via API, we&apos;ve added simplified metadata for the{" "}
             <Link href="https://github.com/NYPL-publicdomain/data-and-utilities">
               public domain portion of Digital Collections on GitHub
             </Link>
             , available in CSV and JSON formats.
-          </li>
-          <li>
-            Metadata API: All Digital Collections metadata is available via{" "}
-            <Link href="https://api.repo.nypl.org/">
-              The New York Public Library Digital Collections API
-            </Link>
-            . This data is available in XML and JSON.
           </li>
         </List>
         <Text sx={{ marginBottom: "xxl" }}>
