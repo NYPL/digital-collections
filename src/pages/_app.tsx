@@ -12,7 +12,6 @@ import Script from "next/script";
 import { trackVirtualPageView } from "../utils/utils";
 import appConfig from "../../appConfig";
 import { ADOBE_EMBED_URL, DC_URL } from "../config/constants";
-import NewRelicSnippet from "../lib/newrelic/NewRelic";
 
 export default function App({ Component, pageProps }: AppProps) {
   const router = useRouter();
@@ -120,7 +119,10 @@ export default function App({ Component, pageProps }: AppProps) {
         />
         <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
       </Head>
-      <NewRelicSnippet />
+      <Script
+        type="text/javascript"
+        src={`/newrelic/` + appConfig.environment + `.js`}
+      />
       <DSProvider>
         <Component {...pageProps} />
         <FeedbackBox
