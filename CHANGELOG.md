@@ -14,6 +14,18 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Added NewRelic client-side monitoring (DR-2893)
 - Added homepage featured image loading test script (DR-2915)
 - Added About Page (DR-2807)
+- Added Next documentation to DCF readme (DR-2868)
+- Reenable underline hover state on 'Explore further' card titles (DR-2834)
+- Enable GitHub Actions to run homepage swimlanes test automatically (DR-2912)
+- Added selenium script (DR-2872)
+
+### Created
+
+- Create featured image test and have it run with the swimlanes test DR-2915
+
+### Updated
+
+- Accessibility fixes for DC Homepage DR-2894
 
 ## [0.1.3] 2024-03-28
 
