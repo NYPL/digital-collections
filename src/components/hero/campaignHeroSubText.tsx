@@ -36,7 +36,14 @@ const CampaignHeroSubText = ({ featuredItem }: any) => {
       </Text>
       <HorizontalRule />
       <Box>
-        <Text color="ui.typography.body" mb="0px" noOfLines={2}>
+        <Text
+          color="ui.typography.body"
+          mb="0px"
+          noOfLines={2}
+          __css={{
+            ":focus-within": { overflow: "visible" },
+          }}
+        >
           Featured Image:{" "}
           <DSLink
             color="var(--nypl-colors-ui-link-primary) !important"

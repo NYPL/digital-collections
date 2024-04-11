@@ -26,7 +26,7 @@ const FeaturedContentComponent = ({ randomNumber }) => {
             data-testid={data.buttonId}
             isUnderlined={false}
             target="_blank"
-            aria-label={data.ariaLabel}
+            aria-label={`${data.buttonText}, ${data.heading}`}
             type="buttonPrimary"
           >
             {data.buttonText}
@@ -34,7 +34,7 @@ const FeaturedContentComponent = ({ randomNumber }) => {
         </Box>
       }
       imageProps={{
-        alt: data.imgAlt,
+        alt: "",
         width: "oneHalf",
         position: "end",
         src: data.imgSrc,

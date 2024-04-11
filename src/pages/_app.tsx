@@ -119,6 +119,10 @@ export default function App({ Component, pageProps }: AppProps) {
         />
         <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
       </Head>
+      <Script
+        type="text/javascript"
+        src={`/newrelic/` + appConfig.environment + `.js`}
+      />
       <DSProvider>
         <Component {...pageProps} />
         <FeedbackBox

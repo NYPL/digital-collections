@@ -7,3 +7,9 @@ expect.extend(toHaveNoViolations);
 // logged and we don't want to see expected errors while we test.
 jest.spyOn(global.console, "error").mockImplementation(() => jest.fn());
 jest.spyOn(global.console, "warn").mockImplementation(() => jest.fn());
+
+global.ResizeObserver = jest.fn().mockImplementation(() => ({
+  observe: jest.fn(),
+  unobserve: jest.fn(),
+  disconnect: jest.fn(),
+}));
