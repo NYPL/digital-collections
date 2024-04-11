@@ -40,3 +40,7 @@ next-env.d.ts
 /log/dc.log
 log/
 newrelic_agent.log
+
+# vim swapfiles
+*.swo
+*.swp
