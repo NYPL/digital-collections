@@ -18,10 +18,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Reenable underline hover state on 'Explore further' card titles (DR-2834)
 - Enable GitHub Actions to run homepage swimlanes test automatically (DR-2912)
 - Added selenium script (DR-2872)
-
-### Created
-
-- Create featured image test and have it run with the swimlanes test DR-2915
+- Added homepage images loading test script (DR-2872)
 
 ### Updated
 
@@ -40,10 +37,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Remove extra spacing on links (DR-2833)
 - Remove Wallach Prints and Photos from "Explore further" (DR-2871)
-
-### Added
-
-- Added homepage images loading test script (DR-2872)
 
 ## [0.1.2] 2024-03-20
 
