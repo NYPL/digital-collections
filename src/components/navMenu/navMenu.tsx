@@ -11,7 +11,7 @@ const NavMenu = ({ render }) => {
       key={text}
       sx={{
         mb: "0px",
-        fontWeight: "510",
+        fontWeight: "medium",
         color: "ui.black",
         marginLeft: "m",
         _visited: {

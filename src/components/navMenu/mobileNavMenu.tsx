@@ -23,7 +23,7 @@ const listItems = dcNavLinks.map(({ href, text }) => (
       paddingLeft: "16px",
       width: "100%",
       marginBottom: "unset",
-      fontWeight: "510",
+      fontWeight: "medium",
       color: "ui.black",
       ":hover": {
         textDecoration: "none",

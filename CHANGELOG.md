@@ -9,6 +9,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 - Added NewRelic client-side monitoring (DR-2893)
+- Added homepage featured image loading test script (DR-2915)
 
 ## [0.1.3] 2024-03-28
 
