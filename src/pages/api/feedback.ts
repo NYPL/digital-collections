@@ -78,8 +78,7 @@ export default async function feedbackFormHandler(
     });
   } catch (e) {
     return response.status(500).send({
-      message:
-        "Something went wrong submitting the feedback form values to the google spreadsheet",
+      message: e.message,
       error: "Internal Server Error",
     });
   }
