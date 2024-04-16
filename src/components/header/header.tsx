@@ -124,10 +124,7 @@ const Header = () => {
         sx={{
           borderColor: "var(--nypl-colors-ui-border-default)",
           margin: "0px",
-          display: "none",
-          [`@media screen and (min-width: ${headerBreakpoints.smTablet})`]: {
-            display: "block",
-          },
+          display: "block",
         }}
       />
     </Box>
