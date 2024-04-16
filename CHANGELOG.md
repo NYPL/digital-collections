@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+### Removed
+
+- temporarily remove feedback button (DR-2918)
+
 ## [0.1.4] 2024-04-11
 
 ### Added
