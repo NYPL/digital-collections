@@ -11,6 +11,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - temporarily remove feedback button (DR-2918)
 
+### Added
+
+- Added legacy homepage image loading test script (DR-2921)
+
 ## [0.1.4] 2024-04-11
 
 ### Added
@@ -21,7 +25,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Added Next documentation to DCF readme (DR-2868)
 - Reenable underline hover state on 'Explore further' card titles (DR-2834)
 - Enable GitHub Actions to run homepage swimlanes test automatically (DR-2912)
-- Added selenium script (DR-2872)
 - Added homepage images loading test script (DR-2872)
 
 ### Updated
