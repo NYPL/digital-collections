@@ -125,13 +125,13 @@ export default function App({ Component, pageProps }: AppProps) {
       />
       <DSProvider>
         <Component {...pageProps} />
-        {/* <FeedbackBox
+        <FeedbackBox
           showCategoryField
           onSubmit={onSubmit}
           onClose={onFormClose}
           title="Feedback"
           view={view}
-        /> */}
+        />
       </DSProvider>
     </>
   );
