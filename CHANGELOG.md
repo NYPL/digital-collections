@@ -7,9 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
-### Removed
-
-- temporarily remove feedback button (DR-2918)
+### Updated
+-  Update version of NYPL Reservoir to 3.0.0 (DR-2924)
 
 ### Added
 
