@@ -36,12 +36,15 @@ const Search = () => {
           alignItems: "start",
           width: "100%",
           marginTop: "0px !important",
-          pt: "xs",
+          paddingTop: "xs",
           [`@media screen and (min-width: ${headerBreakpoints.lgTablet})`]: {
-            pt: "0px",
+            paddingTop: "0px !important",
           },
           "#searchbar-form-searchbar": {
-            marginBottom: "0px",
+            marginBottom: "0px !important",
+          },
+          "#searchbar-form-searchbar > button": {
+            maxWidth: "unset",
           },
         }}
       >
