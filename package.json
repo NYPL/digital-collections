@@ -10,7 +10,12 @@
     "lint": "next lint",
     "test": "jest",
     "test:ci": "jest --ci --config=jest.config.ts",
-    "prepare": "husky install"
+    "prepare": "husky install",
+    "homepageImageLoadingTestQa": "node test/homepageImageLoadingTest.js",
+    "homepageImageLoadingTestProd": "node test/homepageImageLoadingTest.js --prod",
+    "homepageFeaturedImageLoadingTestQa": "node test/homepageFeaturedImageLoadingTest.js",
+    "homepageFeaturedImageLoadingTestProd": "node test/homepageFeaturedImageLoadingTest.js --prod",
+    "legacyHomepageImageLoadingTestProd": "node test/legacyHomepageImageLoadingTest.js --prod"
   },
   "lint-staged": {
     "*.{js,jsx,ts,tsx}": [
@@ -57,6 +62,7 @@
     "jest-axe": "8.0.0",
     "jest-environment-jsdom": "29.7.0",
     "lint-staged": "15.0.1",
-    "prettier": "3.0.3"
+    "prettier": "3.0.3",
+    "puppeteer": "^22.6.2"
   }
 }

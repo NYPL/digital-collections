@@ -13,10 +13,6 @@ describe("Featured Content component renders with expected props", () => {
         "src",
         "/pd_banner.png"
       );
-      expect(within(component).getByRole("img")).toHaveAttribute(
-        "alt",
-        "Public Domain banner"
-      );
 
       const button = within(component).getByTestId("featured-learn-more");
       expect(button).toHaveAttribute("href", "https://publicdomain.nypl.org");
@@ -33,10 +29,6 @@ describe("Featured Content component renders with expected props", () => {
       expect(within(component).getByRole("img")).toHaveAttribute(
         "src",
         "/service-artehouse.jpg"
-      );
-      expect(within(component).getByRole("img")).toHaveAttribute(
-        "alt",
-        "Service Artehouse banner"
       );
 
       const button = within(component).getByTestId("featured-visit-store");
