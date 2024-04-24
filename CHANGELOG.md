@@ -7,13 +7,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
-### Removed
-
-- temporarily remove feedback button (DR-2918)
+## [0.1.5] 2024-04-24
 
 ### Added
 
 - Added legacy homepage image loading test script (DR-2921)
+- Add a bottom border to the collapsed sticky header for screen sizes of 767 and below. (DR-2913)
+- Point About page link to new About page (DR-2910)
+- Add puppeteer script on legacy Digital Collections for images.nypl.org (DR-2921)
 
 ## [0.1.4] 2024-04-11
 
