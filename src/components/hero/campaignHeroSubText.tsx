@@ -27,9 +27,8 @@ const CampaignHeroSubText = ({ featuredItem }: any) => {
               color: "var(--nypl-colors-ui-link-tertiary) !important",
             },
           }}
-          href="https://digitalcollections.nypl.org/about#nypl_harmful_content_statement"
+          href="/about#nypl_harmful_content_statement"
           aria-label="Learn more about harmful content"
-          target="_blank"
         >
           Learn more
         </DSLink>
