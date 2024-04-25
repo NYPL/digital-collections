@@ -119,6 +119,7 @@ const aboutData = [
       <Heading
         level="h2"
         size="heading4"
+        id="public_domain"
         text="Public Domain / no known U.S. copyright restrictions"
       />
     ),
