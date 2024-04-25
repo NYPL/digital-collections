@@ -29,7 +29,6 @@ const CampaignHeroSubText = ({ featuredItem }: any) => {
           }}
           href="/about#nypl_harmful_content_statement"
           aria-label="Learn more about harmful content"
-          target="_blank"
         >
           Learn more
         </DSLink>
