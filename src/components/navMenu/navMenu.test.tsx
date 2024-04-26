@@ -28,6 +28,6 @@ describe("Nav menu component", () => {
       "href",
       appConfig.DC_URL[appConfig.environment] + `/collections`
     );
-    //expect(getByLabelText("About")).toHaveAttribute("href", `/about`);
+    expect(getByLabelText("About")).toHaveAttribute("href", "/about");
   });
 });

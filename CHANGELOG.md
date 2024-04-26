@@ -13,6 +13,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 
 - Added legacy homepage image loading test script (DR-2921)
+- Links updated to point to new About page (DR-2936)
 
 ## [0.1.4] 2024-04-11
 
