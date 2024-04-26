@@ -9,32 +9,6 @@ const Viewer = dynamic(
   }
 );
 
-const options = {
-  informationPanel: {
-    open: false,
-    renderToggle: true,
-  },
-  // Primary title (Manifest label) for top level canvas.  Defaults to true
-  // showTitle: true,
-
-  // IIIF Badge and popover containing options.  Defaults to true
-  showIIIFBadge: true,
-
-  // Ignore supplementing canvases by label value that are not for captioning
-  // ignoreCaptionLabels: ["Chapters"],
-
-  // Override canvas background color, defaults to #1a1d1e
-  canvasBackgroundColor: "#000",
-
-  // Set canvas zooming onScoll (this defaults to false)
-  openSeadragon: {
-    gestureSettingsMouse: {
-      scrollToZoom: true,
-    },
-  },
-  showDownload: true,
-};
-
 const customTheme = {
   colors: {
     /**
@@ -74,11 +48,7 @@ const MyCustomViewer = () => {
   return (
     <>
       <Header />
-      <Viewer
-        iiifContent={iiifContent}
-        // options={options}
-        // customTheme={customTheme}
-      />
+      <Viewer iiifContent={iiifContent} customTheme={customTheme} />
     </>
   );
 };
