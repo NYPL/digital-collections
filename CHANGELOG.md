@@ -12,9 +12,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 
 - Added legacy homepage image loading test script (DR-2921)
+<<<<<<< HEAD
 - Add a bottom border to the collapsed sticky header for screen sizes of 767 and below. (DR-2913)
 - Point About page link to new About page (DR-2910)
 - Add puppeteer script on legacy Digital Collections for images.nypl.org (DR-2921)
+=======
+- Links updated to point to new About page (DR-2936)
+>>>>>>> qa
 
 ## [0.1.4] 2024-04-11
 
