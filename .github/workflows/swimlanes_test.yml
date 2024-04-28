@@ -2,12 +2,14 @@ name: Run Swimlanes Test
 
 on:
   schedule:
-    - cron: '*/10 * * * *'
+    - cron: '*/2 * * * *'
 
 jobs:
-  run_swimlanes_test:
+  run_swimlanes_test_parallel:
+    strategy:
+      matrix:
+        index: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
     runs-on: ubuntu-latest
-
     steps:
       - name: Checkout repo
         uses: actions/checkout@v4

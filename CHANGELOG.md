@@ -16,6 +16,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Added legacy homepage image loading test script (DR-2921)
 - Links updated to point to new About page (DR-2936)
 
+### Updated
+
+- Run homepage images tests 10x in parallel (DR-2937)
+
 ## [0.1.4] 2024-04-11
 
 ### Added
