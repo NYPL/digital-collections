@@ -1,8 +1,9 @@
 name: Run Swimlanes Test
 
 on:
+  workflow_dispatch:
   schedule:
-    - cron: '*/2 * * * *'
+    - cron: '*/5 * * * *'
 
 jobs:
   run_swimlanes_test_parallel:
