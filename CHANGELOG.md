@@ -7,6 +7,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+## [0.1.5] 2024-04-29
+
+### Added
+
+- Added legacy homepage image loading test script (DR-2921)
+- Add a bottom border to the collapsed sticky header for screen sizes of 767 and below. (DR-2913)
+- Point About page link to new About page (DR-2910)
+- Add puppeteer script on legacy Digital Collections for images.nypl.org (DR-2921)
+- Links updated to point to new About page (DR-2936)
+
 ## [0.1.4] 2024-04-11
 
 ### Added
@@ -17,7 +27,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Added Next documentation to DCF readme (DR-2868)
 - Reenable underline hover state on 'Explore further' card titles (DR-2834)
 - Enable GitHub Actions to run homepage swimlanes test automatically (DR-2912)
-- Added selenium script (DR-2872)
 - Added homepage images loading test script (DR-2872)
 
 ### Updated

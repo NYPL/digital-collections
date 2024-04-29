@@ -14,7 +14,8 @@
     "homepageImageLoadingTestQa": "node test/homepageImageLoadingTest.js",
     "homepageImageLoadingTestProd": "node test/homepageImageLoadingTest.js --prod",
     "homepageFeaturedImageLoadingTestQa": "node test/homepageFeaturedImageLoadingTest.js",
-    "homepageFeaturedImageLoadingTestProd": "node test/homepageFeaturedImageLoadingTest.js --prod"
+    "homepageFeaturedImageLoadingTestProd": "node test/homepageFeaturedImageLoadingTest.js --prod",
+    "legacyHomepageImageLoadingTestProd": "node test/legacyHomepageImageLoadingTest.js --prod"
   },
   "lint-staged": {
     "*.{js,jsx,ts,tsx}": [
