@@ -1,0 +1,19 @@
+name: Run Legacy Swimlanes Test
+
+on:
+  schedule:
+    - cron: '*/10 * * * *'
+
+jobs:
+  run_legacy_swimlanes_test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Run Puppeteer script for legacy swimlanes images
+        run: npm run legacyHomepageImageLoadingTestProd

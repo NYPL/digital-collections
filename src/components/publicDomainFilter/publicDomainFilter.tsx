@@ -8,9 +8,7 @@ const PublicDomainFilter = ({ onCheckChange }: PublicDomainFilterProps) => {
   const text = (
     <>
       Search only public domain.{" "}
-      <Link href="https://digitalcollections.nypl.org/about">
-        What is public domain?
-      </Link>
+      <Link href="/about#public_domain">What is public domain?</Link>
     </>
   );
 
