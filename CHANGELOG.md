@@ -7,6 +7,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+## [0.1.6] 2024-04-30
+
+### Removed
+
+- removed caching for the featured item (DR-2944)
+
 ## [0.1.5] 2024-04-29
 
 ### Added
@@ -20,6 +26,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Updated
 
 - Run homepage images tests 10x in parallel (DR-2937)
+- Updated Travis file to point to new AWS clusters (DR-2943)
 
 ## [0.1.4] 2024-04-11
 
