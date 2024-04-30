@@ -151,6 +151,7 @@ export const apiPOSTCall = async (apiUrl: string, postData: any) => {
 export const getFeaturedImage = async () => {
   console.log(`getFeaturedImage: About call getAPIResponse`);
   const apiResponse = await getAPIResponse("featured", "", { random: "true" });
+
   return {
     uuid: apiResponse?.capture?.uuid || "510d47d9-4f93-a3d9-e040-e00a18064a99",
     title: apiResponse?.capture?.title || "Watuppa, From water front, Brooklyn",
