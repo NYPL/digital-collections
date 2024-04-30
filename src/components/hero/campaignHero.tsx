@@ -7,6 +7,7 @@ import CampaignHeroLoading from "./campaignHeroLoading";
 
 const CampaignHero = ({ imageID }) => {
   const [data, setData] = useState<any>({});
+  const [imageSrc, setImageSrc] = useState("482815.jpg");
 
   useEffect(() => {
     const fetchData = async () => {
@@ -17,7 +18,9 @@ const CampaignHero = ({ imageID }) => {
 
     fetchData();
   }, [imageID]);
-
+  // const handleError((e) => {
+  //   console.log(e)
+  // })
   return data?.featuredItem ? (
     <Hero
       backgroundImageSrc={data.featuredItem.backgroundImageSrc}
@@ -33,6 +36,11 @@ const CampaignHero = ({ imageID }) => {
       imageProps={{
         alt: data.featuredItem.title,
         src: data.featuredItem.foregroundImageSrc,
+        fallbackSrc: data.defaultItem.imageSrc,
+        // ,
+        // onError: (_event) => {
+        //   setImageSrc(fallbackImageSrc);
+        // },
       }}
       subHeaderText={<CampaignHeroSubText featuredItem={data.featuredItem} />}
     />
