@@ -439,11 +439,11 @@ All pushes to this repo will be checked with `npm test` and `npm lint`.
 
 Our branches (in order of stability are):
 
-| Branch     | Environment | AWS Account    | Link To Application                                                                        |
-| :--------- | :---------- | :------------- | :----------------------------------------------------------------------------------------- |
-| main       | development |                | [localhost:3000](http://localhost:3000)                                                    |
-| qa         | qa          | nypl-dams-dev  | [https://qa-new-digitalcollections.nypl.org/](https://qa-new-digitalcollections.nypl.org/) |
-| production | production  | nypl-dams-prod | [https://new-digitalcollections.nypl.org/](https://new-digitalcollections.nypl.org/)       |
+| Branch     | Environment | AWS Account    | Cluster                   | Link To Application                                                                        |
+| :--------- | :---------- | :------------- | :------------------------ | :----------------------------------------------------------------------------------------- |
+| main       | development |                |                           | [localhost:3000](http://localhost:3000)                                                    |
+| qa         | qa          | nypl-dams-dev  | dc-frontend-qa            | [https://qa-new-digitalcollections.nypl.org/](https://qa-new-digitalcollections.nypl.org/) |
+| production | production  | nypl-dams-prod | new-digitalcollections    | [https://new-digitalcollections.nypl.org/](https://new-digitalcollections.nypl.org/)       |
 
 ## Contributing
 
