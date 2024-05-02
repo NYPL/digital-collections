@@ -8,12 +8,29 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## Unreleased
 
 ### Updated
--  Update version of NYPL Reservoir to 3.0.0 (DR-2924)
+
+- Update version of NYPL Reservoir to 3.0.0 (DR-2924)
+
+## [0.1.6] 2024-04-30
+
+### Removed
+
+- removed caching for the featured item (DR-2944)
+
+## [0.1.5] 2024-04-29
 
 ### Added
 
 - Added legacy homepage image loading test script (DR-2921)
+- Add a bottom border to the collapsed sticky header for screen sizes of 767 and below. (DR-2913)
+- Point About page link to new About page (DR-2910)
+- Add puppeteer script on legacy Digital Collections for images.nypl.org (DR-2921)
 - Links updated to point to new About page (DR-2936)
+
+### Updated
+
+- Run homepage images tests 10x in parallel (DR-2937)
+- Updated Travis file to point to new AWS clusters (DR-2943)
 
 ## [0.1.4] 2024-04-11
 
