@@ -7,16 +7,13 @@ import CampaignHeroLoading from "./campaignHeroLoading";
 import defaultFeaturedItem from "../../data/defaultFeaturedItemData";
 
 import appConfig from "appConfig";
+import { FeaturedItemData } from "@/types/FeaturedItemData";
 
 const CampaignHero = ({ imageID }) => {
   const defaultFeaturedItemResponse =
     defaultFeaturedItem[appConfig["environment"]];
-  console.log("defaultItem is:", defaultFeaturedItemResponse);
 
-  const [data, setData] = useState<any>({});
-  const [imageSrc, setImageSrc] = useState(
-    defaultFeaturedItemResponse.featuredItem.foregroundImageSrc
-  );
+  const [data, setData] = useState<FeaturedItemData>();
 
   useEffect(() => {
     const fetchData = async () => {

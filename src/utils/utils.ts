@@ -29,7 +29,8 @@ export const getNumDigitizedItems = async () => {
   const apiUrl = `${process.env.API_URL}/api/v2/items/total`;
   const res = await apiCall(apiUrl);
 
-  const fallbackCount = defaultFeaturedItems[appConfig.environment];
+  const fallbackCount =
+    defaultFeaturedItems[appConfig.environment].numberOfDigitizedItems;
   const totalItems = res?.count?.$ ? addCommas(res.count.$) : fallbackCount; // only add commas to repo api response data
   return totalItems;
 };
