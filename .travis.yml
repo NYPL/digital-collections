@@ -6,7 +6,6 @@ branches:
   only:
     - qa
     - production
-    - DR-2564-production-travis
 env:
   global:
     - AWS_DEFAULT_REGION=us-east-1
@@ -43,8 +42,10 @@ jobs:
         - ECR_URL=557492996044.dkr.ecr.us-east-1.amazonaws.com/dc-frontend:latest
         - AWS_ACCESS_KEY_ID=$AWS_ACCESS_KEY_ID_PRODUCTION
         - AWS_SECRET_ACCESS_KEY=$AWS_SECRET_ACCESS_KEY_PRODUCTION
-        - CLUSTER_NAME=dc-frontend
-        - SERVICE_NAME=dc-frontend
+        # ECS cluster name was updated from dc-frontend to new-digitalcollections
+        # This is only true for production
+        - CLUSTER_NAME=new-digitalcollections
+        - SERVICE_NAME=new-digitalcollections
         - APP_ENV=production
       install:
         - pip install --user awscli
