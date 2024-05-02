@@ -4,10 +4,19 @@ import { useEffect, useState } from "react";
 import CampaignHeroSubText from "./campaignHeroSubText";
 import CampaignHeroHeading from "./campaignHeroHeading";
 import CampaignHeroLoading from "./campaignHeroLoading";
+import defaultFeaturedItem from "../../data/defaultFeaturedItemData";
+
+import appConfig from "appConfig";
 
 const CampaignHero = ({ imageID }) => {
+  const defaultFeaturedItemResponse =
+    defaultFeaturedItem[appConfig["environment"]];
+  console.log("defaultItem is:", defaultFeaturedItemResponse);
+
   const [data, setData] = useState<any>({});
-  const [imageSrc, setImageSrc] = useState("482815.jpg");
+  const [imageSrc, setImageSrc] = useState(
+    defaultFeaturedItemResponse.featuredItem.foregroundImageSrc
+  );
 
   useEffect(() => {
     const fetchData = async () => {
@@ -18,9 +27,13 @@ const CampaignHero = ({ imageID }) => {
 
     fetchData();
   }, [imageID]);
-  // const handleError((e) => {
-  //   console.log(e)
-  // })
+
+  const handleError = (e: any) => {
+    console.log(e);
+    setData(defaultFeaturedItemResponse);
+    console.log("data is:", data);
+  };
+
   return data?.featuredItem ? (
     <Hero
       backgroundImageSrc={data.featuredItem.backgroundImageSrc}
@@ -36,11 +49,10 @@ const CampaignHero = ({ imageID }) => {
       imageProps={{
         alt: data.featuredItem.title,
         src: data.featuredItem.foregroundImageSrc,
-        fallbackSrc: data.defaultItem.imageSrc,
-        // ,
-        // onError: (_event) => {
-        //   setImageSrc(fallbackImageSrc);
-        // },
+        fallbackSrc: data.featuredItem.foregroundImageSrc,
+        onError: (_event) => {
+          handleError(_event);
+        },
       }}
       subHeaderText={<CampaignHeroSubText featuredItem={data.featuredItem} />}
     />
