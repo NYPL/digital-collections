@@ -1,8 +1,7 @@
-import { Box, SkipNavigation } from "@nypl/design-system-react-components";
-import Header from "@/components/header/header";
-import NotificationBanner from "@/components/notificationBanner/notificationBanner";
+import { Box } from "@nypl/design-system-react-components";
 import aboutPageElements from "@/data/aboutPageElements";
 import Head from "next/head";
+import Layout from "@/components/layout/layout";
 
 export default function About() {
   function createSection(heading: React.JSX.Element, body: React.JSX.Element) {
@@ -15,10 +14,7 @@ export default function About() {
   }
 
   return (
-    <>
-      <SkipNavigation />
-      <NotificationBanner />
-      <Header />
+    <Layout activePage="about">
       <Head>
         <title>About NYPL Digital Collections</title>
         <meta
@@ -41,6 +37,6 @@ export default function About() {
           createSection(section.heading, section.body)
         )}
       </Box>
-    </>
+    </Layout>
   );
 }
