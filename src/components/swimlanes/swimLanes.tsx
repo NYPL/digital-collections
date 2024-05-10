@@ -46,6 +46,7 @@ const SwimLanes = ({ lanesWithNumItems }) => {
               id={`card-${lane.slug}-${index}`}
               imageProps={{
                 alt: "",
+                id: `swimlanes-image-${lane.slug}-${index}`,
                 isLazy: true,
                 aspectRatio: "twoByOne",
                 src: imageURL(collection.image_id, "full", "288,", "0"),
