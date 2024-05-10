@@ -24,6 +24,7 @@ const CampaignHero = ({ imageID }) => {
       backgroundColor="ui.bg.default"
       isDarkBackgroundImage
       heroType="campaign"
+      isDarkText
       heading={
         <CampaignHeroHeading
           numberOfDigitizedItems={data.numberOfDigitizedItems}
