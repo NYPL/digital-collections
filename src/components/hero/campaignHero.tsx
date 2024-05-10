@@ -9,7 +9,7 @@ import defaultFeaturedItem from "../../data/defaultFeaturedItemData";
 import appConfig from "appConfig";
 import { FeaturedItemData } from "@/types/FeaturedItemData";
 
-const CampaignHero = ({ imageID }) => {
+const CampaignHero = () => {
   const defaultFeaturedItemResponse =
     defaultFeaturedItem[appConfig["environment"]];
 
@@ -23,7 +23,7 @@ const CampaignHero = ({ imageID }) => {
     };
 
     fetchData();
-  }, [imageID]);
+  }, []);
 
   const handleError = (e: any) => {
     console.log(e);

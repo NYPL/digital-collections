@@ -11,7 +11,7 @@ describe("Campaign Hero", () => {
       })
     ) as jest.Mock;
 
-    render(<CampaignHero imageID="5273165" />);
+    render(<CampaignHero />);
 
     expect(screen.getByTestId("hero-skeleton-loader")).toBeTruthy();
   });
@@ -34,7 +34,7 @@ describe("Campaign Hero", () => {
           }),
       })
     ) as jest.Mock;
-    render(<CampaignHero imageID="5273165" />);
+    render(<CampaignHero />);
     await waitFor(() => {
       expect(screen.getByRole("heading")).toHaveTextContent(
         "Explore 863,848 items digitized from The New York Public Library's collections."
