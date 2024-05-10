@@ -9,6 +9,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Updated
 - Add cluster names to readme (DR-2928)
 
+### Added
+
+- Added html id elements to logo, learn more link, swimlands images, and swimlane item counts. (DR-2885)
+
 ### Updated
 
 - Update version of NYPL Reservoir to 3.0.0 (DR-2924)

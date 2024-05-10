@@ -46,6 +46,7 @@ const SwimLanes = ({ lanesWithNumItems }) => {
               id={`card-${lane.slug}-${index}`}
               imageProps={{
                 alt: "",
+                id: `image-${lane.slug}-${index}`,
                 isLazy: true,
                 aspectRatio: "twoByOne",
                 src: imageURL(collection.image_id, "full", "288,", "0"),
@@ -75,6 +76,7 @@ const SwimLanes = ({ lanesWithNumItems }) => {
               </CardHeading>
               <CardContent>
                 <Text
+                  id={`item-count-${lane.slug}-${index}`}
                   size="subtitle2"
                   sx={{
                     fontWeight: "400",
