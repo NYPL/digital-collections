@@ -21,6 +21,7 @@ const CampaignHeroSubText = ({ featuredItem }: any) => {
           hasVisitedState={false}
           href="/about#nypl_harmful_content_statement"
           aria-label="Learn more about harmful content"
+          id="learn-more-hc-link"
         >
           Learn more
         </DSLink>
