@@ -291,7 +291,7 @@ const aboutData = [
     heading: <Heading level="h2" size="heading4" text="Linked projects" />,
     body: (
       <>
-        <Text sx={{ marginTop: "s" }}>
+        <Text sx={{ marginTop: "s", marginBottom: "xxl" }}>
           Whenever possible, we link items in Digital Collections to other
           places where you may be able to find out more about them. Some of the
           places we link to include the{" "}
@@ -301,20 +301,6 @@ const aboutData = [
           , <Link href="https://archives.nypl.org/">NYPL Archives Portal</Link>,
           and{" "}
           <Link href="https://dp.la/">Digital Public Library of America</Link>.
-        </Text>
-        <Text sx={{ marginBottom: "xxl" }}>
-          Meanwhile, we also extract data from historical sources and materials,
-          and have incorporated links to those data extraction experiments
-          wherever possible. Some of those projects include{" "}
-          <Link href="https://wayback.archive-it.org/13216/20210520171637/http://maps.nypl.org/warper/">
-            Map Warper
-          </Link>
-          ,{" "}
-          <Link href="http://buildinginspector.nypl.org/">
-            Building Inspector
-          </Link>
-          , <Link href="https://stereo.nypl.org/">Stereogranimator</Link>, and{" "}
-          <Link href="https://menus.nypl.org/">What&apos;s on the Menu</Link>.
         </Text>
       </>
     ),
