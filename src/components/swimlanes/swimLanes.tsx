@@ -75,6 +75,7 @@ const SwimLanes = ({ lanesWithNumItems }) => {
               </CardHeading>
               <CardContent>
                 <Text
+                  id={`item-count-${lane.slug}-${index}`}
                   size="subtitle2"
                   sx={{
                     fontWeight: "400",
