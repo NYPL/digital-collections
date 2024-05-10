@@ -11,7 +11,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
-- Added html id elements to logo, learn more, and swim lane item counts. (DR-2885)
+- Added html id elements to logo, learn more link, swimlands images, and swimlane item counts. (DR-2885)
 
 ### Updated
 
