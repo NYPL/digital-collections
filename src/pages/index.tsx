@@ -20,7 +20,7 @@ export default function Home(props: any = {}) {
       <TemplateAppContainer
         breakout={
           <div id="hero">
-            <CampaignHero imageID={props.imageID} />
+            <CampaignHero />
           </div>
         }
         contentPrimary={<HomePageMainContent />}
