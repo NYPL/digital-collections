@@ -390,29 +390,33 @@ const aboutData = [
   {
     heading: <Heading level="h2" size="heading4" text="Platform" />,
     body: (
-      <Text sx={{ marginBottom: "xxl", marginTop: "s" }}>
-        The Digital Collections platform utilizes JavaScript libraries such as
-        Next.js, React, and the{" "}
-        <Link
-          target="_blank"
-          href="https://openlibrary.org/dev/docs/bookreader"
-        >
-          Internet Archive&apos;s BookReader.
-        </Link>{" "}
-        The entire platform is currently being refreshed with modern
-        infrastructure, user experience, mobile optimization and accessibility
-        in mind. The digital asset framework for Digital Collections is shifting
-        to overall{" "}
-        <Link target="_blank" href="https://iiif.io/">
-          IIIF compliance
-        </Link>{" "}
-        to optimize performance and enhance shareability. IIIF is a set of open
-        standards commonly used by libraries and other institutions for
-        delivering high-quality, attributed digital objects online at scale.
-        NYPL&apos;s bibliographic, technical, and rights metadata is managed by
-        a custom Ruby on Rails app we call—appropriately enough—the Metadata
-        Management System.
-      </Text>
+      <>
+        <Text sx={{ marginTop: "s" }}>
+          The Digital Collections platform utilizes JavaScript libraries such as
+          Next.js, React, and the{" "}
+          <Link
+            target="_blank"
+            href="https://openlibrary.org/dev/docs/bookreader"
+          >
+            Internet Archive&apos;s BookReader.
+          </Link>{" "}
+          The entire platform is currently being refreshed with modern
+          infrastructure, user experience, mobile optimization and accessibility
+          in mind. The digital asset framework for Digital Collections is
+          shifting to overall{" "}
+          <Link target="_blank" href="https://iiif.io/">
+            IIIF compliance
+          </Link>{" "}
+          to optimize performance and enhance shareability. IIIF is a set of
+          open standards commonly used by libraries and other institutions for
+          delivering high-quality, attributed digital objects online at scale.
+        </Text>
+        <Text sx={{ marginBottom: "xxl" }}>
+          NYPL&apos;s bibliographic, technical, and rights metadata is managed
+          by a custom Ruby on Rails app we call—appropriately enough—the
+          Metadata Management System.
+        </Text>
+      </>
     ),
   },
   {
