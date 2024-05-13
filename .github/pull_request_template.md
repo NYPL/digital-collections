@@ -23,3 +23,4 @@
 
 - [ ] I have added relevant accessibility documentation for this pull request.
 - [ ] All new and existing tests passed.
+- [ ] I have updated the CHANGELOG.md.
