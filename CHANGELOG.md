@@ -6,8 +6,11 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## Unreleased
+
 ### Updated
+
 - Add cluster names to readme (DR-2928)
+- Update Platform and Linked Projects sections of About page (DR-2972)
 
 ### Added
 
