@@ -270,6 +270,6 @@ export const solrCall = async (
       return undefined;
     }
   } catch (error) {
-    return undefined;
+    return error;
   }
 };
