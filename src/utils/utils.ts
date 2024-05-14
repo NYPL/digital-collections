@@ -267,7 +267,8 @@ export const solrCall = async (
       // console.log(`Response time: ${new Date().getTime() - startTime}`);
       return data;
     } else {
-      return undefined;
+      return response;
+      // return undefined;
     }
   } catch (error) {
     return error;
