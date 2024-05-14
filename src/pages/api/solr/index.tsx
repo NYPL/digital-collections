@@ -8,6 +8,7 @@ const solrCallHandler = async (
   const { method } = request;
   if (method === "GET") {
     const res = await solrCall("/select?indent=true&q.op=OR&q=*%3A*");
+    console.log("res", res);
     return response.status(200).json({ data: res });
   }
 };

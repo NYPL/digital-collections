@@ -247,24 +247,22 @@ export const solrCall = async (
   // apiUrl: string,
   queryParam: string
 ) => {
-  const apiKey = process.env.AUTH_TOKEN;
-  const queryString = queryParam
-    ? "?" + new URLSearchParams(queryParam).toString()
-    : "";
-  process.env.SOLR_URL += queryString;
-  console.log("queryString", queryString);
+  // const apiKey = process.env.AUTH_TOKEN;
+  // const queryString = queryParam
+  //   ? "?" + new URLSearchParams(queryParam).toString()
+  //   : "";
+  // console.log("queryString", queryString);
+
+  const solrUrl = `${process.env.SOLR_URL}${queryParam}`;
+  console.log("solrUrl", solrUrl);
   try {
-    // const startTime = new Date().getTime();
-    const response = await fetch(queryString, {
-      // aggressively cache Repo API?
-      // cache: "force-cache",
-      // headers: {
-      //   Authorization: `Token token=${apiKey}`,
-      // },
-    });
+    console.log("fetching solr");
+    const response = await fetch(solrUrl);
+    console.log("response is", response);
 
     if (response.status === 200) {
       const data = await response.json();
+      console.log("data is", data);
       // console.log(`apiCall: called ${apiUrl}`);
       // console.log(`Response time: ${new Date().getTime() - startTime}`);
       return data;
