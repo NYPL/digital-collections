@@ -234,3 +234,41 @@ export const trackVirtualPageView = (pathname = "") => {
     site_section: ADOBE_ANALYTICS_SITE_SECTION,
   });
 };
+
+/**
+ * Returns Repo API response.
+ * @param {string} apiUrl - the url to make a request to
+ */
+
+export const solrCall = async (
+  // apiUrl: string,
+  queryParam: string
+) => {
+  const apiKey = process.env.AUTH_TOKEN;
+  const queryString = queryParam
+    ? "?" + new URLSearchParams(queryParam).toString()
+    : "";
+  process.env.SOLR_URL += queryString;
+  console.log("queryString", queryString);
+  try {
+    // const startTime = new Date().getTime();
+    const response = await fetch(queryString, {
+      // aggressively cache Repo API?
+      // cache: "force-cache",
+      // headers: {
+      //   Authorization: `Token token=${apiKey}`,
+      // },
+    });
+
+    if (response.status === 200) {
+      const data = await response.json();
+      // console.log(`apiCall: called ${apiUrl}`);
+      // console.log(`Response time: ${new Date().getTime() - startTime}`);
+      return data;
+    } else {
+      return undefined;
+    }
+  } catch (error) {
+    return undefined;
+  }
+};
