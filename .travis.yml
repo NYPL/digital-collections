@@ -4,6 +4,7 @@ services:
   - docker
 branches:
   only:
+    - no_ref/DR-2967/spike-av-thumbnails-and-collections
     - qa
     - production
 env:
@@ -19,7 +20,7 @@ env:
 jobs:
   include:
     - stage: deploy QA
-      if: "(branch = qa) AND (type != pull_request)"
+      if: "(branch = no_ref/DR-2967/spike-av-thumbnails-and-collections)"
       env:
         - ECR_URL=685731035297.dkr.ecr.us-east-1.amazonaws.com/dc-frontend:$TRAVIS_BRANCH-latest
         - AWS_ACCESS_KEY_ID=$AWS_ACCESS_KEY_ID_QA
