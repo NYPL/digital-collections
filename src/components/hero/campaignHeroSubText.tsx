@@ -9,26 +9,19 @@ const CampaignHeroSubText = ({ featuredItem }: any) => {
   return (
     <>
       {/* To Do: make the link color blue: */}
-      <Text color="ui.typography.body">
+      <Text>
         This site is a living database with new materials added every day,
         featuring prints, photographs, maps, manuscripts, streaming video, and
         more.
       </Text>
-      <Text color="ui.typography.body">
+      <Text>
         Our collections include some content that may be harmful or difficult to{" "}
         <br /> view.{" "}
         <DSLink
-          color="var(--nypl-colors-ui-link-primary) !important"
-          __css={{
-            _hover: {
-              color: "var(--nypl-colors-ui-link-secondary) !important",
-            },
-            _visited: {
-              color: "var(--nypl-colors-ui-link-tertiary) !important",
-            },
-          }}
+          hasVisitedState={false}
           href="/about#nypl_harmful_content_statement"
           aria-label="Learn more about harmful content"
+          id="learn-more-hc-link"
         >
           Learn more
         </DSLink>
@@ -36,7 +29,6 @@ const CampaignHeroSubText = ({ featuredItem }: any) => {
       <HorizontalRule />
       <Box>
         <Text
-          color="ui.typography.body"
           mb="0px"
           noOfLines={2}
           __css={{
@@ -44,19 +36,7 @@ const CampaignHeroSubText = ({ featuredItem }: any) => {
           }}
         >
           Featured Image:{" "}
-          <DSLink
-            color="var(--nypl-colors-ui-link-primary) !important"
-            __css={{
-              display: "inline !important",
-              _hover: {
-                color: "var(--nypl-colors-ui-link-secondary) !important",
-              },
-              _visited: {
-                color: "var(--nypl-colors-ui-link-tertiary) !important",
-              },
-            }}
-            href={featuredItem.href}
-          >
+          <DSLink hasVisitedState={false} href={featuredItem.href}>
             {featuredItem.title}{" "}
           </DSLink>
         </Text>
