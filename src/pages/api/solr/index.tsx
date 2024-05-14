@@ -14,4 +14,4 @@ const solrCallHandler = async (
 };
 
 export default solrCallHandler;
-// http://localhost:3000/api/featuredItem
+// http://localhost:3000/api/solr
