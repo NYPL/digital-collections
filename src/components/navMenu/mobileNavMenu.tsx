@@ -1,3 +1,5 @@
+"use client";
+
 import { dcNavLinks } from "@/data/dcNavLinks";
 import {
   Link,

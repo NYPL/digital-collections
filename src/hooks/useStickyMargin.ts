@@ -1,3 +1,5 @@
+"use client";
+
 import { useEffect } from "react";
 
 /**  Code taken from https://www.tpgi.com/prevent-focused-elements-from-being-obscured-by-sticky-headers/.

@@ -1,3 +1,5 @@
+"use client";
+
 import { useState, useEffect } from "react";
 
 /* Returns if the page is scrolled past the header, could be refactored for other elements. */

@@ -1,4 +1,4 @@
-import CampaignHero from "../components/hero/campaignHero";
+import CampaignHero from "../../components/hero/campaignHero";
 import {
   SkipNavigation,
   TemplateAppContainer,

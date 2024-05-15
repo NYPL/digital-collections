@@ -2,7 +2,7 @@ import React from "react";
 import { render, fireEvent, screen } from "@testing-library/react";
 import "@testing-library/jest-dom";
 import Search from "@/components/search/search";
-import { useRouter } from "next/router";
+import { useRouter } from "next/navigation";
 import appConfig from "../../../__tests__/data/appConfig";
 
 jest.mock("next/router", () => ({

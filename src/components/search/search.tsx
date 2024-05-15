@@ -1,6 +1,10 @@
+"use client";
+
 import React, { useState } from "react";
 import { Box, SearchBar } from "@nypl/design-system-react-components";
-import { useRouter } from "next/router";
+// import { useRouter } from "next/router";
+import { useRouter } from "next/navigation";
+
 import PublicDomainFilter from "../publicDomainFilter/publicDomainFilter";
 import { headerBreakpoints } from "@/utils/breakpoints";
 import { DC_URL } from "../../config/constants";

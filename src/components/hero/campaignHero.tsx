@@ -1,3 +1,4 @@
+"use client";
 import { Hero } from "@nypl/design-system-react-components";
 import { useEffect, useState } from "react";
 
@@ -31,31 +32,33 @@ const CampaignHero = () => {
     console.log("data is:", data);
   };
 
-  return data?.featuredItem ? (
+  return (
+    // data?.featuredItem ? (
     <Hero
-      backgroundImageSrc={data.featuredItem.backgroundImageSrc}
+      backgroundImageSrc={data?.featuredItem.backgroundImageSrc}
       backgroundColor="ui.bg.default"
       isDarkBackgroundImage
       heroType="campaign"
       isDarkText
       heading={
         <CampaignHeroHeading
-          numberOfDigitizedItems={data.numberOfDigitizedItems}
+          numberOfDigitizedItems={data?.numberOfDigitizedItems}
         />
       }
       imageProps={{
-        alt: data.featuredItem.title,
-        src: data.featuredItem.foregroundImageSrc,
-        fallbackSrc: data.featuredItem.foregroundImageSrc,
+        alt: data?.featuredItem.title,
+        src: data?.featuredItem.foregroundImageSrc,
+        fallbackSrc: data?.featuredItem.foregroundImageSrc,
         onError: (_event) => {
           handleError(_event);
         },
       }}
-      subHeaderText={<CampaignHeroSubText featuredItem={data.featuredItem} />}
+      subHeaderText={<CampaignHeroSubText featuredItem={data?.featuredItem} />}
     />
-  ) : (
-    <CampaignHeroLoading />
   );
+  // : (
+  //   <CampaignHeroLoading />
+  // );
 };
 
 export default CampaignHero;

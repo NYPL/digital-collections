@@ -36,8 +36,8 @@ const CampaignHeroSubText = ({ featuredItem }: any) => {
           }}
         >
           Featured Image:{" "}
-          <DSLink hasVisitedState={false} href={featuredItem.href}>
-            {featuredItem.title}{" "}
+          <DSLink hasVisitedState={false} href={featuredItem?.href}>
+            {featuredItem?.title}{" "}
           </DSLink>
         </Text>
       </Box>
