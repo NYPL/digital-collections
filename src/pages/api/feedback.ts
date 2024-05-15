@@ -22,9 +22,10 @@ export default async function feedbackFormHandler(
   // timetamp
   const timestamp = getCustomTimestamp();
   // page (route)
-  const referrer = request.headers.referer;
+  const referer = request.headers.referer;
   const origin = request.headers.origin;
-  const page = referrer.replace(origin, "");
+  const page = "/"; //setting to root for now
+  // const page = referer.replace(origin, "")
   // ipAddress
   const ipAddress = requestIp.getClientIp(request); // on localhost you'll see 127.0.0.1 if you're using IPv4 or ::1, ::ffff:127.0.0.1 if you're using IPv6
   // userPlatform, userBrowser, userVersion
