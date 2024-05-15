@@ -117,7 +117,7 @@ export default function App({ Component, pageProps }: AppProps) {
           name="google-site-verification"
           content="_shbOK1otHA_eFNFgJsOwITZrWQwRg4wr8nmrJPNVDM"
         />
-        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+        <meta httpEquiv="X-UA-Compatible" content="IE=edge,chrome=1" />
       </Head>
       <Script
         type="text/javascript"
