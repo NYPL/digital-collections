@@ -7,7 +7,7 @@ const getCollectionCount = async (
 ) => {
   const { method, query } = request;
   if (method === "GET") {
-    const name = query.name as string;
+    const name = query.name as string; //divisionShortname_mtxt = slug seperated by - and capitalized
     const res = await getCollectionCountForDivision(name);
     // const res = await solrCall("?indent=true&q.op=OR&q=*%3A*");
     console.log("res", res);

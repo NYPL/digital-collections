@@ -12,7 +12,7 @@ import {
   CardContent,
 } from "@nypl/design-system-react-components";
 import styles from "./Swimlanes.module.css";
-import { imageURL } from "@/utils/utils";
+import { imageURL } from "@/utils/iiif";
 import Image from "next/image";
 import { DC_URL } from "../../config/constants";
 
