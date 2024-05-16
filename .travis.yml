@@ -4,7 +4,7 @@ services:
   - docker
 branches:
   only:
-    - solrtest
+    # - solrtest
     - qa
     - production
 env:
@@ -20,7 +20,7 @@ env:
 jobs:
   include:
     - stage: deploy QA
-      if: "(branch = solrtest)"
+      if: "(branch = qa) AND (type != pull_request)"
       env:
         - ECR_URL=685731035297.dkr.ecr.us-east-1.amazonaws.com/dc-frontend:$TRAVIS_BRANCH-latest
         - AWS_ACCESS_KEY_ID=$AWS_ACCESS_KEY_ID_QA
