@@ -7,6 +7,7 @@ branches:
     # - solrtest
     - qa
     - production
+    - adobe-target-test
 env:
   global:
     - AWS_DEFAULT_REGION=us-east-1
@@ -20,9 +21,9 @@ env:
 jobs:
   include:
     - stage: deploy QA
-      if: "(branch = qa) AND (type != pull_request)"
+      if: "(branch = adobe-target-test)"
       env:
-        - ECR_URL=685731035297.dkr.ecr.us-east-1.amazonaws.com/dc-frontend:$TRAVIS_BRANCH-latest
+        - ECR_URL=685731035297.dkr.ecr.us-east-1.amazonaws.com/dc-frontend:solrtest-latest
         - AWS_ACCESS_KEY_ID=$AWS_ACCESS_KEY_ID_QA
         - AWS_SECRET_ACCESS_KEY=$AWS_SECRET_ACCESS_KEY_QA
         - CLUSTER_NAME=dc-frontend-qa
