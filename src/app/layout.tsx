@@ -5,7 +5,9 @@ import { DSProvider } from "@nypl/design-system-react-components";
 import Header from "@/components/header/header";
 import { SkipNavigation } from "@nypl/design-system-react-components";
 import NotificationBanner from "@/components/notificationBanner/notificationBanner";
+import { ADOBE_EMBED_URL, DC_URL } from "../config/constants";
 
+// Note: Can't use Next Metadata in client components
 // export const metadata: Metadata = {
 //   title: "NYPL Digital Collections",
 
@@ -22,6 +24,28 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body>
+        {/* <!-- OptinMonster --> */}
+        {/* <!-- This site is converting visitors into subscribers and customers with OptinMonster - https://optinmonster.com --> */}
+        <script
+          dangerouslySetInnerHTML={{
+            __html:
+              "(function(d,u,ac){var s=d.createElement('script');s.type='text/javascript';s.src='https://a.omappapi.com/app/js/api.min.js';s.async=true;s.dataset.user=u;s.dataset.account=ac;d.getElementsByTagName('head')[0].appendChild(s);})(document,12468,1044);",
+          }}
+        />
+        {/* <!-- / OptinMonster --> */}
+        {/* <!-- Adobe Analytics  --> */}
+        <Script async src={ADOBE_EMBED_URL} />
+        <Script id="adobeDataLayerDefinition">
+          {`
+                // First define the global variable for the entire data layer array
+                window.adobeDataLayer = window.adobeDataLayer || [];
+                // Then push in the variables required in the Initial Data Layer Definition
+                window.adobeDataLayer.push({
+                  disable_page_view: true
+                });
+            `}
+        </Script>
+        {/* <!-- / Adobe Analytics  --> */}
         <DSProvider>
           <Header />
           <SkipNavigation target="#hero" />

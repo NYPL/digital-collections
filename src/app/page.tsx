@@ -6,6 +6,7 @@ import HomePageMainContent from "@/components/homePageMainContent/homePageMainCo
 import ExploreFurther from "@/components/exploreFurther/exploreFurther";
 
 import { TemplateAppContainer } from "@nypl/design-system-react-components";
+import Head from "next/head";
 
 // export const metadata: Metadata = {
 //   title: "NYPL Digital Collections",
@@ -14,10 +15,49 @@ import { TemplateAppContainer } from "@nypl/design-system-react-components";
 export default function Page() {
   return (
     <>
+      {/* Note: Can't use Next Metadata in client components and Next Head component doesn't work for some reason. Just adding the meta tags worked locally for me? */}
+      {/* {/* <Head> */}
+      <meta name="viewport" content="width=device-width, initial-scale=1" />
+      <title>NYPL Digital Collections</title>
+      <link rel="canonical" href="https://digitalcollections.nypl.org/" />
+      <meta
+        name="description"
+        content="NYPL's Digital Collections is a living database featuring prints, photographs, maps, manuscripts, video, and more unique research materials."
+      />
+      <meta
+        property="og:image"
+        content="https://digitalcollections.nypl.org/featured_items/ps_mss_831.jpg"
+      />
+      <meta property="og:title" content="NYPL Digital Collections" />
+      <meta
+        property="og:description"
+        content="Explore hundreds of thousands of digital items from The New York Public Library."
+      />
+      <meta property="og:url" content="https://digitalcollections.nypl.org/" />
+      <meta property="og:type" content="website" />
+      <meta property="og:site_name" content="NYPL Digital Collections" />
+      <meta name="twitter:url" content="https://digitalcollections.nypl.org/" />
+      <meta name="twitter:title" content="NYPL Digital Collections" />
+      <meta
+        name="twitter:description"
+        content="Explore hundreds of thousands of digital items from The New York Public Library."
+      />
+      <meta name="twitter:card" content="summary_large_image" />
+      <meta
+        name="twitter:image"
+        content="https://digitalcollections.nypl.org/featured_items/ps_mss_831.jpg"
+      />
+      <meta name="twitter:site" content="@nypl" />
+      <meta name="twitter:creator" content="@nypl" />
+      <meta
+        name="google-site-verification"
+        content="_shbOK1otHA_eFNFgJsOwITZrWQwRg4wr8nmrJPNVDM"
+      />
+      <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+      {/* </Head> */}
       <TemplateAppContainer
         breakout={
           <div id="hero">
-            {/* <div>home</div> */}
             <CampaignHero />
           </div>
         }

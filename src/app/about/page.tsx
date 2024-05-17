@@ -1,7 +1,6 @@
 "use client";
-import { Box, SkipNavigation } from "@nypl/design-system-react-components";
-import Header from "@/components/header/header";
-import NotificationBanner from "@/components/notificationBanner/notificationBanner";
+
+import { Box } from "@nypl/design-system-react-components";
 import aboutPageElements from "@/data/aboutPageElements";
 import Head from "next/head";
 
@@ -17,14 +16,14 @@ export default function About() {
 
   return (
     <>
-      <Head>
-        <title>About NYPL Digital Collections</title>
-        <meta
-          property="og:title"
-          content="About NYPL Digital Collections"
-          key="title"
-        />
-      </Head>
+      {/* <Head> */}
+      <title>About NYPL Digital Collections</title>
+      <meta
+        property="og:title"
+        content="About NYPL Digital Collections"
+        key="title"
+      />
+      {/* </Head> */}
       <Box
         id="mainContent"
         sx={{
