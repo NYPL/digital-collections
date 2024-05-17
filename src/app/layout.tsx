@@ -3,9 +3,15 @@ import type { Metadata } from "next";
 import Script from "next/script";
 import { DSProvider } from "@nypl/design-system-react-components";
 import Header from "@/components/header/header";
-import { SkipNavigation } from "@nypl/design-system-react-components";
+import {
+  SkipNavigation,
+  useFeedbackBox,
+} from "@nypl/design-system-react-components";
 import NotificationBanner from "@/components/notificationBanner/notificationBanner";
 import { ADOBE_EMBED_URL, DC_URL } from "../config/constants";
+import { useEffect, useState } from "react";
+import { useRouter, usePathname } from "next/navigation";
+import { trackVirtualPageView } from "../utils/utils";
 
 // Note: Can't use Next Metadata in client components
 // export const metadata: Metadata = {
@@ -21,6 +27,54 @@ export default function RootLayout({
 }: {
   children: React.ReactNode;
 }) {
+  // const router = useRouter();
+  const pathname = usePathname();
+  console.log("pathname before use effect is", pathname);
+  const [view, setView] = useState("form");
+  const { onOpen, isOpen, onClose, FeedbackBox } = useFeedbackBox();
+  const onSubmit = async (values) => {
+    try {
+      const response = await fetch("/api/feedback", {
+        method: "POST",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(values),
+      });
+
+      if (response.ok) {
+        // ...
+        setView("confirmation");
+      } else {
+        setView("error");
+      }
+    } catch (error) {
+      // Reject the promise according to your application.
+      // And then call:
+      setView("error");
+    }
+  };
+
+  const onFormClose = () => {
+    if (isOpen) {
+      onClose();
+      setView("form");
+    }
+  };
+
+  // Track page view events to Adobe Analytics
+  useEffect(() => {
+    /* 
+    "asPath has been removed because the concept of as has been removed from the new router." 
+    https://nextjs.org/docs/app/building-your-application/upgrading/app-router-migration
+    */
+    // trackVirtualPageView(router.asPath);
+    console.log("pathname", pathname);
+    const route = pathname ? pathname : ""; //typescript doesn't like when I just use pathname
+    trackVirtualPageView(route);
+  });
+
   return (
     <html lang="en">
       <body>
@@ -54,6 +108,13 @@ export default function RootLayout({
            * * Let this be @7emansell 's problem if possible **/}
           <NotificationBanner />
           {children}
+          <FeedbackBox
+            showCategoryField
+            onSubmit={onSubmit}
+            onClose={onFormClose}
+            title="Feedback"
+            view={view}
+          />
         </DSProvider>
         <div id="nypl-footer"></div>
         <Script
