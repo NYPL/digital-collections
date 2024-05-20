@@ -10,6 +10,7 @@ import { FeaturedContentData } from "@/types/FeaturedContentData";
 
 const FeaturedContentComponent = ({ randomNumber }) => {
   const data: FeaturedContentData = featuredContentData[randomNumber];
+  // console.log()
   return (
     <FeaturedContent
       data-testid={`featured-content-${randomNumber}`}
