@@ -8,6 +8,7 @@ import Script from "next/script";
 import { trackVirtualPageView } from "../utils/utils";
 import appConfig from "../../appConfig";
 import { ADOBE_EMBED_URL, DC_URL } from "../config/constants";
+import ContextProvider from "./breadcrumbsContext";
 
 export default function App({ Component, pageProps }: AppProps) {
   const router = useRouter();
@@ -87,7 +88,9 @@ export default function App({ Component, pageProps }: AppProps) {
         type="text/javascript"
         src={`/newrelic/` + appConfig.environment + `.js`}
       />
-      <Component {...pageProps} />
+      <ContextProvider>
+        <Component {...pageProps} />
+      </ContextProvider>
     </>
   );
 }

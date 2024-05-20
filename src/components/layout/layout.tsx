@@ -2,7 +2,6 @@ import {
   TemplateAppContainer,
   Breadcrumbs,
   DSProvider,
-  Heading,
   SkipNavigation,
   useFeedbackBox,
 } from "@nypl/design-system-react-components";
