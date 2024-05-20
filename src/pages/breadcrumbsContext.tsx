@@ -1,4 +1,4 @@
-import { createContext, useCallback, useMemo, useReducer } from "react";
+import { createContext, useReducer } from "react";
 
 export const breadcrumbsContext = createContext(null);
 
@@ -20,20 +20,15 @@ function ContextProvider({ children }) {
     { text: "Home", url: "/" },
   ]);
 
-  const setBreadcrumbs = useCallback((newCrumb) => {
+  const setBreadcrumbs = (newCrumb) => {
     dispatch({
       type: actionTypes.SET_BREADCRUMBS,
       newCrumb,
     });
-  }, []);
-
-  const value = useMemo(
-    () => ({ breadcrumbs, setBreadcrumbs }),
-    [breadcrumbs, setBreadcrumbs]
-  );
+  };
 
   return (
-    <breadcrumbsContext.Provider value={value}>
+    <breadcrumbsContext.Provider value={{ breadcrumbs, setBreadcrumbs }}>
       {children}
     </breadcrumbsContext.Provider>
   );
