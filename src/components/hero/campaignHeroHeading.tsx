@@ -1,3 +1,5 @@
+// "use server";
+
 import { Heading } from "@nypl/design-system-react-components";
 
 const CampaignHeroHeading = ({ numberOfDigitizedItems }: any) => {

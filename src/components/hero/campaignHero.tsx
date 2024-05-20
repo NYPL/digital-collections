@@ -1,4 +1,4 @@
-"use client";
+// "use client";
 import { Hero } from "@nypl/design-system-react-components";
 import { useEffect, useState } from "react";
 
