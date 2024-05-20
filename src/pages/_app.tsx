@@ -9,6 +9,7 @@ import React from "react";
 import { useEffect } from "react";
 import { useRouter } from "next/router";
 import Script from "next/script";
+
 import { trackVirtualPageView } from "../utils/utils";
 import appConfig from "../../appConfig";
 import { ADOBE_EMBED_URL, DC_URL } from "../config/constants";
@@ -63,51 +64,16 @@ export default function App({ Component, pageProps }: AppProps) {
         }}
       />
       {/* <!-- / OptinMonster --> */}
-      <Script id="target-snippet">
-        {`
-          //prehiding snippet for Adobe Target with asynchronous tags deployment
-          ;(function(win, doc, style, timeout) {
-          var STYLE_ID = 'at-body-style';
-          function getParent() {
-              return doc.getElementsByTagName('head')[0];
-          }
-          function addStyle(parent, id, def) {
-              if (!parent) {
-              return;
-              }
-              var style = doc.createElement('style');
-              style.id = id;
-              style.innerHTML = def;
-              parent.appendChild(style);
-          }
-          function removeStyle(parent, id) {
-              if (!parent) {
-              return;
-              }
-              var style = doc.getElementById(id);
-              if (!style) {
-              return;
-              }
-              parent.removeChild(style);
-          }
-          addStyle(getParent(), STYLE_ID, style);
-          setTimeout(function() {
-              removeStyle(getParent(), STYLE_ID);
-          }, timeout);
-          }(window, document, "body {opacity: 0 !important}", 3000));
-        `}
-      </Script>
-
       <Script async src={ADOBE_EMBED_URL} />
       <Script id="adobeDataLayerDefinition">
         {`
-              // First define the global variable for the entire data layer array
-              window.adobeDataLayer = window.adobeDataLayer || [];
-              // Then push in the variables required in the Initial Data Layer Definition
-              window.adobeDataLayer.push({
-                disable_page_view: true
-              });
-           `}
+          // First define the global variable for the entire data layer array
+          window.adobeDataLayer = window.adobeDataLayer || [];
+          // Then push in the variables required in the Initial Data Layer Definition
+          window.adobeDataLayer.push({
+            disable_page_view: true
+          });
+        `}
       </Script>
       <Head>
         <meta name="viewport" content="width=device-width, initial-scale=1" />
