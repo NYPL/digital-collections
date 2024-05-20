@@ -32,8 +32,7 @@ const CampaignHero = () => {
     console.log("data is:", data);
   };
 
-  return (
-    // data?.featuredItem ? (
+  return data?.featuredItem ? (
     <Hero
       backgroundImageSrc={data?.featuredItem.backgroundImageSrc}
       backgroundColor="ui.bg.default"
@@ -55,10 +54,9 @@ const CampaignHero = () => {
       }}
       subHeaderText={<CampaignHeroSubText featuredItem={data?.featuredItem} />}
     />
+  ) : (
+    <CampaignHeroLoading />
   );
-  // : (
-  //   <CampaignHeroLoading />
-  // );
 };
 
 export default CampaignHero;
