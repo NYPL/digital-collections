@@ -29,10 +29,14 @@ const SwimLanes = ({ lanesWithNumItems }) => {
           type="standalone"
           href={`${DC_URL}/collections/lane/${lane.slug}`}
           aria-label={`See more ${lane.title.toLowerCase()}`}
+          hasVisitedState={false}
           sx={{
             display: { sm: "none", md: "inline" },
-            fontWeight: "500",
+            color: "ui.blue",
+            fontWeight: "500 !important",
             alignItems: "center",
+            // marginBottom: "1px",
+            _hover: { textDecoration: "underline 1px dotted !important" },
           }}
         >
           See more
@@ -100,6 +104,7 @@ const SwimLanes = ({ lanesWithNumItems }) => {
         href={`${DC_URL}/collections/lane/${lane.slug}`}
         aria-label={`See more ${lane.title.toLowerCase()}`}
         className="smlink"
+        hasVisitedState={false}
         sx={{
           display: { sm: "flex", md: "none" },
           fontWeight: "500",
@@ -108,6 +113,10 @@ const SwimLanes = ({ lanesWithNumItems }) => {
           alignItems: "center",
           "& svg": {
             marginTop: "1px",
+          },
+          color: "ui.blue",
+          _hover: {
+            textDecoration: "underline 1px dotted !important",
           },
         }}
       >
