@@ -1,4 +1,4 @@
-import slugHandler from "@/pages/api/lanes/[slug]";
+import slugHandler from "@/pages/migrated/api/lanes/[slug]";
 import { NextApiRequest } from "next";
 
 it("should respond with 200 status and lanes data for a GET request", () => {

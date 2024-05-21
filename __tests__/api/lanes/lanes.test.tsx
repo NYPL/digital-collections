@@ -1,5 +1,5 @@
-import { getLanesData } from "@/pages/api/lanes";
-import lanesDataHandler from "@/pages/api/lanes";
+import { getLanesData } from "@/pages/migrated/api/lanes";
+import lanesDataHandler from "@/pages/migrated/api/lanes";
 import { NextApiRequest } from "next";
 describe("All lanes API endpoint handler", () => {
   it("should respond with 200 status and lanes data for a GET request", () => {

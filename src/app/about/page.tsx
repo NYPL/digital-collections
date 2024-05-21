@@ -2,7 +2,7 @@
 
 import { Box } from "@nypl/design-system-react-components";
 import aboutPageElements from "@/data/aboutPageElements";
-import Head from "next/head";
+// import Head from "next/head";
 
 export default function About() {
   function createSection(heading: React.JSX.Element, body: React.JSX.Element) {

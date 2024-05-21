@@ -1,5 +1,5 @@
 // import { getLanesData } from "@/pages/api/lanes";
-import featuredItemDataHandler from "@/pages/api/featuredItem";
+import featuredItemDataHandler from "@/pages/migrated/api/featuredItem";
 import { NextApiRequest } from "next";
 import CampaignHero from "@/components/hero/campaignHero";
 import React from "react";
