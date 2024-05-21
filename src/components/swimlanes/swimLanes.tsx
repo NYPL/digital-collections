@@ -35,7 +35,6 @@ const SwimLanes = ({ lanesWithNumItems }) => {
             color: "ui.blue",
             fontWeight: "500 !important",
             alignItems: "center",
-            // marginBottom: "1px",
             _hover: { textDecoration: "underline 1px dotted !important" },
           }}
         >
