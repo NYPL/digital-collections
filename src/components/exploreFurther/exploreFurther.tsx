@@ -72,7 +72,7 @@ const ExploreFurther = () => {
                 href={item.url}
                 target="_blank"
                 rel="noreferrer noopener"
-                hasVisitedState={true}
+                hasVisitedState
               >
                 {item.title}
               </Link>

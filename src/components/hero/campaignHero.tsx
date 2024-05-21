@@ -23,7 +23,7 @@ const CampaignHero = () => {
         response = await fetch(`/api/featuredItem`);
         responseData = await response.json();
       } catch (e) {
-        console.log("error: ", e);
+        console.log("CampaignHero error: ", e);
         console.log("using fallback featured item");
         responseData = defaultFeaturedItemResponse;
       }
