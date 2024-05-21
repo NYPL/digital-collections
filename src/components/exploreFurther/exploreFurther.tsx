@@ -8,9 +8,9 @@ import {
   Text,
   CardContent,
 } from "@nypl/design-system-react-components";
-import { ExploreFurtherData } from "@/types/ExploreFurtherData";
-import exploreFurtherData from "@/data/exploreFurtherData";
-import { headerBreakpoints } from "@/utils/breakpoints";
+import { ExploreFurtherData } from "../../types/ExploreFurtherData";
+import exploreFurtherData from "../../data/exploreFurtherData";
+import { headerBreakpoints } from "../../utils/breakpoints";
 
 const ExploreFurther = () => {
   const data: ExploreFurtherData[] = exploreFurtherData;

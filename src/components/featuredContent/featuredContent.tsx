@@ -5,8 +5,8 @@ import {
   Box,
 } from "@nypl/design-system-react-components";
 import React from "react";
-import featuredContentData from "@/data/featuredContentData";
-import { FeaturedContentData } from "@/types/FeaturedContentData";
+import featuredContentData from "../../data/featuredContentData";
+import { FeaturedContentData } from "../../types/FeaturedContentData";
 
 const FeaturedContentComponent = ({ randomNumber }) => {
   const data: FeaturedContentData = featuredContentData[randomNumber];
