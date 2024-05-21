@@ -62,7 +62,7 @@ const Layout = ({
       ) : (
         <>
           <Breadcrumbs breadcrumbsData={breadcrumbs} />
-          <TemplateAppContainer contentPrimary={children} />
+          <TemplateAppContainer contentPrimary={children as JSX.Element} />
         </>
       )}
       <FeedbackBox
