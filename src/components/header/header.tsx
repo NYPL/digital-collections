@@ -5,13 +5,13 @@ import {
   HorizontalRule,
 } from "@nypl/design-system-react-components";
 import React from "react";
-import { useScrolled } from "@/hooks/useScrolled";
-import { useStickyMargin } from "@/hooks/useStickyMargin";
+import { useScrolled } from "../../hooks/useScrolled";
+import { useStickyMargin } from "../../hooks/useStickyMargin";
 import Search from "../search/search";
 import DCLogo from "../logo/logo";
 import NavMenu from "../navMenu/navMenu";
 import MobileNavMenu from "../navMenu/mobileNavMenu";
-import { headerBreakpoints } from "@/utils/breakpoints";
+import { headerBreakpoints } from "../../utils/breakpoints";
 
 const Header = () => {
   useStickyMargin();

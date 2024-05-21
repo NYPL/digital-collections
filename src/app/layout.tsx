@@ -8,17 +8,26 @@ import {
   useFeedbackBox,
 } from "@nypl/design-system-react-components";
 import NotificationBanner from "@/components/notificationBanner/notificationBanner";
-
+import { ADOBE_EMBED_URL, DC_URL } from "../config/constants";
 import { useEffect, useState } from "react";
 import { useRouter, usePathname } from "next/navigation";
-import { trackVirtualPageView } from "../src/utils/utils";
-import { ADOBE_EMBED_URL } from "@/config/constants";
+import { trackVirtualPageView } from "../utils/utils";
+
+// Note: Can't use Next Metadata in client components
+// export const metadata: Metadata = {
+//   title: "NYPL Digital Collections",
+
+//   description: "Welcome to Next.js",
+// };
 
 export default function RootLayout({
+  // Layouts must accept a children prop.
+  // This will be populated with nested layouts or pages
   children,
 }: {
   children: React.ReactNode;
 }) {
+  // const router = useRouter();
   const pathname = usePathname();
   console.log("pathname before use effect is", pathname);
   const [view, setView] = useState("form");
@@ -80,20 +89,18 @@ export default function RootLayout({
         {/* <!-- / OptinMonster --> */}
         {/* <!-- Adobe Analytics  --> */}
         <Script async src={ADOBE_EMBED_URL} />
+        <Script id="adobeDataLayerDefinition">
+          {`
+                // First define the global variable for the entire data layer array
+                window.adobeDataLayer = window.adobeDataLayer || [];
+                // Then push in the variables required in the Initial Data Layer Definition
+                window.adobeDataLayer.push({
+                  disable_page_view: true
+                });
+            `}
+        </Script>
         {/* <!-- / Adobe Analytics  --> */}
-        <DSProvider>
-          <Header />
-          <SkipNavigation target="#hero" />
-          <NotificationBanner />
-          {children}
-          <FeedbackBox
-            showCategoryField
-            onSubmit={onSubmit}
-            onClose={onFormClose}
-            title="Feedback"
-            view={view}
-          />
-        </DSProvider>
+        {children}
         <div id="nypl-footer"></div>
         <Script
           src="https://ds-header.nypl.org/footer.min.js?containerId=nypl-footer"
