@@ -13,16 +13,7 @@ import { useEffect, useState } from "react";
 import { useRouter, usePathname } from "next/navigation";
 import { trackVirtualPageView } from "../utils/utils";
 
-// Note: Can't use Next Metadata in client components
-// export const metadata: Metadata = {
-//   title: "NYPL Digital Collections",
-
-//   description: "Welcome to Next.js",
-// };
-
 export default function RootLayout({
-  // Layouts must accept a children prop.
-  // This will be populated with nested layouts or pages
   children,
 }: {
   children: React.ReactNode;
