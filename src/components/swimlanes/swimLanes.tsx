@@ -81,13 +81,7 @@ const SwimLanes = ({ lanesWithNumItems }) => {
                 <Text
                   id={`item-count-${lane.slug}-${index}`}
                   size="subtitle2"
-                  sx={{
-                    fontWeight: "400",
-                    display: "none",
-                    [`@media screen and (min-width: 600px)`]: {
-                      display: "inline",
-                    },
-                  }}
+                  fontWeight="medium"
                 >
                   {" "}
                   {`${collection.numItems || 0} items`}{" "}
@@ -104,19 +98,12 @@ const SwimLanes = ({ lanesWithNumItems }) => {
         aria-label={`See more ${lane.title.toLowerCase()}`}
         className="smlink"
         hasVisitedState={false}
-        sx={{
+        __css={{
           display: { sm: "flex", md: "none" },
-          fontWeight: "500",
+          fontWeight: "medium",
           justifyContent: "flex-end",
           marginTop: "s",
-          alignItems: "center",
-          "& svg": {
-            marginTop: "1px",
-          },
-          color: "ui.blue",
-          _hover: {
-            textDecoration: "underline 1px dotted !important",
-          },
+          alignItems: "center", //idk why this doesn't work
         }}
       >
         See more
