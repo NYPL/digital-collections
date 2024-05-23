@@ -27,7 +27,7 @@ const homepageHandler = async (
     });
 
     // 24 hour cache
-    // response.setHeader("Cache-Control", "s-maxage=86400"); //removing bc the featured content is not
+    // response.setHeader("Cache-Control", "s-maxage=86400"); //removing bc the Featured Content does not change when we relead the page if we cache the data.
 
     return response.status(200).json({
       randomNumber,
