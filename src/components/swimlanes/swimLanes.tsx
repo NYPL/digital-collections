@@ -30,9 +30,9 @@ const SwimLanes = ({ lanesWithNumItems }) => {
           href={`${DC_URL}/collections/lane/${lane.slug}`}
           aria-label={`See more ${lane.title.toLowerCase()}`}
           hasVisitedState={false}
-          sx={{
+          __css={{
             display: { sm: "none", md: "inline" },
-            color: "ui.blue",
+            color: "ui.primary.link",
             fontWeight: "500 !important",
             alignItems: "center",
             _hover: { textDecoration: "underline 1px dotted !important" },
@@ -82,6 +82,12 @@ const SwimLanes = ({ lanesWithNumItems }) => {
                   id={`item-count-${lane.slug}-${index}`}
                   size="subtitle2"
                   fontWeight="medium"
+                  __css={{
+                    display: "none",
+                    [`@media screen and (min-width: 600px)`]: {
+                      display: "inline",
+                    },
+                  }}
                 >
                   {" "}
                   {`${collection.numItems || 0} items`}{" "}
@@ -100,11 +106,13 @@ const SwimLanes = ({ lanesWithNumItems }) => {
         hasVisitedState={false}
         __css={{
           display: { sm: "flex", md: "none" },
-          fontWeight: "medium",
+          fontWeight: "regular",
           justifyContent: "flex-end",
           marginTop: "s",
-
           alignItems: "center", //idk why this doesn't work
+          "& svg": {
+            marginTop: "1px",
+          },
         }}
       >
         See more
