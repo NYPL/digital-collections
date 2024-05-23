@@ -1,13 +1,11 @@
-import { useContext, useEffect } from "react";
 import Layout from "@/components/layout/layout";
 import { Heading } from "@nypl/design-system-react-components";
-import { breadcrumbsContext } from "../breadcrumbsContext";
 
-const Collection = () => {
-  const { breadcrumbs, setBreadcrumbs } = useContext(breadcrumbsContext);
-  useEffect(() => {
-    setBreadcrumbs({ text: "A Collection", url: "/collections/collection" });
-  }, []);
+const Collection = ({ breadcrumbs }) => {
+  // const { breadcrumbs, setBreadcrumbs } = useContext(breadcrumbsContext);
+  // useEffect(() => {
+  //   setBreadcrumbs({ text: "A Collection", url: "/collections/collection" });
+  // }, []);
   return (
     <Layout activePage="collection" breadcrumbs={breadcrumbs}>
       <Heading>
@@ -17,8 +15,8 @@ const Collection = () => {
   );
 };
 
-// Imagine an API call somewhere in here
 export const getServerSideProps = async () => {
+  // Fetch something
   let breadcrumbs = [
     { text: "Home", url: "/" },
     { text: "Collections", url: "/collcetions" },
