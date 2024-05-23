@@ -73,6 +73,10 @@ const ExploreFurther = () => {
                 target="_blank"
                 rel="noreferrer noopener"
                 hasVisitedState
+                __css={{
+                  textDecoration: "none !important",
+                  _hover: { textDecoration: "underline 1px dotted !important" },
+                }}
               >
                 {item.title}
               </Link>
