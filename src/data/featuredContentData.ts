@@ -2,7 +2,7 @@ import { FeaturedContentData } from "@/types/FeaturedContentData";
 
 const featuredContentData: FeaturedContentData[] = [
   {
-    heading: "Spotlight on the Public Domain",
+    heading: "Spotlight on the public domain",
     overline: "Featured",
     text: "The New York Public Library recently enhanced access to all public domain items in Digital Collections so that everyone has the freedom to enjoy and reuse these materials in almost limitless ways",
     link: "https://publicdomain.nypl.org",
@@ -13,7 +13,7 @@ const featuredContentData: FeaturedContentData[] = [
     imgAlt: "Public Domain banner",
   },
   {
-    heading: "Digital Collections Print Store",
+    heading: "Digital Collections print store",
     overline: "Featured",
     text: "Decorative prints for purchase: choose from archival prints, framed art, stretched canvas, vintage wood, and wall murals.",
     link: "https://nypl.artehouse.com/perl/home.pl",

@@ -17,13 +17,21 @@ const CampaignHero = () => {
 
   useEffect(() => {
     const fetchData = async () => {
-      const response = await fetch(`/api/featuredItem`);
-      const responseData = await response.json();
+      let response;
+      let responseData: FeaturedItemData;
+      try {
+        response = await fetch(`/api/featuredItem`);
+        responseData = await response.json();
+      } catch (e) {
+        console.log("CampaignHero error: ", e);
+        console.log("using fallback featured item");
+        responseData = defaultFeaturedItemResponse;
+      }
       setData(responseData);
     };
 
     fetchData();
-  }, []);
+  }, [defaultFeaturedItemResponse]);
 
   const handleError = (e: any) => {
     console.log(e);
