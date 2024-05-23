@@ -103,6 +103,7 @@ const SwimLanes = ({ lanesWithNumItems }) => {
           fontWeight: "medium",
           justifyContent: "flex-end",
           marginTop: "s",
+
           alignItems: "center", //idk why this doesn't work
         }}
       >
