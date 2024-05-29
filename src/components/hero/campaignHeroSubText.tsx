@@ -8,15 +8,14 @@ import {
 const CampaignHeroSubText = ({ featuredItem }: any) => {
   return (
     <>
-      {/* To Do: make the link color blue: */}
       <Text>
         This site is a living database with new materials added every day,
         featuring prints, photographs, maps, manuscripts, streaming video, and
         more.
       </Text>
-      <Text sx={{ marginRight: "xxl" }}>
-        Our collections include some content that may be harmful or difficult to
-        view.{" "}
+      <Text sx={{ marginRight: "s" }}>
+        Our collections include some content that may be harmful or difficult
+        to&nbsp;view.{" "}
         <DSLink
           hasVisitedState={false}
           href="/about#nypl_harmful_content_statement"
