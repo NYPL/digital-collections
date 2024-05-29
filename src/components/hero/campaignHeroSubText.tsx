@@ -14,9 +14,9 @@ const CampaignHeroSubText = ({ featuredItem }: any) => {
         featuring prints, photographs, maps, manuscripts, streaming video, and
         more.
       </Text>
-      <Text>
-        Our collections include some content that may be harmful or difficult to{" "}
-        <br /> view.{" "}
+      <Text sx={{ marginRight: "xxl" }}>
+        Our collections include some content that may be harmful or difficult to
+        view.{" "}
         <DSLink
           hasVisitedState={false}
           href="/about#nypl_harmful_content_statement"
