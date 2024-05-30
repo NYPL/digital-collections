@@ -7,7 +7,7 @@ describe("Featured Content component renders with expected props", () => {
     const component = screen.getByTestId("featured-content-0");
     await waitFor(() => {
       expect(
-        within(component).getByText("Spotlight on the Public Domain")
+        within(component).getByText("Spotlight on the public domain")
       ).toBeInTheDocument();
       expect(within(component).getByRole("img")).toHaveAttribute(
         "src",
@@ -24,7 +24,7 @@ describe("Featured Content component renders with expected props", () => {
     const component = screen.getByTestId("featured-content-1");
     await waitFor(() => {
       expect(
-        within(component).getByText("Digital Collections Print Store")
+        within(component).getByText("Digital Collections print store")
       ).toBeInTheDocument();
       expect(within(component).getByRole("img")).toHaveAttribute(
         "src",

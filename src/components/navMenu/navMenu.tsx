@@ -10,7 +10,7 @@ const NavMenu = ({ render }) => {
       aria-label={text}
       key={text}
       sx={{
-        mb: "0px",
+        marginBottom: "0px",
         fontWeight: "medium",
         color: "ui.black",
         marginLeft: "m",
@@ -28,12 +28,7 @@ const NavMenu = ({ render }) => {
   ));
 
   return (
-    <nav
-      aria-label="Header links"
-      style={{
-        paddingBottom: "xs",
-      }}
-    >
+    <nav aria-label="Header links">
       <List
         id={`header-links-${render}`}
         listItems={listItems}
@@ -41,6 +36,7 @@ const NavMenu = ({ render }) => {
         noStyling
         type="ul"
         sx={{
+          marginBottom: "xs",
           "& li": {
             marginInlineEnd: "0px",
           },
