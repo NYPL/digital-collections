@@ -29,7 +29,7 @@ const SwimLanes = ({ lanesWithNumItems }) => {
           type="standalone"
           href={`${DC_URL}/collections/lane/${lane.slug}`}
           aria-label={`See more ${lane.title.toLowerCase()}`}
-          hasVisitedState={false}
+          hasVisitedState
           __css={{
             display: { sm: "none", md: "inline" },
             color: "ui.primary.link",
@@ -103,7 +103,7 @@ const SwimLanes = ({ lanesWithNumItems }) => {
         href={`${DC_URL}/collections/lane/${lane.slug}`}
         aria-label={`See more ${lane.title.toLowerCase()}`}
         className="smlink"
-        hasVisitedState={false}
+        hasVisitedState
         __css={{
           display: { sm: "flex", md: "none" },
           fontWeight: "regular",
