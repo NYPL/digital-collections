@@ -17,6 +17,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Update version of NYPL Reservoir to 3.0.0 (DR-2924)
 - Updated the hero component to use a fallback image if the original featured image returns an error (DR-2925)
+- Updated hero component text line break (DR-2986)
 
 ## [0.1.7] 2024-05-13
 
