@@ -19,7 +19,7 @@ export default function Home(props: any = {}) {
       <Header />
       <TemplateAppContainer
         breakout={
-          <div id="hero">
+          <div id="hero" style={{ height: "500px" }}>
             <CampaignHero imageID={props.imageID} />
           </div>
         }
