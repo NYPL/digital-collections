@@ -17,9 +17,13 @@ export default function Home(props: any = {}) {
        * * Let this be @7emansell 's problem if possible **/}
       <NotificationBanner />
       <Header />
+      {/* <div id="hero" style={{ maxHeight: "500px", marginBottom: "32px" }}>
+        <CampaignHero imageID={props.imageID} />
+      </div>
+      <HomePageMainContent /> */}
       <TemplateAppContainer
         breakout={
-          <div id="hero" style={{ height: "500px" }}>
+          <div id="hero">
             <CampaignHero imageID={props.imageID} />
           </div>
         }
