@@ -12,7 +12,7 @@ export default function Document() {
         <Script
           src="https://ds-header.nypl.org/footer.min.js?containerId=nypl-footer"
           async
-          strategy="beforeInteractive"
+          strategy="lazyOnload"
         ></Script>
         {/* <!-- This site is converting visitors into subscribers and customers with OptinMonster - https://optinmonster.com --> */}
         <script
