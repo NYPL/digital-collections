@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Checkbox, Link } from "@nypl/design-system-react-components";
+import { Box, Checkbox, Link } from "@nypl/design-system-react-components";
 import { PublicDomainFilterProps } from "@/types/PublicDomainFilterProps";
 
 const PublicDomainFilter = ({ onCheckChange }: PublicDomainFilterProps) => {
@@ -19,15 +19,16 @@ const PublicDomainFilter = ({ onCheckChange }: PublicDomainFilterProps) => {
   };
 
   return (
-    <Checkbox
-      id="pd-checkbox"
-      data-testid="pd-checkbox"
-      labelText={text}
-      name="pd_filter"
-      isChecked={isChecked}
-      onChange={handleCheckChange}
-      sx={{ py: "s" }}
-    />
+    <Box sx={{ paddingTop: "15px", paddingBottom: "15px" }}>
+      <Checkbox
+        id="pd-checkbox"
+        data-testid="pd-checkbox"
+        labelText={text}
+        name="pd_filter"
+        isChecked={isChecked}
+        onChange={handleCheckChange}
+      />
+    </Box>
   );
 };
 

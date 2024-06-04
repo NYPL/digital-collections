@@ -2,12 +2,7 @@ import { Heading } from "@nypl/design-system-react-components";
 
 const CampaignHeroHeading = ({ numberOfDigitizedItems }: any) => {
   return (
-    <Heading
-      color="ui.typography.heading"
-      level="h1"
-      id="campaign-hero"
-      size="heading2"
-    >
+    <Heading level="h1" id="campaign-hero" size="heading2">
       <>
         Explore {numberOfDigitizedItems} items digitized from The New York
         Public Library&apos;s collections.

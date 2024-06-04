@@ -8,6 +8,7 @@
  * @param {string} rotation - optional param for the height of an image, default is "0"
  */
 import appConfig from "../../appConfig";
+import defaultFeaturedItems from "../data/defaultFeaturedItemData";
 
 export const imageURL = (
   imageId: any,
@@ -26,13 +27,12 @@ export const imageURL = (
 
 export const getNumDigitizedItems = async () => {
   const apiUrl = `${process.env.API_URL}/api/v2/items/total`;
-  // console.log(`getNumDigitizedItems: About to fetch ${apiUrl}`);
-  // console.log(`getNumDigitizedItems calls apiCall function internally`);
   const res = await apiCall(apiUrl);
 
-  const fallbackCount = 863848;
-  const totalItems = res?.count?.$ || fallbackCount;
-  return addCommas(totalItems);
+  const fallbackCount =
+    defaultFeaturedItems[appConfig.environment].numberOfDigitizedItems;
+  const totalItems = res?.count?.$ ? addCommas(res.count.$) : fallbackCount; // only add commas to repo api response data
+  return totalItems;
 };
 
 /**
@@ -150,11 +150,14 @@ export const apiPOSTCall = async (apiUrl: string, postData: any) => {
 
 export const getFeaturedImage = async () => {
   //console.log(`getFeaturedImage: About call getAPIResponse`);
+  const defaultResponse =
+    defaultFeaturedItems[appConfig.environment].featuredItem;
   const apiResponse = await getAPIResponse("featured", "", { random: "true" });
+
   return {
-    uuid: apiResponse?.capture?.uuid || "510d47d9-4f93-a3d9-e040-e00a18064a99",
-    title: apiResponse?.capture?.title || "Watuppa, From water front, Brooklyn",
-    imageID: apiResponse?.capture?.imageID || 482815,
+    uuid: apiResponse?.capture?.uuid || defaultResponse.uuid,
+    title: apiResponse?.capture?.title || defaultResponse.title,
+    imageID: apiResponse?.capture?.imageID || defaultResponse.imageID,
   };
 };
 
