@@ -13,7 +13,6 @@ const featuredItemDataHandler = async (
   const { method } = request;
   if (method === "GET") {
     //pass query param to featuredImageID function to check if it is legit
-    // logger.info("Generating featured image id");
 
     const featuredImageData = await getFeaturedImage();
     const numDigitizedItems = await getNumDigitizedItems();
@@ -38,9 +37,6 @@ const featuredItemDataHandler = async (
         featuredImageData.uuid
       }`,
     };
-
-    // 24 hour cache
-    response.setHeader("Cache-Control", "s-maxage=86400");
 
     return response.status(200).json({
       featuredItem: featuredItemObject,

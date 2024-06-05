@@ -7,13 +7,45 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+## [0.1.8]
+
+### Added
+
+- Added html id elements to logo, learn more link, swimlands images, and swimlane item counts. (DR-2885)
+
+### Updated
+
+- Update version of NYPL Reservoir to 3.0.0 (DR-2924)
+- Updated the hero component to use a fallback image if the original featured image returns an error (DR-2925)
+- Updated hero component text line break (DR-2986)
+
+## [0.1.7] 2024-05-13
+
+### Updated
+
+- Add cluster names to readme (DR-2928)
+- Update Platform and Linked Projects sections of About page (DR-2972)
+
+## [0.1.6] 2024-04-30
+
 ### Removed
 
-- temporarily remove feedback button (DR-2918)
+- removed caching for the featured item (DR-2944)
+
+## [0.1.5] 2024-04-29
 
 ### Added
 
 - Added legacy homepage image loading test script (DR-2921)
+- Add a bottom border to the collapsed sticky header for screen sizes of 767 and below. (DR-2913)
+- Point About page link to new About page (DR-2910)
+- Add puppeteer script on legacy Digital Collections for images.nypl.org (DR-2921)
+- Links updated to point to new About page (DR-2936)
+
+### Updated
+
+- Run homepage images tests 10x in parallel (DR-2937)
+- Updated Travis file to point to new AWS clusters (DR-2943)
 
 ## [0.1.4] 2024-04-11
 

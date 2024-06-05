@@ -17,6 +17,7 @@ const DCLogo = ({ isMobile = false }: DCLogoProps) => {
           name="digitalCollectionsBlack"
           sizeBasedOn="height"
           height="50px"
+          id="nypl-lion-logo"
         />
       )}
     </Link>

@@ -119,6 +119,7 @@ const aboutData = [
       <Heading
         level="h2"
         size="heading4"
+        id="public_domain"
         text="Public Domain / no known U.S. copyright restrictions"
       />
     ),
@@ -217,11 +218,17 @@ const aboutData = [
           permission for reuse. You may want to look into resources that can
           help you determine on your own whether the items are in the public
           domain—and therefore free of copyright restrictions—including &quot;
-          <Link href="https://www.copyright.gov/circs/circ22.pdf">
+          <Link
+            target="_blank"
+            href="https://www.copyright.gov/circs/circ22.pdf"
+          >
             How to Investigate the Copyright Status of a Work [PDF]
           </Link>
           &quot; from the United States Copyright Office and the{" "}
-          <Link href="https://guides.library.cornell.edu/copyright">
+          <Link
+            target="_blank"
+            href="https://guides.library.cornell.edu/copyright"
+          >
             public domain determination chart
           </Link>{" "}
           made available by the Cornell Copyright Information Center.{" "}
@@ -234,13 +241,21 @@ const aboutData = [
           requires the permission of any other person or entity, or determining
           whether you can exercise fair use rights. You can learn more about
           fair use on{" "}
-          <Link href="https://en.wikipedia.org/wiki/Fair_use">Wikipedia</Link>,
-          or review{" "}
-          <Link href="https://copyright.columbia.edu/basics/fair-use.html">
+          <Link target="_blank" href="https://en.wikipedia.org/wiki/Fair_use">
+            Wikipedia
+          </Link>
+          , or review{" "}
+          <Link
+            target="_blank"
+            href="https://copyright.columbia.edu/basics/fair-use.html"
+          >
             fair use basics
           </Link>{" "}
           and a{" "}
-          <Link href="https://copyright.columbia.edu/basics/fair-use/fair-use-checklist.html">
+          <Link
+            target="_blank"
+            href="https://copyright.columbia.edu/basics/fair-use/fair-use-checklist.html"
+          >
             fair use checklist
           </Link>{" "}
           from Columbia University&apos;s Copyright Advisory Office.{" "}
@@ -290,7 +305,7 @@ const aboutData = [
     heading: <Heading level="h2" size="heading4" text="Linked projects" />,
     body: (
       <>
-        <Text sx={{ marginTop: "s" }}>
+        <Text sx={{ marginTop: "s", marginBottom: "xxl" }}>
           Whenever possible, we link items in Digital Collections to other
           places where you may be able to find out more about them. Some of the
           places we link to include the{" "}
@@ -299,21 +314,10 @@ const aboutData = [
           </Link>
           , <Link href="https://archives.nypl.org/">NYPL Archives Portal</Link>,
           and{" "}
-          <Link href="https://dp.la/">Digital Public Library of America</Link>.
-        </Text>
-        <Text sx={{ marginBottom: "xxl" }}>
-          Meanwhile, we also extract data from historical sources and materials,
-          and have incorporated links to those data extraction experiments
-          wherever possible. Some of those projects include{" "}
-          <Link href="https://wayback.archive-it.org/13216/20210520171637/http://maps.nypl.org/warper/">
-            Map Warper
+          <Link target="_blank" href="https://dp.la/">
+            Digital Public Library of America
           </Link>
-          ,{" "}
-          <Link href="http://buildinginspector.nypl.org/">
-            Building Inspector
-          </Link>
-          , <Link href="https://stereo.nypl.org/">Stereogranimator</Link>, and{" "}
-          <Link href="https://menus.nypl.org/">What&apos;s on the Menu</Link>.
+          .
         </Text>
       </>
     ),
@@ -324,7 +328,10 @@ const aboutData = [
       <>
         <Text sx={{ marginTop: "s" }}>
           NYPL metadata published via the sources below is released under a{" "}
-          <Link href="https://creativecommons.org/publicdomain/zero/1.0/">
+          <Link
+            target="_blank"
+            href="https://creativecommons.org/publicdomain/zero/1.0/"
+          >
             Creative Commons CC0 1.0 Universal Public Domain Dedication
           </Link>
           .
@@ -348,7 +355,10 @@ const aboutData = [
           <li>
             Bulk metadata download: In addition to the full metadata output
             available via API, we&apos;ve added simplified metadata for the{" "}
-            <Link href="https://github.com/NYPL-publicdomain/data-and-utilities">
+            <Link
+              target="_blank"
+              href="https://github.com/NYPL-publicdomain/data-and-utilities"
+            >
               public domain portion of Digital Collections on GitHub
             </Link>
             , available in CSV and JSON formats.
@@ -357,12 +367,18 @@ const aboutData = [
         <Text sx={{ marginBottom: "xxl" }}>
           Digital Collections metadata records are also available for bulk
           download via the{" "}
-          <Link href="https://pro.dp.la/developers/bulk-download">
+          <Link
+            target="_blank"
+            href="https://pro.dp.la/developers/bulk-download"
+          >
             Digital Public Library of America (DPLA)
           </Link>
           . This includes all publicly available record descriptions for items
           on this site. The metadata standard we use is{" "}
-          <Link href="https://en.wikipedia.org/wiki/Metadata_Object_Description_Schema">
+          <Link
+            target="_blank"
+            href="https://en.wikipedia.org/wiki/Metadata_Object_Description_Schema"
+          >
             MODS
           </Link>
           , and the bulk data offered through DPLA is stored in JSON. The bulk
@@ -374,18 +390,33 @@ const aboutData = [
   {
     heading: <Heading level="h2" size="heading4" text="Platform" />,
     body: (
-      <Text sx={{ marginBottom: "xxl", marginTop: "s" }}>
-        NYPL uses Fedora Commons software for our repository, while our
-        bibliographic, technical, and rights metadata is managed by a custom
-        Ruby on Rails app we call—appropriately enough—the Metadata Management
-        System. The Digital Collections platform itself is also a Rails
-        application, but uses a lot of JavaScript (including libraries such as
-        the{" "}
-        <Link href="https://openlibrary.org/dev/docs/bookreader">
-          Internet Archive&apos;s BookReader
-        </Link>
-        ).
-      </Text>
+      <>
+        <Text sx={{ marginTop: "s" }}>
+          The Digital Collections platform utilizes JavaScript libraries such as
+          Next.js, React, and the{" "}
+          <Link
+            target="_blank"
+            href="https://openlibrary.org/dev/docs/bookreader"
+          >
+            Internet Archive&apos;s BookReader.
+          </Link>{" "}
+          The entire platform is currently being refreshed with modern
+          infrastructure, user experience, mobile optimization and accessibility
+          in mind. The digital asset framework for Digital Collections is
+          shifting to overall{" "}
+          <Link target="_blank" href="https://iiif.io/">
+            IIIF compliance
+          </Link>{" "}
+          to optimize performance and enhance shareability. IIIF is a set of
+          open standards commonly used by libraries and other institutions for
+          delivering high-quality, attributed digital objects online at scale.
+        </Text>
+        <Text sx={{ marginBottom: "xxl" }}>
+          NYPL&apos;s bibliographic, technical, and rights metadata is managed
+          by a custom Ruby on Rails app we call—appropriately enough—the
+          Metadata Management System.
+        </Text>
+      </>
     ),
   },
   {
@@ -621,7 +652,10 @@ const aboutData = [
                 </Text>
                 <Text>
                   Adapted from the{" "}
-                  <Link href="https://dp.la/about/harmful-language-statement">
+                  <Link
+                    target="_blank"
+                    href="https://dp.la/about/harmful-language-statement"
+                  >
                     Digital Public Library of America&apos;s Statement on
                     Potentially Harmful Content
                   </Link>

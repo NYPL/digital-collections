@@ -72,7 +72,8 @@ const ExploreFurther = () => {
                 href={item.url}
                 target="_blank"
                 rel="noreferrer noopener"
-                sx={{
+                hasVisitedState
+                __css={{
                   textDecoration: "none !important",
                   _hover: { textDecoration: "underline 1px dotted !important" },
                 }}
