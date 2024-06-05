@@ -10,6 +10,8 @@ import defaultFeaturedItem from "../../data/defaultFeaturedItemData";
 import appConfig from "appConfig";
 import { FeaturedItemData } from "@/types/FeaturedItemData";
 
+import { createURL } from "@/utils/utils";
+
 const CampaignHero = () => {
   const defaultFeaturedItemResponse =
     defaultFeaturedItem[appConfig["environment"]];
@@ -19,12 +21,21 @@ const CampaignHero = () => {
   useEffect(() => {
     const fetchData = async () => {
       const response = await fetch(`/api/featuredItem`);
-      const responseData = await response.json();
-      setData(responseData);
+      if (response.ok) {
+        const responseData = await response.json();
+        setData(responseData);
+        return responseData;
+      } else {
+        console.log("res in error is: ", response);
+        setData(defaultFeaturedItemResponse);
+        throw new Error(
+          "Something went wrong on API server! Method: fetchData() "
+        );
+      }
     };
 
     fetchData();
-  }, []);
+  }, [defaultFeaturedItemResponse]);
 
   const handleError = (e: any) => {
     console.log(e);

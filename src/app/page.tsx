@@ -67,3 +67,7 @@ export default function Page() {
     </>
   );
 }
+
+// export const getServerSideProps = () => {
+
+// }
