@@ -1,7 +1,7 @@
 import dynamic from "next/dynamic";
 import NotificationBanner from "@/components/notificationBanner/notificationBanner";
 import Header from "@/components/header/header";
-import manifestData from "@/data/manifest.json";
+import manifestData from "@/data/manifest_3.json";
 
 const Viewer = dynamic(
   () => import("@samvera/clover-iiif").then((Clover) => Clover.Viewer),
