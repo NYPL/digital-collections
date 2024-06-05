@@ -1,6 +1,7 @@
 import dynamic from "next/dynamic";
 import NotificationBanner from "@/components/notificationBanner/notificationBanner";
 import Header from "@/components/header/header";
+import manifestData from "@/data/manifest.json";
 
 const Viewer = dynamic(
   () => import("@samvera/clover-iiif").then((Clover) => Clover.Viewer),
@@ -70,6 +71,8 @@ const customTheme = {
 const MyCustomViewer = () => {
   const iiifContent =
     "https://api.dc.library.northwestern.edu/api/v2/collections/c373ecd2-2c45-45f2-9f9e-52dc244870bd?as=iiif";
+  //"http://localhost:3002/api/iiif/aeac20de-7757-44ad-9da7-dee24861ed5f"
+  // "https://api.dc.library.northwestern.edu/api/v2/collections/c373ecd2-2c45-45f2-9f9e-52dc244870bd?as=iiif";
 
   return (
     <>
