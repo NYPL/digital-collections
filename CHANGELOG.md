@@ -5,19 +5,18 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## Unreleased
-
-## [0.1.8]
+## [0.1.8] 2024-06-06
 
 ### Added
 
-- Added html id elements to logo, learn more link, swimlands images, and swimlane item counts. (DR-2885)
+- Added HTML id elements to logo, learn more link, swim lanes images, and swim lane item counts. (DR-2885)
 
 ### Updated
 
-- Update version of NYPL Reservoir to 3.0.0 (DR-2924)
+- Updated version of NYPL Reservoir to 3.0.0 (DR-2924)
 - Updated the hero component to use a fallback image if the original featured image returns an error (DR-2925)
 - Updated hero component text line break (DR-2986)
+- Updated hero skeleton loader to be shorter (DR-2800)
 
 ## [0.1.7] 2024-05-13
 
