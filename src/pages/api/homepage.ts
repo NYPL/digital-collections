@@ -13,7 +13,7 @@ const homepageHandler = async (
     // Get all the UUIDs from the collections
     const allCollectionUUIDs = lanes.reduce((acc, lane) => {
       return acc.concat(lane.collections.map((collection) => collection.uuid));
-    }, []);
+    }, [] as any);
     const uuidtoItemCountMap = await getItemsCountFromUUIDs(allCollectionUUIDs);
     // Update the collections for each lane with the number of items
     const updatedLanes = lanes.map((lane) => {
