@@ -149,7 +149,7 @@ export const apiPOSTCall = async (apiUrl: string, postData: any) => {
 };
 
 export const getFeaturedImage = async () => {
-  console.log(`getFeaturedImage: About call getAPIResponse`);
+  //console.log(`getFeaturedImage: About call getAPIResponse`);
   const defaultResponse =
     defaultFeaturedItems[appConfig.environment].featuredItem;
   const apiResponse = await getAPIResponse("featured", "", { random: "true" });
