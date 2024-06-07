@@ -44,7 +44,6 @@ describe("Swim Lanes component renders with expected props", () => {
     fireEvent(window, new Event("resize"));
     fireEvent.pointerOver(screen.getByText("MAVO"));
     const tooltip = await screen.findByRole("tooltip");
-    expect(screen.queryByRole("tooltip")).toBeInTheDocument();
     expect(tooltip).toBeInTheDocument();
   });
   it("does not render tooltips under desktop width", async () => {
