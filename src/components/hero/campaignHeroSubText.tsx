@@ -3,9 +3,12 @@ import {
   HorizontalRule,
   Text,
   Box,
+  Tooltip,
+  useNYPLBreakpoints,
 } from "@nypl/design-system-react-components";
 
 const CampaignHeroSubText = ({ featuredItem }: any) => {
+  const { isLargerThanXLarge } = useNYPLBreakpoints();
   return (
     <>
       <Text>
@@ -35,9 +38,17 @@ const CampaignHeroSubText = ({ featuredItem }: any) => {
           }}
         >
           Featured Image:{" "}
-          <DSLink hasVisitedState={false} href={featuredItem.href}>
-            {featuredItem.title}{" "}
-          </DSLink>
+          {isLargerThanXLarge ? (
+            <Tooltip content={featuredItem.title}>
+              <DSLink hasVisitedState={false} href={featuredItem.href}>
+                {featuredItem.title}{" "}
+              </DSLink>
+            </Tooltip>
+          ) : (
+            <DSLink hasVisitedState={false} href={featuredItem.href}>
+              {featuredItem.title}{" "}
+            </DSLink>
+          )}
         </Text>
       </Box>
     </>
