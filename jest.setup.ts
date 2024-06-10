@@ -1,4 +1,5 @@
 /* eslint-disable no-undef */
+import { MatchMedia } from "@nypl/design-system-react-components";
 import "@testing-library/jest-dom";
 import { toHaveNoViolations } from "jest-axe";
 expect.extend(toHaveNoViolations);
@@ -8,7 +9,6 @@ expect.extend(toHaveNoViolations);
 jest.spyOn(global.console, "error").mockImplementation(() => jest.fn());
 jest.spyOn(global.console, "warn").mockImplementation(() => jest.fn());
 
-import { MatchMedia } from "@nypl/design-system-react-components";
 new MatchMedia();
 
 global.ResizeObserver = jest.fn().mockImplementation(() => ({
