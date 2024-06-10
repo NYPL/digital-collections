@@ -152,15 +152,16 @@ To run the homepage swimlane image loading test script against the qa environmen
 ```
 npm run hompageImageLoadingTestQa
 ```
+
 (requires accessination with nypl-dams-dev)
 
 To run the same test script against the production environment, run
+
 ```
 npm run hompageImageLoadingTestProd
 ```
 
 The test waits for the 24 swim lane images to load, including the 12 that load after scrolling, and has succeeded if it does not time out. It simulates a single user loading the homepage one time.
-
 
 ## Getting Started With Docker
 
@@ -273,7 +274,7 @@ Next.js is a frontend Javascript framework with server-side rendering.
 
 ### Structure and routing
 
-This is a Next.js 13 app that uses the Pages router. This is a basic example project using that structure:
+This is a Next.js 14 app that uses the App router. This is a basic example project using that structure:
 
 ```
 project/
@@ -439,11 +440,11 @@ All pushes to this repo will be checked with `npm test` and `npm lint`.
 
 Our branches (in order of stability are):
 
-| Branch     | Environment | AWS Account    | Cluster                   | Link To Application                                                                        |
-| :--------- | :---------- | :------------- | :------------------------ | :----------------------------------------------------------------------------------------- |
-| main       | development |                |                           | [localhost:3000](http://localhost:3000)                                                    |
-| qa         | qa          | nypl-dams-dev  | dc-frontend-qa            | [https://qa-new-digitalcollections.nypl.org/](https://qa-new-digitalcollections.nypl.org/) |
-| production | production  | nypl-dams-prod | new-digitalcollections    | [https://new-digitalcollections.nypl.org/](https://new-digitalcollections.nypl.org/)       |
+| Branch     | Environment | AWS Account    | Cluster                | Link To Application                                                                        |
+| :--------- | :---------- | :------------- | :--------------------- | :----------------------------------------------------------------------------------------- |
+| main       | development |                |                        | [localhost:3000](http://localhost:3000)                                                    |
+| qa         | qa          | nypl-dams-dev  | dc-frontend-qa         | [https://qa-new-digitalcollections.nypl.org/](https://qa-new-digitalcollections.nypl.org/) |
+| production | production  | nypl-dams-prod | new-digitalcollections | [https://new-digitalcollections.nypl.org/](https://new-digitalcollections.nypl.org/)       |
 
 ## Contributing
 
