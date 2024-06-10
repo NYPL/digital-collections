@@ -9,6 +9,11 @@ import {
 
 const CampaignHeroSubText = ({ featuredItem }: any) => {
   const { isLargerThanXLarge } = useNYPLBreakpoints();
+  const featuredItemLink = (
+    <DSLink hasVisitedState={false} href={featuredItem.href}>
+      {featuredItem.title}{" "}
+    </DSLink>
+  );
   return (
     <>
       <Text>
@@ -39,15 +44,9 @@ const CampaignHeroSubText = ({ featuredItem }: any) => {
         >
           Featured Image:{" "}
           {isLargerThanXLarge ? (
-            <Tooltip content={featuredItem.title}>
-              <DSLink hasVisitedState={false} href={featuredItem.href}>
-                {featuredItem.title}{" "}
-              </DSLink>
-            </Tooltip>
+            <Tooltip content={featuredItem.title}>{featuredItemLink}</Tooltip>
           ) : (
-            <DSLink hasVisitedState={false} href={featuredItem.href}>
-              {featuredItem.title}{" "}
-            </DSLink>
+            featuredItemLink
           )}
         </Text>
       </Box>
