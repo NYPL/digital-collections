@@ -274,33 +274,27 @@ Next.js is a frontend Javascript framework with server-side rendering.
 
 ### Structure and routing
 
-This is a Next.js 14 app that uses the App router. This is a basic example project using that structure:
+This is a Next.js 14 app that uses the App Router. This is a basic example project using that structure:
 
 ```
 project/
 │
-├── pages/
-│   ├── index.js
-│   ├── contact.js
+├── app/
+│   ├── page.tsx
 │   ├── about/
-│   │   └── me.js
+│   │   └── page.tsx
 │   └── posts/
-│      ├── index.js
-│      └── [id].js
+│      ├── page.tsx
+│      └── [id]
+│           └── page.tsx
 │
 └── components/
-    ├── Header.js
-    └── Footer.js
+    ├── header.tsx
+    └── footer.tsx
 
 ```
 
-Files directly represent routes, so `index` files will be routed to the root of the directory, and a nested file structure will create a nested route (`pages/about/me.js` → `/about/me`). Dynamic routes are created with brackets: (`pages/posts/[id].js` → `posts/1`, `posts/2`, etc.).
-
-### Rendering and data fetching
-
-In general, rendering will happen one of three ways: server-side rendering, client-side rendering, and static site generation ("pre-rendering").
-
-Server-side data on a page can be fetched through `getStaticProps` (Next.js will pre-render the page at build time) or `getServerSideProps` (server will call on every request).
+Folders define routes, and paths of nested folders should end in a single "leaf": a `page.tsx` file. Dynamic routes are wrapped in brackets. For example, the route `app/blog/[slug]/page.js` would map to url `/blog/c` where the slug is `c`.
 
 ## Learn More
 
