@@ -1,22 +1,18 @@
 import CampaignHero from "../components/hero/campaignHero";
-import {
-  SkipNavigation,
-  TemplateAppContainer,
-} from "@nypl/design-system-react-components";
-import Header from "@/components/header/header";
+import { TemplateAppContainer } from "@nypl/design-system-react-components";
 import HomePageMainContent from "@/components/homePageMainContent/homePageMainContent";
 import ExploreFurther from "@/components/exploreFurther/exploreFurther";
-import NotificationBanner from "@/components/notificationBanner/notificationBanner";
+import Layout from "@/components/layout/layout";
+import { useContext, useEffect } from "react";
+import { breadcrumbsContext } from "./breadcrumbsContext";
 
 export default function Home(props: any = {}) {
+  const { breadcrumbs, setBreadcrumbs } = useContext(breadcrumbsContext);
+  useEffect(() => {
+    setBreadcrumbs([{ text: "Home", url: "/" }]);
+  }, []);
   return (
-    <>
-      <SkipNavigation target="#hero" />
-      {/**
-       * * @TODO: Header will need to be pulled into a reusable Layout component (DC Facelift phase 2)
-       * * Let this be @7emansell 's problem if possible **/}
-      <NotificationBanner />
-      <Header />
+    <Layout activePage="home" breadcrumbs={breadcrumbs}>
       <TemplateAppContainer
         breakout={
           <div id="hero">
@@ -26,6 +22,6 @@ export default function Home(props: any = {}) {
         contentPrimary={<HomePageMainContent />}
       />
       <ExploreFurther />
-    </>
+    </Layout>
   );
 }

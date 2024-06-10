@@ -6,11 +6,11 @@ export const dcNavLinks = [
     text: "Items",
   },
   {
-    href: `${DC_URL}/collections`,
+    href: `/collections`,
     text: "Collections",
   },
   {
-    href: `${DC_URL}/divisions`,
+    href: `/divisions`,
     text: "Divisions",
   },
   {
