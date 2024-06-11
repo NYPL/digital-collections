@@ -1,5 +1,5 @@
-import data from "app/data/lanes";
-import { getItemsCountFromUUIDs } from "app/utils/utils";
+import data from "../../data/lanes";
+import { getItemsCountFromUUIDs } from "../../utils/utils";
 import type { NextApiRequest, NextApiResponse } from "next";
 
 const homepageHandler = async (
@@ -11,9 +11,9 @@ const homepageHandler = async (
     const randomNumber = Math.floor(Math.random() * 2);
     const lanes = data.lanes;
     // Get all the UUIDs from the collections
-    const allCollectionUUIDs = lanes.reduce((acc, lane) => {
+    const allCollectionUUIDs: string[] = lanes.reduce((acc, lane) => {
       return acc.concat(lane.collections.map((collection) => collection.uuid));
-    }, []);
+    }, [] as string[]);
     const uuidtoItemCountMap = await getItemsCountFromUUIDs(allCollectionUUIDs);
     // Update the collections for each lane with the number of items
     const updatedLanes = lanes.map((lane) => {
@@ -27,7 +27,7 @@ const homepageHandler = async (
     });
 
     // 24 hour cache
-    // response.setHeader("Cache-Control", "s-maxage=86400"); //removing bc the Featured Content does not change when we relead the page if we cache the data.
+    response.setHeader("Cache-Control", "s-maxage=86400");
 
     return response.status(200).json({
       randomNumber,
