@@ -1,4 +1,4 @@
-import About from "@/pages/about";
+import About from "@/about/page";
 import { render } from "@testing-library/react";
 import { axe } from "jest-axe";
 
