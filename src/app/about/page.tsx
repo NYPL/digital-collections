@@ -1,7 +1,6 @@
 "use client";
 import { Box } from "@nypl/design-system-react-components";
 import aboutPageElements from "../data/aboutPageElements";
-import Head from "next/head";
 import React from "react";
 
 export default function About() {
@@ -16,14 +15,7 @@ export default function About() {
 
   return (
     <>
-      <Head>
-        <title>About NYPL Digital Collections</title>
-        <meta
-          property="og:title"
-          content="About NYPL Digital Collections"
-          key="title"
-        />
-      </Head>
+      <title>About NYPL Digital Collections</title>
       <Box
         id="mainContent"
         sx={{
