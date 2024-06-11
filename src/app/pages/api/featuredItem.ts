@@ -2,7 +2,7 @@ import {
   getNumDigitizedItems,
   getFeaturedImage,
   imageURL,
-} from "app/utils/utils";
+} from "../../utils/utils";
 import appConfig from "appConfig";
 import type { NextApiRequest, NextApiResponse } from "next";
 
