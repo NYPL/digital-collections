@@ -29,10 +29,13 @@ const SwimLanes = ({ lanesWithNumItems }) => {
           type="standalone"
           href={`${DC_URL}/collections/lane/${lane.slug}`}
           aria-label={`See more ${lane.title.toLowerCase()}`}
-          sx={{
+          hasVisitedState
+          __css={{
             display: { sm: "none", md: "inline" },
-            fontWeight: "500",
+            color: "ui.primary.link",
+            fontWeight: "500 !important",
             alignItems: "center",
+            _hover: { textDecoration: "underline 1px dotted !important" },
           }}
         >
           See more
@@ -78,8 +81,8 @@ const SwimLanes = ({ lanesWithNumItems }) => {
                 <Text
                   id={`item-count-${lane.slug}-${index}`}
                   size="subtitle2"
-                  sx={{
-                    fontWeight: "400",
+                  fontWeight="medium"
+                  __css={{
                     display: "none",
                     [`@media screen and (min-width: 600px)`]: {
                       display: "inline",
@@ -100,12 +103,13 @@ const SwimLanes = ({ lanesWithNumItems }) => {
         href={`${DC_URL}/collections/lane/${lane.slug}`}
         aria-label={`See more ${lane.title.toLowerCase()}`}
         className="smlink"
-        sx={{
+        hasVisitedState
+        __css={{
           display: { sm: "flex", md: "none" },
-          fontWeight: "500",
+          fontWeight: "regular",
           justifyContent: "flex-end",
           marginTop: "s",
-          alignItems: "center",
+          alignItems: "center", //idk why this doesn't work
           "& svg": {
             marginTop: "1px",
           },
