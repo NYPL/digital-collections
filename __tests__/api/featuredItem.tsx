@@ -1,7 +1,7 @@
 // import { getLanesData } from "@/pages/api/lanes";
 import featuredItemDataHandler from "@/pages/api/featuredItem";
 import { NextApiRequest } from "next";
-import CampaignHero from "@/components/hero/campaignHero";
+import CampaignHero from "app/components/hero/campaignHero";
 import React from "react";
 import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 
