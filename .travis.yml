@@ -4,6 +4,7 @@ services:
   - docker
 branches:
   only:
+    # - solrtest
     - qa
     - production
 env:

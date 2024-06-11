@@ -1,8 +1,5 @@
-import {
-  getNumDigitizedItems,
-  getFeaturedImage,
-  imageURL,
-} from "@/utils/utils";
+import { imageURL } from "@/utils/iiif";
+import { getNumDigitizedItems, getFeaturedImage } from "@/utils/utils";
 import appConfig from "appConfig";
 import type { NextApiRequest, NextApiResponse } from "next";
 

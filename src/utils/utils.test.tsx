@@ -2,10 +2,11 @@ import { waitFor } from "@testing-library/react";
 
 import {
   adobeAnalyticsRouteToPageName,
-  apiCall,
-  apiPOSTCall,
   getItemsCountFromUUIDs,
 } from "../utils/utils";
+
+import { apiCall, apiPOSTCall } from "../utils/api";
+
 import {
   ADOBE_ANALYTICS_DC_PREFIX,
   ADOBE_ANALYTICS_PAGE_NAMES,

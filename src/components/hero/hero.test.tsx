@@ -1,6 +1,6 @@
 import CampaignHero from "@/components/hero/campaignHero";
 import { render, screen, waitFor } from "@testing-library/react";
-import { imageURL } from "@/utils/utils";
+import { imageURL } from "@/utils/iiif";
 
 describe("Campaign Hero", () => {
   it("renders the SkeletonLoader component instead of the Campaign Hero", () => {
