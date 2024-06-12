@@ -7,13 +7,32 @@ import {
   Link,
   Text,
   CardContent,
+  Tooltip,
 } from "@nypl/design-system-react-components";
 import { ExploreFurtherData } from "@/types/ExploreFurtherData";
 import exploreFurtherData from "@/data/exploreFurtherData";
 import { headerBreakpoints } from "@/utils/breakpoints";
+import useBreakpoints from "@/hooks/useBreakpoints";
 
 const ExploreFurther = () => {
   const data: ExploreFurtherData[] = exploreFurtherData;
+  const { isLargerThanLargeTablet } = useBreakpoints();
+  function exploreFurtherLink(item) {
+    return (
+      <Link
+        href={item.url}
+        target="_blank"
+        rel="noreferrer noopener"
+        hasVisitedState
+        __css={{
+          textDecoration: "none !important",
+          _hover: { textDecoration: "underline 1px dotted !important" },
+        }}
+      >
+        {item.title}
+      </Link>
+    );
+  }
 
   return (
     <Box
@@ -68,18 +87,13 @@ const ExploreFurther = () => {
             }}
           >
             <CardHeading id={`main-heading-${index}`} size="h5" level="h3">
-              <Link
-                href={item.url}
-                target="_blank"
-                rel="noreferrer noopener"
-                hasVisitedState
-                __css={{
-                  textDecoration: "none !important",
-                  _hover: { textDecoration: "underline 1px dotted !important" },
-                }}
-              >
-                {item.title}
-              </Link>
+              {isLargerThanLargeTablet ? (
+                <Tooltip content={item.title}>
+                  {exploreFurtherLink(item)}
+                </Tooltip>
+              ) : (
+                exploreFurtherLink(item)
+              )}
             </CardHeading>
             <CardContent>
               <Text size="subtitle2" sx={{ fontWeight: "400" }}>

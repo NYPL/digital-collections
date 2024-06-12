@@ -1,4 +1,4 @@
-import { render, screen, within } from "@testing-library/react";
+import { fireEvent, render, screen, within } from "@testing-library/react";
 import SwimLanes from "@/components/swimlanes/swimLanes";
 import { props } from "../../../__tests__/data/homepageProps";
 import appConfig from "appConfig";
@@ -36,5 +36,21 @@ describe("Swim Lanes component renders with expected props", () => {
     expect(
       within(secondrow).getByText("Diana Davies photographs")
     ).toBeInTheDocument();
+  });
+
+  it("renders tooltips on >1024px width", async () => {
+    render(<SwimLanes {...props} />);
+    window.innerWidth = 1050;
+    fireEvent(window, new Event("resize"));
+    fireEvent.pointerOver(screen.getByText("MAVO"));
+    const tooltip = await screen.findByRole("tooltip");
+    expect(tooltip).toBeInTheDocument();
+  });
+  it("does not render tooltips <1024px width", async () => {
+    render(<SwimLanes {...props} />);
+    window.innerWidth = 1000;
+    fireEvent(window, new Event("resize"));
+    fireEvent.pointerOver(screen.getByText("MAVO"));
+    expect(screen.queryByRole("tooltip")).not.toBeInTheDocument();
   });
 });
