@@ -1,14 +1,14 @@
+import useBreakpoints from "@/hooks/useBreakpoints";
 import {
   Link as DSLink,
   HorizontalRule,
   Text,
   Box,
   Tooltip,
-  useNYPLBreakpoints,
 } from "@nypl/design-system-react-components";
 
 const CampaignHeroSubText = ({ featuredItem }: any) => {
-  const { isLargerThanXLarge } = useNYPLBreakpoints();
+  const { isLargerThanLargeTablet } = useBreakpoints();
   const featuredItemLink = (
     <DSLink hasVisitedState={false} href={featuredItem.href}>
       {featuredItem.title}{" "}
@@ -43,7 +43,7 @@ const CampaignHeroSubText = ({ featuredItem }: any) => {
           }}
         >
           Featured Image:{" "}
-          {isLargerThanXLarge ? (
+          {isLargerThanLargeTablet ? (
             <Tooltip content={featuredItem.title}>{featuredItemLink}</Tooltip>
           ) : (
             featuredItemLink
