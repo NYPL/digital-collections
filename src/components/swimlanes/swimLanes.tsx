@@ -80,7 +80,7 @@ const SwimLanes = ({ lanesWithNumItems }) => {
               >
                 {isLargerThanLargeTablet ? (
                   <Tooltip content={collection.title}>
-                    <Text>{collection.title}</Text>
+                    <Text sx={{ marginBottom: "0" }}>{collection.title}</Text>
                   </Tooltip>
                 ) : (
                   collection.title
