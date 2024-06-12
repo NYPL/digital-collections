@@ -8,15 +8,15 @@ import {
   Text,
   CardContent,
   Tooltip,
-  useNYPLBreakpoints,
 } from "@nypl/design-system-react-components";
 import { ExploreFurtherData } from "@/types/ExploreFurtherData";
 import exploreFurtherData from "@/data/exploreFurtherData";
 import { headerBreakpoints } from "@/utils/breakpoints";
+import useBreakpoints from "@/hooks/useBreakpoints";
 
 const ExploreFurther = () => {
   const data: ExploreFurtherData[] = exploreFurtherData;
-  const { isLargerThanXLarge } = useNYPLBreakpoints();
+  const { isLargerThanLargeTablet } = useBreakpoints();
   function exploreFurtherLink(item) {
     return (
       <Link
@@ -87,7 +87,7 @@ const ExploreFurther = () => {
             }}
           >
             <CardHeading id={`main-heading-${index}`} size="h5" level="h3">
-              {isLargerThanXLarge ? (
+              {isLargerThanLargeTablet ? (
                 <Tooltip content={item.title}>
                   {exploreFurtherLink(item)}
                 </Tooltip>

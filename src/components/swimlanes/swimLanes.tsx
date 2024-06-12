@@ -11,15 +11,15 @@ import {
   Link,
   CardContent,
   Tooltip,
-  useNYPLBreakpoints,
 } from "@nypl/design-system-react-components";
 import styles from "./Swimlanes.module.css";
 import { imageURL } from "@/utils/utils";
 import Image from "next/image";
 import { DC_URL } from "../../config/constants";
+import useBreakpoints from "@/hooks/useBreakpoints";
 
 const SwimLanes = ({ lanesWithNumItems }) => {
-  const { isLargerThanXLarge } = useNYPLBreakpoints();
+  const { isLargerThanLargeTablet } = useBreakpoints();
   return lanesWithNumItems.map((lane, key) => (
     <Box className={styles.lane} data-testid={lane.slug} mt="xxl" key={key}>
       <Flex alignItems="baseline">
@@ -78,7 +78,7 @@ const SwimLanes = ({ lanesWithNumItems }) => {
                 url={collection.url}
                 noOfLines={3}
               >
-                {isLargerThanXLarge ? (
+                {isLargerThanLargeTablet ? (
                   <Tooltip content={collection.title}>
                     <Text>{collection.title}</Text>
                   </Tooltip>
