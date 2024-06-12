@@ -2,5 +2,5 @@
 .git
 .next
 node_modules
-npm - debug.log
+npm-debug.log
 README.md
