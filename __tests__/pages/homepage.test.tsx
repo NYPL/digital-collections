@@ -1,8 +1,8 @@
 import { render } from "@testing-library/react";
-import Home from "../../src/pages/index";
+import Home from "../../src/app/page";
 import { axe } from "jest-axe";
 import { props } from "../data/homepageProps";
-import logger from "../__mocks__/logger";
+import React from "react";
 
 describe("Homepage Accessibility", () => {
   (global as any).fetch = jest.fn(() =>

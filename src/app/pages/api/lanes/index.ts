@@ -1,4 +1,4 @@
-import lanesData from "../../../app/data/lanes";
+import lanesData from "../../../data/lanes";
 import type { NextApiRequest, NextApiResponse } from "next";
 
 export const getLanesData = () => {
