@@ -1,5 +1,5 @@
-import data from "../../app/data/lanes";
-import { getItemsCountFromUUIDs } from "../../app/utils/utils";
+import data from "../../data/lanes";
+import { getItemsCountFromUUIDs } from "../../utils/utils";
 import type { NextApiRequest, NextApiResponse } from "next";
 
 const homepageHandler = async (

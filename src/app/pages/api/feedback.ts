@@ -2,7 +2,7 @@ import type { NextApiRequest, NextApiResponse } from "next";
 import { google } from "googleapis";
 import requestIp from "request-ip";
 import { UAParser } from "ua-parser-js";
-import { getCustomTimestamp } from "../../app/utils/utils";
+import { getCustomTimestamp } from "../../utils/utils";
 
 export default async function feedbackFormHandler(
   request: NextApiRequest,
@@ -15,15 +15,20 @@ export default async function feedbackFormHandler(
       .send({ message: "only POST requests are allowed" });
   }
 
+  // Values to pass to spreadsheet
   const body = request.body;
   const { category: type, comment: feedbackText } = body;
 
+  // timetamp
   const timestamp = getCustomTimestamp();
+  // page (route)
   const referer = request.headers.referer;
   const origin = request.headers.origin;
-  const page = "/";
+  const page = "/"; //setting to root for now
   // const page = referer.replace(origin, "")
-  const ipAddress = requestIp.getClientIp(request);
+  // ipAddress
+  const ipAddress = requestIp.getClientIp(request); // on localhost you'll see 127.0.0.1 if you're using IPv4 or ::1, ::ffff:127.0.0.1 if you're using IPv6
+  // userPlatform, userBrowser, userVersion
   const userAgentParser = new UAParser(request.headers["user-agent"]);
   const userAgent = userAgentParser.getResult();
   const userPlatform = userAgent.device.model;
@@ -31,6 +36,7 @@ export default async function feedbackFormHandler(
   const userVersion = userAgent.browser.version;
 
   try {
+    //prepare auth
     const auth = new google.auth.GoogleAuth({
       credentials: {
         client_email: process.env.GOOGLE_SHEETS_CLIENT_EMAIL,
