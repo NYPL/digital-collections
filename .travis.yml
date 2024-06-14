@@ -5,6 +5,7 @@ services:
 branches:
   only:
     - qa
+    - adobeTargetTest
     - production
 env:
   global:
@@ -19,9 +20,9 @@ env:
 jobs:
   include:
     - stage: deploy QA
-      if: "(branch = qa) AND (type != pull_request)"
+      if: "(branch = adobeTargetTest)"
       env:
-        - ECR_URL=685731035297.dkr.ecr.us-east-1.amazonaws.com/dc-frontend:$TRAVIS_BRANCH-latest
+        - ECR_URL=685731035297.dkr.ecr.us-east-1.amazonaws.com/dc-frontend:adobeTargetTest-latest
         - AWS_ACCESS_KEY_ID=$AWS_ACCESS_KEY_ID_QA
         - AWS_SECRET_ACCESS_KEY=$AWS_SECRET_ACCESS_KEY_QA
         - CLUSTER_NAME=dc-frontend-qa

@@ -14,4 +14,7 @@ export const ADOBE_ANALYTICS_PAGE_NAMES = {
 };
 
 export const DC_URL = appConfig.DC_URL[appConfig.environment];
-export const ADOBE_EMBED_URL = appConfig.adobeEmbedUrl[appConfig.environment];
+// export const ADOBE_EMBED_URL = appConfig.adobeEmbedUrl[appConfig.environment];
+// Hardcoded just to test for now.
+export const ADOBE_EMBED_URL =
+  "https://assets.adobedtm.com/1a9376472d37/0eae8b2db428/launch-73f21f6dbd57-development.min.js";
