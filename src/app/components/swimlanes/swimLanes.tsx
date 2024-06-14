@@ -16,7 +16,7 @@ import {
 import styles from "./Swimlanes.module.css";
 import { imageURL } from "../../utils/utils";
 import { DC_URL } from "../../config/constants";
-import useBreakpoints from "@/hooks/useBreakpoints";
+import useBreakpoints from "../../hooks/useBreakpoints";
 
 const SwimLanes = ({ lanesWithNumItems }) => {
   const { isLargerThanLargeTablet } = useBreakpoints();
