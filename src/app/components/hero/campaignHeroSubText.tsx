@@ -1,4 +1,4 @@
-import useBreakpoints from "@/hooks/useBreakpoints";
+import useBreakpoints from "../../hooks/useBreakpoints";
 import {
   Link as DSLink,
   HorizontalRule,
