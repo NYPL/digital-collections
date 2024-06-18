@@ -23,8 +23,10 @@ export default function RootLayout({
   const [view, setView] = useState("form");
   const { onOpen, isOpen, onClose, FeedbackBox } = useFeedbackBox();
   const onSubmit = async (values) => {
+    console.log("onsubmit");
+    console.log("onsuvmit", values);
     try {
-      const response = await fetch("/api/feedback", {
+      const response = await fetch(`/api/feedback`, {
         method: "POST",
         headers: {
           Accept: "application/json",

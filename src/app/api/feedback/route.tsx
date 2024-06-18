@@ -1,31 +1,27 @@
-import type { NextApiRequest, NextApiResponse } from "next";
+import type { NextApiRequest } from "next";
 import { google } from "googleapis";
 import requestIp from "request-ip";
 import { UAParser } from "ua-parser-js";
 import { getCustomTimestamp } from "../../utils/utils";
+import { NextResponse } from "next/server";
 
-export default async function feedbackFormHandler(
-  request: NextApiRequest,
-  response: NextApiResponse
-) {
-  const { method } = request;
-  if (method !== "POST") {
-    return response
-      .status(405)
-      .send({ message: "only POST requests are allowed" });
-  }
-
+export const POST = async (request: NextApiRequest, response: NextResponse) => {
   // Values to pass to spreadsheet
+  console.log(request);
   const body = request.body;
+  console.log("body");
   const { category: type, comment: feedbackText } = body;
+  console.log(JSON.stringify(body));
 
-  // timetamp
+  // timestamp
   const timestamp = getCustomTimestamp();
   // page (route)
-  const referer = request.headers.referer;
-  const origin = request.headers.origin;
-  const page = "/"; //setting to root for now
-  // const page = referer.replace(origin, "")
+  const referer = request.headers.referer || "";
+  //console.log(referer);
+  const origin = request.headers.origin || "";
+  //console.log(origin);
+  //const page = "/"; //setting to root for now
+  const page = referer.replace(origin, "");
   // ipAddress
   const ipAddress = requestIp.getClientIp(request); // on localhost you'll see 127.0.0.1 if you're using IPv4 or ::1, ::ffff:127.0.0.1 if you're using IPv6
   // userPlatform, userBrowser, userVersion
@@ -51,6 +47,7 @@ export default async function feedbackFormHandler(
         "https://www.googleapis.com/auth/spreadsheets",
       ],
     });
+    //console.log(auth);
 
     const sheets = google.sheets({ auth, version: "v4" });
 
@@ -73,15 +70,22 @@ export default async function feedbackFormHandler(
         ],
       },
     });
+    //console.log(googleResponse);
 
-    return response.status(200).json({
-      text: "successful feedback form submission",
-    });
+    return NextResponse.json(
+      {
+        text: "successful feedback form submission",
+      },
+      { status: 200 }
+    );
   } catch (e) {
-    return response.status(500).send({
-      message: e.message,
-      error: "Internal Server Error",
-    });
+    return NextResponse.json(
+      {
+        message: e.message,
+        error: "Internal Server Error",
+      },
+      { status: 500 }
+    );
   }
-}
+};
 // http://localhost:3000/api/feedback
