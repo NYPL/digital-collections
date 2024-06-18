@@ -1,9 +1,8 @@
 import data from "../../data/lanes";
 import { getItemsCountFromUUIDs } from "../../utils/utils";
-import type { NextApiRequest } from "next";
-import { NextResponse } from "next/server";
+import { NextResponse, NextRequest } from "next/server";
 
-export const GET = async (request: NextApiRequest, response: NextResponse) => {
+export const GET = async (request: NextRequest, response: NextResponse) => {
   const randomNumber = Math.floor(Math.random() * 2);
   const lanes = data.lanes;
   // Get all the UUIDs from the collections

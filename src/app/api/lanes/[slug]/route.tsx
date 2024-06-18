@@ -1,11 +1,11 @@
-import { NextResponse } from "next/server";
+import { NextResponse, NextRequest } from "next/server";
 import lanesData from "../../../data/lanes";
-import type { NextApiRequest } from "next";
 
-export const GET = async (request: NextApiRequest, response: NextResponse) => {
-  const { query } = request;
-  const slug = query.slug as string;
-  const slugData = lanesData.lanes.find((lane) => lane.slug === slug);
+export const GET = async (
+  request: NextRequest,
+  { params }: { params: { slug: string } }
+) => {
+  const slugData = lanesData.lanes.find((lane) => lane.slug === params.slug);
 
   if (slugData) {
     return NextResponse.json(
