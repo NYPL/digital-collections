@@ -8,7 +8,8 @@
     "start": "next start",
     "start:newrelic": "NODE_OPTIONS='-r @newrelic/next' next start",
     "lint": "next lint",
-    "test": "jest",
+    "test": "jest --config=jest.config.ts",
+    "test:API": "jest --config=jestAPI.config.ts",
     "test:ci": "jest --ci --config=jest.config.ts",
     "prepare": "husky install",
     "homepageImageLoadingTestQa": "node test/homepageImageLoadingTest.js",
@@ -59,6 +60,7 @@
     "jest": "29.7.0",
     "jest-axe": "8.0.0",
     "jest-environment-jsdom": "29.7.0",
+    "jest-environment-node": "29.7.0",
     "lint-staged": "15.0.1",
     "prettier": "3.0.3",
     "puppeteer": "^22.6.2"
