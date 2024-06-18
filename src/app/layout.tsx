@@ -19,12 +19,9 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   const pathname = usePathname();
-  console.log("pathname before use effect is", pathname);
   const [view, setView] = useState("form");
   const { onOpen, isOpen, onClose, FeedbackBox } = useFeedbackBox();
   const onSubmit = async (values) => {
-    console.log("onsubmit");
-    console.log("onsuvmit", values);
     try {
       const response = await fetch(`/api/feedback`, {
         method: "POST",
@@ -36,14 +33,11 @@ export default function RootLayout({
       });
 
       if (response.ok) {
-        // ...
         setView("confirmation");
       } else {
         setView("error");
       }
     } catch (error) {
-      // Reject the promise according to your application.
-      // And then call:
       setView("error");
     }
   };
