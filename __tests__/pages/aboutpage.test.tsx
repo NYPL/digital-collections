@@ -1,4 +1,4 @@
-import About from "../../src/app/about/page";
+import About from "../../app/about/page";
 import { render } from "@testing-library/react";
 import { axe } from "jest-axe";
 import React from "react";

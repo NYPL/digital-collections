@@ -18,7 +18,7 @@ const config = {
     "__tests__/pages/*",
     "__tests__/__mocks__/*",
     "__tests__/api/featuredItem",
-    "src/*",
+    "app/*",
   ],
   moduleNameMapper: {
     "^appConfig$": "<rootDir>/__tests__/data/appConfig.ts", // Adjust the path as needed

@@ -6,7 +6,7 @@ import CampaignHeroHeading from "./campaignHeroHeading";
 import CampaignHeroLoading from "./campaignHeroLoading";
 import defaultFeaturedItem from "../../data/defaultFeaturedItemData";
 
-import appConfig from "../../../../appConfig";
+import appConfig from "../../../appConfig";
 import { FeaturedItemData } from "../../types/FeaturedItemData";
 import React from "react";
 
