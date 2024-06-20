@@ -21,7 +21,10 @@ const CampaignHero = () => {
       let response;
       let responseData: FeaturedItemData;
       try {
-        response = await fetch(`/api/featuredItem`);
+        const response = await fetch("/api/featuredItem", {
+          method: "GET",
+          cache: "no-store",
+        });
         responseData = await response.json();
       } catch (e) {
         console.log("CampaignHero error: ", e);
