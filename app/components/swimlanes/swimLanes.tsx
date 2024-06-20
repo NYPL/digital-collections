@@ -19,7 +19,18 @@ import { DC_URL } from "../../config/constants";
 import useBreakpoints from "../../hooks/useBreakpoints";
 
 const SwimLanes = ({ lanesWithNumItems }) => {
-  const { isLargerThanLargeTablet } = useBreakpoints();
+  const {
+    isLargerThanLargeTablet,
+    isLargerThanSmallTablet,
+    isLargerThanLargeMobile,
+  } = useBreakpoints();
+  const numColumns = isLargerThanLargeTablet
+    ? 4
+    : isLargerThanSmallTablet
+    ? 2
+    : isLargerThanLargeMobile
+    ? 2
+    : 2;
   return lanesWithNumItems.map((lane, key) => (
     <Box className={styles.lane} data-testid={lane.slug} mt="xxl" key={key}>
       <Flex alignItems="baseline">
@@ -45,7 +56,7 @@ const SwimLanes = ({ lanesWithNumItems }) => {
         </Link>
       </Flex>
       {lane.collections && lane.collections.length > 0 && (
-        <SimpleGrid columns={4} id={`grid-${lane.slug}`}>
+        <SimpleGrid columns={numColumns} id={`grid-${lane.slug}`}>
           {lane.collections.map((collection, index) => (
             <Card
               key={index}
