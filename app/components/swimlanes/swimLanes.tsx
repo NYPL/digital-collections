@@ -24,13 +24,12 @@ const SwimLanes = ({ lanesWithNumItems }) => {
     isLargerThanSmallTablet,
     isLargerThanLargeMobile,
   } = useBreakpoints();
-  const numColumns = isLargerThanLargeTablet
-    ? 4
-    : isLargerThanSmallTablet
-    ? 2
-    : isLargerThanLargeMobile
-    ? 2
-    : 2;
+  const getNumColumns = () => {
+    if (isLargerThanLargeTablet) return 4;
+    if (isLargerThanSmallTablet) return 2;
+    if (isLargerThanLargeMobile) return 2;
+    return 1;
+  };
   return lanesWithNumItems.map((lane, key) => (
     <Box className={styles.lane} data-testid={lane.slug} mt="xxl" key={key}>
       <Flex alignItems="baseline">
@@ -56,9 +55,16 @@ const SwimLanes = ({ lanesWithNumItems }) => {
         </Link>
       </Flex>
       {lane.collections && lane.collections.length > 0 && (
-        <SimpleGrid columns={numColumns} id={`grid-${lane.slug}`}>
+        <SimpleGrid
+          columns={getNumColumns()}
+          id={`grid-${lane.slug}`}
+          sx={{
+            gridTemplateColumns: `repeat(${getNumColumns()}, minmax(0, 1fr))`,
+          }}
+        >
           {lane.collections.map((collection, index) => (
             <Card
+              sx={{ display: "grid" }}
               key={index}
               id={`card-${lane.slug}-${index}`}
               imageProps={{
@@ -104,7 +110,7 @@ const SwimLanes = ({ lanesWithNumItems }) => {
                   fontWeight="medium"
                   __css={{
                     display: "none",
-                    [`@media screen and (min-width: 600px)`]: {
+                    [`@media screen and (min-width: 480px)`]: {
                       display: "inline",
                     },
                   }}
