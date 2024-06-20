@@ -9,7 +9,3 @@
 .lane:first-child {
   margin-top: 1rem;
 }
-
-.lane {
-  display: grid !important;
-}
