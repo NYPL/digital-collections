@@ -19,14 +19,9 @@ import { DC_URL } from "../../config/constants";
 import useBreakpoints from "../../hooks/useBreakpoints";
 
 const SwimLanes = ({ lanesWithNumItems }) => {
-  const {
-    isLargerThanLargeTablet,
-    isLargerThanSmallTablet,
-    isLargerThanLargeMobile,
-  } = useBreakpoints();
+  const { isLargerThanLargeTablet, isLargerThanLargeMobile } = useBreakpoints();
   const getNumColumns = () => {
     if (isLargerThanLargeTablet) return 4;
-    if (isLargerThanSmallTablet) return 2;
     if (isLargerThanLargeMobile) return 2;
     return 1;
   };
