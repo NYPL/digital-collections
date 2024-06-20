@@ -16,15 +16,10 @@ import {
 import styles from "./Swimlanes.module.css";
 import { imageURL } from "../../utils/utils";
 import { DC_URL } from "../../config/constants";
-import useBreakpoints from "../../hooks/useBreakpoints";
+import useBreakpoints from "app/hooks/useBreakpoints";
 
-const SwimLanes = ({ lanesWithNumItems }) => {
-  const { isLargerThanLargeTablet, isLargerThanLargeMobile } = useBreakpoints();
-  const getNumColumns = () => {
-    if (isLargerThanLargeTablet) return 4;
-    if (isLargerThanLargeMobile) return 2;
-    return 1;
-  };
+const SwimLanes = ({ numColumns, lanesWithNumItems }) => {
+  const { isLargerThanLargeTablet } = useBreakpoints();
   return lanesWithNumItems.map((lane, key) => (
     <Box className={styles.lane} data-testid={lane.slug} mt="xxl" key={key}>
       <Flex alignItems="baseline">
@@ -51,10 +46,10 @@ const SwimLanes = ({ lanesWithNumItems }) => {
       </Flex>
       {lane.collections && lane.collections.length > 0 && (
         <SimpleGrid
-          columns={getNumColumns()}
+          columns={numColumns}
           id={`grid-${lane.slug}`}
           sx={{
-            gridTemplateColumns: `repeat(${getNumColumns()}, minmax(0, 1fr))`,
+            gridTemplateColumns: `repeat(${numColumns}, minmax(0, 1fr))`,
           }}
         >
           {lane.collections.map((collection, index) => (
