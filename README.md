@@ -373,7 +373,7 @@ Note: Do not need to worry about Quality or Format for this application.
 
 The Digital Collections app runs unit tests with Jest and React Testing Library.
 
-We have two groups of tests: pages/components have unit tests in the `jsdom` environment, and the API endpoints are tested in the `node` environment.
+We have two groups of tests: client side components/pages have unit tests in the `jsdom` environment, and the functional tests for API endpoints are in the `node` environment. This is due to the structure of the App Router in Next.
 
 To run all tests once:
 
