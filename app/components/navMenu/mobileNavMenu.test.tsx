@@ -32,12 +32,12 @@ describe("Mobile nav menu component", () => {
     );
     expect(screen.getByLabelText("Divisions")).toHaveAttribute(
       "href",
-      `${appConfig.DC_URL[appConfig.environment]}/divisions`
+      `/divisions`
     );
     expect(screen.getByLabelText("Collections")).toHaveAttribute(
       "href",
-      `${appConfig.DC_URL[appConfig.environment]}/collections`
+      `/collections`
     );
-    //expect(screen.getByLabelText("About")).toHaveAttribute("href", `/about`);
+    expect(screen.getByLabelText("About")).toHaveAttribute("href", `/about`);
   });
 });

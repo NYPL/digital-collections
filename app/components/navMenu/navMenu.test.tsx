@@ -20,13 +20,10 @@ describe("Nav menu component", () => {
       appConfig.DC_URL[appConfig.environment] +
         `/search/index?utf8=%E2%9C%93&keywords=`
     );
-    expect(getByLabelText("Divisions")).toHaveAttribute(
-      "href",
-      appConfig.DC_URL[appConfig.environment] + `/divisions`
-    );
+    expect(getByLabelText("Divisions")).toHaveAttribute("href", `/divisions`);
     expect(getByLabelText("Collections")).toHaveAttribute(
       "href",
-      appConfig.DC_URL[appConfig.environment] + `/collections`
+      `/collections`
     );
     expect(getByLabelText("About")).toHaveAttribute("href", "/about");
   });
