@@ -5,6 +5,7 @@ import {
 } from "../../utils/utils";
 import appConfig from "appConfig";
 import { NextResponse, NextRequest } from "next/server";
+export const fetchCache = "force-no-store";
 
 export const GET = async (request: NextRequest, response: NextResponse) => {
   const featuredImageData = await getFeaturedImage();
@@ -30,12 +31,14 @@ export const GET = async (request: NextRequest, response: NextResponse) => {
       featuredImageData.uuid
     }`,
   };
-
-  return NextResponse.json(
+  const newResponse = NextResponse.json(
     {
       featuredItem: featuredItemObject,
       numberOfDigitizedItems: numDigitizedItems,
     },
     { status: 200 }
   );
+
+  newResponse.headers.set("Cache-Control", "no-store");
+  return newResponse;
 };
