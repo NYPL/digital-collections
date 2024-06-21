@@ -1,6 +1,7 @@
 import { NextResponse, NextRequest } from "next/server";
 
 export function middleware(request: NextRequest) {
+  // Redirecting unreleased pages.
   if (process.env.APP_ENV === "development") {
     return NextResponse.next();
   } else {
@@ -8,6 +9,7 @@ export function middleware(request: NextRequest) {
   }
 }
 
+// TODO: Remove pages from matcher as they're released.
 export const config = {
   matcher: [
     "/collections",
