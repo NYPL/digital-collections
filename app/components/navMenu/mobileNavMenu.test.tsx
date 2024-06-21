@@ -32,11 +32,11 @@ describe("Mobile nav menu component", () => {
     );
     expect(screen.getByLabelText("Divisions")).toHaveAttribute(
       "href",
-      `/divisions`
+      `${appConfig.DC_URL[appConfig.environment]}/divisions`
     );
     expect(screen.getByLabelText("Collections")).toHaveAttribute(
       "href",
-      `/collections`
+      `${appConfig.DC_URL[appConfig.environment]}/collections`
     );
     expect(screen.getByLabelText("About")).toHaveAttribute("href", `/about`);
   });

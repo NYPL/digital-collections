@@ -10,9 +10,9 @@ export function middleware(request: NextRequest) {
 
 export const config = {
   matcher: [
-    "/collections/:path*",
-    "/divisions/:path*",
-    "/divisions",
     "/collections",
+    "/collections/:path*",
+    "/divisions",
+    "/divisions/:path*",
   ],
 };
