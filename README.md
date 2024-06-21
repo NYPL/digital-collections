@@ -137,32 +137,6 @@ These endpoints will change (as DC homepage is built out) to be dynamically gene
 
 This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
 
-## Tests
-
-To run tests, run
-
-```
-npm run test
-```
-
-## Test Scripts
-
-To run the homepage swimlane image loading test script against the qa environment, run
-
-```
-npm run hompageImageLoadingTestQa
-```
-
-(requires accessination with nypl-dams-dev)
-
-To run the same test script against the production environment, run
-
-```
-npm run hompageImageLoadingTestProd
-```
-
-The test waits for the 24 swim lane images to load, including the 12 that load after scrolling, and has succeeded if it does not time out. It simulates a single user loading the homepage one time.
-
 ## Getting Started With Docker
 
 First, install ["Docker"](https://www.docker.com/) on your local machine.
@@ -399,16 +373,24 @@ Note: Do not need to worry about Quality or Format for this application.
 
 The Digital Collections app runs unit tests with Jest and React Testing Library.
 
+We have two groups of tests: client side components/pages have unit tests in the `jsdom` environment, and the functional tests for API endpoints are in the `node` environment. This is due to the structure of the App Router in Next.
+
 To run all tests once:
+
+```sh
+$ npm test:all
+```
+
+To run all `jsdom` tests once:
 
 ```sh
 $ npm test
 ```
 
-If you're actively writing or updating tests, you can run the tests in watch mode. This will wait for any changes and run when a file is saved:
+To run all `node` (API endpoints) tests once:
 
 ```sh
-$ npm run test:watch
+$ npm test:API
 ```
 
 If you want to run tests on only one specific file, run:
@@ -416,6 +398,24 @@ If you want to run tests on only one specific file, run:
 ```sh
 $ npm test -- src/[path/to/file]
 ```
+
+## Test Scripts
+
+To run the homepage swimlane image loading test script against the qa environment, run
+
+```
+npm run hompageImageLoadingTestQa
+```
+
+(requires accessination with nypl-dams-dev)
+
+To run the same test script against the production environment, run
+
+```
+npm run hompageImageLoadingTestProd
+```
+
+The test waits for the 24 swim lane images to load, including the 12 that load after scrolling, and has succeeded if it does not time out. It simulates a single user loading the homepage one time.
 
 ## Linting and Formatting
 
