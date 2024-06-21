@@ -11,6 +11,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Migrated to Next v14 (App Router) (DR-3010, DR-3011)
 
+### Added
+
+- Added `/collections`, `/divisions`, `/divisions/[slug]`, and `/collections/lane/[slug]` pages
+- Added middleware to redirect unpublished pages
+
 ## [0.1.8] 2024-06-06
 
 ### Added
