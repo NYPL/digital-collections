@@ -5,7 +5,6 @@ import CampaignHeroSubText from "./campaignHeroSubText";
 import CampaignHeroHeading from "./campaignHeroHeading";
 import CampaignHeroLoading from "./campaignHeroLoading";
 import defaultFeaturedItem from "../../data/defaultFeaturedItemData";
-
 import appConfig from "../../../appConfig";
 import { FeaturedItemData } from "../../types/FeaturedItemData";
 import React from "react";
@@ -21,7 +20,10 @@ const CampaignHero = () => {
       let response;
       let responseData: FeaturedItemData;
       try {
-        response = await fetch(`/api/featuredItem`);
+        const response = await fetch("/api/featuredItem", {
+          method: "GET",
+          cache: "no-store",
+        });
         responseData = await response.json();
       } catch (e) {
         console.log("CampaignHero error: ", e);

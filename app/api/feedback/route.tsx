@@ -68,7 +68,7 @@ export const POST = async (request: NextRequest) => {
         message: e.message,
         error: "server error",
       },
-      { status: 500 }
+      { status: 400 }
     );
   }
 };
