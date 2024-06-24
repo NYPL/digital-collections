@@ -50,6 +50,7 @@ const SwimLanes = ({ lanesWithNumItems }) => {
             <Card
               key={index}
               id={`card-${lane.slug}-${index}`}
+              mainActionLink={collection.url}
               imageProps={{
                 alt: "",
                 id: `image-${lane.slug}-${index}`,
@@ -75,7 +76,6 @@ const SwimLanes = ({ lanesWithNumItems }) => {
                 level="h3"
                 size="heading5"
                 className={styles.collectiontitle}
-                url={collection.url}
                 noOfLines={3}
               >
                 {isLargerThanLargeTablet ? (
