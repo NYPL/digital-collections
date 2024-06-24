@@ -10,7 +10,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Updated
 
 - Migrated to Next v14 (App Router) (DR-3010, DR-3011)
-- Make the entire card clickable (DR-3024)
+- Make the entire card clickable for Collection and Explore Further cards (DR-3024)
 
 ## [0.1.8] 2024-06-06
 
