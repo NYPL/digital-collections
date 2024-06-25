@@ -3,7 +3,7 @@ import { render, fireEvent, screen } from "@testing-library/react";
 import "@testing-library/jest-dom";
 import Search from "./search";
 import { useRouter } from "next/navigation";
-import appConfig from "../../../__tests__/data/appConfig";
+import appConfig from "../../../../__tests__/data/appConfig";
 
 jest.mock("next/navigation", () => ({
   useRouter: jest.fn(),
