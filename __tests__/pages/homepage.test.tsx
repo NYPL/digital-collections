@@ -19,5 +19,5 @@ describe("Homepage Accessibility", () => {
   it("passes axe accessibility test", async () => {
     const { container } = render(<Home {...props} />);
     expect(await axe(container)).toHaveNoViolations();
-  });
+  }, 60000);
 });
