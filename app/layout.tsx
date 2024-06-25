@@ -123,14 +123,14 @@ export default function RootLayout({
             `}
         </Script>
         {/* <!-- / Adobe Analytics  --> */}
-        <DSProvider>
+        {/* <DSProvider>
           <NotificationBanner />
           <Header />
           <SkipNavigation target="#hero" />
           {/**
            * * @TODO: Header will need to be pulled into a reusable Layout component (DC Facelift phase 2)
            * * Let this be @7emansell 's problem if possible **/}
-          {children}
+        {/* {children}
           <FeedbackBox
             showCategoryField
             onSubmit={onSubmit}
@@ -138,7 +138,8 @@ export default function RootLayout({
             title="Feedback"
             view={view}
           />
-        </DSProvider>
+        </DSProvider> */}
+        {children}
         <div id="nypl-footer"></div>
         <Script
           src="https://ds-header.nypl.org/footer.min.js?containerId=nypl-footer"
