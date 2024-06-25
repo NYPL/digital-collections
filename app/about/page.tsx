@@ -1,10 +1,10 @@
 import AboutPage from "app/components/aboutPage/aboutPage";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "About NYPL Digital Collections",
+};
 
 export default function About() {
-  return (
-    <>
-      <title>About NYPL Digital Collections</title>
-      <AboutPage />
-    </>
-  );
+  return <AboutPage />;
 }

@@ -4,6 +4,11 @@ import { axe } from "jest-axe";
 import { props } from "../data/homepageProps";
 import React from "react";
 
+jest.mock("next/navigation", () => ({
+  useRouter: jest.fn(),
+  usePathname: jest.fn(),
+}));
+
 describe("Homepage Accessibility", () => {
   (global as any).fetch = jest.fn(() =>
     Promise.resolve({
