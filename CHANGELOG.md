@@ -13,8 +13,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
-- Added `/collections`, `/divisions`, `/divisions/[slug]`, and `/collections/lane/[slug]` pages
-- Added middleware to redirect unpublished pages
+- Added `/collections`, `/divisions`, `/divisions/[slug]`, and `/collections/lane/[slug]` pages (DR-3021)
+- Added middleware to redirect unpublished pages (DR-3021)
 
 ## [0.1.8] 2024-06-06
 
