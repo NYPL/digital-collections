@@ -1,5 +1,5 @@
 import { NextRequest } from "next/server";
-import { GET } from "../../../src/app/api/lanes/[slug]/route";
+import { GET } from "../../../app/api/lanes/[slug]/route";
 describe("GET /api/lanes/[slug]", () => {
   it("should respond with 200 status and lanes data for a GET request", async () => {
     const request = {

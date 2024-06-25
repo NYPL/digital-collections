@@ -7,7 +7,7 @@
  * @param {string} size - optional param for the height of an image, default is "!1600,1600"
  * @param {string} rotation - optional param for the height of an image, default is "0"
  */
-import appConfig from "../../../appConfig";
+import appConfig from "../../appConfig";
 import defaultFeaturedItems from "../data/defaultFeaturedItemData";
 
 export const imageURL = (
