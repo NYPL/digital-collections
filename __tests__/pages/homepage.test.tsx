@@ -1,5 +1,5 @@
 import { render } from "@testing-library/react";
-import Home from "../../src/app/page";
+import Home from "../../app/page";
 import { axe } from "jest-axe";
 import { props } from "../data/homepageProps";
 import React from "react";

@@ -1,6 +1,6 @@
 import { fireEvent, render, screen, within } from "@testing-library/react";
 import SwimLanes from "./swimLanes";
-import { props } from "../../../../__tests__/data/homepageProps";
+import { props } from "../../../__tests__/data/homepageProps";
 
 describe("Swim Lanes component renders with expected props", () => {
   it("renders the first row", () => {
