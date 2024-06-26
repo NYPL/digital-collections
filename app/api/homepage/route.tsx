@@ -11,8 +11,10 @@ export const GET = async (request: NextRequest, response: NextResponse) => {
   }, [] as string[]);
   const uuidtoItemCountMap = await getItemsCountFromUUIDs(allCollectionUUIDs);
   // Update the collections for each lane with the number of items
+  console.log("in GET:");
   const updatedLanes = lanes.map((lane) => {
     const updatedCollections = lane.collections.map((collection) => {
+      console.log(uuidtoItemCountMap[collection.uuid]);
       return {
         ...collection,
         numItems: uuidtoItemCountMap[collection.uuid] || "0",
