@@ -15,7 +15,7 @@
     "incremental": true,
     "baseUrl": ".",
     "paths": {
-      "@/*": ["src/*"]
+      "@/*": ["app/*"]
     },
     "forceConsistentCasingInFileNames": true,
     "plugins": [
@@ -34,6 +34,7 @@
     "__tests__/**/*.test.tsx",
     "__tests__/__mocks__/next/logger.js",
     "jest.setup.ts",
+    "middleware.tsx",
     ".next/types/**/*.ts"
   ],
   "exclude": ["node_modules"]
