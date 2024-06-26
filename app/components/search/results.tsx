@@ -1,12 +1,15 @@
 "use client";
 import { useSearchParams } from "next/navigation";
+import { Suspense } from "react";
 
 const SearchResults = ({}) => {
   const queryParams = useSearchParams();
   return (
     <>
-      <h2>Search: {queryParams.toString()}</h2>
-      <br />
+      <Suspense>
+        <h2>Search params: {queryParams.toString()}</h2>
+        <br />
+      </Suspense>
     </>
   );
 };

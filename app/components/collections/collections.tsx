@@ -1,16 +1,11 @@
 "use client";
-import { useSearchParams } from "next/navigation";
-
+import SearchResults from "../search/results";
 const Collections = ({ slug }) => {
-  const queryParams = useSearchParams();
-  const tab = queryParams.get("tab");
-
   return (
     <>
-      <h2>
-        {slug} {queryParams.toString()}
-      </h2>
+      <h2>{slug}</h2>
       <br />
+      <SearchResults />
     </>
   );
 };
