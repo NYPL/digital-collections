@@ -41,11 +41,11 @@ export const getNumDigitizedItems = async () => {
 export const getItemsCountFromUUIDs = async (uuids: string[]) => {
   const apiUrl = `${process.env.API_URL}/api/v2/items/counts`;
   const response = await apiPOSTCall(apiUrl, { uuids });
+  console.log("helper response", response);
 
   if (!response?.counts?.count?.length) {
     return {};
   }
-  console.log("helper response", response);
 
   const counts = response.counts;
 
