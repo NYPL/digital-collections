@@ -13,6 +13,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Make the entire card clickable for Collection and Explore Further cards (DR-3024)
 - Create CollectionCard component and render it on the homepage, also refactor a little bit. (DR-3027)
 
+### Added
+
+- Added `/collections`, `/divisions`, `/divisions/[slug]`, and `/collections/lane/[slug]` pages (DR-3021)
+- Added middleware to redirect unpublished pages (DR-3021)
+- Added `PageLayout` component (DR-3022)
+
+
 ## [0.1.8] 2024-06-06
 
 ### Added
