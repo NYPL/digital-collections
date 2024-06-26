@@ -2,6 +2,8 @@ import React from "react";
 import { Metadata } from "next";
 import PageLayout from "app/components/pageLayout/pageLayout";
 import Item from "@/components/items/item";
+import { getItemData } from "@/utils/utils";
+
 type ItemProps = {
   params: { uuid: string };
 };

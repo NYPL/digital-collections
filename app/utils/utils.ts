@@ -25,6 +25,17 @@ export const imageURL = (
  * Returns the number of digitized items in repo api.
  */
 
+export const getItemData = async (uuid) => {
+  const apiUrl = `${process.env.API_URL}/api/v2/items/mods_captures/${uuid}`;
+  const res = await apiCall(apiUrl);
+  // console.log("res is: ", res)
+  return res;
+};
+
+/**
+ * Returns the number of digitized items in repo api.
+ */
+
 export const getNumDigitizedItems = async () => {
   const apiUrl = `${process.env.API_URL}/api/v2/items/total`;
   const res = await apiCall(apiUrl);
