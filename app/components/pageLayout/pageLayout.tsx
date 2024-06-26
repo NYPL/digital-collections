@@ -32,12 +32,11 @@ const PageLayout = ({
     "asPath has been removed because the concept of as has been removed from the new router."
     https://nextjs.org/docs/app/building-your-application/upgrading/app-router-migration
     */
-    console.log("pathname", pathname);
-    const route = pathname ? pathname : "";
+    const route = pathname || "";
     trackVirtualPageView(route);
   });
   const [view, setView] = React.useState("form");
-  const { onOpen, isOpen, onClose, FeedbackBox } = useFeedbackBox();
+  const { isOpen, onClose, FeedbackBox } = useFeedbackBox();
   const onSubmit = async (values) => {
     try {
       const response = await fetch("/api/feedback", {

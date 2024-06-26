@@ -1,15 +1,14 @@
 import React from "react";
-import { Metadata, ResolvingMetadata } from "next";
+import { Metadata } from "next";
 import PageLayout from "app/components/pageLayout/pageLayout";
 
 type LaneProps = {
   params: { slug: string };
 };
 
-export async function generateMetadata(
-  { params }: LaneProps,
-  parent: ResolvingMetadata
-): Promise<Metadata> {
+export async function generateMetadata({
+  params,
+}: LaneProps): Promise<Metadata> {
   const slug = params.slug;
   return {
     title: `${slug} - NYPL Digital Collections`,
