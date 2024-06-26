@@ -41,7 +41,6 @@ export const getNumDigitizedItems = async () => {
 export const getItemsCountFromUUIDs = async (uuids: string[]) => {
   const apiUrl = `${process.env.API_URL}/api/v2/items/counts`;
   const response = await apiPOSTCall(apiUrl, { uuids });
-  console.log("helper response", response);
 
   if (!response?.counts?.count?.length) {
     return {};
@@ -58,12 +57,10 @@ export const getItemsCountFromUUIDs = async (uuids: string[]) => {
   //   uuid1: count1
   //
   const uuidCounts = counts?.count || [];
-  console.log("uuidCounts", uuidCounts);
   const cleanCounts = uuidCounts.reduce((acc, count) => {
     acc[count.uuid["$"]] = count.count_value["$"];
     return acc;
   }, {});
-  console.log("cleanCounts", cleanCounts);
   return cleanCounts ? cleanCounts : {};
 };
 
