@@ -1,6 +1,7 @@
 import data from "../../data/lanes";
 import { getItemsCountFromUUIDs } from "../../utils/utils";
 import { NextResponse, NextRequest } from "next/server";
+export const fetchCache = "force-no-store";
 
 export const GET = async (request: NextRequest, response: NextResponse) => {
   const randomNumber = Math.floor(Math.random() * 2);
@@ -31,7 +32,7 @@ export const GET = async (request: NextRequest, response: NextResponse) => {
     { status: 200 }
   );
 
-  newResponse.headers.set("Cache-Control", "s-maxage=86400");
+  newResponse.headers.set("Cache-Control", "no-store");
 
   return newResponse;
 };
