@@ -1,15 +1,14 @@
 import React from "react";
 import PageLayout from "app/components/pageLayout/pageLayout";
-import { Metadata, ResolvingMetadata } from "next";
+import { Metadata } from "next";
 
 type DivisionProps = {
   params: { slug: string };
 };
 
-export async function generateMetadata(
-  { params }: DivisionProps,
-  parent: ResolvingMetadata
-): Promise<Metadata> {
+export async function generateMetadata({
+  params,
+}: DivisionProps): Promise<Metadata> {
   const slug = params.slug;
   return {
     title: `${slug} - NYPL Digital Collections`,
