@@ -17,6 +17,9 @@ import styles from "./Swimlanes.module.css";
 import { imageURL } from "../../utils/utils";
 import { DC_URL } from "../../config/constants";
 import useBreakpoints from "../../hooks/useBreakpoints";
+import CollectionCard from "../cards/collectionCard";
+import type { CollectionCardData } from "app/types/CollectionCard";
+import { CollectionCardModel } from "app/models/collectionCard";
 
 const SwimLanes = ({ lanesWithNumItems }) => {
   const { isLargerThanLargeTablet } = useBreakpoints();
@@ -46,64 +49,18 @@ const SwimLanes = ({ lanesWithNumItems }) => {
       </Flex>
       {lane.collections && lane.collections.length > 0 && (
         <SimpleGrid columns={4} id={`grid-${lane.slug}`}>
-          {lane.collections.map((collection, index) => (
-            <Card
-              key={index}
-              id={`card-${lane.slug}-${index}`}
-              mainActionLink={collection.url}
-              imageProps={{
-                alt: "",
-                id: `image-${lane.slug}-${index}`,
-                isLazy: true,
-                aspectRatio: "twoByOne",
-                src: imageURL(collection.image_id, "full", "288,", "0"),
-                // TODO: *IF* we want to use the Nextjs Image component, this
-                // is how we would do it. It's suppose to be better for
-                // performance but it's not visibly noticeable.
-                // component: (
-                //   <Image
-                //     src={imageURL(collection.image_id, "full", "288,", "0")}
-                //     alt=""
-                //     width={100}
-                //     height={100}
-                //     objectFit="cover"
-                //   />
-                // ),
-              }}
-            >
-              <CardHeading
-                id={`row-card-heading-${lane.slug}-${index}`}
-                level="h3"
-                size="heading5"
-                className={styles.collectiontitle}
-                noOfLines={3}
-              >
-                {isLargerThanLargeTablet ? (
-                  <Tooltip content={collection.title}>
-                    <Text sx={{ marginBottom: "0" }}>{collection.title}</Text>
-                  </Tooltip>
-                ) : (
-                  collection.title
-                )}
-              </CardHeading>
-              <CardContent>
-                <Text
-                  id={`item-count-${lane.slug}-${index}`}
-                  size="subtitle2"
-                  fontWeight="medium"
-                  __css={{
-                    display: "none",
-                    [`@media screen and (min-width: 600px)`]: {
-                      display: "inline",
-                    },
-                  }}
-                >
-                  {" "}
-                  {`${collection.numItems || 0} items`}{" "}
-                </Text>
-              </CardContent>
-            </Card>
-          ))}
+          {lane.collections.map((collection: CollectionCardData, index) => {
+            const c = new CollectionCardModel(collection); // can remove this and the line above after referencing the CollectionCardModel in the Lane model after it's created
+            return (
+              <CollectionCard
+                key={index}
+                slug={lane.slug}
+                index={index}
+                collection={c} //rename to collection after Lane model is created
+                isLargerThanLargeTablet={isLargerThanLargeTablet}
+              />
+            );
+          })}
         </SimpleGrid>
       )}
       <Link
