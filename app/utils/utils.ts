@@ -45,6 +45,7 @@ export const getItemsCountFromUUIDs = async (uuids: string[]) => {
   if (!response?.counts?.count?.length) {
     return {};
   }
+  console.log("helper response", response);
 
   const counts = response.counts;
 
@@ -57,11 +58,12 @@ export const getItemsCountFromUUIDs = async (uuids: string[]) => {
   //   uuid1: count1
   //
   const uuidCounts = counts?.count || [];
+  console.log("uuidCounts", uuidCounts);
   const cleanCounts = uuidCounts.reduce((acc, count) => {
     acc[count.uuid["$"]] = count.count_value["$"];
     return acc;
   }, {});
-
+  console.log("cleanCounts", cleanCounts);
   return cleanCounts ? cleanCounts : {};
 };
 

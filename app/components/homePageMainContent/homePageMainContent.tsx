@@ -12,7 +12,6 @@ const HomePageMainContent = () => {
     const fetchData = async () => {
       const response = await fetch("/api/homepage");
       const responseData = await response.json();
-      console.log(responseData);
       setData(responseData);
     };
 
