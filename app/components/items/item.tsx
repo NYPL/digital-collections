@@ -12,9 +12,9 @@ const getItem = async (uuid) => {
   return item;
 };
 
-const Item = async ({ uuid }) => {
-  const data = await getItem(uuid);
-  const item = new ItemModel(data);
+const Item = ({ item }) => {
+  // const data = await getItem(uuid);
+  // const item = new ItemModel(data);
 
   const viewer = () => {
     switch (item.typeOfResource) {
