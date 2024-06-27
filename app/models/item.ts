@@ -6,6 +6,7 @@ export class ItemModel {
   title: string;
   isPDF: boolean;
   isBook: boolean;
+  isSingleCapture: boolean;
 
   constructor(data: any) {
     this.uuid = data.nyplAPI.request.uuid;
@@ -15,7 +16,9 @@ export class ItemModel {
     this.title = data.nyplAPI.response.mods.titleInfo.title
       ? data.nyplAPI.response.mods.titleInfo.title.$
       : data.nyplAPI.response.mods.titleInfo[0].title.$;
-    // this.isBook = data.nyplAPI.response.mods.genre[0].$ == "Books"
-    // this.isPDF = (data.nyplAPI.response.mods.genre.includes("Oral histories") && data.nyplAPI.response.mods.publisher.includes("American Jewish Committee, Oral History Library")) ? true : false
+    this.isSingleCapture = data.nyplAPI.response.numResults.$ == 1;
+    // this.isBook = data.nyplAPI.response.mods.genre[0].$ === "Books"
+    // console.log("flatten: ", data.nyplAPI.response.mods.genre?.flat())
+    // this.isPDF = (data.nyplAPI.response.mods.genreincludes("Oral histories") && data.nyplAPI.response.mods.publisher?.includes("American Jewish Committee, Oral History Library")) ? true : false
   }
 }
