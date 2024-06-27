@@ -1,6 +1,6 @@
 import { useSearchParams } from "next/navigation";
 
-const SearchBody = () => {
+const SearchContent = () => {
   const queryParams = useSearchParams();
   const query = queryParams.toString();
   return (
@@ -11,4 +11,4 @@ const SearchBody = () => {
   );
 };
 
-export default SearchBody;
+export default SearchContent;
