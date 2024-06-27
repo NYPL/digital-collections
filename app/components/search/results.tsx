@@ -1,14 +1,16 @@
 "use client";
-import { useSearchParams } from "next/navigation";
 import { Suspense } from "react";
+import SearchBody from "./body";
+
+function SearchBarFallback() {
+  return <>placeholder</>;
+}
 
 const SearchResults = ({}) => {
-  const queryParams = useSearchParams();
   return (
     <>
-      <Suspense>
-        <h2>Search params: {queryParams.toString()}</h2>
-        <br />
+      <Suspense fallback={<SearchBarFallback />}>
+        <SearchBody />
       </Suspense>
     </>
   );
