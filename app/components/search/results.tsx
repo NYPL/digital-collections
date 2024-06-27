@@ -1,6 +1,6 @@
 "use client";
 import { Suspense } from "react";
-import SearchBody from "./body";
+import SearchContent from "./content";
 
 function SearchBarFallback() {
   return <>placeholder</>;
@@ -10,7 +10,7 @@ const SearchResults = ({}) => {
   return (
     <>
       <Suspense fallback={<SearchBarFallback />}>
-        <SearchBody />
+        <SearchContent />
       </Suspense>
     </>
   );

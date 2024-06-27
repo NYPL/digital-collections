@@ -1,6 +1,6 @@
 "use client";
 import SearchResults from "../search/results";
-const Collections = ({ slug }) => {
+const CollectionsPage = ({ slug }) => {
   return (
     <>
       <h2>{slug}</h2>
@@ -9,4 +9,4 @@ const Collections = ({ slug }) => {
     </>
   );
 };
-export default Collections;
+export default CollectionsPage;

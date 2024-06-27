@@ -1,7 +1,7 @@
 import React from "react";
 import { Metadata } from "next";
 import PageLayout from "app/components/pageLayout/pageLayout";
-import Collections from "app/components/collections/collections";
+import CollectionsPage from "app/components/collections/collections";
 import { useSearchParams } from "next/navigation";
 
 type CollectionProps = {
@@ -30,7 +30,7 @@ export default function Lane({ params }: CollectionProps) {
         },
       ]}
     >
-      <Collections slug={params.slug} />
+      <CollectionsPage slug={params.slug} />
     </PageLayout>
   );
 }
