@@ -1,18 +1,21 @@
-import { imageURL } from "app/utils/utils";
-
-// TO DO: Connect to typescript interface for CollectionCardData
 export class ItemModel {
+  uuid: string;
   mods: object;
   capture: object;
   typeOfResource: string;
   title: string;
+  isPDF: boolean;
+  isBook: boolean;
 
   constructor(data: any) {
-    this.mods = data.mods;
-    this.capture = data.capture;
-    this.typeOfResource = data.mods.typeOfResource.$;
-    this.title = data.mods.titleInfo.title
-      ? data.mods.titleInfo.title.$
-      : data.mods.titleInfo[0].title.$;
+    this.uuid = data.nyplAPI.request.uuid;
+    this.mods = data.nyplAPI.response.mods;
+    this.capture = data.nyplAPI.response.capture;
+    this.typeOfResource = data.nyplAPI.response.mods.typeOfResource.$;
+    this.title = data.nyplAPI.response.mods.titleInfo.title
+      ? data.nyplAPI.response.mods.titleInfo.title.$
+      : data.nyplAPI.response.mods.titleInfo[0].title.$;
+    // this.isBook = data.nyplAPI.response.mods.genre[0].$ == "Books"
+    // this.isPDF = (data.nyplAPI.response.mods.genre.includes("Oral histories") && data.nyplAPI.response.mods.publisher.includes("American Jewish Committee, Oral History Library")) ? true : false
   }
 }

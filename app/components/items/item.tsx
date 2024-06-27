@@ -5,6 +5,7 @@ import CloverImageViewer from "./clover/image/viewer";
 import AudioViewer from "./clover/audio/viewer";
 import VideoViewer from "./clover/video/viewer";
 import BookViewer from "./clover/book/viewer";
+import PDFViewer from "./clover/pdf/viewer";
 
 const getItem = async (uuid) => {
   const item = await getItemData(uuid);
@@ -39,9 +40,10 @@ const Item = async ({ uuid }) => {
           </>
         );
       case "text":
+        //also PDF
         return (
           <>
-            <h2> Book/PDF: {item.title} </h2>
+            <h2> Book: {item.title} </h2>
             <BookViewer />
           </>
         );

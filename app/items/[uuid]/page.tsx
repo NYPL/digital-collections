@@ -3,21 +3,37 @@ import { Metadata } from "next";
 import PageLayout from "app/components/pageLayout/pageLayout";
 import Item from "@/components/items/item";
 import { getItemData } from "@/utils/utils";
+import { ItemModel } from "@/models/item";
+
+let data = {};
+let item;
 
 type ItemProps = {
-  params: { uuid: string };
+  params: {
+    uuid: string;
+    item: ItemModel;
+  };
+};
+
+const getItem = async (uuid) => {
+  const item = await getItemData(uuid);
+  return item;
 };
 
 export async function generateMetadata({
   params,
 }: ItemProps): Promise<Metadata> {
-  const uuid = params.uuid;
+  data = await getItem(params.uuid);
+  item = new ItemModel(data);
+  params.item = item;
   return {
-    title: `${uuid} - NYPL Digital Collections`, //should be item title
+    title: `${item.title} - NYPL Digital Collections`, //should be item title
   };
 }
 
-export default function Lane({ params }: ItemProps) {
+export default async function Lane({ params }) {
+  data = await getItem(params.uuid);
+  item = new ItemModel(data);
   return (
     <PageLayout
       activePage="item"
@@ -25,7 +41,7 @@ export default function Lane({ params }: ItemProps) {
         { text: "Home", url: "/" },
         { text: "All Items", url: "/items" },
         {
-          text: `${params.uuid}`,
+          text: `${item.title}`,
           url: `/items/${params.uuid}`,
         },
       ]}
