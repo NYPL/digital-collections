@@ -19,12 +19,21 @@ const Item = async ({ uuid }) => {
   const viewer = () => {
     switch (item.typeOfResource) {
       case "still image":
-        return (
-          <>
-            <h2> Image: {item.title} </h2>
-            <CloverImageViewer />
-          </>
-        );
+        if (item.isSingleCapture) {
+          return (
+            <>
+              <h2> Image: {item.title} </h2>
+              <ImageViewer imageID={item.capture.imageID.$} />
+            </>
+          );
+        } else {
+          return (
+            <>
+              <h2> Image: {item.title} </h2>
+              <CloverImageViewer />
+            </>
+          );
+        }
       case "moving image":
         return (
           <>
