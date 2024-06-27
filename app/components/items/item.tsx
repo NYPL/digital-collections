@@ -23,28 +23,28 @@ const Item = async ({ uuid }) => {
             <h2> Image: {item.title} </h2>
             <CloverImageViewer />
           </>
-        ); //<ComponentA />;
+        );
       case "moving image":
         return (
           <>
             <h2> Video: {item.title} </h2>
             <VideoViewer />
           </>
-        ); //<ComponentB />;
+        );
       case "sound recording":
         return (
           <>
             <h2> Audio: {item.title} </h2>
             <AudioViewer />
           </>
-        ); //<ComponentC />;
+        );
       case "text":
         return (
           <>
             <h2> Book/PDF: {item.title} </h2>
             <BookViewer />
           </>
-        ); //<ComponentD />;
+        );
 
       default:
         return <h1>No type of resource match</h1>;
