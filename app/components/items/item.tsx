@@ -1,16 +1,9 @@
-import { getItemData } from "@/utils/utils";
-import { ItemModel } from "@/models/item";
 import ImageViewer from "./clover/image/image";
 import CloverImageViewer from "./clover/image/viewer";
 import AudioViewer from "./clover/audio/viewer";
 import VideoViewer from "./clover/video/viewer";
 import BookViewer from "./clover/book/viewer";
 import PDFViewer from "./clover/pdf/viewer";
-
-const getItem = async (uuid) => {
-  const item = await getItemData(uuid);
-  return item;
-};
 
 const Item = ({ item }) => {
   // const data = await getItem(uuid);
