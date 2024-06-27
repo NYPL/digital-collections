@@ -5,9 +5,6 @@ import Item from "@/components/items/item";
 import { getItemData } from "@/utils/utils";
 import { ItemModel } from "@/models/item";
 
-let data = {};
-let item;
-
 type ItemProps = {
   params: {
     uuid: string;
@@ -23,17 +20,17 @@ const getItem = async (uuid) => {
 export async function generateMetadata({
   params,
 }: ItemProps): Promise<Metadata> {
-  data = await getItem(params.uuid);
-  item = new ItemModel(data);
+  const data = await getItem(params.uuid);
+  const item = new ItemModel(data);
   params.item = item;
   return {
     title: `${item.title} - NYPL Digital Collections`, //should be item title
   };
 }
 
-export default async function Lane({ params }) {
-  data = await getItem(params.uuid);
-  item = new ItemModel(data);
+export default async function ItemPage({ params }) {
+  const data = await getItem(params.uuid);
+  const item = new ItemModel(data);
   return (
     <PageLayout
       activePage="item"
@@ -46,7 +43,7 @@ export default async function Lane({ params }) {
         },
       ]}
     >
-      <Item uuid={params.uuid} />
+      <Item item={item} />
     </PageLayout>
   );
 }
