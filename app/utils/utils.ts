@@ -61,7 +61,6 @@ export const getItemsCountFromUUIDs = async (uuids: string[]) => {
     acc[count.uuid["$"]] = count.count_value["$"];
     return acc;
   }, {});
-
   return cleanCounts ? cleanCounts : {};
 };
 
