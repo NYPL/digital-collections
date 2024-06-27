@@ -6,56 +6,53 @@ import BookViewer from "./clover/book/viewer";
 import PDFViewer from "./clover/pdf/viewer";
 
 const Item = ({ item }) => {
-  // const data = await getItem(uuid);
-  // const item = new ItemModel(data);
-
-  const viewer = () => {
-    switch (item.typeOfResource) {
-      case "still image":
-        if (item.isSingleCapture) {
-          return (
-            <>
-              <h2> Image: {item.title} </h2>
-              <ImageViewer imageID={item.capture.imageID.$} />
-            </>
-          );
-        } else {
-          return (
-            <>
-              <h2> Image: {item.title} </h2>
-              <CloverImageViewer />
-            </>
-          );
-        }
-      case "moving image":
-        return (
+  let viewer;
+  switch (item.typeOfResource) {
+    case "still image":
+      if (item.isSingleCapture) {
+        viewer = (
           <>
-            <h2> Video: {item.title} </h2>
-            <VideoViewer />
+            <h2> Image: {item.title} </h2>
+            <ImageViewer imageID={item.capture.imageID.$} />
           </>
         );
-      case "sound recording":
-        return (
+      } else {
+        viewer = (
           <>
-            <h2> Audio: {item.title} </h2>
-            <AudioViewer />
+            <h2> Image: {item.title} </h2>
+            <CloverImageViewer />
           </>
         );
-      case "text":
-        //also PDF
-        return (
-          <>
-            <h2> Book: {item.title} </h2>
-            <BookViewer />
-          </>
-        );
-
-      default:
-        return <h1>No type of resource match</h1>;
-    }
-  };
-
-  return <>{viewer()}</>;
+      }
+      return viewer;
+    case "moving image":
+      viewer = (
+        <>
+          <h2> Video: {item.title} </h2>
+          <VideoViewer />
+        </>
+      );
+      return viewer;
+    case "sound recording":
+      viewer = (
+        <>
+          <h2> Audio: {item.title} </h2>
+          <AudioViewer />
+        </>
+      );
+      return viewer;
+    case "text":
+      //also PDF
+      viewer = (
+        <>
+          <h2> Book: {item.title} </h2>
+          <BookViewer />
+        </>
+      );
+      return viewer;
+    default:
+      return <h1>No type of resource match</h1>;
+  }
 };
 
 export default Item;
