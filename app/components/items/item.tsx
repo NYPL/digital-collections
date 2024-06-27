@@ -1,5 +1,10 @@
 import { getItemData } from "@/utils/utils";
 import { ItemModel } from "@/models/item";
+import ImageViewer from "./clover/image/image";
+import CloverImageViewer from "./clover/image/viewer";
+import AudioViewer from "./clover/audio/viewer";
+import VideoViewer from "./clover/video/viewer";
+import BookViewer from "./clover/book/viewer";
 
 const getItem = async (uuid) => {
   const item = await getItemData(uuid);
@@ -9,19 +14,37 @@ const getItem = async (uuid) => {
 const Item = async ({ uuid }) => {
   const data = await getItem(uuid);
   const item = new ItemModel(data);
-  // console.log("item is:")
-  console.log("item is: ", item);
 
   const viewer = () => {
     switch (item.typeOfResource) {
       case "still image":
-        return <h2> Image: {item.title} </h2>; //<ComponentA />;
+        return (
+          <>
+            <h2> Image: {item.title} </h2>
+            <CloverImageViewer />
+          </>
+        ); //<ComponentA />;
       case "moving image":
-        return <h2> Video: {item.title} </h2>; //<ComponentB />;
+        return (
+          <>
+            <h2> Video: {item.title} </h2>
+            <VideoViewer />
+          </>
+        ); //<ComponentB />;
       case "sound recording":
-        return <h2> Audio: {item.title} </h2>; //<ComponentC />;
+        return (
+          <>
+            <h2> Audio: {item.title} </h2>
+            <AudioViewer />
+          </>
+        ); //<ComponentC />;
       case "text":
-        return <h2> Book/PDF: {item.title} </h2>; //<ComponentD />;
+        return (
+          <>
+            <h2> Book/PDF: {item.title} </h2>
+            <BookViewer />
+          </>
+        ); //<ComponentD />;
 
       default:
         return <h1>No type of resource match</h1>;
