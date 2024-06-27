@@ -81,4 +81,5 @@ export const props = {
   },
   numberOfDigitizedItems: "863,848",
   randomNumber: 1,
+  numColumns: 4,
 };
