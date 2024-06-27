@@ -27,7 +27,7 @@ export const imageURL = (
 
 export const getItemData = async (uuid) => {
   const apiUrl = `${process.env.API_URL}/api/v2/items/mods_captures/${uuid}`;
-  const res = await apiCall(apiUrl);
+  const res = await RepoAPICall(apiUrl);
   // console.log("res is: ", res)
   return res;
 };
@@ -109,7 +109,38 @@ export const apiCall = async (
   apiUrl += queryString;
 
   try {
-    const startTime = new Date().getTime();
+    const response = await RepoAPICall(apiUrl);
+
+    if (response.status === 200) {
+      const data = await response.json();
+      // console.log(`apiCall: called ${apiUrl}`);
+      // console.log(`Response time: ${new Date().getTime() - startTime}`);
+      return data.nyplAPI.response;
+    } else {
+      return undefined;
+    }
+  } catch (error) {
+    return undefined;
+  }
+};
+
+/**
+ * Returns Repo API response WITH request data.
+ * @param {string} apiUrl - the url to make a request to
+ * @param {[key: string]} urlParam = url parameters to use in the request
+ */
+
+export const RepoAPICall = async (
+  apiUrl: string,
+  urlParam?: { [key: string]: any }
+) => {
+  const apiKey = process.env.AUTH_TOKEN;
+  const queryString = urlParam
+    ? "?" + new URLSearchParams(urlParam).toString()
+    : "";
+  apiUrl += queryString;
+
+  try {
     const response = await fetch(apiUrl, {
       // aggressively cache Repo API?
       // cache: "force-cache",
@@ -122,7 +153,7 @@ export const apiCall = async (
       const data = await response.json();
       // console.log(`apiCall: called ${apiUrl}`);
       // console.log(`Response time: ${new Date().getTime() - startTime}`);
-      return data.nyplAPI.response;
+      return data;
     } else {
       return undefined;
     }
