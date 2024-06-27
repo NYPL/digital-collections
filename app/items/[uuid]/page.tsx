@@ -12,16 +12,16 @@ type ItemProps = {
   };
 };
 
-const getItem = async (uuid) => {
-  const item = await getItemData(uuid);
+const getItemModel = async (uuid) => {
+  const data = await getItemData(uuid);
+  const item = new ItemModel(data);
   return item;
 };
 
 export async function generateMetadata({
   params,
 }: ItemProps): Promise<Metadata> {
-  const data = await getItem(params.uuid);
-  const item = new ItemModel(data);
+  const item = await getItemModel(params.uuid);
   params.item = item;
   return {
     title: `${item.title} - NYPL Digital Collections`, //should be item title
@@ -29,8 +29,7 @@ export async function generateMetadata({
 }
 
 export default async function ItemPage({ params }) {
-  const data = await getItem(params.uuid);
-  const item = new ItemModel(data);
+  const item = await getItemModel(params.uuid);
   return (
     <PageLayout
       activePage="item"
