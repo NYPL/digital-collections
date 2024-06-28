@@ -3,6 +3,7 @@ import { render, fireEvent, screen } from "@testing-library/react";
 import "@testing-library/jest-dom";
 import appConfig from "../../../__tests__/data/appConfig";
 import MobileNavMenu from "./mobileNavMenu";
+import { ENV_KEY } from "@/types/EnvironmentType";
 
 describe("Mobile nav menu component", () => {
   it("renders mobile nav menu component", () => {
@@ -27,16 +28,16 @@ describe("Mobile nav menu component", () => {
     expect(screen.getByLabelText("Items")).toHaveAttribute(
       "href",
       `${
-        appConfig.DC_URL[appConfig.environment]
+        appConfig.DC_URL[appConfig.environment as ENV_KEY]
       }/search/index?utf8=%E2%9C%93&keywords=`
     );
     expect(screen.getByLabelText("Divisions")).toHaveAttribute(
       "href",
-      `${appConfig.DC_URL[appConfig.environment]}/divisions`
+      `${appConfig.DC_URL[appConfig.environment as ENV_KEY]}/divisions`
     );
     expect(screen.getByLabelText("Collections")).toHaveAttribute(
       "href",
-      `${appConfig.DC_URL[appConfig.environment]}/collections`
+      `${appConfig.DC_URL[appConfig.environment as ENV_KEY]}/collections`
     );
     expect(screen.getByLabelText("About")).toHaveAttribute("href", `/about`);
   });

@@ -6,7 +6,7 @@ import CampaignHero from "../../hero/campaignHero";
 import HomePageMainContent from "../../homePageMainContent/homePageMainContent";
 import PageLayout from "../../pageLayout/pageLayout";
 
-export default function HomePage(props: any) {
+export default function HomePage() {
   return (
     <PageLayout activePage="home">
       <TemplateAppContainer
