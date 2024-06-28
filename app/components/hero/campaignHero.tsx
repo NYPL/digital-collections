@@ -8,10 +8,11 @@ import defaultFeaturedItem from "../../data/defaultFeaturedItemData";
 import appConfig from "../../../appConfig";
 import { FeaturedItemData } from "../../types/FeaturedItemData";
 import React from "react";
+import { ENV_KEY } from "@/types/EnvironmentType";
 
 const CampaignHero = () => {
   const defaultFeaturedItemResponse =
-    defaultFeaturedItem[appConfig["environment"]];
+    defaultFeaturedItem[appConfig["environment"] as ENV_KEY];
 
   const [data, setData] = useState<FeaturedItemData>();
 
@@ -36,7 +37,7 @@ const CampaignHero = () => {
     fetchData();
   }, [defaultFeaturedItemResponse]);
 
-  const handleError = (e: any) => {
+  const handleError = (e: React.SyntheticEvent<HTMLImageElement, Event>) => {
     console.log(e);
     setData(defaultFeaturedItemResponse);
     console.log("data is:", data);

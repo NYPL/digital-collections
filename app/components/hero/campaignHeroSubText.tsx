@@ -1,3 +1,4 @@
+import { FeaturedContentData } from "@/types/FeaturedContentData";
 import useBreakpoints from "../../hooks/useBreakpoints";
 import {
   Link as DSLink,
@@ -8,7 +9,18 @@ import {
 } from "@nypl/design-system-react-components";
 import React from "react";
 
-const CampaignHeroSubText = ({ featuredItem }: any) => {
+interface CampaignHeroSubtextProps {
+  featuredItem: {
+    title: string;
+    uuid: string;
+    href: string;
+    imageID: string;
+    backgroundImageSrc: string;
+    foregroundImageSrc: string;
+  };
+}
+
+const CampaignHeroSubText = ({ featuredItem }: CampaignHeroSubtextProps) => {
   const { isLargerThanLargeTablet } = useBreakpoints();
   const featuredItemLink = (
     <DSLink hasVisitedState={false} href={featuredItem.href}>

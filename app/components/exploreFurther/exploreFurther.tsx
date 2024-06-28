@@ -17,7 +17,7 @@ import useBreakpoints from "../../hooks/useBreakpoints";
 const ExploreFurther = () => {
   const data: ExploreFurtherData[] = exploreFurtherData;
   const { isLargerThanLargeTablet } = useBreakpoints();
-  function exploreFurtherLink(item) {
+  function exploreFurtherLink(item: ExploreFurtherData) {
     return (
       <Link
         href={item.url}

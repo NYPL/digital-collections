@@ -55,6 +55,7 @@
     "@types/jest": "29.5.5",
     "@types/jest-axe": "3.5.6",
     "@types/newrelic": "^9.14.3",
+    "@types/ua-parser-js": "0.7.39",
     "eslint-config-next": "14.2.3",
     "eslint-config-prettier": "9.0.0",
     "husky": "8.0.0",
