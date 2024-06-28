@@ -36,7 +36,7 @@ export const props: SwimLanesProps = {
           image_id: "58591658",
           numItems: 55,
         },
-      ] as CollectionItem[],
+      ],
     },
     {
       title: "Test collections 2",
