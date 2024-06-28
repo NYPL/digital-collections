@@ -11,10 +11,7 @@ const Search = () => {
   const [keywords, setKeywords] = useState("");
   const [publicDomainOnly, setPublicDomainOnly] = useState(false);
 
-  const handleSubmit = (
-    event: React.FormEvent<HTMLFormElement>,
-    router: ReturnType<typeof useRouter>
-  ) => {
+  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const searchUrl =
       DC_URL +
@@ -57,7 +54,7 @@ const Search = () => {
           invalidText="Could not find the item"
           labelText="Search Digital Collections"
           onSubmit={(event: React.FormEvent<HTMLFormElement>) =>
-            handleSubmit(event, router)
+            handleSubmit(event)
           }
           textInputProps={{
             labelText: "Search keyword(s)",

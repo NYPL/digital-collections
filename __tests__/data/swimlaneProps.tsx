@@ -1,5 +1,4 @@
 import { SwimLanesProps } from "@/components/swimlanes/swimLanes";
-import type { CollectionItem } from "@/components/swimlanes/swimLanes";
 
 export const props: SwimLanesProps = {
   lanesWithNumItems: [
