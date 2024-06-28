@@ -9,11 +9,6 @@
  */
 import appConfig from "../../appConfig";
 import defaultFeaturedItems from "../data/defaultFeaturedItemData";
-interface AdobeDataLayerEvent {
-  event?: string;
-  page_name?: string;
-  site_section?: string;
-}
 
 export const imageURL = (
   imageId: any,
