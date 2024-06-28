@@ -18,9 +18,26 @@ import { imageURL } from "../../utils/utils";
 import { DC_URL } from "../../config/constants";
 import useBreakpoints from "../../hooks/useBreakpoints";
 
-const SwimLanes = ({ lanesWithNumItems }) => {
+export type CollectionItem = {
+  uuid: string;
+  title: string;
+  image_id: string;
+  url: string;
+  numItems: number;
+};
+
+export interface SwimLanesProps {
+  lanesWithNumItems: {
+    slug: string;
+    title: string;
+    rank: number;
+    collections: CollectionItem[];
+  }[];
+}
+
+const SwimLanes = ({ lanesWithNumItems }: SwimLanesProps) => {
   const { isLargerThanLargeTablet } = useBreakpoints();
-  return lanesWithNumItems.map((lane, key) => (
+  const lanes = lanesWithNumItems.map((lane, key) => (
     <Box className={styles.lane} data-testid={lane.slug} mt="xxl" key={key}>
       <Flex alignItems="baseline">
         <Heading id={`row-heading-${lane.slug}`} level="h2" size="heading3">
@@ -128,6 +145,7 @@ const SwimLanes = ({ lanesWithNumItems }) => {
       </Link>
     </Box>
   ));
+  return <>{lanes}</>;
 };
 
 export default SwimLanes;

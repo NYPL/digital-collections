@@ -237,6 +237,7 @@ export const adobeAnalyticsRouteToPageName = (route = "", queryParams = "") => {
  * Tracks a virtual page view to Adobe Analytics on page navigation.
  */
 export const trackVirtualPageView = (pathname = "") => {
+  // @ts-ignore
   const adobeDataLayer = window["adobeDataLayer"] || [];
   const route = pathname.toLowerCase().replace(BASE_URL, "");
   const queryIndex = route.indexOf("?");

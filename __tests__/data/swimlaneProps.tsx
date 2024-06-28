@@ -1,5 +1,7 @@
-export const props = {
-  randomNumber: 1,
+import { SwimLanesProps } from "@/components/swimlanes/swimLanes";
+import type { CollectionItem } from "@/components/swimlanes/swimLanes";
+
+export const props: SwimLanesProps = {
   lanesWithNumItems: [
     {
       title: "Test collections 1",
@@ -34,7 +36,7 @@ export const props = {
           image_id: "58591658",
           numItems: 55,
         },
-      ],
+      ] as CollectionItem[],
     },
     {
       title: "Test collections 2",

@@ -1,6 +1,5 @@
 import React from "react";
 import { useEffect, useState } from "react";
-
 import FeaturedContentComponent from "../featuredContent/featuredContent";
 import SwimLanes from "../swimlanes/swimLanes";
 import SwimLanesLoading from "../swimlanes/swimLanesLoading";
