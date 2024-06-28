@@ -9,6 +9,7 @@
  */
 import appConfig from "../../appConfig";
 import defaultFeaturedItems from "../data/defaultFeaturedItemData";
+import { ENV_KEY } from "@/types/EnvironmentType";
 
 export const imageURL = (
   imageId: any,
@@ -201,7 +202,6 @@ import {
   ADOBE_ANALYTICS_DC_PREFIX,
   BASE_URL,
 } from "../config/constants";
-import { ENV_KEY } from "@/types/EnvironmentType";
 
 /**
  * adobeAnalyticsParam
