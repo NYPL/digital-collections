@@ -66,13 +66,19 @@ export const POST = async (request: NextRequest) => {
     );
   } catch (e: unknown) {
     if (e instanceof Error) {
-      return NextResponse.json({
-        message: e.message,
-      });
+      return NextResponse.json(
+        {
+          message: e.message,
+        },
+        { status: 400 }
+      );
     } else {
-      return NextResponse.json({
-        message: "unknown error occurred",
-      });
+      return NextResponse.json(
+        {
+          message: "unknown error occurred",
+        },
+        { status: 400 }
+      );
     }
   }
 };

@@ -233,6 +233,7 @@ export const adobeAnalyticsRouteToPageName = (route = "", queryParams = "") => {
  */
 export const trackVirtualPageView = (pathname = "") => {
   // @ts-ignore
+  // Adobe does not support TS types.
   const adobeDataLayer = window["adobeDataLayer"] || [];
   const route = pathname.toLowerCase().replace(BASE_URL, "");
   const queryIndex = route.indexOf("?");
