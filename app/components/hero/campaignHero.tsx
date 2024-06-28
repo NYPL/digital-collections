@@ -1,6 +1,5 @@
 import { Hero } from "@nypl/design-system-react-components";
 import { useEffect, useState } from "react";
-
 import CampaignHeroSubText from "./campaignHeroSubText";
 import CampaignHeroHeading from "./campaignHeroHeading";
 import CampaignHeroLoading from "./campaignHeroLoading";

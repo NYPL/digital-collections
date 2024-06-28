@@ -1,4 +1,3 @@
-import { FeaturedContentData } from "@/types/FeaturedContentData";
 import useBreakpoints from "../../hooks/useBreakpoints";
 import {
   Link as DSLink,
