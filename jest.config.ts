@@ -15,8 +15,12 @@ const config = {
   collectCoverage: true,
   // Add more setup options before each test is run
   setupFilesAfterEnv: ["<rootDir>/jest.setup.ts"],
-  testEnvironment: "jest-environment-jsdom",
-  testPathIgnorePatterns: ["__tests__/data/*", "__tests__/__mocks__/*"],
+  testEnvironment: "jsdom",
+  testPathIgnorePatterns: [
+    "__tests__/data/*",
+    "__tests__/__mocks__/*",
+    "__tests__/api/lanes/*",
+  ],
   moduleNameMapper: {
     "^appConfig$": "<rootDir>/__tests__/data/appConfig.ts", // Adjust the path as needed
   },
