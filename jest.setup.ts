@@ -1,4 +1,5 @@
 /* eslint-disable no-undef */
+import { MatchMedia } from "@nypl/design-system-react-components";
 import "@testing-library/jest-dom";
 import { toHaveNoViolations } from "jest-axe";
 expect.extend(toHaveNoViolations);
@@ -7,6 +8,8 @@ expect.extend(toHaveNoViolations);
 // logged and we don't want to see expected errors while we test.
 jest.spyOn(global.console, "error").mockImplementation(() => jest.fn());
 jest.spyOn(global.console, "warn").mockImplementation(() => jest.fn());
+
+new MatchMedia();
 
 global.ResizeObserver = jest.fn().mockImplementation(() => ({
   observe: jest.fn(),

@@ -40,7 +40,7 @@ You can start editing the page by modifying `pages/index.tsx`. The page auto-upd
 
 [API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.ts`.
 
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
+The `app/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
 
 ## Environment Variables
 
@@ -136,31 +136,6 @@ These endpoints will change (as DC homepage is built out) to be dynamically gene
 ## Fonts
 
 This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
-
-## Tests
-
-To run tests, run
-
-```
-npm run test
-```
-
-## Test Scripts
-
-To run the homepage swimlane image loading test script against the qa environment, run
-
-```
-npm run hompageImageLoadingTestQa
-```
-(requires accessination with nypl-dams-dev)
-
-To run the same test script against the production environment, run
-```
-npm run hompageImageLoadingTestProd
-```
-
-The test waits for the 24 swim lane images to load, including the 12 that load after scrolling, and has succeeded if it does not time out. It simulates a single user loading the homepage one time.
-
 
 ## Getting Started With Docker
 
@@ -273,33 +248,27 @@ Next.js is a frontend Javascript framework with server-side rendering.
 
 ### Structure and routing
 
-This is a Next.js 13 app that uses the Pages router. This is a basic example project using that structure:
+This is a Next.js 14 app that uses the App Router. This is a basic example project using that structure:
 
 ```
 project/
 │
-├── pages/
-│   ├── index.js
-│   ├── contact.js
+├── app/
+│   ├── page.tsx
 │   ├── about/
-│   │   └── me.js
+│   │   └── page.tsx
 │   └── posts/
-│      ├── index.js
-│      └── [id].js
+│      ├── page.tsx
+│      └── [id]
+│           └── page.tsx
 │
 └── components/
-    ├── Header.js
-    └── Footer.js
+    ├── header.tsx
+    └── footer.tsx
 
 ```
 
-Files directly represent routes, so `index` files will be routed to the root of the directory, and a nested file structure will create a nested route (`pages/about/me.js` → `/about/me`). Dynamic routes are created with brackets: (`pages/posts/[id].js` → `posts/1`, `posts/2`, etc.).
-
-### Rendering and data fetching
-
-In general, rendering will happen one of three ways: server-side rendering, client-side rendering, and static site generation ("pre-rendering").
-
-Server-side data on a page can be fetched through `getStaticProps` (Next.js will pre-render the page at build time) or `getServerSideProps` (server will call on every request).
+Folders define routes, and paths of nested folders should end in a single "leaf": a `page.tsx` file. Dynamic routes are wrapped in brackets. For example, the route `app/blog/[slug]/page.js` would map to url `/blog/c` where the slug is `c`.
 
 ## Learn More
 
@@ -404,16 +373,24 @@ Note: Do not need to worry about Quality or Format for this application.
 
 The Digital Collections app runs unit tests with Jest and React Testing Library.
 
+We have two groups of tests: client side components/pages have unit tests in the `jsdom` environment, and the functional tests for API endpoints are in the `node` environment. This is due to the structure of the App Router in Next.
+
 To run all tests once:
+
+```sh
+$ npm test:all
+```
+
+To run all `jsdom` tests once:
 
 ```sh
 $ npm test
 ```
 
-If you're actively writing or updating tests, you can run the tests in watch mode. This will wait for any changes and run when a file is saved:
+To run all `node` (API endpoints) tests once:
 
 ```sh
-$ npm run test:watch
+$ npm test:API
 ```
 
 If you want to run tests on only one specific file, run:
@@ -421,6 +398,24 @@ If you want to run tests on only one specific file, run:
 ```sh
 $ npm test -- src/[path/to/file]
 ```
+
+## Test Scripts
+
+To run the homepage swimlane image loading test script against the qa environment, run
+
+```
+npm run hompageImageLoadingTestQa
+```
+
+(requires accessination with nypl-dams-dev)
+
+To run the same test script against the production environment, run
+
+```
+npm run hompageImageLoadingTestProd
+```
+
+The test waits for the 24 swim lane images to load, including the 12 that load after scrolling, and has succeeded if it does not time out. It simulates a single user loading the homepage one time.
 
 ## Linting and Formatting
 
@@ -439,11 +434,11 @@ All pushes to this repo will be checked with `npm test` and `npm lint`.
 
 Our branches (in order of stability are):
 
-| Branch     | Environment | AWS Account    | Cluster                   | Link To Application                                                                        |
-| :--------- | :---------- | :------------- | :------------------------ | :----------------------------------------------------------------------------------------- |
-| main       | development |                |                           | [localhost:3000](http://localhost:3000)                                                    |
-| qa         | qa          | nypl-dams-dev  | dc-frontend-qa            | [https://qa-new-digitalcollections.nypl.org/](https://qa-new-digitalcollections.nypl.org/) |
-| production | production  | nypl-dams-prod | new-digitalcollections    | [https://new-digitalcollections.nypl.org/](https://new-digitalcollections.nypl.org/)       |
+| Branch     | Environment | AWS Account    | Cluster                | Link To Application                                                                        |
+| :--------- | :---------- | :------------- | :--------------------- | :----------------------------------------------------------------------------------------- |
+| main       | development |                |                        | [localhost:3000](http://localhost:3000)                                                    |
+| qa         | qa          | nypl-dams-dev  | dc-frontend-qa         | [https://qa-new-digitalcollections.nypl.org/](https://qa-new-digitalcollections.nypl.org/) |
+| production | production  | nypl-dams-prod | new-digitalcollections | [https://new-digitalcollections.nypl.org/](https://new-digitalcollections.nypl.org/)       |
 
 ## Contributing
 
