@@ -17,5 +17,6 @@ export const config = {
     "/divisions",
     "/divisions/:path*",
     "/items/:path*",
+    "/search/:path*",
   ],
 };
