@@ -14,15 +14,15 @@ import {
   Tooltip,
 } from "@nypl/design-system-react-components";
 import styles from "./Swimlanes.module.css";
-import { imageURL } from "../../utils/utils";
 import { DC_URL } from "../../config/constants";
 import useBreakpoints from "../../hooks/useBreakpoints";
 import CollectionCard from "../cards/collectionCard";
-import type { CollectionCardData } from "app/types/CollectionCard";
-import { CollectionCardModel } from "app/models/collectionCard";
+import type { CollectionCardData } from "../../types/CollectionCard";
+import { CollectionCardModel } from "../../models/collectionCard";
 
-const SwimLanes = ({ lanesWithNumItems }) => {
+const SwimLanes = ({ numColumns, lanesWithNumItems }) => {
   const { isLargerThanLargeTablet } = useBreakpoints();
+
   return lanesWithNumItems.map((lane, key) => (
     <Box className={styles.lane} data-testid={lane.slug} mt="xxl" key={key}>
       <Flex alignItems="baseline">
@@ -48,7 +48,13 @@ const SwimLanes = ({ lanesWithNumItems }) => {
         </Link>
       </Flex>
       {lane.collections && lane.collections.length > 0 && (
-        <SimpleGrid columns={4} id={`grid-${lane.slug}`}>
+        <SimpleGrid
+          columns={numColumns}
+          id={`grid-${lane.slug}`}
+          sx={{
+            gridTemplateColumns: `repeat(${numColumns}, minmax(0, 1fr))`,
+          }}
+        >
           {lane.collections.map((collection: CollectionCardData, index) => {
             const c = new CollectionCardModel(collection); // can remove this and the line above after referencing the CollectionCardModel in the Lane model after it's created
             return (
