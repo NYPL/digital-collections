@@ -16,9 +16,9 @@ import {
 import styles from "./Swimlanes.module.css";
 import { imageURL } from "../../utils/utils";
 import { DC_URL } from "../../config/constants";
-import useBreakpoints from "../../hooks/useBreakpoints";
+import useBreakpoints from "app/hooks/useBreakpoints";
 
-const SwimLanes = ({ lanesWithNumItems }) => {
+const SwimLanes = ({ numColumns, lanesWithNumItems }) => {
   const { isLargerThanLargeTablet } = useBreakpoints();
 
   return lanesWithNumItems.map((lane, key) => (
@@ -46,9 +46,16 @@ const SwimLanes = ({ lanesWithNumItems }) => {
         </Link>
       </Flex>
       {lane.collections && lane.collections.length > 0 && (
-        <SimpleGrid columns={4} id={`grid-${lane.slug}`}>
+        <SimpleGrid
+          columns={numColumns}
+          id={`grid-${lane.slug}`}
+          sx={{
+            gridTemplateColumns: `repeat(${numColumns}, minmax(0, 1fr))`,
+          }}
+        >
           {lane.collections.map((collection, index) => (
             <Card
+              sx={{ display: "grid" }}
               key={index}
               id={`card-${lane.slug}-${index}`}
               mainActionLink={collection.url}
@@ -96,7 +103,7 @@ const SwimLanes = ({ lanesWithNumItems }) => {
                   fontWeight="medium"
                   __css={{
                     display: "none",
-                    [`@media screen and (min-width: 600px)`]: {
+                    [`@media screen and (min-width: 480px)`]: {
                       display: "inline",
                     },
                   }}
