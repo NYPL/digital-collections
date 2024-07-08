@@ -51,7 +51,7 @@ const Item = ({ item }) => {
       );
       return viewer;
     default:
-      return <h1>No type of resource match</h1>;
+      return <h2>No type of resource match</h2>;
   }
 };
 
