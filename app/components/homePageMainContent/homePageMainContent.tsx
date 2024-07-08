@@ -4,8 +4,15 @@ import { useEffect, useState } from "react";
 import FeaturedContentComponent from "../featuredContent/featuredContent";
 import SwimLanes from "../swimlanes/swimLanes";
 import SwimLanesLoading from "../swimlanes/swimLanesLoading";
+import useBreakpoints from "app/hooks/useBreakpoints";
 
 const HomePageMainContent = () => {
+  const { isLargerThanLargeTablet, isLargerThanLargeMobile } = useBreakpoints();
+  const numColumns = isLargerThanLargeTablet
+    ? 4
+    : isLargerThanLargeMobile
+    ? 2
+    : 1;
   const [data, setData] = useState<any>({});
 
   useEffect(() => {
@@ -23,9 +30,15 @@ const HomePageMainContent = () => {
 
   return data?.lanesWithNumItems ? (
     <>
-      <SwimLanes lanesWithNumItems={[data.lanesWithNumItems[0]]} />
+      <SwimLanes
+        numColumns={numColumns}
+        lanesWithNumItems={[data.lanesWithNumItems[0]]}
+      />
       <FeaturedContentComponent randomNumber={data.randomNumber} />
-      <SwimLanes lanesWithNumItems={data.lanesWithNumItems.slice(1)} />
+      <SwimLanes
+        numColumns={numColumns}
+        lanesWithNumItems={data.lanesWithNumItems.slice(1)}
+      />
     </>
   ) : (
     <>
