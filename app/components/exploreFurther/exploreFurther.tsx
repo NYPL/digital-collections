@@ -67,6 +67,7 @@ const ExploreFurther = () => {
             id={`card-id-${index}`}
             key={`card-key-${index}`}
             data-testid={`test-id-${index}`}
+            mainActionLink={item.url}
             imageProps={{
               alt: "",
               aspectRatio: "sixteenByNine",

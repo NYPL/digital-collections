@@ -7,10 +7,19 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+## [0.1.9] 2024-07-08
+
 ### Updated
 
 - Updates card columns to new breakpoints (DR-3036)
 - Migrated to Next v14 (App Router) (DR-3010, DR-3011)
+- Make the entire card clickable for Collection and Explore Further cards (DR-3024)
+
+### Added
+
+- Added `/collections`, `/divisions`, `/divisions/[slug]`, and `/collections/lane/[slug]` pages (DR-3021)
+- Added middleware to redirect unpublished pages (DR-3021)
+- Added `PageLayout` component (DR-3022)
 
 ## [0.1.8] 2024-06-06
 

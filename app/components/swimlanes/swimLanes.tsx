@@ -20,6 +20,7 @@ import useBreakpoints from "app/hooks/useBreakpoints";
 
 const SwimLanes = ({ numColumns, lanesWithNumItems }) => {
   const { isLargerThanLargeTablet } = useBreakpoints();
+
   return lanesWithNumItems.map((lane, key) => (
     <Box className={styles.lane} data-testid={lane.slug} mt="xxl" key={key}>
       <Flex alignItems="baseline">
@@ -57,6 +58,7 @@ const SwimLanes = ({ numColumns, lanesWithNumItems }) => {
               sx={{ display: "grid" }}
               key={index}
               id={`card-${lane.slug}-${index}`}
+              mainActionLink={collection.url}
               imageProps={{
                 alt: "",
                 id: `image-${lane.slug}-${index}`,
@@ -82,12 +84,13 @@ const SwimLanes = ({ numColumns, lanesWithNumItems }) => {
                 level="h3"
                 size="heading5"
                 className={styles.collectiontitle}
-                url={collection.url}
                 noOfLines={3}
               >
                 {isLargerThanLargeTablet ? (
                   <Tooltip content={collection.title}>
-                    <Text sx={{ marginBottom: "0" }}>{collection.title}</Text>
+                    <Link href={collection.url} sx={{ marginBottom: "0" }}>
+                      {collection.title}
+                    </Link>
                   </Tooltip>
                 ) : (
                   collection.title
