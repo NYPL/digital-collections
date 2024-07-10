@@ -102,26 +102,8 @@ export const apiCall = async (
   apiUrl: string,
   urlParam?: { [key: string]: any }
 ) => {
-  const apiKey = process.env.AUTH_TOKEN;
-  const queryString = urlParam
-    ? "?" + new URLSearchParams(urlParam).toString()
-    : "";
-  apiUrl += queryString;
-
-  try {
-    const response = await RepoAPICall(apiUrl);
-
-    if (response.status === 200) {
-      const data = await response.json();
-      // console.log(`apiCall: called ${apiUrl}`);
-      // console.log(`Response time: ${new Date().getTime() - startTime}`);
-      return data.nyplAPI.response;
-    } else {
-      return undefined;
-    }
-  } catch (error) {
-    return undefined;
-  }
+  const data = await RepoAPICall(apiUrl, urlParam);
+  return data?.nyplAPI?.response;
 };
 
 /**
