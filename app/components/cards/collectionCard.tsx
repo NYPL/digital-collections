@@ -13,32 +13,32 @@ import { headerBreakpoints } from "../../utils/breakpoints";
 import { CollectionCardDataType } from "../..//types/CollectionCard";
 interface CollectionCardProps {
   slug: string;
-  index: number;
+  id: number;
   isLargerThanLargeTablet: boolean;
   collection: CollectionCardDataType;
 }
 
 const CollectionCard = ({
   slug,
-  index,
+  id,
   isLargerThanLargeTablet,
   collection,
 }: CollectionCardProps) => {
   return (
     <Card
       sx={{ display: "grid" }}
-      id={`card-${slug}-${index}`}
+      id={`card-${slug}-${id}`}
       mainActionLink={collection.url}
       imageProps={{
         alt: "",
-        id: `image-${slug}-${index}`,
+        id: `image-${slug}-${id}`,
         isLazy: true,
         aspectRatio: "twoByOne",
         src: collection.imageURL,
       }}
     >
       <CardHeading
-        id={`row-card-heading-${slug}-${index}`}
+        id={`row-card-heading-${slug}-${id}`}
         level="h3"
         size="heading5"
         className={styles.collectiontitle}
@@ -56,7 +56,7 @@ const CollectionCard = ({
       </CardHeading>
       <CardContent>
         <Text
-          id={`item-count-${slug}-${index}`}
+          id={`item-count-${slug}-${id}`}
           size="subtitle2"
           fontWeight="medium"
           __css={{

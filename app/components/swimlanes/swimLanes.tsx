@@ -61,7 +61,7 @@ const SwimLanes = ({ numColumns, lanesWithNumItems }) => {
               <CollectionCard
                 key={index}
                 slug={lane.slug}
-                index={index}
+                id={index}
                 collection={c} //rename to collection after Lane model is created
                 isLargerThanLargeTablet={isLargerThanLargeTablet}
               />
