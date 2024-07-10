@@ -10,12 +10,12 @@ import {
 } from "@nypl/design-system-react-components";
 import styles from "../swimlanes/Swimlanes.module.css";
 import { headerBreakpoints } from "../../utils/breakpoints";
-import { CollectionCardData } from "../..//types/CollectionCard";
+import { CollectionCardDataType } from "../..//types/CollectionCard";
 interface CollectionCardProps {
   slug: string;
   index: number;
   isLargerThanLargeTablet: boolean;
-  collection: CollectionCardData;
+  collection: CollectionCardDataType;
 }
 
 const CollectionCard = ({

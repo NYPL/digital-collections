@@ -1,4 +1,4 @@
-export interface CollectionCardData {
+export interface CollectionCardDataType {
   uuid: string;
   title: string;
   url: string;
@@ -9,4 +9,4 @@ export interface CollectionCardData {
   // constainsOnSiteMaterials: boolean; // too be added in phase 2
 }
 
-export default CollectionCardData;
+export default CollectionCardDataType;
