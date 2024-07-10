@@ -38,7 +38,7 @@ export const getItemData = async (uuid) => {
 
 export const getNumDigitizedItems = async () => {
   const apiUrl = `${process.env.API_URL}/api/v2/items/total`;
-  const res = await apiCall(apiUrl);
+  const res = await apiResponse(apiUrl);
 
   const fallbackCount =
     defaultFeaturedItems[appConfig.environment].numberOfDigitizedItems;
@@ -89,7 +89,7 @@ export const getAPIResponse = async (
   const apiUrl = `${process.env.API_URL}/api/v2/items/${identifierType}/${identifier}`;
   // console.log(`getAPIUri: About to fetch ${apiUrl}`);
   // console.log(`getAPIUri calls apiCall function internally`);
-  const apiCallValue = apiCall(apiUrl, urlParam);
+  const apiCallValue = apiResponse(apiUrl, urlParam);
   return apiCallValue;
 };
 
@@ -98,7 +98,7 @@ export const getAPIResponse = async (
  * @param {string} apiUrl - the url to make a request to
  */
 
-export const apiCall = async (
+export const apiResponse = async (
   apiUrl: string,
   urlParam?: { [key: string]: any }
 ) => {
