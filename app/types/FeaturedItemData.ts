@@ -1,4 +1,4 @@
-export interface FeaturedItemData {
+export interface FeaturedItemDataType {
   featuredItem: {
     title: string;
     uuid: string;
