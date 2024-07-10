@@ -17,7 +17,7 @@ import styles from "./Swimlanes.module.css";
 import { DC_URL } from "../../config/constants";
 import useBreakpoints from "../../hooks/useBreakpoints";
 import CollectionCard from "../cards/collectionCard";
-import type { CollectionCardData } from "../../types/CollectionCard";
+import type { CollectionCardDataType } from "../../types/CollectionCard";
 import { CollectionCardModel } from "../../models/collectionCard";
 
 const SwimLanes = ({ numColumns, lanesWithNumItems }) => {
@@ -55,7 +55,7 @@ const SwimLanes = ({ numColumns, lanesWithNumItems }) => {
             gridTemplateColumns: `repeat(${numColumns}, minmax(0, 1fr))`,
           }}
         >
-          {lane.collections.map((collection: CollectionCardData, index) => {
+          {lane.collections.map((collection: CollectionCardDataType, index) => {
             const c = new CollectionCardModel(collection); // can remove this and the line above after referencing the CollectionCardModel in the Lane model after it's created
             return (
               <CollectionCard
