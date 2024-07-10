@@ -1,7 +1,7 @@
 // import { CollectionCardData } from "app/types/Collection";
 import { imageURL } from "app/utils/utils";
 
-// TO DO: Connect to typescript interface for CollectionCardData
+// TODO: Connect to typescript interface for CollectionCardData
 export class CollectionCardModel {
   uuid: string;
   title: string;
