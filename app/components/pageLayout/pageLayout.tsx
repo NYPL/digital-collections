@@ -14,10 +14,11 @@ import { ADOBE_EMBED_URL } from "app/config/constants";
 import Script from "next/script";
 import { trackVirtualPageView } from "app/utils/utils";
 import { usePathname } from "next/navigation";
+import { BreadcrumbsDataProps } from "@nypl/design-system-react-components/dist/src/components/Breadcrumbs/Breadcrumbs";
 
 interface PageLayoutProps {
   activePage: string;
-  breadcrumbs?;
+  breadcrumbs?: BreadcrumbsDataProps[];
 }
 
 const PageLayout = ({
@@ -37,7 +38,7 @@ const PageLayout = ({
   });
   const [view, setView] = React.useState("form");
   const { isOpen, onClose, FeedbackBox } = useFeedbackBox();
-  const onSubmit = async (values) => {
+  const onSubmit = async (values: { category: string; comment: string }) => {
     try {
       const response = await fetch("/api/feedback", {
         method: "POST",
@@ -90,7 +91,7 @@ const PageLayout = ({
           children
         ) : (
           <>
-            <Breadcrumbs breadcrumbsData={breadcrumbs} />
+            <Breadcrumbs breadcrumbsData={breadcrumbs || []} />
             <TemplateAppContainer contentPrimary={children as JSX.Element} />
           </>
         )}

@@ -3,6 +3,11 @@ import dynamic from "next/dynamic";
 import Header from "@/components/header/header";
 import { Box } from "@nypl/design-system-react-components";
 import { imageURL } from "@/utils/utils";
+
+interface ImageViewerProps {
+  imageID: string;
+}
+
 const Image: any = dynamic(
   () => import("@samvera/clover-iiif").then((Clover) => (Clover as any).Image),
   {
@@ -10,7 +15,7 @@ const Image: any = dynamic(
   }
 );
 
-const ImageViewer = ({ imageID }) => {
+const ImageViewer = ({ imageID }: ImageViewerProps) => {
   // const imageID = item.capture.imageID.$;
   return (
     <>

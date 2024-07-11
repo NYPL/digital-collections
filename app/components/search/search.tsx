@@ -11,7 +11,7 @@ const Search = () => {
   const [keywords, setKeywords] = useState("");
   const [publicDomainOnly, setPublicDomainOnly] = useState(false);
 
-  const handleSubmit = (event, router) => {
+  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const searchUrl =
       DC_URL +
@@ -21,11 +21,11 @@ const Search = () => {
     router.push(searchUrl);
   };
 
-  const handleTextChange = (event) => {
+  const handleTextChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setKeywords(event.target.value);
   };
 
-  const handleCheckChange = (isChecked): void => {
+  const handleCheckChange = (isChecked: boolean): void => {
     setPublicDomainOnly(isChecked);
   };
 
@@ -53,7 +53,9 @@ const Search = () => {
           id="searchbar"
           invalidText="Could not find the item"
           labelText="Search Digital Collections"
-          onSubmit={(event) => handleSubmit(event, router)}
+          onSubmit={(event: React.FormEvent<HTMLFormElement>) =>
+            handleSubmit(event)
+          }
           textInputProps={{
             labelText: "Search keyword(s)",
             name: "textInputName",

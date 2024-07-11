@@ -10,7 +10,10 @@ import { useEffect } from "react";
 
 export function useStickyMargin() {
   useEffect(() => {
-    const applyStickyMargin = (sticky) => {
+    const applyStickyMargin = (sticky: {
+      header?: HTMLElement | null;
+      offset: number;
+    }) => {
       // Specifying which element on the page is focused, if none then defaulting to body.
       const focused = (document.activeElement || document.body) as HTMLElement;
       let applicable = focused !== document.body;
@@ -40,9 +43,10 @@ export function useStickyMargin() {
      **/
     let sticky: {
       header?: HTMLElement | null;
-      // Could have footer, other sticky elements.
-      offset?: number;
-    } = {};
+      offset: number;
+    } = {
+      offset: 0,
+    };
 
     sticky.header = document.querySelector(
       `[data-sticky-${"header"}]`
@@ -59,7 +63,7 @@ export function useStickyMargin() {
     const observer = new ResizeObserver(() => applyStickyMargin(sticky));
 
     // Handles "focus" events.
-    const applyStickyMarginWithEvent = (ev) => {
+    const applyStickyMarginWithEvent = (ev: FocusEvent) => {
       applyStickyMargin(sticky);
     };
 

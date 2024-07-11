@@ -1,6 +1,11 @@
 "use client";
 import SearchResults from "../search/results";
-const CollectionsPage = ({ slug }) => {
+
+interface CollectionPageProps {
+  slug: String;
+}
+
+const CollectionsPage = ({ slug }: CollectionPageProps) => {
   return (
     <>
       <h2>{slug}</h2>

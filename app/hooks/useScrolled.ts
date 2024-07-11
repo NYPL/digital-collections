@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 
 /* Returns if the page is scrolled past the header, could be refactored for other elements. */
-export function useScrolled(elementId) {
+export function useScrolled(elementId: string) {
   const [isScrolled, setIsScrolled] = useState(true);
 
   useEffect(() => {
