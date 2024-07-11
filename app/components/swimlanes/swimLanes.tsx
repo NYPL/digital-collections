@@ -20,14 +20,6 @@ import CollectionCard from "../cards/collectionCard";
 import type { CollectionCardDataType } from "../../types/CollectionCard";
 import { CollectionCardModel } from "../../models/collectionCard";
 
-// export type CollectionItem = {
-//   uuid: string;
-//   title: string;
-//   image_id: string;
-//   url: string;
-//   numItems: number;
-// };
-
 export interface SwimLanesProps {
   numColumns: number;
   lanesWithNumItems: {
