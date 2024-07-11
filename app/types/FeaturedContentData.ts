@@ -1,4 +1,4 @@
-export interface FeaturedContentData {
+export interface FeaturedContentDataType {
   overline: string;
   heading: string;
   text: string;
