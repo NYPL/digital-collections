@@ -1,5 +1,5 @@
 import React from "react";
-import PageLayout from "components/pageLayout/pageLayout";
+import PageLayout from "../../../src/components/pageLayout/pageLayout";
 import { Metadata } from "next";
 
 type DivisionProps = {

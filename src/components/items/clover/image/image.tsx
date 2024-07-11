@@ -1,8 +1,8 @@
 "use client";
 import dynamic from "next/dynamic";
-import Header from "components/header/header";
+import Header from "src/components/header/header";
 import { Box } from "@nypl/design-system-react-components";
-import { imageURL } from "utils/utils";
+import { imageURL } from "src/utils/utils";
 
 interface ImageViewerProps {
   imageID: string;

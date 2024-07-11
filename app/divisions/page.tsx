@@ -1,6 +1,6 @@
 import React from "react";
 import { Metadata } from "next";
-import PageLayout from "components/pageLayout/pageLayout";
+import PageLayout from "../../src/components/pageLayout/pageLayout";
 
 export const metadata: Metadata = {
   title: "Divisions - NYPL Digital Collections",

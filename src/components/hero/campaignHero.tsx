@@ -4,10 +4,10 @@ import CampaignHeroSubText from "./campaignHeroSubText";
 import CampaignHeroHeading from "./campaignHeroHeading";
 import CampaignHeroLoading from "./campaignHeroLoading";
 import defaultFeaturedItem from "../../data/defaultFeaturedItemData";
-import appConfig from "../../appConfig";
+import appConfig from "../../../appConfig";
 import { FeaturedItemDataType } from "../../types/FeaturedItemData";
 import React from "react";
-import { ENV_KEY } from "@/../types/EnvironmentType";
+import { ENV_KEY } from "src/types/EnvironmentType";
 
 const CampaignHero = () => {
   const defaultFeaturedItemResponse =
