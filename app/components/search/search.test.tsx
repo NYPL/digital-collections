@@ -4,6 +4,7 @@ import "@testing-library/jest-dom";
 import Search from "./search";
 import { useRouter } from "next/navigation";
 import appConfig from "../../../__tests__/data/appConfig";
+import { ENV_KEY } from "@/types/EnvironmentType";
 
 jest.mock("next/navigation", () => ({
   useRouter: jest.fn(),
@@ -27,7 +28,7 @@ describe("Search component", () => {
     });
     fireEvent.submit(getByLabelText("Search Digital Collections"));
     expect(mockRouter.push).toHaveBeenCalledWith(
-      appConfig.DC_URL[appConfig.environment] +
+      appConfig.DC_URL[appConfig.environment as ENV_KEY] +
         `/search/index?keywords=test%20word`
     );
   });
@@ -46,7 +47,7 @@ describe("Search component", () => {
     fireEvent.submit(screen.getByLabelText("Search Digital Collections"));
 
     expect(mockRouter.push).toHaveBeenCalledWith(
-      appConfig.DC_URL[appConfig.environment] +
+      appConfig.DC_URL[appConfig.environment as ENV_KEY] +
         `/search/index?utf8=✓&filters%5Brights%5D=pd&keywords=test%20words`
     );
   });

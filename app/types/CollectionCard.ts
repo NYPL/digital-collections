@@ -2,7 +2,7 @@ export interface CollectionCardDataType {
   uuid: string;
   title: string;
   url: string;
-  image_id: string;
+  imageID: string;
   imageURL: string;
   numItems: string;
   // TODO: containsAVMaterial: boolean; // to be added in phase 2

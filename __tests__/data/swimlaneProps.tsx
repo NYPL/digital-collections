@@ -1,5 +1,6 @@
-export const props = {
-  randomNumber: 1,
+import { SwimLanesProps } from "@/components/swimlanes/swimLanes";
+
+export const props: SwimLanesProps = {
   lanesWithNumItems: [
     {
       title: "Test collections 1",
