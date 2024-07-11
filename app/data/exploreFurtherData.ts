@@ -1,6 +1,6 @@
-import { ExploreFurtherData } from "../types/ExploreFurtherData";
+import { ExploreFurtherDataType } from "../types/ExploreFurtherData";
 
-const exploreFurtherData: ExploreFurtherData[] = [
+const exploreFurtherData: ExploreFurtherDataType[] = [
   {
     title: "Digital Collections Print Store",
     description:
