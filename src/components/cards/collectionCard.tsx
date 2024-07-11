@@ -8,6 +8,7 @@ import {
   Tooltip,
   Link,
 } from "@nypl/design-system-react-components";
+import Image from "next/image";
 import styles from "./CollectionCard.module.css";
 import { headerBreakpoints } from "../../utils/breakpoints";
 import { CollectionCardDataType } from "../../types/CollectionCard";
@@ -35,7 +36,15 @@ const CollectionCard = ({
         id: `image-${slug}-${id}`,
         isLazy: true,
         aspectRatio: "twoByOne",
-        src: collection.imageURL,
+        component: (
+          <Image
+            src={collection.imageURL}
+            alt=""
+            width={100}
+            height={100}
+            objectFit="cover"
+          />
+        ),
       }}
     >
       <CardHeading
