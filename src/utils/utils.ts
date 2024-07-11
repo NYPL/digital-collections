@@ -9,7 +9,7 @@
  */
 import appConfig from "../../appConfig";
 import defaultFeaturedItems from "../data/defaultFeaturedItemData";
-import { ENV_KEY } from "@/types/EnvironmentType";
+import { ENV_KEY } from "src/types/EnvironmentType";
 
 export const imageURL = (
   imageId: any,

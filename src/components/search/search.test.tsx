@@ -4,7 +4,7 @@ import "@testing-library/jest-dom";
 import Search from "./search";
 import { useRouter } from "next/navigation";
 import appConfig from "../../../__tests__/data/appConfig";
-import { ENV_KEY } from "@/types/EnvironmentType";
+import { ENV_KEY } from "../../types/EnvironmentType";
 
 jest.mock("next/navigation", () => ({
   useRouter: jest.fn(),

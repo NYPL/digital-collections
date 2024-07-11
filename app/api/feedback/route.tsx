@@ -1,6 +1,6 @@
 import { google } from "googleapis";
 import { UAParser } from "ua-parser-js";
-import { getCustomTimestamp } from "../../utils/utils";
+import { getCustomTimestamp } from "../../../src/utils/utils";
 import { NextResponse, NextRequest } from "next/server";
 
 export const POST = async (request: NextRequest) => {
@@ -14,7 +14,7 @@ export const POST = async (request: NextRequest) => {
     const page = referer.replace(origin, "");
     const ipAddress = request.headers.get("x-forwarded-for") || "";
     const userAgentParser = new UAParser(
-      request.headers.get("user-agent") ?? undefined
+      request.headers.get("user-agent" as string) ?? undefined
     );
     const userAgent = userAgentParser.getResult();
     const userPlatform = userAgent.device.model || "";

@@ -1,4 +1,4 @@
-import { ENV_KEY } from "@/types/EnvironmentType";
+import { ENV_KEY } from "../types/EnvironmentType";
 import appConfig from "../../appConfig";
 
 export const BASE_URL = "/";
