@@ -14,7 +14,7 @@ export const POST = async (request: NextRequest) => {
     const page = referer.replace(origin, "");
     const ipAddress = request.headers.get("x-forwarded-for") || "";
     const userAgentParser = new UAParser(
-      request.headers.get("user-agent") as string
+      request.headers.get("user-agent" as string) ?? undefined
     );
     const userAgent = userAgentParser.getResult();
     const userPlatform = userAgent.device.model || "";
@@ -64,13 +64,21 @@ export const POST = async (request: NextRequest) => {
       },
       { status: 200 }
     );
-  } catch (e) {
-    return NextResponse.json(
-      {
-        message: e.message,
-        error: "server error",
-      },
-      { status: 400 }
-    );
+  } catch (e: unknown) {
+    if (e instanceof Error) {
+      return NextResponse.json(
+        {
+          message: e.message,
+        },
+        { status: 400 }
+      );
+    } else {
+      return NextResponse.json(
+        {
+          message: "unknown error occurred",
+        },
+        { status: 400 }
+      );
+    }
   }
 };

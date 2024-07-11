@@ -20,10 +20,19 @@ import CollectionCard from "../cards/collectionCard";
 import type { CollectionCardDataType } from "../../types/CollectionCard";
 import { CollectionCardModel } from "../../models/collectionCard";
 
-const SwimLanes = ({ numColumns, lanesWithNumItems }) => {
-  const { isLargerThanLargeTablet } = useBreakpoints();
+export interface SwimLanesProps {
+  numColumns: number;
+  lanesWithNumItems: {
+    slug: string;
+    title: string;
+    rank: number;
+    collections: CollectionCardDataType[];
+  }[];
+}
 
-  return lanesWithNumItems.map((lane, key) => (
+const SwimLanes = ({ numColumns, lanesWithNumItems }: SwimLanesProps) => {
+  const { isLargerThanLargeTablet } = useBreakpoints();
+  const lanes = lanesWithNumItems.map((lane, key) => (
     <Box className={styles.lane} data-testid={lane.slug} mt="xxl" key={key}>
       <Flex alignItems="baseline">
         <Heading id={`row-heading-${lane.slug}`} level="h2" size="heading3">
@@ -91,6 +100,7 @@ const SwimLanes = ({ numColumns, lanesWithNumItems }) => {
       </Link>
     </Box>
   ));
+  return <>{lanes}</>;
 };
 
 export default SwimLanes;

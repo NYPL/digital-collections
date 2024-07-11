@@ -1,6 +1,9 @@
 import React, { useState } from "react";
 import { Box, Checkbox, Link } from "@nypl/design-system-react-components";
-import { PublicDomainFilterProps } from "../../types/props/PublicDomainFilterProps";
+
+export interface PublicDomainFilterProps {
+  onCheckChange: (isChecked: boolean) => void;
+}
 
 const PublicDomainFilter = ({ onCheckChange }: PublicDomainFilterProps) => {
   const [isChecked, setIsChecked] = useState(false);
@@ -12,7 +15,7 @@ const PublicDomainFilter = ({ onCheckChange }: PublicDomainFilterProps) => {
     </>
   );
 
-  const handleCheckChange = (event) => {
+  const handleCheckChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const newValue = event.target.checked;
     setIsChecked(newValue);
     onCheckChange(newValue);

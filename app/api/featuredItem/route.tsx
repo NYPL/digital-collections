@@ -1,3 +1,4 @@
+import { ENV_KEY } from "@/../types/EnvironmentType";
 import {
   getNumDigitizedItems,
   getFeaturedImage,
@@ -27,7 +28,7 @@ export const GET = async (request: NextRequest, response: NextResponse) => {
     ),
     uuid: featuredImageData.uuid,
     title: featuredImageData.title,
-    href: `${appConfig.DC_URL[appConfig.environment]}/items/${
+    href: `${appConfig.DC_URL[appConfig.environment as ENV_KEY]}/items/${
       featuredImageData.uuid
     }`,
   };

@@ -11,6 +11,7 @@ import {
 import styles from "./CollectionCard.module.css";
 import { headerBreakpoints } from "../../utils/breakpoints";
 import { CollectionCardDataType } from "../../types/CollectionCard";
+
 interface CollectionCardProps {
   slug: string;
   id: number;

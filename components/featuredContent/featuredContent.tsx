@@ -8,7 +8,11 @@ import React from "react";
 import featuredContentData from "../../data/featuredContentData";
 import { FeaturedContentDataType } from "../../types/FeaturedContentData";
 
-const FeaturedContentComponent = ({ randomNumber }) => {
+interface FeaturedContentProps {
+  randomNumber: number;
+}
+
+const FeaturedContentComponent = ({ randomNumber }: FeaturedContentProps) => {
   const data: FeaturedContentDataType = featuredContentData[randomNumber];
   return (
     <FeaturedContent

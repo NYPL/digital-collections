@@ -9,6 +9,7 @@
  */
 import appConfig from "../appConfig";
 import defaultFeaturedItems from "../data/defaultFeaturedItemData";
+import { ENV_KEY } from "@/../types/EnvironmentType";
 
 export const imageURL = (
   imageId: any,
@@ -17,7 +18,7 @@ export const imageURL = (
   rotation = "0"
 ) => {
   return `${
-    appConfig.IIIF_URL[appConfig.environment]
+    appConfig.IIIF_URL[appConfig.environment as ENV_KEY]
   }/iiif/2/${imageId}/${region}/${size}/${rotation}/default.jpg`;
 };
 
@@ -25,7 +26,7 @@ export const imageURL = (
  * Returns the number of digitized items in repo api.
  */
 
-export const getItemData = async (uuid) => {
+export const getItemData = async (uuid: string) => {
   const apiUrl = `${process.env.API_URL}/api/v2/items/mods_captures/${uuid}`;
   const res = await RepoAPICall(apiUrl);
   // console.log("res is: ", res)
@@ -41,7 +42,8 @@ export const getNumDigitizedItems = async () => {
   const res = await apiResponse(apiUrl);
 
   const fallbackCount =
-    defaultFeaturedItems[appConfig.environment].numberOfDigitizedItems;
+    defaultFeaturedItems[appConfig.environment as ENV_KEY]
+      .numberOfDigitizedItems;
   const totalItems = res?.count?.$ ? addCommas(res.count.$) : fallbackCount; // only add commas to repo api response data
   return totalItems;
 };
@@ -68,7 +70,7 @@ export const getItemsCountFromUUIDs = async (uuids: string[]) => {
   //   uuid1: count1
   //
   const uuidCounts = counts?.count || [];
-  const cleanCounts = uuidCounts.reduce((acc, count) => {
+  const cleanCounts = uuidCounts.reduce((acc: any, count: any) => {
     acc[count.uuid["$"]] = count.count_value["$"];
     return acc;
   }, {});
@@ -174,7 +176,7 @@ export const apiPOSTCall = async (apiUrl: string, postData: any) => {
 export const getFeaturedImage = async () => {
   //console.log(`getFeaturedImage: About call getAPIResponse`);
   const defaultResponse =
-    defaultFeaturedItems[appConfig.environment].featuredItem;
+    defaultFeaturedItems[appConfig.environment as ENV_KEY].featuredItem;
   const apiResponse = await getAPIResponse("featured", "", { random: "true" });
 
   return {
@@ -184,7 +186,7 @@ export const getFeaturedImage = async () => {
   };
 };
 
-function addCommas(number) {
+function addCommas(number: string) {
   // Return the formatted number
   return Number(number).toLocaleString("en-US");
 }
@@ -244,6 +246,8 @@ export const adobeAnalyticsRouteToPageName = (route = "", queryParams = "") => {
  * Tracks a virtual page view to Adobe Analytics on page navigation.
  */
 export const trackVirtualPageView = (pathname = "") => {
+  // @ts-ignore
+  // Adobe does not support TS types.
   const adobeDataLayer = window["adobeDataLayer"] || [];
   const route = pathname.toLowerCase().replace(BASE_URL, "");
   const queryIndex = route.indexOf("?");
