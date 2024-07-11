@@ -7,7 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+### Added
+
 - Added `/search/index` and `/collections/slug` pages (DR-3028)
+- Added `/items` pages (DR-3029)
 
 ## [0.1.9] 2024-07-08
 
