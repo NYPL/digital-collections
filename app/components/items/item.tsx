@@ -4,8 +4,13 @@ import AudioViewer from "./clover/audio/viewer";
 import VideoViewer from "./clover/video/viewer";
 import BookViewer from "./clover/book/viewer";
 import PDFViewer from "./clover/pdf/viewer";
+import { ItemModel } from "@/models/item";
 
-const Item = ({ item }) => {
+interface ItemProps {
+  item: ItemModel;
+}
+
+const Item = ({ item }: ItemProps) => {
   let viewer;
   switch (item.typeOfResource) {
     case "still image":
