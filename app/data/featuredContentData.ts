@@ -1,6 +1,6 @@
-import { FeaturedContentData } from "../types/FeaturedContentData";
+import { FeaturedContentDataType } from "../types/FeaturedContentData";
 
-const featuredContentData: FeaturedContentData[] = [
+const featuredContentData: FeaturedContentDataType[] = [
   {
     heading: "Spotlight on the public domain",
     overline: "Featured",
