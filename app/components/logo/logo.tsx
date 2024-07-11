@@ -1,6 +1,6 @@
 import { Logo, Link } from "@nypl/design-system-react-components";
 import React from "react";
-import { DCLogoProps } from "../../types/DCLogoProps";
+import { DCLogoProps } from "../../types/props/DCLogoProps";
 
 const DCLogo = ({ isMobile = false }: DCLogoProps) => {
   return (
