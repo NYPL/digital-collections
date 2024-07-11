@@ -2,7 +2,7 @@ import {
   getNumDigitizedItems,
   getFeaturedImage,
   imageURL,
-} from "../../utils/utils";
+} from "../../../utils/utils";
 import appConfig from "appConfig";
 import { NextResponse, NextRequest } from "next/server";
 export const fetchCache = "force-no-store";

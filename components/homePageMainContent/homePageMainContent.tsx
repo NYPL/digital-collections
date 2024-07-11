@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import FeaturedContentComponent from "../featuredContent/featuredContent";
 import SwimLanes from "../swimlanes/swimLanes";
 import SwimLanesLoading from "../swimlanes/swimLanesLoading";
-import useBreakpoints from "app/hooks/useBreakpoints";
+import useBreakpoints from "hooks/useBreakpoints";
 
 const HomePageMainContent = () => {
   const { isLargerThanLargeTablet, isLargerThanLargeMobile } = useBreakpoints();

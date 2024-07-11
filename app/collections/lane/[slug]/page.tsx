@@ -1,6 +1,6 @@
 import React from "react";
 import { Metadata } from "next";
-import PageLayout from "app/components/pageLayout/pageLayout";
+import PageLayout from "components/pageLayout/pageLayout";
 
 type LaneProps = {
   params: { slug: string };

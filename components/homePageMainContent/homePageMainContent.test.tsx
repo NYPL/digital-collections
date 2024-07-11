@@ -1,6 +1,6 @@
 import { render, screen, waitFor, within } from "@testing-library/react";
 import HomePageMainContent from "./homePageMainContent";
-import { props as homepageData } from "../../../__tests__/data/homepageProps";
+import { props as homepageData } from "../../__tests__/data/homepageProps";
 import React from "react";
 
 describe("homePageMainContent", () => {

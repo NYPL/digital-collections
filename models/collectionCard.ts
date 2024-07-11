@@ -1,5 +1,5 @@
 // import { CollectionCardData } from "app/types/Collection";
-import { imageURL } from "app/utils/utils";
+import { imageURL } from "utils/utils";
 
 // TODO: Connect to typescript interface for CollectionCardData
 export class CollectionCardModel {
