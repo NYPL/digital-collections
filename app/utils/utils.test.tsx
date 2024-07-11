@@ -2,7 +2,7 @@ import { waitFor } from "@testing-library/react";
 
 import {
   adobeAnalyticsRouteToPageName,
-  apiCall,
+  apiResponse,
   apiPOSTCall,
   getItemsCountFromUUIDs,
 } from "./utils";
@@ -11,15 +11,15 @@ import {
   ADOBE_ANALYTICS_PAGE_NAMES,
 } from "../config/constants";
 
-describe.skip("apiCall()", () => {
+describe.skip("apiResponse()", () => {
   it("should not return undefined", async () => {
     expect(
-      await apiCall(
+      await apiResponse(
         "https://api.repo.nypl.org/api/v2/items/local_image_id/105180"
       )
     ).toBeDefined();
     expect(
-      await apiCall(
+      await apiResponse(
         "http://api.repo.nypl.org/api/v2/mods/6265a5c0-c5ef-012f-687c-58d385a7bc34"
       )
     ).toBeDefined();
@@ -126,7 +126,7 @@ describe("getItemsCountFromUUIDs()", () => {
   });
 });
 
-// TO DO:
+// TODO:
 /**
  * Represents a IIIF Image API URL, which will be used globally throughout the application.
  * IIIF Image API has several params, the ones we are the most concerned about are Region, Size, and Rotation.
