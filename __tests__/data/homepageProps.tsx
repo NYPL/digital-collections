@@ -1,4 +1,4 @@
-import { imageURL } from "../../app/utils/utils";
+import { imageURL } from "../../src/utils/utils";
 export const props = {
   lanesWithNumItems: [
     {

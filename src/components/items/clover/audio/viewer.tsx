@@ -1,8 +1,8 @@
 "use client";
 
 import dynamic from "next/dynamic";
-// import NotificationBanner from "@/components/notificationBanner/notificationBanner";
-// import Header from "@/components/header/header";
+// import NotificationBanner from "@/../components/notificationBanner/notificationBanner";
+// import Header from "@/../components/header/header";
 
 const Viewer = dynamic(
   () => import("@samvera/clover-iiif").then((Clover) => Clover.Viewer),
