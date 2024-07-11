@@ -10,9 +10,9 @@ import React, { useEffect } from "react";
 import { type PropsWithChildren } from "react";
 import Header from "../header/header";
 import NotificationBanner from "../notificationBanner/notificationBanner";
-import { ADOBE_EMBED_URL } from "app/config/constants";
+import { ADOBE_EMBED_URL } from "config/constants";
 import Script from "next/script";
-import { trackVirtualPageView } from "app/utils/utils";
+import { trackVirtualPageView } from "utils/utils";
 import { usePathname } from "next/navigation";
 
 interface PageLayoutProps {

@@ -1,6 +1,6 @@
 "use client";
 import { Box } from "@nypl/design-system-react-components";
-import aboutPageElements from "app/data/aboutPageElements";
+import aboutPageElements from "data/aboutPageElements";
 import PageLayout from "../../pageLayout/pageLayout";
 
 export default function AboutPage() {

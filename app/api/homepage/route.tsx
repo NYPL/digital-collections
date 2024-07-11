@@ -1,7 +1,7 @@
-import data from "../../data/lanes";
-import { getItemsCountFromUUIDs } from "../../utils/utils";
+import data from "../../../data/lanes";
+import { getItemsCountFromUUIDs } from "../../../utils/utils";
 import { NextResponse, NextRequest } from "next/server";
-import type { LaneDataType } from "../../types/Lane";
+import type { LaneDataType } from "../../../types/Lane";
 export const fetchCache = "force-no-store";
 
 export const GET = async (request: NextRequest, response: NextResponse) => {

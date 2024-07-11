@@ -1,5 +1,5 @@
 import { NextResponse, NextRequest } from "next/server";
-import lanesData from "../../../data/lanes";
+import lanesData from "../../../../data/lanes";
 
 export const GET = async (
   request: NextRequest,
