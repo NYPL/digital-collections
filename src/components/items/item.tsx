@@ -4,7 +4,7 @@ import AudioViewer from "./clover/audio/viewer";
 import VideoViewer from "./clover/video/viewer";
 import BookViewer from "./clover/book/viewer";
 import PDFViewer from "./clover/pdf/viewer";
-import { ItemModel } from "@/../models/item";
+import { ItemModel } from "src/models/item";
 
 interface ItemProps {
   item: ItemModel;

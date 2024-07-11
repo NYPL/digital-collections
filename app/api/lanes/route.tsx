@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import lanesData from "../../../data/lanes";
+import lanesData from "../../../src/data/lanes";
 
 export const GET = async () => {
   return NextResponse.json(lanesData, { status: 200 });
