@@ -12,7 +12,7 @@ type ItemProps = {
   };
 };
 
-const getItemModel = async (uuid) => {
+const getItemModel = async (uuid: string) => {
   const data = await getItemData(uuid);
   const item = new ItemModel(data);
   return item;
@@ -28,7 +28,7 @@ export async function generateMetadata({
   };
 }
 
-export default async function ItemPage({ params }) {
+export default async function ItemPage({ params }: ItemProps) {
   const item = await getItemModel(params.uuid);
   return (
     <PageLayout

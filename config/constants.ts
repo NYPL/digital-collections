@@ -1,3 +1,4 @@
+import { ENV_KEY } from "../types/EnvironmentType";
 import appConfig from "../appConfig";
 
 export const BASE_URL = "/";
@@ -13,5 +14,6 @@ export const ADOBE_ANALYTICS_PAGE_NAMES = {
   NOT_FOUND_404: "error|404",
 };
 
-export const DC_URL = appConfig.DC_URL[appConfig.environment];
-export const ADOBE_EMBED_URL = appConfig.adobeEmbedUrl[appConfig.environment];
+export const DC_URL = appConfig.DC_URL[appConfig.environment as ENV_KEY];
+export const ADOBE_EMBED_URL =
+  appConfig.adobeEmbedUrl[appConfig.environment as ENV_KEY];

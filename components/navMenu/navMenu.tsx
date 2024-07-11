@@ -2,7 +2,11 @@ import { dcNavLinks } from "../../data/dcNavLinks";
 import { Link, List } from "@nypl/design-system-react-components";
 import React from "react";
 
-const NavMenu = ({ render }) => {
+interface NavMenuProps {
+  render: number;
+}
+
+const NavMenu = ({ render }: NavMenuProps) => {
   const listItems = dcNavLinks.map(({ href, text }) => (
     <Link
       isUnderlined={false}
