@@ -9,13 +9,13 @@ import {
   CardContent,
   Tooltip,
 } from "@nypl/design-system-react-components";
-import { ExploreFurtherData } from "../../types/ExploreFurtherData";
+import { ExploreFurtherDataType } from "../../types/ExploreFurtherData";
 import exploreFurtherData from "../../data/exploreFurtherData";
 import { headerBreakpoints } from "../../utils/breakpoints";
 import useBreakpoints from "../../hooks/useBreakpoints";
 
 const ExploreFurther = () => {
-  const data: ExploreFurtherData[] = exploreFurtherData;
+  const data: ExploreFurtherDataType[] = exploreFurtherData;
   const { isLargerThanLargeTablet } = useBreakpoints();
   function exploreFurtherLink(item: ExploreFurtherData) {
     return (
@@ -67,6 +67,7 @@ const ExploreFurther = () => {
             id={`card-id-${index}`}
             key={`card-key-${index}`}
             data-testid={`test-id-${index}`}
+            mainActionLink={item.url}
             imageProps={{
               alt: "",
               aspectRatio: "sixteenByNine",

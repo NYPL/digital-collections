@@ -5,7 +5,7 @@ import CampaignHeroHeading from "./campaignHeroHeading";
 import CampaignHeroLoading from "./campaignHeroLoading";
 import defaultFeaturedItem from "../../data/defaultFeaturedItemData";
 import appConfig from "../../../appConfig";
-import { FeaturedItemData } from "../../types/FeaturedItemData";
+import { FeaturedItemDataType } from "../../types/FeaturedItemData";
 import React from "react";
 import { ENV_KEY } from "@/types/EnvironmentType";
 
@@ -13,12 +13,12 @@ const CampaignHero = () => {
   const defaultFeaturedItemResponse =
     defaultFeaturedItem[appConfig["environment"] as ENV_KEY];
 
-  const [data, setData] = useState<FeaturedItemData>();
+  const [data, setData] = useState<FeaturedItemDataType>();
 
   useEffect(() => {
     const fetchData = async () => {
       let response;
-      let responseData: FeaturedItemData;
+      let responseData: FeaturedItemDataType;
       try {
         const response = await fetch("/api/featuredItem", {
           method: "GET",

@@ -1,7 +1,7 @@
-import { FeaturedItemData } from "../types/FeaturedItemData";
+import { FeaturedItemDataType } from "../types/FeaturedItemData";
 type Environment = "development" | "qa" | "production";
 
-const defaultFeaturedItem: Record<Environment, FeaturedItemData> = {
+const defaultFeaturedItem: Record<Environment, FeaturedItemDataType> = {
   development: {
     featuredItem: {
       imageID: "482815",

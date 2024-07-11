@@ -26,9 +26,20 @@ export const imageURL = (
  * Returns the number of digitized items in repo api.
  */
 
+export const getItemData = async (uuid) => {
+  const apiUrl = `${process.env.API_URL}/api/v2/items/mods_captures/${uuid}`;
+  const res = await RepoAPICall(apiUrl);
+  // console.log("res is: ", res)
+  return res;
+};
+
+/**
+ * Returns the number of digitized items in repo api.
+ */
+
 export const getNumDigitizedItems = async () => {
   const apiUrl = `${process.env.API_URL}/api/v2/items/total`;
-  const res = await apiCall(apiUrl);
+  const res = await apiResponse(apiUrl);
 
   const fallbackCount =
     defaultFeaturedItems[appConfig.environment as ENV_KEY]
@@ -59,20 +70,10 @@ export const getItemsCountFromUUIDs = async (uuids: string[]) => {
   //   uuid1: count1
   //
   const uuidCounts = counts?.count || [];
-  const cleanCounts = uuidCounts.reduce(
-    (
-      acc: { [x: string]: any },
-      count: {
-        uuid: { [x: string]: string | number };
-        count_value: { [x: string]: any };
-      }
-    ) => {
-      acc[count.uuid["$"]] = count.count_value["$"];
-      return acc;
-    },
-    {}
-  );
-
+  const cleanCounts = uuidCounts.reduce((acc, count) => {
+    acc[count.uuid["$"]] = count.count_value["$"];
+    return acc;
+  }, {});
   return cleanCounts ? cleanCounts : {};
 };
 
@@ -90,7 +91,7 @@ export const getAPIResponse = async (
   const apiUrl = `${process.env.API_URL}/api/v2/items/${identifierType}/${identifier}`;
   // console.log(`getAPIUri: About to fetch ${apiUrl}`);
   // console.log(`getAPIUri calls apiCall function internally`);
-  const apiCallValue = apiCall(apiUrl, urlParam);
+  const apiCallValue = apiResponse(apiUrl, urlParam);
   return apiCallValue;
 };
 
@@ -99,7 +100,21 @@ export const getAPIResponse = async (
  * @param {string} apiUrl - the url to make a request to
  */
 
-export const apiCall = async (
+export const apiResponse = async (
+  apiUrl: string,
+  urlParam?: { [key: string]: any }
+) => {
+  const data = await RepoAPICall(apiUrl, urlParam);
+  return data?.nyplAPI?.response;
+};
+
+/**
+ * Returns Repo API response WITH request data.
+ * @param {string} apiUrl - the url to make a request to
+ * @param {[key: string]} urlParam = url parameters to use in the request
+ */
+
+export const RepoAPICall = async (
   apiUrl: string,
   urlParam?: { [key: string]: any }
 ) => {
@@ -110,7 +125,6 @@ export const apiCall = async (
   apiUrl += queryString;
 
   try {
-    const startTime = new Date().getTime();
     const response = await fetch(apiUrl, {
       // aggressively cache Repo API?
       // cache: "force-cache",
@@ -123,7 +137,7 @@ export const apiCall = async (
       const data = await response.json();
       // console.log(`apiCall: called ${apiUrl}`);
       // console.log(`Response time: ${new Date().getTime() - startTime}`);
-      return data.nyplAPI.response;
+      return data;
     } else {
       return undefined;
     }
