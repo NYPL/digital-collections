@@ -4,8 +4,8 @@ export class ItemModel {
   capture: any;
   typeOfResource: string;
   title: string;
-  isPDF: boolean;
-  isBook: boolean;
+  isPDF?: boolean;
+  isBook?: boolean;
   isSingleCapture: boolean;
 
   constructor(data: any) {
