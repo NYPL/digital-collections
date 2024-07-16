@@ -12,6 +12,7 @@ import Image from "next/image";
 import styles from "./CollectionCard.module.css";
 import { headerBreakpoints } from "../../utils/breakpoints";
 import { CollectionCardDataType } from "../../types/CollectionCard";
+import { imageURL } from "src/utils/utils";
 
 interface CollectionCardProps {
   slug: string;
@@ -37,13 +38,21 @@ const CollectionCard = ({
         isLazy: true,
         aspectRatio: "twoByOne",
         component: (
-          <Image
-            src={collection.imageURL}
-            alt=""
-            width={100}
-            height={100}
-            objectFit="cover"
-          />
+          <div style={{ display: "block" }}>
+            <Image
+              // src={collection.imageURL}
+              src={imageURL(collection.imageID, "square", "max", "0")}
+              alt=""
+              width={288}
+              height={144}
+              // layout="fill"
+              // fill={true}
+              // sx={{ display: "block" }}
+              // sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+              loading="lazy"
+              // objectFit="cover"
+            />
+          </div>
         ),
       }}
     >
