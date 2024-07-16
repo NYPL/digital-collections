@@ -21,8 +21,8 @@ export default function Division({ params }: DivisionProps) {
       activePage="division"
       breadcrumbs={[
         { text: "Home", url: "/" },
-        { text: "All Divisions", url: "/divisions" },
-        { text: `${params.slug} Division`, url: `/divisions/${params.slug}` },
+        { text: "Divisions", url: "/divisions" },
+        { text: `${params.slug}`, url: `/divisions/${params.slug}` },
       ]}
     >
       <h2> {params.slug} Division </h2>
