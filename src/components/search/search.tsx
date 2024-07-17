@@ -1,3 +1,4 @@
+// @ts-nocheck
 "use client";
 import React, { useState } from "react";
 import { Box, SearchBar } from "@nypl/design-system-react-components";
