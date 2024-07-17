@@ -12,6 +12,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Added `/search/index` and `/collections/slug` pages (DR-3028)
 - Added `/items` pages (DR-3029)
 
+### Updated
+
+- Updated static breadcrumbs to render correct copy (DR-3023)
+
 ## [0.1.9] 2024-07-08
 
 ### Updated
