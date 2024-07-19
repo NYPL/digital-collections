@@ -15,6 +15,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Updated
 
 - Updated static breadcrumbs to render correct copy (DR-3023)
+- Updated sticky header to take up less space on zoomed/mobile breakpoints (DR-3089)
 
 ## [0.1.9] 2024-07-08
 
