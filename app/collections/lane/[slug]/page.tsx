@@ -21,9 +21,9 @@ export default function Lane({ params }: LaneProps) {
       activePage="lane"
       breadcrumbs={[
         { text: "Home", url: "/" },
-        { text: "All Collections", url: "/collections" },
+        { text: "Collections", url: "/collections" },
         {
-          text: `${params.slug} Lane`,
+          text: `${params.slug}`,
           url: `/collections/lane/${params.slug}`,
         },
       ]}

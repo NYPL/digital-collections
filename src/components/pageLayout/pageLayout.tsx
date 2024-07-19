@@ -91,7 +91,10 @@ const PageLayout = ({
           children
         ) : (
           <>
-            <Breadcrumbs breadcrumbsData={breadcrumbs || []} />
+            <Breadcrumbs
+              breadcrumbsType="digitalCollections"
+              breadcrumbsData={breadcrumbs || []}
+            />
             <TemplateAppContainer contentPrimary={children as JSX.Element} />
           </>
         )}
