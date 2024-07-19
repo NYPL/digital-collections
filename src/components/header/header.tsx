@@ -73,6 +73,7 @@ const Header = () => {
         </HStack>
         <HStack
           sx={{
+            display: isScrolled ? "flex" : "none",
             [`@media screen and (min-width: ${headerBreakpoints.smTablet})`]: {
               display: "none",
             },

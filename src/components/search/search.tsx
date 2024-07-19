@@ -65,11 +65,20 @@ const Search = () => {
             placeholder: "Search keyword(s)",
           }}
           sx={{
-            [`@media screen and (min-width: ${headerBreakpoints.lgMobile})`]: {
-              flexFlow: "column nowrap",
-            },
-            [`@media screen and (min-width: ${headerBreakpoints.smTablet})`]: {
-              flexFlow: "row nowrap",
+            flexFlow: "row nowrap",
+            [`@media screen and (max-width: ${headerBreakpoints.lgMobile})`]: {
+              button: {
+                textIndent: "-9000px",
+                textTransform: "capitalize",
+                gap: 0,
+                padding: "xs",
+                borderRadius: "0px 2px 2px 0px",
+                "> svg": {
+                  width: "18px",
+                  height: "18px",
+                  margin: 0,
+                },
+              },
             },
           }}
         />
