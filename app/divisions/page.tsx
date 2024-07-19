@@ -12,7 +12,7 @@ export default function Divisions() {
       activePage="divisions"
       breadcrumbs={[
         { text: "Home", url: "/" },
-        { text: "All Divisions", url: "/divisions" },
+        { text: "Divisions", url: "/divisions" },
       ]}
     >
       <h2> All Divisions </h2>
