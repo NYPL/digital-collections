@@ -66,12 +66,14 @@ const Search = () => {
           }}
           sx={{
             flexFlow: "row nowrap",
+            button: {
+              borderRadius: "0px 2px 2px 0px",
+            },
             [`@media screen and (max-width: ${headerBreakpoints.lgMobile})`]: {
               button: {
                 textIndent: "-9000px",
                 gap: 0,
                 padding: "xs",
-                borderRadius: "0px 2px 2px 0px",
                 "> svg": {
                   width: "18px",
                   height: "18px",
