@@ -69,7 +69,6 @@ const Search = () => {
             [`@media screen and (max-width: ${headerBreakpoints.lgMobile})`]: {
               button: {
                 textIndent: "-9000px",
-                textTransform: "capitalize",
                 gap: 0,
                 padding: "xs",
                 borderRadius: "0px 2px 2px 0px",
