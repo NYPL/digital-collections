@@ -12,10 +12,12 @@ import DCLogo from "../logo/logo";
 import NavMenu from "../navMenu/navMenu";
 import MobileNavMenu from "../navMenu/mobileNavMenu";
 import { headerBreakpoints } from "../../utils/breakpoints";
+import useScrollDirection from "src/hooks/useScrollDirection";
 
 const Header = () => {
   useStickyMargin();
   const isScrolled = useScrolled("header");
+  const isScrollingUp = useScrollDirection();
   return (
     <Box
       data-sticky-header
@@ -73,7 +75,7 @@ const Header = () => {
         </HStack>
         <HStack
           sx={{
-            display: isScrolled ? "flex" : "none",
+            display: isScrolled ? "flex" : isScrollingUp ? "flex" : "none",
             [`@media screen and (min-width: ${headerBreakpoints.smTablet})`]: {
               display: "none",
             },
