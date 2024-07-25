@@ -5,7 +5,7 @@ export function useScrolled(elementId: string) {
   const [isScrolled, setIsScrolled] = useState(true);
 
   useEffect(() => {
-    let DELAY_STICKY_TRANSITION = window.innerWidth < 600 ? 700 : 300;
+    let DELAY_STICKY_TRANSITION = window.innerWidth < 767 ? 300 : 300;
     function handleScroll() {
       const element = document.getElementById(elementId);
       if (element) {
