@@ -18,7 +18,7 @@ export function useScrolled(elementId: string) {
       }
     }
     function handleScreenSize() {
-      const newDelay = window.innerWidth < 600 ? 700 : 300;
+      const newDelay = window.innerWidth < 767 ? 0 : 300;
       if (newDelay !== DELAY_STICKY_TRANSITION) {
         setIsScrolled(true);
         DELAY_STICKY_TRANSITION = newDelay;
