@@ -69,7 +69,7 @@ const Search = () => {
             button: {
               borderRadius: "0px 2px 2px 0px",
             },
-            [`@media screen and (max-width: ${headerBreakpoints.lgMobile})`]: {
+            [`@media screen and (max-width: 481px)`]: {
               button: {
                 textIndent: "-9000px",
                 gap: 0,
