@@ -65,11 +65,21 @@ const Search = () => {
             placeholder: "Search keyword(s)",
           }}
           sx={{
-            [`@media screen and (min-width: ${headerBreakpoints.lgMobile})`]: {
-              flexFlow: "column nowrap",
+            flexFlow: "row nowrap",
+            button: {
+              borderRadius: "0px 2px 2px 0px",
             },
-            [`@media screen and (min-width: ${headerBreakpoints.smTablet})`]: {
-              flexFlow: "row nowrap",
+            [`@media screen and (max-width: 481px)`]: {
+              button: {
+                textIndent: "-9000px",
+                gap: 0,
+                padding: "xs",
+                "> svg": {
+                  width: "18px",
+                  height: "18px",
+                  margin: 0,
+                },
+              },
             },
           }}
         />
