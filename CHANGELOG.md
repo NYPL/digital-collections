@@ -15,7 +15,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Updated
 
 - Updated static breadcrumbs to render correct copy (DR-3023)
-- Updated `/divisions` page to render title and content
+- Updated `/divisions` page to render title and content (DR-3030)
 
 ## [0.1.9] 2024-07-08
 
