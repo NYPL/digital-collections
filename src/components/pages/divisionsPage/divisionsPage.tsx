@@ -8,15 +8,10 @@ import PageLayout from "../../pageLayout/pageLayout";
 import { headerBreakpoints } from "src/utils/breakpoints";
 import SwimLanes from "src/components/swimlanes/swimLanes";
 import { props } from "__tests__/data/swimlaneProps";
-import useBreakpoints from "src/hooks/useBreakpoints";
+import { useNumColumns } from "src/hooks/useNumColumns";
 
 export default function DivisionsPage() {
-  const { isLargerThanLargeTablet, isLargerThanLargeMobile } = useBreakpoints();
-  const numColumns = isLargerThanLargeTablet
-    ? 4
-    : isLargerThanLargeMobile
-    ? 2
-    : 1;
+  const numColumns = useNumColumns();
   return (
     <PageLayout
       activePage="divisions"

@@ -3,15 +3,10 @@ import { useEffect, useState } from "react";
 import FeaturedContentComponent from "../featuredContent/featuredContent";
 import SwimLanes from "../swimlanes/swimLanes";
 import SwimLanesLoading from "../swimlanes/swimLanesLoading";
-import useBreakpoints from "src/hooks/useBreakpoints";
+import { useNumColumns } from "src/hooks/useNumColumns";
 
 const HomePageMainContent = () => {
-  const { isLargerThanLargeTablet, isLargerThanLargeMobile } = useBreakpoints();
-  const numColumns = isLargerThanLargeTablet
-    ? 4
-    : isLargerThanLargeMobile
-    ? 2
-    : 1;
+  const numColumns = useNumColumns();
   const [data, setData] = useState<any>({});
 
   useEffect(() => {
