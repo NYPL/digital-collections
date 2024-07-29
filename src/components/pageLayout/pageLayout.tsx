@@ -96,6 +96,7 @@ const PageLayout = ({
               breadcrumbsType="digitalCollections"
               breadcrumbsData={breadcrumbs || []}
             />
+            {/* TODO: Move to TemplateAppContainer once spacing is more flexible.  --> */}
             <Box
               id="mainContent"
               sx={{
