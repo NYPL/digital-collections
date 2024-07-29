@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import React, { FormEvent, useState } from "react";
 import { Box, SearchBar } from "@nypl/design-system-react-components";
 import { useRouter } from "next/navigation";
 import PublicDomainFilter from "../publicDomainFilter/publicDomainFilter";
@@ -11,7 +11,7 @@ const Search = () => {
   const [keywords, setKeywords] = useState("");
   const [publicDomainOnly, setPublicDomainOnly] = useState(false);
 
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = (event) => {
     event.preventDefault();
     const searchUrl =
       DC_URL +
@@ -53,9 +53,7 @@ const Search = () => {
           id="searchbar"
           invalidText="Could not find the item"
           labelText="Search Digital Collections"
-          onSubmit={(event: React.FormEvent<HTMLFormElement>) =>
-            handleSubmit(event)
-          }
+          onSubmit={(event) => handleSubmit(event)}
           textInputProps={{
             labelText: "Search keyword(s)",
             name: "textInputName",
