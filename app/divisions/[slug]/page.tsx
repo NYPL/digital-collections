@@ -9,12 +9,18 @@ export type DivisionProps = {
 export async function generateMetadata({
   params,
 }: DivisionProps): Promise<Metadata> {
-  const slug = params.slug;
+  function slugToString(slug) {
+    let str = slug.replace(/[-]/g, " ");
+    str = str.replace(/\b\w/g, (char) => char.toUpperCase());
+    return str;
+  }
+
+  const slug = slugToString(params.slug);
   return {
     title: `${slug} - NYPL Digital Collections`,
   };
 }
 
 export default function Division() {
-  return <DivisionPage slug />;
+  return <DivisionPage />;
 }
