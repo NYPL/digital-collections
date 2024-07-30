@@ -69,15 +69,17 @@ const Search = () => {
             button: {
               borderRadius: "0px 2px 2px 0px",
             },
-            [`@media screen and (max-width: 481px)`]: {
+            [`@media screen and (max-width: ${headerBreakpoints.lgMobile})`]: {
               button: {
-                textIndent: "-9000px",
                 gap: 0,
                 padding: "xs",
                 "> svg": {
                   width: "18px",
                   height: "18px",
                   margin: 0,
+                },
+                "> span": {
+                  display: "none",
                 },
               },
             },
