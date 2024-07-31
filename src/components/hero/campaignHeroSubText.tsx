@@ -7,17 +7,7 @@ import {
   Tooltip,
 } from "@nypl/design-system-react-components";
 import React from "react";
-
-interface CampaignHeroSubtextProps {
-  featuredItem: {
-    title: string;
-    uuid: string;
-    href: string;
-    imageID: string;
-    backgroundImageSrc: string;
-    foregroundImageSrc: string;
-  };
-}
+import { CampaignHeroSubtextProps } from "src/types/props/CampaignHeroProps";
 
 const CampaignHeroSubText = ({ featuredItem }: CampaignHeroSubtextProps) => {
   const { isLargerThanLargeTablet } = useBreakpoints();

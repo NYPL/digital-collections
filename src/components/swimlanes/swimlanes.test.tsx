@@ -14,7 +14,6 @@ describe("Swim Lanes component renders with expected props", () => {
     expect(within(firstrow).getByText("Posada Collection")).toBeInTheDocument();
     expect(within(firstrow).getByText("34 items")).toBeInTheDocument();
     expect(within(firstrow).findAllByRole("img")).toBeVisible;
-    console.log(within(firstrow).getAllByRole("img"));
     expect(within(firstrow).getByText("MAVO")).toBeInTheDocument();
     expect(
       within(firstrow).getByText("Austin Hansen photograph collection")
