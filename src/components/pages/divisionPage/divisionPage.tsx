@@ -11,16 +11,12 @@ import { props } from "__tests__/data/swimlaneProps";
 import { useNumColumns } from "src/hooks/useNumColumns";
 import { useParams } from "next/navigation";
 import { headerBreakpoints } from "src/utils/breakpoints";
+import { slugToString } from "src/utils/utils";
 
 export default function DivisionPage() {
   const params = useParams();
   const numColumns = useNumColumns();
   const slug = params.slug as string;
-  function slugToString(slug) {
-    let str = slug.replace(/[-]/g, " ");
-    str = str.replace(/\b\w/g, (char) => char.toUpperCase());
-    return str;
-  }
   const title = slugToString(slug);
   return (
     <PageLayout
