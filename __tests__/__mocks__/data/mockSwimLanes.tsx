@@ -1,7 +1,6 @@
-import { SwimLanesProps } from "src/types/props/SwimLanesProps";
 import { mockCollections } from "./mockCollections";
 
-export const mockSwimLanes: SwimLanesProps = {
+export const mockSwimLanes = {
   numColumns: 4,
   lanesWithNumItems: [
     {
