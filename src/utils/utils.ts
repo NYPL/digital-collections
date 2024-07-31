@@ -264,3 +264,9 @@ export const trackVirtualPageView = (pathname = "") => {
     site_section: ADOBE_ANALYTICS_SITE_SECTION,
   });
 };
+
+export const slugToString = (slug) => {
+  let str = slug.replace(/[-]/g, " ");
+  str = str.replace(/\b\w/g, (char) => char.toUpperCase());
+  return str;
+};
