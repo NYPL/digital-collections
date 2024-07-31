@@ -1,7 +1,7 @@
 import React from "react";
 import { render, fireEvent, screen } from "@testing-library/react";
 import "@testing-library/jest-dom";
-import appConfig from "../../../__tests__/data/appConfig";
+import appConfig from "../../appConfig";
 import MobileNavMenu from "./mobileNavMenu";
 import { ENV_KEY } from "src/types/EnvironmentType";
 

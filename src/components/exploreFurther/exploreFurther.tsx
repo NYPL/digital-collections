@@ -9,7 +9,7 @@ import {
   CardContent,
   Tooltip,
 } from "@nypl/design-system-react-components";
-import { ExploreFurtherDataType } from "../../types/ExploreFurtherData";
+import { ExploreFurtherDataType } from "../../types/ExploreFurtherDataType";
 import exploreFurtherData from "../../data/exploreFurtherData";
 import { headerBreakpoints } from "../../utils/breakpoints";
 import useBreakpoints from "../../hooks/useBreakpoints";

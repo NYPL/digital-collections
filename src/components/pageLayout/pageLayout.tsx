@@ -16,6 +16,7 @@ import Script from "next/script";
 import { trackVirtualPageView } from "src/utils/utils";
 import { usePathname } from "next/navigation";
 import { BreadcrumbsDataProps } from "@nypl/design-system-react-components/dist/src/components/Breadcrumbs/Breadcrumbs";
+import { useNumColumns } from "src/hooks/useNumColumns";
 
 interface PageLayoutProps {
   activePage: string;

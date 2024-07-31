@@ -7,8 +7,8 @@ import {
 import PageLayout from "../../pageLayout/pageLayout";
 import { headerBreakpoints } from "src/utils/breakpoints";
 import SwimLanes from "src/components/swimlanes/swimLanes";
-import { props } from "__tests__/data/swimlaneProps";
 import { useNumColumns } from "src/hooks/useNumColumns";
+import { mockSwimLanes } from "__tests__/__mocks__/data/mockSwimLanes";
 
 export default function DivisionsPage() {
   const numColumns = useNumColumns();
@@ -41,7 +41,7 @@ export default function DivisionsPage() {
       <HorizontalRule sx={{ marginTop: "xxl", marginBottom: "xxl" }} />
       <SwimLanes
         numColumns={numColumns}
-        lanesWithNumItems={props.lanesWithNumItems}
+        lanesWithNumItems={mockSwimLanes.lanesWithNumItems}
       />
     </PageLayout>
   );

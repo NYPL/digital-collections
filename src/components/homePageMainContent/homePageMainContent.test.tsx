@@ -1,7 +1,7 @@
 import { render, screen, waitFor, within } from "@testing-library/react";
 import HomePageMainContent from "./homePageMainContent";
-import { props as homepageData } from "../../../__tests__/data/homepageProps";
 import React from "react";
+import { mockHomePageData } from "__tests__/__mocks__/data/mockHomePage";
 
 describe("homePageMainContent", () => {
   it("renders the SkeletonLoader", () => {
@@ -27,7 +27,7 @@ describe("homePageMainContent", () => {
         json: () =>
           Promise.resolve({
             randomNumber: 1,
-            lanesWithNumItems: homepageData.lanesWithNumItems,
+            lanesWithNumItems: mockHomePageData.lanesWithNumItems,
           }),
       })
     ) as jest.Mock;

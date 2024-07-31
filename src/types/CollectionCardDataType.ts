@@ -4,9 +4,8 @@ export interface CollectionCardDataType {
   url: string;
   imageID: string;
   imageURL: string;
-  numItems: string;
-  // TODO: containsAVMaterial: boolean; // to be added in phase 2
-  // TODO: constainsOnSiteMaterials: boolean; // to be added in phase 2
+  numItems: number;
+  // TODO: containsOnSiteMaterials: boolean; // to be added in phase 2
 }
 
 export default CollectionCardDataType;
