@@ -1,7 +1,7 @@
 import { imageURL } from "src/utils/utils";
 import { mockSwimLanes } from "./mockSwimLanes";
 
-export const mockHomePageData = {
+export const mockHomePageMainContent = {
   lanesWithNumItems: mockSwimLanes.lanesWithNumItems,
   featuredItem: {
     imageID: "5273165",
