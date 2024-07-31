@@ -1,7 +1,6 @@
 import { render } from "@testing-library/react";
 import Home from "../../app/page";
 import { axe } from "jest-axe";
-import { props } from "../data/mockHomePage";
 import React from "react";
 
 jest.mock("next/navigation", () => ({
@@ -17,7 +16,7 @@ describe("Homepage Accessibility", () => {
     })
   ) as jest.Mock;
   it("passes axe accessibility test", async () => {
-    const { container } = render(<Home {...props} />);
+    const { container } = render(<Home />);
     expect(await axe(container)).toHaveNoViolations();
   }, 60000);
 });
