@@ -1,4 +1,4 @@
-import { CollectionCardDataType } from "./CollectionCard";
+import { CollectionCardDataType } from "./CollectionCardDataType";
 
 export interface LaneDataType {
   title: String;

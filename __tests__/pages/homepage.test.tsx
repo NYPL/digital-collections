@@ -1,7 +1,7 @@
 import { render } from "@testing-library/react";
 import Home from "../../app/page";
 import { axe } from "jest-axe";
-import { props } from "../data/homepageProps";
+import { props } from "../data/mockHomePage";
 import React from "react";
 
 jest.mock("next/navigation", () => ({

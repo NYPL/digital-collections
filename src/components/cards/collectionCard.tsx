@@ -10,7 +10,7 @@ import {
 } from "@nypl/design-system-react-components";
 import styles from "./CollectionCard.module.css";
 import { headerBreakpoints } from "../../utils/breakpoints";
-import { CollectionCardDataType } from "../../types/CollectionCard";
+import { CollectionCardDataType } from "../../types/CollectionCardDataType";
 
 interface CollectionCardProps {
   slug: string;

@@ -1,4 +1,4 @@
-import { ExploreFurtherDataType } from "../types/ExploreFurtherData";
+import { ExploreFurtherDataType } from "../types/ExploreFurtherDataType";
 
 const exploreFurtherData: ExploreFurtherDataType[] = [
   {
