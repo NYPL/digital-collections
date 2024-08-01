@@ -1,4 +1,4 @@
-import { imageURL } from "../../app/utils/utils";
+import { imageURL } from "../../src/utils/utils";
 export const props = {
   lanesWithNumItems: [
     {
@@ -81,4 +81,5 @@ export const props = {
   },
   numberOfDigitizedItems: "863,848",
   randomNumber: 1,
+  numColumns: 4,
 };
