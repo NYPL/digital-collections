@@ -7,6 +7,23 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+## [0.1.10] 2024-08-01
+
+### Added
+
+- Added `/search/index` and `/collections/slug` pages (DR-3028)
+- Added `/items` pages (DR-3029)
+- Added strict type checking (DR-2867)
+
+### Updated
+
+- Updated static breadcrumbs to render correct copy (DR-3023)
+- Updated `/divisions` page to render title and content (DR-3030)
+- Updates card columns to new breakpoints (DR-3036)
+- Create CollectionCard component and render it on the homepage, also refactor a little bit. (DR-3027)
+- Moved non-page directories outside of /app folder (DR-3058)
+- Update DS version to 3.2.0.
+
 ## [0.1.9] 2024-07-08
 
 ### Updated
@@ -19,6 +36,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Added `/collections`, `/divisions`, `/divisions/[slug]`, and `/collections/lane/[slug]` pages (DR-3021)
 - Added middleware to redirect unpublished pages (DR-3021)
 - Added `PageLayout` component (DR-3022)
+- Added Tool tip to homepage (DR-2695)
 
 ## [0.1.8] 2024-06-06
 

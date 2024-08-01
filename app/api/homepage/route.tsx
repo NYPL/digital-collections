@@ -1,11 +1,12 @@
-import data from "../../data/lanes";
-import { getItemsCountFromUUIDs } from "../../utils/utils";
+import data from "../../../src/data/lanes";
+import { getItemsCountFromUUIDs } from "../../../src/utils/utils";
 import { NextResponse, NextRequest } from "next/server";
+import type { LaneDataType } from "../../../src/types/Lane";
 export const fetchCache = "force-no-store";
 
 export const GET = async (request: NextRequest, response: NextResponse) => {
   const randomNumber = Math.floor(Math.random() * 2);
-  const lanes = data.lanes;
+  const lanes: LaneDataType[] = data.lanes as unknown as LaneDataType[];
   // Get all the UUIDs from the collections
   const allCollectionUUIDs: string[] = lanes.reduce((acc, lane) => {
     return acc.concat(lane.collections.map((collection) => collection.uuid));

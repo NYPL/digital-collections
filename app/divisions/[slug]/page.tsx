@@ -1,5 +1,5 @@
 import React from "react";
-import PageLayout from "app/components/pageLayout/pageLayout";
+import PageLayout from "../../../src/components/pageLayout/pageLayout";
 import { Metadata } from "next";
 
 type DivisionProps = {
@@ -21,8 +21,8 @@ export default function Division({ params }: DivisionProps) {
       activePage="division"
       breadcrumbs={[
         { text: "Home", url: "/" },
-        { text: "All Divisions", url: "/divisions" },
-        { text: `${params.slug} Division`, url: `/divisions/${params.slug}` },
+        { text: "Divisions", url: "/divisions" },
+        { text: `${params.slug}`, url: `/divisions/${params.slug}` },
       ]}
     >
       <h2> {params.slug} Division </h2>

@@ -1,6 +1,6 @@
 import React from "react";
 import { Metadata } from "next";
-import PageLayout from "app/components/pageLayout/pageLayout";
+import PageLayout from "../../src/components/pageLayout/pageLayout";
 
 export const metadata: Metadata = {
   title: "Collections - NYPL Digital Collections",
@@ -12,7 +12,7 @@ export default function Collections() {
       activePage="collections"
       breadcrumbs={[
         { text: "Home", url: "/" },
-        { text: "All Collections", url: "/collections" },
+        { text: "Collections", url: "/collections" },
       ]}
     >
       <h2> All Collections </h2>
