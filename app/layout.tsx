@@ -50,6 +50,11 @@ export default function RootLayout({
     <html lang="en">
       <head>
         <meta httpEquiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+        <script
+          async
+          type="text/javascript"
+          src="/hash-router-redirect.js"
+        ></script>
       </head>
       <body>
         {/* <!-- OptinMonster --> */}
