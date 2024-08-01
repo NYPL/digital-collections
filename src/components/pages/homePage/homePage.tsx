@@ -9,10 +9,7 @@ import { useRouter } from "next/navigation";
 
 export default function HomePage() {
   const router = useRouter();
-
-  // if (process.env.APP_ENV === "qa" || process.env.APP_ENV === "production") {
   router.replace("/", undefined);
-  // }
 
   return (
     <PageLayout activePage="home">
