@@ -9,7 +9,7 @@ import { useRouter } from "next/navigation";
 
 export default function HomePage() {
   const router = useRouter();
-  router.replace("/", undefined);
+  router?.replace("/", undefined);
 
   return (
     <PageLayout activePage="home">
