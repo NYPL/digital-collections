@@ -22,6 +22,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Updates card columns to new breakpoints (DR-3036)
 - Create CollectionCard component and render it on the homepage, also refactor a little bit. (DR-3027)
 - Moved non-page directories outside of /app folder (DR-3058)
+- Update DS version to 3.2.0.
 
 ## [0.1.9] 2024-07-08
 
