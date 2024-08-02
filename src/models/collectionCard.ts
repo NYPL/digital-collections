@@ -14,7 +14,7 @@ export class CollectionCardModel {
     this.uuid = data.uuid;
     this.title = data.title;
     this.url = data.url;
-    this.imageID = data.image_id;
+    this.imageID = data.imageID;
     this.imageURL = imageURL(data.image_id, "full", "288,", "0");
     this.numItems = data.numItems || 0;
   }

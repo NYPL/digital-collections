@@ -1,8 +1,8 @@
 import { imageURL } from "src/utils/utils";
 
 export class ItemCardModel {
-  uuid: string;
   title: string;
+  uuid: string;
   url: string;
   imageID: string;
   imageURL: string;
@@ -10,8 +10,8 @@ export class ItemCardModel {
   constructor(data: any) {
     this.uuid = data.uuid;
     this.title = data.title;
-    this.url = data.url;
-    this.imageID = data.image_id;
+    this.url = data.href;
+    this.imageID = data.imageID;
     this.imageURL = imageURL(data.image_id, "full", "288,", "0");
   }
 }
