@@ -1,10 +1,12 @@
 "use client";
 import {
   Box,
+  Flex,
   Heading,
   HorizontalRule,
   Link,
   SimpleGrid,
+  Spacer,
 } from "@nypl/design-system-react-components";
 import PageLayout from "../../pageLayout/pageLayout";
 import { useNumColumns } from "src/hooks/useNumColumns";
@@ -16,6 +18,9 @@ import { CollectionCardModel } from "src/models/collectionCard";
 import useBreakpoints from "src/hooks/useBreakpoints";
 import CollectionDataType from "src/types/CollectionDataType";
 import { mockCollections } from "__tests__/__mocks__/data/mockCollections";
+import ItemCard from "src/components/cards/itemCard";
+import { mockItemCards } from "__tests__/__mocks__/data/mockItemCards";
+import styles from "../../swimlanes/Swimlanes.module.css";
 
 export default function DivisionPage() {
   const params = useParams();
@@ -61,9 +66,68 @@ export default function DivisionPage() {
         </Link>
       </Box>
       <HorizontalRule sx={{ marginTop: "xxl", marginBottom: "xxl" }} />
-      <Heading level="h2" size="heading3">
-        {`Items in the ${title}`}
-      </Heading>
+      <Box className={styles.lane}>
+        <Flex alignItems="baseline">
+          <Heading level="h2" size="heading3">
+            {`Items in the ${title}`}
+          </Heading>
+          <Spacer />
+          <Link
+            id={`row-see-more-items`}
+            type="standalone"
+            href={`#`}
+            aria-label={`See more items in ${title}`}
+            hasVisitedState
+            __css={{
+              display: { sm: "none", md: "inline" },
+              color: "ui.primary.link",
+              fontWeight: "500 !important",
+              alignItems: "center",
+              _hover: { textDecoration: "underline 1px dotted !important" },
+            }}
+          >
+            See more
+          </Link>
+        </Flex>
+        <SimpleGrid
+          columns={numColumns}
+          sx={{
+            gridTemplateColumns: `repeat(${numColumns}, minmax(0, 1fr))`,
+          }}
+        >
+          {mockItemCards.map((item, index) => {
+            return (
+              <ItemCard
+                key={index}
+                id={index}
+                slug={item.title}
+                item={item}
+                isLargerThanLargeTablet={isLargerThanLargeTablet}
+              />
+            );
+          })}
+        </SimpleGrid>
+        <Link
+          id={`row-see-more-items-mobile`}
+          type="standalone"
+          href={`#`}
+          aria-label={`See more items in ${title}`}
+          className="smlink"
+          hasVisitedState
+          __css={{
+            display: { sm: "flex", md: "none" },
+            fontWeight: "regular",
+            justifyContent: "flex-end",
+            marginTop: "s",
+            alignItems: "center",
+            "& svg": {
+              marginTop: "1px",
+            },
+          }}
+        >
+          See more
+        </Link>
+      </Box>
       <HorizontalRule sx={{ marginTop: "xxl", marginBottom: "xxl" }} />
       <Heading level="h2" size="heading3">
         {`Collections in the ${title}`}

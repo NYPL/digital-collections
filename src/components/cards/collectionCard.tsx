@@ -8,7 +8,7 @@ import {
   Tooltip,
   Link,
 } from "@nypl/design-system-react-components";
-import styles from "./CollectionCard.module.css";
+import styles from "./Card.module.css";
 import { headerBreakpoints } from "../../utils/breakpoints";
 import { CollectionCardDataType } from "../../types/CollectionCardDataType";
 
@@ -42,7 +42,7 @@ const CollectionCard = ({
         id={`row-card-heading-${slug}-${id}`}
         level="h3"
         size="heading5"
-        className={styles.collectiontitle}
+        className={styles.cardtitle}
         noOfLines={3}
       >
         {isLargerThanLargeTablet ? (
