@@ -29,7 +29,6 @@ const PageLayout = ({
   breadcrumbs,
 }: PropsWithChildren<PageLayoutProps>) => {
   const [isIOS, setIsIOS] = useState(false);
-
   useEffect(() => {
     const userAgent = typeof window !== "undefined" && navigator.userAgent;
     if (userAgent && /iPad|iPhone|iPod/.test(userAgent)) {
@@ -106,15 +105,6 @@ const PageLayout = ({
       <DSProvider>
         <SkipNavigation />
         <NotificationBanner />
-        {isIOS ? (
-          <>
-            <Text>IM IOS</Text>
-          </>
-        ) : (
-          <>
-            <Text>not ios</Text>
-          </>
-        )}
         <Header />
         {activePage === "home" || activePage === "about" ? (
           children
