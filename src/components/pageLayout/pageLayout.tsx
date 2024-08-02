@@ -3,6 +3,7 @@ import {
   TemplateAppContainer,
   Breadcrumbs,
   DSProvider,
+  Text,
   SkipNavigation,
   useFeedbackBox,
 } from "@nypl/design-system-react-components";
@@ -107,6 +108,15 @@ const PageLayout = ({
       <DSProvider>
         <SkipNavigation />
         <NotificationBanner />
+        {isIOS ? (
+          <>
+            <Text>IM IOS</Text>
+          </>
+        ) : (
+          <>
+            <Text>not ios</Text>
+          </>
+        )}
         <Header />
         {activePage === "home" || activePage === "about" ? (
           children
