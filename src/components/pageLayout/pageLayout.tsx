@@ -83,17 +83,15 @@ const PageLayout = ({
     <>
       <Helmet>
         {/* other head elements?? */}
-        {isIOS ? (
-          <>
-            <meta
-              name="viewport"
-              content="width=device-width, initial-scale=1, maximum-scale=1"
-            />
-            <title> IOS!!!</title>
-          </>
-        ) : (
-          <meta name="viewport" content="width=device-width" />
-        )}
+        {/* {isIOS ? ( */}
+        <meta
+          name="viewport"
+          content="width=device-width, initial-scale=1, maximum-scale=1"
+        />
+        <title> IOS!!!</title>
+        {/* // ) : (
+        //   <meta name="viewport" content="width=device-width" />
+        // )} */}
       </Helmet>
       {/* <!-- Adobe Analytics  --> */}
       <Script async src={ADOBE_EMBED_URL} />
