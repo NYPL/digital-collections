@@ -85,11 +85,12 @@ const PageLayout = ({
         {/* other head elements?? */}
         {isIOS ? (
           <meta
+            key="meta"
             name="viewport"
             content="width=device-width, initial-scale=1, maximum-scale=1"
           />
         ) : (
-          <meta name="viewport" content="width=device-width" />
+          <meta key="meta" name="viewport" content="width=device-width" />
         )}
       </Head>
       {/* <!-- Adobe Analytics  --> */}
