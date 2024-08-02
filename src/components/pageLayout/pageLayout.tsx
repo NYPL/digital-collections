@@ -6,7 +6,7 @@ import {
   SkipNavigation,
   useFeedbackBox,
 } from "@nypl/design-system-react-components";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { type PropsWithChildren } from "react";
 import Header from "../header/header";
 import NotificationBanner from "../notificationBanner/notificationBanner";
@@ -15,6 +15,7 @@ import Script from "next/script";
 import { trackVirtualPageView } from "src/utils/utils";
 import { usePathname } from "next/navigation";
 import { BreadcrumbsDataProps } from "@nypl/design-system-react-components/dist/src/components/Breadcrumbs/Breadcrumbs";
+import Head from "next/head";
 
 interface PageLayoutProps {
   activePage: string;
@@ -26,6 +27,15 @@ const PageLayout = ({
   activePage,
   breadcrumbs,
 }: PropsWithChildren<PageLayoutProps>) => {
+  const [isIOS, setIsIOS] = useState(false);
+
+  useEffect(() => {
+    const userAgent = typeof window !== "undefined" && navigator.userAgent;
+    if (userAgent && /iPad|iPhone|iPod/.test(userAgent)) {
+      console.log("is ios");
+      setIsIOS(true);
+    }
+  }, []);
   const pathname = usePathname();
   // Track page view events to Adobe Analytics
   useEffect(() => {
@@ -70,6 +80,17 @@ const PageLayout = ({
   };
   return (
     <>
+      <Head>
+        {/* other head elements?? */}
+        {isIOS ? (
+          <meta
+            name="viewport"
+            content="width=device-width, initial-scale=1, maximum-scale=1"
+          />
+        ) : (
+          <meta name="viewport" content="width=device-width" />
+        )}
+      </Head>
       {/* <!-- Adobe Analytics  --> */}
       <Script async src={ADOBE_EMBED_URL} />
       <Script id="adobeDataLayerDefinition">
