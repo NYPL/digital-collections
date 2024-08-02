@@ -49,11 +49,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <head>
-        <meta
-          key="meta"
-          httpEquiv="X-UA-Compatible"
-          content="IE=edge,chrome=1"
-        />
+        <meta httpEquiv="X-UA-Compatible" content="IE=edge,chrome=1" />
       </head>
       <body>
         {/* <!-- OptinMonster --> */}
