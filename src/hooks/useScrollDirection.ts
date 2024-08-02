@@ -13,16 +13,19 @@ function useScrollDirection() {
       const direction = scrollY > lastScrollY ? "down" : "up";
       if (
         direction !== scrollDirection &&
-        (scrollY - lastScrollY > 2 || scrollY - lastScrollY < 2)
+        (scrollY - lastScrollY > 10 || scrollY - lastScrollY < 10)
       ) {
         setScrollDirection(direction);
       }
+      //console.log(lastScrollY);
       lastScrollY = scrollY > 0 ? scrollY : 0;
     };
 
+    console.log("remove event listener");
     window.addEventListener("scroll", updateScrollDirection);
 
     return () => {
+      console.log("remove event listener");
       window.removeEventListener("scroll", updateScrollDirection);
     };
   }, [scrollDirection]);
