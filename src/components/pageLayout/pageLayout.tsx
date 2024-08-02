@@ -31,7 +31,6 @@ const PageLayout = ({
   useEffect(() => {
     const userAgent = typeof window !== "undefined" && navigator.userAgent;
     if (userAgent && /iPad|iPhone|iPod/.test(userAgent)) {
-      console.log("is ios");
       setIsIOS(true);
     }
   }, []);
