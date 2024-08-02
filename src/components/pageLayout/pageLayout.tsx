@@ -37,6 +37,14 @@ const PageLayout = ({
       setIsIOS(true);
     }
   }, []);
+  const viewport = isIOS ? (
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, maximum-scale=1"
+    />
+  ) : (
+    <meta name="viewport" content="width=device-width" />
+  );
   const pathname = usePathname();
   // Track page view events to Adobe Analytics
   useEffect(() => {
@@ -81,18 +89,7 @@ const PageLayout = ({
   };
   return (
     <>
-      <Helmet>
-        {/* other head elements?? */}
-        {/* {isIOS ? ( */}
-        <meta
-          name="viewport"
-          content="width=device-width, initial-scale=1, maximum-scale=1"
-        />
-        <title> IOS!!!</title>
-        {/* // ) : (
-        //   <meta name="viewport" content="width=device-width" />
-        // )} */}
-      </Helmet>
+      <Helmet>{viewport}</Helmet>
       {/* <!-- Adobe Analytics  --> */}
       <Script async src={ADOBE_EMBED_URL} />
       <Script id="adobeDataLayerDefinition">
