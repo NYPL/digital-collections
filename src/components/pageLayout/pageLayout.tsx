@@ -3,7 +3,6 @@ import {
   TemplateAppContainer,
   Breadcrumbs,
   DSProvider,
-  Text,
   SkipNavigation,
   useFeedbackBox,
 } from "@nypl/design-system-react-components";
@@ -17,7 +16,6 @@ import { trackVirtualPageView } from "src/utils/utils";
 import { usePathname } from "next/navigation";
 import { BreadcrumbsDataProps } from "@nypl/design-system-react-components/dist/src/components/Breadcrumbs/Breadcrumbs";
 import { Helmet } from "react-helmet";
-import Head from "next/head";
 
 interface PageLayoutProps {
   activePage: string;
@@ -89,7 +87,7 @@ const PageLayout = ({
   };
   return (
     <>
-      <Head>{viewport}</Head>
+      <Helmet>{viewport}</Helmet>
       {/* <!-- Adobe Analytics  --> */}
       <Script async src={ADOBE_EMBED_URL} />
       <Script id="adobeDataLayerDefinition">
