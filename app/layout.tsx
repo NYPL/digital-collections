@@ -1,11 +1,6 @@
 import Script from "next/script";
 import React from "react";
 import { Metadata } from "next";
-import type { Viewport } from "next";
-
-export const viewport: Viewport = {
-  width: "device-width",
-};
 
 export const metadata: Metadata = {
   title: "NYPL Digital Collections",
