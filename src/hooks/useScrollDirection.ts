@@ -17,15 +17,13 @@ function useScrollDirection() {
       ) {
         setScrollDirection(direction);
       }
-      //console.log(lastScrollY);
+
       lastScrollY = scrollY > 0 ? scrollY : 0;
     };
 
-    console.log("remove event listener");
     window.addEventListener("scroll", updateScrollDirection);
 
     return () => {
-      console.log("remove event listener");
       window.removeEventListener("scroll", updateScrollDirection);
     };
   }, [scrollDirection]);
