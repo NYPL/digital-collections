@@ -12,7 +12,7 @@ export default function Collections() {
       activePage="collections"
       breadcrumbs={[
         { text: "Home", url: "/" },
-        { text: "All Collections", url: "/collections" },
+        { text: "Collections", url: "/collections" },
       ]}
     >
       <h2> All Collections </h2>

@@ -5,6 +5,7 @@ import {
   DSProvider,
   SkipNavigation,
   useFeedbackBox,
+  Box,
 } from "@nypl/design-system-react-components";
 import React, { useEffect } from "react";
 import { type PropsWithChildren } from "react";
@@ -91,8 +92,21 @@ const PageLayout = ({
           children
         ) : (
           <>
-            <Breadcrumbs breadcrumbsData={breadcrumbs || []} />
-            <TemplateAppContainer contentPrimary={children as JSX.Element} />
+            <Breadcrumbs
+              breadcrumbsType="digitalCollections"
+              breadcrumbsData={breadcrumbs || []}
+            />
+            {/* TODO: Move to TemplateAppContainer once spacing is more flexible.  --> */}
+            <Box
+              id="mainContent"
+              sx={{
+                margin: "auto",
+                maxWidth: "1280px",
+                padding: "64px 16px",
+              }}
+            >
+              {children as JSX.Element}
+            </Box>
           </>
         )}
         <FeedbackBox

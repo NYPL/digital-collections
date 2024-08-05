@@ -2,7 +2,6 @@ import React from "react";
 import { Metadata } from "next";
 import PageLayout from "../../../src/components/pageLayout/pageLayout";
 import CollectionsPage from "src/components/collections/collections";
-import { useSearchParams } from "next/navigation";
 
 type CollectionProps = {
   params: { slug: string };
@@ -17,13 +16,13 @@ export async function generateMetadata({
   };
 }
 
-export default function Lane({ params }: CollectionProps) {
+export default function Collections({ params }: CollectionProps) {
   return (
     <PageLayout
       activePage="lane"
       breadcrumbs={[
         { text: "Home", url: "/" },
-        { text: "All Collections", url: "/collections" },
+        { text: "Collections", url: "/collections" },
         {
           text: `${params.slug}`,
           url: `/collections/${params.slug}`,
