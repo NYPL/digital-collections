@@ -478,6 +478,15 @@ PATCH: feature or hotfix that supports a component or section of the mvp of a Ph
 
 Format: MAJOR.MINOR.PATCH
 
+## Deployment
+
+Deployment:
+PR previews and `main` are all deployed to Vercel. Merges to `main` trigger automatic deployments to Vercel.
+
+QA deployments are automatically triggered by pushing changes to the `qa` branch. `qa` is deployed to AWS [via Github Actions](https://github.com/NYPL/digital-collections/blob/production/.github/workflows/deploy_qa.yml).
+
+Production deployments for this repo require a PR to the `production` branch. Once merged, `production` is deployed to AWS [via Github Actions](https://github.com/NYPL/digital-collections/blob/production/.github/workflows/deploy_production.yml).
+
 ### Summary of Phases (to be removed later?)
 
 #### 1. Home Page
@@ -511,12 +520,3 @@ These page types are:
 ##### 4d. PDFs
 
 ##### 5. About Page
-
-## Deployment
-
-Deployment:
-PR previews and `main` are all deployed to Vercel. Merges to `main` trigger automatic deployments to Vercel.
-
-QA deployments are automatically triggered by pushing changes to the `qa` branch. `qa` is deployed to AWS [Via Travis](https://travis-ci.com/github/NYPL).
-
-Production deployments for this repo require a PR to the `production` branch. Once merged, `production` is deployed to AWS [Via Travis](https://travis-ci.com/github/NYPL).
