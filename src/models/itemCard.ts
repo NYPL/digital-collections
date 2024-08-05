@@ -12,6 +12,6 @@ export class ItemCardModel {
     this.title = data.title;
     this.url = data.href;
     this.imageID = data.imageID;
-    this.imageURL = imageURL(data.image_id, "full", "288,", "0");
+    this.imageURL = imageURL(data.imageID, "full", "288,", "0");
   }
 }
