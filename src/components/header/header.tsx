@@ -4,7 +4,7 @@ import {
   VStack,
   HorizontalRule,
 } from "@nypl/design-system-react-components";
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { useScrolled } from "../../hooks/useScrolled";
 import { useStickyMargin } from "../../hooks/useStickyMargin";
 import Search from "../search/search";
@@ -76,11 +76,7 @@ const Header = () => {
         </HStack>
         <HStack
           sx={{
-            // display: isScrolled
-            //   ? "flex"
-            //   : scrollDirection == "up"
-            //   ? "flex"
-            //   : "none",
+            //display: isScrolled ? "flex" : isScrollingUp ? "flex" : "none",
             display: isScrollingUp ? "flex" : "none",
             [`@media screen and (min-width: ${headerBreakpoints.smTablet})`]: {
               display: "none",
