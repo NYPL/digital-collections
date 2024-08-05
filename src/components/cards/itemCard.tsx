@@ -4,7 +4,6 @@ import {
   Card,
   CardHeading,
   Tooltip,
-  Link,
 } from "@nypl/design-system-react-components";
 import styles from "./Card.module.css";
 
@@ -30,15 +29,9 @@ const ItemCard = ({ slug, id, isLargerThanLargeTablet, item }) => {
         noOfLines={3}
       >
         {isLargerThanLargeTablet ? (
-          <Tooltip content={item.title}>
-            <Link href={item.url} sx={{ marginBottom: "0" }}>
-              {item.title}
-            </Link>
-          </Tooltip>
+          <Tooltip content={item.title}>{item.title}</Tooltip>
         ) : (
-          <Link href={item.url} sx={{ marginBottom: "0" }}>
-            {item.title}
-          </Link>
+          item.title
         )}
       </CardHeading>
     </Card>
