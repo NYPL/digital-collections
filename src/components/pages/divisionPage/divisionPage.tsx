@@ -19,8 +19,9 @@ import useBreakpoints from "src/hooks/useBreakpoints";
 import CollectionDataType from "src/types/CollectionDataType";
 import { mockCollections } from "__tests__/__mocks__/data/mockCollections";
 import ItemCard from "src/components/cards/itemCard";
-import { mockItemCards } from "__tests__/__mocks__/data/mockItemCards";
+import { mockItems } from "__tests__/__mocks__/data/mockItems";
 import styles from "../../swimlanes/Swimlanes.module.css";
+import { ItemCardModel } from "src/models/itemCard";
 
 export default function DivisionPage() {
   const params = useParams();
@@ -95,13 +96,13 @@ export default function DivisionPage() {
             gridTemplateColumns: `repeat(${numColumns}, minmax(0, 1fr))`,
           }}
         >
-          {mockItemCards.map((item, index) => {
+          {mockItems.map((item, index) => {
+            const i = new ItemCardModel(item);
             return (
               <ItemCard
                 key={index}
                 id={`item-${index}-${title}`}
-                slug={item.title}
-                item={item}
+                item={i}
                 isLargerThanLargeTablet={isLargerThanLargeTablet}
               />
             );
