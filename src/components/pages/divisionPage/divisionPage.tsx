@@ -40,7 +40,7 @@ export default function DivisionPage() {
       <Box
         sx={{
           display: "flex",
-          flexFlow: "column",
+          flexDirection: "column",
           "> hgroup": {
             marginBottom: 0,
           },
@@ -73,7 +73,7 @@ export default function DivisionPage() {
           </Heading>
           <Spacer />
           <Link
-            id={`row-see-more-items`}
+            id={`row-see-more-items-${title}`}
             type="standalone"
             href={`#`}
             aria-label={`See more items in ${title}`}
@@ -99,7 +99,7 @@ export default function DivisionPage() {
             return (
               <ItemCard
                 key={index}
-                id={index}
+                id={`item-${index}-${title}`}
                 slug={item.title}
                 item={item}
                 isLargerThanLargeTablet={isLargerThanLargeTablet}
@@ -108,7 +108,7 @@ export default function DivisionPage() {
           })}
         </SimpleGrid>
         <Link
-          id={`row-see-more-items-mobile`}
+          id={`row-see-more-items-mobile-${title}`}
           type="standalone"
           href={`#`}
           aria-label={`See more items in ${title}`}
