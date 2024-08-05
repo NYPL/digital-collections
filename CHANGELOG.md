@@ -7,20 +7,35 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+## [0.1.11] 2024-08-05
+
+### Added
+
+- Added Github Actions deployment workflows, Travis deployment script removed (DR-3019)
+
+## [0.1.10] 2024-08-01
+
 ### Added
 
 - Added `/search/index` and `/collections/slug` pages (DR-3028)
 - Added `/items` pages (DR-3029)
-- Added Github Actions deployment workflows, Travis deployment script removed (DR-3019)
+- Added strict type checking (DR-2867)
+
+### Updated
+
+- Updated static breadcrumbs to render correct copy (DR-3023)
+- Updated `/divisions` page to render title and content (DR-3030)
+- Updates card columns to new breakpoints (DR-3036)
+- Create CollectionCard component and render it on the homepage, also refactor a little bit. (DR-3027)
+- Moved non-page directories outside of /app folder (DR-3058)
+- Update DS version to 3.2.0.
 
 ## [0.1.9] 2024-07-08
 
 ### Updated
 
-- Updates card columns to new breakpoints (DR-3036)
 - Migrated to Next v14 (App Router) (DR-3010, DR-3011)
 - Make the entire card clickable for Collection and Explore Further cards (DR-3024)
-- Create CollectionCard component and render it on the homepage, also refactor a little bit. (DR-3027)
 
 ### Added
 
