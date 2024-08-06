@@ -1,7 +1,7 @@
 import Script from "next/script";
 import React from "react";
-import { Metadata } from "next";
-import { isIOS } from "./appUtils";
+import { Metadata, Viewport } from "next";
+import { headers } from "next/headers";
 
 export const metadata: Metadata = {
   title: "NYPL Digital Collections",
@@ -42,16 +42,19 @@ export const metadata: Metadata = {
   },
 };
 
-const viewport = isIOS() ? (
-  <meta
-    name="viewport"
-    content="width=device-width, initial-scale=1, maximum-scale=1"
-  />
-) : (
-  <meta name="viewport" content="width=device-width" />
-);
+export async function generateViewport(): Promise<Viewport> {
+  const userAgent = headers().get("user-agent");
+  const isiPhone = /iphone/i.test(userAgent ?? "");
 
-const textCheck = isIOS() ? <div>im ios</div> : <div>im NOT ios</div>;
+  return isiPhone
+    ? {
+        width: "device-width",
+        initialScale: 1,
+        maximumScale: 1,
+        userScalable: false,
+      }
+    : {};
+}
 
 export default function RootLayout({
   children,
@@ -62,7 +65,6 @@ export default function RootLayout({
     <html lang="en">
       <head>
         <meta httpEquiv="X-UA-Compatible" content="IE=edge,chrome=1" />
-        {viewport}
       </head>
       <body>
         {/* <!-- OptinMonster --> */}
@@ -74,7 +76,6 @@ export default function RootLayout({
           }}
         />
         {/* <!-- / OptinMonster --> */}
-        {textCheck}
         {children}
         <div id="nypl-footer"></div>
         <Script

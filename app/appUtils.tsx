@@ -1,3 +1,4 @@
+"use server";
 import { UAParser } from "ua-parser-js";
 import { headers } from "next/headers";
 
