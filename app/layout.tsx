@@ -1,7 +1,7 @@
 import Script from "next/script";
 import React from "react";
 import { Metadata } from "next";
-import { isIOS } from "src/utils/utils";
+import { isIOS } from "./appUtils";
 
 export const metadata: Metadata = {
   title: "NYPL Digital Collections",
