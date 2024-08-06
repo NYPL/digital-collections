@@ -1,6 +1,7 @@
 import Script from "next/script";
 import React from "react";
 import { Metadata } from "next";
+import { isIOS } from "src/utils/utils";
 
 export const metadata: Metadata = {
   title: "NYPL Digital Collections",
@@ -41,6 +42,17 @@ export const metadata: Metadata = {
   },
 };
 
+const viewport = isIOS() ? (
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1, maximum-scale=1"
+  />
+) : (
+  <meta name="viewport" content="width=device-width" />
+);
+
+const textCheck = isIOS() ? <div>im ios</div> : <div>im NOT ios</div>;
+
 export default function RootLayout({
   children,
 }: {
@@ -50,6 +62,7 @@ export default function RootLayout({
     <html lang="en">
       <head>
         <meta httpEquiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+        {viewport}
       </head>
       <body>
         {/* <!-- OptinMonster --> */}
@@ -61,6 +74,7 @@ export default function RootLayout({
           }}
         />
         {/* <!-- / OptinMonster --> */}
+        {textCheck}
         {children}
         <div id="nypl-footer"></div>
         <Script

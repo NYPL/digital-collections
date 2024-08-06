@@ -264,3 +264,15 @@ export const trackVirtualPageView = (pathname = "") => {
     site_section: ADOBE_ANALYTICS_SITE_SECTION,
   });
 };
+
+import { UAParser } from "ua-parser-js";
+
+export const isIOS = () => {
+  if (typeof process === "undefined") {
+    throw new Error("server");
+  }
+
+  const parser = new UAParser("user-agent" || "").getResult();
+
+  return parser.os.name === "iOS";
+};
