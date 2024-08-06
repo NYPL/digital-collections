@@ -9,19 +9,20 @@ import {
   Spacer,
 } from "@nypl/design-system-react-components";
 import PageLayout from "../../pageLayout/pageLayout";
-import { useNumColumns } from "src/hooks/useNumColumns";
+import { useNumColumns } from "../../../hooks/useNumColumns";
 import { useParams } from "next/navigation";
-import { headerBreakpoints } from "src/utils/breakpoints";
-import { slugToString } from "src/utils/utils";
-import CollectionCard from "src/components/cards/collectionCard";
-import { CollectionCardModel } from "src/models/collectionCard";
-import useBreakpoints from "src/hooks/useBreakpoints";
-import CollectionDataType from "src/types/CollectionDataType";
-import { mockCollections } from "__tests__/__mocks__/data/mockCollections";
-import ItemCard from "src/components/cards/itemCard";
-import { mockItems } from "__tests__/__mocks__/data/mockItems";
-import styles from "../../swimlanes/Swimlanes.module.css";
-import { ItemCardModel } from "src/models/itemCard";
+import { headerBreakpoints } from "../../../utils/breakpoints";
+import { slugToString } from "../../../utils/utils";
+import CollectionCard from "../../../components/cards/collectionCard";
+import { CollectionCardModel } from "../../../models/collectionCard";
+import useBreakpoints from "../../../hooks/useBreakpoints";
+import CollectionDataType from "../../../types/CollectionDataType";
+import { mockCollections } from "../../../../__tests__/__mocks__/data/mockCollections";
+import ItemCard from "../../../components/cards/itemCard";
+import { mockItems } from "../../../../__tests__/__mocks__/data/mockItems";
+import styles from "../../src/components/swimlanes/Swimlanes.module.css";
+import { ItemCardModel } from "../../../models/itemCard";
+import React from "react";
 
 export default function DivisionPage() {
   const params = useParams();
