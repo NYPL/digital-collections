@@ -105,3 +105,9 @@ a {
     color-scheme: dark;
   }
 }
+
+@media (min-width: 768px) {
+  /* html {
+    scroll-padding-top: 50px;
+  } */
+}
