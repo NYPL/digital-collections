@@ -1,25 +1,57 @@
 "use client";
 import PageLayout from "../../pageLayout/pageLayout";
 import React from "react";
-import useBreakpoints from "../../../hooks/useBreakpoints";
-import { useNumColumns } from "../../../hooks/useNumColumns";
-import { useParams } from "next/navigation";
-import { slugToString } from "../../../utils/utils";
+import SearchResults from "../../search/results";
+import {
+  Box,
+  Heading,
+  HorizontalRule,
+  SearchBar,
+} from "@nypl/design-system-react-components";
+import { headerBreakpoints } from "src/utils/breakpoints";
+// interface CollectionPageProps {
+//   slug: String;
+// }
 
-export default function DivisionPage() {
-  const params = useParams();
-  const { isLargerThanLargeTablet } = useBreakpoints();
-  const slug = params.slug as string;
-  const title = slugToString(slug);
-  const numColumns = useNumColumns();
+export const CollectionsPage = () => {
   return (
     <PageLayout
-      activePage="division"
+      activePage="collections"
       breadcrumbs={[
         { text: "Home", url: "/" },
-        { text: "Divisions", url: "/divisions" },
-        { text: `${title}`, url: `/divisions/${slug}` },
+        { text: "Collections", url: "/collections" },
       ]}
-    ></PageLayout>
+    >
+      <Box
+        sx={{
+          [`@media screen and (min-width: ${headerBreakpoints.smTablet})`]: {
+            maxWidth: "715px",
+          },
+          "> hgroup > p": {
+            fontWeight: "400 !important",
+          },
+        }}
+      >
+        <Heading
+          level="h1"
+          text="Collections"
+          subtitle="Explore the New York Public Library's diverse collections, including digitized photographs, manuscripts, maps, and more. Start exploring by using the search bar below or browse through the collections."
+        />
+        <SearchBar
+          sx={{ maxWidth: "462px", marginTop: "l" }}
+          id={"search-collections"}
+          textInputProps={{
+            isClearable: true,
+            labelText: "Search by collection title",
+            name: "searchinput",
+            placeholder: "Search by collection title",
+          }}
+          onSubmit={function (event: React.FormEvent): void {}}
+          labelText={""}
+        />
+      </Box>
+      <HorizontalRule sx={{ marginTop: "xxl", marginBottom: "xxl" }} />
+      <SearchResults />
+    </PageLayout>
   );
-}
+};
