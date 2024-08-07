@@ -26,21 +26,6 @@ const PageLayout = ({
   activePage,
   breadcrumbs,
 }: PropsWithChildren<PageLayoutProps>) => {
-  const [isIOS, setIsIOS] = useState(false);
-  useEffect(() => {
-    const userAgent = typeof window !== "undefined" && navigator.userAgent;
-    if (userAgent && /iPad|iPhone|iPod/.test(userAgent)) {
-      setIsIOS(true);
-    }
-  }, []);
-  const viewport = isIOS ? (
-    <meta
-      name="viewport"
-      content="width=device-width, initial-scale=1, maximum-scale=1"
-    />
-  ) : (
-    <meta name="viewport" content="width=device-width" />
-  );
   const pathname = usePathname();
   // Track page view events to Adobe Analytics
   useEffect(() => {
