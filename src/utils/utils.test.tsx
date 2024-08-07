@@ -182,19 +182,19 @@ describe("appUtils", () => {
 describe("slugToString", () => {
   test("converts a slug to a human-readable string", () => {
     const input = "this-is-a-test-slug";
-    const expectedOutput = "This Is A Test Slug";
-    expect(slugToString(input)).toBe(expectedOutput);
+    const output = "This Is A Test Slug";
+    expect(slugToString(input)).toBe(output);
   });
 
   test("handles slugs with lots of hyphens", () => {
     const input = "a-slug-with----many-hyphens";
-    const expectedOutput = "A Slug With Many Hyphens";
-    expect(slugToString(input)).toBe(expectedOutput);
+    const output = "A Slug With Many Hyphens";
+    expect(slugToString(input)).toBe(output);
   });
 
   test("returns an empty string for an empty input", () => {
     const input = "";
-    const expectedOutput = "";
-    expect(slugToString(input)).toBe(expectedOutput);
+    const output = "";
+    expect(slugToString(input)).toBe(output);
   });
 });
