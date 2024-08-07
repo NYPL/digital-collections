@@ -266,7 +266,9 @@ export const trackVirtualPageView = (pathname = "") => {
 };
 
 export const slugToString = (slug) => {
-  let str = slug.replace(/[-]/g, " ");
-  str = str.replace(/\b\w/g, (char) => char.toUpperCase());
-  return str;
+  return slug
+    .split("-")
+    .filter(Boolean)
+    .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+    .join(" ");
 };
