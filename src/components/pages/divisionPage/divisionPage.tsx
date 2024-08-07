@@ -20,7 +20,6 @@ import CollectionDataType from "../../../types/CollectionDataType";
 import { mockCollections } from "../../../../__tests__/__mocks__/data/mockCollections";
 import ItemCard from "../../../components/cards/itemCard";
 import { mockItems } from "../../../../__tests__/__mocks__/data/mockItems";
-import styles from "../../src/components/swimlanes/Swimlanes.module.css";
 import { ItemCardModel } from "../../../models/itemCard";
 import React from "react";
 
@@ -68,7 +67,7 @@ export default function DivisionPage() {
         </Link>
       </Box>
       <HorizontalRule sx={{ marginTop: "xxl", marginBottom: "xxl" }} />
-      <Box className={styles.lane}>
+      <Box>
         <Flex alignItems="baseline">
           <Heading level="h2" size="heading3">
             {`Items in the ${title}`}
@@ -142,6 +141,7 @@ export default function DivisionPage() {
       >
         {mockCollections.map((collection: CollectionDataType, index) => {
           const c = new CollectionCardModel(collection);
+          console.log(c.imageURL);
           return (
             <CollectionCard
               key={index}
