@@ -15,7 +15,6 @@ import Script from "next/script";
 import { trackVirtualPageView } from "src/utils/utils";
 import { usePathname } from "next/navigation";
 import { BreadcrumbsDataProps } from "@nypl/design-system-react-components/dist/src/components/Breadcrumbs/Breadcrumbs";
-import { Helmet } from "react-helmet";
 
 interface PageLayoutProps {
   activePage: string;
@@ -86,7 +85,6 @@ const PageLayout = ({
   };
   return (
     <>
-      <Helmet>{viewport}</Helmet>
       {/* <!-- Adobe Analytics  --> */}
       <Script async src={ADOBE_EMBED_URL} />
       <Script id="adobeDataLayerDefinition">
