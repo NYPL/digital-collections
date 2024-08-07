@@ -1,4 +1,4 @@
-import CollectionCardDataType from "src/types/CollectionCardDataType";
+import CollectionCardDataType from "../../../src/types/CollectionCardDataType";
 
 export const mockCollectionCards: CollectionCardDataType[] = [
   {

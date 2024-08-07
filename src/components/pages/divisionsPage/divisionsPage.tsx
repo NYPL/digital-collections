@@ -5,10 +5,11 @@ import {
   HorizontalRule,
 } from "@nypl/design-system-react-components";
 import PageLayout from "../../pageLayout/pageLayout";
-import { headerBreakpoints } from "src/utils/breakpoints";
-import SwimLanes from "src/components/swimlanes/swimLanes";
-import { useNumColumns } from "src/hooks/useNumColumns";
-import { mockSwimLanes } from "__tests__/__mocks__/data/mockSwimLanes";
+import React from "react";
+import { useNumColumns } from "../../../hooks/useNumColumns";
+import { headerBreakpoints } from "../../../utils/breakpoints";
+import { mockSwimLanes } from "../../../../__tests__/__mocks__/data/mockSwimLanes";
+import SwimLanes from "../../../components/swimlanes/swimLanes";
 
 export default function DivisionsPage() {
   const numColumns = useNumColumns();
