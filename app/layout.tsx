@@ -1,6 +1,7 @@
 import Script from "next/script";
 import React from "react";
-import { Metadata, Viewport } from "next";
+import { Metadata } from "next";
+import "./globals.css";
 import { headers } from "next/headers";
 
 export const metadata: Metadata = {
