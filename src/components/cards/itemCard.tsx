@@ -6,7 +6,7 @@ import {
   Link,
   Tooltip,
 } from "@nypl/design-system-react-components";
-import "src/styles/globals.css";
+import styles from "./Card.module.css";
 
 const ItemCard = ({ id, isLargerThanLargeTablet, item }) => {
   return (
@@ -26,7 +26,7 @@ const ItemCard = ({ id, isLargerThanLargeTablet, item }) => {
         id={`row-card-heading-${id}`}
         level="h3"
         size="heading5"
-        className="cardTitle"
+        className={styles.cardTitle}
         noOfLines={3}
       >
         {isLargerThanLargeTablet ? (
