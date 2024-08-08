@@ -1,7 +1,7 @@
-.cardtitle a:focus {
+.cardTitle a:focus {
   outline: none;
 }
 
-.cardtitle:focus-within {
+.cardTitle:focus-within {
   outline: 2px solid var(--nypl-colors-ui-link-primary);
 }

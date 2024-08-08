@@ -42,7 +42,7 @@ const CollectionCard = ({
         id={`row-card-heading-${slug}-${id}`}
         level="h3"
         size="heading5"
-        className={styles.cardtitle}
+        className={styles.cardTitle}
         noOfLines={3}
       >
         {isLargerThanLargeTablet ? (
