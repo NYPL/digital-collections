@@ -7,6 +7,8 @@ export class ItemModel {
   isPDF?: boolean;
   isBook?: boolean;
   isSingleCapture: boolean;
+  imageID: string;
+  href: string;
 
   constructor(data: any) {
     const {
@@ -20,5 +22,7 @@ export class ItemModel {
       ? response.mods.titleInfo.title.$
       : response.mods.titleInfo[0].title.$;
     this.isSingleCapture = response.numResults.$ == 1;
+    this.imageID = response.imageID;
+    this.href = response.href;
   }
 }
