@@ -265,7 +265,7 @@ export const trackVirtualPageView = (pathname = "") => {
   });
 };
 
-export const slugToString = (slug: string) => {
+export const slugToString = (slug: string = ""): string => {
   return slug
     .split("-")
     .filter(Boolean)
