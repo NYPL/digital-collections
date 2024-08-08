@@ -2,33 +2,19 @@
 import React from "react";
 import {
   Box,
-  Card,
-  CardHeading,
   Flex,
   Heading,
   SimpleGrid,
   Spacer,
-  Text,
   Link,
-  CardContent,
-  Tooltip,
 } from "@nypl/design-system-react-components";
 import styles from "./Swimlanes.module.css";
 import { DC_URL } from "../../config/constants";
 import useBreakpoints from "../../hooks/useBreakpoints";
 import CollectionCard from "../cards/collectionCard";
-import type { CollectionCardDataType } from "../../types/CollectionCard";
-import { CollectionCardModel } from "../../models/collectionCard";
-
-export interface SwimLanesProps {
-  numColumns: number;
-  lanesWithNumItems: {
-    slug: string;
-    title: string;
-    rank: number;
-    collections: CollectionCardDataType[];
-  }[];
-}
+import CollectionDataType from "src/types/CollectionDataType";
+import { CollectionCardModel } from "src/models/collectionCard";
+import { SwimLanesProps } from "src/types/props/SwimLanesProps";
 
 const SwimLanes = ({ numColumns, lanesWithNumItems }: SwimLanesProps) => {
   const { isLargerThanLargeTablet } = useBreakpoints();
@@ -64,14 +50,14 @@ const SwimLanes = ({ numColumns, lanesWithNumItems }: SwimLanesProps) => {
             gridTemplateColumns: `repeat(${numColumns}, minmax(0, 1fr))`,
           }}
         >
-          {lane.collections.map((collection: CollectionCardDataType, index) => {
-            const c = new CollectionCardModel(collection); // can remove this and the line above after referencing the CollectionCardModel in the Lane model after it's created
+          {lane.collections.map((collection: CollectionDataType, index) => {
+            const c = new CollectionCardModel(collection);
             return (
               <CollectionCard
                 key={index}
                 slug={lane.slug}
                 id={index}
-                collection={c} //rename to collection after Lane model is created
+                collection={c}
                 isLargerThanLargeTablet={isLargerThanLargeTablet}
               />
             );

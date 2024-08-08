@@ -6,7 +6,7 @@ import {
 } from "@nypl/design-system-react-components";
 import React from "react";
 import featuredContentData from "../../data/featuredContentData";
-import { FeaturedContentDataType } from "../../types/FeaturedContentData";
+import { FeaturedContentDataType } from "../../types/FeaturedContentDataType";
 
 interface FeaturedContentProps {
   randomNumber: number;

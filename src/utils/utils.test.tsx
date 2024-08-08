@@ -5,6 +5,7 @@ import {
   apiResponse,
   apiPOSTCall,
   getItemsCountFromUUIDs,
+  slugToString,
 } from "./utils";
 import {
   ADOBE_ANALYTICS_DC_PREFIX,
@@ -175,5 +176,25 @@ describe("appUtils", () => {
         `${ADOBE_ANALYTICS_DC_PREFIX}${ADOBE_ANALYTICS_PAGE_NAMES.HOME}`
       );
     });
+  });
+});
+
+describe("slugToString", () => {
+  test("converts a slug to a human-readable string", () => {
+    const input = "this-is-a-test-slug";
+    const output = "This Is A Test Slug";
+    expect(slugToString(input)).toBe(output);
+  });
+
+  test("handles slugs with lots of hyphens", () => {
+    const input = "a-slug-with----many-hyphens";
+    const output = "A Slug With Many Hyphens";
+    expect(slugToString(input)).toBe(output);
+  });
+
+  test("returns an empty string for an empty input", () => {
+    const input = "";
+    const output = "";
+    expect(slugToString(input)).toBe(output);
   });
 });

@@ -1,4 +1,4 @@
-import { FeaturedContentDataType } from "../types/FeaturedContentData";
+import { FeaturedContentDataType } from "../types/FeaturedContentDataType";
 
 const featuredContentData: FeaturedContentDataType[] = [
   {
