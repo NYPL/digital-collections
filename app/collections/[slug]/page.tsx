@@ -1,7 +1,6 @@
 import React from "react";
 import { Metadata } from "next";
 import PageLayout from "../../../src/components/pageLayout/pageLayout";
-import CollectionsPage from "src/components/collections/collections";
 
 type CollectionProps = {
   params: { slug: string };
@@ -28,8 +27,6 @@ export default function Collections({ params }: CollectionProps) {
           url: `/collections/${params.slug}`,
         },
       ]}
-    >
-      <CollectionsPage slug={params.slug} />
-    </PageLayout>
+    ></PageLayout>
   );
 }
