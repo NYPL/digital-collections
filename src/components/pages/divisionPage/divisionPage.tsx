@@ -97,12 +97,12 @@ export default function DivisionPage() {
           }}
         >
           {mockItems.map((item, index) => {
-            const i = new ItemCardModel(item);
+            const itemModel = new ItemCardModel(item);
             return (
               <ItemCard
                 key={index}
                 id={`item-${index}-${title}`}
-                item={i}
+                item={itemModel}
                 isLargerThanLargeTablet={isLargerThanLargeTablet}
               />
             );
@@ -140,14 +140,13 @@ export default function DivisionPage() {
         }}
       >
         {mockCollections.map((collection: CollectionDataType, index) => {
-          const c = new CollectionCardModel(collection);
-          console.log(c.imageURL);
+          const collectionModel = new CollectionCardModel(collection);
           return (
             <CollectionCard
               key={index}
               id={index}
-              slug={c.title}
-              collection={c}
+              slug={collectionModel.title}
+              collection={collectionModel}
               isLargerThanLargeTablet={isLargerThanLargeTablet}
             />
           );
