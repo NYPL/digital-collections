@@ -39,7 +39,7 @@ const Search = () => {
           width: "100%",
           marginTop: "0px !important",
           paddingTop: "xs",
-          [`@media screen and (min-width: ${headerBreakpoints.lgTablet})`]: {
+          [`@media screen and (min-width: ${headerBreakpoints.lgTablet}px)`]: {
             paddingTop: "0px !important",
           },
           "#searchbar-form-searchbar": {
@@ -69,20 +69,21 @@ const Search = () => {
             button: {
               borderRadius: "0px 2px 2px 0px",
             },
-            [`@media screen and (max-width: ${headerBreakpoints.lgMobile})`]: {
-              button: {
-                gap: 0,
-                padding: "xs",
-                "> svg": {
-                  width: "18px",
-                  height: "18px",
-                  margin: 0,
-                },
-                "> span": {
-                  display: "none",
+            [`@media screen and (max-width: ${headerBreakpoints.lgMobile}px)`]:
+              {
+                button: {
+                  gap: 0,
+                  padding: "xs",
+                  "> svg": {
+                    width: "18px",
+                    height: "18px",
+                    margin: 0,
+                  },
+                  "> span": {
+                    display: "none",
+                  },
                 },
               },
-            },
           }}
         />
         <PublicDomainFilter onCheckChange={handleCheckChange} />

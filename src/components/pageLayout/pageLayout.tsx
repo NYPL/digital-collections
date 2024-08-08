@@ -6,7 +6,7 @@ import {
   SkipNavigation,
   useFeedbackBox,
 } from "@nypl/design-system-react-components";
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { type PropsWithChildren } from "react";
 import Header from "../header/header";
 import NotificationBanner from "../notificationBanner/notificationBanner";
