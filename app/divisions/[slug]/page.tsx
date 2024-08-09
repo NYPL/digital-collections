@@ -1,7 +1,7 @@
 import { Metadata } from "next";
 import React from "react";
-import DivisionPage from "src/components/pages/divisionPage/divisionPage";
-import { slugToString } from "src/utils/utils";
+import DivisionPage from "../../src/components/pages/divisionPage/divisionPage";
+import { slugToString } from "../../src/utils/utils";
 
 export type DivisionProps = {
   params: { slug: string };
