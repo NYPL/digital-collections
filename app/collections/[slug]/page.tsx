@@ -1,6 +1,6 @@
 import React from "react";
 import { Metadata } from "next";
-import PageLayout from "../../../src/components/pageLayout/pageLayout";
+import PageLayout from "../../src/components/pageLayout/pageLayout";
 
 type CollectionProps = {
   params: { slug: string };

@@ -1,6 +1,6 @@
 import { google } from "googleapis";
 import { UAParser } from "ua-parser-js";
-import { getCustomTimestamp } from "../../../src/utils/utils";
+import { getCustomTimestamp } from "../../src/utils/utils";
 import { NextResponse, NextRequest } from "next/server";
 
 export const POST = async (request: NextRequest) => {
