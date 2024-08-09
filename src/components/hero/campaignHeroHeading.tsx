@@ -1,9 +1,6 @@
 import { Heading } from "@nypl/design-system-react-components";
 import React from "react";
-
-interface CampaignHeroHeadingProps {
-  numberOfDigitizedItems: string;
-}
+import { CampaignHeroHeadingProps } from "src/types/props/CampaignHeroProps";
 
 const CampaignHeroHeading = ({
   numberOfDigitizedItems,

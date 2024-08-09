@@ -264,3 +264,11 @@ export const trackVirtualPageView = (pathname = "") => {
     site_section: ADOBE_ANALYTICS_SITE_SECTION,
   });
 };
+
+export const slugToString = (slug: string = ""): string => {
+  return slug
+    .split("-")
+    .filter(Boolean)
+    .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+    .join(" ");
+};

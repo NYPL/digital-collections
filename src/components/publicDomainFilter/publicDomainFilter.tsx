@@ -1,9 +1,6 @@
 import React, { useState } from "react";
 import { Box, Checkbox, Link } from "@nypl/design-system-react-components";
-
-export interface PublicDomainFilterProps {
-  onCheckChange: (isChecked: boolean) => void;
-}
+import { PublicDomainFilterProps } from "src/types/props/PublicDomainFilterProps";
 
 const PublicDomainFilter = ({ onCheckChange }: PublicDomainFilterProps) => {
   const [isChecked, setIsChecked] = useState(false);

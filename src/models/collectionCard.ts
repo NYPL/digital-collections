@@ -8,7 +8,7 @@ export class CollectionCardModel {
   url: string;
   imageID: string;
   imageURL: string;
-  numItems: string;
+  numItems: number;
 
   constructor(data: any) {
     this.uuid = data.uuid;
