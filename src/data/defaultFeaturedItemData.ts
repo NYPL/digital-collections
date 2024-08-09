@@ -1,4 +1,4 @@
-import { FeaturedItemDataType } from "../types/FeaturedItemData";
+import { FeaturedItemDataType } from "../types/FeaturedItemDataType";
 type Environment = "development" | "qa" | "production";
 
 const defaultFeaturedItem: Record<Environment, FeaturedItemDataType> = {
