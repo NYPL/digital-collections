@@ -12,7 +12,7 @@ import DCLogo from "../logo/logo";
 import NavMenu from "../navMenu/navMenu";
 import MobileNavMenu from "../navMenu/mobileNavMenu";
 import { headerBreakpoints } from "../../utils/breakpoints";
-import useScrollDirection from "src/hooks/useScrollDirection";
+import useScrollDirection from "../../hooks/useScrollDirection";
 
 const Header = () => {
   useStickyMargin();
