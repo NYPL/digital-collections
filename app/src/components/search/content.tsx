@@ -18,7 +18,6 @@ const SearchContent = () => {
   const query = queryParams.toString();
   const numColumns = useNumColumns();
   const { isLargerThanLargeTablet } = useBreakpoints();
-  //Git
 
   const router = useRouter();
 
