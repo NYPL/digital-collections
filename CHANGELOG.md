@@ -10,6 +10,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 
 - Rendered collections page with preliminary search/sort (DR-3099)
+- Rendered swimlane page (DR-3106)
 - Rendered division landing page (DR-3093)
 - Created item and item card models and mocks (DR-3094)
 
