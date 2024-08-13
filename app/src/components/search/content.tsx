@@ -74,18 +74,6 @@ const SearchContent = () => {
               onClick: onMenuClick,
               type: "action",
             },
-            {
-              id: "items-descending",
-              label: "Number of items most to least",
-              onClick: onMenuClick,
-              type: "action",
-            },
-            {
-              id: "items-ascending",
-              label: "Number of items least to most",
-              onClick: onMenuClick,
-              type: "action",
-            },
           ]}
         />
       </Box>
