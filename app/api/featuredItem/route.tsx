@@ -1,10 +1,10 @@
-import { ENV_KEY } from "src/types/EnvironmentType";
+import { ENV_KEY } from "../../src/types/EnvironmentType";
 import {
   getNumDigitizedItems,
   getFeaturedImage,
   imageURL,
-} from "../../../src/utils/utils";
-import appConfig from "appConfig";
+} from "../../src/utils/utils";
+import appConfig from "../../../appConfig";
 import { NextResponse, NextRequest } from "next/server";
 export const fetchCache = "force-no-store";
 
