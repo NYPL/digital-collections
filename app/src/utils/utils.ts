@@ -1,3 +1,10 @@
+import {
+  ADOBE_ANALYTICS_SITE_SECTION,
+  ADOBE_ANALYTICS_PAGE_NAMES,
+  ADOBE_ANALYTICS_DC_PREFIX,
+  BASE_URL,
+} from "../config/constants";
+import { ENV_KEY } from "../types/EnvironmentType";
 /**
  * Represents a IIIF Image API URL, which will be used globally throughout the application.
  * IIIF Image API has several params, the ones we are the most concerned about are Region, Size, and Rotation.
@@ -208,14 +215,6 @@ export function getCustomTimestamp() {
 
   return timestamp;
 }
-
-import {
-  ADOBE_ANALYTICS_SITE_SECTION,
-  ADOBE_ANALYTICS_PAGE_NAMES,
-  ADOBE_ANALYTICS_DC_PREFIX,
-  BASE_URL,
-} from "../config/constants";
-import { ENV_KEY } from "../types/EnvironmentType";
 
 /**
  * adobeAnalyticsParam
