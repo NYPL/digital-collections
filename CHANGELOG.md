@@ -9,6 +9,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
+- Added `containsOnSiteMaterials` field to collection card model and component (DR-3123)
 - Rendered `/collections` page with preliminary search/sort (DR-3099)
 - Rendered `/collections/lane/[slug]` collection lane landing page (DR-3106)
 - Rendered `/divisions/[slug]` division landing page (DR-3093)
