@@ -7,6 +7,7 @@ import {
   CardContent,
   Tooltip,
   Link,
+  StatusBadge,
 } from "@nypl/design-system-react-components";
 import styles from "./Card.module.css";
 import { headerBreakpoints } from "../../utils/breakpoints";
@@ -45,6 +46,12 @@ const CollectionCard = ({
         className={styles.cardTitle}
         noOfLines={3}
       >
+        {collection.containsOnSiteMaterials && (
+          <StatusBadge type="informative">
+            {" "}
+            Contains On-Site Materials{" "}
+          </StatusBadge>
+        )}
         {isLargerThanLargeTablet ? (
           <Tooltip content={collection.title}>
             <Link href={collection.url} sx={{ marginBottom: "0" }}>
