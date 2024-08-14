@@ -1,4 +1,4 @@
-import lanesData from "../../../src/data/lanes";
+import lanesData from "../../../app/src/data/lanes";
 import { GET } from "../../../app/api/lanes/route";
 describe("All lanes API endpoint handler", () => {
   it("should respond with 200 status and lanes data for a GET request", async () => {

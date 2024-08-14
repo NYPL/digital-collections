@@ -1,4 +1,4 @@
-import { imageURL } from "src/utils/utils";
+import { imageURL } from "../../../app/src/utils/utils";
 import { mockSwimLanes } from "./mockSwimLanes";
 
 export const mockHomePageMainContent = {
