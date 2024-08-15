@@ -48,8 +48,7 @@ const CollectionCard = ({
       >
         {collection.containsOnSiteMaterials && (
           <StatusBadge type="informative">
-            {" "}
-            Contains On-Site Materials{" "}
+            Contains On-Site Materials
           </StatusBadge>
         )}
         {isLargerThanLargeTablet ? (
