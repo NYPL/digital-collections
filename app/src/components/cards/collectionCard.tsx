@@ -58,6 +58,7 @@ const CollectionCard = ({
           size="heading5"
           className={styles.cardTitle}
           noOfLines={3}
+          sx={{ marginBottom: "xs" }}
         >
           <>
             {collection.containsOnSiteMaterials && (
@@ -75,6 +76,7 @@ const CollectionCard = ({
                       textDecoration: "underline",
                       textDecorationStyle: "dotted",
                       textDecorationThickness: "1px",
+                      textUnderlineOffset: "2px",
                     },
                     marginBottom: "0",
                   }}
