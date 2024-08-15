@@ -16,6 +16,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Rendered `/divisions/[slug]` division landing page (DR-3093)
 - Created item and item card models and mocks (DR-3094)
 - Added `/api/changelog` endpoint (DR-3048)
+
 ## [0.1.11] 2024-08-05
 
 ### Added
