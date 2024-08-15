@@ -73,6 +73,7 @@ const CollectionCard = ({
                   sx={{
                     color: "ui.link.primary",
                     ":hover": {
+                      color: "ui.link.secondary",
                       textDecoration: "underline",
                       textDecorationStyle: "dotted",
                       textDecorationThickness: "1px",
