@@ -8,6 +8,7 @@ import {
   Tooltip,
   Link,
   StatusBadge,
+  Heading,
 } from "@nypl/design-system-react-components";
 import styles from "./Card.module.css";
 import { headerBreakpoints } from "../../utils/breakpoints";
@@ -42,36 +43,42 @@ const CollectionCard = ({
             }
           : {
               alt: "",
-              id: `no-image`,
+              id: `no-image-${id}`,
               isLazy: true,
               aspectRatio: "twoByOne",
               src: "/noImage.png",
             }
       }
     >
-      <CardHeading
-        id={`row-card-heading-${slug}-${id}`}
-        level="h3"
-        size="heading5"
-        className={styles.cardTitle}
-        noOfLines={3}
-      >
-        {collection.containsOnSiteMaterials && (
-          <StatusBadge type="informative">
-            Contains On-Site Materials
-          </StatusBadge>
-        )}
-        {isLargerThanLargeTablet ? (
-          <Tooltip content={collection.title}>
-            <Link href={collection.url} sx={{ marginBottom: "0" }}>
-              {collection.title}
-            </Link>
-          </Tooltip>
-        ) : (
-          collection.title
-        )}
-      </CardHeading>
+      <CardHeading sx={{ display: "none" }}></CardHeading>
       <CardContent>
+        <Heading
+          id={`row-card-heading-${slug}-${id}`}
+          level="h3"
+          size="heading5"
+          className={styles.cardTitle}
+          noOfLines={3}
+        >
+          <>
+            {collection.containsOnSiteMaterials && (
+              <StatusBadge type="informative">
+                Contains on-site materials
+              </StatusBadge>
+            )}
+            {isLargerThanLargeTablet ? (
+              <Tooltip content={collection.title}>
+                <Link
+                  href={collection.url}
+                  sx={{ color: "ui.link", marginBottom: "0" }}
+                >
+                  {collection.title}
+                </Link>
+              </Tooltip>
+            ) : (
+              collection.title
+            )}
+          </>
+        </Heading>
         <Text
           id={`item-count-${slug}-${id}`}
           size="subtitle2"
