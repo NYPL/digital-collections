@@ -50,7 +50,7 @@ const CollectionCard = ({
             }
       }
     >
-      <CardHeading sx={{ display: "none" }}></CardHeading>
+      <CardHeading sx={{ height: 0, padding: 0, margin: 0 }}></CardHeading>
       <CardContent>
         <Heading
           id={`row-card-heading-${slug}-${id}`}
