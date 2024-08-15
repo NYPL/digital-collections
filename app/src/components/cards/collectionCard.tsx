@@ -13,6 +13,7 @@ import {
 import styles from "./Card.module.css";
 import { headerBreakpoints } from "../../utils/breakpoints";
 import { CollectionCardDataType } from "../../types/CollectionCardDataType";
+import { TextDecoderStream } from "stream/web";
 
 interface CollectionCardProps {
   slug: string;
@@ -29,7 +30,6 @@ const CollectionCard = ({
 }: CollectionCardProps) => {
   return (
     <Card
-      sx={{ display: "grid" }}
       id={`card-${slug}-${id}`}
       mainActionLink={collection.url}
       imageProps={
@@ -51,9 +51,9 @@ const CollectionCard = ({
       }
     >
       <CardHeading sx={{ height: 0, padding: 0, margin: 0 }}></CardHeading>
-      <CardContent>
+      <CardContent sx={{ alignContent: "top" }}>
         {collection.containsOnSiteMaterials && (
-          <StatusBadge type="informative">
+          <StatusBadge sx={{ marginBottom: "xs" }} type="informative">
             Contains on-site materials
           </StatusBadge>
         )}
@@ -63,7 +63,7 @@ const CollectionCard = ({
           size="heading5"
           className={styles.cardTitle}
           noOfLines={3}
-          sx={{ marginBottom: "xs" }}
+          sx={{ marginTop: "0px", marginBottom: "xs" }}
         >
           <>
             {isLargerThanLargeTablet ? (
@@ -86,7 +86,22 @@ const CollectionCard = ({
                 </Link>
               </Tooltip>
             ) : (
-              collection.title
+              <Link
+                href={collection.url}
+                sx={{
+                  color: "ui.link.primary",
+                  ":hover": {
+                    color: "ui.link.secondary",
+                    textDecoration: "underline",
+                    textDecorationStyle: "dotted",
+                    textDecorationThickness: "1px",
+                    textUnderlineOffset: "2px",
+                  },
+                  marginBottom: "0",
+                }}
+              >
+                {collection.title}
+              </Link>
             )}
           </>
         </Heading>

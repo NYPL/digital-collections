@@ -11,7 +11,6 @@ import styles from "./Card.module.css";
 const ItemCard = ({ id, isLargerThanLargeTablet, item }) => {
   return (
     <Card
-      sx={{ display: "grid" }}
       id={`card-${id}`}
       mainActionLink={item.url}
       imageProps={{

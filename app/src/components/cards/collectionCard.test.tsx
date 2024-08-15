@@ -20,20 +20,20 @@ describe("Collection card component", () => {
   it("renders the correct heading with the provided title", () => {
     render(<CollectionCard {...mockProps} />);
     const headingElement = screen.getByRole("heading", {
-      name: /Contains On-Site Materials Posada Collection/i,
+      name: /Posada Collection/i,
     });
     expect(headingElement).toBeInTheDocument();
   });
 
   it("renders the badge when containsOnSiteMaterials is true", () => {
     render(<CollectionCard {...mockProps} />);
-    const badgeElement = screen.getByText(/Contains On-Site Materials/i);
+    const badgeElement = screen.getByText(/Contains on-site materials/i);
     expect(badgeElement).toBeInTheDocument();
   });
 
   it("does not render the badge when containsOnSiteMaterials is false", () => {
     render(<CollectionCard {...mockPropsNoOnSite} />);
-    const badgeElement = screen.queryByText(/Contains On-Site Materials/i);
+    const badgeElement = screen.queryByText(/Contains on-site materials/i);
     expect(badgeElement).not.toBeInTheDocument();
   });
 
