@@ -31,13 +31,23 @@ const CollectionCard = ({
       sx={{ display: "grid" }}
       id={`card-${slug}-${id}`}
       mainActionLink={collection.url}
-      imageProps={{
-        alt: "",
-        id: `image-${slug}-${id}`,
-        isLazy: true,
-        aspectRatio: "twoByOne",
-        src: collection.imageURL,
-      }}
+      imageProps={
+        collection.imageID
+          ? {
+              alt: "",
+              id: `image-${slug}-${id}`,
+              isLazy: true,
+              aspectRatio: "twoByOne",
+              src: collection.imageURL,
+            }
+          : {
+              alt: "",
+              id: `no-image`,
+              isLazy: true,
+              aspectRatio: "twoByOne",
+              src: "/noImage.png",
+            }
+      }
     >
       <CardHeading
         id={`row-card-heading-${slug}-${id}`}
