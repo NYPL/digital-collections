@@ -5,22 +5,22 @@ import SwimLanes from "../swimlanes/swimLanes";
 import SwimLanesLoading from "../swimlanes/swimLanesLoading";
 import { useNumColumns } from "../../hooks/useNumColumns";
 
-const HomePageMainContent = () => {
+const HomePageMainContent = (data: any) => {
   const numColumns = useNumColumns();
-  const [data, setData] = useState<any>({});
+  // const [data, setData] = useState<any>({});
 
-  useEffect(() => {
-    const fetchData = async () => {
-      const response = await fetch("/api/homepage", {
-        method: "GET",
-        cache: "no-store",
-      });
-      const responseData = await response.json();
-      setData(responseData);
-    };
+  // useEffect(() => {
+  //   const fetchData = async () => {
+  //     const response = await fetch("/api/homepage", {
+  //       method: "GET",
+  //       cache: "no-store",
+  //     });
+  //     const responseData = await response.json();
+  //     setData(responseData);
+  //   };
 
-    fetchData();
-  }, []);
+  //   fetchData();
+  // }, []);
 
   return data?.lanesWithNumItems ? (
     <>

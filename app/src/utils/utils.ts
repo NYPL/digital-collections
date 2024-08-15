@@ -17,6 +17,11 @@ import { ENV_KEY } from "../types/EnvironmentType";
 import appConfig from "../appConfig";
 import defaultFeaturedItems from "../data/defaultFeaturedItemData";
 
+const createURL = (path) => {
+  console.log("window.location", window.location);
+  return window.location.origin + path;
+};
+
 export const imageURL = (
   imageId: any,
   region = "full",
@@ -270,4 +275,16 @@ export const slugToString = (slug: string = ""): string => {
     .filter(Boolean)
     .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
     .join(" ");
+};
+
+export const getHomePageData = async () => {
+  const response = await fetch(
+    new Request(createURL(`/api/homepage`), {
+      method: "GET",
+      cache: "no-store",
+    })
+  );
+
+  const responseData = await response.json();
+  return responseData;
 };

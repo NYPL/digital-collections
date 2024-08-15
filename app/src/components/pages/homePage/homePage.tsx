@@ -7,7 +7,7 @@ import HomePageMainContent from "../../homePageMainContent/homePageMainContent";
 import PageLayout from "../../pageLayout/pageLayout";
 import { useRouter } from "next/navigation";
 
-export default function HomePage() {
+export default function HomePage(data) {
   const router = useRouter();
   router?.replace("/", undefined);
 
@@ -19,7 +19,7 @@ export default function HomePage() {
             <CampaignHero />
           </div>
         }
-        contentPrimary={<HomePageMainContent />}
+        contentPrimary={<HomePageMainContent data />}
       />
       <ExploreFurther />
     </PageLayout>
