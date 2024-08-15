@@ -52,6 +52,11 @@ const CollectionCard = ({
     >
       <CardHeading sx={{ height: 0, padding: 0, margin: 0 }}></CardHeading>
       <CardContent>
+        {collection.containsOnSiteMaterials && (
+          <StatusBadge type="informative">
+            Contains on-site materials
+          </StatusBadge>
+        )}
         <Heading
           id={`row-card-heading-${slug}-${id}`}
           level="h3"
@@ -61,11 +66,6 @@ const CollectionCard = ({
           sx={{ marginBottom: "xs" }}
         >
           <>
-            {collection.containsOnSiteMaterials && (
-              <StatusBadge type="informative">
-                Contains on-site materials
-              </StatusBadge>
-            )}
             {isLargerThanLargeTablet ? (
               <Tooltip content={collection.title}>
                 <Link
