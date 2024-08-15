@@ -69,7 +69,15 @@ const CollectionCard = ({
               <Tooltip content={collection.title}>
                 <Link
                   href={collection.url}
-                  sx={{ color: "ui.link", marginBottom: "0" }}
+                  sx={{
+                    color: "ui.link.primary",
+                    ":hover": {
+                      textDecoration: "underline",
+                      textDecorationStyle: "dotted",
+                      textDecorationThickness: "1px",
+                    },
+                    marginBottom: "0",
+                  }}
                 >
                   {collection.title}
                 </Link>
