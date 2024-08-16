@@ -13,8 +13,6 @@ import {
 import styles from "./Card.module.css";
 import { headerBreakpoints } from "../../utils/breakpoints";
 import { CollectionCardDataType } from "../../types/CollectionCardDataType";
-import { TextDecoderStream } from "stream/web";
-
 interface CollectionCardProps {
   slug: string;
   id: number;
@@ -116,8 +114,7 @@ const CollectionCard = ({
             },
           }}
         >
-          {" "}
-          {`${collection.numItems} items`}{" "}
+          {`${collection.numItems} items`}
         </Text>
       </CardContent>
     </Card>
