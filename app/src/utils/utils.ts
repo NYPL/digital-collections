@@ -5,7 +5,9 @@ import {
   BASE_URL,
 } from "../config/constants";
 import { ENV_KEY } from "../types/EnvironmentType";
-// import { useRouter } from "next/navigation";
+import appConfig from "../appConfig";
+import defaultFeaturedItems from "../data/defaultFeaturedItemData";
+
 /**
  * Represents a IIIF Image API URL, which will be used globally throughout the application.
  * IIIF Image API has several params, the ones we are the most concerned about are Region, Size, and Rotation.
@@ -15,8 +17,6 @@ import { ENV_KEY } from "../types/EnvironmentType";
  * @param {string} size - optional param for the height of an image, default is "!1600,1600"
  * @param {string} rotation - optional param for the height of an image, default is "0"
  */
-import appConfig from "../appConfig";
-import defaultFeaturedItems from "../data/defaultFeaturedItemData";
 
 export const imageURL = (
   imageId: any,
