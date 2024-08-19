@@ -26,7 +26,7 @@ const homePageData = async () => {
   });
 
   const newResponse = { randomNumber, lanesWithNumItems: updatedLanes };
-  return JSON.parse(JSON.stringify(newResponse));
+  return newResponse;
 };
 
 export const getHomePageData = async () => {
