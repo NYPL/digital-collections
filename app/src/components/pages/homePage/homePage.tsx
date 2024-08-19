@@ -8,6 +8,9 @@ import PageLayout from "../../pageLayout/pageLayout";
 import { useRouter } from "next/navigation";
 
 export default function HomePage(data) {
+  console.log("data in HomePage component is: ", data);
+  // console.log("data.lanesWithNumItems[0] is: ", data.lanesWithNumItems[0] )
+
   const router = useRouter();
   router?.replace("/", undefined);
 
@@ -19,7 +22,7 @@ export default function HomePage(data) {
             <CampaignHero />
           </div>
         }
-        contentPrimary={<HomePageMainContent data />}
+        contentPrimary={<HomePageMainContent data={data} />}
       />
       <ExploreFurther />
     </PageLayout>

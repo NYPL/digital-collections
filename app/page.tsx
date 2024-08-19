@@ -1,15 +1,9 @@
 import HomePage from "./src/components/pages/homePage/homePage";
-import { getHomePageData } from "./src/utils/utils";
+import { getHomePageData } from "@/src/utils/api";
 
 export default async function Home() {
   const data = await getHomePageData();
-  // const response = await fetch("/api/homepage", {
-  //   method: "GET",
-  //   cache: "no-store",
-  // }).then((res) =>
-  //   res.json()
-  // )
-  // const responseData = await response.json();
+  console.log("data in Home component is: ", data);
 
   return <HomePage data={data} />;
 }
