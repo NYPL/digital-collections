@@ -13,11 +13,13 @@ import NavMenu from "../navMenu/navMenu";
 import MobileNavMenu from "../navMenu/mobileNavMenu";
 import { headerBreakpoints } from "../../utils/breakpoints";
 import useScrollDirection from "../../hooks/useScrollDirection";
+import useStickyHeader from "src/hooks/useStickyHeader";
 
 const Header = () => {
   useStickyMargin();
   const isScrolled = useScrolled("header");
   const isScrollingUp = useScrollDirection();
+  useStickyHeader("header", 10);
 
   return (
     <Box
