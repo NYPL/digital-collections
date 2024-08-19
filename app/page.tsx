@@ -1,7 +1,13 @@
 import HomePage from "./src/components/pages/homePage/homePage";
-import { getHomePageData } from "@/src/utils/api";
+import { getHomePageData, getFeaturedItemData } from "@/src/utils/api";
+import { FeaturedItemDataType } from "../app/src/types/FeaturedItemDataType";
 
 export default async function Home() {
-  const data = await getHomePageData();
+  const swimLaneData = await getHomePageData();
+  const featuredItemData: FeaturedItemDataType = await getFeaturedItemData();
+  const data = {
+    swimLaneData: swimLaneData,
+    featuredItemData: featuredItemData,
+  };
   return <HomePage data={data} />;
 }
