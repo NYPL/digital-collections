@@ -1,4 +1,4 @@
-import CampaignHero from "../../app/src/components/hero/campaignHero";
+import CampaignHero from "../../app/src/components/featuredItem/campaignHero";
 import React from "react";
 import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 
