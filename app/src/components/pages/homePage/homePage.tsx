@@ -7,10 +7,7 @@ import HomePageMainContent from "../../homePageMainContent/homePageMainContent";
 import PageLayout from "../../pageLayout/pageLayout";
 import { useRouter } from "next/navigation";
 
-export default function HomePage(data) {
-  console.log("data in HomePage component is: ", data);
-  // console.log("data.lanesWithNumItems[0] is: ", data.lanesWithNumItems[0] )
-
+export default function HomePage({ data }) {
   const router = useRouter();
   router?.replace("/", undefined);
 

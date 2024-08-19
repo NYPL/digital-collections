@@ -1,10 +1,9 @@
 import data from "../../src/data/lanes";
 import { getItemsCountFromUUIDs } from "../../src/utils/utils";
-import { NextResponse, NextRequest } from "next/server";
 import type { LaneDataType } from "../../src/types/Lane";
 export const fetchCache = "force-no-store";
 
-const homePageData = async () => {
+export const getHomePageData = async () => {
   const randomNumber = Math.floor(Math.random() * 2);
   const lanes: LaneDataType[] = data.lanes as unknown as LaneDataType[];
 
@@ -27,17 +26,4 @@ const homePageData = async () => {
 
   const newResponse = { randomNumber, lanesWithNumItems: updatedLanes };
   return newResponse;
-};
-
-export const getHomePageData = async () => {
-  const data = await homePageData();
-  console.log("data in utils/api.ts is :", data);
-  if (data.lanesWithNumItems[0]) {
-    return data;
-  } else {
-    console.log("There is an error getting the home page data: ", data);
-    throw new Error(
-      "Something went wrong on API server! Method: getHomePageData() "
-    );
-  }
 };

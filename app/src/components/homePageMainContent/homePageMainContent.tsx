@@ -5,9 +5,7 @@ import SwimLanes from "../swimlanes/swimLanes";
 import SwimLanesLoading from "../swimlanes/swimLanesLoading";
 import { useNumColumns } from "../../hooks/useNumColumns";
 
-const HomePageMainContent = (data) => {
-  console.log("data in HomePageMainContent component is: ", data);
-
+const HomePageMainContent = ({ data }) => {
   const numColumns = useNumColumns();
 
   return data?.lanesWithNumItems ? (

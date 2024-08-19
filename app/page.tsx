@@ -3,7 +3,5 @@ import { getHomePageData } from "@/src/utils/api";
 
 export default async function Home() {
   const data = await getHomePageData();
-  console.log("data in Home component is: ", data);
-
   return <HomePage data={data} />;
 }
