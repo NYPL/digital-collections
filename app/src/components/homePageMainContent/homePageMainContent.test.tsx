@@ -2,6 +2,7 @@ import { render, screen, waitFor, within } from "@testing-library/react";
 import HomePageMainContent from "./homePageMainContent";
 import React from "react";
 import { mockHomePageMainContent } from "../../../../__tests__/__mocks__/data/mockHomePageMainContent";
+import { getHomePageData } from "@/src/utils/api";
 
 describe("homePageMainContent", () => {
   it("renders the SkeletonLoader", () => {
@@ -12,7 +13,7 @@ describe("homePageMainContent", () => {
       })
     ) as jest.Mock;
 
-    render(<HomePageMainContent />);
+    render(<HomePageMainContent data={getHomePageData} />);
 
     expect(screen.getByTestId("swimlane-skeleton-loader-1")).toBeTruthy();
     expect(screen.getByTestId("swimlane-skeleton-loader-2")).toBeTruthy();
@@ -32,7 +33,7 @@ describe("homePageMainContent", () => {
       })
     ) as jest.Mock;
 
-    render(<HomePageMainContent />);
+    render(<HomePageMainContent data={getHomePageData} />);
     await waitFor(() => {
       const firstrow = screen.getByTestId("test-collections-1");
       expect(

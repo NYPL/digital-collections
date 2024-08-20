@@ -17,7 +17,7 @@ export default function HomePage({ data }) {
       <TemplateAppContainer
         breakout={
           <div id="hero">
-            <CampaignHero data={data.featuredItemData} />
+            <CampaignHero featuredItemData={data.featuredItemData} />
           </div>
         }
         contentPrimary={<HomePageMainContent data={data.swimLaneData} />}

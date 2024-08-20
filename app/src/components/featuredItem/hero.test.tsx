@@ -2,6 +2,7 @@ import CampaignHero from "./campaignHero";
 import { render, screen, waitFor } from "@testing-library/react";
 import { imageURL } from "../../utils/utils";
 import React from "react";
+import { getFeaturedItemData } from "@/src/utils/api";
 
 describe("Campaign Hero", () => {
   it("renders the SkeletonLoader component instead of the Campaign Hero", () => {
@@ -12,7 +13,7 @@ describe("Campaign Hero", () => {
       })
     ) as jest.Mock;
 
-    render(<CampaignHero />);
+    render(<CampaignHero featuredItemData={getFeaturedItemData} />);
 
     expect(screen.getByTestId("hero-skeleton-loader")).toBeTruthy();
   });
@@ -35,7 +36,7 @@ describe("Campaign Hero", () => {
           }),
       })
     ) as jest.Mock;
-    render(<CampaignHero />);
+    render(<CampaignHero featuredItemData={getFeaturedItemData} />);
     await waitFor(() => {
       expect(screen.getByRole("heading")).toHaveTextContent(
         "Explore 863,848 items digitized from The New York Public Library's collections."
