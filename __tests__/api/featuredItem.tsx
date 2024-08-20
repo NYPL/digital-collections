@@ -1,6 +1,7 @@
 import CampaignHero from "../../app/src/components/featuredItem/campaignHero";
 import React from "react";
 import { fireEvent, render, screen, waitFor } from "@testing-library/react";
+import { getFeaturedItemData } from "@/src/utils/api";
 
 it("renders the fallback image if the image returns an error", async () => {
   (global as any).fetch = jest.fn(() =>
@@ -21,7 +22,7 @@ it("renders the fallback image if the image returns an error", async () => {
     })
   ) as jest.Mock;
 
-  render(<CampaignHero />);
+  render(<CampaignHero featuredItemData={getFeaturedItemData} />);
 
   await waitFor(async () => {
     fireEvent.error(screen.getByRole("img"));
@@ -52,7 +53,7 @@ it("renders the selected chosen image if the image does NOT return an error", as
         }),
     })
   ) as jest.Mock;
-  render(<CampaignHero />);
+  render(<CampaignHero featuredItemData={getFeaturedItemData} />);
 
   await waitFor(async () => {
     expect(screen.getByText("Momoyogusa")).toBeInTheDocument();
