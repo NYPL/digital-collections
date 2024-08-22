@@ -1,28 +1,27 @@
 import CampaignHero from "../../app/src/components/featuredItem/campaignHero";
 import React from "react";
 import { fireEvent, render, screen, waitFor } from "@testing-library/react";
-import { getFeaturedItemData } from "@/src/utils/api";
+import { mockHomePageMainContent } from "__tests__/__mocks__/data/mockHomePageMainContent";
 
 it("renders the fallback image if the image returns an error", async () => {
-  (global as any).fetch = jest.fn(() =>
-    Promise.resolve({
-      status: 200,
-      json: () =>
-        Promise.resolve({
-          featuredItem: {
-            imageID: "1269908",
-            backgroundImageSrc: "foobar.jpg", //bad image
-            foregroundImageSrc: "foobar.jpg",
-            uuid: "510d47e0-cb17-a3d9-e040-e00a18064a99",
-            title: "Momoyogusa",
-            href: "https://digitalcollections.nypl.org/items/510d47e0-cb17-a3d9-e040-e00a18064a99",
-          },
-          numberOfDigitizedItems: "876,067",
-        }),
-    })
-  ) as jest.Mock;
+  // const mockFeaturedItemData={
+  //   featuredItem: mockHomePageMainContent.featuredItem,
+  //   numberOfDigitizedItems: mockHomePageMainContent.numberOfDigitizedItems
+  // }
 
-  render(<CampaignHero featuredItemData={getFeaturedItemData} />);
+  const mockFeaturedItemData = {
+    featuredItem: {
+      imageID: "1269908",
+      backgroundImageSrc: "foobar.jpg", //bad image
+      foregroundImageSrc: "foobar.jpg",
+      uuid: "510d47e0-cb17-a3d9-e040-e00a18064a99",
+      title: "Momoyogusa",
+      href: "https://digitalcollections.nypl.org/items/510d47e0-cb17-a3d9-e040-e00a18064a99",
+    },
+    numberOfDigitizedItems: "876,067",
+  };
+
+  render(<CampaignHero featuredItemData={mockFeaturedItemData} />);
 
   await waitFor(async () => {
     fireEvent.error(screen.getByRole("img"));
@@ -34,26 +33,20 @@ it("renders the fallback image if the image returns an error", async () => {
 });
 
 it("renders the selected chosen image if the image does NOT return an error", async () => {
-  (global as any).fetch = jest.fn(() =>
-    Promise.resolve({
-      status: 200,
-      json: () =>
-        Promise.resolve({
-          featuredItem: {
-            imageID: "1269908",
-            backgroundImageSrc:
-              "https://iiif.nypl.org/iiif/2/1269908/full/!1600,1600/0/default.jpg",
-            foregroundImageSrc:
-              "https://iiif.nypl.org/iiif/2/1269908/full/!900,900/0/default.jpg",
-            uuid: "510d47e0-cb17-a3d9-e040-e00a18064a99",
-            title: "Momoyogusa",
-            href: "https://digitalcollections.nypl.org/items/510d47e0-cb17-a3d9-e040-e00a18064a99",
-          },
-          numberOfDigitizedItems: "876,067",
-        }),
-    })
-  ) as jest.Mock;
-  render(<CampaignHero featuredItemData={getFeaturedItemData} />);
+  const mockFeaturedItemData = {
+    featuredItem: {
+      imageID: "1269908",
+      backgroundImageSrc:
+        "https://iiif.nypl.org/iiif/2/1269908/full/!1600,1600/0/default.jpg",
+      foregroundImageSrc:
+        "https://iiif.nypl.org/iiif/2/1269908/full/!900,900/0/default.jpg",
+      uuid: "510d47e0-cb17-a3d9-e040-e00a18064a99",
+      title: "Momoyogusa",
+      href: "https://digitalcollections.nypl.org/items/510d47e0-cb17-a3d9-e040-e00a18064a99",
+    },
+    numberOfDigitizedItems: "876,067",
+  };
+  render(<CampaignHero featuredItemData={mockFeaturedItemData} />);
 
   await waitFor(async () => {
     expect(screen.getByText("Momoyogusa")).toBeInTheDocument();

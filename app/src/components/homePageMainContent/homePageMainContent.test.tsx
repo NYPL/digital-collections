@@ -2,38 +2,11 @@ import { render, screen, waitFor, within } from "@testing-library/react";
 import HomePageMainContent from "./homePageMainContent";
 import React from "react";
 import { mockHomePageMainContent } from "../../../../__tests__/__mocks__/data/mockHomePageMainContent";
-import { getHomePageData } from "@/src/utils/api";
 
 describe("homePageMainContent", () => {
-  it("renders the SkeletonLoader", () => {
-    (global as any).fetch = jest.fn(() =>
-      Promise.resolve({
-        status: 200,
-        json: () => Promise.resolve(),
-      })
-    ) as jest.Mock;
-
-    render(<HomePageMainContent data={getHomePageData} />);
-
-    expect(screen.getByTestId("swimlane-skeleton-loader-1")).toBeTruthy();
-    expect(screen.getByTestId("swimlane-skeleton-loader-2")).toBeTruthy();
-    expect(screen.getByTestId("swimlane-skeleton-loader-3")).toBeTruthy();
-    expect(screen.getByTestId("swimlane-skeleton-loader-4")).toBeTruthy();
-  });
-
   it("renders the Campaign Hero", async () => {
-    (global as any).fetch = jest.fn(() =>
-      Promise.resolve({
-        status: 200,
-        json: () =>
-          Promise.resolve({
-            randomNumber: 1,
-            lanesWithNumItems: mockHomePageMainContent.lanesWithNumItems,
-          }),
-      })
-    ) as jest.Mock;
+    render(<HomePageMainContent data={mockHomePageMainContent} />);
 
-    render(<HomePageMainContent data={getHomePageData} />);
     await waitFor(() => {
       const firstrow = screen.getByTestId("test-collections-1");
       expect(
