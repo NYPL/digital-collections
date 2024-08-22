@@ -4,11 +4,6 @@ import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import { mockHomePageMainContent } from "__tests__/__mocks__/data/mockHomePageMainContent";
 
 it("renders the fallback image if the image returns an error", async () => {
-  // const mockFeaturedItemData={
-  //   featuredItem: mockHomePageMainContent.featuredItem,
-  //   numberOfDigitizedItems: mockHomePageMainContent.numberOfDigitizedItems
-  // }
-
   const mockFeaturedItemData = {
     featuredItem: {
       imageID: "1269908",
@@ -20,9 +15,7 @@ it("renders the fallback image if the image returns an error", async () => {
     },
     numberOfDigitizedItems: "876,067",
   };
-
   render(<CampaignHero featuredItemData={mockFeaturedItemData} />);
-
   await waitFor(async () => {
     fireEvent.error(screen.getByRole("img"));
 
@@ -47,7 +40,6 @@ it("renders the selected chosen image if the image does NOT return an error", as
     numberOfDigitizedItems: "876,067",
   };
   render(<CampaignHero featuredItemData={mockFeaturedItemData} />);
-
   await waitFor(async () => {
     expect(screen.getByText("Momoyogusa")).toBeInTheDocument();
   });
