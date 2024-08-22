@@ -9,7 +9,8 @@ import {
 import styles from "./Card.module.css";
 
 const ItemCard = ({ id, isLargerThanLargeTablet, item }) => {
-  return (
+  const truncatedTitle = item.title.length > 80; // Pretty much random
+  const card = (
     <Card
       id={`card-${id}`}
       mainActionLink={item.url}
@@ -28,17 +29,15 @@ const ItemCard = ({ id, isLargerThanLargeTablet, item }) => {
         className={styles.cardTitle}
         noOfLines={3}
       >
-        {isLargerThanLargeTablet ? (
-          <Tooltip content={item.title}>
-            <Link href={item.url} sx={{ marginBottom: "0" }}>
-              {item.title}
-            </Link>
-          </Tooltip>
-        ) : (
-          item.title
-        )}
+        {item.title}
       </CardHeading>
     </Card>
+  );
+  return isLargerThanLargeTablet && truncatedTitle ? (
+    // Needs tooltip position updates
+    <Tooltip content={item.title}>{card}</Tooltip>
+  ) : (
+    card
   );
 };
 
