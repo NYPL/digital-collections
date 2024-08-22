@@ -7,6 +7,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+### Updated
+- Updated swim lanes and featured item features to use server side api calls (DR-3016)
+
 ### Added
 
 - Rendered `/collections` page with preliminary search/sort (DR-3099)
