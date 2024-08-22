@@ -7,8 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
-### Added
+### Updated
+- Update middleware file to not redirect urls created for phase 2-4 in 'qa' environment (DR-3122)
 
+### Added
 - Rendered `/collections` page with preliminary search/sort (DR-3099)
 - Rendered `/collections/lane/[slug]` collection lane landing page (DR-3106)
 - Rendered `/divisions/[slug]` division landing page (DR-3093)
