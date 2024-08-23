@@ -32,7 +32,7 @@ const CollectionCard = ({
       mainActionLink={collection.url}
       imageProps={{
         alt: "",
-        id: `image-${slug}-${id}-img`,
+        id: `image-${slug}-${id}`,
         isLazy: true,
         aspectRatio: "twoByOne",
         src: collection.imageURL,
