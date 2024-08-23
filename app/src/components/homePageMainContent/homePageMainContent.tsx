@@ -3,8 +3,8 @@ import FeaturedContentComponent from "../featuredContent/featuredContent";
 import SwimLanes from "../swimlanes/swimLanes";
 import SwimLanesLoading from "../swimlanes/swimLanesLoading";
 import { useNumColumns } from "../../hooks/useNumColumns";
-import useBreakpoints from "@/src/hooks/useBreakpoints";
 import { useEffect, useState } from "react";
+
 const HomePageMainContent = ({ data }) => {
   const numColumns = useNumColumns();
   const [isLoaded, setIsLoaded] = useState(false);
