@@ -4,16 +4,16 @@ import SwimLanes from "../swimlanes/swimLanes";
 import SwimLanesLoading from "../swimlanes/swimLanesLoading";
 import { useNumColumns } from "../../hooks/useNumColumns";
 import useBreakpoints from "@/src/hooks/useBreakpoints";
-
+import { useEffect, useState } from "react";
 const HomePageMainContent = ({ data }) => {
-  // const numColumns = useNumColumns();
-  const { isLargerThanLargeTablet, isLargerThanLargeMobile } = useBreakpoints();
-  const numColumns = isLargerThanLargeTablet
-    ? 4
-    : isLargerThanLargeMobile
-    ? 2
-    : 4;
-  return data?.lanesWithNumItems ? (
+  const numColumns = useNumColumns();
+  const [isLoaded, setIsLoaded] = useState(false);
+
+  useEffect(() => {
+    setIsLoaded(true);
+  }, []);
+
+  return isLoaded ? (
     <>
       <SwimLanes
         numColumns={numColumns}
