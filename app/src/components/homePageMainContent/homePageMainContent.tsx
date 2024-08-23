@@ -1,28 +1,19 @@
 import React from "react";
-import { useEffect, useState } from "react";
 import FeaturedContentComponent from "../featuredContent/featuredContent";
 import SwimLanes from "../swimlanes/swimLanes";
 import SwimLanesLoading from "../swimlanes/swimLanesLoading";
 import { useNumColumns } from "../../hooks/useNumColumns";
+import { useEffect, useState } from "react";
 
-const HomePageMainContent = () => {
+const HomePageMainContent = ({ data }) => {
   const numColumns = useNumColumns();
-  const [data, setData] = useState<any>({});
+  const [isLoaded, setIsLoaded] = useState(false);
 
   useEffect(() => {
-    const fetchData = async () => {
-      const response = await fetch("/api/homepage", {
-        method: "GET",
-        cache: "no-store",
-      });
-      const responseData = await response.json();
-      setData(responseData);
-    };
-
-    fetchData();
+    setIsLoaded(true);
   }, []);
 
-  return data?.lanesWithNumItems ? (
+  return isLoaded ? (
     <>
       <SwimLanes
         numColumns={numColumns}

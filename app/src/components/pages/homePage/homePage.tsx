@@ -2,12 +2,13 @@
 import { TemplateAppContainer } from "@nypl/design-system-react-components";
 import React from "react";
 import ExploreFurther from "../../exploreFurther/exploreFurther";
-import CampaignHero from "../../hero/campaignHero";
+import CampaignHero from "../../featuredItem/campaignHero";
 import HomePageMainContent from "../../homePageMainContent/homePageMainContent";
 import PageLayout from "../../pageLayout/pageLayout";
 import { useRouter } from "next/navigation";
+import { FeaturedItemDataType } from "../../../types/FeaturedItemDataType";
 
-export default function HomePage() {
+export default function HomePage({ data }) {
   const router = useRouter();
   router?.replace("/", undefined);
 
@@ -16,10 +17,10 @@ export default function HomePage() {
       <TemplateAppContainer
         breakout={
           <div id="hero">
-            <CampaignHero />
+            <CampaignHero featuredItemData={data.featuredItemData} />
           </div>
         }
-        contentPrimary={<HomePageMainContent />}
+        contentPrimary={<HomePageMainContent data={data.swimLaneData} />}
       />
       <ExploreFurther />
     </PageLayout>
