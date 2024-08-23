@@ -5,8 +5,9 @@ import { mockHomePageMainContent } from "../../../../__tests__/__mocks__/data/mo
 
 describe("Campaign Hero", () => {
   const mockFeaturedItemData = {
-    featuredItem: mockHomePageMainContent.featuredItem,
-    numberOfDigitizedItems: mockHomePageMainContent.numberOfDigitizedItems,
+    featuredItem: mockHomePageMainContent.featuredItemData.featuredItem,
+    numberOfDigitizedItems:
+      mockHomePageMainContent.featuredItemData.numberOfDigitizedItems,
   };
   it("renders the Campaign Hero", async () => {
     render(<CampaignHero featuredItemData={mockFeaturedItemData} />);
