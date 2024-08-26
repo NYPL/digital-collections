@@ -27,7 +27,6 @@ const CollectionCard = ({
 }: CollectionCardProps) => {
   return (
     <Card
-      sx={{ display: "grid" }}
       id={`card-${slug}-${id}`}
       mainActionLink={collection.url}
       imageProps={{

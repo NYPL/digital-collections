@@ -164,6 +164,7 @@ export default function DivisionPage() {
         sx={{
           display: "flex",
           justifyContent: "center",
+          gap: "s",
         }}
       />
     </PageLayout>
