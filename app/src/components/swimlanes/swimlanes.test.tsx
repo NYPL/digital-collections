@@ -82,4 +82,14 @@ describe("Swim Lanes component renders with expected props", () => {
     );
     expect(screen.queryByRole("tooltip")).not.toBeInTheDocument();
   });
+  it("does not render tooltips on non-truncated titles", async () => {
+    render(
+      <SwimLanes
+        numColumns={4}
+        lanesWithNumItems={mockSwimLanes.lanesWithNumItems}
+      />
+    );
+    fireEvent.pointerOver(screen.getAllByText("MAVO")[0]);
+    expect(screen.queryByRole("tooltip")).not.toBeInTheDocument();
+  });
 });
