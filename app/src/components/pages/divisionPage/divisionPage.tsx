@@ -5,6 +5,7 @@ import {
   Heading,
   HorizontalRule,
   Link,
+  Pagination,
   SimpleGrid,
   Spacer,
 } from "@nypl/design-system-react-components";
@@ -22,6 +23,7 @@ import ItemCard from "../../../components/cards/itemCard";
 import { mockItems } from "../../../../../__tests__/__mocks__/data/mockItems";
 import { ItemCardModel } from "../../../models/itemCard";
 import React from "react";
+import { Span } from "next/dist/trace";
 
 export default function DivisionPage() {
   const params = useParams();
@@ -136,22 +138,34 @@ export default function DivisionPage() {
       <SimpleGrid
         columns={numColumns}
         sx={{
+          marginBottom: "xxl",
           gridTemplateColumns: `repeat(${numColumns}, minmax(0, 1fr))`,
         }}
       >
-        {mockCollections.map((collection: CollectionDataType, index) => {
-          const collectionModel = new CollectionCardModel(collection);
-          return (
-            <CollectionCard
-              key={index}
-              id={index}
-              slug={collectionModel.title}
-              collection={collectionModel}
-              isLargerThanLargeTablet={isLargerThanLargeTablet}
-            />
-          );
-        })}
+        {[...mockCollections, ...mockCollections, ...mockCollections].map(
+          (collection: CollectionDataType, index) => {
+            const collectionModel = new CollectionCardModel(collection);
+            return (
+              <CollectionCard
+                key={index}
+                id={index}
+                slug={collectionModel.title}
+                collection={collectionModel}
+                isLargerThanLargeTablet={isLargerThanLargeTablet}
+              />
+            );
+          }
+        )}
       </SimpleGrid>
+      <Pagination
+        id="pagination-id"
+        initialPage={1}
+        pageCount={10}
+        sx={{
+          display: "flex",
+          justifyContent: "center",
+        }}
+      />
     </PageLayout>
   );
 }

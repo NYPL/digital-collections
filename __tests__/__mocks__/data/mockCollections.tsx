@@ -1,4 +1,4 @@
-import CollectionDataType from "../../../src/types/CollectionDataType";
+import CollectionDataType from "@/src/types/CollectionDataType";
 
 export const mockCollections: CollectionDataType[] = [
   {
