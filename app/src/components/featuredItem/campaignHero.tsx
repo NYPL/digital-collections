@@ -9,37 +9,18 @@ import { FeaturedItemDataType } from "../../types/FeaturedItemDataType";
 import React from "react";
 import { ENV_KEY } from "../../types/EnvironmentType";
 
-const CampaignHero = () => {
+const CampaignHero = ({ featuredItemData }) => {
   const defaultFeaturedItemResponse =
     defaultFeaturedItem[appConfig["environment"] as ENV_KEY];
 
-  const [data, setData] = useState<FeaturedItemDataType>();
-
-  useEffect(() => {
-    const fetchData = async () => {
-      let response;
-      let responseData: FeaturedItemDataType;
-      try {
-        const response = await fetch("/api/featuredItem", {
-          method: "GET",
-          cache: "no-store",
-        });
-        responseData = await response.json();
-      } catch (e) {
-        console.log("CampaignHero error: ", e);
-        console.log("using fallback featured item");
-        responseData = defaultFeaturedItemResponse;
-      }
-      setData(responseData);
-    };
-
-    fetchData();
-  }, [defaultFeaturedItemResponse]);
+  const [data, setData] = useState<FeaturedItemDataType>(
+    featuredItemData || defaultFeaturedItemResponse
+  );
 
   const handleError = (e: React.SyntheticEvent<HTMLImageElement, Event>) => {
-    console.log(e);
+    console.log("error loading campaign hero:", e);
     setData(defaultFeaturedItemResponse);
-    console.log("data is:", data);
+    console.log("data in CampaignHero component is:", data);
   };
 
   return data?.featuredItem ? (
