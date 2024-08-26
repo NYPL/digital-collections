@@ -47,6 +47,13 @@ const CollectionCard = ({
             }
       }
     >
+      <CardContent>
+        {collection.containsOnSiteMaterials && (
+          <StatusBadge sx={{ marginBottom: "xs" }} type="informative">
+            Contains on-site materials
+          </StatusBadge>
+        )}
+      </CardContent>
       <CardHeading
         id={`row-card-heading-${slug}-${id}`}
         level="h3"
@@ -58,11 +65,6 @@ const CollectionCard = ({
         {collection.title}
       </CardHeading>
       <CardContent sx={{ alignContent: "top" }}>
-        {collection.containsOnSiteMaterials && (
-          <StatusBadge sx={{ marginBottom: "xs" }} type="informative">
-            Contains on-site materials
-          </StatusBadge>
-        )}
         <Text
           id={`item-count-${slug}-${id}`}
           size="subtitle2"
