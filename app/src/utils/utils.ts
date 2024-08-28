@@ -234,6 +234,11 @@ export const adobeAnalyticsRouteToPageName = (route = "", queryParams = "") => {
     case route.match(/^\/?(\?.+)?$/)?.input:
       pageName = ADOBE_ANALYTICS_PAGE_NAMES.HOME;
       break;
+    case route.match(/\/divisons/i)?.input:
+      pageName = `${ADOBE_ANALYTICS_PAGE_NAMES.DIVISIONS}${adobeAnalyticsParam(
+        queryParams
+      )}`;
+      break;
     default:
       pageName = `UNREGISTERED ROUTE: ${route}`;
       break;
