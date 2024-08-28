@@ -1,9 +1,9 @@
 import React from "react";
 import { render, fireEvent, screen } from "@testing-library/react";
 import "@testing-library/jest-dom";
-import appConfig from "../../appConfig";
+import appConfig from "../../../../appConfig";
 import MobileNavMenu from "./mobileNavMenu";
-import { ENV_KEY } from "src/types/EnvironmentType";
+import { ENV_KEY } from "../../types/EnvironmentType";
 
 describe("Mobile nav menu component", () => {
   it("renders mobile nav menu component", () => {

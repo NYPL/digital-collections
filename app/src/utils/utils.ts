@@ -5,7 +5,7 @@ import {
   BASE_URL,
 } from "../config/constants";
 import { ENV_KEY } from "../types/EnvironmentType";
-import appConfig from "../appConfig";
+import appConfig from "../../../appConfig";
 import defaultFeaturedItems from "../data/defaultFeaturedItemData";
 
 /**
