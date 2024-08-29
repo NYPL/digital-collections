@@ -20,12 +20,14 @@ import { trackVirtualPageView } from "../../utils/utils";
 interface PageLayoutProps {
   activePage: string;
   breadcrumbs?: BreadcrumbsDataProps[];
+  adobeAnalyticsPageName: string;
 }
 
 const PageLayout = ({
   children,
   activePage,
   breadcrumbs,
+  adobeAnalyticsPageName,
 }: PropsWithChildren<PageLayoutProps>) => {
   const pathname = usePathname();
   // Track page view events to Adobe Analytics
@@ -36,7 +38,7 @@ const PageLayout = ({
     */
     const route = pathname || "";
     // console.log("route is: ", route)
-    trackVirtualPageView(route);
+    trackVirtualPageView(adobeAnalyticsPageName);
   });
 
   const [view, setView] = React.useState("form");

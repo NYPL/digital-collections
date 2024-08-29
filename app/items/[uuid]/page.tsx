@@ -2,7 +2,7 @@ import React from "react";
 import { Metadata } from "next";
 import PageLayout from "../../src/components/pageLayout/pageLayout";
 import Item from "../../src/components/items/item";
-import { getItemData } from "../../src/utils/utils";
+import { getItemData, stringToSlug } from "../../src/utils/utils";
 import { ItemModel } from "../../src/models/item";
 
 type ItemProps = {
@@ -30,6 +30,7 @@ export async function generateMetadata({
 
 export default async function ItemPage({ params }: ItemProps) {
   const item = await getItemModel(params.uuid);
+  const pageName = `dc|items|${stringToSlug(item.title)}`;
   return (
     <PageLayout
       activePage="item"
@@ -41,6 +42,7 @@ export default async function ItemPage({ params }: ItemProps) {
           url: `/items/${params.uuid}`,
         },
       ]}
+      adobeAnalyticsPageName={pageName}
     >
       <Item item={item} />
     </PageLayout>
