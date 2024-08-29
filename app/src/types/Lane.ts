@@ -1,10 +1,10 @@
-import { CollectionCardDataType } from "./CollectionCardDataType";
+import CollectionDataType from "./CollectionDataType";
 
 export interface LaneDataType {
-  title: String;
+  name: String;
   slug: String;
   rank: number;
-  collections: CollectionCardDataType[];
+  collections: CollectionDataType[];
 }
 
 export default LaneDataType;

@@ -8,8 +8,6 @@ export const metadata: Metadata = {
 };
 
 export default async function Divisions() {
-  const apiUrl = `${process.env.API_URL}/api/v2/divisions`;
-  const data = await RepoAPICall(apiUrl);
-  console.log(data);
-  return <DivisionsPage data={data} />;
+  const data = await RepoAPICall(`${process.env.API_URL}/api/v2/divisions`);
+  return <DivisionsPage data={data.nyplAPI.response} />;
 }

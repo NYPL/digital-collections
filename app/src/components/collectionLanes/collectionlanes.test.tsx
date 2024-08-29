@@ -1,13 +1,14 @@
 import { fireEvent, render, screen, within } from "@testing-library/react";
-import SwimLanes from "./swimLanes";
-import { mockSwimLanes } from "__tests__/__mocks__/data/mockSwimLanes";
+import CollectionLanes from "./collectionLanes";
+import { mockCollectionLanes } from "__tests__/__mocks__/data/mockCollectionLanes";
 
 describe("Swim Lanes component renders with expected props", () => {
   it("renders the first row", () => {
     render(
-      <SwimLanes
+      <CollectionLanes
+        isSwimLane={false}
         numColumns={4}
-        lanesWithNumItems={mockSwimLanes.lanesWithNumItems}
+        lanesWithNumItems={mockCollectionLanes.lanesWithNumItems}
       />
     );
     const firstrow = screen.getByTestId("test-collections-1");
@@ -25,9 +26,10 @@ describe("Swim Lanes component renders with expected props", () => {
 
   it("renders the second row", () => {
     render(
-      <SwimLanes
+      <CollectionLanes
+        isSwimLane={false}
         numColumns={4}
-        lanesWithNumItems={mockSwimLanes.lanesWithNumItems}
+        lanesWithNumItems={mockCollectionLanes.lanesWithNumItems}
       />
     );
     const secondrow = screen.getByTestId("test-collections-2");
@@ -51,9 +53,10 @@ describe("Swim Lanes component renders with expected props", () => {
 
   it("renders tooltips on >1024px width", async () => {
     render(
-      <SwimLanes
+      <CollectionLanes
+        isSwimLane={false}
         numColumns={4}
-        lanesWithNumItems={mockSwimLanes.lanesWithNumItems}
+        lanesWithNumItems={mockCollectionLanes.lanesWithNumItems}
       />
     );
     window.innerWidth = 1050;
@@ -68,9 +71,10 @@ describe("Swim Lanes component renders with expected props", () => {
   });
   it("does not render tooltips <1024px width", async () => {
     render(
-      <SwimLanes
+      <CollectionLanes
+        isSwimLane={false}
         numColumns={4}
-        lanesWithNumItems={mockSwimLanes.lanesWithNumItems}
+        lanesWithNumItems={mockCollectionLanes.lanesWithNumItems}
       />
     );
     window.innerWidth = 1000;
@@ -84,9 +88,10 @@ describe("Swim Lanes component renders with expected props", () => {
   });
   it("does not render tooltips on non-truncated titles", async () => {
     render(
-      <SwimLanes
+      <CollectionLanes
+        isSwimLane={false}
         numColumns={4}
-        lanesWithNumItems={mockSwimLanes.lanesWithNumItems}
+        lanesWithNumItems={mockCollectionLanes.lanesWithNumItems}
       />
     );
     fireEvent.pointerOver(screen.getAllByText("MAVO")[0]);
