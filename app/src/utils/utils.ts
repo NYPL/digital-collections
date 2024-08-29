@@ -96,23 +96,7 @@ export const getAPIResponse = async (
   urlParam?: { [key: string]: any }
 ) => {
   const apiUrl = `${process.env.API_URL}/api/v2/items/${identifierType}/${identifier}`;
-  // console.log(`getAPIUri: About to fetch ${apiUrl}`);
-  // console.log(`getAPIUri calls apiCall function internally`);
   const apiCallValue = apiResponse(apiUrl, urlParam);
-  return apiCallValue;
-};
-
-/**
- * Returns the uuid, API uri, and numResults of an item given an identifier type and identifier value.
- * @param {string} identifierType - the identifier type
- * @param {string} identifier - the identifier value
- */
-
-export const getDivisionsFromAPI = async () => {
-  const apiUrl = `${process.env.API_URL}/api/v2/divisions`;
-  console.log(`getDivisionsFromAPI: About to fetch ${apiUrl}`);
-  // console.log(`getAPIUri calls apiCall function internally`);
-  const apiCallValue = apiResponse(apiUrl);
   return apiCallValue;
 };
 
@@ -156,8 +140,6 @@ export const RepoAPICall = async (
 
     if (response.status === 200) {
       const data = await response.json();
-      // console.log(`apiCall: called ${apiUrl}`);
-      // console.log(`Response time: ${new Date().getTime() - startTime}`);
       return data;
     } else {
       return undefined;
@@ -195,7 +177,6 @@ export const apiPOSTCall = async (apiUrl: string, postData: any) => {
 };
 
 export const getFeaturedImage = async () => {
-  //console.log(`getFeaturedImage: About call getAPIResponse`);
   const defaultResponse =
     defaultFeaturedItems[appConfig.environment as ENV_KEY].featuredItem;
   const apiResponse = await getAPIResponse("featured", "", { random: "true" });
@@ -232,66 +213,14 @@ export function getCustomTimestamp() {
 }
 
 /**
- * adobeAnalyticsParam
- * Utility function that builds a param string as expected by the Adobe Analytics dashboard
- */
-const adobeAnalyticsParam = (route = "") => {
-  // return param.length ? `|${param}` : "";
-  return route.replace(/\//g, "|");
-};
-
-// Maps routes to the appropriate page name for Adobe Analytics.
-export const adobeAnalyticsRouteToPageName = (route = "") => {
-  // parse additional route attributes
-  let pageName = "";
-  console.log("route is:", route);
-  console.log("adobeAnalyticsParam(route) is:", adobeAnalyticsParam(route));
-
-  switch (route) {
-    case route.match(/\/search\/index/i)?.input:
-      pageName = ADOBE_ANALYTICS_PAGE_NAMES.SEARCH;
-      break;
-    case route.match(/\/about/i)?.input:
-      pageName = adobeAnalyticsParam(route);
-      break;
-    case route.match(/\/divisions/i)?.input:
-      pageName = adobeAnalyticsParam(route);
-      break;
-    case route.match(/\/collections/i)?.input:
-      pageName = adobeAnalyticsParam(route);
-      break;
-    case route.match(/^\//)?.input:
-      pageName = ADOBE_ANALYTICS_PAGE_NAMES.HOME;
-      break;
-    default:
-      pageName = `UNREGISTERED ROUTE: ${route}`;
-      break;
-  }
-
-  return ADOBE_ANALYTICS_DC_PREFIX + pageName;
-};
-
-/**
  * Tracks a virtual page view to Adobe Analytics on page navigation.
  */
 export const trackVirtualPageView = (pagename) => {
   // @ts-ignore
   // Adobe does not support TS types.
-
-  console.log("pathname is: ", pagename);
-
   const adobeDataLayer = window["adobeDataLayer"] || [];
-  // const route = pathname.toLowerCase().replace(BASE_URL, "");
 
-  // console.log("route is: ", route);
-  // const queryIndex = route.indexOf("?");
-  // const path = route.substring(0, queryIndex);
-  // const queryParams = route.slice(queryIndex);
-  // console.log(
-  //   "adobeAnalyticsRouteToPageName(route) is: ",
-  //   adobeAnalyticsRouteToPageName(route)
-  // );
-
+  console.log("pagename is: ", pagename);
   adobeDataLayer.push({
     page_name: null,
     site_section: null,

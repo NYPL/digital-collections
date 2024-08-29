@@ -36,8 +36,6 @@ const PageLayout = ({
     "asPath has been removed because the concept of as has been removed from the new router."
     https://nextjs.org/docs/app/building-your-application/upgrading/app-router-migration
     */
-    const route = pathname || "";
-    // console.log("route is: ", route)
     trackVirtualPageView(adobeAnalyticsPageName);
   });
 
