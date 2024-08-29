@@ -8,7 +8,6 @@ import CollectionLanesLoading from "../collectionLanes/collectionLanesLoading";
 const HomePageMainContent = ({ data }) => {
   const numColumns = useNumColumns();
   const [isLoaded, setIsLoaded] = useState(false);
-  console.log(data.lanesWithNumItems);
 
   useEffect(() => {
     setIsLoaded(true);
@@ -22,7 +21,6 @@ const HomePageMainContent = ({ data }) => {
         isSwimLane={true}
       />
       <FeaturedContentComponent randomNumber={data.randomNumber} />
-
       <CollectionLanes
         numColumns={numColumns}
         lanesWithNumItems={data.lanesWithNumItems.slice(1)}

@@ -12,7 +12,6 @@ import CollectionLanes from "../../collectionLanes/collectionLanes";
 
 export default function DivisionsPage(data) {
   const numColumns = useNumColumns();
-  console.log(data.data.divisions);
   return (
     <PageLayout
       activePage="divisions"
