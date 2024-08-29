@@ -3,7 +3,7 @@ import {
   ADOBE_ANALYTICS_DC_PREFIX,
 } from "../config/constants";
 import { ENV_KEY } from "../types/EnvironmentType";
-import appConfig from "../appConfig";
+import appConfig from "../../../appConfig";
 import defaultFeaturedItems from "../data/defaultFeaturedItemData";
 
 /**

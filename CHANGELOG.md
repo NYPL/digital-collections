@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+## [0.1.12] 2024-08-05
+
 ### Updated
 - Updated swim lanes and featured item features to use server side api calls (DR-3016)
 
