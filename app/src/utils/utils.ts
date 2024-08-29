@@ -103,6 +103,20 @@ export const getAPIResponse = async (
 };
 
 /**
+ * Returns the uuid, API uri, and numResults of an item given an identifier type and identifier value.
+ * @param {string} identifierType - the identifier type
+ * @param {string} identifier - the identifier value
+ */
+
+export const getDivisionsFromAPI = async () => {
+  const apiUrl = `${process.env.API_URL}/api/v2/divisions`;
+  console.log(`getDivisionsFromAPI: About to fetch ${apiUrl}`);
+  // console.log(`getAPIUri calls apiCall function internally`);
+  const apiCallValue = apiResponse(apiUrl);
+  return apiCallValue;
+};
+
+/**
  * Returns Repo API response.
  * @param {string} apiUrl - the url to make a request to
  */
@@ -221,23 +235,33 @@ export function getCustomTimestamp() {
  * adobeAnalyticsParam
  * Utility function that builds a param string as expected by the Adobe Analytics dashboard
  */
-const adobeAnalyticsParam = (param = "") => {
-  return param.length ? `|${param}` : "";
+const adobeAnalyticsParam = (route = "") => {
+  // return param.length ? `|${param}` : "";
+  return route.replace(/\//g, "|");
 };
 
 // Maps routes to the appropriate page name for Adobe Analytics.
-export const adobeAnalyticsRouteToPageName = (route = "", queryParams = "") => {
+export const adobeAnalyticsRouteToPageName = (route = "") => {
   // parse additional route attributes
   let pageName = "";
+  console.log("route is:", route);
+  console.log("adobeAnalyticsParam(route) is:", adobeAnalyticsParam(route));
 
   switch (route) {
-    case route.match(/^\/?(\?.+)?$/)?.input:
-      pageName = ADOBE_ANALYTICS_PAGE_NAMES.HOME;
+    case route.match(/\/search\/index/i)?.input:
+      pageName = ADOBE_ANALYTICS_PAGE_NAMES.SEARCH;
       break;
-    case route.match(/\/divisons/i)?.input:
-      pageName = `${ADOBE_ANALYTICS_PAGE_NAMES.DIVISIONS}${adobeAnalyticsParam(
-        queryParams
-      )}`;
+    case route.match(/\/about/i)?.input:
+      pageName = adobeAnalyticsParam(route);
+      break;
+    case route.match(/\/divisions/i)?.input:
+      pageName = adobeAnalyticsParam(route);
+      break;
+    case route.match(/\/collections/i)?.input:
+      pageName = adobeAnalyticsParam(route);
+      break;
+    case route.match(/^\//)?.input:
+      pageName = ADOBE_ANALYTICS_PAGE_NAMES.HOME;
       break;
     default:
       pageName = `UNREGISTERED ROUTE: ${route}`;
@@ -250,14 +274,23 @@ export const adobeAnalyticsRouteToPageName = (route = "", queryParams = "") => {
 /**
  * Tracks a virtual page view to Adobe Analytics on page navigation.
  */
-export const trackVirtualPageView = (pathname = "") => {
+export const trackVirtualPageView = (route = "") => {
   // @ts-ignore
   // Adobe does not support TS types.
+
+  console.log("pathname is: ", route);
+
   const adobeDataLayer = window["adobeDataLayer"] || [];
-  const route = pathname.toLowerCase().replace(BASE_URL, "");
-  const queryIndex = route.indexOf("?");
-  const path = route.substring(0, queryIndex);
-  const queryParams = route.slice(queryIndex);
+  // const route = pathname.toLowerCase().replace(BASE_URL, "");
+
+  console.log("route is: ", route);
+  // const queryIndex = route.indexOf("?");
+  // const path = route.substring(0, queryIndex);
+  // const queryParams = route.slice(queryIndex);
+  console.log(
+    "adobeAnalyticsRouteToPageName(route) is: ",
+    adobeAnalyticsRouteToPageName(route)
+  );
 
   adobeDataLayer.push({
     page_name: null,
@@ -265,7 +298,7 @@ export const trackVirtualPageView = (pathname = "") => {
   });
   adobeDataLayer.push({
     event: "virtual_page_view",
-    page_name: adobeAnalyticsRouteToPageName(path, queryParams),
+    page_name: adobeAnalyticsRouteToPageName(route),
     site_section: ADOBE_ANALYTICS_SITE_SECTION,
   });
 };
@@ -277,3 +310,16 @@ export const slugToString = (slug: string = ""): string => {
     .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
     .join(" ");
 };
+
+export const stringToSlug = (string: string = ""): string => {
+  return string
+    .replace(/^\s+|\s+$/g, "") // trim leading/trailing white space
+    .toLowerCase() // convert string to lowercase
+    .replace(/[^a-z0-9 -]/g, "") // remove any non-alphanumeric characters
+    .replace(/\s+/g, "-") // replace spaces with hyphens
+    .replace(/-+/g, "-"); // remove consecutive hyphens
+};
+
+// export const isUUID = (string: string) => {
+//   return string.match(/\/about/i)?
+// };

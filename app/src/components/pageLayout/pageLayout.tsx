@@ -35,8 +35,10 @@ const PageLayout = ({
     https://nextjs.org/docs/app/building-your-application/upgrading/app-router-migration
     */
     const route = pathname || "";
+    // console.log("route is: ", route)
     trackVirtualPageView(route);
   });
+
   const [view, setView] = React.useState("form");
   const { isOpen, onClose, FeedbackBox } = useFeedbackBox();
   const onSubmit = async (values: { category: string; comment: string }) => {
