@@ -11,7 +11,7 @@ import { headerBreakpoints } from "../../../utils/breakpoints";
 import { mockSwimLanes } from "../../../../../__tests__/__mocks__/data/mockSwimLanes";
 import SwimLanes from "../../../components/swimlanes/swimLanes";
 
-export default function DivisionsPage() {
+export default function DivisionsPage(data) {
   const numColumns = useNumColumns();
   return (
     <PageLayout
