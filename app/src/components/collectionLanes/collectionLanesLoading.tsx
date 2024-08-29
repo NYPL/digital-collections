@@ -6,10 +6,10 @@ import {
 } from "@nypl/design-system-react-components";
 import React from "react";
 
-const SwimLanesLoading = () => {
+const CollectionLanesLoading = () => {
   return (
     <>
-      <Box data-testid="swimlane-skeleton-loader-1">
+      <Box data-testid="collectionlane-skeleton-loader-1">
         <Flex>
           <SkeletonLoader contentSize={0} showImage={false} headingSize={1} />
         </Flex>
@@ -20,7 +20,7 @@ const SwimLanesLoading = () => {
           <SkeletonLoader imageAspectRatio="landscape" contentSize={1} />
         </SimpleGrid>
       </Box>
-      <Box data-testid="swimlane-skeleton-loader-2">
+      <Box data-testid="collectionlane-skeleton-loader-2">
         <Flex>
           <SkeletonLoader contentSize={0} showImage={false} headingSize={1} />
         </Flex>
@@ -31,7 +31,7 @@ const SwimLanesLoading = () => {
           <SkeletonLoader imageAspectRatio="landscape" contentSize={1} />
         </SimpleGrid>
       </Box>
-      <Box data-testid="swimlane-skeleton-loader-3">
+      <Box data-testid="collectionlane-skeleton-loader-3">
         <Flex>
           <SkeletonLoader contentSize={0} showImage={false} headingSize={1} />
         </Flex>
@@ -42,7 +42,7 @@ const SwimLanesLoading = () => {
           <SkeletonLoader imageAspectRatio="landscape" contentSize={1} />
         </SimpleGrid>
       </Box>
-      <Box data-testid="swimlane-skeleton-loader-4">
+      <Box data-testid="collectionlane-skeleton-loader-4">
         <Flex>
           <SkeletonLoader contentSize={0} showImage={false} headingSize={1} />
         </Flex>
@@ -57,4 +57,4 @@ const SwimLanesLoading = () => {
   );
 };
 
-export default SwimLanesLoading;
+export default CollectionLanesLoading;

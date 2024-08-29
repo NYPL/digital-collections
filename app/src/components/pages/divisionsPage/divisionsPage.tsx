@@ -8,11 +8,11 @@ import PageLayout from "../../pageLayout/pageLayout";
 import React from "react";
 import { useNumColumns } from "../../../hooks/useNumColumns";
 import { headerBreakpoints } from "../../../utils/breakpoints";
-import { mockSwimLanes } from "../../../../../__tests__/__mocks__/data/mockSwimLanes";
-import SwimLanes from "../../../components/swimlanes/swimLanes";
+import CollectionLanes from "../../collectionLanes/collectionLanes";
 
 export default function DivisionsPage(data) {
   const numColumns = useNumColumns();
+  console.log(data.data.divisions);
   return (
     <PageLayout
       activePage="divisions"
@@ -31,18 +31,13 @@ export default function DivisionsPage(data) {
           },
         }}
       >
-        <Heading
-          level="h1"
-          text="Divisions"
-          subtitle="The New York Public Library's Digital Collections feature diverse
-        divisions with a wide array of digitized materials. Explore the various
-        divisions to discover rich history, culture, and art."
-        />
+        <Heading level="h1" text="Divisions" subtitle={data.data.summary} />
       </Box>
       <HorizontalRule sx={{ marginTop: "xxl", marginBottom: "xxl" }} />
-      <SwimLanes
+      <CollectionLanes
         numColumns={numColumns}
-        lanesWithNumItems={mockSwimLanes.lanesWithNumItems}
+        lanesWithNumItems={data.data.divisions}
+        isSwimLane={false}
       />
     </PageLayout>
   );

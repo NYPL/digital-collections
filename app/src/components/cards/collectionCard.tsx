@@ -76,7 +76,9 @@ const CollectionCard = ({
             },
           }}
         >
-          {`${collection.numItems} items`}
+          {collection.numberOfDigitizedItems > 1
+            ? `${collection.numberOfDigitizedItems} items`
+            : `${collection.numberOfDigitizedItems} item`}
         </Text>
       </CardContent>
     </Card>

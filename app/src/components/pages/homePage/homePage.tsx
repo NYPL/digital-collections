@@ -6,7 +6,6 @@ import CampaignHero from "../../featuredItem/campaignHero";
 import HomePageMainContent from "../../homePageMainContent/homePageMainContent";
 import PageLayout from "../../pageLayout/pageLayout";
 import { useRouter } from "next/navigation";
-import { FeaturedItemDataType } from "../../../types/FeaturedItemDataType";
 
 export default function HomePage({ data }) {
   const router = useRouter();
