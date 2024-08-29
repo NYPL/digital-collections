@@ -10,7 +10,7 @@ import {
   getFeaturedImage,
   imageURL,
 } from "../utils/utils";
-import appConfig from "../appConfig";
+import appConfig from "../../../appConfig";
 
 export const getHomePageData = async () => {
   const randomNumber = Math.floor(Math.random() * 2);

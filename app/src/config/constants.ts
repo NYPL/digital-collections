@@ -1,5 +1,5 @@
 import { ENV_KEY } from "../types/EnvironmentType";
-import appConfig from "../appConfig";
+import appConfig from "../../../appConfig";
 
 export const BASE_URL = "/";
 export const SITE_NAME = "NYPL Digital Collections";
