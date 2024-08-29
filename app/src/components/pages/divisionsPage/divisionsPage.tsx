@@ -10,11 +10,9 @@ import { useNumColumns } from "../../../hooks/useNumColumns";
 import { headerBreakpoints } from "../../../utils/breakpoints";
 import { mockSwimLanes } from "../../../../../__tests__/__mocks__/data/mockSwimLanes";
 import SwimLanes from "../../../components/swimlanes/swimLanes";
-import { ADOBE_ANALYTICS_DC_PREFIX } from "@/src/config/constants";
 
 export default function DivisionsPage() {
   const numColumns = useNumColumns();
-  const pageName = `${ADOBE_ANALYTICS_DC_PREFIX}|divisions`;
 
   return (
     <PageLayout
@@ -23,7 +21,7 @@ export default function DivisionsPage() {
         { text: "Home", url: "/" },
         { text: "Divisions", url: "/divisions" },
       ]}
-      adobeAnalyticsPageName={pageName}
+      adobeAnalyticsPageName="divisions"
     >
       <Box
         sx={{
