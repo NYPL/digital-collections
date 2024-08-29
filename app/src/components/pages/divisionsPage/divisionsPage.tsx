@@ -10,7 +10,7 @@ import { useNumColumns } from "../../../hooks/useNumColumns";
 import { headerBreakpoints } from "../../../utils/breakpoints";
 import CollectionLanes from "../../collectionLanes/collectionLanes";
 
-export default function DivisionsPage(data) {
+export default function DivisionsPage({ data }) {
   const numColumns = useNumColumns();
   return (
     <PageLayout
@@ -30,12 +30,12 @@ export default function DivisionsPage(data) {
           },
         }}
       >
-        <Heading level="h1" text="Divisions" subtitle={data.data.summary} />
+        <Heading level="h1" text="Divisions" subtitle={data?.data?.summary} />
       </Box>
       <HorizontalRule sx={{ marginTop: "xxl", marginBottom: "xxl" }} />
       <CollectionLanes
         numColumns={numColumns}
-        lanesWithNumItems={data.data.divisions}
+        lanesWithNumItems={data?.data?.divisions}
         isSwimLane={false}
       />
     </PageLayout>
