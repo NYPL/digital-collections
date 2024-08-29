@@ -17,6 +17,10 @@ import { CollectionCardModel } from "../../models/collectionCard";
 
 const CollectionLanes = ({ numColumns, lanesWithNumItems, isSwimLane }) => {
   const { isLargerThanLargeTablet } = useBreakpoints();
+  const seeMoreLink = (lane, isSwimLane) =>
+    isSwimLane
+      ? `${DC_URL}/collections/lane/${lane.slug}`
+      : `${DC_URL}/divisions/${lane.slug}`;
   const lanes = lanesWithNumItems.map((lane, key) => (
     <Box className={styles.lane} data-testid={lane.slug} mt="xxl" key={key}>
       <Flex alignItems="baseline">
@@ -27,11 +31,7 @@ const CollectionLanes = ({ numColumns, lanesWithNumItems, isSwimLane }) => {
         <Link
           id={`row-see-more-${lane.slug}`}
           type="standalone"
-          href={
-            isSwimLane
-              ? `${DC_URL}/collections/lane/${lane.slug}`
-              : `${DC_URL}/divisions/${lane.slug}`
-          }
+          href={seeMoreLink(lane, isSwimLane)}
           aria-label={`See more ${lane.name}`}
           hasVisitedState
           __css={{
@@ -70,11 +70,7 @@ const CollectionLanes = ({ numColumns, lanesWithNumItems, isSwimLane }) => {
       <Link
         id={`row-see-more-${lane.slug}-mobile`}
         type="standalone"
-        href={
-          isSwimLane
-            ? `${DC_URL}/collections/lane/${lane.slug}`
-            : `${DC_URL}/divisions/${lane.slug}`
-        }
+        href={seeMoreLink(lane, isSwimLane)}
         aria-label={`See more ${lane.name}`}
         className="smlink"
         hasVisitedState
