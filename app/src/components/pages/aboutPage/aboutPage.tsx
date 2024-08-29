@@ -14,7 +14,7 @@ export default function AboutPage() {
   }
 
   return (
-    <PageLayout activePage="about">
+    <PageLayout activePage="about" adobeAnalyticsPageName="dc|about">
       <Box
         id="mainContent"
         sx={{

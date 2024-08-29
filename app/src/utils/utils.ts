@@ -274,23 +274,23 @@ export const adobeAnalyticsRouteToPageName = (route = "") => {
 /**
  * Tracks a virtual page view to Adobe Analytics on page navigation.
  */
-export const trackVirtualPageView = (route = "") => {
+export const trackVirtualPageView = (pagename) => {
   // @ts-ignore
   // Adobe does not support TS types.
 
-  console.log("pathname is: ", route);
+  console.log("pathname is: ", pagename);
 
   const adobeDataLayer = window["adobeDataLayer"] || [];
   // const route = pathname.toLowerCase().replace(BASE_URL, "");
 
-  console.log("route is: ", route);
+  // console.log("route is: ", route);
   // const queryIndex = route.indexOf("?");
   // const path = route.substring(0, queryIndex);
   // const queryParams = route.slice(queryIndex);
-  console.log(
-    "adobeAnalyticsRouteToPageName(route) is: ",
-    adobeAnalyticsRouteToPageName(route)
-  );
+  // console.log(
+  //   "adobeAnalyticsRouteToPageName(route) is: ",
+  //   adobeAnalyticsRouteToPageName(route)
+  // );
 
   adobeDataLayer.push({
     page_name: null,
@@ -298,7 +298,7 @@ export const trackVirtualPageView = (route = "") => {
   });
   adobeDataLayer.push({
     event: "virtual_page_view",
-    page_name: adobeAnalyticsRouteToPageName(route),
+    page_name: pagename,
     site_section: ADOBE_ANALYTICS_SITE_SECTION,
   });
 };
