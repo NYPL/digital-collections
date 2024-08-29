@@ -8,7 +8,7 @@ import {
   Spacer,
   Link,
 } from "@nypl/design-system-react-components";
-import styles from "./CollectionLanes.module.css";
+import styles from "./Collectionlanes.module.css";
 import { DC_URL } from "../../config/constants";
 import useBreakpoints from "../../hooks/useBreakpoints";
 import CollectionCard from "../cards/collectionCard";
