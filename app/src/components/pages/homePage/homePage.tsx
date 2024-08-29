@@ -13,7 +13,7 @@ export default function HomePage({ data }) {
   router?.replace("/", undefined);
 
   return (
-    <PageLayout activePage="home" adobeAnalyticsPageName="dc|home">
+    <PageLayout activePage="home" adobeAnalyticsPageName="home">
       <TemplateAppContainer
         breakout={
           <div id="hero">

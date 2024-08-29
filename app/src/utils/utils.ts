@@ -1,8 +1,6 @@
 import {
   ADOBE_ANALYTICS_SITE_SECTION,
-  ADOBE_ANALYTICS_PAGE_NAMES,
   ADOBE_ANALYTICS_DC_PREFIX,
-  BASE_URL,
 } from "../config/constants";
 import { ENV_KEY } from "../types/EnvironmentType";
 import appConfig from "../appConfig";
@@ -227,7 +225,7 @@ export const trackVirtualPageView = (pagename) => {
   });
   adobeDataLayer.push({
     event: "virtual_page_view",
-    page_name: pagename,
+    page_name: `${ADOBE_ANALYTICS_DC_PREFIX}${pagename}`,
     site_section: ADOBE_ANALYTICS_SITE_SECTION,
   });
 };
@@ -248,7 +246,3 @@ export const stringToSlug = (string: string = ""): string => {
     .replace(/\s+/g, "-") // replace spaces with hyphens
     .replace(/-+/g, "-"); // remove consecutive hyphens
 };
-
-// export const isUUID = (string: string) => {
-//   return string.match(/\/about/i)?
-// };

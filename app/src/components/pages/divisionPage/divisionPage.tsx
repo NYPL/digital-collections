@@ -22,7 +22,6 @@ import ItemCard from "../../../components/cards/itemCard";
 import { mockItems } from "../../../../../__tests__/__mocks__/data/mockItems";
 import { ItemCardModel } from "../../../models/itemCard";
 import React from "react";
-import { ADOBE_ANALYTICS_DC_PREFIX } from "@/src/config/constants";
 
 export default function DivisionPage() {
   const params = useParams();
@@ -30,7 +29,7 @@ export default function DivisionPage() {
   const slug = params.slug as string;
   const title = slugToString(slug);
   const numColumns = useNumColumns();
-  const pageName = `${ADOBE_ANALYTICS_DC_PREFIX}|divisions|${slug}`;
+  const pageName = `divisions|${slug}`;
 
   return (
     <PageLayout

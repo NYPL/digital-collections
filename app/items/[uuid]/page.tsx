@@ -30,7 +30,7 @@ export async function generateMetadata({
 
 export default async function ItemPage({ params }: ItemProps) {
   const item = await getItemModel(params.uuid);
-  const pageName = `dc|items|${stringToSlug(item.title)}`;
+  const pageName = `items|${stringToSlug(item.title)}`;
   return (
     <PageLayout
       activePage="item"
