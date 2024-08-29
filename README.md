@@ -448,7 +448,7 @@ Our branches (in order of stability are):
 
 2.  Add your changes to the CHANGELOG.md file under `## [Unreleased]`. See [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) for formatting docs.
 3.  Create a pull request of the `feature` branch _into_ `main`.
-4.  After a feature branch has approved accessibility review and VQA, merge `feature` branch into `main`, then merge `main` branch into `qa` for testing. Merging can be done manually or with a pull request. Pushing the changes to the remote branch will automatically trigger a deployment to the `qa` environment via Travis.
+4.  After a feature branch has approved accessibility review and VQA, merge `feature` branch into `main`, then merge `main` branch into `qa` for testing. Merging can be done manually or with a pull request. Pushing the changes to the remote branch will automatically trigger a deployment to the `qa` environment.
 5.  After QA has tested and approved cut a `release` branch off of `qa` using our Release Naming Strategy. Please see Release Naming Strategy for details on how we plan to number our releases during the initial rollout of this project.
 
 `git checkout -b release/x.y.z`.
@@ -460,7 +460,7 @@ Our branches (in order of stability are):
    ie. `## [2.4.13] - 04-21-2023`
 
 7. Commit and push changes to release branch.
-8. The `production` branch is protected. When the release is ready, create a pull request to merge `release` branch to `production`/ Merging in the release will deploy through Travis.
+8. The `production` branch is protected. When the release is ready, create a pull request to merge `release` branch to `production`. Pushing to `production` will automatically deploy to the production environment.
 9. Immediately after merging release to production, finish the release. This is done by backmerging the release to `qa` and `main` followed by creating the tags/release on github using these commands:
 
    `$ git tag -a x.y.z`
@@ -477,6 +477,15 @@ MINOR: phase, set of features required to meet the mvp of a Phase as defined in 
 PATCH: feature or hotfix that supports a component or section of the mvp of a Phase
 
 Format: MAJOR.MINOR.PATCH
+
+## Deployment
+
+Deployment:
+PR previews and `main` are all deployed to Vercel. Merges to `main` trigger automatic deployments to Vercel.
+
+QA deployments are automatically triggered by pushing changes to the `qa` branch. `qa` is deployed to AWS [via Github Actions](https://github.com/NYPL/digital-collections/blob/production/.github/workflows/deploy_qa.yml).
+
+Production deployments for this repo require a PR to the `production` branch. Once merged, `production` is deployed to AWS [via Github Actions](https://github.com/NYPL/digital-collections/blob/production/.github/workflows/deploy_production.yml).
 
 ### Summary of Phases (to be removed later?)
 
@@ -511,12 +520,3 @@ These page types are:
 ##### 4d. PDFs
 
 ##### 5. About Page
-
-## Deployment
-
-Deployment:
-PR previews and `main` are all deployed to Vercel. Merges to `main` trigger automatic deployments to Vercel.
-
-QA deployments are automatically triggered by pushing changes to the `qa` branch. `qa` is deployed to AWS [Via Travis](https://travis-ci.com/github/NYPL).
-
-Production deployments for this repo require a PR to the `production` branch. Once merged, `production` is deployed to AWS [Via Travis](https://travis-ci.com/github/NYPL).

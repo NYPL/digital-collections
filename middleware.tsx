@@ -2,7 +2,7 @@ import { NextResponse, NextRequest } from "next/server";
 
 export function middleware(request: NextRequest) {
   // Redirecting unreleased pages.
-  if (process.env.APP_ENV === "development") {
+  if (process.env.APP_ENV === "development" || process.env.APP_ENV === "qa") {
     return NextResponse.next();
   } else {
     return NextResponse.redirect(new URL("/", request.url));
