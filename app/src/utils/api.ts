@@ -1,5 +1,8 @@
 import data from "../../src/data/lanes";
-import { getItemsCountFromUUIDs } from "../../src/utils/utils";
+import {
+  getDivisionsFromAPI,
+  getItemsCountFromUUIDs,
+} from "../../src/utils/utils";
 import type { LaneDataType } from "../../src/types/Lane";
 import { ENV_KEY } from "../../src/types/EnvironmentType";
 import {
@@ -63,4 +66,10 @@ export const getFeaturedItemData = async () => {
     numberOfDigitizedItems: numDigitizedItems,
   };
   return newResponse;
+};
+
+export const getdivisionsData = async () => {
+  const response = await getDivisionsFromAPI();
+  console.log("divisions: ", response);
+  return response;
 };

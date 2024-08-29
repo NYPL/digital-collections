@@ -29,6 +29,7 @@ export default function DivisionPage() {
   const slug = params.slug as string;
   const title = slugToString(slug);
   const numColumns = useNumColumns();
+
   return (
     <PageLayout
       activePage="division"
