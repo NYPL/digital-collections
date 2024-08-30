@@ -9,6 +9,12 @@ export const metadata: Metadata = {
 };
 
 export default async function Divisions() {
-  const data = await RepoAPICall(`${process.env.API_URL}/api/v2/divisions`);
-  return <DivisionsPage data={data?.nyplAPI?.response} />;
+  let data;
+  try {
+    data = await RepoAPICall(`${process.env.API_URL}/api/v2/divisions`);
+  } catch (error) {
+    logger.error("Failed to fetch divisions data", error);
+  }
+
+  return <DivisionsPage data={data?.nyplAPI?.response || null} />;
 }
