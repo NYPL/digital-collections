@@ -30,12 +30,12 @@ export default function DivisionsPage({ data }) {
           },
         }}
       >
-        <Heading level="h1" text="Divisions" subtitle={data?.data?.summary} />
+        <Heading level="h1" text="Divisions" subtitle={data?.summary} />
       </Box>
       <HorizontalRule sx={{ marginTop: "xxl", marginBottom: "xxl" }} />
       <CollectionLanes
         numColumns={numColumns}
-        lanesWithNumItems={data?.data?.divisions}
+        lanesWithNumItems={data?.divisions}
         isSwimLane={false}
       />
     </PageLayout>
