@@ -16,6 +16,6 @@ export async function generateMetadata({
   };
 }
 
-export default async function Division() {
+export default function Division() {
   return <DivisionPage />;
 }
