@@ -21,7 +21,7 @@ const CollectionLanes = ({ numColumns, lanesWithNumItems, isSwimLane }) => {
     isSwimLane
       ? `${DC_URL}/collections/lane/${lane.slug}`
       : `${DC_URL}/divisions/${lane.slug}`;
-  const lanes = lanesWithNumItems.map((lane, key) => (
+  const lanes = lanesWithNumItems?.map((lane, key) => (
     <Box className={styles.lane} data-testid={lane.slug} mt="xxl" key={key}>
       <Flex alignItems="baseline">
         <Heading id={`row-heading-${lane.slug}`} level="h2" size="heading3">
