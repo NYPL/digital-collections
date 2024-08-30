@@ -13,13 +13,9 @@ function useScrollDirection() {
       let direction: "up" | "down" | null =
         scrollY > lastScrollY ? "down" : "up";
 
-      if (scrollY <= 50) {
-        direction = "up";
-      }
-
       if (
         direction !== scrollDirection &&
-        Math.abs(scrollY - lastScrollY) > 20
+        Math.abs(scrollY - lastScrollY) > 10
       ) {
         setScrollDirection(direction);
       }
