@@ -19,7 +19,7 @@ export async function generateMetadata({
 }
 
 export default function Lane({ params }: LaneProps) {
-  const pageName = `dc|collections|lane|${params.slug}`;
+  const pageName = `collections|lane|${params.slug}`;
   return (
     <PageLayout
       activePage="lane"
