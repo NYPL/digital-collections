@@ -7,7 +7,6 @@ import {
 import { ENV_KEY } from "../types/EnvironmentType";
 import appConfig from "../appConfig";
 import defaultFeaturedItems from "../data/defaultFeaturedItemData";
-import logger from "logger";
 
 /**
  * Represents a IIIF Image API URL, which will be used globally throughout the application.
@@ -150,7 +149,7 @@ export const RepoAPICall = async (
       return undefined;
     }
   } catch (error) {
-    logger.error("Failed to fetch data", error);
+    return undefined;
   }
 };
 
