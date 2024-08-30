@@ -68,19 +68,29 @@ const Search = () => {
             flexFlow: "row nowrap",
             button: {
               borderRadius: "0px 2px 2px 0px",
+              "> svg": {
+                width: "14px",
+                height: "14px",
+              },
+              paddingTop: "xs",
+              paddingBottom: "xs",
+              paddingLeft: "s !important",
+              paddingRight: "s !important",
+              "> span": {
+                display: "block !important",
+              },
             },
             [`@media screen and (max-width: ${headerBreakpoints.lgMobile}px)`]:
               {
                 button: {
+                  padding: "xs !important",
                   gap: 0,
-                  padding: "xs",
+                  "> span": {
+                    display: "none !important",
+                  },
                   "> svg": {
                     width: "18px",
                     height: "18px",
-                    margin: 0,
-                  },
-                  "> span": {
-                    display: "none",
                   },
                 },
               },
