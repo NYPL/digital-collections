@@ -67,9 +67,3 @@ export const getFeaturedItemData = async () => {
   };
   return newResponse;
 };
-
-export const getdivisionsData = async () => {
-  const response = await getDivisionsFromAPI();
-  console.log("divisions: ", response);
-  return response;
-};
