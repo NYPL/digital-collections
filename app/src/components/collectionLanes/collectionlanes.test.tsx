@@ -1,12 +1,13 @@
 import { fireEvent, render, screen, within } from "@testing-library/react";
 import CollectionLanes from "./collectionLanes";
 import { mockCollectionLanes } from "__tests__/__mocks__/data/mockCollectionLanes";
+import { DC_URL } from "@/src/config/constants";
 
 describe("Swim Lanes component renders with expected props", () => {
   it("renders the first row", () => {
     render(
       <CollectionLanes
-        isSwimLane={false}
+        seeMoreLink={`${DC_URL}/collections/lane`}
         numColumns={4}
         lanesWithNumItems={mockCollectionLanes.lanesWithNumItems}
       />
@@ -27,7 +28,7 @@ describe("Swim Lanes component renders with expected props", () => {
   it("renders the second row", () => {
     render(
       <CollectionLanes
-        isSwimLane={false}
+        seeMoreLink={`${DC_URL}/collections/lane`}
         numColumns={4}
         lanesWithNumItems={mockCollectionLanes.lanesWithNumItems}
       />
@@ -54,7 +55,7 @@ describe("Swim Lanes component renders with expected props", () => {
   it("renders tooltips on >1024px width", async () => {
     render(
       <CollectionLanes
-        isSwimLane={false}
+        seeMoreLink={`${DC_URL}/collections/lane`}
         numColumns={4}
         lanesWithNumItems={mockCollectionLanes.lanesWithNumItems}
       />
@@ -72,7 +73,7 @@ describe("Swim Lanes component renders with expected props", () => {
   it("does not render tooltips <1024px width", async () => {
     render(
       <CollectionLanes
-        isSwimLane={false}
+        seeMoreLink={`${DC_URL}/collections/lane`}
         numColumns={4}
         lanesWithNumItems={mockCollectionLanes.lanesWithNumItems}
       />
@@ -89,7 +90,7 @@ describe("Swim Lanes component renders with expected props", () => {
   it("does not render tooltips on non-truncated titles", async () => {
     render(
       <CollectionLanes
-        isSwimLane={false}
+        seeMoreLink={`${DC_URL}/collections/lane`}
         numColumns={4}
         lanesWithNumItems={mockCollectionLanes.lanesWithNumItems}
       />

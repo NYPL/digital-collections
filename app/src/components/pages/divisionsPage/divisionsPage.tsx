@@ -9,6 +9,7 @@ import React from "react";
 import { useNumColumns } from "../../../hooks/useNumColumns";
 import { headerBreakpoints } from "../../../utils/breakpoints";
 import CollectionLanes from "../../collectionLanes/collectionLanes";
+import { DC_URL } from "@/src/config/constants";
 
 export default function DivisionsPage({ data }) {
   const numColumns = useNumColumns();
@@ -36,7 +37,7 @@ export default function DivisionsPage({ data }) {
       <CollectionLanes
         numColumns={numColumns}
         lanesWithNumItems={data?.divisions}
-        isSwimLane={false}
+        seeMoreLink={`${DC_URL}/divisions`}
       />
     </PageLayout>
   );
