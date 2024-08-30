@@ -7,6 +7,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+### Added
+- Added Adobe Analytics to top level category pages, search based pages, and item pages (DR-3061)
+
 ## [0.1.12] 2024-08-29
 
 ### Updated
