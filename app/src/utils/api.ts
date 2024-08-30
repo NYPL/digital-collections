@@ -1,8 +1,5 @@
 import data from "../../src/data/lanes";
-import {
-  getDivisionsFromAPI,
-  getItemsCountFromUUIDs,
-} from "../../src/utils/utils";
+import { getItemsCountFromUUIDs } from "../../src/utils/utils";
 import type { LaneDataType } from "../../src/types/Lane";
 import { ENV_KEY } from "../../src/types/EnvironmentType";
 import {
