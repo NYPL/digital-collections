@@ -24,7 +24,6 @@ const CollectionCard = ({
   isLargerThanLargeTablet,
   collection,
 }: CollectionCardProps) => {
-  console.log(collection.numberOfDigitizedItems);
   const truncatedTitle = collection.title.length > 80; // Pretty much random
   const card = (
     <Card
