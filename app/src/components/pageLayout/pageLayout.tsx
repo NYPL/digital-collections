@@ -12,7 +12,6 @@ import { type PropsWithChildren } from "react";
 import Header from "../header/header";
 import NotificationBanner from "../notificationBanner/notificationBanner";
 import Script from "next/script";
-import { usePathname } from "next/navigation";
 import { BreadcrumbsDataProps } from "@nypl/design-system-react-components/dist/src/components/Breadcrumbs/Breadcrumbs";
 import { ADOBE_EMBED_URL } from "../../config/constants";
 import { trackVirtualPageView } from "../../utils/utils";
@@ -29,13 +28,8 @@ const PageLayout = ({
   breadcrumbs,
   adobeAnalyticsPageName,
 }: PropsWithChildren<PageLayoutProps>) => {
-  const pathname = usePathname();
   // Track page view events to Adobe Analytics
   useEffect(() => {
-    /*
-    "asPath has been removed because the concept of as has been removed from the new router."
-    https://nextjs.org/docs/app/building-your-application/upgrading/app-router-migration
-    */
     trackVirtualPageView(adobeAnalyticsPageName);
   });
 
