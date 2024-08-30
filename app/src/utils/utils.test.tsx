@@ -7,7 +7,6 @@ import {
   slugToString,
   stringToSlug,
 } from "./utils";
-import { ADOBE_ANALYTICS_DC_PREFIX } from "../config/constants";
 
 describe.skip("apiResponse()", () => {
   it("should not return undefined", async () => {
