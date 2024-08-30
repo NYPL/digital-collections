@@ -24,6 +24,7 @@ const CollectionCard = ({
   isLargerThanLargeTablet,
   collection,
 }: CollectionCardProps) => {
+  console.log(collection.numberOfDigitizedItems);
   const truncatedTitle = collection.title.length > 80; // Pretty much random
   const card = (
     <Card
@@ -76,9 +77,9 @@ const CollectionCard = ({
             },
           }}
         >
-          {collection.numberOfDigitizedItems > 1
-            ? `${collection.numberOfDigitizedItems} items`
-            : `${collection.numberOfDigitizedItems} item`}
+          {`${Math.floor(collection.numberOfDigitizedItems)} item${
+            Math.floor(collection.numberOfDigitizedItems) !== 1 ? "s" : ""
+          }`}
         </Text>
       </CardContent>
     </Card>
