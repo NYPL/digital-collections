@@ -17,7 +17,7 @@ import { CollectionCardModel } from "../../models/collectionCard";
 import { SwimLanesProps } from "../../types/props/SwimLanesProps";
 
 const SwimLanes = ({ numColumns, lanesWithNumItems }: SwimLanesProps) => {
-  const { isLargerThanLargeTablet } = useBreakpoints();
+  const { isLargerThanLargeTablet, isLargerThanDesktop } = useBreakpoints();
   const lanes = lanesWithNumItems.map((lane, key) => (
     <Box className={styles.lane} data-testid={lane.slug} mt="xxl" key={key}>
       <Flex alignItems="baseline">
@@ -59,6 +59,7 @@ const SwimLanes = ({ numColumns, lanesWithNumItems }: SwimLanesProps) => {
                 id={index}
                 collection={c}
                 isLargerThanLargeTablet={isLargerThanLargeTablet}
+                isLargerThanDesktop={isLargerThanDesktop}
               />
             );
           })}

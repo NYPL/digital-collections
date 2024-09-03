@@ -25,7 +25,7 @@ import React from "react";
 
 export default function DivisionPage() {
   const params = useParams();
-  const { isLargerThanLargeTablet } = useBreakpoints();
+  const { isLargerThanLargeTablet, isLargerThanDesktop } = useBreakpoints();
   const slug = params.slug as string;
   const title = slugToString(slug);
   const numColumns = useNumColumns();
@@ -148,6 +148,7 @@ export default function DivisionPage() {
               slug={collectionModel.title}
               collection={collectionModel}
               isLargerThanLargeTablet={isLargerThanLargeTablet}
+              isLargerThanDesktop={isLargerThanDesktop}
             />
           );
         })}
