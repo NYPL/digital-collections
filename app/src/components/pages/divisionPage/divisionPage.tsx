@@ -29,6 +29,8 @@ export default function DivisionPage() {
   const slug = params.slug as string;
   const title = slugToString(slug);
   const numColumns = useNumColumns();
+  const pageName = `divisions|${slug}`;
+
   return (
     <PageLayout
       activePage="division"
@@ -37,6 +39,7 @@ export default function DivisionPage() {
         { text: "Divisions", url: "/divisions" },
         { text: `${title}`, url: `/divisions/${slug}` },
       ]}
+      adobeAnalyticsPageName={pageName}
     >
       <Box
         sx={{
