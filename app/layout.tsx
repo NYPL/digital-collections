@@ -1,6 +1,7 @@
 import Script from "next/script";
 import React from "react";
-import { Metadata } from "next";
+import { Metadata, Viewport } from "next";
+import { headers } from "next/headers";
 
 export const metadata: Metadata = {
   title: "NYPL Digital Collections",
@@ -40,6 +41,20 @@ export const metadata: Metadata = {
     google: "_shbOK1otHA_eFNFgJsOwITZrWQwRg4wr8nmrJPNVDM",
   },
 };
+
+export async function generateViewport() {
+  const userAgent = headers().get("user-agent");
+  const isiPhone = /iphone/i.test(userAgent ?? "");
+
+  return isiPhone
+    ? {
+        width: "device-width",
+        initialScale: 1,
+        maximumScale: 1,
+        userScalable: false,
+      }
+    : {};
+}
 
 export default function RootLayout({
   children,

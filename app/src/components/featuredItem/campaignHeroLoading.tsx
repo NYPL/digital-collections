@@ -7,7 +7,7 @@ const CampaignHeroLoading = () => {
     <SkeletonLoader
       sx={{
         "> div": {
-          [`@media screen and (min-width: ${headerBreakpoints.lgMobile})`]: {
+          [`@media screen and (min-width: ${headerBreakpoints.lgMobile}px)`]: {
             maxHeight: "500px",
           },
         },
