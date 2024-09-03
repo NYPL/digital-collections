@@ -39,7 +39,7 @@ const Search = () => {
           width: "100%",
           marginTop: "0px !important",
           paddingTop: "xs",
-          [`@media screen and (min-width: ${headerBreakpoints.lgTablet})`]: {
+          [`@media screen and (min-width: ${headerBreakpoints.lgTablet}px)`]: {
             paddingTop: "0px !important",
           },
           "#searchbar-form-searchbar": {
@@ -63,12 +63,35 @@ const Search = () => {
             placeholder: "Search keyword(s)",
           }}
           sx={{
-            [`@media screen and (min-width: ${headerBreakpoints.lgMobile})`]: {
-              flexFlow: "column nowrap",
+            flexFlow: "row nowrap",
+            button: {
+              borderRadius: "0px 2px 2px 0px",
+              "> svg": {
+                width: "14px",
+                height: "14px",
+              },
+              paddingTop: "xs",
+              paddingBottom: "xs",
+              paddingLeft: "s !important",
+              paddingRight: "s !important",
+              "> span": {
+                display: "block !important",
+              },
             },
-            [`@media screen and (min-width: ${headerBreakpoints.smTablet})`]: {
-              flexFlow: "row nowrap",
-            },
+            [`@media screen and (max-width: ${headerBreakpoints.lgMobile}px)`]:
+              {
+                button: {
+                  padding: "xs !important",
+                  gap: 0,
+                  "> span": {
+                    display: "none !important",
+                  },
+                  "> svg": {
+                    width: "18px",
+                    height: "18px",
+                  },
+                },
+              },
           }}
         />
         <PublicDomainFilter onCheckChange={handleCheckChange} />
