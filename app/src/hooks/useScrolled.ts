@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { headerBreakpoints } from "src/utils/breakpoints";
+import { headerBreakpoints } from "../utils/breakpoints";
 
 /* Returns if the page is scrolled past the header, could be refactored for other elements. */
 export function useScrolled(elementId: string) {
