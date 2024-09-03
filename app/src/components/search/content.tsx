@@ -17,7 +17,7 @@ const SearchContent = () => {
   const queryParams = useSearchParams();
   const query = queryParams.toString();
   const numColumns = useNumColumns();
-  const { isLargerThanLargeTablet } = useBreakpoints();
+  const { isLargerThanLargeTablet, isLargerThanDesktop } = useBreakpoints();
 
   const router = useRouter();
 
@@ -92,6 +92,7 @@ const SearchContent = () => {
               slug={collectionModel.title}
               collection={collectionModel}
               isLargerThanLargeTablet={isLargerThanLargeTablet}
+              isLargerThanDesktop={isLargerThanDesktop}
             />
           );
         })}
