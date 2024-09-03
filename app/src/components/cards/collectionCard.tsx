@@ -62,9 +62,10 @@ const CollectionCard = ({
           fontWeight="medium"
           __css={{
             display: "none",
-            [`@media screen and (min-width: ${headerBreakpoints.lgMobile})`]: {
-              display: "inline",
-            },
+            [`@media screen and (min-width: ${headerBreakpoints.lgMobile}px)`]:
+              {
+                display: "inline",
+              },
           }}
         >
           {" "}
