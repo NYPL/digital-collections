@@ -15,6 +15,7 @@ interface CollectionCardProps {
   slug: string;
   id: number;
   isLargerThanLargeTablet: boolean;
+  isLargerThanDesktop: boolean;
   collection: CollectionCardDataType;
 }
 
@@ -22,6 +23,7 @@ const CollectionCard = ({
   slug,
   id,
   isLargerThanLargeTablet,
+  isLargerThanDesktop,
   collection,
 }: CollectionCardProps) => {
   const truncatedTitle = collection.title.length > 80; // Pretty much random
@@ -82,8 +84,12 @@ const CollectionCard = ({
     </Card>
   );
   return isLargerThanLargeTablet && truncatedTitle ? (
-    // Needs tooltip position updates
-    <Tooltip content={collection.title}>{card}</Tooltip>
+    <Tooltip
+      offset={isLargerThanDesktop ? [0, -140] : [0, -120]}
+      content={collection.title}
+    >
+      {card}
+    </Tooltip>
   ) : (
     card
   );
