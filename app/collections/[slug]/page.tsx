@@ -1,8 +1,6 @@
 import React from "react";
 import { Metadata } from "next";
-import PageLayout from "../../../src/components/pageLayout/pageLayout";
-import CollectionsPage from "src/components/collections/collections";
-import { useSearchParams } from "next/navigation";
+import PageLayout from "../../src/components/pageLayout/pageLayout";
 
 type CollectionProps = {
   params: { slug: string };
@@ -17,7 +15,7 @@ export async function generateMetadata({
   };
 }
 
-export default function Lane({ params }: CollectionProps) {
+export default function Collections({ params }: CollectionProps) {
   return (
     <PageLayout
       activePage="lane"
@@ -29,8 +27,6 @@ export default function Lane({ params }: CollectionProps) {
           url: `/collections/${params.slug}`,
         },
       ]}
-    >
-      <CollectionsPage slug={params.slug} />
-    </PageLayout>
+    ></PageLayout>
   );
 }

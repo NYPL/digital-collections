@@ -1,8 +1,8 @@
 import { render } from "@testing-library/react";
-import Home from "../../app/page";
 import { axe } from "jest-axe";
-import { props } from "../data/homepageProps";
 import React from "react";
+import { mockHomePageMainContent } from "__tests__/__mocks__/data/mockHomePageMainContent";
+import HomePage from "@/src/components/pages/homePage/homePage";
 
 jest.mock("next/navigation", () => ({
   useRouter: jest.fn(),
@@ -10,14 +10,8 @@ jest.mock("next/navigation", () => ({
 }));
 
 describe.skip("Homepage Accessibility", () => {
-  (global as any).fetch = jest.fn(() =>
-    Promise.resolve({
-      status: 200,
-      json: () => Promise.resolve({}),
-    })
-  ) as jest.Mock;
   it("passes axe accessibility test", async () => {
-    const { container } = render(<Home {...props} />);
+    const { container } = render(<HomePage data={mockHomePageMainContent} />);
     expect(await axe(container)).toHaveNoViolations();
   }, 60000);
 });
