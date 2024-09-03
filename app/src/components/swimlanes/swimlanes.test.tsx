@@ -19,7 +19,7 @@ describe("Swim Lanes component renders with expected props", () => {
       within(firstrow).getByText("Austin Hansen photograph collection")
     ).toBeInTheDocument();
     expect(
-      within(firstrow).getByText("Arthur Alfonso Schomburg papers")
+      within(firstrow).getByText(/Arthur Alfonso Schomburg papers/)
     ).toBeInTheDocument();
   });
 
