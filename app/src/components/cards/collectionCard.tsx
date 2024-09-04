@@ -11,6 +11,7 @@ import {
 import styles from "./Card.module.css";
 import { headerBreakpoints } from "../../utils/breakpoints";
 import { CollectionCardDataType } from "../../types/CollectionCardDataType";
+import { TRUNCATED_LENGTH } from "@/src/config/constants";
 interface CollectionCardProps {
   slug: string;
   id: number;
@@ -26,7 +27,7 @@ const CollectionCard = ({
   isLargerThanDesktop,
   collection,
 }: CollectionCardProps) => {
-  const truncatedTitle = collection.title.length > 80; // Pretty much random
+  const truncatedTitle = collection.title.length > TRUNCATED_LENGTH; // Pretty much random
   const card = (
     <Card
       id={`card-${slug}-${id}`}

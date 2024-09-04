@@ -104,6 +104,7 @@ export default function DivisionPage() {
                 id={`item-${index}-${title}`}
                 item={itemModel}
                 isLargerThanLargeTablet={isLargerThanLargeTablet}
+                isLargerThanDesktop={isLargerThanDesktop}
               />
             );
           })}
