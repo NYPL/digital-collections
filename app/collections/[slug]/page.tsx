@@ -9,13 +9,14 @@ type CollectionProps = {
 export async function generateMetadata({
   params,
 }: CollectionProps): Promise<Metadata> {
-  const slug = params.slug;
+  const slug = params.slug; //  TODO: this needs to support both a slug or a uuid. we will need to update this later to check if slug is a uuid and then get the slugified title of the collection
   return {
     title: `${slug} - NYPL Digital Collections`,
   };
 }
 
 export default function Collections({ params }: CollectionProps) {
+  const pageName = `collections|${params.slug}`; // TODO: make sure this is the slugified title
   return (
     <PageLayout
       activePage="lane"
@@ -27,6 +28,7 @@ export default function Collections({ params }: CollectionProps) {
           url: `/collections/${params.slug}`,
         },
       ]}
+      adobeAnalyticsPageName={pageName}
     ></PageLayout>
   );
 }

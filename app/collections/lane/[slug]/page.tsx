@@ -19,6 +19,7 @@ export async function generateMetadata({
 }
 
 export default function Lane({ params }: LaneProps) {
+  const pageName = `collections|lane|${params.slug}`;
   return (
     <PageLayout
       activePage="lane"
@@ -30,6 +31,7 @@ export default function Lane({ params }: LaneProps) {
           url: `/collections/lane/${params.slug}`,
         },
       ]}
+      adobeAnalyticsPageName={pageName}
     >
       <CollectionLanePage />
     </PageLayout>
