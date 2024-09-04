@@ -61,7 +61,7 @@ const ExploreFurther = () => {
             sx={{
               alignItems: "center",
               paddingBottom: "l",
-              [`@media screen and (min-width: ${headerBreakpoints.smTablet})`]:
+              [`@media screen and (min-width: ${headerBreakpoints.smTablet}px)`]:
                 {
                   paddingRight: "m",
                 },

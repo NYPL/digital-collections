@@ -8,10 +8,23 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## Unreleased
 
 ### Updated
-- Updated swim lanes and featured item features to use server side api calls (DR-3016)
+
 - Added `containsOnSiteMaterials` field to collection card model and component (DR-3123)
+- Updated sticky header to take up less space on zoomed/mobile breakpoints (DR-3089)
+- Updated sticky header to add scroll padding on anchor elements (DR-3102)
 
 ### Added
+
+- Added Adobe Analytics to top level category pages, search based pages, and item pages (DR-3061)
+
+## [0.1.12] 2024-08-29
+
+### Updated
+
+- Updated swim lanes and featured item features to use server side api calls (DR-3016)
+
+### Added
+
 - Update middleware file to not redirect urls created for phase 2-4 in 'qa' environment (DR-3122)
 - Rendered `/collections` page with preliminary search/sort (DR-3099)
 - Rendered `/collections/lane/[slug]` collection lane landing page (DR-3106)
