@@ -23,8 +23,21 @@ export default function CollectionLanePage() {
   const slug = params.slug as string;
   const title = slugToString(slug);
   const numColumns = useNumColumns();
+  const pageName = `collections|lane|${params.slug}`;
+
   return (
-    <>
+    <PageLayout
+      activePage="lane"
+      breadcrumbs={[
+        { text: "Home", url: "/" },
+        { text: "Collections", url: "/collections" },
+        {
+          text: `${params.slug}`,
+          url: `/collections/lane/${params.slug}`,
+        },
+      ]}
+      adobeAnalyticsPageName={pageName}
+    >
       <Box
         sx={{
           display: "flex",
@@ -60,6 +73,6 @@ export default function CollectionLanePage() {
           );
         })}
       </SimpleGrid>
-    </>
+    </PageLayout>
   );
 }

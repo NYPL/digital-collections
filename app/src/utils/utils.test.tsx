@@ -1,12 +1,8 @@
 import { waitFor } from "@testing-library/react";
 
-import {
-  apiResponse,
-  apiPOSTCall,
-  getItemsCountFromUUIDs,
-  slugToString,
-  stringToSlug,
-} from "./utils";
+import { slugToString, stringToSlug } from "./utils";
+
+import { apiResponse, apiPOSTCall, getItemsCountFromUUIDs } from "./api";
 
 describe.skip("apiResponse()", () => {
   it("should not return undefined", async () => {

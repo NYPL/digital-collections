@@ -19,21 +19,21 @@ export async function generateMetadata({
 }
 
 export default function Lane({ params }: LaneProps) {
-  const pageName = `collections|lane|${params.slug}`;
+  // const pageName = `collections|lane|${params.slug}`;
   return (
-    <PageLayout
-      activePage="lane"
-      breadcrumbs={[
-        { text: "Home", url: "/" },
-        { text: "Collections", url: "/collections" },
-        {
-          text: `${params.slug}`,
-          url: `/collections/lane/${params.slug}`,
-        },
-      ]}
-      adobeAnalyticsPageName={pageName}
-    >
-      <CollectionLanePage />
-    </PageLayout>
+    // <PageLayout
+    //   activePage="lane"
+    //   breadcrumbs={[
+    //     { text: "Home", url: "/" },
+    //     { text: "Collections", url: "/collections" },
+    //     {
+    //       text: `${params.slug}`,
+    //       url: `/collections/lane/${params.slug}`,
+    //     },
+    //   ]}
+    //   adobeAnalyticsPageName={pageName}
+    // >
+    <CollectionLanePage />
+    // </PageLayout>
   );
 }
