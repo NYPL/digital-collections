@@ -1,5 +1,5 @@
 "use client";
-import React from "react";
+import React, { useEffect, useLayoutEffect, useRef, useState } from "react";
 import {
   Card,
   CardHeading,
@@ -16,7 +16,6 @@ interface CollectionCardProps {
   slug: string;
   id: number;
   isLargerThanLargeTablet: boolean;
-  isLargerThanDesktop: boolean;
   collection: CollectionCardDataType;
 }
 
@@ -24,12 +23,37 @@ const CollectionCard = ({
   slug,
   id,
   isLargerThanLargeTablet,
-  isLargerThanDesktop,
   collection,
 }: CollectionCardProps) => {
-  const truncatedTitle = collection.title.length > TRUNCATED_LENGTH; // Pretty much random
+  const truncatedTitle = collection.title.length > TRUNCATED_LENGTH;
+  const [offset, setOffset] = useState<[number, number]>([0, -130]);
+  const cardRef = useRef<HTMLDivElement>(null);
+  const getOffset = () => {
+    if (cardRef.current) {
+      const image = cardRef.current.children[0] as HTMLElement;
+      const imageHeight = image.offsetHeight;
+      const percentageOffset = imageHeight * 1.01;
+
+      setOffset([
+        0,
+        collection.containsOnSiteMaterials
+          ? -percentageOffset - 35
+          : -percentageOffset,
+      ]);
+    }
+  };
+
+  useEffect(() => {
+    getOffset();
+    window.addEventListener("resize", getOffset);
+    return () => {
+      window.removeEventListener("resize", getOffset);
+    };
+  }, []);
+
   const card = (
     <Card
+      ref={cardRef}
       id={`card-${slug}-${id}`}
       mainActionLink={collection.url}
       imageProps={
@@ -52,7 +76,7 @@ const CollectionCard = ({
     >
       <CardContent>
         {collection.containsOnSiteMaterials && (
-          <StatusBadge sx={{ marginBottom: "xs" }} type="informative">
+          <StatusBadge sx={{ marginBottom: "0px" }} type="informative">
             Contains on-site materials
           </StatusBadge>
         )}
@@ -86,10 +110,7 @@ const CollectionCard = ({
     </Card>
   );
   return isLargerThanLargeTablet && truncatedTitle ? (
-    <Tooltip
-      offset={isLargerThanDesktop ? [0, -140] : [0, -120]}
-      content={collection.title}
-    >
+    <Tooltip offset={offset} content={collection.title}>
       {card}
     </Tooltip>
   ) : (

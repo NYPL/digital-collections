@@ -8,7 +8,6 @@ describe("Collection card component", () => {
     id: 1,
     isLargerThanLargeTablet: true,
     collection: mockCollectionCards[0],
-    isLargerThanDesktop: true,
   };
 
   const mockPropsNoOnSite = {
@@ -16,7 +15,6 @@ describe("Collection card component", () => {
     id: 1,
     isLargerThanLargeTablet: true,
     collection: mockCollectionCards[4],
-    isLargerThanDesktop: true,
   };
 
   it("renders the correct heading with the provided title", () => {
