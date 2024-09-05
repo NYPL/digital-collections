@@ -30,7 +30,8 @@ export const mockCollections: CollectionDataType[] = [
   },
   {
     uuid: "5b996640-c31c-0139-0bac-0242ac110004",
-    title: "Arthur Alfonso Schomburg papers",
+    title:
+      "Arthur Alfonso Schomburg papers Arthur Alfonso Schomburg papers Arthur Alfonso Schomburg papers",
     url: "https://digitalcollections.nypl.org/collections/arthur-alfonso-schomburg-papers#/?tab=navigation",
     imageID: null,
     numberOfDigitizedItems: 55,

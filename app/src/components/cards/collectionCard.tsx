@@ -1,5 +1,5 @@
 "use client";
-import React from "react";
+import React, { useEffect, useRef, useState } from "react";
 import {
   Card,
   CardHeading,
@@ -11,6 +11,7 @@ import {
 import styles from "./Card.module.css";
 import { headerBreakpoints } from "../../utils/breakpoints";
 import { CollectionCardDataType } from "../../types/CollectionCardDataType";
+import { TRUNCATED_LENGTH } from "@/src/config/constants";
 interface CollectionCardProps {
   slug: string;
   id: number;
@@ -24,9 +25,36 @@ const CollectionCard = ({
   isLargerThanLargeTablet,
   collection,
 }: CollectionCardProps) => {
-  const truncatedTitle = collection.title.length > 80; // Pretty much random
+  const truncatedTitle = collection.title.length > TRUNCATED_LENGTH;
+  const [offset, setOffset] = useState<[number, number]>([0, -130]);
+  const cardRef = useRef<HTMLDivElement>(null);
+  const getOffset = () => {
+    if (cardRef.current) {
+      const image = cardRef.current.children[0] as HTMLElement;
+      const imageHeight = image.offsetHeight;
+      const percentageOffset = imageHeight * 1.01;
+
+      setOffset([
+        0,
+        collection.containsOnSiteMaterials
+          ? -percentageOffset - 35
+          : -percentageOffset,
+      ]);
+    }
+  };
+
+  useEffect(() => {
+    setTimeout(getOffset, 0);
+    window.addEventListener("resize", getOffset);
+
+    return () => {
+      window.removeEventListener("resize", getOffset);
+    };
+  }, []);
+
   const card = (
     <Card
+      ref={cardRef}
       id={`card-${slug}-${id}`}
       mainActionLink={collection.url}
       imageProps={
@@ -49,7 +77,7 @@ const CollectionCard = ({
     >
       <CardContent>
         {collection.containsOnSiteMaterials && (
-          <StatusBadge sx={{ marginBottom: "xs" }} type="informative">
+          <StatusBadge sx={{ marginBottom: "0px" }} type="informative">
             Contains on-site materials
           </StatusBadge>
         )}
@@ -71,9 +99,10 @@ const CollectionCard = ({
           fontWeight="medium"
           __css={{
             display: "none",
-            [`@media screen and (min-width: ${headerBreakpoints.lgMobile})`]: {
-              display: "inline",
-            },
+            [`@media screen and (min-width: ${headerBreakpoints.lgMobile}px)`]:
+              {
+                display: "inline",
+              },
           }}
         >
           {`${Math.floor(collection.numberOfDigitizedItems)} item${
@@ -84,8 +113,9 @@ const CollectionCard = ({
     </Card>
   );
   return isLargerThanLargeTablet && truncatedTitle ? (
-    // Needs tooltip position updates
-    <Tooltip content={collection.title}>{card}</Tooltip>
+    <Tooltip offset={offset} content={collection.title}>
+      {card}
+    </Tooltip>
   ) : (
     card
   );

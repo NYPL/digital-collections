@@ -22,6 +22,7 @@ export default function DivisionsPage({ data }) {
         { text: "Home", url: "/" },
         { text: "Divisions", url: "/divisions" },
       ]}
+      adobeAnalyticsPageName="divisions"
     >
       {data?.divisions && data.divisions.length > 0 ? (
         <>
