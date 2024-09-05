@@ -18,12 +18,11 @@ import CollectionCard from "../../../components/cards/collectionCard";
 import { CollectionCardModel } from "../../../models/collectionCard";
 import useBreakpoints from "../../../hooks/useBreakpoints";
 import CollectionDataType from "../../../types/CollectionDataType";
-import { mockCollections } from "../../../../../__tests__/__mocks__/data/mockCollections";
 import ItemCard from "../../../components/cards/itemCard";
-import { mockItems } from "../../../../../__tests__/__mocks__/data/mockItems";
 import { ItemCardModel } from "../../../models/itemCard";
 import React from "react";
-import { totalNumPages } from "../../../utils/utils";
+import { titleToDCParam, totalNumPages } from "../../../utils/utils";
+import { DC_URL } from "@/src/config/constants";
 
 export default function DivisionPage(data) {
   const params = useParams();
@@ -66,12 +65,8 @@ export default function DivisionPage(data) {
           gap: "m",
         }}
       >
-        <Heading
-          level="h1"
-          text={title}
-          subtitle="The Billy Rose Theatre Division of The New York Public Library is one of the largest and most comprehensive archives devoted to the theatrical arts. Encompassing dramatic performance in all its diversity, the division is an indispensable resource for artists, writers, researchers, scholars, students, and the general public."
-        />
-        <Link type="standalone" href="#">
+        <Heading level="h1" text={title} subtitle={data.data.summary} />
+        <Link type="standalone" target="_blank" href={data.data.nyplLink}>
           <span> Contact info and more </span>
         </Link>
       </Box>
@@ -85,7 +80,9 @@ export default function DivisionPage(data) {
           <Link
             id={`row-see-more-items-${title}`}
             type="standalone"
-            href={`/search/index?filters[divisionFullname_mtxt_s][]=Billy+Rose+Theatre+Division`}
+            href={`${DC_URL}/search/index?filters[divisionFullname_mtxt_s][]=${titleToDCParam(
+              title
+            )}`} //TO DO: update with slug
             aria-label={`See more items in ${title}`}
             hasVisitedState
             __css={{
