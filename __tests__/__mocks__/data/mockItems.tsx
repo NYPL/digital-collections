@@ -1,4 +1,4 @@
-import { ItemModel } from "../../../src/models/item";
+import { ItemModel } from "../../../app/src/models/item";
 
 // TODO: Add data that makes more sense.
 

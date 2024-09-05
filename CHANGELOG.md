@@ -7,7 +7,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+### Updated
+
+- Added `containsOnSiteMaterials` field to collection card model and component (DR-3123)
+- Updated sticky header to take up less space on zoomed/mobile breakpoints (DR-3089)
+- Updated sticky header to add scroll padding on anchor elements (DR-3102)
+
 ### Added
+
 - Added Adobe Analytics to top level category pages, search based pages, and item pages (DR-3061)
 
 ## [0.1.12] 2024-08-29
@@ -15,8 +22,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Updated
 
 - Updated swim lanes and featured item features to use server side api calls (DR-3016)
-- Updated sticky header to take up less space on zoomed/mobile breakpoints (DR-3089)
-- Updated sticky header to add scroll padding on anchor elements (DR-3102)
 
 ### Added
 
