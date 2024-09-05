@@ -1,17 +1,38 @@
 "use client";
-import React from "react";
+import React, { useEffect, useRef, useState } from "react";
 import {
   Card,
   CardHeading,
-  Link,
   Tooltip,
 } from "@nypl/design-system-react-components";
 import styles from "./Card.module.css";
+import { TRUNCATED_LENGTH } from "@/src/config/constants";
 
 const ItemCard = ({ id, isLargerThanLargeTablet, item }) => {
-  const truncatedTitle = item.title.length > 80; // Pretty much random
+  const truncatedTitle = item.title.length > TRUNCATED_LENGTH;
+  const [offset, setOffset] = useState<[number, number]>([0, -130]);
+  const cardRef = useRef<HTMLDivElement>(null);
+  const getOffset = () => {
+    if (cardRef.current) {
+      const image = cardRef.current.children[0] as HTMLElement;
+      const imageHeight = image.offsetHeight;
+      const percentageOffset = imageHeight * 1.01;
+      setOffset([0, -percentageOffset]);
+    }
+  };
+
+  useEffect(() => {
+    setTimeout(getOffset, 0);
+    window.addEventListener("resize", getOffset);
+
+    return () => {
+      window.removeEventListener("resize", getOffset);
+    };
+  }, []);
+
   const card = (
     <Card
+      ref={cardRef}
       id={`card-${id}`}
       mainActionLink={item.url}
       imageProps={{
@@ -34,8 +55,9 @@ const ItemCard = ({ id, isLargerThanLargeTablet, item }) => {
     </Card>
   );
   return isLargerThanLargeTablet && truncatedTitle ? (
-    // Needs tooltip position updates
-    <Tooltip content={item.title}>{card}</Tooltip>
+    <Tooltip content={item.title} offset={offset}>
+      {card}
+    </Tooltip>
   ) : (
     card
   );

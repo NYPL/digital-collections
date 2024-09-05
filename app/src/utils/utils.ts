@@ -1,11 +1,9 @@
 import {
   ADOBE_ANALYTICS_SITE_SECTION,
-  ADOBE_ANALYTICS_PAGE_NAMES,
   ADOBE_ANALYTICS_DC_PREFIX,
-  BASE_URL,
 } from "../config/constants";
 import { ENV_KEY } from "../types/EnvironmentType";
-import appConfig from "../appConfig";
+import appConfig from "../../../appConfig";
 import defaultFeaturedItems from "../data/defaultFeaturedItemData";
 
 /**
@@ -96,8 +94,6 @@ export const getAPIResponse = async (
   urlParam?: { [key: string]: any }
 ) => {
   const apiUrl = `${process.env.API_URL}/api/v2/items/${identifierType}/${identifier}`;
-  // console.log(`getAPIUri: About to fetch ${apiUrl}`);
-  // console.log(`getAPIUri calls apiCall function internally`);
   const apiCallValue = apiResponse(apiUrl, urlParam);
   return apiCallValue;
 };
@@ -142,8 +138,6 @@ export const RepoAPICall = async (
 
     if (response.status === 200) {
       const data = await response.json();
-      // console.log(`apiCall: called ${apiUrl}`);
-      // console.log(`Response time: ${new Date().getTime() - startTime}`);
       return data;
     } else {
       return undefined;
@@ -181,7 +175,6 @@ export const apiPOSTCall = async (apiUrl: string, postData: any) => {
 };
 
 export const getFeaturedImage = async () => {
-  //console.log(`getFeaturedImage: About call getAPIResponse`);
   const defaultResponse =
     defaultFeaturedItems[appConfig.environment as ENV_KEY].featuredItem;
   const apiResponse = await getAPIResponse("featured", "", { random: "true" });
@@ -218,49 +211,21 @@ export function getCustomTimestamp() {
 }
 
 /**
- * adobeAnalyticsParam
- * Utility function that builds a param string as expected by the Adobe Analytics dashboard
- */
-const adobeAnalyticsParam = (param = "") => {
-  return param.length ? `|${param}` : "";
-};
-
-// Maps routes to the appropriate page name for Adobe Analytics.
-export const adobeAnalyticsRouteToPageName = (route = "", queryParams = "") => {
-  // parse additional route attributes
-  let pageName = "";
-
-  switch (route) {
-    case route.match(/^\/?(\?.+)?$/)?.input:
-      pageName = ADOBE_ANALYTICS_PAGE_NAMES.HOME;
-      break;
-    default:
-      pageName = `UNREGISTERED ROUTE: ${route}`;
-      break;
-  }
-
-  return ADOBE_ANALYTICS_DC_PREFIX + pageName;
-};
-
-/**
  * Tracks a virtual page view to Adobe Analytics on page navigation.
  */
-export const trackVirtualPageView = (pathname = "") => {
+export const trackVirtualPageView = (pagename) => {
   // @ts-ignore
   // Adobe does not support TS types.
   const adobeDataLayer = window["adobeDataLayer"] || [];
-  const route = pathname.toLowerCase().replace(BASE_URL, "");
-  const queryIndex = route.indexOf("?");
-  const path = route.substring(0, queryIndex);
-  const queryParams = route.slice(queryIndex);
 
+  console.log("pagename is: ", pagename);
   adobeDataLayer.push({
     page_name: null,
     site_section: null,
   });
   adobeDataLayer.push({
     event: "virtual_page_view",
-    page_name: adobeAnalyticsRouteToPageName(path, queryParams),
+    page_name: `${ADOBE_ANALYTICS_DC_PREFIX}${pagename}`,
     site_section: ADOBE_ANALYTICS_SITE_SECTION,
   });
 };
@@ -271,4 +236,13 @@ export const slugToString = (slug: string = ""): string => {
     .filter(Boolean)
     .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
     .join(" ");
+};
+
+export const stringToSlug = (string: string = ""): string => {
+  return string
+    .replace(/^\s+|\s+$/g, "") // trim leading/trailing white space
+    .toLowerCase() // convert string to lowercase
+    .replace(/[^a-z0-9 -]/g, "") // remove any non-alphanumeric characters
+    .replace(/\s+/g, "-") // replace spaces with hyphens
+    .replace(/-+/g, "-"); // remove consecutive hyphens
 };

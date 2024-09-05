@@ -1,0 +1,15 @@
+/* TODO: Update these values when breakpoints are added to the DS. */
+
+html {
+  scroll-padding-top: 150px;
+}
+@media (min-width: 768px) {
+  html {
+    scroll-padding-top: 180px;
+  }
+}
+@media (min-width: 1024px) {
+  html {
+    scroll-padding-top: 150px;
+  }
+}
