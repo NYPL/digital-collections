@@ -4,7 +4,7 @@ export interface CollectionCardDataType {
   url: string;
   imageID: string | null;
   imageURL: string;
-  numItems: number;
+  numberOfDigitizedItems: number;
   containsOnSiteMaterials: boolean;
 }
 

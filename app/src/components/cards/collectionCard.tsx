@@ -105,7 +105,9 @@ const CollectionCard = ({
               },
           }}
         >
-          {`${collection.numItems} items`}
+          {`${Math.floor(collection.numberOfDigitizedItems)} item${
+            Math.floor(collection.numberOfDigitizedItems) !== 1 ? "s" : ""
+          }`}
         </Text>
       </CardContent>
     </Card>

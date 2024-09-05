@@ -1,9 +1,10 @@
 import React from "react";
 import FeaturedContentComponent from "../featuredContent/featuredContent";
-import SwimLanes from "../swimlanes/swimLanes";
-import SwimLanesLoading from "../swimlanes/swimLanesLoading";
 import { useNumColumns } from "../../hooks/useNumColumns";
 import { useEffect, useState } from "react";
+import CollectionLanes from "../collectionLanes/collectionLanes";
+import CollectionLanesLoading from "../collectionLanes/collectionLanesLoading";
+import { DC_URL } from "@/src/config/constants";
 
 const HomePageMainContent = ({ data }) => {
   const numColumns = useNumColumns();
@@ -15,19 +16,21 @@ const HomePageMainContent = ({ data }) => {
 
   return isLoaded ? (
     <>
-      <SwimLanes
+      <CollectionLanes
         numColumns={numColumns}
         lanesWithNumItems={[data.lanesWithNumItems[0]]}
+        seeMoreLink={`${DC_URL}/collections/lane`}
       />
       <FeaturedContentComponent randomNumber={data.randomNumber} />
-      <SwimLanes
+      <CollectionLanes
         numColumns={numColumns}
         lanesWithNumItems={data.lanesWithNumItems.slice(1)}
+        seeMoreLink={`${DC_URL}/collections/lane`}
       />
     </>
   ) : (
     <>
-      <SwimLanesLoading />
+      <CollectionLanesLoading />
     </>
   );
 };
