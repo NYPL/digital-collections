@@ -42,16 +42,13 @@ export default function CollectionLanePage() {
         sx={{
           display: "flex",
           flexDirection: "column",
-          "> h1": {
-            marginBottom: 0,
-          },
           [`@media screen and (min-width: ${headerBreakpoints.smTablet})`]: {
             maxWidth: "715px",
           },
           gap: "m",
         }}
       >
-        <Heading level="h1" text={title} />
+        <Heading sx={{ marginBottom: 0 }} level="h1" text={title} />
       </Box>
       <HorizontalRule sx={{ marginTop: "xxl", marginBottom: "xxl" }} />
       <SimpleGrid
