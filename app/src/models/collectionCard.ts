@@ -17,13 +17,9 @@ export class CollectionCardModel {
     this.title = data.title;
     this.url =
       process.env.APP_ENV === "development"
-        ? `/collections/${stringToSlug(data.title)}`
+        ? `/collections/${stringToSlug(data.title)}#/?tab=about`
         : data.url;
-    this.imageID = data.image_id;
-    // this.imageURL = imageURL(data.image_id, "full", "288,", "0");
-    // this.numItems = data.numItems || 0;
-    this.url = data.url;
-    this.imageID = data.imageID;
+    this.imageID = data.image_id || data.imageID;
     this.imageURL = imageURL(data.imageID, "full", "288,", "0");
     this.numberOfDigitizedItems =
       data.numberOfDigitizedItems || data.numItems || 0;
