@@ -8,28 +8,27 @@ import {
   Spacer,
   Link,
 } from "@nypl/design-system-react-components";
-import styles from "./Swimlanes.module.css";
+import styles from "./Collectionlanes.module.css";
 import { DC_URL } from "../../config/constants";
 import useBreakpoints from "../../hooks/useBreakpoints";
 import CollectionCard from "../cards/collectionCard";
 import CollectionDataType from "../../types/CollectionDataType";
 import { CollectionCardModel } from "../../models/collectionCard";
-import { SwimLanesProps } from "../../types/props/SwimLanesProps";
 
-const SwimLanes = ({ numColumns, lanesWithNumItems }: SwimLanesProps) => {
+const CollectionLanes = ({ numColumns, lanesWithNumItems, seeMoreLink }) => {
   const { isLargerThanLargeTablet } = useBreakpoints();
-  const lanes = lanesWithNumItems.map((lane, key) => (
+  const lanes = lanesWithNumItems?.map((lane, key) => (
     <Box className={styles.lane} data-testid={lane.slug} mt="xxl" key={key}>
       <Flex alignItems="baseline">
         <Heading id={`row-heading-${lane.slug}`} level="h2" size="heading3">
-          {lane.title}
+          {lane.name}
         </Heading>
         <Spacer />
         <Link
           id={`row-see-more-${lane.slug}`}
           type="standalone"
-          href={`${DC_URL}/collections/lane/${lane.slug}`}
-          aria-label={`See more ${lane.title.toLowerCase()}`}
+          href={`${seeMoreLink}/${lane.slug}`}
+          aria-label={`See more ${lane.name}`}
           hasVisitedState
           __css={{
             display: { sm: "none", md: "inline" },
@@ -67,8 +66,8 @@ const SwimLanes = ({ numColumns, lanesWithNumItems }: SwimLanesProps) => {
       <Link
         id={`row-see-more-${lane.slug}-mobile`}
         type="standalone"
-        href={`${DC_URL}/collections/lane/${lane.slug}`}
-        aria-label={`See more ${lane.title.toLowerCase()}`}
+        href={`${seeMoreLink}/${lane.slug}`}
+        aria-label={`See more ${lane.name}`}
         className="smlink"
         hasVisitedState
         __css={{
@@ -89,4 +88,4 @@ const SwimLanes = ({ numColumns, lanesWithNumItems }: SwimLanesProps) => {
   return <>{lanes}</>;
 };
 
-export default SwimLanes;
+export default CollectionLanes;
