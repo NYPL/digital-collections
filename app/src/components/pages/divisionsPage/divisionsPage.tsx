@@ -13,6 +13,7 @@ import SwimLanes from "../../../components/swimlanes/swimLanes";
 
 export default function DivisionsPage() {
   const numColumns = useNumColumns();
+
   return (
     <PageLayout
       activePage="divisions"
@@ -20,6 +21,7 @@ export default function DivisionsPage() {
         { text: "Home", url: "/" },
         { text: "Divisions", url: "/divisions" },
       ]}
+      adobeAnalyticsPageName="divisions"
     >
       <Box
         sx={{

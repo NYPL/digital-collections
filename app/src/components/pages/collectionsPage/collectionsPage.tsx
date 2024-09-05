@@ -18,6 +18,7 @@ export const CollectionsPage = () => {
         { text: "Home", url: "/" },
         { text: "Collections", url: "/collections" },
       ]}
+      adobeAnalyticsPageName="all-collections"
     >
       <Box
         sx={{

@@ -2,9 +2,9 @@ export interface CollectionDataType {
   uuid: string;
   title: string;
   url: string;
-  image_id: string;
+  image_id: string | null;
   numItems: number;
-  // TODO: containsOnSiteMaterials: boolean; // to be added in phase 2
+  containsOnSiteMaterials: boolean;
 }
 
 export default CollectionDataType;
