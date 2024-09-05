@@ -28,10 +28,7 @@ export default function DivisionsPage({ data }) {
         <>
           <Box
             sx={{
-              [`@media screen and (min-width: ${headerBreakpoints.smTablet})`]:
-                {
-                  maxWidth: "715px",
-                },
+              maxWidth: "715px",
               "> hgroup > p": {
                 fontWeight: "400 !important",
               },
