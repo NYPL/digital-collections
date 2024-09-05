@@ -1,16 +1,12 @@
 import { waitFor } from "@testing-library/react";
 
 import {
-  adobeAnalyticsRouteToPageName,
   apiResponse,
   apiPOSTCall,
   getItemsCountFromUUIDs,
   slugToString,
+  stringToSlug,
 } from "./utils";
-import {
-  ADOBE_ANALYTICS_DC_PREFIX,
-  ADOBE_ANALYTICS_PAGE_NAMES,
-} from "../config/constants";
 
 describe.skip("apiResponse()", () => {
   it("should not return undefined", async () => {
@@ -166,19 +162,6 @@ describe("getItemsCountFromUUIDs()", () => {
 // let numberWithCommas = addCommas(1234567);
 // console.log(numberWithCommas); // Output: "1,234,567"
 
-describe("appUtils", () => {
-  describe("adobeAnalyticsRouteToPageName", () => {
-    it("should return the appropriate page name for a given route", () => {
-      expect(adobeAnalyticsRouteToPageName("/")).toBe(
-        `${ADOBE_ANALYTICS_DC_PREFIX}${ADOBE_ANALYTICS_PAGE_NAMES.HOME}`
-      );
-      expect(adobeAnalyticsRouteToPageName("")).toBe(
-        `${ADOBE_ANALYTICS_DC_PREFIX}${ADOBE_ANALYTICS_PAGE_NAMES.HOME}`
-      );
-    });
-  });
-});
-
 describe("slugToString", () => {
   test("converts a slug to a human-readable string", () => {
     const input = "this-is-a-test-slug";
@@ -196,5 +179,25 @@ describe("slugToString", () => {
     const input = "";
     const output = "";
     expect(slugToString(input)).toBe(output);
+  });
+});
+
+describe("stringToSlug", () => {
+  test("converts a human-readable string to a slug", () => {
+    const output = "this-is-a-test-slug";
+    const input = "This Is A Test Slug";
+    expect(stringToSlug(input)).toBe(output);
+  });
+
+  test("handles slugs with lots of symbols", () => {
+    const output = "a-slug-with-many-symbols-23";
+    const input = "A Slug With --- ? /, Many ; Symbols 23";
+    expect(stringToSlug(input)).toBe(output);
+  });
+
+  test("returns an empty string for an empty input", () => {
+    const input = "";
+    const output = "";
+    expect(stringToSlug(input)).toBe(output);
   });
 });
