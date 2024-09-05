@@ -86,3 +86,8 @@ export const stringToSlug = (string: string = ""): string => {
     .replace(/\s+/g, "-") // replace spaces with hyphens
     .replace(/-+/g, "-"); // remove consecutive hyphens
 };
+
+export const totalNumPages = (numResults: string, perPage: string): number => {
+  console.log("numResults: ", numResults);
+  return Math.ceil(parseInt(numResults) / parseInt(perPage));
+};

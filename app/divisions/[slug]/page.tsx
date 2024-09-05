@@ -17,7 +17,7 @@ export async function generateMetadata({
   };
 }
 
-export default async function Division(params) {
-  const data = await getDivisionData(params.slug);
+export default async function Division({ params }) {
+  const data = await getDivisionData(params.slug, 40, 1);
   return <DivisionPage data={data} />;
 }

@@ -23,6 +23,7 @@ import ItemCard from "../../../components/cards/itemCard";
 import { mockItems } from "../../../../../__tests__/__mocks__/data/mockItems";
 import { ItemCardModel } from "../../../models/itemCard";
 import React from "react";
+import { totalNumPages } from "../../../utils/utils";
 
 export default function DivisionPage(data) {
   const params = useParams();
@@ -31,6 +32,9 @@ export default function DivisionPage(data) {
   const title = slugToString(slug);
   const numColumns = useNumColumns();
   const pageName = `divisions|${slug}`;
+
+  const totalPages = totalNumPages(data.data.numFound, data.data.perPage);
+
   console.log("data is: ", data);
 
   return (
@@ -81,7 +85,7 @@ export default function DivisionPage(data) {
           <Link
             id={`row-see-more-items-${title}`}
             type="standalone"
-            href={`#`}
+            href={`/search/index?filters[divisionFullname_mtxt_s][]=Billy+Rose+Theatre+Division`}
             aria-label={`See more items in ${title}`}
             hasVisitedState
             __css={{
@@ -101,7 +105,7 @@ export default function DivisionPage(data) {
             gridTemplateColumns: `repeat(${numColumns}, minmax(0, 1fr))`,
           }}
         >
-          {mockItems.map((item, index) => {
+          {data.data.items.map((item, index) => {
             const itemModel = new ItemCardModel(item);
             return (
               <ItemCard
@@ -145,25 +149,23 @@ export default function DivisionPage(data) {
           gridTemplateColumns: `repeat(${numColumns}, minmax(0, 1fr))`,
         }}
       >
-        {[...mockCollections, ...mockCollections, ...mockCollections].map(
-          (collection: CollectionDataType, index) => {
-            const collectionModel = new CollectionCardModel(collection);
-            return (
-              <CollectionCard
-                key={index}
-                id={index}
-                slug={collectionModel.title}
-                collection={collectionModel}
-                isLargerThanLargeTablet={isLargerThanLargeTablet}
-              />
-            );
-          }
-        )}
+        {data.data.collections.map((collection: CollectionDataType, index) => {
+          const collectionModel = new CollectionCardModel(collection);
+          return (
+            <CollectionCard
+              key={index}
+              id={index}
+              slug={collectionModel.title}
+              collection={collectionModel}
+              isLargerThanLargeTablet={isLargerThanLargeTablet}
+            />
+          );
+        })}
       </SimpleGrid>
       <Pagination
         id="pagination-id"
         initialPage={1}
-        pageCount={10}
+        pageCount={totalPages}
         sx={{
           display: "flex",
           justifyContent: "center",
