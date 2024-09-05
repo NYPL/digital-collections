@@ -222,7 +222,7 @@ export const apiPOSTCall = async (apiUrl: string, postData: any) => {
   }
 };
 
-export const getDivisionData = async (slug, perPage?: 40, pageNum?: 0) => {
+export const getDivisionData = async (slug, perPage?: 40, pageNum?: 1) => {
   const apiUrl = `${process.env.API_URL}/api/v2/divisions/${slug}?page=${pageNum}&per_page=${perPage}`;
   const res = await apiResponse(apiUrl);
   return res;
