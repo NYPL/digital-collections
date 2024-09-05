@@ -9,12 +9,7 @@ import {
 import styles from "./Card.module.css";
 import { TRUNCATED_LENGTH } from "@/src/config/constants";
 
-const ItemCard = ({
-  id,
-  isLargerThanLargeTablet,
-  isLargerThanDesktop,
-  item,
-}) => {
+const ItemCard = ({ id, isLargerThanLargeTablet, item }) => {
   const truncatedTitle = item.title.length > TRUNCATED_LENGTH; // Pretty much random
   const card = (
     <Card
@@ -40,12 +35,7 @@ const ItemCard = ({
     </Card>
   );
   return isLargerThanLargeTablet && truncatedTitle ? (
-    <Tooltip
-      offset={isLargerThanDesktop ? [0, -140] : [0, -120]}
-      content={item.title}
-    >
-      {card}
-    </Tooltip>
+    <Tooltip content={item.title}>{card}</Tooltip>
   ) : (
     card
   );

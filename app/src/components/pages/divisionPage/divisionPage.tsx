@@ -21,11 +21,12 @@ import { mockCollections } from "../../../../../__tests__/__mocks__/data/mockCol
 import ItemCard from "../../../components/cards/itemCard";
 import { mockItems } from "../../../../../__tests__/__mocks__/data/mockItems";
 import { ItemCardModel } from "../../../models/itemCard";
-import React from "react";
+import React, { useEffect, useState } from "react";
+import SwimLanesLoading from "../../swimlanes/swimLanesLoading";
 
 export default function DivisionPage() {
   const params = useParams();
-  const { isLargerThanLargeTablet, isLargerThanDesktop } = useBreakpoints();
+  const { isLargerThanLargeTablet } = useBreakpoints();
   const slug = params.slug as string;
   const title = slugToString(slug);
   const numColumns = useNumColumns();
@@ -107,7 +108,6 @@ export default function DivisionPage() {
                 id={`item-${index}-${title}`}
                 item={itemModel}
                 isLargerThanLargeTablet={isLargerThanLargeTablet}
-                isLargerThanDesktop={isLargerThanDesktop}
               />
             );
           })}
@@ -152,7 +152,6 @@ export default function DivisionPage() {
               slug={collectionModel.title}
               collection={collectionModel}
               isLargerThanLargeTablet={isLargerThanLargeTablet}
-              isLargerThanDesktop={isLargerThanDesktop}
             />
           );
         })}
