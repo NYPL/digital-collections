@@ -1,6 +1,7 @@
 // import { CollectionCardData } from "app/types/Collection";
 import { imageURL } from "../utils/utils";
 import { stringToSlug } from "../utils/utils";
+import { parseBoolean } from "../utils/utils";
 // TODO: Connect to typescript interface for CollectionCardData
 export class CollectionCardModel {
   uuid: string;
@@ -26,6 +27,7 @@ export class CollectionCardModel {
     this.imageURL = imageURL(data.imageID, "full", "288,", "0");
     this.numberOfDigitizedItems =
       data.numberOfDigitizedItems || data.numItems || 0;
-    this.containsOnSiteMaterials = data.containsOnSiteMaterials || false;
+    this.containsOnSiteMaterials =
+      parseBoolean(data.containsOnSiteMaterials) || false;
   }
 }
