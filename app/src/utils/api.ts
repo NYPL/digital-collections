@@ -64,3 +64,5 @@ export const getFeaturedItemData = async () => {
   };
   return newResponse;
 };
+
+export const getDivisionData = async (slug) => {};
