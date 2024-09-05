@@ -1,5 +1,5 @@
 "use client";
-import React, { useEffect, useLayoutEffect, useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import {
   Card,
   CardHeading,
@@ -44,8 +44,9 @@ const CollectionCard = ({
   };
 
   useEffect(() => {
-    getOffset();
+    setTimeout(getOffset, 0);
     window.addEventListener("resize", getOffset);
+
     return () => {
       window.removeEventListener("resize", getOffset);
     };
