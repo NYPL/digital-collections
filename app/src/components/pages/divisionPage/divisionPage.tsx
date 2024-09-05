@@ -21,8 +21,7 @@ import { mockCollections } from "../../../../../__tests__/__mocks__/data/mockCol
 import ItemCard from "../../../components/cards/itemCard";
 import { mockItems } from "../../../../../__tests__/__mocks__/data/mockItems";
 import { ItemCardModel } from "../../../models/itemCard";
-import React, { useEffect, useState } from "react";
-import SwimLanesLoading from "../../swimlanes/swimLanesLoading";
+import React from "react";
 
 export default function DivisionPage() {
   const params = useParams();
