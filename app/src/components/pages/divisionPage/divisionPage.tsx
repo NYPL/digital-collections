@@ -26,13 +26,14 @@ import React from "react";
 import { useEffect, useState } from "react";
 import SwimLanesLoading from "../../swimlanes/swimLanesLoading";
 
-export default function DivisionPage() {
+export default function DivisionPage(data) {
   const params = useParams();
   const { isLargerThanLargeTablet } = useBreakpoints();
   const slug = params.slug as string;
   const title = slugToString(slug);
   const numColumns = useNumColumns();
   const pageName = `divisions|${slug}`;
+  console.log("data is: ", data);
 
   return (
     <PageLayout

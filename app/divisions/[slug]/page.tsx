@@ -2,6 +2,7 @@ import { Metadata } from "next";
 import React from "react";
 import DivisionPage from "../../src/components/pages/divisionPage/divisionPage";
 import { slugToString } from "../../src/utils/utils";
+import { getDivisionData } from "../../src/utils/api";
 
 export type DivisionProps = {
   params: { slug: string };
@@ -16,6 +17,7 @@ export async function generateMetadata({
   };
 }
 
-export default function Division() {
-  return <DivisionPage />;
+export default async function Division(params) {
+  const data = await getDivisionData(params.slug);
+  return <DivisionPage data={data} />;
 }
