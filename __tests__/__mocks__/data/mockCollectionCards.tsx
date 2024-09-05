@@ -8,6 +8,7 @@ export const mockCollectionCards: CollectionCardDataType[] = [
     imageID: "58270299",
     imageURL: "https://iiif.nypl.org/iiif/2/58270299/full/288,/0/default.jpg",
     numItems: 34,
+    containsOnSiteMaterials: true,
   },
   {
     uuid: "724303e0-c6bb-012f-afbd-58d385a7bc34",
@@ -16,6 +17,7 @@ export const mockCollectionCards: CollectionCardDataType[] = [
     imageID: "1408153",
     imageURL: "https://iiif.nypl.org/iiif/2/58270299/full/288,/0/default.jpg",
     numItems: 35,
+    containsOnSiteMaterials: true,
   },
   {
     uuid: "6b6532b0-5df7-013b-36f8-0242ac110002",
@@ -24,6 +26,7 @@ export const mockCollectionCards: CollectionCardDataType[] = [
     imageID: "58300996",
     imageURL: "https://iiif.nypl.org/iiif/2/58270299/full/288,/0/default.jpg",
     numItems: 65,
+    containsOnSiteMaterials: true,
   },
   {
     uuid: "5b996640-c31c-0139-0bac-0242ac110004",
@@ -32,6 +35,7 @@ export const mockCollectionCards: CollectionCardDataType[] = [
     imageID: "58591658",
     imageURL: "https://iiif.nypl.org/iiif/2/58270299/full/288,/0/default.jpg",
     numItems: 55,
+    containsOnSiteMaterials: true,
   },
   {
     uuid: "d3802d10-f49a-0139-3bff-0242ac110002",
@@ -40,6 +44,7 @@ export const mockCollectionCards: CollectionCardDataType[] = [
     imageID: "58498722",
     imageURL: "https://iiif.nypl.org/iiif/2/58270299/full/288,/0/default.jpg",
     numItems: 35,
+    containsOnSiteMaterials: false,
   },
   {
     uuid: "e5462600-c5d9-012f-a6a3-58d385a7bc34",
@@ -48,6 +53,7 @@ export const mockCollectionCards: CollectionCardDataType[] = [
     imageID: "1952272",
     imageURL: "https://iiif.nypl.org/iiif/2/58270299/full/288,/0/default.jpg",
     numItems: 36,
+    containsOnSiteMaterials: false,
   },
   {
     uuid: "812e5770-c60c-012f-7167-58d385a7bc34",
@@ -56,6 +62,7 @@ export const mockCollectionCards: CollectionCardDataType[] = [
     imageID: "58447105",
     imageURL: "https://iiif.nypl.org/iiif/2/58270299/full/288,/0/default.jpg",
     numItems: 37,
+    containsOnSiteMaterials: false,
   },
   {
     uuid: "f7ffc990-c5ae-012f-eb75-58d385a7bc34",
@@ -64,5 +71,6 @@ export const mockCollectionCards: CollectionCardDataType[] = [
     imageID: "1582202",
     imageURL: "https://iiif.nypl.org/iiif/2/58270299/full/288,/0/default.jpg",
     numItems: 38,
+    containsOnSiteMaterials: false,
   },
 ];

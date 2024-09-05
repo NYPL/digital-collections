@@ -19,7 +19,7 @@ describe("Swim Lanes component renders with expected props", () => {
       within(firstrow).getByText("Austin Hansen photograph collection")
     ).toBeInTheDocument();
     expect(
-      within(firstrow).getByText("Arthur Alfonso Schomburg papers")
+      within(firstrow).getByText(/Arthur Alfonso Schomburg papers/)
     ).toBeInTheDocument();
   });
 
@@ -43,7 +43,9 @@ describe("Swim Lanes component renders with expected props", () => {
       within(secondrow).getByText("Changing New York")
     ).toBeInTheDocument();
     expect(
-      within(secondrow).getByText("Diana Davies photographs")
+      within(secondrow).getByText(
+        "The Black Experience in Children's Books: Selections from Augusta Baker's Bibliographies"
+      )
     ).toBeInTheDocument();
   });
 
@@ -56,7 +58,11 @@ describe("Swim Lanes component renders with expected props", () => {
     );
     window.innerWidth = 1050;
     fireEvent(window, new Event("resize"));
-    fireEvent.pointerOver(screen.getAllByText("MAVO")[0]);
+    fireEvent.pointerOver(
+      screen.getAllByText(
+        "The Black Experience in Children's Books: Selections from Augusta Baker's Bibliographies"
+      )[0]
+    );
     const tooltip = await screen.findByRole("tooltip");
     expect(tooltip).toBeInTheDocument();
   });
@@ -69,6 +75,20 @@ describe("Swim Lanes component renders with expected props", () => {
     );
     window.innerWidth = 1000;
     fireEvent(window, new Event("resize"));
+    fireEvent.pointerOver(
+      screen.getAllByText(
+        "The Black Experience in Children's Books: Selections from Augusta Baker's Bibliographies"
+      )[0]
+    );
+    expect(screen.queryByRole("tooltip")).not.toBeInTheDocument();
+  });
+  it("does not render tooltips on non-truncated titles", async () => {
+    render(
+      <SwimLanes
+        numColumns={4}
+        lanesWithNumItems={mockSwimLanes.lanesWithNumItems}
+      />
+    );
     fireEvent.pointerOver(screen.getAllByText("MAVO")[0]);
     expect(screen.queryByRole("tooltip")).not.toBeInTheDocument();
   });
