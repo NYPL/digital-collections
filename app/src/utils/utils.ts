@@ -248,5 +248,5 @@ export const stringToSlug = (string: string = ""): string => {
 };
 
 export const parseBoolean = (value: string): boolean => {
-  return value == "true" ? true : false;
+  return value === "true" ? true : false;
 };
