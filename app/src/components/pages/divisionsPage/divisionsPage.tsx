@@ -6,16 +6,21 @@ import {
   Text,
 } from "@nypl/design-system-react-components";
 import PageLayout from "../../pageLayout/pageLayout";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useNumColumns } from "../../../hooks/useNumColumns";
 import { headerBreakpoints } from "../../../utils/breakpoints";
 import CollectionLanes from "../../collectionLanes/collectionLanes";
 import { DC_URL } from "@/src/config/constants";
+import CollectionLanesLoading from "../../collectionLanes/collectionLanesLoading";
 
 export default function DivisionsPage({ data }) {
   const numColumns = useNumColumns();
+  const [isLoaded, setIsLoaded] = useState(false);
 
-  return (
+  useEffect(() => {
+    setIsLoaded(true);
+  }, []);
+  const page = (
     <PageLayout
       activePage="divisions"
       breadcrumbs={[
@@ -50,5 +55,13 @@ export default function DivisionsPage({ data }) {
         </>
       )}
     </PageLayout>
+  );
+
+  return isLoaded ? (
+    <>{page}</>
+  ) : (
+    <>
+      <CollectionLanesLoading />
+    </>
   );
 }
