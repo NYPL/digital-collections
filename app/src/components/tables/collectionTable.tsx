@@ -6,71 +6,47 @@ import {
   useRouter,
 } from "next/navigation";
 import {
-  Box,
-  Flex,
   Heading,
-  HorizontalRule,
-  Link,
   Pagination,
   SimpleGrid,
-  Spacer,
 } from "@nypl/design-system-react-components";
-import PageLayout from "../pageLayout/pageLayout";
 import { useNumColumns } from "../../hooks/useNumColumns";
-import { headerBreakpoints } from "../../utils/breakpoints";
-import { slugToString } from "../../utils/utils";
 import CollectionCard from "../../components/cards/collectionCard";
 import { CollectionCardModel } from "../../models/collectionCard";
 import useBreakpoints from "../../hooks/useBreakpoints";
 import CollectionDataType from "../../types/CollectionDataType";
-import ItemCard from "../../components/cards/itemCard";
-import { ItemCardModel } from "../../models/itemCard";
 import React, { useEffect } from "react";
-import { titleToDCParam, totalNumPages } from "../../utils/utils";
-import { DC_URL } from "@/src/config/constants";
+import { totalNumPages } from "../../utils/utils";
+import { useState } from "react";
 
-export const CollectionsTable = async ({ data }: any, currentPage: number) => {
-  const params = useParams();
-  const queryParams = useSearchParams();
+export const CollectionsTable = ({ data }: any, setCollections) => {
   const pathname = usePathname();
+  const queryParams = useSearchParams();
+
+  // const [collections, setCollections] = useState(data.collections);
+  const [currentPage, setCurrentPage] = useState(
+    Number(queryParams.get("page")) || 1
+  );
+  console.log("currentPage is: ", currentPage);
+
   const { replace } = useRouter();
 
   const { isLargerThanLargeTablet } = useBreakpoints();
   const numColumns = useNumColumns();
 
-  // const [currentPage, setCurrentPage] = useState(currentPage);
-
-  // useEffect(() => {
-  //   setIsLoaded(true);
-  // }, []);
-
-  // const slug = params.slug as string;
-  // const title = slugToString(slug);
-  // const pageName = `divisions|${slug}`;
-  // console.log("data.perPage is: ",data.perPage )
   const totalPages = totalNumPages(data.numFound, data.perPage);
-  // console.log("data is: ", data);
-  const page = Number(queryParams.get("page")) || 1;
 
-  const createPageURL = (pageNumber: number | string) => {
+  const createPageURL = (pageNumber: number) => {
     console.log("pageNumber is", pageNumber);
     const params = new URLSearchParams();
-    // params.set('page', '1');
+    // const newPageNumber = pageNumber.toString()
     params.set("page", pageNumber.toString());
+    setCurrentPage(pageNumber);
+    updateCollections();
+    // console.log("currentPage after updating params is: ", currentPage)
     const url = `${pathname}?${params.toString()}`;
     replace(url);
-    // `${pathname}?${params.toString()}`;
   };
-
-  // const createQueryString = useCallback(
-  //   (pageNumber: number | string) => {
-  //     const params = new URLSearchParams(searchParams.toString())
-  //     params.set(name, value)
-
-  //     return params.toString()
-  //   },
-  //   [searchParams]
-  // )
 
   return (
     <>
@@ -84,7 +60,7 @@ export const CollectionsTable = async ({ data }: any, currentPage: number) => {
           gridTemplateColumns: `repeat(${numColumns}, minmax(0, 1fr))`,
         }}
       >
-        {data.collections.map((collection: CollectionDataType, index) => {
+        {collections.map((collection: CollectionDataType, index) => {
           const collectionModel = new CollectionCardModel(collection);
           return (
             <CollectionCard
@@ -99,8 +75,7 @@ export const CollectionsTable = async ({ data }: any, currentPage: number) => {
       </SimpleGrid>
       <Pagination
         id="pagination-id"
-        // initialPage={1}
-        // getPageHref={createPageURL}
+        initialPage={currentPage}
         currentPage={currentPage}
         pageCount={totalPages}
         onPageChange={createPageURL}
