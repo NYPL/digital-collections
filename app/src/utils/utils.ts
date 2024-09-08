@@ -87,15 +87,18 @@ export const stringToSlug = (string: string = ""): string => {
     .replace(/-+/g, "-"); // remove consecutive hyphens
 };
 
-export const totalNumPages = (numResults: string, perPage: string): number => {
-  console.log("numResults: ", numResults);
-  return Math.ceil(parseInt(numResults) / parseInt(perPage));
-};
-
 export const parseBoolean = (value: string): boolean => {
   return value == "true" ? true : false;
 };
 
-export const titleToDCParam = (string: string): string => {
-  return string.replace(/\s+/g, "+"); // replace spaces with +
+export const titleToDCParam = (string: string = ""): string => {
+  console.log("string is: ", string);
+  return string?.replace(/\s+/g, "+"); // replace spaces with +
+};
+
+export const totalNumPages = (numResults: string, perPage: string): number => {
+  // console.log("numResults: ", numResults);
+  // console.log("perPage: ", perPage);
+  // console.log("totalNum:", Math.ceil(parseInt(numResults) / parseInt(perPage)))
+  return Math.ceil(parseInt(numResults) / parseInt(perPage));
 };

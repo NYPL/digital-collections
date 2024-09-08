@@ -9,7 +9,7 @@ import PageLayout from "../../pageLayout/pageLayout";
 import React from "react";
 import { useNumColumns } from "../../../hooks/useNumColumns";
 import { headerBreakpoints } from "../../../utils/breakpoints";
-import CollectionLanes from "../../collectionLanes/collectionLanes";
+import CollectionLanes from "../../lanes/collectionLanes/collectionLanes";
 import { DC_URL } from "@/src/config/constants";
 
 export default function DivisionsPage({ data }) {
