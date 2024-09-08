@@ -9,11 +9,11 @@ import {
   Link,
 } from "@nypl/design-system-react-components";
 import styles from "./Collectionlanes.module.css";
-import { DC_URL } from "../../config/constants";
-import useBreakpoints from "../../hooks/useBreakpoints";
-import CollectionCard from "../cards/collectionCard";
-import CollectionDataType from "../../types/CollectionDataType";
-import { CollectionCardModel } from "../../models/collectionCard";
+import { DC_URL } from "../../../config/constants";
+import useBreakpoints from "../../../hooks/useBreakpoints";
+import CollectionCard from "../../cards/collectionCard";
+import CollectionDataType from "../../../types/CollectionDataType";
+import { CollectionCardModel } from "../../../models/collectionCard";
 
 const CollectionLanes = ({ numColumns, lanesWithNumItems, seeMoreLink }) => {
   const { isLargerThanLargeTablet } = useBreakpoints();

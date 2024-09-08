@@ -3,9 +3,10 @@ import React from "react";
 import DivisionPage from "../../src/components/pages/divisionPage/divisionPage";
 import { slugToString } from "../../src/utils/utils";
 import { getDivisionData } from "../../src/utils/api";
+import { Suspense } from "react";
 
 export type DivisionProps = {
-  params: { slug: string };
+  params: { slug: string; page?: string };
 };
 
 export async function generateMetadata({
@@ -18,6 +19,13 @@ export async function generateMetadata({
 }
 
 export default async function Division({ params }) {
-  const data = await getDivisionData(params.slug, 40, 1);
-  return <DivisionPage data={data} />;
+  const data = await getDivisionData(params.slug, params.page);
+  const currentPage = Number(params.page) || 1;
+
+  return (
+    <Suspense>
+      {/* key={query + currentPage} fallback={<InvoicesTableSkeleton />}> */}
+      <DivisionPage data={data} currentPage={currentPage} />
+    </Suspense>
+  );
 }

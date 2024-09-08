@@ -1,5 +1,11 @@
 "use client";
 import {
+  useParams,
+  useSearchParams,
+  usePathname,
+  useRouter,
+} from "next/navigation";
+import {
   Box,
   Flex,
   Heading,
@@ -11,7 +17,6 @@ import {
 } from "@nypl/design-system-react-components";
 import PageLayout from "../../pageLayout/pageLayout";
 import { useNumColumns } from "../../../hooks/useNumColumns";
-import { useParams } from "next/navigation";
 import { headerBreakpoints } from "../../../utils/breakpoints";
 import { slugToString } from "../../../utils/utils";
 import CollectionCard from "../../../components/cards/collectionCard";
@@ -23,18 +28,30 @@ import { ItemCardModel } from "../../../models/itemCard";
 import React from "react";
 import { titleToDCParam, totalNumPages } from "../../../utils/utils";
 import { DC_URL } from "@/src/config/constants";
+import { ItemLane } from "../../lanes/itemLanes/itemLane";
+import { CollectionsTable } from "../../tables/collectionTable";
+import { getDivisionData } from "../../../utils/api";
+import { useState } from "react";
 
-export default function DivisionPage(data) {
+export default function DivisionPage({ data }: any, currentPage: number) {
   const params = useParams();
+  const queryParams = useSearchParams();
+  const pathname = usePathname();
+  const { replace } = useRouter();
+
+  const [collections, setCollections] = useState(data.collections);
+
   const { isLargerThanLargeTablet } = useBreakpoints();
+  const numColumns = useNumColumns();
+
   const slug = params.slug as string;
   const title = slugToString(slug);
-  const numColumns = useNumColumns();
+  console.log("title is: ", title);
   const pageName = `divisions|${slug}`;
-
-  const totalPages = totalNumPages(data.data.numFound, data.data.perPage);
-
+  console.log("data.perPage is: ", data.perPage);
+  const totalPages = totalNumPages(data.numFound, data.perPage);
   console.log("data is: ", data);
+  const page = Number(queryParams.get("page")) || 1;
 
   return (
     <PageLayout
@@ -65,13 +82,15 @@ export default function DivisionPage(data) {
           gap: "m",
         }}
       >
-        <Heading level="h1" text={title} subtitle={data.data.summary} />
-        <Link type="standalone" target="_blank" href={data.data.nyplLink}>
+        <Heading level="h1" text={title} subtitle={data.summary} />
+        <Link type="standalone" target="_blank" href={data.nyplLink}>
           <span> Contact info and more </span>
         </Link>
       </Box>
+
       <HorizontalRule sx={{ marginTop: "xxl", marginBottom: "xxl" }} />
-      <Box>
+
+      {/* <Box>
         <Flex alignItems="baseline">
           <Heading level="h2" size="heading3">
             {`Items in the ${title}`}
@@ -102,12 +121,12 @@ export default function DivisionPage(data) {
             gridTemplateColumns: `repeat(${numColumns}, minmax(0, 1fr))`,
           }}
         >
-          {data.data.items.map((item, index) => {
+          {data.items.map((item, index) => {
             const itemModel = new ItemCardModel(item);
             return (
               <ItemCard
                 key={index}
-                id={`item-${index}-${title}`}
+                id={`item-${index}-${data.title}`}
                 item={itemModel}
                 isLargerThanLargeTablet={isLargerThanLargeTablet}
               />
@@ -134,19 +153,24 @@ export default function DivisionPage(data) {
         >
           See more
         </Link>
-      </Box>
+      </Box> */}
+
+      <ItemLane items={data.items} data={data} />
+
       <HorizontalRule sx={{ marginTop: "xxl", marginBottom: "xxl" }} />
-      <Heading level="h2" size="heading3">
+      {/* <Heading level="h2" size="heading3">
         {`Collections in the ${title}`}
-      </Heading>
-      <SimpleGrid
+      </Heading> */}
+
+      <CollectionsTable data={data} currentPage={page} />
+      {/* <SimpleGrid
         columns={numColumns}
         sx={{
           marginBottom: "xxl",
           gridTemplateColumns: `repeat(${numColumns}, minmax(0, 1fr))`,
         }}
       >
-        {data.data.collections.map((collection: CollectionDataType, index) => {
+        {data.collections.map((collection: CollectionDataType, index) => {
           const collectionModel = new CollectionCardModel(collection);
           return (
             <CollectionCard
@@ -161,14 +185,17 @@ export default function DivisionPage(data) {
       </SimpleGrid>
       <Pagination
         id="pagination-id"
-        initialPage={1}
+        // initialPage={1}
+        // getPageHref={function Ua(){}}
+        currentPage={currentPage}
         pageCount={totalPages}
+        onPageChange={createPageURL}
         sx={{
           display: "flex",
           justifyContent: "center",
           gap: "s",
         }}
-      />
+      /> */}
     </PageLayout>
   );
 }
