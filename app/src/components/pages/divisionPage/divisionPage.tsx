@@ -10,25 +10,16 @@ import PageLayout from "../../pageLayout/pageLayout";
 import { headerBreakpoints } from "../../../utils/breakpoints";
 import { slugToString } from "../../../utils/utils";
 import React from "react";
-import { ItemLane } from "../../lanes/itemLanes/itemLane";
+import { ItemLane } from "../../lanes/itemLane/itemLane";
 import { CollectionsTable } from "../../tables/collectionTable";
 import { useState } from "react";
 
-export default async function DivisionPage({ data }: any) {
+export default function DivisionPage({ data }: any) {
   const params = useParams();
   const queryParams = useSearchParams();
-  // const pathname = usePathname();
-  // const { replace } = useRouter();
-
-  const [collections, setCollections] = useState(data.collections);
-
-  // const { isLargerThanLargeTablet } = useBreakpoints();
-  // const numColumns = useNumColumns();
-
   const slug = params.slug as string;
   const title = slugToString(slug);
   const pageName = `divisions|${slug}`;
-  // const page = Number(queryParams.get("page")) || 1;
 
   const updateCollections = () => {};
 
@@ -68,11 +59,9 @@ export default async function DivisionPage({ data }: any) {
       </Box>
 
       <HorizontalRule sx={{ marginTop: "xxl", marginBottom: "xxl" }} />
-
-      <ItemLane items={data.items} data={data} />
+      <ItemLane data={data} />
 
       <HorizontalRule sx={{ marginTop: "xxl", marginBottom: "xxl" }} />
-
       <CollectionsTable data={data} updateCollections={updateCollections} />
     </PageLayout>
   );

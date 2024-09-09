@@ -18,12 +18,12 @@ import CollectionDataType from "../../types/CollectionDataType";
 import React, { useEffect } from "react";
 import { totalNumPages } from "../../utils/utils";
 import { useState } from "react";
+import { getDivisionData } from "../../../src/utils/api";
 
-export const CollectionsTable = ({ data }: any, setCollections) => {
+export const CollectionsTable = ({ data }: any) => {
   const pathname = usePathname();
   const queryParams = useSearchParams();
 
-  // const [collections, setCollections] = useState(data.collections);
   const [currentPage, setCurrentPage] = useState(
     Number(queryParams.get("page")) || 1
   );
@@ -36,14 +36,11 @@ export const CollectionsTable = ({ data }: any, setCollections) => {
 
   const totalPages = totalNumPages(data.numFound, data.perPage);
 
-  const createPageURL = (pageNumber: number) => {
+  const updatePageURL = async (pageNumber: number) => {
     console.log("pageNumber is", pageNumber);
     const params = new URLSearchParams();
-    // const newPageNumber = pageNumber.toString()
     params.set("page", pageNumber.toString());
     setCurrentPage(pageNumber);
-    updateCollections();
-    // console.log("currentPage after updating params is: ", currentPage)
     const url = `${pathname}?${params.toString()}`;
     replace(url);
   };
@@ -60,7 +57,7 @@ export const CollectionsTable = ({ data }: any, setCollections) => {
           gridTemplateColumns: `repeat(${numColumns}, minmax(0, 1fr))`,
         }}
       >
-        {collections.map((collection: CollectionDataType, index) => {
+        {data.collections.map((collection: CollectionDataType, index) => {
           const collectionModel = new CollectionCardModel(collection);
           return (
             <CollectionCard
@@ -78,7 +75,7 @@ export const CollectionsTable = ({ data }: any, setCollections) => {
         initialPage={currentPage}
         currentPage={currentPage}
         pageCount={totalPages}
-        onPageChange={createPageURL}
+        onPageChange={updatePageURL}
         sx={{
           display: "flex",
           justifyContent: "center",
