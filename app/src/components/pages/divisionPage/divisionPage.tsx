@@ -120,7 +120,7 @@ export default function DivisionPage() {
           </SimpleGrid>
         ) : (
           <>
-            <CollectionLanesLoading />
+            <CollectionLanesLoading withTitle={false} />
           </>
         )}
         <Link
@@ -170,8 +170,9 @@ export default function DivisionPage() {
         </SimpleGrid>
       ) : (
         <>
-          <CollectionLanesLoading />, <CollectionLanesLoading />,
-          <CollectionLanesLoading />
+          <CollectionLanesLoading withTitle={false} />,
+          <CollectionLanesLoading withTitle={false} />,
+          <CollectionLanesLoading withTitle={false} />
         </>
       )}
     </PageLayout>

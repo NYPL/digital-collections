@@ -49,7 +49,8 @@ export default function DivisionsPage({ data }) {
             />
           ) : (
             <>
-              <CollectionLanesLoading />, <CollectionLanesLoading />,
+              <CollectionLanesLoading />,
+              <CollectionLanesLoading />,
               <CollectionLanesLoading />
             </>
           )}

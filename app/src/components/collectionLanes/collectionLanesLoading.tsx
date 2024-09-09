@@ -6,12 +6,14 @@ import {
 } from "@nypl/design-system-react-components";
 import React from "react";
 
-export default function Loading() {
+export default function Loading({ withTitle = true }) {
   return (
     <Box data-testid="collectionlane-skeleton-loader-1">
-      <Flex>
-        <SkeletonLoader contentSize={0} showImage={false} headingSize={1} />
-      </Flex>
+      {withTitle && (
+        <Flex>
+          <SkeletonLoader contentSize={0} showImage={false} headingSize={1} />
+        </Flex>
+      )}
       <SimpleGrid columns={4}>
         <SkeletonLoader imageAspectRatio="landscape" contentSize={1} />
         <SkeletonLoader imageAspectRatio="landscape" contentSize={1} />
