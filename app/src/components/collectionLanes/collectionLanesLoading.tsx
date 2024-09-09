@@ -7,7 +7,7 @@ import {
 } from "@nypl/design-system-react-components";
 import React from "react";
 
-export default function Loading({ withTitle = true }) {
+export default function CollectionLanesLoading({ withTitle = true }) {
   return (
     <Box data-testid="collectionlane-skeleton-loader-1">
       {withTitle && (
