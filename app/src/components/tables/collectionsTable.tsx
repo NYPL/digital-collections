@@ -18,7 +18,6 @@ import CollectionDataType from "../../types/CollectionDataType";
 import React, { useEffect } from "react";
 import { totalNumPages } from "../../utils/utils";
 import { useState } from "react";
-import { getDivisionData } from "../../utils/api";
 
 export const CollectionsTable = ({ data }: any) => {
   const pathname = usePathname();
@@ -69,18 +68,20 @@ export const CollectionsTable = ({ data }: any) => {
           );
         })}
       </SimpleGrid>
-      <Pagination
-        id="pagination-id"
-        initialPage={currentPage}
-        currentPage={currentPage}
-        pageCount={totalPages}
-        onPageChange={updatePageURL}
-        sx={{
-          display: "flex",
-          justifyContent: "center",
-          gap: "s",
-        }}
-      />
+      {totalPages > 1 && (
+        <Pagination
+          id="pagination-id"
+          initialPage={currentPage}
+          currentPage={currentPage}
+          pageCount={totalPages}
+          onPageChange={updatePageURL}
+          sx={{
+            display: "flex",
+            justifyContent: "center",
+            gap: "s",
+          }}
+        />
+      )}
     </>
   );
 };
