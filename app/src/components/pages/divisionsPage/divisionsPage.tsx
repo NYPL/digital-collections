@@ -8,7 +8,6 @@ import {
 import PageLayout from "../../pageLayout/pageLayout";
 import React, { useEffect, useState } from "react";
 import { useNumColumns } from "../../../hooks/useNumColumns";
-import { headerBreakpoints } from "../../../utils/breakpoints";
 import CollectionLanes from "../../collectionLanes/collectionLanes";
 import { DC_URL } from "@/src/config/constants";
 import CollectionLanesLoading from "../../collectionLanes/collectionLanesLoading";
@@ -20,7 +19,7 @@ export default function DivisionsPage({ data }) {
   useEffect(() => {
     setIsLoaded(true);
   }, []);
-  const page = (
+  return (
     <PageLayout
       activePage="divisions"
       breadcrumbs={[
@@ -42,11 +41,18 @@ export default function DivisionsPage({ data }) {
             <Heading level="h1" text="Divisions" subtitle={data?.summary} />
           </Box>
           <HorizontalRule sx={{ marginTop: "xxl", marginBottom: "xxl" }} />
-          <CollectionLanes
-            numColumns={numColumns}
-            lanesWithNumItems={data.divisions}
-            seeMoreLink={`${DC_URL}/divisions`}
-          />
+          {isLoaded ? (
+            <CollectionLanes
+              numColumns={numColumns}
+              lanesWithNumItems={data.divisions}
+              seeMoreLink={`${DC_URL}/divisions`}
+            />
+          ) : (
+            <>
+              <CollectionLanesLoading />, <CollectionLanesLoading />,
+              <CollectionLanesLoading />
+            </>
+          )}
         </>
       ) : (
         <>
@@ -55,13 +61,5 @@ export default function DivisionsPage({ data }) {
         </>
       )}
     </PageLayout>
-  );
-
-  return isLoaded ? (
-    <>{page}</>
-  ) : (
-    <>
-      <CollectionLanesLoading />
-    </>
   );
 }

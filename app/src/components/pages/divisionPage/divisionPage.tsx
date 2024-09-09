@@ -21,7 +21,8 @@ import { mockCollections } from "../../../../../__tests__/__mocks__/data/mockCol
 import ItemCard from "../../../components/cards/itemCard";
 import { mockItems } from "../../../../../__tests__/__mocks__/data/mockItems";
 import { ItemCardModel } from "../../../models/itemCard";
-import React from "react";
+import React, { useEffect, useState } from "react";
+import CollectionLanesLoading from "../../collectionLanes/collectionLanesLoading";
 
 export default function DivisionPage() {
   const params = useParams();
@@ -30,6 +31,11 @@ export default function DivisionPage() {
   const title = slugToString(slug);
   const numColumns = useNumColumns();
   const pageName = `divisions|${slug}`;
+  const [isLoaded, setIsLoaded] = useState(false);
+
+  useEffect(() => {
+    setIsLoaded(true);
+  }, []);
 
   return (
     <PageLayout
@@ -93,24 +99,30 @@ export default function DivisionPage() {
             See more
           </Link>
         </Flex>
-        <SimpleGrid
-          columns={numColumns}
-          sx={{
-            gridTemplateColumns: `repeat(${numColumns}, minmax(0, 1fr))`,
-          }}
-        >
-          {mockItems.map((item, index) => {
-            const itemModel = new ItemCardModel(item);
-            return (
-              <ItemCard
-                key={index}
-                id={`item-${index}-${title}`}
-                item={itemModel}
-                isLargerThanLargeTablet={isLargerThanLargeTablet}
-              />
-            );
-          })}
-        </SimpleGrid>
+        {isLoaded ? (
+          <SimpleGrid
+            columns={numColumns}
+            sx={{
+              gridTemplateColumns: `repeat(${numColumns}, minmax(0, 1fr))`,
+            }}
+          >
+            {mockItems.map((item, index) => {
+              const itemModel = new ItemCardModel(item);
+              return (
+                <ItemCard
+                  key={index}
+                  id={`item-${index}-${title}`}
+                  item={itemModel}
+                  isLargerThanLargeTablet={isLargerThanLargeTablet}
+                />
+              );
+            })}
+          </SimpleGrid>
+        ) : (
+          <>
+            <CollectionLanesLoading />
+          </>
+        )}
         <Link
           id={`row-see-more-items-mobile-${title}`}
           type="standalone"
@@ -136,25 +148,32 @@ export default function DivisionPage() {
       <Heading level="h2" size="heading3">
         {`Collections in the ${title}`}
       </Heading>
-      <SimpleGrid
-        columns={numColumns}
-        sx={{
-          gridTemplateColumns: `repeat(${numColumns}, minmax(0, 1fr))`,
-        }}
-      >
-        {mockCollections.map((collection: CollectionDataType, index) => {
-          const collectionModel = new CollectionCardModel(collection);
-          return (
-            <CollectionCard
-              key={index}
-              id={index}
-              slug={collectionModel.title}
-              collection={collectionModel}
-              isLargerThanLargeTablet={isLargerThanLargeTablet}
-            />
-          );
-        })}
-      </SimpleGrid>
+      {isLoaded ? (
+        <SimpleGrid
+          columns={numColumns}
+          sx={{
+            gridTemplateColumns: `repeat(${numColumns}, minmax(0, 1fr))`,
+          }}
+        >
+          {mockCollections.map((collection: CollectionDataType, index) => {
+            const collectionModel = new CollectionCardModel(collection);
+            return (
+              <CollectionCard
+                key={index}
+                id={index}
+                slug={collectionModel.title}
+                collection={collectionModel}
+                isLargerThanLargeTablet={isLargerThanLargeTablet}
+              />
+            );
+          })}
+        </SimpleGrid>
+      ) : (
+        <>
+          <CollectionLanesLoading />, <CollectionLanesLoading />,
+          <CollectionLanesLoading />
+        </>
+      )}
     </PageLayout>
   );
 }

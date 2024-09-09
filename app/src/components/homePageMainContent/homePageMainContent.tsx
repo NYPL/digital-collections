@@ -3,7 +3,7 @@ import FeaturedContentComponent from "../featuredContent/featuredContent";
 import { useNumColumns } from "../../hooks/useNumColumns";
 import { useEffect, useState } from "react";
 import CollectionLanes from "../collectionLanes/collectionLanes";
-import CollectionLanesLoading from "../collectionLanes/collectionLanesLoading";
+import CollectionLanesLoading from "../collectionLanes/loading";
 import { DC_URL } from "@/src/config/constants";
 
 const HomePageMainContent = ({ data }) => {
