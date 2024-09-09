@@ -1,3 +1,4 @@
+import { useNumColumns } from "@/src/hooks/useNumColumns";
 import {
   SkeletonLoader,
   SimpleGrid,
@@ -14,8 +15,7 @@ export default function Loading({ withTitle = true }) {
           <SkeletonLoader contentSize={0} showImage={false} headingSize={1} />
         </Flex>
       )}
-      <SimpleGrid columns={4}>
-        <SkeletonLoader imageAspectRatio="landscape" contentSize={1} />
+      <SimpleGrid>
         <SkeletonLoader imageAspectRatio="landscape" contentSize={1} />
         <SkeletonLoader imageAspectRatio="landscape" contentSize={1} />
         <SkeletonLoader imageAspectRatio="landscape" contentSize={1} />
