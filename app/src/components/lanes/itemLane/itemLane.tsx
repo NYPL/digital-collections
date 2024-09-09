@@ -3,21 +3,12 @@ import {
   Box,
   Flex,
   Heading,
-  HorizontalRule,
   Link,
-  Pagination,
   SimpleGrid,
   Spacer,
 } from "@nypl/design-system-react-components";
-import PageLayout from "../../pageLayout/pageLayout";
 import { useNumColumns } from "../../../hooks/useNumColumns";
-import { useParams, useSearchParams } from "next/navigation";
-import { headerBreakpoints } from "../../../utils/breakpoints";
-import { slugToString } from "../../../utils/utils";
-import CollectionCard from "../../cards/collectionCard";
-import { CollectionCardModel } from "../../../models/collectionCard";
 import useBreakpoints from "../../../hooks/useBreakpoints";
-import CollectionDataType from "../../../types/CollectionDataType";
 import ItemCard from "../../cards/itemCard";
 import { ItemCardModel } from "../../../models/itemCard";
 import React from "react";
@@ -41,7 +32,7 @@ export const ItemLane = ({ data }: any) => {
             type="standalone"
             href={`${DC_URL}/search/index?filters[divisionFullname_mtxt_s][]=${titleToDCParam(
               divisionName
-            )}`} //TO DO: update with slug
+            )}`}
             aria-label={`See more items in ${divisionName}`}
             hasVisitedState
             __css={{

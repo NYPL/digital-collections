@@ -4,6 +4,7 @@ import { ENV_KEY } from "../../src/types/EnvironmentType";
 import { imageURL, addCommas } from "../utils/utils";
 import appConfig from "../../../appConfig";
 import defaultFeaturedItems from "../data/defaultFeaturedItemData";
+import { CARDS_PER_PAGE } from "../config/constants";
 
 export const getHomePageData = async () => {
   const randomNumber = Math.floor(Math.random() * 2);
@@ -225,7 +226,7 @@ export const apiPOSTCall = async (apiUrl: string, postData: any) => {
 export const getDivisionData = async (
   slug: string,
   pageNum: number = 1,
-  perPage: number = 48
+  perPage: number = CARDS_PER_PAGE
 ) => {
   const apiUrl = `${process.env.API_URL}/api/v2/divisions/${slug}?page=${pageNum}&per_page=${perPage}`;
   const res = await apiResponse(apiUrl);
