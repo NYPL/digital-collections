@@ -11,14 +11,14 @@ import {
   SimpleGrid,
 } from "@nypl/design-system-react-components";
 import { useNumColumns } from "../../hooks/useNumColumns";
-import CollectionCard from "../../components/cards/collectionCard";
+import CollectionCard from "../cards/collectionCard";
 import { CollectionCardModel } from "../../models/collectionCard";
 import useBreakpoints from "../../hooks/useBreakpoints";
 import CollectionDataType from "../../types/CollectionDataType";
 import React, { useEffect } from "react";
 import { totalNumPages } from "../../utils/utils";
 import { useState } from "react";
-import { getDivisionData } from "../../../src/utils/api";
+import { getDivisionData } from "../../utils/api";
 
 export const CollectionsTable = ({ data }: any) => {
   const pathname = usePathname();
