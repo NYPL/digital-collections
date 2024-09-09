@@ -23,9 +23,8 @@ export default async function Division({ params }) {
   const currentPage = Number(params.page) || 1;
 
   return (
-    <Suspense>
-      {/* key={query + currentPage} fallback={<InvoicesTableSkeleton />}> */}
-      <DivisionPage data={data} currentPage={currentPage} />
-    </Suspense>
+    // <Suspense>
+    <DivisionPage data={data} currentPage={currentPage} />
+    // </Suspense>
   );
 }

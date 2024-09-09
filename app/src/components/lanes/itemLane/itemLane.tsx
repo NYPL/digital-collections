@@ -14,25 +14,22 @@ import { useNumColumns } from "../../../hooks/useNumColumns";
 import { useParams, useSearchParams } from "next/navigation";
 import { headerBreakpoints } from "../../../utils/breakpoints";
 import { slugToString } from "../../../utils/utils";
-import CollectionCard from "../../../components/cards/collectionCard";
+import CollectionCard from "../../cards/collectionCard";
 import { CollectionCardModel } from "../../../models/collectionCard";
 import useBreakpoints from "../../../hooks/useBreakpoints";
 import CollectionDataType from "../../../types/CollectionDataType";
-import ItemCard from "../../../components/cards/itemCard";
+import ItemCard from "../../cards/itemCard";
 import { ItemCardModel } from "../../../models/itemCard";
 import React from "react";
 import { titleToDCParam, totalNumPages } from "../../../utils/utils";
 import { DC_URL } from "@/src/config/constants";
 
-export const ItemLane = ({ data }: any, { items }: any) => {
+export const ItemLane = ({ data }: any) => {
   const numColumns = useNumColumns();
   const { isLargerThanLargeTablet } = useBreakpoints();
   const divisionName = data.name;
-  // console.log("items is: ", items)
-  // console.log("laneTitle is: ", laneTitle)
   return (
     <>
-      {/* <HorizontalRule sx={{ marginTop: "xxl", marginBottom: "xxl" }} /> */}
       <Box>
         <Flex alignItems="baseline">
           <Heading level="h2" size="heading3">
@@ -64,7 +61,7 @@ export const ItemLane = ({ data }: any, { items }: any) => {
             gridTemplateColumns: `repeat(${numColumns}, minmax(0, 1fr))`,
           }}
         >
-          {data.items.map((item, index) => {
+          {data?.items?.map((item, index) => {
             const itemModel = new ItemCardModel(item);
             return (
               <ItemCard
