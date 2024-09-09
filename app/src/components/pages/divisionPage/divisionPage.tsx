@@ -11,7 +11,7 @@ import { headerBreakpoints } from "../../../utils/breakpoints";
 import { slugToString } from "../../../utils/utils";
 import React from "react";
 import { ItemLane } from "../../lanes/itemLane/itemLane";
-import { CollectionsTable } from "../../tables/collectionTable";
+import { CollectionsTable } from "../../tables/collectionsTable";
 import { useState } from "react";
 
 export default function DivisionPage({ data }: any) {
