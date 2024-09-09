@@ -37,17 +37,16 @@ export const CollectionsTable = ({ data }: any) => {
   const totalPages = totalNumPages(data.numFound, data.perPage);
 
   const updatePageURL = async (pageNumber: number) => {
-    console.log("pageNumber is", pageNumber);
     const params = new URLSearchParams();
     params.set("page", pageNumber.toString());
     setCurrentPage(pageNumber);
-    const url = `${pathname}?${params.toString()}`;
+    const url = `${pathname}?${params.toString()}#collections-table`;
     replace(url);
   };
 
   return (
     <>
-      <Heading level="h2" size="heading3">
+      <Heading level="h2" id="collections-table" size="heading3">
         {`Collections in the ${data.name}`}
       </Heading>
       <SimpleGrid
