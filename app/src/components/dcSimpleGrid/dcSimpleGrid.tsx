@@ -31,6 +31,7 @@ export interface SimpleGridProps {
   id?: string;
 }
 
+// Exactly the same as the DS SimpleGrid, but with our breakpoints and desired number of columns applied.
 const SimpleGridComponent = forwardRef<
   HTMLDivElement,
   React.PropsWithChildren<SimpleGridProps>
@@ -40,7 +41,6 @@ const SimpleGridComponent = forwardRef<
   const responsiveCols = columns
     ? { base: 1, sm: columns }
     : { base: 1, md: 2, lg: 3 };
-
   return (
     <ChakraSimpleGrid
       className={className}
