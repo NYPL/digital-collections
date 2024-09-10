@@ -40,6 +40,7 @@ const ItemCard = ({ id, isLargerThanLargeTablet, item }) => {
         id: `image-${id}`,
         isLazy: true,
         aspectRatio: "twoByOne",
+        fallbackSrc: "/noImage.png",
         src: item.imageURL,
       }}
     >

@@ -64,6 +64,7 @@ const CollectionCard = ({
               id: `image-${slug}-${id}`,
               isLazy: true,
               aspectRatio: "twoByOne",
+              fallbackSrc: "/noImage.png",
               src: collection.imageURL,
             }
           : {
