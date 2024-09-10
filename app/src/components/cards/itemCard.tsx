@@ -12,6 +12,7 @@ const ItemCard = ({ id, isLargerThanLargeTablet, item }) => {
   const truncatedTitle = item.title.length > TRUNCATED_LENGTH;
   const [offset, setOffset] = useState<[number, number]>([0, -130]);
   const cardRef = useRef<HTMLDivElement>(null);
+
   const getOffset = () => {
     if (cardRef.current) {
       const image = cardRef.current.children[0] as HTMLElement;
@@ -41,6 +42,11 @@ const ItemCard = ({ id, isLargerThanLargeTablet, item }) => {
         isLazy: true,
         aspectRatio: "twoByOne",
         fallbackSrc: "/noImage.png",
+        onError: (_event) =>
+          console.log(
+            "Card image failed to load, fallback image loaded instead. ImageURL: ",
+            item.imageURL
+          ),
         src: item.imageURL,
       }}
     >

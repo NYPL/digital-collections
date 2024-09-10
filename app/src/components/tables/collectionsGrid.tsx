@@ -26,7 +26,6 @@ export const CollectionsGrid = ({ data }: any) => {
   const [currentPage, setCurrentPage] = useState(
     Number(queryParams.get("page")) || 1
   );
-  console.log("currentPage is: ", currentPage);
 
   const { replace } = useRouter();
 

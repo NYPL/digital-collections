@@ -24,8 +24,8 @@ export default async function Division({ params, searchParams }) {
   const currentPage = Number(searchParams.page) || 1;
 
   return (
-    // <Suspense>
-    <DivisionPage data={data} currentPage={currentPage} />
-    // </Suspense>
+    <Suspense>
+      <DivisionPage data={data} currentPage={currentPage} />
+    </Suspense>
   );
 }
