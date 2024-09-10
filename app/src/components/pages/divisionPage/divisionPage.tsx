@@ -53,7 +53,12 @@ export default function DivisionPage({ data }: any) {
         }}
       >
         <Heading level="h1" text={title} subtitle={data.summary} />
-        <Link type="standalone" target="_blank" href={data.nyplLink}>
+        <Link
+          type="standalone"
+          target="_blank"
+          href={data.nyplLink}
+          style={{ width: "fit-content" }}
+        >
           <span> Contact info and more </span>
         </Link>
       </Box>
