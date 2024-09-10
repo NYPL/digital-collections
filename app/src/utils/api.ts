@@ -83,7 +83,6 @@ export const getFeaturedImage = async () => {
 export const getItemData = async (uuid: string) => {
   const apiUrl = `${process.env.API_URL}/api/v2/items/mods_captures/${uuid}`;
   const res = await RepoAPICall(apiUrl);
-  // console.log("res is: ", res)
   return res;
 };
 

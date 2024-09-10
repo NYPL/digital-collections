@@ -58,7 +58,6 @@ export const trackVirtualPageView = (pagename) => {
   // Adobe does not support TS types.
   const adobeDataLayer = window["adobeDataLayer"] || [];
 
-  console.log("pagename is: ", pagename);
   adobeDataLayer.push({
     page_name: null,
     site_section: null,
@@ -92,13 +91,9 @@ export const parseBoolean = (value: string): boolean => {
 };
 
 export const titleToDCParam = (string: string = ""): string => {
-  console.log("string is: ", string);
   return string?.replace(/\s+/g, "+"); // replace spaces with +
 };
 
 export const totalNumPages = (numResults: string, perPage: string): number => {
-  // console.log("numResults: ", numResults);
-  // console.log("perPage: ", perPage);
-  // console.log("totalNum:", Math.ceil(parseInt(numResults) / parseInt(perPage)))
   return Math.ceil(parseInt(numResults) / parseInt(perPage));
 };
