@@ -6,7 +6,6 @@ import {
   SimpleGrid,
 } from "@nypl/design-system-react-components";
 import PageLayout from "../../pageLayout/pageLayout";
-import { useNumColumns } from "../../../hooks/useNumColumns";
 import { useParams } from "next/navigation";
 import { headerBreakpoints } from "../../../utils/breakpoints";
 import { slugToString } from "../../../utils/utils";
@@ -22,7 +21,6 @@ export default function CollectionLanePage() {
   const { isLargerThanLargeTablet } = useBreakpoints();
   const slug = params.slug as string;
   const title = slugToString(slug);
-  const numColumns = useNumColumns();
   return (
     <>
       <Box
@@ -39,9 +37,13 @@ export default function CollectionLanePage() {
       </Box>
       <HorizontalRule sx={{ marginTop: "xxl", marginBottom: "xxl" }} />
       <SimpleGrid
-        columns={numColumns}
         sx={{
-          gridTemplateColumns: `repeat(${numColumns}, minmax(0, 1fr))`,
+          [`@media screen and (min-width: ${headerBreakpoints.lgMobile}px)`]: {
+            gridTemplateColumns: `repeat(2, minmax(0, 1fr))`,
+          },
+          [`@media screen and (min-width: ${headerBreakpoints.lgTablet}px)`]: {
+            gridTemplateColumns: `repeat(4, minmax(0, 1fr))`,
+          },
         }}
       >
         {mockCollections.map((collection: CollectionDataType, index) => {

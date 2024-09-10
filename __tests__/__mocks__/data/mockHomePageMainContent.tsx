@@ -5,7 +5,6 @@ export const mockHomePageMainContent = {
   collectionLaneData: {
     lanesWithNumItems: mockCollectionLanes.lanesWithNumItems,
     randomNumber: 1,
-    numColumns: 4,
   },
   featuredItemData: {
     featuredItem: {

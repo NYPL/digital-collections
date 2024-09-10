@@ -9,7 +9,6 @@ import {
   Spacer,
 } from "@nypl/design-system-react-components";
 import PageLayout from "../../pageLayout/pageLayout";
-import { useNumColumns } from "../../../hooks/useNumColumns";
 import { useParams } from "next/navigation";
 import { headerBreakpoints } from "../../../utils/breakpoints";
 import { slugToString } from "../../../utils/utils";
@@ -23,13 +22,13 @@ import { mockItems } from "../../../../../__tests__/__mocks__/data/mockItems";
 import { ItemCardModel } from "../../../models/itemCard";
 import React, { useEffect, useState } from "react";
 import CollectionLanesLoading from "../../collectionLanes/collectionLanesLoading";
+import DCSimpleGrid from "../../dcSimpleGrid/dcSimpleGrid";
 
 export default function DivisionPage() {
   const params = useParams();
   const { isLargerThanLargeTablet } = useBreakpoints();
   const slug = params.slug as string;
   const title = slugToString(slug);
-  const numColumns = useNumColumns();
   const pageName = `divisions|${slug}`;
   const [isLoaded, setIsLoaded] = useState(false);
 
@@ -101,9 +100,15 @@ export default function DivisionPage() {
         </Flex>
         {isLoaded ? (
           <SimpleGrid
-            columns={numColumns}
             sx={{
-              gridTemplateColumns: `repeat(${numColumns}, minmax(0, 1fr))`,
+              [`@media screen and (min-width: ${headerBreakpoints.lgMobile}px)`]:
+                {
+                  gridTemplateColumns: `repeat(2, minmax(0, 1fr))`,
+                },
+              [`@media screen and (min-width: ${headerBreakpoints.lgTablet}px)`]:
+                {
+                  gridTemplateColumns: `repeat(4, minmax(0, 1fr))`,
+                },
             }}
           >
             {mockItems.map((item, index) => {
@@ -149,12 +154,7 @@ export default function DivisionPage() {
         {`Collections in the ${title}`}
       </Heading>
       {isLoaded ? (
-        <SimpleGrid
-          columns={numColumns}
-          sx={{
-            gridTemplateColumns: `repeat(${numColumns}, minmax(0, 1fr))`,
-          }}
-        >
+        <DCSimpleGrid>
           {mockCollections.map((collection: CollectionDataType, index) => {
             const collectionModel = new CollectionCardModel(collection);
             return (
@@ -167,7 +167,7 @@ export default function DivisionPage() {
               />
             );
           })}
-        </SimpleGrid>
+        </DCSimpleGrid>
       ) : (
         <>
           <CollectionLanesLoading withTitle={false} />,

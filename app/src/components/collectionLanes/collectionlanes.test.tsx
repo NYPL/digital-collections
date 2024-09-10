@@ -8,7 +8,6 @@ describe("Swim Lanes component renders with expected props", () => {
     render(
       <CollectionLanes
         seeMoreLink={`${DC_URL}/collections/lane`}
-        numColumns={4}
         lanesWithNumItems={mockCollectionLanes.lanesWithNumItems}
       />
     );
@@ -29,7 +28,6 @@ describe("Swim Lanes component renders with expected props", () => {
     render(
       <CollectionLanes
         seeMoreLink={`${DC_URL}/collections/lane`}
-        numColumns={4}
         lanesWithNumItems={mockCollectionLanes.lanesWithNumItems}
       />
     );
@@ -56,7 +54,6 @@ describe("Swim Lanes component renders with expected props", () => {
     render(
       <CollectionLanes
         seeMoreLink={`${DC_URL}/collections/lane`}
-        numColumns={4}
         lanesWithNumItems={mockCollectionLanes.lanesWithNumItems}
       />
     );
@@ -74,7 +71,6 @@ describe("Swim Lanes component renders with expected props", () => {
     render(
       <CollectionLanes
         seeMoreLink={`${DC_URL}/collections/lane`}
-        numColumns={4}
         lanesWithNumItems={mockCollectionLanes.lanesWithNumItems}
       />
     );
@@ -91,7 +87,6 @@ describe("Swim Lanes component renders with expected props", () => {
     render(
       <CollectionLanes
         seeMoreLink={`${DC_URL}/collections/lane`}
-        numColumns={4}
         lanesWithNumItems={mockCollectionLanes.lanesWithNumItems}
       />
     );

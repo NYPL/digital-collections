@@ -7,13 +7,11 @@ import {
 } from "@nypl/design-system-react-components";
 import PageLayout from "../../pageLayout/pageLayout";
 import React, { useEffect, useState } from "react";
-import { useNumColumns } from "../../../hooks/useNumColumns";
 import CollectionLanes from "../../collectionLanes/collectionLanes";
 import { DC_URL } from "@/src/config/constants";
 import CollectionLanesLoading from "../../collectionLanes/collectionLanesLoading";
 
 export default function DivisionsPage({ data }) {
-  const numColumns = useNumColumns();
   const [isLoaded, setIsLoaded] = useState(false);
 
   useEffect(() => {
@@ -43,7 +41,6 @@ export default function DivisionsPage({ data }) {
           <HorizontalRule sx={{ marginTop: "xxl", marginBottom: "xxl" }} />
           {isLoaded ? (
             <CollectionLanes
-              numColumns={numColumns}
               lanesWithNumItems={data.divisions}
               seeMoreLink={`${DC_URL}/divisions`}
             />

@@ -1,11 +1,10 @@
-import { useNumColumns } from "@/src/hooks/useNumColumns";
 import {
   SkeletonLoader,
-  SimpleGrid,
   Box,
   Flex,
 } from "@nypl/design-system-react-components";
 import React from "react";
+import DCSimpleGrid from "../dcSimpleGrid/dcSimpleGrid";
 
 export default function CollectionLanesLoading({ withTitle = true }) {
   return (
@@ -15,11 +14,12 @@ export default function CollectionLanesLoading({ withTitle = true }) {
           <SkeletonLoader contentSize={0} showImage={false} headingSize={1} />
         </Flex>
       )}
-      <SimpleGrid>
+      <DCSimpleGrid>
         <SkeletonLoader imageAspectRatio="landscape" contentSize={1} />
         <SkeletonLoader imageAspectRatio="landscape" contentSize={1} />
         <SkeletonLoader imageAspectRatio="landscape" contentSize={1} />
-      </SimpleGrid>
+        <SkeletonLoader imageAspectRatio="landscape" contentSize={1} />
+      </DCSimpleGrid>
     </Box>
   );
 }

@@ -13,8 +13,10 @@ import useBreakpoints from "../../hooks/useBreakpoints";
 import CollectionCard from "../cards/collectionCard";
 import CollectionDataType from "../../types/CollectionDataType";
 import { CollectionCardModel } from "../../models/collectionCard";
+import DCSimpleGrid from "../dcSimpleGrid/dcSimpleGrid";
+import { headerBreakpoints } from "@/src/utils/breakpoints";
 
-const CollectionLanes = ({ numColumns, lanesWithNumItems, seeMoreLink }) => {
+const CollectionLanes = ({ lanesWithNumItems, seeMoreLink }) => {
   const { isLargerThanLargeTablet } = useBreakpoints();
   const lanes = lanesWithNumItems?.map((lane, key) => (
     <Box className={styles.lane} data-testid={lane.slug} mt="xxl" key={key}>
@@ -42,10 +44,16 @@ const CollectionLanes = ({ numColumns, lanesWithNumItems, seeMoreLink }) => {
       </Flex>
       {lane.collections && lane.collections.length > 0 && (
         <SimpleGrid
-          columns={numColumns}
           id={`grid-${lane.slug}`}
           sx={{
-            gridTemplateColumns: `repeat(${numColumns}, minmax(0, 1fr))`,
+            [`@media screen and (min-width: ${headerBreakpoints.lgMobile}px)`]:
+              {
+                gridTemplateColumns: `repeat(2, minmax(0, 1fr))`,
+              },
+            [`@media screen and (min-width: ${headerBreakpoints.lgTablet}px)`]:
+              {
+                gridTemplateColumns: `repeat(4, minmax(0, 1fr))`,
+              },
           }}
         >
           {lane.collections.map((collection: CollectionDataType, index) => {

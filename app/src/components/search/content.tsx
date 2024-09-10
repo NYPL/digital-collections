@@ -9,14 +9,13 @@ import { useSearchParams } from "next/navigation";
 import { CollectionCardModel } from "../../models/collectionCard";
 import CollectionDataType from "../../types/CollectionDataType";
 import CollectionCard from "../cards/collectionCard";
-import { useNumColumns } from "../../hooks/useNumColumns";
 import useBreakpoints from "../../hooks/useBreakpoints";
 import { useRouter } from "next/navigation";
+import { headerBreakpoints } from "@/src/utils/breakpoints";
 
 const SearchContent = () => {
   const queryParams = useSearchParams();
   const query = queryParams.toString();
-  const numColumns = useNumColumns();
   const { isLargerThanLargeTablet } = useBreakpoints();
 
   const router = useRouter();
@@ -78,9 +77,13 @@ const SearchContent = () => {
         />
       </Box>
       <SimpleGrid
-        columns={numColumns}
         sx={{
-          gridTemplateColumns: `repeat(${numColumns}, minmax(0, 1fr))`,
+          [`@media screen and (min-width: ${headerBreakpoints.lgMobile}px)`]: {
+            gridTemplateColumns: `repeat(2, minmax(0, 1fr))`,
+          },
+          [`@media screen and (min-width: ${headerBreakpoints.lgTablet}px)`]: {
+            gridTemplateColumns: `repeat(4, minmax(0, 1fr))`,
+          },
         }}
       >
         {mockCollections.map((collection: CollectionDataType, index) => {
