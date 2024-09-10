@@ -14,7 +14,6 @@ import CollectionCard from "../cards/collectionCard";
 import CollectionDataType from "../../types/CollectionDataType";
 import { CollectionCardModel } from "../../models/collectionCard";
 import DCSimpleGrid from "../dcSimpleGrid/dcSimpleGrid";
-import { headerBreakpoints } from "@/src/utils/breakpoints";
 
 const CollectionLanes = ({ lanesWithNumItems, seeMoreLink }) => {
   const { isLargerThanLargeTablet } = useBreakpoints();
@@ -43,19 +42,7 @@ const CollectionLanes = ({ lanesWithNumItems, seeMoreLink }) => {
         </Link>
       </Flex>
       {lane.collections && lane.collections.length > 0 && (
-        <SimpleGrid
-          id={`grid-${lane.slug}`}
-          sx={{
-            [`@media screen and (min-width: ${headerBreakpoints.lgMobile}px)`]:
-              {
-                gridTemplateColumns: `repeat(2, minmax(0, 1fr))`,
-              },
-            [`@media screen and (min-width: ${headerBreakpoints.lgTablet}px)`]:
-              {
-                gridTemplateColumns: `repeat(4, minmax(0, 1fr))`,
-              },
-          }}
-        >
+        <DCSimpleGrid id={`grid-${lane.slug}`}>
           {lane.collections.map((collection: CollectionDataType, index) => {
             const c = new CollectionCardModel(collection);
             return (
@@ -68,7 +55,7 @@ const CollectionLanes = ({ lanesWithNumItems, seeMoreLink }) => {
               />
             );
           })}
-        </SimpleGrid>
+        </DCSimpleGrid>
       )}
       <Link
         id={`row-see-more-${lane.slug}-mobile`}

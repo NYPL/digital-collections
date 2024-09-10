@@ -99,18 +99,7 @@ export default function DivisionPage() {
           </Link>
         </Flex>
         {isLoaded ? (
-          <SimpleGrid
-            sx={{
-              [`@media screen and (min-width: ${headerBreakpoints.lgMobile}px)`]:
-                {
-                  gridTemplateColumns: `repeat(2, minmax(0, 1fr))`,
-                },
-              [`@media screen and (min-width: ${headerBreakpoints.lgTablet}px)`]:
-                {
-                  gridTemplateColumns: `repeat(4, minmax(0, 1fr))`,
-                },
-            }}
-          >
+          <DCSimpleGrid>
             {mockItems.map((item, index) => {
               const itemModel = new ItemCardModel(item);
               return (
@@ -122,7 +111,7 @@ export default function DivisionPage() {
                 />
               );
             })}
-          </SimpleGrid>
+          </DCSimpleGrid>
         ) : (
           <>
             <CollectionLanesLoading withTitle={false} />

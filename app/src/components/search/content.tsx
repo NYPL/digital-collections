@@ -1,9 +1,4 @@
-import {
-  Box,
-  Menu,
-  SimpleGrid,
-  Text,
-} from "@nypl/design-system-react-components";
+import { Box, Menu, Text } from "@nypl/design-system-react-components";
 import { mockCollections } from "__tests__/__mocks__/data/mockCollections";
 import { useSearchParams } from "next/navigation";
 import { CollectionCardModel } from "../../models/collectionCard";
@@ -11,7 +6,7 @@ import CollectionDataType from "../../types/CollectionDataType";
 import CollectionCard from "../cards/collectionCard";
 import useBreakpoints from "../../hooks/useBreakpoints";
 import { useRouter } from "next/navigation";
-import { headerBreakpoints } from "@/src/utils/breakpoints";
+import DCSimpleGrid from "../dcSimpleGrid/dcSimpleGrid";
 
 const SearchContent = () => {
   const queryParams = useSearchParams();
@@ -76,16 +71,7 @@ const SearchContent = () => {
           ]}
         />
       </Box>
-      <SimpleGrid
-        sx={{
-          [`@media screen and (min-width: ${headerBreakpoints.lgMobile}px)`]: {
-            gridTemplateColumns: `repeat(2, minmax(0, 1fr))`,
-          },
-          [`@media screen and (min-width: ${headerBreakpoints.lgTablet}px)`]: {
-            gridTemplateColumns: `repeat(4, minmax(0, 1fr))`,
-          },
-        }}
-      >
+      <DCSimpleGrid>
         {mockCollections.map((collection: CollectionDataType, index) => {
           const collectionModel = new CollectionCardModel(collection);
           return (
@@ -98,7 +84,7 @@ const SearchContent = () => {
             />
           );
         })}
-      </SimpleGrid>
+      </DCSimpleGrid>
     </>
   );
 };

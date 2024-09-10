@@ -4,18 +4,7 @@ import {
   ChakraComponent,
 } from "@chakra-ui/react";
 import React, { forwardRef } from "react";
-import { extendTheme } from "@chakra-ui/react";
-
-const breakpoints = {
-  base: "0px",
-  sm: "480px",
-  md: "768px",
-  lg: "1024px",
-  xl: "1280px",
-  "2xl": "1536px",
-};
-
-extendTheme({ breakpoints });
+import { headerBreakpoints } from "@/src/utils/breakpoints";
 
 export const gridGapsArray = [
   "grid.xxs",
@@ -50,7 +39,7 @@ const SimpleGridComponent = forwardRef<
 
   const responsiveCols = columns
     ? { base: 1, sm: columns }
-    : { base: 1, sm: 2, lg: 4 };
+    : { base: 1, md: 2, lg: 3 };
 
   return (
     <ChakraSimpleGrid
@@ -60,6 +49,14 @@ const SimpleGridComponent = forwardRef<
       id={id}
       ref={ref}
       {...rest}
+      sx={{
+        [`@media screen and (min-width: ${headerBreakpoints.lgMobile}px)`]: {
+          gridTemplateColumns: `repeat(2, minmax(0, 1fr))`,
+        },
+        [`@media screen and (min-width: ${headerBreakpoints.lgTablet}px)`]: {
+          gridTemplateColumns: `repeat(4, minmax(0, 1fr))`,
+        },
+      }}
     >
       {children}
     </ChakraSimpleGrid>

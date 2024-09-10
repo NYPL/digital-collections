@@ -3,7 +3,6 @@ import {
   Box,
   Heading,
   HorizontalRule,
-  SimpleGrid,
 } from "@nypl/design-system-react-components";
 import PageLayout from "../../pageLayout/pageLayout";
 import { useParams } from "next/navigation";
@@ -15,6 +14,7 @@ import useBreakpoints from "../../../hooks/useBreakpoints";
 import CollectionDataType from "../../../types/CollectionDataType";
 import { mockCollections } from "../../../../../__tests__/__mocks__/data/mockCollections";
 import React from "react";
+import DCSimpleGrid from "../../dcSimpleGrid/dcSimpleGrid";
 
 export default function CollectionLanePage() {
   const params = useParams();
@@ -36,16 +36,7 @@ export default function CollectionLanePage() {
         <Heading sx={{ marginBottom: 0 }} level="h1" text={title} />
       </Box>
       <HorizontalRule sx={{ marginTop: "xxl", marginBottom: "xxl" }} />
-      <SimpleGrid
-        sx={{
-          [`@media screen and (min-width: ${headerBreakpoints.lgMobile}px)`]: {
-            gridTemplateColumns: `repeat(2, minmax(0, 1fr))`,
-          },
-          [`@media screen and (min-width: ${headerBreakpoints.lgTablet}px)`]: {
-            gridTemplateColumns: `repeat(4, minmax(0, 1fr))`,
-          },
-        }}
-      >
+      <DCSimpleGrid>
         {mockCollections.map((collection: CollectionDataType, index) => {
           const collectionModel = new CollectionCardModel(collection);
           return (
@@ -58,7 +49,7 @@ export default function CollectionLanePage() {
             />
           );
         })}
-      </SimpleGrid>
+      </DCSimpleGrid>
     </>
   );
 }
