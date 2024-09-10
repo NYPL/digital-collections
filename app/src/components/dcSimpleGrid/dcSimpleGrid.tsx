@@ -31,7 +31,7 @@ export interface SimpleGridProps {
   id?: string;
 }
 
-// Exactly the same as the DS SimpleGrid, but with our breakpoints and desired number of columns applied.
+// Exactly the same as the DS SimpleGrid, but with our breakpoints and desired number of columns applied via media queries.
 const SimpleGridComponent = forwardRef<
   HTMLDivElement,
   React.PropsWithChildren<SimpleGridProps>
