@@ -11,7 +11,7 @@ import { headerBreakpoints } from "../../../utils/breakpoints";
 import { slugToString } from "../../../utils/utils";
 import React from "react";
 import { ItemLane } from "../../lanes/itemLane/itemLane";
-import { CollectionsTable } from "../../tables/collectionsTable";
+import { CollectionsGrid } from "../../tables/collectionsGrid";
 import { useState } from "react";
 
 export default function DivisionPage({ data }: any) {
@@ -62,7 +62,7 @@ export default function DivisionPage({ data }: any) {
       <ItemLane data={data} />
 
       <HorizontalRule sx={{ marginTop: "xxl", marginBottom: "xxl" }} />
-      <CollectionsTable data={data} updateCollections={updateCollections} />
+      <CollectionsGrid data={data} updateCollections={updateCollections} />
     </PageLayout>
   );
 }
