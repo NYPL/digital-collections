@@ -4,7 +4,7 @@ import {
 } from "../config/constants";
 import { ENV_KEY } from "../types/EnvironmentType";
 import appConfig from "../../../appConfig";
-import { CARDS_PER_PAGE } from "../config/constants";
+
 /**
  * Represents a IIIF Image API URL, which will be used globally throughout the application.
  * IIIF Image API has several params, the ones we are the most concerned about are Region, Size, and Rotation.
