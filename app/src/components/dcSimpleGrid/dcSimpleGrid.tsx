@@ -21,7 +21,7 @@ export interface SimpleGridProps {
   /** Additional class name. */
   className?: string;
   /** Optional numeric value to override the default column count; the default
-   * column count is 4. */
+   * column count is 3. */
   columns?: number;
   /** Optional gap size; if omitted, the default `large` (2rem / 32px) spacing
    * will be used; `IMPORTANT: for standard grid layouts, this prop should
