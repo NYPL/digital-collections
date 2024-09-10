@@ -5,7 +5,6 @@ export const mockHomePageMainContent = {
   swimLaneData: {
     lanesWithNumItems: mockSwimLanes.lanesWithNumItems,
     randomNumber: 1,
-    numColumns: 4,
   },
   featuredItemData: {
     featuredItem: {

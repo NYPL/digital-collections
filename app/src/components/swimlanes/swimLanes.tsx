@@ -15,8 +15,9 @@ import CollectionCard from "../cards/collectionCard";
 import CollectionDataType from "../../types/CollectionDataType";
 import { CollectionCardModel } from "../../models/collectionCard";
 import { SwimLanesProps } from "../../types/props/SwimLanesProps";
+import DCSimpleGrid from "../dcSimpleGrid/dcSimpleGrid";
 
-const SwimLanes = ({ numColumns, lanesWithNumItems }: SwimLanesProps) => {
+const SwimLanes = ({ lanesWithNumItems }: SwimLanesProps) => {
   const { isLargerThanLargeTablet } = useBreakpoints();
   const lanes = lanesWithNumItems.map((lane, key) => (
     <Box className={styles.lane} data-testid={lane.slug} mt="xxl" key={key}>
@@ -43,13 +44,7 @@ const SwimLanes = ({ numColumns, lanesWithNumItems }: SwimLanesProps) => {
         </Link>
       </Flex>
       {lane.collections && lane.collections.length > 0 && (
-        <SimpleGrid
-          columns={numColumns}
-          id={`grid-${lane.slug}`}
-          sx={{
-            gridTemplateColumns: `repeat(${numColumns}, minmax(0, 1fr))`,
-          }}
-        >
+        <DCSimpleGrid id={`grid-${lane.slug}`}>
           {lane.collections.map((collection: CollectionDataType, index) => {
             const c = new CollectionCardModel(collection);
             return (
@@ -62,7 +57,7 @@ const SwimLanes = ({ numColumns, lanesWithNumItems }: SwimLanesProps) => {
               />
             );
           })}
-        </SimpleGrid>
+        </DCSimpleGrid>
       )}
       <Link
         id={`row-see-more-${lane.slug}-mobile`}
