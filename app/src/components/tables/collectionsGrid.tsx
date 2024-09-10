@@ -41,12 +41,19 @@ export const CollectionsGrid = ({ data }: any) => {
     setCurrentPage(pageNumber);
     const url = `${pathname}?${params.toString()}#${data.slug}`;
     replace(url);
-    headingRef.current?.focus();
+    headingRef.current?.focus;
   };
 
   return (
     <>
-      <Heading ref={headingRef} level="h2" id={data.slug} size="heading3">
+      <Heading
+        ref={headingRef}
+        tabIndex={0}
+        level="h2"
+        id={data.slug}
+        size="heading3"
+        style={{ width: "fit-content" }}
+      >
         {`Collections in the ${data.name}`}
       </Heading>
       <SimpleGrid
