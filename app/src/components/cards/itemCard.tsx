@@ -43,9 +43,8 @@ const ItemCard = ({ id, isLargerThanLargeTablet, item }) => {
         aspectRatio: "twoByOne",
         fallbackSrc: "/noImage.png",
         onError: (_event) =>
-          console.log(
-            "Card image failed to load, fallback image loaded instead. ImageURL: ",
-            item.imageURL
+          console.warn(
+            `Card image failed to load, fallback image loaded instead. ImageURL: ${item.imageURL}`
           ),
         src: item.imageURL,
       }}

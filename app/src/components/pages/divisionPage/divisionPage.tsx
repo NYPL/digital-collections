@@ -1,5 +1,5 @@
 "use client";
-import { useParams, useSearchParams } from "next/navigation";
+import { useParams } from "next/navigation";
 import {
   Box,
   Heading,
@@ -12,11 +12,9 @@ import { slugToString } from "../../../utils/utils";
 import React from "react";
 import { ItemLane } from "../../lanes/itemLane/itemLane";
 import { CollectionsGrid } from "../../tables/collectionsGrid";
-import { useState } from "react";
 
 export default function DivisionPage({ data }: any) {
   const params = useParams();
-  const queryParams = useSearchParams();
   const slug = params.slug as string;
   const title = slugToString(slug);
   const pageName = `divisions|${slug}`;
@@ -67,7 +65,7 @@ export default function DivisionPage({ data }: any) {
       <ItemLane data={data} />
 
       <HorizontalRule sx={{ marginTop: "xxl", marginBottom: "xxl" }} />
-      <CollectionsGrid data={data} updateCollections={updateCollections} />
+      <CollectionsGrid data={data} />
     </PageLayout>
   );
 }
