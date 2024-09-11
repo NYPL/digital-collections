@@ -1,6 +1,5 @@
 "use client";
 import {
-  TemplateAppContainer,
   Breadcrumbs,
   DSProvider,
   SkipNavigation,
