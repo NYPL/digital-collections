@@ -193,7 +193,6 @@ export const RepoAPICall = async (
     }
   } catch (error) {
     console.error(error);
-    return Response.json({ message: "Internal Server Error" }, { status: 500 });
   }
 };
 
