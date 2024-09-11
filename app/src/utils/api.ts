@@ -5,6 +5,7 @@ import { imageURL, addCommas } from "../utils/utils";
 import appConfig from "../../../appConfig";
 import defaultFeaturedItems from "../data/defaultFeaturedItemData";
 import { CARDS_PER_PAGE } from "../config/constants";
+import { redirect } from "next/navigation";
 
 export const getHomePageData = async () => {
   const randomNumber = Math.floor(Math.random() * 2);
@@ -229,5 +230,9 @@ export const getDivisionData = async (
 ) => {
   const apiUrl = `${process.env.API_URL}/api/v2/divisions/${slug}?page=${pageNum}&per_page=${perPage}`;
   const res = await apiResponse(apiUrl);
-  return res;
+  if (res.headers.code === "404") {
+    redirect("/404");
+  } else {
+    return res;
+  }
 };
