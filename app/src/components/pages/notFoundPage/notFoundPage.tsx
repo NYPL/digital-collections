@@ -15,6 +15,7 @@ export default function NotFoundPage() {
           justifyContent: "center",
           alignItems: "center",
           margin: "xl",
+          textAlign: "center",
         }}
       >
         <Heading level="h1">404 Not Found</Heading>
