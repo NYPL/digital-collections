@@ -189,10 +189,11 @@ export const RepoAPICall = async (
       const data = await response.json();
       return data;
     } else {
-      return undefined;
+      throw new Error("Server error");
     }
   } catch (error) {
-    return undefined;
+    console.error(error);
+    return Response.json({ message: "Internal Server Error" }, { status: 500 });
   }
 };
 
@@ -229,6 +230,16 @@ export const getDivisionData = async (
   perPage: number = CARDS_PER_PAGE
 ) => {
   const apiUrl = `${process.env.API_URL}/api/v2/divisions/${slug}?page=${pageNum}&per_page=${perPage}`;
+  const res = await apiResponse(apiUrl);
+  if (res.headers.code === "404") {
+    redirect("/404");
+  } else {
+    return res;
+  }
+};
+
+export const getDivisionsData = async () => {
+  const apiUrl = `${process.env.API_URL}/api/v2/divisions`;
   const res = await apiResponse(apiUrl);
   if (res.headers.code === "404") {
     redirect("/404");

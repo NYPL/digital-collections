@@ -86,7 +86,8 @@ const PageLayout = ({
         <Header />
         {activePage === "home" ||
         activePage === "about" ||
-        activePage === "notFound" ? (
+        activePage === "notFound" ||
+        activePage === "serverError" ? (
           children
         ) : (
           <>
