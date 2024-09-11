@@ -20,9 +20,6 @@ export type GridGaps = (typeof gridGapsArray)[number];
 export interface SimpleGridProps {
   /** Additional class name. */
   className?: string;
-  /** Optional numeric value to override the default column count; the default
-   * column count is 3. */
-  columns?: number;
   /** Optional gap size; if omitted, the default `large` (2rem / 32px) spacing
    * will be used; `IMPORTANT: for standard grid layouts, this prop should
    * not be used.` */
@@ -36,15 +33,11 @@ const SimpleGridComponent = forwardRef<
   HTMLDivElement,
   React.PropsWithChildren<SimpleGridProps>
 >((props, ref?) => {
-  const { children, columns, className, gap = "grid.l", id, ...rest } = props;
+  const { children, className, gap = "grid.l", id, ...rest } = props;
 
-  const responsiveCols = columns
-    ? { base: 1, sm: columns }
-    : { base: 1, md: 2, lg: 3 };
   return (
     <ChakraSimpleGrid
       className={className}
-      columns={responsiveCols}
       gap={gap}
       id={id}
       ref={ref}
