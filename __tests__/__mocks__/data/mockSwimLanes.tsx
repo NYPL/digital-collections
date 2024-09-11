@@ -1,7 +1,6 @@
 import { mockCollections } from "./mockCollections";
 
 export const mockSwimLanes = {
-  numColumns: 4,
   lanesWithNumItems: [
     {
       title: "Test collections 1",
