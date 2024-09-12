@@ -19,8 +19,6 @@ export default function DivisionPage({ data }: any) {
   const title = slugToString(slug);
   const pageName = `divisions|${slug}`;
 
-  const updateCollections = () => {};
-
   return (
     <PageLayout
       activePage="division"
