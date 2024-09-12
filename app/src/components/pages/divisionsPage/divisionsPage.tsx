@@ -5,14 +5,17 @@ import {
   HorizontalRule,
 } from "@nypl/design-system-react-components";
 import PageLayout from "../../pageLayout/pageLayout";
-import React from "react";
-import { useNumColumns } from "../../../hooks/useNumColumns";
+import React, { useEffect, useState } from "react";
 import { headerBreakpoints } from "../../../utils/breakpoints";
 import { mockSwimLanes } from "../../../../../__tests__/__mocks__/data/mockSwimLanes";
 import SwimLanes from "../../../components/swimlanes/swimLanes";
+import SwimLanesLoading from "../../swimlanes/swimLanesLoading";
 
 export default function DivisionsPage() {
-  const numColumns = useNumColumns();
+  const [isLoaded, setIsLoaded] = useState(false);
+  useEffect(() => {
+    setIsLoaded(true);
+  }, []);
   return (
     <PageLayout
       activePage="divisions"
@@ -20,6 +23,7 @@ export default function DivisionsPage() {
         { text: "Home", url: "/" },
         { text: "Divisions", url: "/divisions" },
       ]}
+      adobeAnalyticsPageName="divisions"
     >
       <Box
         sx={{
@@ -40,10 +44,15 @@ export default function DivisionsPage() {
         />
       </Box>
       <HorizontalRule sx={{ marginTop: "xxl", marginBottom: "xxl" }} />
-      <SwimLanes
-        numColumns={numColumns}
-        lanesWithNumItems={mockSwimLanes.lanesWithNumItems}
-      />
+      {isLoaded ? (
+        <SwimLanes lanesWithNumItems={mockSwimLanes.lanesWithNumItems} />
+      ) : (
+        <>
+          <SwimLanesLoading />,
+          <SwimLanesLoading />,
+          <SwimLanesLoading />
+        </>
+      )}
     </PageLayout>
   );
 }

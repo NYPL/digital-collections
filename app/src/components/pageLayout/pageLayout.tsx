@@ -1,6 +1,5 @@
 "use client";
 import {
-  TemplateAppContainer,
   Breadcrumbs,
   DSProvider,
   SkipNavigation,
@@ -12,7 +11,6 @@ import { type PropsWithChildren } from "react";
 import Header from "../header/header";
 import NotificationBanner from "../notificationBanner/notificationBanner";
 import Script from "next/script";
-import { usePathname } from "next/navigation";
 import { BreadcrumbsDataProps } from "@nypl/design-system-react-components/dist/src/components/Breadcrumbs/Breadcrumbs";
 import { ADOBE_EMBED_URL } from "../../config/constants";
 import { trackVirtualPageView } from "../../utils/utils";
@@ -20,23 +18,20 @@ import { trackVirtualPageView } from "../../utils/utils";
 interface PageLayoutProps {
   activePage: string;
   breadcrumbs?: BreadcrumbsDataProps[];
+  adobeAnalyticsPageName?: string;
 }
 
 const PageLayout = ({
   children,
   activePage,
   breadcrumbs,
+  adobeAnalyticsPageName,
 }: PropsWithChildren<PageLayoutProps>) => {
-  const pathname = usePathname();
   // Track page view events to Adobe Analytics
   useEffect(() => {
-    /*
-    "asPath has been removed because the concept of as has been removed from the new router."
-    https://nextjs.org/docs/app/building-your-application/upgrading/app-router-migration
-    */
-    const route = pathname || "";
-    trackVirtualPageView(route);
+    trackVirtualPageView(adobeAnalyticsPageName);
   });
+
   const [view, setView] = React.useState("form");
   const { isOpen, onClose, FeedbackBox } = useFeedbackBox();
   const onSubmit = async (values: { category: string; comment: string }) => {
@@ -88,7 +83,9 @@ const PageLayout = ({
         <SkipNavigation />
         <NotificationBanner />
         <Header />
-        {activePage === "home" || activePage === "about" ? (
+        {activePage === "home" ||
+        activePage === "about" ||
+        activePage === "notFound" ? (
           children
         ) : (
           <>

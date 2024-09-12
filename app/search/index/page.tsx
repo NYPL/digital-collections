@@ -15,6 +15,7 @@ export default function Search() {
         { text: "Home", url: "/" },
         { text: "Keyword Search", url: "/search/index" },
       ]}
+      adobeAnalyticsPageName="search"
     >
       <SearchResults />
     </PageLayout>

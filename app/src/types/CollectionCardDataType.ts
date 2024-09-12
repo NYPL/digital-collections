@@ -2,10 +2,10 @@ export interface CollectionCardDataType {
   uuid: string;
   title: string;
   url: string;
-  imageID: string;
+  imageID: string | null;
   imageURL: string;
   numItems: number;
-  // TODO: containsOnSiteMaterials: boolean; // to be added in phase 2
+  containsOnSiteMaterials: boolean;
 }
 
 export default CollectionCardDataType;
