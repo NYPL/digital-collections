@@ -12,10 +12,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Added `containsOnSiteMaterials` field to collection card model and component (DR-3123)
 - Updated sticky header to take up less space on zoomed/mobile breakpoints (DR-3089)
 - Updated sticky header to add scroll padding on anchor elements (DR-3102)
+- Updated lane skeleton loader to remove visual discrepancies and no longer use hooks (DR-3171)
 
 ### Added
 
 - Added Adobe Analytics to top level category pages, search based pages, and item pages (DR-3061)
+- Added 404 page which catches nonexistent routes (DR-3168)
 
 ## [0.1.12] 2024-08-29
 
