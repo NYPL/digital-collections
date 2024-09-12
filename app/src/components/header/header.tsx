@@ -12,10 +12,13 @@ import DCLogo from "../logo/logo";
 import NavMenu from "../navMenu/navMenu";
 import MobileNavMenu from "../navMenu/mobileNavMenu";
 import { headerBreakpoints } from "../../utils/breakpoints";
+import useScrollDirection from "../../hooks/useScrollDirection";
 
 const Header = () => {
   useStickyMargin();
   const isScrolled = useScrolled("header");
+  const isScrollingUp = useScrollDirection();
+
   return (
     <Box
       data-sticky-header
@@ -26,7 +29,7 @@ const Header = () => {
       zIndex={999}
       bgColor="ui.white"
       sx={{
-        [`@media screen and (min-width: ${headerBreakpoints.smTablet})`]: {
+        [`@media screen and (min-width: ${headerBreakpoints.smTablet}px)`]: {
           pt: "xs",
         },
         alignItems: "center",
@@ -37,7 +40,7 @@ const Header = () => {
         mx="auto"
         padding="0 16px !important"
         sx={{
-          [`@media screen and (min-width: ${headerBreakpoints.lgTablet})`]: {
+          [`@media screen and (min-width: ${headerBreakpoints.lgTablet}px)`]: {
             display: "flex",
             justifyContent: "space-between",
           },
@@ -47,10 +50,11 @@ const Header = () => {
           justify="space-between"
           sx={{
             display: "none",
-            [`@media screen and (min-width: ${headerBreakpoints.smTablet})`]: {
-              display: "flex",
-              pt: "2px",
-            },
+            [`@media screen and (min-width: ${headerBreakpoints.smTablet}px)`]:
+              {
+                display: "flex",
+                pt: "2px",
+              },
             pb: "xs",
           }}
         >
@@ -58,11 +62,11 @@ const Header = () => {
           <Box
             sx={{
               display: "none",
-              [`@media screen and (min-width: ${headerBreakpoints.smTablet})`]:
+              [`@media screen and (min-width: ${headerBreakpoints.smTablet}px)`]:
                 {
                   display: isScrolled ? "block" : "none",
                 },
-              [`@media screen and (min-width: ${headerBreakpoints.lgTablet})`]:
+              [`@media screen and (min-width: ${headerBreakpoints.lgTablet}px)`]:
                 {
                   display: "none",
                 },
@@ -73,9 +77,11 @@ const Header = () => {
         </HStack>
         <HStack
           sx={{
-            [`@media screen and (min-width: ${headerBreakpoints.smTablet})`]: {
-              display: "none",
-            },
+            display: isScrollingUp ? "flex" : "none",
+            [`@media screen and (min-width: ${headerBreakpoints.smTablet}px)`]:
+              {
+                display: "none",
+              },
             justifyContent: "space-between",
             paddingTop: "xs",
             paddingBottom: "xs",
@@ -90,24 +96,26 @@ const Header = () => {
           sx={{
             borderColor: "var(--nypl-colors-ui-border-default)",
             margin: "0 -15px",
-            [`@media screen and (min-width: ${headerBreakpoints.smTablet})`]: {
-              display: "none",
-            },
+            [`@media screen and (min-width: ${headerBreakpoints.smTablet}px)`]:
+              {
+                display: "none",
+              },
           }}
         />
         <VStack
           align="end"
           sx={{
-            [`@media screen and (min-width: ${headerBreakpoints.lgTablet})`]: {
-              width: "36%",
-            },
+            [`@media screen and (min-width: ${headerBreakpoints.lgTablet}px)`]:
+              {
+                width: "36%",
+              },
             paddingTop: "xs",
           }}
         >
           <Box
             sx={{
               display: "none",
-              [`@media screen and (min-width: ${headerBreakpoints.lgTablet})`]:
+              [`@media screen and (min-width: ${headerBreakpoints.lgTablet}px)`]:
                 {
                   display: isScrolled ? "block" : "none",
                 },

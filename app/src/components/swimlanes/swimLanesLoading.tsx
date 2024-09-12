@@ -1,60 +1,25 @@
 import {
   SkeletonLoader,
-  SimpleGrid,
   Box,
   Flex,
 } from "@nypl/design-system-react-components";
 import React from "react";
+import DCSimpleGrid from "../dcSimpleGrid/dcSimpleGrid";
 
-const SwimLanesLoading = () => {
+export default function SwimLanesLoading({ withTitle = true }) {
   return (
-    <>
-      <Box data-testid="swimlane-skeleton-loader-1">
+    <Box data-testid="swimlane-skeleton-loader-1">
+      {withTitle && (
         <Flex>
           <SkeletonLoader contentSize={0} showImage={false} headingSize={1} />
         </Flex>
-        <SimpleGrid columns={4}>
-          <SkeletonLoader imageAspectRatio="landscape" contentSize={1} />
-          <SkeletonLoader imageAspectRatio="landscape" contentSize={1} />
-          <SkeletonLoader imageAspectRatio="landscape" contentSize={1} />
-          <SkeletonLoader imageAspectRatio="landscape" contentSize={1} />
-        </SimpleGrid>
-      </Box>
-      <Box data-testid="swimlane-skeleton-loader-2">
-        <Flex>
-          <SkeletonLoader contentSize={0} showImage={false} headingSize={1} />
-        </Flex>
-        <SimpleGrid columns={4}>
-          <SkeletonLoader imageAspectRatio="landscape" contentSize={1} />
-          <SkeletonLoader imageAspectRatio="landscape" contentSize={1} />
-          <SkeletonLoader imageAspectRatio="landscape" contentSize={1} />
-          <SkeletonLoader imageAspectRatio="landscape" contentSize={1} />
-        </SimpleGrid>
-      </Box>
-      <Box data-testid="swimlane-skeleton-loader-3">
-        <Flex>
-          <SkeletonLoader contentSize={0} showImage={false} headingSize={1} />
-        </Flex>
-        <SimpleGrid columns={4}>
-          <SkeletonLoader imageAspectRatio="landscape" contentSize={1} />
-          <SkeletonLoader imageAspectRatio="landscape" contentSize={1} />
-          <SkeletonLoader imageAspectRatio="landscape" contentSize={1} />
-          <SkeletonLoader imageAspectRatio="landscape" contentSize={1} />
-        </SimpleGrid>
-      </Box>
-      <Box data-testid="swimlane-skeleton-loader-4">
-        <Flex>
-          <SkeletonLoader contentSize={0} showImage={false} headingSize={1} />
-        </Flex>
-        <SimpleGrid columns={4}>
-          <SkeletonLoader imageAspectRatio="landscape" contentSize={1} />
-          <SkeletonLoader imageAspectRatio="landscape" contentSize={1} />
-          <SkeletonLoader imageAspectRatio="landscape" contentSize={1} />
-          <SkeletonLoader imageAspectRatio="landscape" contentSize={1} />
-        </SimpleGrid>
-      </Box>
-    </>
+      )}
+      <DCSimpleGrid>
+        <SkeletonLoader imageAspectRatio="landscape" contentSize={1} />
+        <SkeletonLoader imageAspectRatio="landscape" contentSize={1} />
+        <SkeletonLoader imageAspectRatio="landscape" contentSize={1} />
+        <SkeletonLoader imageAspectRatio="landscape" contentSize={1} />
+      </DCSimpleGrid>
+    </Box>
   );
-};
-
-export default SwimLanesLoading;
+}
