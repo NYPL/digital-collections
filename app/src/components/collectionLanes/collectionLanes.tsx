@@ -4,18 +4,17 @@ import {
   Box,
   Flex,
   Heading,
-  SimpleGrid,
   Spacer,
   Link,
 } from "@nypl/design-system-react-components";
 import styles from "./Collectionlanes.module.css";
-import { DC_URL } from "../../config/constants";
 import useBreakpoints from "../../hooks/useBreakpoints";
 import CollectionCard from "../cards/collectionCard";
 import CollectionDataType from "../../types/CollectionDataType";
 import { CollectionCardModel } from "../../models/collectionCard";
+import DCSimpleGrid from "../dcSimpleGrid/dcSimpleGrid";
 
-const CollectionLanes = ({ numColumns, lanesWithNumItems, seeMoreLink }) => {
+const CollectionLanes = ({ lanesWithNumItems, seeMoreLink }) => {
   const { isLargerThanLargeTablet } = useBreakpoints();
   const lanes = lanesWithNumItems?.map((lane, key) => (
     <Box className={styles.lane} data-testid={lane.slug} mt="xxl" key={key}>
@@ -42,13 +41,7 @@ const CollectionLanes = ({ numColumns, lanesWithNumItems, seeMoreLink }) => {
         </Link>
       </Flex>
       {lane.collections && lane.collections.length > 0 && (
-        <SimpleGrid
-          columns={numColumns}
-          id={`grid-${lane.slug}`}
-          sx={{
-            gridTemplateColumns: `repeat(${numColumns}, minmax(0, 1fr))`,
-          }}
-        >
+        <DCSimpleGrid id={`grid-${lane.slug}`}>
           {lane.collections.map((collection: CollectionDataType, index) => {
             const c = new CollectionCardModel(collection);
             return (
@@ -61,7 +54,7 @@ const CollectionLanes = ({ numColumns, lanesWithNumItems, seeMoreLink }) => {
               />
             );
           })}
-        </SimpleGrid>
+        </DCSimpleGrid>
       )}
       <Link
         id={`row-see-more-${lane.slug}-mobile`}
