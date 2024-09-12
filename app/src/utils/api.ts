@@ -78,7 +78,7 @@ export const getFeaturedImage = async () => {
 };
 
 /**
- * Returns the number of digitized items in repo api.
+ *
  */
 
 export const getItemData = async (uuid: string) => {
@@ -189,10 +189,13 @@ export const RepoAPICall = async (
       const data = await response.json();
       return data;
     } else {
-      throw new Error("Server error");
+      throw new Error(
+        `${response.status}: ${response.statusText || "3xx/4xx error"}`
+      );
     }
   } catch (error) {
     console.error(error);
+    throw new Error(error.message);
   }
 };
 
@@ -214,35 +217,28 @@ export const apiPOSTCall = async (apiUrl: string, postData: any) => {
 
     if (response.status === 200) {
       const data = await response.json();
-      return data?.nyplAPI?.response;
+      return data;
     } else {
-      return undefined;
+      throw new Error(
+        `${response.status}: ${response.statusText || "3xx/4xx error"}`
+      );
     }
   } catch (error) {
-    return undefined;
+    console.error(error);
+    throw new Error(error.message);
   }
 };
 
 export const getDivisionData = async (
-  slug: string,
+  slug?: string,
   pageNum: number = 1,
   perPage: number = CARDS_PER_PAGE
 ) => {
-  const apiUrl = `${process.env.API_URL}/api/v2/divisions/${slug}?page=${pageNum}&per_page=${perPage}`;
-  const res = await apiResponse(apiUrl);
-  if (res.headers.code === "404") {
-    redirect("/404");
-  } else {
-    return res;
-  }
-};
+  let apiUrl = `${process.env.API_URL}/api/v2/divisions`;
 
-export const getDivisionsData = async () => {
-  const apiUrl = `${process.env.API_URL}/api/v2/divisions`;
-  const res = await apiResponse(apiUrl);
-  if (res.headers.code === "404") {
-    redirect("/404");
-  } else {
-    return res;
+  if (slug) {
+    apiUrl += `/${slug}?page=${pageNum}&per_page=${perPage}`;
   }
+  const res = await apiResponse(apiUrl);
+  return res;
 };

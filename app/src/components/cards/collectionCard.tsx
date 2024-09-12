@@ -42,7 +42,6 @@ const CollectionCard = ({
       ]);
     }
   };
-
   useEffect(() => {
     setTimeout(getOffset, 0);
     window.addEventListener("resize", getOffset);
