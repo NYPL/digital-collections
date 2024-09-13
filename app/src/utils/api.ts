@@ -108,12 +108,10 @@ export const getNumDigitizedItems = async () => {
 export const getItemsCountFromUUIDs = async (uuids: string[]) => {
   const apiUrl = `${process.env.API_URL}/api/v2/items/counts`;
   const response = await apiPOSTCall(apiUrl, { uuids });
-
-  if (!response?.counts?.count?.length) {
+  const counts = response.nyplAPI.response.counts;
+  if (!counts?.count?.length) {
     return {};
   }
-
-  const counts = response.counts;
 
   // The response is an array of objects:
   // [
