@@ -22,7 +22,7 @@ export async function generateMetadata({
 
 export default async function Division({ params, searchParams }) {
   const data = await getDivisionData(params.slug, searchParams.page);
-  if (data.headers.code === "404") {
+  if (data?.headers?.code === "404") {
     redirect("/404");
   }
   const currentPage = Number(searchParams.page) || 1;
