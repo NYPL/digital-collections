@@ -17,6 +17,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Added Adobe Analytics to top level category pages, search based pages, and item pages (DR-3061)
 - Added 404 page which catches nonexistent routes (DR-3168)
+- Added general error boundary which catches 5xx/3xx/4xx errors other than 404 (DR-3175)
 
 ## [0.1.12] 2024-08-29
 
