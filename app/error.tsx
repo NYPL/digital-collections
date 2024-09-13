@@ -26,7 +26,7 @@ export default function Error({
           textAlign: "center",
         }}
       >
-        <Heading level="h1">500 Error</Heading>
+        <Heading level="h1">{error.message}</Heading>
         <p>We&apos;re sorry...</p>
         <p>Something went wrong.</p>
         <p>
