@@ -10,7 +10,7 @@ export const metadata: Metadata = {
 
 export default async function Divisions() {
   const data = await getDivisionData();
-  if (data.headers.code === "404") {
+  if (data?.headers?.code === "404") {
     redirect("/404");
   }
   return (
