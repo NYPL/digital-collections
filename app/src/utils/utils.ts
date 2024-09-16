@@ -218,7 +218,7 @@ export const trackVirtualPageView = (pagename) => {
   // Adobe does not support TS types.
   const adobeDataLayer = window["adobeDataLayer"] || [];
 
-  console.log("pagename is: ", pagename);
+  //("pagename is: ", pagename);
   adobeDataLayer.push({
     page_name: null,
     site_section: null,

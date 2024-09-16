@@ -64,6 +64,11 @@ const CollectionCard = ({
               id: `image-${slug}-${id}`,
               isLazy: true,
               aspectRatio: "twoByOne",
+              fallbackSrc: "/noImage.png",
+              onError: (_event) =>
+                console.warn(
+                  `Card image failed to load, fallback image loaded instead. ImageURL: ${collection.imageURL}`
+                ),
               src: collection.imageURL,
             }
           : {
