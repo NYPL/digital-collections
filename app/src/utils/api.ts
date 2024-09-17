@@ -28,6 +28,7 @@ export const getHomePageData = async () => {
   });
 
   const newResponse = { randomNumber, lanesWithNumItems: updatedLanes };
+  console.log("new response is: ", newResponse);
   return newResponse;
 };
 
@@ -188,9 +189,12 @@ export const RepoAPICall = async (
       const data = await response.json();
       return data;
     } else {
+      console.log(`Response from Repo API ${apiUrl} was not a 200`);
       return undefined;
     }
   } catch (error) {
+    console.log(`error fetching Repo API ${apiUrl}`);
+    console.log(error);
     return undefined;
   }
 };
