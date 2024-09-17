@@ -10,13 +10,13 @@ import {
   Pagination,
   SimpleGrid,
 } from "@nypl/design-system-react-components";
-import { useNumColumns } from "../../hooks/useNumColumns";
 import CollectionCard from "../cards/collectionCard";
 import { CollectionCardModel } from "../../models/collectionCard";
 import useBreakpoints from "../../hooks/useBreakpoints";
 import CollectionDataType from "../../types/CollectionDataType";
 import React, { useRef, useState } from "react";
 import { totalNumPages } from "../../utils/utils";
+import DCSimpleGrid from "../dcSimpleGrid/dcSimpleGrid";
 
 export const CollectionsGrid = ({ data }: any) => {
   const pathname = usePathname();
@@ -30,7 +30,6 @@ export const CollectionsGrid = ({ data }: any) => {
   const { replace } = useRouter();
 
   const { isLargerThanLargeTablet } = useBreakpoints();
-  const numColumns = useNumColumns();
 
   const totalPages = totalNumPages(data.numFound, data.perPage);
 
@@ -55,13 +54,7 @@ export const CollectionsGrid = ({ data }: any) => {
       >
         {`Collections in the ${data.name}`}
       </Heading>
-      <SimpleGrid
-        columns={numColumns}
-        sx={{
-          marginBottom: "xxl",
-          gridTemplateColumns: `repeat(${numColumns}, minmax(0, 1fr))`,
-        }}
-      >
+      <DCSimpleGrid>
         {data?.collections?.map((collection: CollectionDataType, index) => {
           const collectionModel = new CollectionCardModel(collection);
           return (
@@ -74,7 +67,7 @@ export const CollectionsGrid = ({ data }: any) => {
             />
           );
         })}
-      </SimpleGrid>
+      </DCSimpleGrid>
       {totalPages > 1 && (
         <Pagination
           id="pagination-id"

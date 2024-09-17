@@ -7,16 +7,15 @@ import {
   SimpleGrid,
   Spacer,
 } from "@nypl/design-system-react-components";
-import { useNumColumns } from "../../../hooks/useNumColumns";
 import useBreakpoints from "../../../hooks/useBreakpoints";
 import ItemCard from "../../cards/itemCard";
 import { ItemCardModel } from "../../../models/itemCard";
 import React from "react";
 import { titleToDCParam, totalNumPages } from "../../../utils/utils";
 import { DC_URL } from "@/src/config/constants";
+import DCSimpleGrid from "../../dcSimpleGrid/dcSimpleGrid";
 
 export const ItemLane = ({ data }: any) => {
-  const numColumns = useNumColumns();
   const { isLargerThanLargeTablet } = useBreakpoints();
   const divisionName = data.name;
   return (
@@ -46,12 +45,7 @@ export const ItemLane = ({ data }: any) => {
             See more
           </Link>
         </Flex>
-        <SimpleGrid
-          columns={numColumns}
-          sx={{
-            gridTemplateColumns: `repeat(${numColumns}, minmax(0, 1fr))`,
-          }}
-        >
+        <DCSimpleGrid>
           {data?.items?.map((item, index) => {
             const itemModel = new ItemCardModel(item);
             return (
@@ -63,7 +57,7 @@ export const ItemLane = ({ data }: any) => {
               />
             );
           })}
-        </SimpleGrid>
+        </DCSimpleGrid>
         <Link
           id={`row-see-more-items-mobile-${divisionName}`}
           type="standalone"

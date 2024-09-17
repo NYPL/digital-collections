@@ -1,6 +1,5 @@
 "use client";
 import {
-  TemplateAppContainer,
   Breadcrumbs,
   DSProvider,
   SkipNavigation,
@@ -19,7 +18,7 @@ import { trackVirtualPageView } from "../../utils/utils";
 interface PageLayoutProps {
   activePage: string;
   breadcrumbs?: BreadcrumbsDataProps[];
-  adobeAnalyticsPageName: string;
+  adobeAnalyticsPageName?: string;
 }
 
 const PageLayout = ({
@@ -84,7 +83,9 @@ const PageLayout = ({
         <SkipNavigation />
         <NotificationBanner />
         <Header />
-        {activePage === "home" || activePage === "about" ? (
+        {activePage === "home" ||
+        activePage === "about" ||
+        activePage === "notFound" ? (
           children
         ) : (
           <>
