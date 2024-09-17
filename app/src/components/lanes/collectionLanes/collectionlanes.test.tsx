@@ -3,7 +3,7 @@ import CollectionLanes from "./collectionLanes";
 import { mockCollectionLanes } from "__tests__/__mocks__/data/mockCollectionLanes";
 import { DC_URL } from "@/src/config/constants";
 
-describe("Swim Lanes component renders with expected props", () => {
+describe("CollectionLanes component renders with expected props", () => {
   it("renders the first row", () => {
     render(
       <CollectionLanes

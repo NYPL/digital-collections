@@ -6,15 +6,20 @@ import {
   Text,
 } from "@nypl/design-system-react-components";
 import PageLayout from "../../pageLayout/pageLayout";
-import React from "react";
-import { useNumColumns } from "../../../hooks/useNumColumns";
-import { headerBreakpoints } from "../../../utils/breakpoints";
+import React, { useEffect, useState } from "react";
 import CollectionLanes from "../../lanes/collectionLanes/collectionLanes";
 import { DC_URL } from "@/src/config/constants";
+import CollectionLanesLoading from "../../lanes/collectionLanes/collectionLanesLoading";
 
 export default function DivisionsPage({ data }) {
-  const numColumns = useNumColumns();
   console.log("data in divisions page is: ", data);
+
+  const [isLoaded, setIsLoaded] = useState(false);
+
+  useEffect(() => {
+    setIsLoaded(true);
+  }, []);
+
   return (
     <PageLayout
       activePage="divisions"
@@ -37,11 +42,18 @@ export default function DivisionsPage({ data }) {
             <Heading level="h1" text="Divisions" subtitle={data?.summary} />
           </Box>
           <HorizontalRule sx={{ marginTop: "xxl", marginBottom: "xxl" }} />
-          <CollectionLanes
-            numColumns={numColumns}
-            lanesWithNumItems={data.divisions}
-            seeMoreLink={`${DC_URL}/divisions`}
-          />
+          {isLoaded ? (
+            <CollectionLanes
+              lanesWithNumItems={data.divisions}
+              seeMoreLink={`${DC_URL}/divisions`}
+            />
+          ) : (
+            <>
+              <CollectionLanesLoading />,
+              <CollectionLanesLoading />,
+              <CollectionLanesLoading />
+            </>
+          )}
         </>
       ) : (
         <>
