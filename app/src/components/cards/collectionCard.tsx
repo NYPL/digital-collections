@@ -12,6 +12,8 @@ import styles from "./Card.module.css";
 import { headerBreakpoints } from "../../utils/breakpoints";
 import { CollectionCardDataType } from "../../types/CollectionCardDataType";
 import { TRUNCATED_LENGTH } from "@/src/config/constants";
+import Image from "next/image";
+import CardImage from "./cardImage";
 interface CollectionCardProps {
   slug: string;
   id: number;
@@ -57,23 +59,13 @@ const CollectionCard = ({
       ref={cardRef}
       id={`card-${slug}-${id}`}
       mainActionLink={collection.url}
-      imageProps={
-        collection.imageID
-          ? {
-              alt: "",
-              id: `image-${slug}-${id}`,
-              isLazy: true,
-              aspectRatio: "twoByOne",
-              src: collection.imageURL,
-            }
-          : {
-              alt: "",
-              id: `no-image-${id}`,
-              isLazy: true,
-              aspectRatio: "twoByOne",
-              src: "/noImage.png",
-            }
-      }
+      imageProps={{
+        alt: "",
+        id: `image-${slug}-${id}`,
+        isLazy: true,
+        aspectRatio: "twoByOne",
+        component: <CardImage collection={collection} />,
+      }}
     >
       <CardContent>
         {collection.containsOnSiteMaterials && (
