@@ -10,6 +10,7 @@ export const metadata: Metadata = {
 
 export default async function Divisions() {
   let data;
+  console.log(`${process.env.API_URL}/api/v2/divisions`);
   try {
     data = await RepoAPICall(`${process.env.API_URL}/api/v2/divisions`);
   } catch (error) {
