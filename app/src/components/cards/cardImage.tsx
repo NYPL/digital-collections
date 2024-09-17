@@ -1,44 +1,42 @@
 import Image from "next/image";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 const CardImage = ({ collection }) => {
-  const [imageWidth, setImageWidth] = useState(288);
-  const [imageHeight, setImageHeight] = useState(0.5 * imageWidth);
-
+  const [imageHeight, setImageHeight] = useState(144);
+  const imageRef = useRef<HTMLDivElement>(null);
   useEffect(() => {
-    const updateImageWidth = () => {
-      const smTabletBreakpoint = 768;
-      const lgTabletBreakpoint = 1024;
+    const updateImageHeight = () => {
+      if (imageRef.current) {
+        const image = imageRef.current as HTMLElement;
+        const imageWidth = image.offsetWidth;
 
-      if (window.innerWidth >= lgTabletBreakpoint) {
-        setImageWidth(288);
-      } else if (window.innerWidth >= smTabletBreakpoint) {
-        setImageWidth(480);
-      } else {
-        setImageWidth(480);
+        setImageHeight(0.5 * imageWidth);
       }
-      setImageHeight(0.5 * imageWidth);
     };
+    updateImageHeight();
+    window.addEventListener("resize", updateImageHeight);
 
-    updateImageWidth();
-    window.addEventListener("resize", updateImageWidth);
-
-    return () => window.removeEventListener("resize", updateImageWidth);
+    return () => window.removeEventListener("resize", updateImageHeight);
   }, []);
 
   return (
     <div
+      ref={imageRef}
       style={{
-        display: "inline-block",
-        height: imageHeight,
         overflow: "hidden",
+        height: imageHeight,
       }}
     >
       <Image
         src={collection.imageID ? collection.imageURL : "/noImage.png"}
         alt=""
-        width={imageWidth}
-        height={imageHeight}
+        sizes="(max-width: 480px) 100vw, (max-width: 1024px) 50vw, 25vw"
+        style={{
+          width: "100%",
+          height: "auto",
+        }}
+        width={288}
+        height={144}
       />
     </div>
   );
