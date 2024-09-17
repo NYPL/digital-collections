@@ -14,7 +14,7 @@ import { DC_URL } from "@/src/config/constants";
 
 export default function DivisionsPage({ data }) {
   const numColumns = useNumColumns();
-
+  console.log("data in divisions page is: ", data);
   return (
     <PageLayout
       activePage="divisions"
