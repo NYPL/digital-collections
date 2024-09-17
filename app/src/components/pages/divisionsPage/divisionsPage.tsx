@@ -26,7 +26,7 @@ export default function DivisionsPage({ data }) {
       ]}
       adobeAnalyticsPageName="divisions"
     >
-      {data?.divisions.length > 0 ? (
+      {data?.divisions?.length > 0 ? (
         <>
           <Box
             sx={{
