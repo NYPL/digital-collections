@@ -2,8 +2,9 @@ import React from "react";
 import { Metadata } from "next";
 import PageLayout from "../../src/components/pageLayout/pageLayout";
 import Item from "../../src/components/items/item";
-import { getItemData, stringToSlug } from "../../src/utils/utils";
+import { stringToSlug } from "../../src/utils/utils";
 import { ItemModel } from "../../src/models/item";
+import { getItemData } from "../../src/utils/api";
 
 type ItemProps = {
   params: {
