@@ -12,6 +12,7 @@ import { DC_URL } from "@/src/config/constants";
 import CollectionLanesLoading from "../../collectionLanes/collectionLanesLoading";
 
 export default function DivisionsPage({ data }) {
+  console.log("divisions", data);
   const [isLoaded, setIsLoaded] = useState(false);
   useEffect(() => {
     setIsLoaded(true);
@@ -25,7 +26,7 @@ export default function DivisionsPage({ data }) {
       ]}
       adobeAnalyticsPageName="divisions"
     >
-      {data.divisions.length > 0 ? (
+      {data?.divisions.length > 0 ? (
         <>
           <Box
             sx={{
