@@ -21,8 +21,8 @@ import ItemCard from "../../../components/cards/itemCard";
 import { mockItems } from "../../../../../__tests__/__mocks__/data/mockItems";
 import { ItemCardModel } from "../../../models/itemCard";
 import React, { useEffect, useState } from "react";
-import SwimLanesLoading from "../../swimlanes/swimLanesLoading";
 import DCSimpleGrid from "../../dcSimpleGrid/dcSimpleGrid";
+import CollectionLanesLoading from "../../collectionLanes/collectionLanesLoading";
 
 export default function DivisionPage() {
   const params = useParams();
@@ -113,7 +113,7 @@ export default function DivisionPage() {
           </DCSimpleGrid>
         ) : (
           <>
-            <SwimLanesLoading withTitle={false} />
+            <CollectionLanesLoading withTitle={false} />
           </>
         )}
         <Link
@@ -158,9 +158,9 @@ export default function DivisionPage() {
         </DCSimpleGrid>
       ) : (
         <>
-          <SwimLanesLoading withTitle={false} />,
-          <SwimLanesLoading withTitle={false} />,
-          <SwimLanesLoading withTitle={false} />
+          <CollectionLanesLoading withTitle={false} />,
+          <CollectionLanesLoading withTitle={false} />,
+          <CollectionLanesLoading withTitle={false} />
         </>
       )}
     </PageLayout>

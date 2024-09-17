@@ -24,7 +24,7 @@ export const getHomePageData = async () => {
     const updatedCollections = lane.collections.map((collection) => {
       return {
         ...collection,
-        numItems: uuidtoItemCountMap[collection.uuid] || "0",
+        numberOfDigitizedItems: uuidtoItemCountMap[collection.uuid] || "0",
       };
     });
     return { ...lane, collections: updatedCollections };

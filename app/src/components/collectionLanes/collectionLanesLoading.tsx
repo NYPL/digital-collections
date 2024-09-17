@@ -6,9 +6,9 @@ import {
 import React from "react";
 import DCSimpleGrid from "../dcSimpleGrid/dcSimpleGrid";
 
-export default function SwimLanesLoading({ withTitle = true }) {
+export default function CollectionLanesLoading({ withTitle = true }) {
   return (
-    <Box data-testid="swimlane-skeleton-loader-1">
+    <Box data-testid="collectionlane-skeleton-loader-1">
       {withTitle && (
         <Flex>
           <SkeletonLoader contentSize={0} showImage={false} headingSize={1} />

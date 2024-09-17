@@ -2,9 +2,10 @@ export interface CollectionDataType {
   uuid: string;
   title: string;
   url: string;
-  image_id: string | null;
-  numItems: number;
+  imageID: string | null;
+  numberOfDigitizedItems: number;
   containsOnSiteMaterials: boolean;
+  containsAVMaterial: boolean;
 }
 
 export default CollectionDataType;

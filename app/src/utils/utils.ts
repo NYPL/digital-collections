@@ -218,7 +218,7 @@ export const trackVirtualPageView = (pagename) => {
   // Adobe does not support TS types.
   const adobeDataLayer = window["adobeDataLayer"] || [];
 
-  console.log("pagename is: ", pagename);
+  //("pagename is: ", pagename);
   adobeDataLayer.push({
     page_name: null,
     site_section: null,
@@ -245,4 +245,8 @@ export const stringToSlug = (string: string = ""): string => {
     .replace(/[^a-z0-9 -]/g, "") // remove any non-alphanumeric characters
     .replace(/\s+/g, "-") // replace spaces with hyphens
     .replace(/-+/g, "-"); // remove consecutive hyphens
+};
+
+export const parseBoolean = (value: string): boolean => {
+  return value === "true" ? true : false;
 };
