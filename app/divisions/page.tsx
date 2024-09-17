@@ -16,5 +16,5 @@ export default async function Divisions() {
     logger.error("Failed to fetch divisions data", error);
   }
 
-  return <DivisionsPage data={data?.nyplAPI?.response || null} />;
+  return <DivisionsPage data={data} />;
 }
