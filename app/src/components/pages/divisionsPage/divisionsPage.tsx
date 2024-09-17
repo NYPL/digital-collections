@@ -12,7 +12,7 @@ import { DC_URL } from "@/src/config/constants";
 import CollectionLanesLoading from "../../collectionLanes/collectionLanesLoading";
 
 export default function DivisionsPage({ data }) {
-  console.log(`${process.env.API_URL}/api/v2/divisions`);
+  console.log(`${process.env.NEXT_PUBLIC_API_URL}/api/v2/divisions`);
   const [isLoaded, setIsLoaded] = useState(false);
   useEffect(() => {
     setIsLoaded(true);
