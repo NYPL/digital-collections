@@ -12,6 +12,7 @@ export default async function Divisions() {
   let data;
   try {
     data = await RepoAPICall(`${process.env.API_URL}/api/v2/divisions`);
+    console.log(data);
   } catch (error) {
     logger.error("Failed to fetch divisions data", error);
   }
