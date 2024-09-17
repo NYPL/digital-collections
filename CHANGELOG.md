@@ -13,6 +13,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Updated sticky header to take up less space on zoomed/mobile breakpoints (DR-3089)
 - Updated sticky header to add scroll padding on anchor elements (DR-3102)
 - Updated lane skeleton loader to remove visual discrepancies and no longer use hooks (DR-3171)
+- Updated `/divisions` page to fetch data from Repo API (DR-3101)
 
 ### Added
 

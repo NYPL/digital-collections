@@ -9,6 +9,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Updated
 - Updated swim lanes and featured item features to use server side api calls (DR-3016)
+- Added `containsOnSiteMaterials` field to collection card model and component (DR-3123)
 
 ### Added
 - Update middleware file to not redirect urls created for phase 2-4 in 'qa' environment (DR-3122)
