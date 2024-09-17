@@ -12,8 +12,6 @@ import { DC_URL } from "@/src/config/constants";
 import CollectionLanesLoading from "../../lanes/collectionLanes/collectionLanesLoading";
 
 export default function DivisionsPage({ data }) {
-  console.log("data in divisions page is: ", data);
-
   const [isLoaded, setIsLoaded] = useState(false);
 
   useEffect(() => {

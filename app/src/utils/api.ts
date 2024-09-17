@@ -233,7 +233,5 @@ export const getDivisionData = async (
 ) => {
   const apiUrl = `${process.env.API_URL}/api/v2/divisions/${slug}?page=${pageNum}&per_page=${perPage}`;
   const res = await apiResponse(apiUrl);
-  console.log("apiUrl in getDivisionData is: ", apiUrl);
-  console.log("res in getDivisionData is: ", res);
   return res;
 };
