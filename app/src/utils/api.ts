@@ -29,6 +29,7 @@ export const getHomePageData = async () => {
   });
 
   const newResponse = { randomNumber, lanesWithNumItems: updatedLanes };
+  console.log("new response is: ", newResponse);
   return newResponse;
 };
 
@@ -238,7 +239,5 @@ export const getDivisionData = async (
     apiUrl += `/${slug}?page=${pageNum}&per_page=${perPage}`;
   }
   const res = await apiResponse(apiUrl);
-  console.log("apiUrl in getDivisionData is: ", apiUrl);
-  console.log("res in getDivisionData is: ", res);
   return res;
 };

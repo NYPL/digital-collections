@@ -2,7 +2,6 @@ import LaneDataType from "@/src/types/Lane";
 import { mockCollections } from "./mockCollections";
 
 export const mockCollectionLanes = {
-  numColumns: 4,
   lanesWithNumItems: [
     {
       name: "Test collections 1",
