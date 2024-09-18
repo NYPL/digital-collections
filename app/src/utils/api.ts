@@ -238,5 +238,7 @@ export const getDivisionData = async (
     apiUrl += `/${slug}?page=${pageNum}&per_page=${perPage}`;
   }
   const res = await apiResponse(apiUrl);
+  console.log("apiUrl in getDivisionData is: ", apiUrl);
+  console.log("res in getDivisionData is: ", res);
   return res;
 };
