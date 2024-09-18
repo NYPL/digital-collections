@@ -9,15 +9,20 @@ import {
 import PageLayout from "../../pageLayout/pageLayout";
 import { headerBreakpoints } from "../../../utils/breakpoints";
 import { slugToString } from "../../../utils/utils";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { ItemLane } from "../../lanes/itemLane/itemLane";
 import { CollectionsGrid } from "../../tables/collectionsGrid";
+import CollectionLanesLoading from "../../lanes/collectionLanes/collectionLanesLoading";
 
 export default function DivisionPage({ data }: any) {
   const params = useParams();
   const slug = params.slug as string;
   const title = slugToString(slug);
   const pageName = `divisions|${slug}`;
+  const [isLoaded, setIsLoaded] = useState(false);
+  useEffect(() => {
+    setIsLoaded(true);
+  }, []);
 
   return (
     <PageLayout
@@ -60,10 +65,23 @@ export default function DivisionPage({ data }: any) {
       </Box>
 
       <HorizontalRule sx={{ marginTop: "xxl", marginBottom: "xxl" }} />
-      <ItemLane data={data} />
+
+      {isLoaded ? (
+        <ItemLane data={data} />
+      ) : (
+        <>
+          <CollectionLanesLoading withTitle={false} />
+        </>
+      )}
 
       <HorizontalRule sx={{ marginTop: "xxl", marginBottom: "xxl" }} />
-      <CollectionsGrid data={data} />
+      {isLoaded ? (
+        <CollectionsGrid data={data} />
+      ) : (
+        <>
+          <CollectionLanesLoading withTitle={false} />
+        </>
+      )}
     </PageLayout>
   );
 }
