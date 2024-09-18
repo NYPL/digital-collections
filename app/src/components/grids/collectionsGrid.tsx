@@ -1,10 +1,6 @@
 "use client";
-import {
-  useParams,
-  useSearchParams,
-  usePathname,
-  useRouter,
-} from "next/navigation";
+
+import { useSearchParams, usePathname, useRouter } from "next/navigation";
 import { Heading, Pagination } from "@nypl/design-system-react-components";
 import CollectionCard from "../cards/collectionCard";
 import { CollectionCardModel } from "../../models/collectionCard";
