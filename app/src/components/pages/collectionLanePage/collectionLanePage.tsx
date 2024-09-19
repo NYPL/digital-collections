@@ -17,6 +17,8 @@ import CollectionDataType from "../../../types/CollectionDataType";
 import { mockCollections } from "../../../../../__tests__/__mocks__/data/mockCollections";
 import React from "react";
 import DCSimpleGrid from "../../dcSimpleGrid/dcSimpleGrid";
+import { mockCollectionCards } from "__tests__/__mocks__/data/mockCollectionCards";
+import { CollectionsGrid } from "../../grids/collectionsGrid";
 
 export default function CollectionLanePage() {
   const params = useParams();
@@ -38,7 +40,9 @@ export default function CollectionLanePage() {
         <Heading sx={{ marginBottom: 0 }} level="h1" text={title} />
       </Box>
       <HorizontalRule sx={{ marginTop: "xxl", marginBottom: "xxl" }} />
-      <DCSimpleGrid>
+      <CollectionsGrid data={mockCollectionCards} />
+
+      {/* <DCSimpleGrid>
         {mockCollections.map((collection: CollectionDataType, index) => {
           const collectionModel = new CollectionCardModel(collection);
           return (
@@ -51,7 +55,7 @@ export default function CollectionLanePage() {
             />
           );
         })}
-      </DCSimpleGrid>
+      </DCSimpleGrid> */}
     </>
   );
 }

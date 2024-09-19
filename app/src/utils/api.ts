@@ -234,3 +234,15 @@ export const getDivisionData = async (
   const res = await apiResponse(apiUrl);
   return res;
 };
+
+export const getItemsByCollectionUUID = async (uuid: string) => {
+  const apiUrl = `${process.env.API_URL}/api/v2/collections/${uuid}/items`;
+  const res = await apiResponse(apiUrl);
+  return res;
+};
+
+export const getCollections = async () => {
+  const apiUrl = `${process.env.API_URL}/api/v2/collections`;
+  const res = await apiResponse(apiUrl);
+  return res;
+};
