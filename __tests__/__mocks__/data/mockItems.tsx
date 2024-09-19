@@ -1,3 +1,4 @@
+import ItemCardDataType from "@/src/types/ItemCardDataType";
 import { ItemModel } from "../../../app/src/models/item";
 
 // TODO: Add data that makes more sense.
