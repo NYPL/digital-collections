@@ -12,44 +12,24 @@ import styles from "./Card.module.css";
 import { headerBreakpoints } from "../../utils/breakpoints";
 import { CollectionCardDataType } from "../../types/CollectionCardDataType";
 import { TRUNCATED_LENGTH } from "@/src/config/constants";
-interface CollectionCardProps {
+interface DCCardProps {
   slug: string;
   id: number;
   isLargerThanLargeTablet: boolean;
+  cardOffset;
+  cardRef;
   collection: CollectionCardDataType;
 }
 
-const CollectionCard = ({
+const DCCard = ({
   slug,
   id,
   isLargerThanLargeTablet,
   collection,
-}: CollectionCardProps) => {
+  cardOffset,
+  cardRef,
+}: DCCardProps) => {
   const truncatedTitle = collection.title.length > TRUNCATED_LENGTH;
-  const [offset, setOffset] = useState<[number, number]>([0, -130]);
-  const cardRef = useRef<HTMLDivElement>(null);
-  const getOffset = () => {
-    if (cardRef.current) {
-      const image = cardRef.current.children[0] as HTMLElement;
-      const imageHeight = image.offsetHeight;
-      const percentageOffset = imageHeight * 1.01;
-
-      setOffset([
-        0,
-        collection.containsOnSiteMaterials
-          ? -percentageOffset - 35
-          : -percentageOffset,
-      ]);
-    }
-  };
-  useEffect(() => {
-    setTimeout(getOffset, 0);
-    window.addEventListener("resize", getOffset);
-
-    return () => {
-      window.removeEventListener("resize", getOffset);
-    };
-  }, []);
 
   const card = (
     <Card
@@ -117,7 +97,7 @@ const CollectionCard = ({
     </Card>
   );
   return isLargerThanLargeTablet && truncatedTitle ? (
-    <Tooltip offset={offset} content={collection.title}>
+    <Tooltip offset={cardOffset} content={collection.title}>
       {card}
     </Tooltip>
   ) : (
@@ -125,4 +105,4 @@ const CollectionCard = ({
   );
 };
 
-export default CollectionCard;
+export default DCCard;

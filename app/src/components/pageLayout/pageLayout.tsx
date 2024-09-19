@@ -6,7 +6,12 @@ import {
   useFeedbackBox,
   Box,
 } from "@nypl/design-system-react-components";
-import React, { useEffect } from "react";
+import React, {
+  createContext,
+  useEffect,
+  MutableRefObject,
+  useRef,
+} from "react";
 import { type PropsWithChildren } from "react";
 import Header from "../header/header";
 import NotificationBanner from "../notificationBanner/notificationBanner";
@@ -14,12 +19,20 @@ import Script from "next/script";
 import { BreadcrumbsDataProps } from "@nypl/design-system-react-components/dist/src/components/Breadcrumbs/Breadcrumbs";
 import { ADOBE_EMBED_URL } from "../../config/constants";
 import { trackVirtualPageView } from "../../utils/utils";
+import { useTooltipOffset } from "@/src/hooks/useTooltipOffset";
 
 interface PageLayoutProps {
   activePage: string;
   breadcrumbs?: BreadcrumbsDataProps[];
   adobeAnalyticsPageName?: string;
 }
+
+interface CardContextType {
+  cardRef: MutableRefObject<HTMLDivElement>;
+  cardOffset: [number, number];
+}
+
+export const CardContext = createContext<CardContextType | null>(null);
 
 const PageLayout = ({
   children,
@@ -31,6 +44,9 @@ const PageLayout = ({
   useEffect(() => {
     trackVirtualPageView(adobeAnalyticsPageName);
   });
+
+  const cardRef = useRef<HTMLDivElement>(null);
+  const cardOffset = useTooltipOffset(cardRef);
 
   const [view, setView] = React.useState("form");
   const { isOpen, onClose, FeedbackBox } = useFeedbackBox();
@@ -80,40 +96,44 @@ const PageLayout = ({
       </Script>
       {/* <!-- / Adobe Analytics  --> */}
       <DSProvider>
-        <SkipNavigation />
-        <NotificationBanner />
-        <Header />
-        {activePage === "home" ||
-        activePage === "about" ||
-        activePage === "notFound" ||
-        activePage === "serverError" ? (
-          children
-        ) : (
-          <>
-            <Breadcrumbs
-              breadcrumbsType="digitalCollections"
-              breadcrumbsData={breadcrumbs || []}
-            />
-            {/* TODO: Move to TemplateAppContainer once spacing is more flexible.  --> */}
-            <Box
-              id="mainContent"
-              sx={{
-                margin: "auto",
-                maxWidth: "1280px",
-                padding: "64px 16px",
-              }}
-            >
-              {children as JSX.Element}
-            </Box>
-          </>
-        )}
-        <FeedbackBox
-          showCategoryField
-          onSubmit={onSubmit}
-          onClose={onFormClose}
-          title="Feedback"
-          view={view}
-        />
+        <CardContext.Provider
+          value={{ cardOffset: cardOffset, cardRef: cardRef }}
+        >
+          <SkipNavigation />
+          <NotificationBanner />
+          <Header />
+          {activePage === "home" ||
+          activePage === "about" ||
+          activePage === "notFound" ||
+          activePage === "serverError" ? (
+            children
+          ) : (
+            <>
+              <Breadcrumbs
+                breadcrumbsType="digitalCollections"
+                breadcrumbsData={breadcrumbs || []}
+              />
+              {/* TODO: Move to TemplateAppContainer once spacing is more flexible.  --> */}
+              <Box
+                id="mainContent"
+                sx={{
+                  margin: "auto",
+                  maxWidth: "1280px",
+                  padding: "64px 16px",
+                }}
+              >
+                {children as JSX.Element}
+              </Box>
+            </>
+          )}
+          <FeedbackBox
+            showCategoryField
+            onSubmit={onSubmit}
+            onClose={onFormClose}
+            title="Feedback"
+            view={view}
+          />
+        </CardContext.Provider>
       </DSProvider>
     </>
   );
