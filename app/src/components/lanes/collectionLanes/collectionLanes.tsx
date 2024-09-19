@@ -52,7 +52,7 @@ const CollectionLanes = ({ lanesWithNumItems, seeMoreLink }) => {
                 key={index}
                 slug={lane.slug}
                 id={index}
-                collection={c}
+                record={c}
                 isLargerThanLargeTablet={isLargerThanLargeTablet}
                 cardRef={cardContext?.cardRef}
                 cardOffset={cardContext?.cardOffset}

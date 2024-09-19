@@ -6,12 +6,7 @@ import {
   useFeedbackBox,
   Box,
 } from "@nypl/design-system-react-components";
-import React, {
-  createContext,
-  useEffect,
-  MutableRefObject,
-  useRef,
-} from "react";
+import React, { createContext, useEffect, useRef } from "react";
 import { type PropsWithChildren } from "react";
 import Header from "../header/header";
 import NotificationBanner from "../notificationBanner/notificationBanner";
@@ -28,7 +23,7 @@ interface PageLayoutProps {
 }
 
 interface CardContextType {
-  cardRef: MutableRefObject<HTMLDivElement>;
+  cardRef: any;
   cardOffset: [number, number];
 }
 

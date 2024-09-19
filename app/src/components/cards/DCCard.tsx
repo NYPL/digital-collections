@@ -1,5 +1,5 @@
 "use client";
-import React, { useEffect, useRef, useState } from "react";
+import React, { MutableRefObject } from "react";
 import {
   Card,
   CardHeading,
@@ -12,43 +12,49 @@ import styles from "./Card.module.css";
 import { headerBreakpoints } from "../../utils/breakpoints";
 import { CollectionCardDataType } from "../../types/CollectionCardDataType";
 import { TRUNCATED_LENGTH } from "@/src/config/constants";
+import ItemCardDataType from "@/src/types/ItemCardDataType";
 interface DCCardProps {
-  slug: string;
-  id: number;
+  cardOffset?: [number, number];
+  cardRef: any;
+  id: string;
   isLargerThanLargeTablet: boolean;
-  cardOffset;
-  cardRef;
-  collection: CollectionCardDataType;
+  slug?: string;
+  record: CollectionCardDataType | ItemCardDataType;
+}
+function isCollectionCardDataType(
+  record: any
+): record is CollectionCardDataType {
+  return record && record.numberOfDigitizedItems;
 }
 
 const DCCard = ({
-  slug,
-  id,
-  isLargerThanLargeTablet,
-  collection,
   cardOffset,
   cardRef,
+  id,
+  isLargerThanLargeTablet,
+  slug,
+  record,
 }: DCCardProps) => {
-  const truncatedTitle = collection.title.length > TRUNCATED_LENGTH;
-
+  const truncatedTitle = record.title.length > TRUNCATED_LENGTH;
+  const isCollection = isCollectionCardDataType(record);
   const card = (
     <Card
       ref={cardRef}
       id={`card-${slug}-${id}`}
-      mainActionLink={collection.url}
+      mainActionLink={record.url}
       imageProps={
-        collection.imageID
+        record.imageID
           ? {
               alt: "",
-              id: `image-${slug}-${id}`,
+              id: isCollection ? `image-${slug}-${id}` : `image-${id}`,
               isLazy: true,
               aspectRatio: "twoByOne",
               fallbackSrc: "/noImage.png",
               onError: (_event) =>
                 console.warn(
-                  `Card image failed to load, fallback image loaded instead. ImageURL: ${collection.imageURL}`
+                  `Card image failed to load, fallback image loaded instead. ImageURL: ${record.imageURL}`
                 ),
-              src: collection.imageURL,
+              src: record.imageURL,
             }
           : {
               alt: "",
@@ -60,7 +66,7 @@ const DCCard = ({
       }
     >
       <CardContent>
-        {collection.containsOnSiteMaterials && (
+        {isCollection && record.containsOnSiteMaterials && (
           <StatusBadge sx={{ marginBottom: "0px" }} type="informative">
             Contains on-site materials
           </StatusBadge>
@@ -74,30 +80,32 @@ const DCCard = ({
         noOfLines={3}
         sx={{ marginTop: "0px", marginBottom: "xs" }}
       >
-        {collection.title}
+        {record.title}
       </CardHeading>
-      <CardContent sx={{ alignContent: "top" }}>
-        <Text
-          id={`item-count-${slug}-${id}`}
-          size="subtitle2"
-          fontWeight="medium"
-          __css={{
-            display: "none",
-            [`@media screen and (min-width: ${headerBreakpoints.lgMobile}px)`]:
-              {
-                display: "inline",
-              },
-          }}
-        >
-          {`${Math.floor(collection.numberOfDigitizedItems)} item${
-            Math.floor(collection.numberOfDigitizedItems) !== 1 ? "s" : ""
-          }`}
-        </Text>
-      </CardContent>
+      {isCollection && (
+        <CardContent sx={{ alignContent: "top" }}>
+          <Text
+            id={`item-count-${slug}-${id}`}
+            size="subtitle2"
+            fontWeight="medium"
+            __css={{
+              display: "none",
+              [`@media screen and (min-width: ${headerBreakpoints.lgMobile}px)`]:
+                {
+                  display: "inline",
+                },
+            }}
+          >
+            {`${Math.floor(record.numberOfDigitizedItems)} item${
+              Math.floor(record.numberOfDigitizedItems) !== 1 ? "s" : ""
+            }`}
+          </Text>
+        </CardContent>
+      )}
     </Card>
   );
   return isLargerThanLargeTablet && truncatedTitle ? (
-    <Tooltip offset={cardOffset} content={collection.title}>
+    <Tooltip offset={cardOffset} content={record.title}>
       {card}
     </Tooltip>
   ) : (
