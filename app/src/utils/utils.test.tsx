@@ -54,7 +54,7 @@ describe("apiPOSTCall()", () => {
 });
 
 describe("getItemsCountFromUUIDs()", () => {
-  it("should return an error with a bad request", async () => {
+  it("should throw an error with a bad request", async () => {
     (global as any).fetch = jest.fn(() =>
       Promise.resolve({
         status: 403,

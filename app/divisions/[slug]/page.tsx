@@ -22,9 +22,11 @@ export async function generateMetadata({
 
 export default async function Division({ params, searchParams }) {
   const data = await getDivisionData(params.slug, searchParams.page);
+  // Repo API returns 404s within the data.
   if (data?.headers?.code === "404") {
     redirect("/404");
   }
+  throw new Error("heehe");
   const currentPage = Number(searchParams.page) || 1;
 
   return (
