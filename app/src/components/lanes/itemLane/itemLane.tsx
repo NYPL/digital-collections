@@ -4,20 +4,21 @@ import {
   Flex,
   Heading,
   Link,
-  SimpleGrid,
   Spacer,
 } from "@nypl/design-system-react-components";
 import useBreakpoints from "../../../hooks/useBreakpoints";
-import ItemCard from "../../cards/itemCard";
 import { ItemCardModel } from "../../../models/itemCard";
-import React from "react";
-import { titleToDCParam, totalNumPages } from "../../../utils/utils";
+import React, { useContext } from "react";
+import { titleToDCParam } from "../../../utils/utils";
 import { DC_URL } from "@/src/config/constants";
 import DCSimpleGrid from "../../dcSimpleGrid/dcSimpleGrid";
+import DCCard from "../../cards/DCCard";
+import { CardContext } from "../../pageLayout/pageLayout";
 
 export const ItemLane = ({ data }: any) => {
   const { isLargerThanLargeTablet } = useBreakpoints();
   const divisionName = data.name;
+  const cardContext = useContext(CardContext);
   return (
     <>
       <Box>
@@ -49,11 +50,13 @@ export const ItemLane = ({ data }: any) => {
           {data?.items?.map((item, index) => {
             const itemModel = new ItemCardModel(item);
             return (
-              <ItemCard
+              <DCCard
                 key={index}
                 id={`item-${index}-${item.title}`}
-                item={itemModel}
+                record={itemModel}
                 isLargerThanLargeTablet={isLargerThanLargeTablet}
+                cardOffset={cardContext?.cardOffset}
+                cardRef={cardContext?.cardRef}
               />
             );
           })}

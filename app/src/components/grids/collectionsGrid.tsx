@@ -59,7 +59,7 @@ export const CollectionsGrid = ({ data }: any) => {
               cardOffset={cardContext?.cardOffset}
               id={index}
               slug={collectionModel.title}
-              collection={collectionModel}
+              record={collectionModel}
               isLargerThanLargeTablet={isLargerThanLargeTablet}
             />
           );
