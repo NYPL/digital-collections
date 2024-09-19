@@ -26,7 +26,6 @@ export default async function Division({ params, searchParams }) {
   if (data?.headers?.code === "404") {
     redirect("/404");
   }
-  throw new Error("heehe");
   const currentPage = Number(searchParams.page) || 1;
 
   return (
