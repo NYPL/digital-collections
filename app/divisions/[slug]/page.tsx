@@ -8,7 +8,7 @@ import { redirect } from "next/navigation";
 
 export type DivisionProps = {
   params: { slug: string };
-  searchParams: { page: string };
+  searchParams: { page: number };
 };
 
 export async function generateMetadata({
@@ -20,8 +20,14 @@ export async function generateMetadata({
   };
 }
 
-export default async function Division({ params, searchParams }) {
-  const data = await getDivisionData(params.slug, searchParams.page);
+export default async function Division({
+  params,
+  searchParams,
+}: DivisionProps) {
+  const data = await getDivisionData({
+    slug: params.slug,
+    pageNum: searchParams.page,
+  });
   // Repo API returns 404s within the data.
   if (data?.headers?.code === "404") {
     redirect("/404");

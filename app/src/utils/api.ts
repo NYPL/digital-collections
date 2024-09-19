@@ -230,16 +230,21 @@ export const apiPOSTCall = async (apiUrl: string, postData: any) => {
   }
 };
 
-export const getDivisionData = async (
-  pageNum: number = 1,
-  perPage: number = CARDS_PER_PAGE,
-  slug?: string
-) => {
+export const getDivisionData = async ({
+  pageNum = 1,
+  perPage = CARDS_PER_PAGE,
+  slug,
+}: {
+  pageNum?: number;
+  perPage?: number;
+  slug?: string;
+} = {}) => {
   let apiUrl = `${process.env.API_URL}/api/v2/divisions`;
 
   if (slug) {
     apiUrl += `/${slug}?page=${pageNum}&per_page=${perPage}`;
   }
+
   const res = await apiResponse(apiUrl);
   return res;
 };
