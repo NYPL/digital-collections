@@ -5,7 +5,6 @@ import { imageURL, addCommas } from "../utils/utils";
 import appConfig from "../../../appConfig";
 import defaultFeaturedItems from "../data/defaultFeaturedItemData";
 import { CARDS_PER_PAGE } from "../config/constants";
-import { redirect } from "next/navigation";
 import { DC_URL } from "../config/constants";
 
 export const getHomePageData = async () => {
@@ -108,7 +107,7 @@ export const getNumDigitizedItems = async () => {
 export const getItemsCountFromUUIDs = async (uuids: string[]) => {
   const apiUrl = `${process.env.API_URL}/api/v2/items/counts`;
   const response = await apiPOSTCall(apiUrl, { uuids });
-  const counts = response.nyplAPI.response.counts;
+  const { counts } = response.nyplAPI.response;
   if (!counts?.count?.length) {
     return {};
   }
@@ -188,12 +187,14 @@ export const RepoAPICall = async (
       return data;
     } else {
       throw new Error(
-        `${response.status}: ${response.statusText || "3xx/4xx error"}`
+        `RepoAPICall: ${response.status}: ${
+          response.statusText || "3xx/4xx error"
+        }`
       );
     }
   } catch (error) {
     console.error(error);
-    throw new Error(error.message);
+    throw new Error(`RepoAPICall: ${error.message}`);
   }
 };
 
@@ -218,19 +219,21 @@ export const apiPOSTCall = async (apiUrl: string, postData: any) => {
       return data;
     } else {
       throw new Error(
-        `${response.status}: ${response.statusText || "3xx/4xx error"}`
+        `apiPOSTCall: ${response.status}: ${
+          response.statusText || "3xx/4xx error"
+        }`
       );
     }
   } catch (error) {
     console.error(error);
-    throw new Error(error.message);
+    throw new Error(`apiPOSTCall: ${error.message}`);
   }
 };
 
 export const getDivisionData = async (
-  slug?: string,
   pageNum: number = 1,
-  perPage: number = CARDS_PER_PAGE
+  perPage: number = CARDS_PER_PAGE,
+  slug?: string
 ) => {
   let apiUrl = `${process.env.API_URL}/api/v2/divisions`;
 

@@ -6,10 +6,8 @@ import { useEffect } from "react";
 
 export default function Error({
   error,
-  reset,
 }: {
   error: Error & { digest?: string };
-  reset: () => void;
 }) {
   useEffect(() => {
     console.error(error);
@@ -26,7 +24,7 @@ export default function Error({
           textAlign: "center",
         }}
       >
-        <Heading level="h1">{error.message}</Heading>
+        <Heading level="h1">Error</Heading>
         <p>We&apos;re sorry...</p>
         <p>Something went wrong.</p>
         <p>
