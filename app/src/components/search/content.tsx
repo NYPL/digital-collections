@@ -4,16 +4,14 @@ import {
   SimpleGrid,
   Text,
 } from "@nypl/design-system-react-components";
-import { mockCollections } from "__tests__/__mocks__/data/mockCollections";
 import { mockItems } from "__tests__/__mocks__/data/mockItems";
 import { useSearchParams } from "next/navigation";
-import { CollectionCardModel } from "../../models/collectionCard";
-import CollectionDataType from "../../types/CollectionDataType";
-import CollectionCard from "../cards/collectionCard";
+import { ItemCardModel } from "../../models/itemCard";
+import ItemDataType from "../../types/ItemDataType";
+import ItemCard from "../cards/itemCard";
 import useBreakpoints from "../../hooks/useBreakpoints";
 import { useRouter } from "next/navigation";
 import DCSimpleGrid from "../dcSimpleGrid/dcSimpleGrid";
-import { ItemsGrid } from "../grids/itemsGrid";
 
 const SearchContent = () => {
   const queryParams = useSearchParams();
@@ -78,21 +76,19 @@ const SearchContent = () => {
           ]}
         />
       </Box>
-      {/* <DCSimpleGrid>
-        {mockCollections.map((collection: CollectionDataType, index) => {
-          const collectionModel = new CollectionCardModel(collection);
+      <DCSimpleGrid>
+        {mockItems.map((item: ItemDataType, index) => {
+          const itemModel = new ItemCardModel(item);
           return (
-            <CollectionCard
+            <ItemCard
               key={index}
               id={index}
-              slug={collectionModel.title}
-              collection={collectionModel}
+              item={itemModel}
               isLargerThanLargeTablet={isLargerThanLargeTablet}
             />
           );
         })}
-      </DCSimpleGrid> */}
-      <ItemsGrid data={mockCollections} />
+      </DCSimpleGrid>
     </>
   );
 };
