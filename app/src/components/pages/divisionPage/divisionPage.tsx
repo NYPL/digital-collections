@@ -11,7 +11,7 @@ import { headerBreakpoints } from "../../../utils/breakpoints";
 import { slugToString } from "../../../utils/utils";
 import React, { useEffect, useState } from "react";
 import { ItemLane } from "../../lanes/itemLane/itemLane";
-import { CollectionsGrid } from "../../tables/collectionsGrid";
+import { CollectionsGrid } from "../../grids/collectionsGrid";
 import CollectionLanesLoading from "../../lanes/collectionLanes/collectionLanesLoading";
 
 export default function DivisionPage({ data }: any) {

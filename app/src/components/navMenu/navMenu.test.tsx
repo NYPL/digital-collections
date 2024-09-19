@@ -4,6 +4,7 @@ import "@testing-library/jest-dom";
 import appConfig from "../../../../appConfig";
 import NavMenu from "./navMenu";
 import { ENV_KEY } from "../../types/EnvironmentType";
+import { DC_URL } from "../../config/constants";
 
 describe("Nav menu component", () => {
   it("renders nav menu component", () => {
@@ -18,16 +19,15 @@ describe("Nav menu component", () => {
     const { getByLabelText } = render(<NavMenu render={1} />);
     expect(getByLabelText("Items")).toHaveAttribute(
       "href",
-      appConfig.DC_URL[appConfig.environment as ENV_KEY] +
-        `/search/index?utf8=%E2%9C%93&keywords=`
+      `${DC_URL}/search/index?utf8=%E2%9C%93&keywords=`
     );
     expect(getByLabelText("Divisions")).toHaveAttribute(
       "href",
-      appConfig.DC_URL[appConfig.environment as ENV_KEY] + `/divisions`
+      `${DC_URL}/divisions`
     );
     expect(getByLabelText("Collections")).toHaveAttribute(
       "href",
-      appConfig.DC_URL[appConfig.environment as ENV_KEY] + `/collections`
+      `${DC_URL}/collections`
     );
     expect(getByLabelText("About")).toHaveAttribute("href", "/about");
   });
