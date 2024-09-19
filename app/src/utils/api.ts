@@ -6,6 +6,7 @@ import appConfig from "../../../appConfig";
 import defaultFeaturedItems from "../data/defaultFeaturedItemData";
 import { CARDS_PER_PAGE } from "../config/constants";
 import { redirect } from "next/navigation";
+import { DC_URL } from "../config/constants";
 
 export const getHomePageData = async () => {
   const randomNumber = Math.floor(Math.random() * 2);
@@ -53,9 +54,7 @@ export const getFeaturedItemData = async () => {
     ),
     uuid: featuredImageData.uuid,
     title: featuredImageData.title,
-    href: `${appConfig.DC_URL[appConfig.environment as ENV_KEY]}/items/${
-      featuredImageData.uuid
-    }`,
+    href: `${DC_URL}/items/${featuredImageData.uuid}`,
   };
   const newResponse = {
     featuredItem: featuredItemObject,
