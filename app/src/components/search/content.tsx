@@ -5,6 +5,7 @@ import {
   Text,
 } from "@nypl/design-system-react-components";
 import { mockCollections } from "__tests__/__mocks__/data/mockCollections";
+import { mockItems } from "__tests__/__mocks__/data/mockItems";
 import { useSearchParams } from "next/navigation";
 import { CollectionCardModel } from "../../models/collectionCard";
 import CollectionDataType from "../../types/CollectionDataType";
@@ -12,6 +13,7 @@ import CollectionCard from "../cards/collectionCard";
 import useBreakpoints from "../../hooks/useBreakpoints";
 import { useRouter } from "next/navigation";
 import DCSimpleGrid from "../dcSimpleGrid/dcSimpleGrid";
+import { ItemsGrid } from "../grids/itemsGrid";
 
 const SearchContent = () => {
   const queryParams = useSearchParams();
@@ -19,7 +21,7 @@ const SearchContent = () => {
   const { isLargerThanLargeTablet } = useBreakpoints();
 
   const router = useRouter();
-
+  console.log(`items are ${mockItems}`);
   const createQueryString = (name, value) => {
     const params = new URLSearchParams();
     params.set(name, value);
@@ -76,7 +78,7 @@ const SearchContent = () => {
           ]}
         />
       </Box>
-      <DCSimpleGrid>
+      {/* <DCSimpleGrid>
         {mockCollections.map((collection: CollectionDataType, index) => {
           const collectionModel = new CollectionCardModel(collection);
           return (
@@ -89,7 +91,8 @@ const SearchContent = () => {
             />
           );
         })}
-      </DCSimpleGrid>
+      </DCSimpleGrid> */}
+      <ItemsGrid data={mockCollections} />
     </>
   );
 };
