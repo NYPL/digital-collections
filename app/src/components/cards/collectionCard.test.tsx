@@ -1,6 +1,6 @@
 import { render, screen } from "@testing-library/react";
 import { mockCollectionCards } from "__tests__/__mocks__/data/mockCollectionCards";
-import CollectionCard from "./collectionCard";
+import CollectionCard from "./DCCard";
 
 describe("Collection card component", () => {
   const mockProps = {
