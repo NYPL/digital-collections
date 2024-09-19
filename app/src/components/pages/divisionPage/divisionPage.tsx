@@ -5,14 +5,18 @@ import {
   Heading,
   HorizontalRule,
   Link,
+  Pagination,
 } from "@nypl/design-system-react-components";
 import PageLayout from "../../pageLayout/pageLayout";
 import { headerBreakpoints } from "../../../utils/breakpoints";
 import { slugToString } from "../../../utils/utils";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import { ItemLane } from "../../lanes/itemLane/itemLane";
 import { CollectionsGrid } from "../../grids/collectionsGrid";
 import CollectionLanesLoading from "../../lanes/collectionLanes/collectionLanesLoading";
+import { totalNumPages } from "../../../utils/utils";
+import { useSearchParams, usePathname, useRouter } from "next/navigation";
+import useBreakpoints from "../../../hooks/useBreakpoints";
 
 export default function DivisionPage({ data }: any) {
   const params = useParams();
@@ -20,6 +24,30 @@ export default function DivisionPage({ data }: any) {
   const title = slugToString(slug);
   const pageName = `divisions|${slug}`;
   const [isLoaded, setIsLoaded] = useState(false);
+
+  const pathname = usePathname();
+  const queryParams = useSearchParams();
+  const headingRef = useRef<HTMLHeadingElement>(null);
+
+  const [currentPage, setCurrentPage] = useState(
+    Number(queryParams.get("page")) || 1
+  );
+
+  const { replace } = useRouter();
+
+  const { isLargerThanLargeTablet } = useBreakpoints();
+
+  const totalPages = totalNumPages(data.numFound, data.perPage);
+
+  const updatePageURL = async (pageNumber: number) => {
+    const params = new URLSearchParams();
+    params.set("page", pageNumber.toString());
+    setCurrentPage(pageNumber);
+    const url = `${pathname}?${params.toString()}#${data.slug}`;
+    replace(url);
+    headingRef.current?.focus;
+  };
+
   useEffect(() => {
     setIsLoaded(true);
   }, []);
@@ -32,7 +60,7 @@ export default function DivisionPage({ data }: any) {
       breadcrumbs={[
         { text: "Home", url: "/" },
         { text: "Divisions", url: "/divisions" },
-        { text: `${title}`, url: `/divisions/${slug}` },
+        { text: `${title}`, url: `/divisions/${data.slug}` },
       ]}
       adobeAnalyticsPageName={pageName}
     >
@@ -77,12 +105,38 @@ export default function DivisionPage({ data }: any) {
       )}
 
       <HorizontalRule sx={{ marginTop: "xxl", marginBottom: "xxl" }} />
+
+      <Heading
+        ref={headingRef}
+        tabIndex={0}
+        level="h2"
+        id={slug}
+        size="heading3"
+        style={{ width: "fit-content" }}
+      >
+        {`Collections in the ${data.name}`}
+      </Heading>
+
       {isLoaded ? (
-        <CollectionsGrid data={data} />
+        <CollectionsGrid collections={data.collections} />
       ) : (
         <>
           <CollectionLanesLoading withTitle={false} />
         </>
+      )}
+      {totalPages > 1 && (
+        <Pagination
+          id="pagination-id"
+          initialPage={currentPage}
+          currentPage={currentPage}
+          pageCount={totalPages}
+          onPageChange={updatePageURL}
+          sx={{
+            display: "flex",
+            justifyContent: "center",
+            gap: "s",
+          }}
+        />
       )}
     </PageLayout>
   );

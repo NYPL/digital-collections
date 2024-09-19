@@ -10,7 +10,7 @@ import React, { useRef, useState } from "react";
 import { totalNumPages } from "../../utils/utils";
 import DCSimpleGrid from "../dcSimpleGrid/dcSimpleGrid";
 
-export const CollectionsGrid = ({ collections }: any) => {
+export const CollectionsGridWithHeading = ({ collections }: any) => {
   const { isLargerThanLargeTablet } = useBreakpoints();
 
   return (

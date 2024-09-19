@@ -17,7 +17,7 @@ export default function Search() {
       ]}
       adobeAnalyticsPageName="search"
     >
-      <SearchResults />
+      <SearchResults showFilter={false} />
     </PageLayout>
   );
 }
