@@ -12,7 +12,7 @@ import { DC_URL } from "@/src/config/constants";
 import CollectionLanesLoading from "../../collectionLanes/collectionLanesLoading";
 
 export default function DivisionsPage({ data }) {
-  console.log("clientside divisions", data);
+  console.log("clientside divisions", data.divisions.length);
   const [isLoaded, setIsLoaded] = useState(false);
   useEffect(() => {
     setIsLoaded(true);
@@ -46,9 +46,9 @@ export default function DivisionsPage({ data }) {
             />
           ) : (
             <>
-              <CollectionLanesLoading />,
-              <CollectionLanesLoading />,
-              <CollectionLanesLoading />
+              {[...Array(36)].map((_, index) => (
+                <CollectionLanesLoading key={index} />
+              ))}
             </>
           )}
         </>
