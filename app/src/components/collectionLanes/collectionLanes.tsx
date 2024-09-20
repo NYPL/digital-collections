@@ -20,11 +20,10 @@ const CollectionLanes = ({ lanesWithNumItems, seeMoreLink }) => {
   const { isLargerThanLargeTablet } = useBreakpoints();
   const lanes = lanesWithNumItems?.map((lane, key) => (
     <Box className={styles.lane} data-testid={lane.slug} mt="xxl" key={key}>
-      <Flex width="100%" alignItems={"center"}>
+      <Flex alignItems={"center"}>
         <Heading
           id={`row-heading-${lane.slug}`}
           sx={{
-            width: "auto",
             [`@media screen and (min-width: ${headerBreakpoints.smTablet}px)`]:
               {
                 width: "90%",
