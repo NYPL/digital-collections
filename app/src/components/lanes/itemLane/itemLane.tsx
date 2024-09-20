@@ -8,17 +8,18 @@ import {
 } from "@nypl/design-system-react-components";
 import useBreakpoints from "../../../hooks/useBreakpoints";
 import { ItemCardModel } from "../../../models/itemCard";
-import React, { useContext } from "react";
+import React, { useRef } from "react";
 import { titleToDCParam } from "../../../utils/utils";
 import { DC_URL } from "@/src/config/constants";
 import DCSimpleGrid from "../../dcSimpleGrid/dcSimpleGrid";
 import DCCard from "../../cards/DCCard";
-import { CardContext } from "../../pageLayout/pageLayout";
+import { useTooltipOffset } from "@/src/hooks/useTooltipOffset";
 
 export const ItemLane = ({ data }: any) => {
   const { isLargerThanLargeTablet } = useBreakpoints();
   const divisionName = data.name;
-  const cardContext = useContext(CardContext);
+  const cardRef = useRef<HTMLDivElement>(null);
+  const cardOffset = useTooltipOffset(cardRef);
   return (
     <>
       <Box>
@@ -55,8 +56,8 @@ export const ItemLane = ({ data }: any) => {
                 id={`item-${index}-${item.title}`}
                 record={itemModel}
                 isLargerThanLargeTablet={isLargerThanLargeTablet}
-                cardOffset={cardContext?.cardOffset}
-                cardRef={cardContext?.cardRef}
+                cardOffset={cardOffset}
+                cardRef={cardRef}
               />
             );
           })}

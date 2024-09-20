@@ -9,7 +9,7 @@ import React, { useContext, useRef, useState } from "react";
 import { totalNumPages } from "../../utils/utils";
 import DCSimpleGrid from "../dcSimpleGrid/dcSimpleGrid";
 import DCCard from "../cards/DCCard";
-import { CardContext } from "../pageLayout/pageLayout";
+import { useTooltipOffset } from "@/src/hooks/useTooltipOffset";
 
 export const CollectionsGrid = ({ data }: any) => {
   const pathname = usePathname();
@@ -35,7 +35,8 @@ export const CollectionsGrid = ({ data }: any) => {
     headingRef.current?.focus;
   };
 
-  const cardContext = useContext(CardContext);
+  const cardRef = useRef<HTMLDivElement>(null);
+  const cardOffset = useTooltipOffset(cardRef);
 
   return (
     <>
@@ -55,8 +56,8 @@ export const CollectionsGrid = ({ data }: any) => {
           return (
             <DCCard
               key={index}
-              cardRef={cardContext?.cardRef}
-              cardOffset={cardContext?.cardOffset}
+              cardRef={cardRef}
+              cardOffset={cardOffset}
               id={index}
               slug={collectionModel.title}
               record={collectionModel}
