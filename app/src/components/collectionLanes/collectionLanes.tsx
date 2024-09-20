@@ -42,6 +42,7 @@ const CollectionLanes = ({ lanesWithNumItems, seeMoreLink }) => {
           hasVisitedState
           isUnderlined={false}
           __css={{
+            paddingLeft: "l",
             whiteSpace: "nowrap",
             justifyContent: "flex-end",
             display: "none",
