@@ -61,6 +61,7 @@ const CollectionLanes = ({ lanesWithNumItems, seeMoreLink }) => {
             _hover: {
               textDecoration: "underline 1px dotted !important",
               textUnderlineOffset: "2px",
+              "> svg": { fill: "ui.link.secondary" },
             },
             _visited: { "> svg": { fill: "ui.link.tertiary" } },
           }}
