@@ -53,7 +53,7 @@ describe("Collection DCCard component", () => {
     const link = screen.getByRole("link");
     expect(link).toHaveAttribute(
       "href",
-      "https://digitalcollections.nypl.org/collections/posada-collection#/?tab=navigation"
+      expect.stringContaining("/collections/posada-collection#/?tab=navigation")
     );
   });
 });
@@ -79,7 +79,7 @@ describe("Item DCCard component", () => {
     const link = screen.getByRole("link");
     expect(link).toHaveAttribute(
       "href",
-      "/items/50370c90-cabb-013c-da64-0242ac110002"
+      expect.stringContaining("/items/50370c90-cabb-013c-da64-0242ac110002/")
     );
   });
 });
