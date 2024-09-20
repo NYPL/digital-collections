@@ -5,7 +5,7 @@ import { Heading, Pagination } from "@nypl/design-system-react-components";
 import { CollectionCardModel } from "../../models/collectionCard";
 import useBreakpoints from "../../hooks/useBreakpoints";
 import CollectionDataType from "../../types/CollectionDataType";
-import React, { useContext, useRef, useState } from "react";
+import React, { useRef, useState } from "react";
 import { totalNumPages } from "../../utils/utils";
 import DCSimpleGrid from "../dcSimpleGrid/dcSimpleGrid";
 import DCCard from "../dcCard/DCCard";
