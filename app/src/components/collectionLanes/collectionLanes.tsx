@@ -20,7 +20,7 @@ const CollectionLanes = ({ lanesWithNumItems, seeMoreLink }) => {
   const { isLargerThanLargeTablet } = useBreakpoints();
   const lanes = lanesWithNumItems?.map((lane, key) => (
     <Box className={styles.lane} data-testid={lane.slug} mt="xxl" key={key}>
-      <Flex alignItems={"center"}>
+      <Flex alignItems="baseline">
         <Heading
           id={`row-heading-${lane.slug}`}
           sx={{
@@ -43,6 +43,7 @@ const CollectionLanes = ({ lanesWithNumItems, seeMoreLink }) => {
           isUnderlined={false}
           __css={{
             paddingLeft: "l",
+            marginBottom: "s",
             whiteSpace: "nowrap",
             justifyContent: "flex-end",
             display: "none",
@@ -56,6 +57,7 @@ const CollectionLanes = ({ lanesWithNumItems, seeMoreLink }) => {
             color: "ui.link.primary",
             fontWeight: "medium",
             alignItems: "end",
+            alignSelf: "end",
             _hover: {
               textDecoration: "underline 1px dotted !important",
               textUnderlineOffset: "2px",
