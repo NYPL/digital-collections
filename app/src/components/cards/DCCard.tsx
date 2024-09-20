@@ -21,10 +21,11 @@ interface DCCardProps {
   slug?: string;
   record: CollectionCardDataType | ItemCardDataType;
 }
+
 function isCollectionCardDataType(
-  record: any
+  record: CollectionCardDataType | ItemCardDataType
 ): record is CollectionCardDataType {
-  return record && record.numberOfDigitizedItems;
+  return "numberOfDigitizedItems" in record;
 }
 
 const DCCard = ({
@@ -82,8 +83,8 @@ const DCCard = ({
       >
         {record.title}
       </CardHeading>
-      {isCollection && (
-        <CardContent sx={{ alignContent: "top" }}>
+      <CardContent sx={{ alignContent: "top" }}>
+        {isCollection && (
           <Text
             id={`item-count-${slug}-${id}`}
             size="subtitle2"
@@ -100,8 +101,8 @@ const DCCard = ({
               Math.floor(record.numberOfDigitizedItems) !== 1 ? "s" : ""
             }`}
           </Text>
-        </CardContent>
-      )}
+        )}
+      </CardContent>
     </Card>
   );
   return isLargerThanLargeTablet && truncatedTitle ? (

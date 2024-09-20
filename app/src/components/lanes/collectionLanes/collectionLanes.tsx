@@ -1,5 +1,5 @@
 "use client";
-import React, { useContext } from "react";
+import React, { useContext, useRef } from "react";
 import {
   Box,
   Flex,
@@ -13,11 +13,12 @@ import DCCard from "../../cards/DCCard";
 import CollectionDataType from "../../../types/CollectionDataType";
 import { CollectionCardModel } from "../../../models/collectionCard";
 import DCSimpleGrid from "../../dcSimpleGrid/dcSimpleGrid";
-import { CardContext } from "../../pageLayout/pageLayout";
+import { useTooltipOffset } from "@/src/hooks/useTooltipOffset";
 
 const CollectionLanes = ({ lanesWithNumItems, seeMoreLink }) => {
   const { isLargerThanLargeTablet } = useBreakpoints();
-  const cardContext = useContext(CardContext);
+  const cardRef = useRef<HTMLDivElement>(null);
+  const cardOffset = useTooltipOffset(cardRef);
 
   const lanes = lanesWithNumItems?.map((lane, key) => (
     <Box className={styles.lane} data-testid={lane.slug} mt="xxl" key={key}>
@@ -54,8 +55,8 @@ const CollectionLanes = ({ lanesWithNumItems, seeMoreLink }) => {
                 id={index}
                 record={c}
                 isLargerThanLargeTablet={isLargerThanLargeTablet}
-                cardRef={cardContext?.cardRef}
-                cardOffset={cardContext?.cardOffset}
+                cardRef={cardRef}
+                cardOffset={cardOffset}
               />
             );
           })}

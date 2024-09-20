@@ -22,13 +22,6 @@ interface PageLayoutProps {
   adobeAnalyticsPageName?: string;
 }
 
-interface CardContextType {
-  cardRef: any;
-  cardOffset: [number, number];
-}
-
-export const CardContext = createContext<CardContextType | null>(null);
-
 const PageLayout = ({
   children,
   activePage,
@@ -39,9 +32,6 @@ const PageLayout = ({
   useEffect(() => {
     trackVirtualPageView(adobeAnalyticsPageName);
   });
-
-  const cardRef = useRef<HTMLDivElement>(null);
-  const cardOffset = useTooltipOffset(cardRef);
 
   const [view, setView] = React.useState("form");
   const { isOpen, onClose, FeedbackBox } = useFeedbackBox();
@@ -91,44 +81,40 @@ const PageLayout = ({
       </Script>
       {/* <!-- / Adobe Analytics  --> */}
       <DSProvider>
-        <CardContext.Provider
-          value={{ cardOffset: cardOffset, cardRef: cardRef }}
-        >
-          <SkipNavigation />
-          <NotificationBanner />
-          <Header />
-          {activePage === "home" ||
-          activePage === "about" ||
-          activePage === "notFound" ||
-          activePage === "serverError" ? (
-            children
-          ) : (
-            <>
-              <Breadcrumbs
-                breadcrumbsType="digitalCollections"
-                breadcrumbsData={breadcrumbs || []}
-              />
-              {/* TODO: Move to TemplateAppContainer once spacing is more flexible.  --> */}
-              <Box
-                id="mainContent"
-                sx={{
-                  margin: "auto",
-                  maxWidth: "1280px",
-                  padding: "64px 16px",
-                }}
-              >
-                {children as JSX.Element}
-              </Box>
-            </>
-          )}
-          <FeedbackBox
-            showCategoryField
-            onSubmit={onSubmit}
-            onClose={onFormClose}
-            title="Feedback"
-            view={view}
-          />
-        </CardContext.Provider>
+        <SkipNavigation />
+        <NotificationBanner />
+        <Header />
+        {activePage === "home" ||
+        activePage === "about" ||
+        activePage === "notFound" ||
+        activePage === "serverError" ? (
+          children
+        ) : (
+          <>
+            <Breadcrumbs
+              breadcrumbsType="digitalCollections"
+              breadcrumbsData={breadcrumbs || []}
+            />
+            {/* TODO: Move to TemplateAppContainer once spacing is more flexible.  --> */}
+            <Box
+              id="mainContent"
+              sx={{
+                margin: "auto",
+                maxWidth: "1280px",
+                padding: "64px 16px",
+              }}
+            >
+              {children as JSX.Element}
+            </Box>
+          </>
+        )}
+        <FeedbackBox
+          showCategoryField
+          onSubmit={onSubmit}
+          onClose={onFormClose}
+          title="Feedback"
+          view={view}
+        />
       </DSProvider>
     </>
   );
