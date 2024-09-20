@@ -1,5 +1,5 @@
 "use client";
-import React, { MutableRefObject } from "react";
+import React, { RefObject } from "react";
 import {
   Card,
   CardHeading,
@@ -15,7 +15,7 @@ import { TRUNCATED_LENGTH } from "@/src/config/constants";
 import ItemCardDataType from "@/src/types/ItemCardDataType";
 interface DCCardProps {
   cardOffset?: number[];
-  cardRef?: any;
+  cardRef?: RefObject<HTMLDivElement>;
   id: string;
   isLargerThanLargeTablet: boolean;
   slug?: string;
