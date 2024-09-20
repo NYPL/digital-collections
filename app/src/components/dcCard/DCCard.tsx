@@ -14,8 +14,8 @@ import { CollectionCardDataType } from "../../types/CollectionCardDataType";
 import { TRUNCATED_LENGTH } from "@/src/config/constants";
 import ItemCardDataType from "@/src/types/ItemCardDataType";
 interface DCCardProps {
-  cardOffset?: [number, number];
-  cardRef: any;
+  cardOffset?: number[];
+  cardRef?: any;
   id: string;
   isLargerThanLargeTablet: boolean;
   slug?: string;
@@ -106,7 +106,7 @@ const DCCard = ({
     </Card>
   );
   return isLargerThanLargeTablet && truncatedTitle ? (
-    <Tooltip offset={cardOffset} content={record.title}>
+    <Tooltip offset={cardOffset as [number, number]} content={record.title}>
       {card}
     </Tooltip>
   ) : (

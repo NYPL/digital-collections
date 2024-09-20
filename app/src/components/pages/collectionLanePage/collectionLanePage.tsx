@@ -10,7 +10,7 @@ import PageLayout from "../../pageLayout/pageLayout";
 import { useParams } from "next/navigation";
 import { headerBreakpoints } from "../../../utils/breakpoints";
 import { slugToString } from "../../../utils/utils";
-import DCCard from "../../cards/DCCard";
+import DCCard from "../../dcCard/DCCard";
 import { CollectionCardModel } from "../../../models/collectionCard";
 import useBreakpoints from "../../../hooks/useBreakpoints";
 import CollectionDataType from "../../../types/CollectionDataType";
