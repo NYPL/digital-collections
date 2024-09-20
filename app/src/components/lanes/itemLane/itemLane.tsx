@@ -12,7 +12,7 @@ import React, { useRef } from "react";
 import { titleToDCParam } from "../../../utils/utils";
 import { DC_URL } from "@/src/config/constants";
 import DCSimpleGrid from "../../dcSimpleGrid/dcSimpleGrid";
-import DCCard from "../../cards/DCCard";
+import DCCard from "../../dcCard/DCCard";
 import { useTooltipOffset } from "@/src/hooks/useTooltipOffset";
 
 export const ItemLane = ({ data }: any) => {

@@ -9,7 +9,7 @@ import {
 } from "@nypl/design-system-react-components";
 import styles from "./Collectionlanes.module.css";
 import useBreakpoints from "../../../hooks/useBreakpoints";
-import DCCard from "../../cards/DCCard";
+import DCCard from "../../dcCard/DCCard";
 import CollectionDataType from "../../../types/CollectionDataType";
 import { CollectionCardModel } from "../../../models/collectionCard";
 import DCSimpleGrid from "../../dcSimpleGrid/dcSimpleGrid";
