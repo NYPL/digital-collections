@@ -6,7 +6,7 @@ import {
   useFeedbackBox,
   Box,
 } from "@nypl/design-system-react-components";
-import React, { createContext, useEffect, useRef } from "react";
+import React, { useEffect } from "react";
 import { type PropsWithChildren } from "react";
 import Header from "../header/header";
 import NotificationBanner from "../notificationBanner/notificationBanner";
@@ -14,7 +14,6 @@ import Script from "next/script";
 import { BreadcrumbsDataProps } from "@nypl/design-system-react-components/dist/src/components/Breadcrumbs/Breadcrumbs";
 import { ADOBE_EMBED_URL } from "../../config/constants";
 import { trackVirtualPageView } from "../../utils/utils";
-import { useTooltipOffset } from "@/src/hooks/useTooltipOffset";
 
 interface PageLayoutProps {
   activePage: string;
