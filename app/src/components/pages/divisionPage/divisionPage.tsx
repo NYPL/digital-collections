@@ -9,7 +9,7 @@ import {
 import PageLayout from "../../pageLayout/pageLayout";
 import { headerBreakpoints } from "../../../utils/breakpoints";
 import { slugToString } from "../../../utils/utils";
-import React, { useContext, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { ItemLane } from "../../lanes/itemLane/itemLane";
 import { CollectionsGrid } from "../../grids/collectionsGrid";
 import CollectionLanesLoading from "../../lanes/collectionLanes/collectionLanesLoading";
