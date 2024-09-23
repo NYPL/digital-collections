@@ -19,7 +19,7 @@ export const ItemLane = ({ data }: any) => {
   const { isLargerThanLargeTablet } = useBreakpoints();
   const divisionName = data.name;
   const cardRef = useRef<HTMLDivElement>(null);
-  const cardOffset = useTooltipOffset(cardRef);
+  const tooltipOffset = useTooltipOffset(cardRef);
   return (
     <>
       <Box>
@@ -56,8 +56,8 @@ export const ItemLane = ({ data }: any) => {
                 id={`item-${index}-${item.title}`}
                 record={itemModel}
                 isLargerThanLargeTablet={isLargerThanLargeTablet}
-                cardOffset={cardOffset}
-                cardRef={cardRef}
+                tooltipOffset={tooltipOffset}
+                ref={cardRef}
               />
             );
           })}

@@ -18,7 +18,7 @@ import { useTooltipOffset } from "@/src/hooks/useTooltipOffset";
 const CollectionLanes = ({ lanesWithNumItems, seeMoreLink }) => {
   const { isLargerThanLargeTablet } = useBreakpoints();
   const cardRef = useRef<HTMLDivElement>(null);
-  const cardOffset = useTooltipOffset(cardRef);
+  const tooltipOffset = useTooltipOffset(cardRef);
 
   const lanes = lanesWithNumItems?.map((lane, key) => (
     <Box className={styles.lane} data-testid={lane.slug} mt="xxl" key={key}>
@@ -55,8 +55,8 @@ const CollectionLanes = ({ lanesWithNumItems, seeMoreLink }) => {
                 id={index}
                 record={c}
                 isLargerThanLargeTablet={isLargerThanLargeTablet}
-                cardRef={cardRef}
-                cardOffset={cardOffset}
+                ref={cardRef}
+                tooltipOffset={tooltipOffset}
               />
             );
           })}
