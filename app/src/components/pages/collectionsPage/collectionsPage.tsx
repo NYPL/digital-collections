@@ -12,7 +12,7 @@ import {
 import { headerBreakpoints } from "../../../utils/breakpoints";
 import { CollectionsGrid } from "../../grids/collectionsGrid";
 
-export const CollectionsPage = () => {
+export const CollectionsPage = ({ data }) => {
   return (
     <PageLayout
       activePage="collections"
@@ -52,7 +52,7 @@ export const CollectionsPage = () => {
       </Box>
       <HorizontalRule sx={{ marginTop: "xxl", marginBottom: "xxl" }} />
       {/* <CollectionsGrid data={mockCollectionCards}/> */}
-      <SearchResults showFilter={true} />
+      <SearchResults showFilter={true} data={data} />
     </PageLayout>
   );
 };

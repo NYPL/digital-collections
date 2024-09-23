@@ -1,5 +1,4 @@
 "use client";
-import { useParams } from "next/navigation";
 import {
   Box,
   Heading,
@@ -7,15 +6,19 @@ import {
   Link,
   Pagination,
 } from "@nypl/design-system-react-components";
+import React, { useEffect, useState, useRef } from "react";
+import {
+  useParams,
+  useSearchParams,
+  usePathname,
+  useRouter,
+} from "next/navigation";
 import PageLayout from "../../pageLayout/pageLayout";
 import { headerBreakpoints } from "../../../utils/breakpoints";
-import { slugToString } from "../../../utils/utils";
-import React, { useEffect, useState, useRef } from "react";
 import { ItemLane } from "../../lanes/itemLane/itemLane";
 import { CollectionsGrid } from "../../grids/collectionsGrid";
 import CollectionLanesLoading from "../../lanes/collectionLanes/collectionLanesLoading";
-import { totalNumPages } from "../../../utils/utils";
-import { useSearchParams, usePathname, useRouter } from "next/navigation";
+import { slugToString, totalNumPages } from "../../../utils/utils";
 import useBreakpoints from "../../../hooks/useBreakpoints";
 
 export default function DivisionPage({ data }: any) {
