@@ -16,7 +16,6 @@ import ItemCardDataType from "@/src/types/ItemCardDataType";
 import { Offset } from "@/src/hooks/useTooltipOffset";
 interface DCCardProps {
   tooltipOffset?: number[];
-  cardRef?: RefObject<HTMLDivElement>;
   id: string;
   isLargerThanLargeTablet: boolean;
   slug?: string;

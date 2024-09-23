@@ -36,7 +36,7 @@ export const CollectionsGrid = ({ data }: any) => {
   };
 
   const cardRef = useRef<HTMLDivElement>(null);
-  const cardOffset = useTooltipOffset(cardRef);
+  const tooltipOffset = useTooltipOffset(cardRef);
 
   return (
     <>
@@ -56,8 +56,8 @@ export const CollectionsGrid = ({ data }: any) => {
           return (
             <DCCard
               key={index}
-              cardRef={cardRef}
-              cardOffset={cardOffset}
+              ref={cardRef}
+              tooltipOffset={tooltipOffset}
               id={index}
               slug={collectionModel.title}
               record={collectionModel}
