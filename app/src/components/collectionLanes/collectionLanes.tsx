@@ -56,7 +56,6 @@ const CollectionLanes = ({ lanesWithNumItems, seeMoreLink }) => {
               },
             color: "ui.link.primary",
             fontWeight: "medium",
-            alignItems: "end",
             alignSelf: "end",
             _hover: {
               textDecoration: "underline 1px dotted !important",
