@@ -12,7 +12,6 @@ import { DC_URL } from "@/src/config/constants";
 import CollectionLanesLoading from "../../collectionLanes/collectionLanesLoading";
 
 export default function DivisionsPage({ data }) {
-  console.log("clientside divisions", data);
   const [isLoaded, setIsLoaded] = useState(false);
   useEffect(() => {
     setIsLoaded(true);
@@ -30,7 +29,7 @@ export default function DivisionsPage({ data }) {
         <>
           <Box
             sx={{
-              maxWidth: "715px",
+              maxWidth: "730px",
               "> hgroup > p": {
                 fontWeight: "400 !important",
               },
@@ -46,9 +45,9 @@ export default function DivisionsPage({ data }) {
             />
           ) : (
             <>
-              <CollectionLanesLoading />,
-              <CollectionLanesLoading />,
-              <CollectionLanesLoading />
+              {[...Array(36)].map((_, index) => (
+                <CollectionLanesLoading key={index} />
+              ))}
             </>
           )}
         </>
