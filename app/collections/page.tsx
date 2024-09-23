@@ -8,6 +8,8 @@ export const metadata: Metadata = {
 };
 
 export default async function Collections() {
-  const data = await getCollections();
-  return <CollectionsPage />;
+  const initialData = await getCollections();
+  console.log(`initial data is: ${initialData.response}`);
+
+  return <CollectionsPage data={{ initialData }} />;
 }

@@ -1,30 +1,71 @@
 import {
   Box,
   Menu,
-  SimpleGrid,
   Text,
+  Pagination,
 } from "@nypl/design-system-react-components";
 import { mockItems } from "__tests__/__mocks__/data/mockItems";
-import { useSearchParams } from "next/navigation";
+import {
+  useParams,
+  useSearchParams,
+  usePathname,
+  useRouter,
+} from "next/navigation";
 import { ItemCardModel } from "../../models/itemCard";
 import ItemDataType from "../../types/ItemDataType";
 import ItemCard from "../cards/itemCard";
 import { mockCollectionCards } from "__tests__/__mocks__/data/mockCollectionCards";
-import { CollectionCardModel } from "../../models/CollectionCard";
+import { CollectionCardModel } from "../../models/collectionCard";
 import CollectionCardDataType from "../../types/CollectionCardDataType";
 import CollectionCard from "../cards/collectionCard";
 import useBreakpoints from "../../hooks/useBreakpoints";
-import { useRouter } from "next/navigation";
 import DCSimpleGrid from "../dcSimpleGrid/dcSimpleGrid";
 import { CollectionsGrid } from "../grids/collectionsGrid";
+import React, { useEffect, useState, useRef } from "react";
+import { slugToString, totalNumPages } from "../../utils/utils";
+import { CARDS_PER_PAGE } from "@/src/config/constants";
+import CollectionLanesLoading from "../lanes/collectionLanes/collectionLanesLoading";
 
-const SearchContent = ({ showFilter }) => {
+const SearchContent = ({ showFilter, data }) => {
+  const params = useParams();
+  const slug = params.slug as string;
+  const title = slugToString(slug);
+  const pageName = `search|${slug}`;
+  const [isLoaded, setIsLoaded] = useState(false);
+
   const queryParams = useSearchParams();
   const query = queryParams.toString();
-  const { isLargerThanLargeTablet } = useBreakpoints();
 
   const router = useRouter();
-  console.log(`items are ${mockItems}`);
+
+  const pathname = usePathname();
+  // const queryParams = useSearchParams();
+  const headingRef = useRef<HTMLHeadingElement>(null);
+
+  const [currentPage, setCurrentPage] = useState(
+    Number(queryParams.get("page")) || 1
+  );
+
+  const { replace } = useRouter();
+
+  const totalPages = totalNumPages(
+    data?.numFound || 0,
+    data?.perPage || CARDS_PER_PAGE
+  );
+
+  useEffect(() => {
+    setIsLoaded(true);
+  }, []);
+
+  const updatePageURL = async (pageNumber: number) => {
+    const params = new URLSearchParams();
+    params.set("page", pageNumber.toString());
+    setCurrentPage(pageNumber);
+    const url = `${pathname}?${params.toString()}#${data.slug}`;
+    replace(url);
+    headingRef.current?.focus;
+  };
+
   const createQueryString = (name, value) => {
     const params = new URLSearchParams();
     params.set(name, value);
@@ -87,7 +128,29 @@ const SearchContent = ({ showFilter }) => {
           <></>
         )}
       </Box>
-      <CollectionsGrid collections={mockCollectionCards} />
+
+      {isLoaded ? (
+        <CollectionsGrid collections={mockCollectionCards} />
+      ) : (
+        <>
+          <CollectionLanesLoading withTitle={false} />
+        </>
+      )}
+
+      {totalPages > 1 && (
+        <Pagination
+          id="pagination-id"
+          initialPage={currentPage}
+          currentPage={currentPage}
+          pageCount={totalPages}
+          onPageChange={updatePageURL}
+          sx={{
+            display: "flex",
+            justifyContent: "center",
+            gap: "s",
+          }}
+        />
+      )}
     </>
   );
 };
