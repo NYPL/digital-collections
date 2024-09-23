@@ -4,67 +4,23 @@ import {
   Text,
   Pagination,
 } from "@nypl/design-system-react-components";
-import { mockItems } from "__tests__/__mocks__/data/mockItems";
-import {
-  useParams,
-  useSearchParams,
-  usePathname,
-  useRouter,
-} from "next/navigation";
-import { ItemCardModel } from "../../models/itemCard";
-import ItemDataType from "../../types/ItemDataType";
-import ItemCard from "../cards/itemCard";
-import { mockCollectionCards } from "__tests__/__mocks__/data/mockCollectionCards";
-import { CollectionCardModel } from "../../models/collectionCard";
-import CollectionCardDataType from "../../types/CollectionCardDataType";
-import CollectionCard from "../cards/collectionCard";
-import useBreakpoints from "../../hooks/useBreakpoints";
-import DCSimpleGrid from "../dcSimpleGrid/dcSimpleGrid";
+import { useSearchParams, usePathname, useRouter } from "next/navigation";
 import { CollectionsGrid } from "../grids/collectionsGrid";
-import React, { useEffect, useState, useRef } from "react";
-import { slugToString, totalNumPages } from "../../utils/utils";
-import { CARDS_PER_PAGE } from "@/src/config/constants";
-import CollectionLanesLoading from "../lanes/collectionLanes/collectionLanesLoading";
+import React, { useState } from "react";
+import { ItemsGrid } from "../grids/itemsGrid";
 
 const SearchContent = ({ showFilter, data }) => {
-  const params = useParams();
-  const slug = params.slug as string;
-  const title = slugToString(slug);
-  const pageName = `search|${slug}`;
-  const [isLoaded, setIsLoaded] = useState(false);
-
+  const isLoaded = true;
   const queryParams = useSearchParams();
   const query = queryParams.toString();
-
   const router = useRouter();
-
   const pathname = usePathname();
-  // const queryParams = useSearchParams();
-  const headingRef = useRef<HTMLHeadingElement>(null);
+
+  const totalPages = 3; // TODO: change to be dynamic after API hookup
 
   const [currentPage, setCurrentPage] = useState(
     Number(queryParams.get("page")) || 1
   );
-
-  const { replace } = useRouter();
-
-  const totalPages = totalNumPages(
-    data?.numFound || 0,
-    data?.perPage || CARDS_PER_PAGE
-  );
-
-  useEffect(() => {
-    setIsLoaded(true);
-  }, []);
-
-  const updatePageURL = async (pageNumber: number) => {
-    const params = new URLSearchParams();
-    params.set("page", pageNumber.toString());
-    setCurrentPage(pageNumber);
-    const url = `${pathname}?${params.toString()}#${data.slug}`;
-    replace(url);
-    headingRef.current?.focus;
-  };
 
   const createQueryString = (name, value) => {
     const params = new URLSearchParams();
@@ -129,12 +85,11 @@ const SearchContent = ({ showFilter, data }) => {
         )}
       </Box>
 
-      {isLoaded ? (
-        <CollectionsGrid collections={mockCollectionCards} />
+      {/* certainly a better way to handle this but it's annoying me. */}
+      {isLoaded && pathname !== "/search/index" ? (
+        <CollectionsGrid collections={data} />
       ) : (
-        <>
-          <CollectionLanesLoading withTitle={false} />
-        </>
+        <ItemsGrid items={data} />
       )}
 
       {totalPages > 1 && (
@@ -143,7 +98,7 @@ const SearchContent = ({ showFilter, data }) => {
           initialPage={currentPage}
           currentPage={currentPage}
           pageCount={totalPages}
-          onPageChange={updatePageURL}
+          // onPageChange={updatePageURL} // TODO: pagination stuff
           sx={{
             display: "flex",
             justifyContent: "center",

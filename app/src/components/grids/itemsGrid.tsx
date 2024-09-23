@@ -9,20 +9,23 @@ import CollectionDataType from "../../types/CollectionDataType";
 import React, { useRef, useState } from "react";
 import { totalNumPages } from "../../utils/utils";
 import DCSimpleGrid from "../dcSimpleGrid/dcSimpleGrid";
+import ItemCard from "../cards/itemCard";
+import ItemCardDataType from "@/src/types/ItemCardDataType";
+import { ItemCardModel } from "@/src/models/itemCard";
 
-export const CollectionsGridWithHeading = ({ collections }: any) => {
+export const ItemsGrid = ({ items }: any) => {
+  console.log("items are: ", items);
   const { isLargerThanLargeTablet } = useBreakpoints();
 
   return (
     <DCSimpleGrid>
-      {collections?.map((collection: CollectionDataType, index) => {
-        const collectionModel = new CollectionCardModel(collection);
+      {items?.map((item: ItemCardDataType, index) => {
+        const itemModel = new ItemCardModel(item);
         return (
-          <CollectionCard
+          <ItemCard
             key={index}
             id={index}
-            slug={collectionModel.title}
-            collection={collectionModel}
+            item={itemModel}
             isLargerThanLargeTablet={isLargerThanLargeTablet}
           />
         );

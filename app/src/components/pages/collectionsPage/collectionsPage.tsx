@@ -2,7 +2,6 @@
 import PageLayout from "../../pageLayout/pageLayout";
 import React from "react";
 import SearchResults from "../../search/results";
-import { mockCollectionCards } from "__tests__/__mocks__/data/mockCollectionCards";
 import {
   Box,
   Heading,
@@ -10,9 +9,11 @@ import {
   SearchBar,
 } from "@nypl/design-system-react-components";
 import { headerBreakpoints } from "../../../utils/breakpoints";
-import { CollectionsGrid } from "../../grids/collectionsGrid";
+// import { CollectionsGrid } from "../../grids/collectionsGrid";
+// import { mockCollectionCards } from "__tests__/__mocks__/data/mockCollectionCards";
 
 export const CollectionsPage = ({ data }) => {
+  console.log("Data in collections page is: ", data);
   return (
     <PageLayout
       activePage="collections"
