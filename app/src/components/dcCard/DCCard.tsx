@@ -15,7 +15,7 @@ import { TRUNCATED_LENGTH } from "@/src/config/constants";
 import ItemCardDataType from "@/src/types/ItemCardDataType";
 import { Offset } from "@/src/hooks/useTooltipOffset";
 interface DCCardProps {
-  tooltipOffset?: number[];
+  tooltipOffset?: Offset;
   id: string;
   isLargerThanLargeTablet: boolean;
   slug?: string;
@@ -100,7 +100,7 @@ const DCCard = forwardRef<HTMLDivElement, DCCardProps>(
       </Card>
     );
     return isLargerThanLargeTablet && truncatedTitle ? (
-      <Tooltip offset={tooltipOffset as Offset} content={record.title}>
+      <Tooltip offset={tooltipOffset} content={record.title}>
         {card}
       </Tooltip>
     ) : (
