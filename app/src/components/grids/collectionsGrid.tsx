@@ -2,13 +2,14 @@
 
 import { useSearchParams, usePathname, useRouter } from "next/navigation";
 import { Heading, Pagination } from "@nypl/design-system-react-components";
-import CollectionCard from "../cards/collectionCard";
 import { CollectionCardModel } from "../../models/collectionCard";
 import useBreakpoints from "../../hooks/useBreakpoints";
 import CollectionDataType from "../../types/CollectionDataType";
 import React, { useRef, useState } from "react";
 import { totalNumPages } from "../../utils/utils";
 import DCSimpleGrid from "../dcSimpleGrid/dcSimpleGrid";
+import DCCard from "../dcCard/DCCard";
+import { useTooltipOffset } from "@/src/hooks/useTooltipOffset";
 
 export const CollectionsGrid = ({ data }: any) => {
   const pathname = usePathname();
@@ -34,6 +35,9 @@ export const CollectionsGrid = ({ data }: any) => {
     headingRef.current?.focus;
   };
 
+  const cardRef = useRef<HTMLDivElement>(null);
+  const tooltipOffset = useTooltipOffset(cardRef);
+
   return (
     <>
       <Heading
@@ -50,11 +54,13 @@ export const CollectionsGrid = ({ data }: any) => {
         {data?.collections?.map((collection: CollectionDataType, index) => {
           const collectionModel = new CollectionCardModel(collection);
           return (
-            <CollectionCard
+            <DCCard
               key={index}
+              ref={cardRef}
+              tooltipOffset={tooltipOffset}
               id={index}
               slug={collectionModel.title}
-              collection={collectionModel}
+              record={collectionModel}
               isLargerThanLargeTablet={isLargerThanLargeTablet}
             />
           );
