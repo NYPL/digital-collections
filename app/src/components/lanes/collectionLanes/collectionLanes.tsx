@@ -1,5 +1,5 @@
 "use client";
-import React from "react";
+import React, { useRef } from "react";
 import {
   Box,
   Flex,
@@ -8,15 +8,18 @@ import {
   Link,
 } from "@nypl/design-system-react-components";
 import styles from "./Collectionlanes.module.css";
-import { DC_URL } from "../../../config/constants";
 import useBreakpoints from "../../../hooks/useBreakpoints";
-import CollectionCard from "../../cards/collectionCard";
+import DCCard from "../../dcCard/DCCard";
 import CollectionDataType from "../../../types/CollectionDataType";
 import { CollectionCardModel } from "../../../models/collectionCard";
 import DCSimpleGrid from "../../dcSimpleGrid/dcSimpleGrid";
+import { useTooltipOffset } from "@/src/hooks/useTooltipOffset";
 
 const CollectionLanes = ({ lanesWithNumItems, seeMoreLink }) => {
   const { isLargerThanLargeTablet } = useBreakpoints();
+  const cardRef = useRef<HTMLDivElement>(null);
+  const tooltipOffset = useTooltipOffset(cardRef);
+
   const lanes = lanesWithNumItems?.map((lane, key) => (
     <Box className={styles.lane} data-testid={lane.slug} mt="xxl" key={key}>
       <Flex alignItems="baseline">
@@ -46,12 +49,14 @@ const CollectionLanes = ({ lanesWithNumItems, seeMoreLink }) => {
           {lane.collections.map((collection: CollectionDataType, index) => {
             const c = new CollectionCardModel(collection);
             return (
-              <CollectionCard
+              <DCCard
                 key={index}
                 slug={lane.slug}
                 id={index}
-                collection={c}
+                record={c}
                 isLargerThanLargeTablet={isLargerThanLargeTablet}
+                ref={cardRef}
+                tooltipOffset={tooltipOffset}
               />
             );
           })}
