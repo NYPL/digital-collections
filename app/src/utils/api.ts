@@ -5,6 +5,7 @@ import { imageURL, addCommas } from "../utils/utils";
 import appConfig from "../../../appConfig";
 import defaultFeaturedItems from "../data/defaultFeaturedItemData";
 import { CARDS_PER_PAGE } from "../config/constants";
+import { DC_URL } from "../config/constants";
 
 export const getHomePageData = async () => {
   const randomNumber = Math.floor(Math.random() * 2);
@@ -28,6 +29,7 @@ export const getHomePageData = async () => {
   });
 
   const newResponse = { randomNumber, lanesWithNumItems: updatedLanes };
+  console.log("new response is: ", newResponse);
   return newResponse;
 };
 
@@ -51,9 +53,7 @@ export const getFeaturedItemData = async () => {
     ),
     uuid: featuredImageData.uuid,
     title: featuredImageData.title,
-    href: `${appConfig.DC_URL[appConfig.environment as ENV_KEY]}/items/${
-      featuredImageData.uuid
-    }`,
+    href: `${DC_URL}/items/${featuredImageData.uuid}`,
   };
   const newResponse = {
     featuredItem: featuredItemObject,
@@ -188,9 +188,12 @@ export const RepoAPICall = async (
       const data = await response.json();
       return data;
     } else {
+      console.log(`Response from Repo API ${apiUrl} was not a 200`);
       return undefined;
     }
   } catch (error) {
+    console.log(`error fetching Repo API ${apiUrl}`);
+    console.log(error);
     return undefined;
   }
 };
@@ -229,7 +232,5 @@ export const getDivisionData = async (
 ) => {
   const apiUrl = `${process.env.API_URL}/api/v2/divisions/${slug}?page=${pageNum}&per_page=${perPage}`;
   const res = await apiResponse(apiUrl);
-  console.log("apiUrl in getDivisionData is: ", apiUrl);
-  console.log("res in getDivisionData is: ", res);
   return res;
 };

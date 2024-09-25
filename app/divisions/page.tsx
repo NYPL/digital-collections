@@ -15,7 +15,6 @@ export default async function Divisions() {
     console.log(
       `api URL for divisions page is ${process.env.API_URL}/api/v2/divisions`
     );
-    console.log("data in divisions page is: ", data);
   } catch (error) {
     logger.error("Failed to fetch divisions data", error);
   }

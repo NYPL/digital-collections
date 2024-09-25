@@ -9,11 +9,12 @@ import {
   Icon,
 } from "@nypl/design-system-react-components";
 import styles from "./Collectionlanes.module.css";
-import useBreakpoints from "../../hooks/useBreakpoints";
-import CollectionCard from "../cards/collectionCard";
-import CollectionDataType from "../../types/CollectionDataType";
-import { CollectionCardModel } from "../../models/collectionCard";
-import DCSimpleGrid from "../dcSimpleGrid/dcSimpleGrid";
+import { DC_URL } from "../../../config/constants";
+import useBreakpoints from "../../../hooks/useBreakpoints";
+import CollectionCard from "../../cards/collectionCard";
+import CollectionDataType from "../../../types/CollectionDataType";
+import { CollectionCardModel } from "../../../models/collectionCard";
+import DCSimpleGrid from "../../dcSimpleGrid/dcSimpleGrid";
 import { headerBreakpoints } from "@/src/utils/breakpoints";
 
 const CollectionLanes = ({ lanesWithNumItems, seeMoreLink }) => {
