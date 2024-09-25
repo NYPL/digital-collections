@@ -6,6 +6,7 @@ import {
   Heading,
   Spacer,
   Link,
+  Icon,
 } from "@nypl/design-system-react-components";
 import styles from "./Collectionlanes.module.css";
 import { DC_URL } from "../../../config/constants";
@@ -14,31 +15,58 @@ import CollectionCard from "../../cards/collectionCard";
 import CollectionDataType from "../../../types/CollectionDataType";
 import { CollectionCardModel } from "../../../models/collectionCard";
 import DCSimpleGrid from "../../dcSimpleGrid/dcSimpleGrid";
+import { headerBreakpoints } from "@/src/utils/breakpoints";
 
 const CollectionLanes = ({ lanesWithNumItems, seeMoreLink }) => {
   const { isLargerThanLargeTablet } = useBreakpoints();
   const lanes = lanesWithNumItems?.map((lane, key) => (
     <Box className={styles.lane} data-testid={lane.slug} mt="xxl" key={key}>
       <Flex alignItems="baseline">
-        <Heading id={`row-heading-${lane.slug}`} level="h2" size="heading3">
+        <Heading
+          id={`row-heading-${lane.slug}`}
+          sx={{
+            [`@media screen and (min-width: ${headerBreakpoints.smTablet}px)`]:
+              {
+                width: "90%",
+              },
+          }}
+          level="h2"
+          size="heading3"
+        >
           {lane.name}
         </Heading>
         <Spacer />
         <Link
           id={`row-see-more-${lane.slug}`}
-          type="standalone"
           href={`${seeMoreLink}/${lane.slug}`}
           aria-label={`See more ${lane.name}`}
           hasVisitedState
+          isUnderlined={false}
           __css={{
-            display: { sm: "none", md: "inline" },
-            color: "ui.primary.link",
-            fontWeight: "500 !important",
-            alignItems: "center",
-            _hover: { textDecoration: "underline 1px dotted !important" },
+            paddingLeft: "l",
+            marginBottom: "s",
+            whiteSpace: "nowrap",
+            justifyContent: "flex-end",
+            display: "none",
+            " > svg": {
+              fill: "ui.link.primary",
+            },
+            [`@media screen and (min-width: ${headerBreakpoints.smTablet}px)`]:
+              {
+                display: "inline",
+              },
+            color: "ui.link.primary",
+            fontWeight: "medium",
+            alignSelf: "end",
+            _hover: {
+              textDecoration: "underline 1px dotted !important",
+              textUnderlineOffset: "2px",
+              "> svg": { fill: "ui.link.secondary" },
+            },
+            _visited: { "> svg": { fill: "ui.link.tertiary" } },
           }}
         >
-          See more
+          See more <Icon iconRotation="rotate270" size="xsmall" name="arrow" />
         </Link>
       </Flex>
       {lane.collections && lane.collections.length > 0 && (
@@ -65,11 +93,14 @@ const CollectionLanes = ({ lanesWithNumItems, seeMoreLink }) => {
         className="smlink"
         hasVisitedState
         __css={{
-          display: { sm: "flex", md: "none" },
-          fontWeight: "regular",
+          display: "flex",
+          [`@media screen and (min-width: ${headerBreakpoints.smTablet}px)`]: {
+            display: "none",
+          },
+          fontWeight: "medium",
           justifyContent: "flex-end",
           marginTop: "s",
-          alignItems: "center", //idk why this doesn't work
+          alignItems: "center",
           "& svg": {
             marginTop: "1px",
           },
