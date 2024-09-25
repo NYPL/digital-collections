@@ -64,9 +64,7 @@ export default function DivisionPage({ data }: any) {
           <span> Contact info and more </span>
         </Link>
       </Box>
-
       <HorizontalRule sx={{ marginTop: "xxl", marginBottom: "xxl" }} />
-
       {isLoaded ? (
         <ItemLane data={data} />
       ) : (
@@ -74,7 +72,6 @@ export default function DivisionPage({ data }: any) {
           <CollectionLanesLoading withTitle={false} />
         </>
       )}
-
       <HorizontalRule sx={{ marginTop: "xxl", marginBottom: "xxl" }} />
       {isLoaded ? (
         <CollectionsGrid data={data} />
