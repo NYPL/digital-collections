@@ -2,9 +2,12 @@ import { Metadata } from "next";
 import React from "react";
 import DivisionPage from "../../src/components/pages/divisionPage/divisionPage";
 import { slugToString } from "../../src/utils/utils";
+import { getDivisionData } from "../../src/utils/api";
+import { Suspense } from "react";
 
 export type DivisionProps = {
   params: { slug: string };
+  searchParams: { page: string };
 };
 
 export async function generateMetadata({
@@ -16,6 +19,13 @@ export async function generateMetadata({
   };
 }
 
-export default function Division() {
-  return <DivisionPage />;
+export default async function Division({ params, searchParams }) {
+  const data = await getDivisionData(params.slug, searchParams.page);
+  const currentPage = Number(searchParams.page) || 1;
+
+  return (
+    <Suspense>
+      <DivisionPage data={data} currentPage={currentPage} />
+    </Suspense>
+  );
 }

@@ -7,15 +7,17 @@ import {
 } from "@nypl/design-system-react-components";
 import PageLayout from "../../pageLayout/pageLayout";
 import React, { useEffect, useState } from "react";
-import CollectionLanes from "../../collectionLanes/collectionLanes";
+import CollectionLanes from "../../lanes/collectionLanes/collectionLanes";
 import { DC_URL } from "@/src/config/constants";
-import CollectionLanesLoading from "../../collectionLanes/collectionLanesLoading";
+import CollectionLanesLoading from "../../lanes/collectionLanes/collectionLanesLoading";
 
 export default function DivisionsPage({ data }) {
   const [isLoaded, setIsLoaded] = useState(false);
+
   useEffect(() => {
     setIsLoaded(true);
   }, []);
+
   return (
     <PageLayout
       activePage="divisions"

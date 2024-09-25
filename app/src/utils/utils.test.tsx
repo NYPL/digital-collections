@@ -1,5 +1,4 @@
 import { waitFor } from "@testing-library/react";
-
 import { slugToString, stringToSlug } from "./utils";
 import { apiPOSTCall, apiResponse, getItemsCountFromUUIDs } from "./api";
 
