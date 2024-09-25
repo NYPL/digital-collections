@@ -69,6 +69,7 @@ export default function DivisionPage({ data }: any) {
     >
       <Box
         sx={{
+          maxWidth: "730px",
           display: "flex",
           flexDirection: "column",
           "> hgroup": {
@@ -138,6 +139,7 @@ export default function DivisionPage({ data }: any) {
             display: "flex",
             justifyContent: "center",
             gap: "s",
+            marginTop: "xxl",
           }}
         />
       )}
