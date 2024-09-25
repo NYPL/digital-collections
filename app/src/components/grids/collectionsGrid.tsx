@@ -1,7 +1,11 @@
 "use client";
 
 import { useSearchParams, usePathname, useRouter } from "next/navigation";
-import { Heading, Pagination } from "@nypl/design-system-react-components";
+import {
+  Heading,
+  Pagination,
+  Spacer,
+} from "@nypl/design-system-react-components";
 import CollectionCard from "../cards/collectionCard";
 import { CollectionCardModel } from "../../models/collectionCard";
 import useBreakpoints from "../../hooks/useBreakpoints";
@@ -61,18 +65,21 @@ export const CollectionsGrid = ({ data }: any) => {
         })}
       </DCSimpleGrid>
       {totalPages > 1 && (
-        <Pagination
-          id="pagination-id"
-          initialPage={currentPage}
-          currentPage={currentPage}
-          pageCount={totalPages}
-          onPageChange={updatePageURL}
-          sx={{
-            display: "flex",
-            justifyContent: "center",
-            gap: "s",
-          }}
-        />
+        <>
+          <Pagination
+            id="pagination-id"
+            initialPage={currentPage}
+            currentPage={currentPage}
+            pageCount={totalPages}
+            onPageChange={updatePageURL}
+            sx={{
+              display: "flex",
+              justifyContent: "center",
+              gap: "s",
+              marginTop: "xxl",
+            }}
+          />
+        </>
       )}
     </>
   );
