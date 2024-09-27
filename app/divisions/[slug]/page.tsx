@@ -4,10 +4,11 @@ import DivisionPage from "../../src/components/pages/divisionPage/divisionPage";
 import { slugToString } from "../../src/utils/utils";
 import { getDivisionData } from "../../src/utils/api";
 import { Suspense } from "react";
+import { redirect } from "next/navigation";
 
 export type DivisionProps = {
   params: { slug: string };
-  searchParams: { page: string };
+  searchParams: { page: number };
 };
 
 export async function generateMetadata({
@@ -19,8 +20,18 @@ export async function generateMetadata({
   };
 }
 
-export default async function Division({ params, searchParams }) {
-  const data = await getDivisionData(params.slug, searchParams.page);
+export default async function Division({
+  params,
+  searchParams,
+}: DivisionProps) {
+  const data = await getDivisionData({
+    slug: params.slug,
+    pageNum: searchParams.page,
+  });
+  // Repo API returns 404s within the data.
+  if (data?.headers?.code === "404") {
+    redirect("/404");
+  }
   const currentPage = Number(searchParams.page) || 1;
 
   return (
