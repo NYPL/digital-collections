@@ -1,22 +1,22 @@
-import React from "react";
+import React, { Suspense } from "react";
 import { Metadata } from "next";
 import DivisionsPage from "../src/components/pages/divisionsPage/divisionsPage";
-import logger from "logger";
-import { RepoAPICall } from "../src/utils/api";
+import { getDivisionData } from "@/src/utils/api";
+import { redirect } from "next/navigation";
 
 export const metadata: Metadata = {
   title: "Divisions - NYPL Digital Collections",
 };
 
 export default async function Divisions() {
-  let data;
-  try {
-    data = await RepoAPICall(`${process.env.API_URL}/api/v2/divisions`);
-    console.log(
-      `api URL for divisions page is ${process.env.API_URL}/api/v2/divisions`
-    );
-  } catch (error) {
-    logger.error("Failed to fetch divisions data", error);
+  const data = await getDivisionData();
+  // Repo API returns 404s within the data.
+  if (data?.headers?.code === "404") {
+    redirect("/404");
   }
-  return <DivisionsPage data={data?.nyplAPI?.response || null} />;
+  return (
+    <Suspense>
+      <DivisionsPage data={data} />
+    </Suspense>
+  );
 }

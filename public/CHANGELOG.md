@@ -8,10 +8,33 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## Unreleased
 
 ### Updated
-- Updated swim lanes and featured item features to use server side api calls (DR-3016)
+
+- Refactored collection/item cards into one `DCCard` component (DR-3192)
+
+## [0.1.13] 2024-09-12
+
+### Updated
+
 - Added `containsOnSiteMaterials` field to collection card model and component (DR-3123)
+- Updated sticky header to take up less space on zoomed/mobile breakpoints (DR-3089)
+- Updated sticky header to add scroll padding on anchor elements (DR-3102)
+- Updated lane skeleton loader to remove visual discrepancies and no longer use hooks (DR-3171)
+- Updated `/divisions` page to fetch data from Repo API (DR-3101)
 
 ### Added
+
+- Added Adobe Analytics to top level category pages, search based pages, and item pages (DR-3061)
+- Added 404 page which catches nonexistent routes (DR-3168)
+- Added general error boundary which catches 5xx/3xx/4xx errors other than 404 (DR-3175)
+
+## [0.1.12] 2024-08-29
+
+### Updated
+
+- Updated swim lanes and featured item features to use server side api calls (DR-3016)
+
+### Added
+
 - Update middleware file to not redirect urls created for phase 2-4 in 'qa' environment (DR-3122)
 - Rendered `/collections` page with preliminary search/sort (DR-3099)
 - Rendered `/collections/lane/[slug]` collection lane landing page (DR-3106)
