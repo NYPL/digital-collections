@@ -8,10 +8,15 @@ import { useParams } from "next/navigation";
 import { headerBreakpoints } from "../../../utils/breakpoints";
 import { slugToString } from "../../../utils/utils";
 import { mockCollections } from "../../../../../__tests__/__mocks__/data/mockCollections";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import PageLayout from "../../pageLayout/pageLayout";
-import { CollectionsGrid } from "../../grids/collectionsGrid";
 import CollectionLanesLoading from "../../lanes/collectionLanes/collectionLanesLoading";
+import DCSimpleGrid from "../../dcSimpleGrid/dcSimpleGrid";
+import { CollectionCardModel } from "@/src/models/collectionCard";
+import CollectionDataType from "@/src/types/CollectionDataType";
+import DCCard from "../../dcCard/DCCard";
+import useBreakpoints from "@/src/hooks/useBreakpoints";
+import { useTooltipOffset } from "@/src/hooks/useTooltipOffset";
 
 export default function CollectionLanePage() {
   const params = useParams();
@@ -19,6 +24,9 @@ export default function CollectionLanePage() {
   const title = slugToString(slug);
   const [isLoaded, setIsLoaded] = useState(false);
   const pageName = `collections|lane|${slug}`;
+  const { isLargerThanLargeTablet } = useBreakpoints();
+  const cardRef = useRef<HTMLDivElement>(null);
+  const tooltipOffset = useTooltipOffset(cardRef);
 
   useEffect(() => {
     setIsLoaded(true);
@@ -47,7 +55,22 @@ export default function CollectionLanePage() {
       </Box>
       <HorizontalRule sx={{ marginTop: "xxl", marginBottom: "xxl" }} />
       {isLoaded ? (
-        <CollectionsGrid data={mockCollections} />
+        <DCSimpleGrid>
+          {mockCollections?.map((collection: CollectionDataType, index) => {
+            const collectionModel = new CollectionCardModel(collection);
+            return (
+              <DCCard
+                key={index}
+                ref={cardRef}
+                tooltipOffset={tooltipOffset}
+                id={`${index}`}
+                slug={collectionModel.title}
+                record={collectionModel}
+                isLargerThanLargeTablet={isLargerThanLargeTablet}
+              />
+            );
+          })}
+        </DCSimpleGrid>
       ) : (
         <>
           <CollectionLanesLoading withTitle={false} />,
