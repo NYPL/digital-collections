@@ -6,7 +6,7 @@ export const mockItems: ItemModel[] = [
   {
     uuid: "50370c90-cabb-013c-da64-0242ac110002",
     title: "Sarah Myers Blackwell sitting in a tree",
-    href: "https://digitalcollections.nypl.org/collections/posada-collection#/?tab=navigation",
+    href: "https://digitalcollections.nypl.org/items/50370c90-cabb-013c-da64-0242ac110002",
     imageID: "58886955",
     mods: "mods",
     capture: "capture",

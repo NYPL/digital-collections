@@ -17,7 +17,6 @@ function parseArgs(args) {
 (async () => {
   const args = process.argv.slice(2);
   const parsedArgs = parseArgs(args);
-  //console.log('Parsed command line arguments:', parsedArgs);
 
   const browser = await puppeteer.launch({ headless: true });
   const page = await browser.newPage();
