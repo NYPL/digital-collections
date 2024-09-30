@@ -9,8 +9,6 @@ import {
   SearchBar,
 } from "@nypl/design-system-react-components";
 import { headerBreakpoints } from "../../../utils/breakpoints";
-// import { CollectionsGrid } from "../../grids/collectionsGrid";
-// import { mockCollectionCards } from "__tests__/__mocks__/data/mockCollectionCards";
 
 export const CollectionsPage = ({ data }) => {
   console.log("Data in collections page is: ", data);
@@ -52,7 +50,6 @@ export const CollectionsPage = ({ data }) => {
         />
       </Box>
       <HorizontalRule sx={{ marginTop: "xxl", marginBottom: "xxl" }} />
-      {/* <CollectionsGrid data={mockCollectionCards}/> */}
       <SearchResults showFilter={true} data={data} />
     </PageLayout>
   );

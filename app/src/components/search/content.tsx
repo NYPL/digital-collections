@@ -13,6 +13,7 @@ const SearchContent = ({ showFilter, data }) => {
   const isLoaded = true;
   const queryParams = useSearchParams();
   const query = queryParams.toString();
+
   const router = useRouter();
   const pathname = usePathname();
 
