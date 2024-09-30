@@ -1,32 +1,21 @@
 "use client";
+import { useParams } from "next/navigation";
 import {
   Box,
-  Flex,
   Heading,
   HorizontalRule,
   Link,
-  SimpleGrid,
-  Spacer,
 } from "@nypl/design-system-react-components";
 import PageLayout from "../../pageLayout/pageLayout";
-import { useParams } from "next/navigation";
 import { headerBreakpoints } from "../../../utils/breakpoints";
 import { slugToString } from "../../../utils/utils";
-import CollectionCard from "../../../components/cards/collectionCard";
-import { CollectionCardModel } from "../../../models/collectionCard";
-import useBreakpoints from "../../../hooks/useBreakpoints";
-import CollectionDataType from "../../../types/CollectionDataType";
-import { mockCollections } from "../../../../../__tests__/__mocks__/data/mockCollections";
-import ItemCard from "../../../components/cards/itemCard";
-import { mockItems } from "../../../../../__tests__/__mocks__/data/mockItems";
-import { ItemCardModel } from "../../../models/itemCard";
 import React, { useEffect, useState } from "react";
-import SwimLanesLoading from "../../swimlanes/swimLanesLoading";
-import DCSimpleGrid from "../../dcSimpleGrid/dcSimpleGrid";
+import { ItemLane } from "../../lanes/itemLane/itemLane";
+import { CollectionsGrid } from "../../grids/collectionsGrid";
+import CollectionLanesLoading from "../../lanes/collectionLanes/collectionLanesLoading";
 
-export default function DivisionPage() {
+export default function DivisionPage({ data }: any) {
   const params = useParams();
-  const { isLargerThanLargeTablet } = useBreakpoints();
   const slug = params.slug as string;
   const title = slugToString(slug);
   const pageName = `divisions|${slug}`;
@@ -47,6 +36,7 @@ export default function DivisionPage() {
     >
       <Box
         sx={{
+          maxWidth: "730px",
           display: "flex",
           flexDirection: "column",
           "> hgroup": {
@@ -64,103 +54,30 @@ export default function DivisionPage() {
           gap: "m",
         }}
       >
-        <Heading
-          level="h1"
-          text={title}
-          subtitle="The Billy Rose Theatre Division of The New York Public Library is one of the largest and most comprehensive archives devoted to the theatrical arts. Encompassing dramatic performance in all its diversity, the division is an indispensable resource for artists, writers, researchers, scholars, students, and the general public."
-        />
-        <Link type="standalone" href="#">
+        <Heading level="h1" text={title} subtitle={data.summary} />
+        <Link
+          type="standalone"
+          target="_blank"
+          href={data.nyplLink}
+          style={{ width: "fit-content" }}
+        >
           <span> Contact info and more </span>
         </Link>
       </Box>
       <HorizontalRule sx={{ marginTop: "xxl", marginBottom: "xxl" }} />
-      <Box>
-        <Flex alignItems="baseline">
-          <Heading level="h2" size="heading3">
-            {`Items in the ${title}`}
-          </Heading>
-          <Spacer />
-          <Link
-            id={`row-see-more-items-${title}`}
-            type="standalone"
-            href={`#`}
-            aria-label={`See more items in ${title}`}
-            hasVisitedState
-            __css={{
-              display: { sm: "none", md: "inline" },
-              color: "ui.primary.link",
-              fontWeight: "500 !important",
-              alignItems: "center",
-              _hover: { textDecoration: "underline 1px dotted !important" },
-            }}
-          >
-            See more
-          </Link>
-        </Flex>
-        {isLoaded ? (
-          <DCSimpleGrid>
-            {mockItems.map((item, index) => {
-              const itemModel = new ItemCardModel(item);
-              return (
-                <ItemCard
-                  key={index}
-                  id={`item-${index}-${title}`}
-                  item={itemModel}
-                  isLargerThanLargeTablet={isLargerThanLargeTablet}
-                />
-              );
-            })}
-          </DCSimpleGrid>
-        ) : (
-          <>
-            <SwimLanesLoading withTitle={false} />
-          </>
-        )}
-        <Link
-          id={`row-see-more-items-mobile-${title}`}
-          type="standalone"
-          href={`#`}
-          aria-label={`See more items in ${title}`}
-          className="smlink"
-          hasVisitedState
-          __css={{
-            display: { sm: "flex", md: "none" },
-            fontWeight: "regular",
-            justifyContent: "flex-end",
-            marginTop: "s",
-            alignItems: "center",
-            "& svg": {
-              marginTop: "1px",
-            },
-          }}
-        >
-          See more
-        </Link>
-      </Box>
-      <HorizontalRule sx={{ marginTop: "xxl", marginBottom: "xxl" }} />
-      <Heading level="h2" size="heading3">
-        {`Collections in the ${title}`}
-      </Heading>
       {isLoaded ? (
-        <DCSimpleGrid>
-          {mockCollections.map((collection: CollectionDataType, index) => {
-            const collectionModel = new CollectionCardModel(collection);
-            return (
-              <CollectionCard
-                key={index}
-                id={index}
-                slug={collectionModel.title}
-                collection={collectionModel}
-                isLargerThanLargeTablet={isLargerThanLargeTablet}
-              />
-            );
-          })}
-        </DCSimpleGrid>
+        <ItemLane data={data} />
       ) : (
         <>
-          <SwimLanesLoading withTitle={false} />,
-          <SwimLanesLoading withTitle={false} />,
-          <SwimLanesLoading withTitle={false} />
+          <CollectionLanesLoading withTitle={false} />
+        </>
+      )}
+      <HorizontalRule sx={{ marginTop: "xxl", marginBottom: "xxl" }} />
+      {isLoaded ? (
+        <CollectionsGrid data={data} />
+      ) : (
+        <>
+          <CollectionLanesLoading withTitle={false} />
         </>
       )}
     </PageLayout>
