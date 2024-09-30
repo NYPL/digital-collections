@@ -77,7 +77,7 @@ export const getFeaturedImage = async () => {
 };
 
 /**
- * Returns the number of digitized items in repo api.
+ *
  */
 
 export const getItemData = async (uuid: string) => {
@@ -107,12 +107,10 @@ export const getNumDigitizedItems = async () => {
 export const getItemsCountFromUUIDs = async (uuids: string[]) => {
   const apiUrl = `${process.env.API_URL}/api/v2/items/counts`;
   const response = await apiPOSTCall(apiUrl, { uuids });
-
-  if (!response?.counts?.count?.length) {
+  const { counts } = response.nyplAPI.response;
+  if (!counts?.count?.length) {
     return {};
   }
-
-  const counts = response.counts;
 
   // The response is an array of objects:
   // [
@@ -188,13 +186,15 @@ export const RepoAPICall = async (
       const data = await response.json();
       return data;
     } else {
-      console.log(`Response from Repo API ${apiUrl} was not a 200`);
-      return undefined;
+      throw new Error(
+        `RepoAPICall: ${response.status}: ${
+          response.statusText || "3xx/4xx error"
+        }`
+      );
     }
   } catch (error) {
-    console.log(`error fetching Repo API ${apiUrl}`);
-    console.log(error);
-    return undefined;
+    console.error(error);
+    throw new Error(`RepoAPICall: ${error.message}`);
   }
 };
 
@@ -216,21 +216,35 @@ export const apiPOSTCall = async (apiUrl: string, postData: any) => {
 
     if (response.status === 200) {
       const data = await response.json();
-      return data?.nyplAPI?.response;
+      return data;
     } else {
-      return undefined;
+      throw new Error(
+        `apiPOSTCall: ${response.status}: ${
+          response.statusText || "3xx/4xx error"
+        }`
+      );
     }
   } catch (error) {
-    return undefined;
+    console.error(error);
+    throw new Error(`apiPOSTCall: ${error.message}`);
   }
 };
 
-export const getDivisionData = async (
-  slug: string,
-  pageNum: number = 1,
-  perPage: number = CARDS_PER_PAGE
-) => {
-  const apiUrl = `${process.env.API_URL}/api/v2/divisions/${slug}?page=${pageNum}&per_page=${perPage}`;
+export const getDivisionData = async ({
+  pageNum = 1,
+  perPage = CARDS_PER_PAGE,
+  slug,
+}: {
+  pageNum?: number;
+  perPage?: number;
+  slug?: string;
+} = {}) => {
+  let apiUrl = `${process.env.API_URL}/api/v2/divisions`;
+
+  if (slug) {
+    apiUrl += `/${slug}?page=${pageNum}&per_page=${perPage}`;
+  }
+
   const res = await apiResponse(apiUrl);
   return res;
 };
