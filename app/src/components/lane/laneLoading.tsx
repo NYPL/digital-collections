@@ -4,9 +4,9 @@ import {
   Flex,
 } from "@nypl/design-system-react-components";
 import React from "react";
-import DCSimpleGrid from "../../dcSimpleGrid/dcSimpleGrid";
+import DCSimpleGrid from "../dcSimpleGrid/dcSimpleGrid";
 
-export default function CollectionLanesLoading({ withTitle = true }) {
+export default function LaneLoading({ withTitle = true }) {
   return (
     <Box data-testid="collectionlane-skeleton-loader-1">
       {withTitle && (

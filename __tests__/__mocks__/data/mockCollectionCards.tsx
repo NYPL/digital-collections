@@ -66,11 +66,12 @@ export const mockCollectionCards: CollectionCardDataType[] = [
   },
   {
     uuid: "f7ffc990-c5ae-012f-eb75-58d385a7bc34",
-    title: "Diana Davies photographs",
-    url: "https://digitalcollections.nypl.org/collections/diana-davies-photographs#/?tab=navigation",
-    imageID: "1582202",
-    imageURL: "https://iiif.nypl.org/iiif/2/58270299/full/288,/0/default.jpg",
-    numberOfDigitizedItems: 38,
+    title:
+      "The Black Experience in Children's Books: Selections from Augusta Baker's Bibliographies",
+    url: "https://digitalcollections.nypl.org/collections/the-black-experience-in-childrens-books-selections-from-augusta-bakers#/?tab=about",
+    imageID: "56958645",
+    imageURL: "https://iiif.nypl.org/iiif/2/56958645/full/288,/0/default.jpg",
+    numberOfDigitizedItems: 153,
     containsOnSiteMaterials: false,
   },
 ];

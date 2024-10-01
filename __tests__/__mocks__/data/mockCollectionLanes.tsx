@@ -1,5 +1,4 @@
-import LaneDataType from "@/src/types/Lane";
-import { mockCollections } from "./mockCollections";
+import { mockCollectionCards } from "./mockCollectionCards";
 
 export const mockCollectionLanes = {
   lanesWithNumItems: [
@@ -7,13 +6,13 @@ export const mockCollectionLanes = {
       name: "Test collections 1",
       slug: "test-collections-1",
       rank: 0,
-      collections: mockCollections.slice(0, 4),
+      collections: mockCollectionCards.slice(0, 4),
     },
     {
       name: "Test collections 2",
       slug: "test-collections-2",
       rank: 1,
-      collections: mockCollections.slice(4),
+      collections: mockCollectionCards.slice(4),
     },
-  ] as LaneDataType[],
+  ],
 };
