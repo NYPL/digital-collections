@@ -12,6 +12,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Updated to DS v3.3.2 (DR-3101)
 - Added general error boundary which catches 5xx/3xx/4xx errors other than 404 (DR-3175)
 - Refactored collection/item cards into one `DCCard` component (DR-3192)
+- Refactor collection/item lanes into one `Lane` component (DR-3191)
 
 ## [0.1.13] 2024-09-12
 

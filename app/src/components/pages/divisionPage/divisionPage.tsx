@@ -12,8 +12,8 @@ import { slugToString } from "../../../utils/utils";
 import React, { useEffect, useState } from "react";
 import { CollectionsGrid } from "../../grids/collectionsGrid";
 import { DC_URL } from "@/src/config/constants";
-import LaneLoading from "../../lane/laneLoading";
 import Lane from "../../lane/lane";
+import LaneLoading from "../../lane/laneLoading";
 
 export default function DivisionPage({ data }: any) {
   const params = useParams();
