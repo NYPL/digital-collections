@@ -7,9 +7,9 @@ import {
 } from "@nypl/design-system-react-components";
 import PageLayout from "../../pageLayout/pageLayout";
 import React, { useEffect, useState } from "react";
-import CollectionLanes from "../../lanes/collectionLanes/collectionLanes";
 import { DC_URL } from "@/src/config/constants";
-import CollectionLanesLoading from "../../lanes/collectionLanes/collectionLanesLoading";
+import Lane from "../../lane/lane";
+import LaneLoading from "../../lane/laneLoading";
 
 export default function DivisionsPage({ data }) {
   const [isLoaded, setIsLoaded] = useState(false);
@@ -17,7 +17,6 @@ export default function DivisionsPage({ data }) {
   useEffect(() => {
     setIsLoaded(true);
   }, []);
-
   return (
     <PageLayout
       activePage="divisions"
@@ -41,14 +40,19 @@ export default function DivisionsPage({ data }) {
           </Box>
           <HorizontalRule sx={{ marginTop: "xxl", marginBottom: "xxl" }} />
           {isLoaded ? (
-            <CollectionLanes
-              lanesWithNumItems={data.divisions}
-              seeMoreLink={`${DC_URL}/divisions`}
-            />
+            data.divisions.map((division, key) => (
+              <Lane
+                key={key}
+                records={division.collections}
+                seeMoreLink={`${DC_URL}/divisions`}
+                laneName={division.name}
+                laneSlug={division.slug}
+              />
+            ))
           ) : (
             <>
               {[...Array(36)].map((_, index) => (
-                <CollectionLanesLoading key={index} />
+                <LaneLoading key={index} />
               ))}
             </>
           )}
