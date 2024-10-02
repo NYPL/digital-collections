@@ -8,10 +8,16 @@ import {
 import PageLayout from "../../pageLayout/pageLayout";
 import React, { useEffect, useState } from "react";
 import { DC_URL } from "@/src/config/constants";
-import Lane from "../../lane/lane";
+import { Lane as DCLane } from "../../lane/lane";
 import LaneLoading from "../../lane/laneLoading";
+import LaneDataType from "@/src/types/Lane";
 
-export default function DivisionsPage({ data }) {
+interface DivisionsProps {
+  summary: string;
+  divisions: LaneDataType[];
+}
+
+export default function DivisionsPage({ summary, divisions }: DivisionsProps) {
   const [isLoaded, setIsLoaded] = useState(false);
 
   useEffect(() => {
@@ -26,7 +32,7 @@ export default function DivisionsPage({ data }) {
       ]}
       adobeAnalyticsPageName="divisions"
     >
-      {data?.divisions && data.divisions.length > 0 ? (
+      {divisions && divisions.length > 0 ? (
         <>
           <Box
             sx={{
@@ -36,12 +42,12 @@ export default function DivisionsPage({ data }) {
               },
             }}
           >
-            <Heading level="h1" text="Divisions" subtitle={data?.summary} />
+            <Heading level="h1" text="Divisions" subtitle={summary} />
           </Box>
           <HorizontalRule sx={{ marginTop: "xxl", marginBottom: "xxl" }} />
           {isLoaded ? (
-            data.divisions.map((division, key) => (
-              <Lane
+            divisions.map((division, key) => (
+              <DCLane
                 key={key}
                 records={division.collections}
                 seeMoreLink={`${DC_URL}/divisions`}

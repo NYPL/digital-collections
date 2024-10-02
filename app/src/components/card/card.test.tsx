@@ -1,7 +1,6 @@
 import { render, screen } from "@testing-library/react";
 import { mockCollectionCards } from "__tests__/__mocks__/data/mockCollectionCards";
 import { Card as DCCard } from "./card";
-import { useRef } from "react";
 import { ItemCardModel } from "@/src/models/itemCard";
 import { mockItems } from "__tests__/__mocks__/data/mockItems";
 
