@@ -44,7 +44,7 @@ export default function DivisionsPage({ summary, divisions }: DivisionsProps) {
           >
             <Heading level="h1" text="Divisions" subtitle={summary} />
           </Box>
-          <HorizontalRule sx={{ marginTop: "xxl", marginBottom: "xxl" }} />
+          <HorizontalRule sx={{ marginTop: "xxl", marginBottom: "s" }} />
           {isLoaded ? (
             divisions.map((division, key) => (
               <DCLane
