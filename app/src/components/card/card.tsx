@@ -71,9 +71,17 @@ export const Card = forwardRef<HTMLDivElement, DCCardProps>(
           id={`row-card-heading-${slug}-${id}`}
           level="h3"
           size="heading5"
-          className={styles.cardTitle}
           noOfLines={3}
-          sx={{ marginTop: "0px", marginBottom: "xs" }}
+          sx={{
+            marginTop: "0px",
+            marginBottom: "xs",
+            ":focus-within": {
+              outline: "2px solid var(--nypl-colors-ui-link-primary)",
+              "> a": {
+                outline: "none",
+              },
+            },
+          }}
         >
           {record.title}
         </CardHeading>
