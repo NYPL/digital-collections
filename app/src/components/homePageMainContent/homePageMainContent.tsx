@@ -24,6 +24,7 @@ const HomePageMainContent = ({
   const firstSwimLane = swimlanes[0];
   return isLoaded ? (
     <>
+      <div style={{ marginTop: "-3rem" }} />
       <DCLane
         key={0}
         records={firstSwimLane.collections}
