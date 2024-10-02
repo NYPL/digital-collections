@@ -8,7 +8,7 @@ import {
   Tooltip,
   StatusBadge,
 } from "@nypl/design-system-react-components";
-import styles from "./Card.module.css";
+import styles from "./card.module.css";
 import { headerBreakpoints } from "../../utils/breakpoints";
 import { CollectionCardDataType } from "../../types/CollectionCardDataType";
 import { TRUNCATED_LENGTH } from "@/src/config/constants";

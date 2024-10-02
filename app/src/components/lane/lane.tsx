@@ -61,7 +61,11 @@ const Lane = ({ records, seeMoreLink, laneName, laneSlug }: LaneProps) => {
       };
 
   const lane = (
-    <Box className={styles.lane} data-testid={laneSlug} mt="xxl">
+    <Box
+      sx={{ ":first-child": { marginTop: "1rem" } }}
+      data-testid={laneSlug}
+      mt="xxl"
+    >
       <Flex alignItems="baseline">
         <Heading
           id={laneContents.headingId}
