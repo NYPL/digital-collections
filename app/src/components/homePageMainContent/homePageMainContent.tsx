@@ -15,24 +15,22 @@ const HomePageMainContent = ({
   swimlanes,
   randomNumber,
 }: HomePageMainContentProps) => {
-  console.log(swimlanes);
   const [isLoaded, setIsLoaded] = useState(false);
 
   useEffect(() => {
     setIsLoaded(true);
   }, []);
 
+  const firstSwimLane = swimlanes[0];
   return isLoaded ? (
     <>
-      {[swimlanes[0]].map((lane, key) => (
-        <Lane
-          key={key}
-          records={lane.collections}
-          seeMoreLink={`${DC_URL}/collections/lane`}
-          laneName={lane.name}
-          laneSlug={lane.slug}
-        />
-      ))}
+      <Lane
+        key={0}
+        records={firstSwimLane.collections}
+        seeMoreLink={`${DC_URL}/collections/lane`}
+        laneName={firstSwimLane.name}
+        laneSlug={firstSwimLane.slug}
+      />
       <FeaturedContentComponent randomNumber={randomNumber} />
       {swimlanes.slice(1).map((lane, key) => (
         <Lane
