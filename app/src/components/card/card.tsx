@@ -1,5 +1,5 @@
 "use client";
-import React, { forwardRef, RefObject } from "react";
+import React, { forwardRef } from "react";
 import {
   Card as ChakraCard,
   CardHeading,

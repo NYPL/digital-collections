@@ -4,8 +4,18 @@ import { useEffect, useState } from "react";
 import CollectionLanesLoading from "../lane/laneLoading";
 import { DC_URL } from "@/src/config/constants";
 import Lane from "../lane/lane";
+import LaneDataType from "@/src/types/Lane";
 
-const HomePageMainContent = ({ data }) => {
+interface HomePageMainContentProps {
+  swimlanes: LaneDataType[];
+  randomNumber: number;
+}
+
+const HomePageMainContent = ({
+  swimlanes,
+  randomNumber,
+}: HomePageMainContentProps) => {
+  console.log(swimlanes);
   const [isLoaded, setIsLoaded] = useState(false);
 
   useEffect(() => {
@@ -14,7 +24,7 @@ const HomePageMainContent = ({ data }) => {
 
   return isLoaded ? (
     <>
-      {[data.lanesWithNumItems[0]].map((lane, key) => (
+      {[swimlanes[0]].map((lane, key) => (
         <Lane
           key={key}
           records={lane.collections}
@@ -23,8 +33,8 @@ const HomePageMainContent = ({ data }) => {
           laneSlug={lane.slug}
         />
       ))}
-      <FeaturedContentComponent randomNumber={data.randomNumber} />
-      {data.lanesWithNumItems.slice(1).map((lane, key) => (
+      <FeaturedContentComponent randomNumber={randomNumber} />
+      {swimlanes.slice(1).map((lane, key) => (
         <Lane
           key={key}
           records={lane.collections}

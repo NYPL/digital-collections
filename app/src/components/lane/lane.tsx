@@ -8,29 +8,29 @@ import {
   Link,
   Icon,
 } from "@nypl/design-system-react-components";
-import styles from "./lane.module.css";
-import { useTooltipOffset } from "@/src/hooks/useTooltipOffset";
-import { headerBreakpoints } from "@/src/utils/breakpoints";
-import useBreakpoints from "@/src/hooks/useBreakpoints";
-import { CollectionCardModel } from "@/src/models/collectionCard";
 import { Card as DCCard } from "../card/card";
 import { SimpleGrid as DCSimpleGrid } from "../simpleGrid/simpleGrid";
-import CollectionCardDataType from "@/src/types/CollectionCardDataType";
-import ItemCardDataType from "@/src/types/ItemCardDataType";
-import { titleToDCParam } from "@/src/utils/utils";
+import styles from "./lane.module.css";
 import { DC_URL } from "@/src/config/constants";
+import { headerBreakpoints } from "@/src/utils/breakpoints";
+import { titleToDCParam } from "@/src/utils/utils";
 import { ItemCardModel } from "@/src/models/itemCard";
+import { CollectionCardModel } from "@/src/models/collectionCard";
+import CollectionDataType from "@/src/types/CollectionDataType";
+import ItemDataType from "@/src/types/ItemDataType";
+import useBreakpoints from "@/src/hooks/useBreakpoints";
+import { useTooltipOffset } from "@/src/hooks/useTooltipOffset";
 
 interface LaneProps {
   seeMoreLink: string;
-  records: CollectionCardDataType[] | ItemCardDataType[];
+  records: CollectionDataType[] | ItemDataType[];
   laneName: string;
   laneSlug?: string;
 }
 
 function isCollectionType(
-  records: CollectionCardDataType[] | ItemCardDataType[]
-): records is CollectionCardDataType[] {
+  records: CollectionDataType[] | ItemDataType[]
+): records is CollectionDataType[] {
   return "numberOfDigitizedItems" in records[0];
 }
 
@@ -40,11 +40,31 @@ const Lane = ({ records, seeMoreLink, laneName, laneSlug }: LaneProps) => {
   const tooltipOffset = useTooltipOffset(cardRef);
   const isCollections = isCollectionType(records);
 
+  const laneContents = isCollections
+    ? {
+        heading: laneName,
+        headingId: `row-heading-${laneSlug}`,
+        seeMoreLinkId: `row-see-more-${laneSlug}`,
+        seeMoreLinkHref: `${seeMoreLink}/${laneSlug}`,
+        seeMoreAriaLabel: `See more ${laneName}`,
+        seeMoreLinkMobileId: `row-see-more-${laneSlug}-mobile`,
+      }
+    : {
+        heading: `Items in the ${laneName}`,
+        headingId: `row-heading-${laneName}`,
+        seeMoreLinkId: `row-see-more-items-${laneName}`,
+        seeMoreLinkHref: `${DC_URL}/search/index?filters[divisionFullname_mtxt_s][]=${titleToDCParam(
+          laneName
+        )}`,
+        seeMoreAriaLabel: `See more items in ${laneName}`,
+        seeMoreLinkMobileId: `row-see-more-items-${laneName}-mobile`,
+      };
+
   const lane = (
     <Box className={styles.lane} data-testid={laneSlug} mt="xxl">
       <Flex alignItems="baseline">
         <Heading
-          id={`row-heading-${laneSlug}`}
+          id={laneContents.headingId}
           sx={{
             [`@media screen and (min-width: ${headerBreakpoints.smTablet}px)`]:
               {
@@ -54,23 +74,13 @@ const Lane = ({ records, seeMoreLink, laneName, laneSlug }: LaneProps) => {
           level="h2"
           size="heading3"
         >
-          {isCollections ? laneName : `Items in the ${laneName}`}
+          {laneContents.heading}
         </Heading>
         <Spacer />
         <Link
-          id={
-            isCollections
-              ? `row-see-more-${laneSlug}`
-              : `row-see-more-items-${laneName}`
-          }
-          href={
-            isCollections
-              ? `${seeMoreLink}/${laneSlug}`
-              : `${DC_URL}/search/index?filters[divisionFullname_mtxt_s][]=${titleToDCParam(
-                  laneName
-                )}`
-          }
-          aria-label={`See more ${laneName}`}
+          id={laneContents.seeMoreLinkId}
+          href={laneContents.seeMoreLinkHref}
+          aria-label={laneContents.seeMoreAriaLabel}
           hasVisitedState
           isUnderlined={false}
           __css={{
@@ -100,59 +110,40 @@ const Lane = ({ records, seeMoreLink, laneName, laneSlug }: LaneProps) => {
           See more <Icon iconRotation="rotate270" size="xsmall" name="arrow" />
         </Link>
       </Flex>
-      {isCollections ? (
-        <DCSimpleGrid id={`grid-${laneSlug}`}>
-          {records.map((collection, index) => {
-            const c = new CollectionCardModel(collection);
+      <DCSimpleGrid>
+        {records.map((record, index) => {
+          if (isCollections) {
+            const collectionCardModel = new CollectionCardModel(record);
             return (
               <DCCard
                 key={index}
                 slug={laneSlug}
                 id={`${index}`}
-                record={c}
+                record={collectionCardModel}
                 isLargerThanLargeTablet={isLargerThanLargeTablet}
                 ref={cardRef}
                 tooltipOffset={tooltipOffset}
               />
             );
-          })}
-        </DCSimpleGrid>
-      ) : (
-        <DCSimpleGrid>
-          {records.map((item, index) => {
-            const itemModel = new ItemCardModel(item);
+          } else {
+            const itemCardModel = new ItemCardModel(record);
             return (
               <DCCard
-                key={index}
-                id={`item-${index}-${item.title}`}
-                record={itemModel}
+                key={`item-${index}-${record.title}`}
+                id={`item-${index}-${record.title}`}
+                record={itemCardModel}
                 isLargerThanLargeTablet={isLargerThanLargeTablet}
                 tooltipOffset={tooltipOffset}
                 ref={cardRef}
               />
             );
-          })}
-        </DCSimpleGrid>
-      )}
+          }
+        })}
+      </DCSimpleGrid>
       <Link
-        id={
-          isCollections
-            ? `row-see-more-${laneSlug}-mobile`
-            : `row-see-more-items-mobile-${laneName}`
-        }
-        type="standalone"
-        href={
-          isCollections
-            ? `${seeMoreLink}/${laneSlug}`
-            : `${DC_URL}/search/index?filters[divisionFullname_mtxt_s][]=${titleToDCParam(
-                laneName
-              )}`
-        }
-        aria-label={
-          isCollections
-            ? `See more ${laneName}`
-            : `See more items in ${laneName}`
-        }
+        id={laneContents.seeMoreLinkMobileId}
+        href={laneContents.seeMoreLinkHref}
+        aria-label={laneContents.seeMoreAriaLabel}
         className="smlink"
         hasVisitedState
         __css={{
@@ -173,7 +164,7 @@ const Lane = ({ records, seeMoreLink, laneName, laneSlug }: LaneProps) => {
       </Link>
     </Box>
   );
-  return <>{lane}</>;
+  return lane;
 };
 
 export default Lane;
