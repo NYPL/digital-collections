@@ -4,7 +4,7 @@ import {
   Flex,
 } from "@nypl/design-system-react-components";
 import React from "react";
-import DCSimpleGrid from "../dcSimpleGrid/dcSimpleGrid";
+import { SimpleGrid as DCSimpleGrid } from "../simpleGrid/simpleGrid";
 
 export default function LaneLoading({ withTitle = true }) {
   return (
