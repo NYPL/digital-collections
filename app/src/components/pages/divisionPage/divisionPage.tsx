@@ -12,7 +12,7 @@ import { slugToString } from "../../../utils/utils";
 import React, { useEffect, useState } from "react";
 import { CollectionsGrid } from "../../grids/collectionsGrid";
 import { DC_URL } from "@/src/config/constants";
-import Lane from "../../lane/lane";
+import { Lane as DCLane } from "../../lane/lane";
 import LaneLoading from "../../lane/laneLoading";
 
 export default function DivisionPage({ data }: any) {
@@ -67,7 +67,7 @@ export default function DivisionPage({ data }: any) {
       </Box>
       <HorizontalRule sx={{ marginTop: "xxl", marginBottom: "xxl" }} />
       {isLoaded ? (
-        <Lane
+        <DCLane
           records={data.items}
           seeMoreLink={`${DC_URL}/divisions`}
           laneName={data.name}

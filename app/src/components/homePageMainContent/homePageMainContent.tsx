@@ -3,7 +3,7 @@ import FeaturedContentComponent from "../featuredContent/featuredContent";
 import { useEffect, useState } from "react";
 import CollectionLanesLoading from "../lane/laneLoading";
 import { DC_URL } from "@/src/config/constants";
-import Lane from "../lane/lane";
+import { Lane as DCLane } from "../lane/lane";
 import LaneDataType from "@/src/types/Lane";
 
 interface HomePageMainContentProps {
@@ -24,7 +24,7 @@ const HomePageMainContent = ({
   const firstSwimLane = swimlanes[0];
   return isLoaded ? (
     <>
-      <Lane
+      <DCLane
         key={0}
         records={firstSwimLane.collections}
         seeMoreLink={`${DC_URL}/collections/lane`}
@@ -33,7 +33,7 @@ const HomePageMainContent = ({
       />
       <FeaturedContentComponent randomNumber={randomNumber} />
       {swimlanes.slice(1).map((lane, key) => (
-        <Lane
+        <DCLane
           key={key}
           records={lane.collections}
           seeMoreLink={`${DC_URL}/collections/lane`}

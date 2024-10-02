@@ -10,7 +10,6 @@ import {
 } from "@nypl/design-system-react-components";
 import { Card as DCCard } from "../card/card";
 import { SimpleGrid as DCSimpleGrid } from "../simpleGrid/simpleGrid";
-import styles from "./lane.module.css";
 import { DC_URL } from "@/src/config/constants";
 import { headerBreakpoints } from "@/src/utils/breakpoints";
 import { titleToDCParam } from "@/src/utils/utils";
@@ -34,7 +33,12 @@ function isCollectionType(
   return "numberOfDigitizedItems" in records[0];
 }
 
-const Lane = ({ records, seeMoreLink, laneName, laneSlug }: LaneProps) => {
+export const Lane = ({
+  records,
+  seeMoreLink,
+  laneName,
+  laneSlug,
+}: LaneProps) => {
   const { isLargerThanLargeTablet } = useBreakpoints();
   const cardRef = useRef<HTMLDivElement>(null);
   const tooltipOffset = useTooltipOffset(cardRef);
