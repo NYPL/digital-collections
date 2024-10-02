@@ -43,9 +43,7 @@ const HomePageMainContent = ({
       ))}
     </>
   ) : (
-    <>
-      <CollectionLanesLoading />
-    </>
+    <CollectionLanesLoading />
   );
 };
 
