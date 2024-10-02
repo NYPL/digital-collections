@@ -1,10 +1,10 @@
 import React from "react";
 import FeaturedContentComponent from "../featuredContent/featuredContent";
 import { useEffect, useState } from "react";
-import CollectionLanesLoading from "../lane/laneLoading";
 import { DC_URL } from "@/src/config/constants";
 import { Lane as DCLane } from "../lane/lane";
 import LaneDataType from "@/src/types/Lane";
+import LaneLoading from "../lane/laneLoading";
 
 interface HomePageMainContentProps {
   swimlanes: LaneDataType[];
@@ -44,7 +44,11 @@ const HomePageMainContent = ({
       ))}
     </>
   ) : (
-    <CollectionLanesLoading />
+    <>
+      {[...Array(24)].map((_, index) => (
+        <LaneLoading key={index} />
+      ))}
+    </>
   );
 };
 
