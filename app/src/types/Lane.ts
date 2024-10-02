@@ -1,8 +1,7 @@
 import CollectionDataType from "./CollectionDataType";
-
 export interface LaneDataType {
-  name: String;
-  slug: String;
+  name: string;
+  slug: string;
   rank: number;
   collections: CollectionDataType[];
 }
