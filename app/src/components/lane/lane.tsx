@@ -65,11 +65,7 @@ export const Lane = ({
       };
 
   const lane = (
-    <Box
-      sx={{ ":first-child": { marginTop: "1rem" } }}
-      data-testid={laneSlug}
-      mt="xxl"
-    >
+    <Box data-testid={laneSlug} mt="xxl">
       <Flex alignItems="baseline">
         <Heading
           id={laneContents.headingId}
