@@ -13,9 +13,8 @@ import { useTooltipOffset } from "@/src/hooks/useTooltipOffset";
 import { headerBreakpoints } from "@/src/utils/breakpoints";
 import useBreakpoints from "@/src/hooks/useBreakpoints";
 import { CollectionCardModel } from "@/src/models/collectionCard";
-import CollectionDataType from "@/src/types/CollectionDataType";
-import DCCard from "../dcCard/DCCard";
-import DCSimpleGrid from "../dcSimpleGrid/dcSimpleGrid";
+import { Card as DCCard } from "../card/card";
+import { SimpleGrid as DCSimpleGrid } from "../simpleGrid/simpleGrid";
 import CollectionCardDataType from "@/src/types/CollectionCardDataType";
 import ItemCardDataType from "@/src/types/ItemCardDataType";
 import { titleToDCParam } from "@/src/utils/utils";
@@ -103,7 +102,7 @@ const Lane = ({ records, seeMoreLink, laneName, laneSlug }: LaneProps) => {
       </Flex>
       {isCollections ? (
         <DCSimpleGrid id={`grid-${laneSlug}`}>
-          {records.map((collection: CollectionDataType, index) => {
+          {records.map((collection, index) => {
             const c = new CollectionCardModel(collection);
             return (
               <DCCard

@@ -5,7 +5,7 @@ export interface CollectionDataType {
   imageID: string | null;
   numberOfDigitizedItems: number;
   containsOnSiteMaterials: boolean;
-  containsAVMaterial?: boolean;
+  containsAVMaterial: boolean;
 }
 
 export default CollectionDataType;

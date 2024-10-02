@@ -1,7 +1,7 @@
 "use client";
 import React, { forwardRef, RefObject } from "react";
 import {
-  Card,
+  Card as ChakraCard,
   CardHeading,
   Text,
   CardContent,
@@ -28,12 +28,12 @@ function isCollectionCardDataType(
   return "numberOfDigitizedItems" in record;
 }
 
-const DCCard = forwardRef<HTMLDivElement, DCCardProps>(
+export const Card = forwardRef<HTMLDivElement, DCCardProps>(
   ({ tooltipOffset, id, isLargerThanLargeTablet, slug, record }, ref) => {
     const truncatedTitle = record.title.length > TRUNCATED_LENGTH;
     const isCollection = isCollectionCardDataType(record);
     const card = (
-      <Card
+      <ChakraCard
         ref={ref}
         id={`card-${slug}-${id}`}
         mainActionLink={record.url}
@@ -97,7 +97,7 @@ const DCCard = forwardRef<HTMLDivElement, DCCardProps>(
             </Text>
           )}
         </CardContent>
-      </Card>
+      </ChakraCard>
     );
     return isLargerThanLargeTablet && truncatedTitle ? (
       <Tooltip offset={tooltipOffset} content={record.title}>
@@ -109,6 +109,6 @@ const DCCard = forwardRef<HTMLDivElement, DCCardProps>(
   }
 );
 
-DCCard.displayName = "DCCard";
+Card.displayName = "DCCard";
 
-export default DCCard;
+export default Card;
