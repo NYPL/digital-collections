@@ -65,7 +65,7 @@ export default function DivisionPage({ data }: any) {
           <span> Contact info and more </span>
         </Link>
       </Box>
-      <HorizontalRule sx={{ marginTop: "xxl", marginBottom: "s" }} />
+      <HorizontalRule sx={{ marginTop: "xxl", marginBottom: "xxl" }} />
       {isLoaded ? (
         <DCLane
           records={data.items}
