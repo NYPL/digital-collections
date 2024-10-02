@@ -73,17 +73,13 @@ export default function DivisionPage({ data }: any) {
           laneName={data.name}
         />
       ) : (
-        <>
-          <LaneLoading withTitle={false} />
-        </>
+        <LaneLoading withTitle={false} />
       )}
       <HorizontalRule sx={{ marginTop: "xxl", marginBottom: "xxl" }} />
       {isLoaded ? (
         <CollectionsGrid data={data} />
       ) : (
-        <>
-          <LaneLoading withTitle={false} />
-        </>
+        <LaneLoading withTitle={false} />
       )}
     </PageLayout>
   );
