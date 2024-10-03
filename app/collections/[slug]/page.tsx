@@ -32,7 +32,7 @@ export default function Collections({ params }: CollectionProps) {
       ]}
       adobeAnalyticsPageName={pageName}
     >
-      <SearchResults showFilter={false} data={mockItems} />
+      <SearchResults showFilter={false} isSearchPage={false} data={mockItems} />
     </PageLayout>
   );
 }

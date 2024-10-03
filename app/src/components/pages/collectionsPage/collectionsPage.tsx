@@ -50,7 +50,7 @@ export const CollectionsPage = ({ data }) => {
         />
       </Box>
       <HorizontalRule sx={{ marginTop: "xxl", marginBottom: "xxl" }} />
-      <SearchResults showFilter={true} data={data} />
+      <SearchResults showFilter={true} isSearchPage={false} data={data} />
     </PageLayout>
   );
 };

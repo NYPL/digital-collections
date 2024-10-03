@@ -20,7 +20,7 @@ export default async function Search() {
       ]}
       adobeAnalyticsPageName="search"
     >
-      <SearchResults showFilter={false} data={mockItems} />
+      <SearchResults showFilter={false} isSearchPage={true} data={mockItems} />
     </PageLayout>
   );
 }
