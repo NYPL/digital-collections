@@ -1,12 +1,6 @@
 import { waitFor } from "@testing-library/react";
-
-import {
-  apiResponse,
-  apiPOSTCall,
-  getItemsCountFromUUIDs,
-  slugToString,
-  stringToSlug,
-} from "./utils";
+import { slugToString, stringToSlug } from "./utils";
+import { apiPOSTCall, apiResponse, getItemsCountFromUUIDs } from "./api";
 
 describe.skip("apiResponse()", () => {
   it("should not return undefined", async () => {
@@ -24,22 +18,20 @@ describe.skip("apiResponse()", () => {
 });
 
 describe("apiPOSTCall()", () => {
-  it("should return undefined for an unsuccessful request", async () => {
+  it("should throw an error for an unsuccessful request", async () => {
     (global as any).fetch = jest.fn(() =>
       Promise.resolve({
-        status: 500,
+        status: 403,
         json: () => Promise.resolve({ nyplAPI: { response: "success" } }),
       })
     ) as jest.Mock;
 
-    await waitFor(async () => {
-      expect(
-        await apiPOSTCall(
-          "https://api.repo.nypl.org/api/v2/items/local_image_id/105180",
-          { uuid: ["uuid1", "uuid2"] }
-        )
-      ).toBe(undefined);
-    });
+    await expect(
+      apiPOSTCall(
+        "https://api.repo.nypl.org/api/v2/items/local_image_id/105180",
+        { uuid: ["uuid1", "uuid2"] }
+      )
+    ).rejects.toThrow("403: 3xx/4xx error");
   });
 
   it("should return the API response for a successful request", async () => {
@@ -56,25 +48,24 @@ describe("apiPOSTCall()", () => {
           "https://api.repo.nypl.org/api/v2/items/local_image_id/105180",
           { uuid: ["uuid1", "uuid2"] }
         )
-      ).toBe("success");
+      ).toStrictEqual({ nyplAPI: { response: "success" } });
     });
   });
 });
 
 describe("getItemsCountFromUUIDs()", () => {
-  it("should return an empty object with a bad request", async () => {
+  it("should throw an error with a bad request", async () => {
     (global as any).fetch = jest.fn(() =>
       Promise.resolve({
-        status: 500,
+        status: 403,
         json: () => Promise.resolve({ nyplAPI: { response: "success" } }),
       })
     ) as jest.Mock;
 
     const data = ["uuid1", "uuid2"];
-
-    await waitFor(async () => {
-      expect(await getItemsCountFromUUIDs(data)).toEqual({});
-    });
+    await expect(getItemsCountFromUUIDs(data)).rejects.toThrow(
+      "403: 3xx/4xx error"
+    );
   });
 
   it("should return an empty object with a successful request but bad data structure", async () => {

@@ -5,6 +5,8 @@ FROM node:18-alpine AS production
 
 ARG APP_ENV
 ARG NEW_RELIC_LICENSE_KEY
+ARG AUTH_TOKEN
+ARG API_URL
 
 WORKDIR /app
 
@@ -18,6 +20,8 @@ COPY . .
 
 ENV APP_ENV=${APP_ENV}
 ENV NEW_RELIC_LICENSE_KEY=${NEW_RELIC_LICENSE_KEY}
+ENV API_URL=${API_URL}
+ENV AUTH_TOKEN=${AUTH_TOKEN}
 
 # Set environment variables. NODE_ENV is set early because we
 # want to use it when running `npm install` and `npm run build`.
