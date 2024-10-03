@@ -11,7 +11,7 @@ Environment variables are used in this code repository to control how the applic
 
 General environment variables are declared in the `.env.example` file. A copy of this file should be made and saved as `.env.local` where real values should be added.
 
-Generally, environment variables are meant to be read through the `process.env` object _on the server_. Variables intended for use on the client side should be prefaced with NEXT*PUBLIC* per Next's [docs](https://nextjs.org/docs/pages/building-your-application/configuring/environment-variables).
+Generally, environment variables are meant to be read through the `process.env` object _on the server_. Variables intended for use on the client side should be prefaced with NEXT*PUBLIC* per Next's [docs](https://nextjs.org/docs/app/building-your-application/configuring/environment-variables).
 
 If an environment variable is updated, make sure to restart the server for the application to pick up the new value.
 
