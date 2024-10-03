@@ -7,7 +7,6 @@ function SearchBarFallback() {
 }
 
 const SearchResults = ({ showFilter, isSearchPage, data }) => {
-  console.log("data is: ", data);
   return (
     <>
       <Suspense fallback={<SearchBarFallback />}>

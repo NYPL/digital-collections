@@ -59,11 +59,9 @@ export default function CollectionLanePage() {
         <Heading sx={{ marginBottom: 0 }} level="h1" text={title} />
       </Box>
       <HorizontalRule sx={{ marginTop: "xxl", marginBottom: "xxl" }} />
-      <CollectionsGrid collections={mockCollectionCards} />
-      {/* 
       {isLoaded ? (
         <>
-         <CollectionsGrid data={mockCollectionCards} />
+          <CollectionsGrid collections={mockCollectionCards} />
         </>
       ) : (
         <>
@@ -71,7 +69,7 @@ export default function CollectionLanePage() {
           <CollectionLanesLoading withTitle={false} />,
           <CollectionLanesLoading withTitle={false} />,
         </>
-      )} */}
+      )}
     </PageLayout>
   );
 }
