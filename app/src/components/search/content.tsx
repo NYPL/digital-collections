@@ -9,7 +9,7 @@ import { CollectionsGrid } from "../grids/collectionsGrid";
 import React, { useState } from "react";
 import { ItemsGrid } from "../grids/itemsGrid";
 
-const SearchContent = ({ showFilter, data }) => {
+const SearchContent = ({ showFilter, isSearchPage, data }) => {
   const isLoaded = true;
   const queryParams = useSearchParams();
   const query = queryParams.toString();
@@ -81,13 +81,11 @@ const SearchContent = ({ showFilter, data }) => {
               ]}
             />
           </>
-        ) : (
-          <></>
-        )}
+        ) : null}
       </Box>
 
       {/* certainly a better way to handle this but it's annoying me. */}
-      {isLoaded && pathname !== "/search/index" ? (
+      {isLoaded && isSearchPage ? (
         <CollectionsGrid collections={data} />
       ) : (
         <ItemsGrid items={data} />
@@ -104,6 +102,7 @@ const SearchContent = ({ showFilter, data }) => {
             display: "flex",
             justifyContent: "center",
             gap: "s",
+            marginTop: "xxl",
           }}
         />
       )}
