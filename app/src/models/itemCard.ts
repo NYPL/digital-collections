@@ -10,7 +10,10 @@ export class ItemCardModel {
   constructor(data: any) {
     this.uuid = data.uuid;
     this.title = data.title;
-    this.url = data.href;
+    this.url =
+      process.env.APP_ENV === "development"
+        ? `/items/${data.uuid}`
+        : data.href || data.url;
     this.imageID = data.imageID;
     this.imageURL = imageURL(data.imageID, "full", "288,", "0");
   }

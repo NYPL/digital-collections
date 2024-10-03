@@ -1,9 +1,8 @@
 import React from "react";
 import { render, fireEvent, screen } from "@testing-library/react";
 import "@testing-library/jest-dom";
-import appConfig from "../../../../appConfig";
 import MobileNavMenu from "./mobileNavMenu";
-import { ENV_KEY } from "../../types/EnvironmentType";
+import { DC_URL } from "@/src/config/constants";
 
 describe("Mobile nav menu component", () => {
   it("renders mobile nav menu component", () => {
@@ -27,17 +26,15 @@ describe("Mobile nav menu component", () => {
     fireEvent.click(screen.getByLabelText("Open Navigation"));
     expect(screen.getByLabelText("Items")).toHaveAttribute(
       "href",
-      `${
-        appConfig.DC_URL[appConfig.environment as ENV_KEY]
-      }/search/index?utf8=%E2%9C%93&keywords=`
+      `${DC_URL}/search/index?utf8=%E2%9C%93&keywords=`
     );
     expect(screen.getByLabelText("Divisions")).toHaveAttribute(
       "href",
-      `${appConfig.DC_URL[appConfig.environment as ENV_KEY]}/divisions`
+      `${DC_URL}/divisions`
     );
     expect(screen.getByLabelText("Collections")).toHaveAttribute(
       "href",
-      `${appConfig.DC_URL[appConfig.environment as ENV_KEY]}/collections`
+      `${DC_URL}/collections`
     );
     expect(screen.getByLabelText("About")).toHaveAttribute("href", `/about`);
   });
