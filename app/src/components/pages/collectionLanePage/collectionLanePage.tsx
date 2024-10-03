@@ -7,17 +7,11 @@ import {
 import { useParams } from "next/navigation";
 import { headerBreakpoints } from "../../../utils/breakpoints";
 import { slugToString } from "../../../utils/utils";
-// import { mockCollections } from "../../../../../__tests__/__mocks__/data/mockCollections";
-// import DCSimpleGrid from "../../dcSimpleGrid/dcSimpleGrid";
 import { mockCollectionCards } from "__tests__/__mocks__/data/mockCollectionCards";
 import { CollectionsGrid } from "../../grids/collectionsGrid";
 import React, { useEffect, useRef, useState } from "react";
 import PageLayout from "../../pageLayout/pageLayout";
 import CollectionLanesLoading from "../../lanes/collectionLanes/collectionLanesLoading";
-// import DCSimpleGrid from "../../dcSimpleGrid/dcSimpleGrid";
-// import { CollectionCardModel } from "@/src/models/collectionCard";
-// import CollectionDataType from "@/src/types/CollectionDataType";
-// import DCCard from "../../dcCard/DCCard";
 import useBreakpoints from "@/src/hooks/useBreakpoints";
 import { useTooltipOffset } from "@/src/hooks/useTooltipOffset";
 
