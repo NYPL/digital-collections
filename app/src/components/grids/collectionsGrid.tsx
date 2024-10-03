@@ -1,15 +1,11 @@
 "use client";
 
-import { useSearchParams, usePathname, useRouter } from "next/navigation";
-import { Heading, Pagination } from "@nypl/design-system-react-components";
 import { CollectionCardModel } from "../../models/collectionCard";
 import useBreakpoints from "../../hooks/useBreakpoints";
 import CollectionDataType from "../../types/CollectionDataType";
-import React, { useRef, useState } from "react";
-import { totalNumPages } from "../../utils/utils";
+import React from "react";
 import DCSimpleGrid from "../dcSimpleGrid/dcSimpleGrid";
 import DCCard from "../dcCard/DCCard";
-import { useTooltipOffset } from "@/src/hooks/useTooltipOffset";
 
 export const CollectionsGrid = ({ collections }: any) => {
   const { isLargerThanLargeTablet } = useBreakpoints();
