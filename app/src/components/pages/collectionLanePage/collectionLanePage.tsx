@@ -10,13 +10,13 @@ import { slugToString } from "../../../utils/utils";
 import { mockCollections } from "../../../../../__tests__/__mocks__/data/mockCollections";
 import React, { useEffect, useRef, useState } from "react";
 import PageLayout from "../../pageLayout/pageLayout";
-import CollectionLanesLoading from "../../lanes/collectionLanes/collectionLanesLoading";
-import DCSimpleGrid from "../../dcSimpleGrid/dcSimpleGrid";
+import { SimpleGrid as DCSimpleGrid } from "../../simpleGrid/simpleGrid";
 import { CollectionCardModel } from "@/src/models/collectionCard";
 import CollectionDataType from "@/src/types/CollectionDataType";
-import DCCard from "../../dcCard/DCCard";
+import { Card as DCCard } from "../../card/card";
 import useBreakpoints from "@/src/hooks/useBreakpoints";
 import { useTooltipOffset } from "@/src/hooks/useTooltipOffset";
+import LaneLoading from "../../lane/laneLoading";
 
 export default function CollectionLanePage() {
   const params = useParams();
@@ -73,9 +73,9 @@ export default function CollectionLanePage() {
         </DCSimpleGrid>
       ) : (
         <>
-          <CollectionLanesLoading withTitle={false} />,
-          <CollectionLanesLoading withTitle={false} />,
-          <CollectionLanesLoading withTitle={false} />,
+          <LaneLoading withTitle={false} />,
+          <LaneLoading withTitle={false} />,
+          <LaneLoading withTitle={false} />,
         </>
       )}
     </PageLayout>

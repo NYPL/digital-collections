@@ -6,7 +6,10 @@ import { mockHomePageMainContent } from "../../../../__tests__/__mocks__/data/mo
 describe("homePageMainContent", () => {
   it("renders the Campaign Hero", async () => {
     render(
-      <HomePageMainContent data={mockHomePageMainContent.collectionLaneData} />
+      <HomePageMainContent
+        swimlanes={mockHomePageMainContent.laneData.lanesWithNumItems}
+        randomNumber={1}
+      />
     );
 
     await waitFor(() => {
