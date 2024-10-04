@@ -13,6 +13,7 @@ export function useTooltipOffset(cardRef) {
     0,
     initialImageHeight,
   ]);
+
   const getOffset = () => {
     if (cardRef.current) {
       const image = cardRef.current.children[0] as HTMLElement;
