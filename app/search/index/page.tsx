@@ -1,13 +1,14 @@
 import React from "react";
-import { Metadata } from "next";
 import PageLayout from "../../src/components/pageLayout/pageLayout";
 import SearchResults from "../../src/components/search/results";
+import { mockItems } from "../../../__tests__/__mocks__/data/mockItems"; // TODO: render mockItems
 
-export const metadata: Metadata = {
-  title: "Search - NYPL Digital Collections",
+export type SearchProps = {
+  params: { slug: string };
+  searchParams: { page: string };
 };
 
-export default function Search() {
+export default async function Search() {
   return (
     <PageLayout
       activePage="collections"
@@ -17,7 +18,7 @@ export default function Search() {
       ]}
       adobeAnalyticsPageName="search"
     >
-      <SearchResults />
+      <SearchResults showFilter={false} isSearchPage data={mockItems} />
     </PageLayout>
   );
 }

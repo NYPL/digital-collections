@@ -1,6 +1,8 @@
 import React from "react";
 import { Metadata } from "next";
 import PageLayout from "../../src/components/pageLayout/pageLayout";
+import SearchResults from "@/src/components/search/results";
+import { mockItems } from "__tests__/__mocks__/data/mockItems";
 
 type CollectionProps = {
   params: { slug: string };
@@ -29,6 +31,8 @@ export default function Collections({ params }: CollectionProps) {
         },
       ]}
       adobeAnalyticsPageName={pageName}
-    ></PageLayout>
+    >
+      <SearchResults showFilter={false} isSearchPage={false} data={mockItems} />
+    </PageLayout>
   );
 }

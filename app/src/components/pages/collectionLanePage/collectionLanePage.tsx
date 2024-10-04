@@ -7,13 +7,15 @@ import {
 import { useParams } from "next/navigation";
 import { headerBreakpoints } from "../../../utils/breakpoints";
 import { slugToString } from "../../../utils/utils";
-import { mockCollections } from "../../../../../__tests__/__mocks__/data/mockCollections";
+import { mockCollectionCards } from "__tests__/__mocks__/data/mockCollectionCards";
+import { CollectionsGrid } from "../../grids/collectionsGrid";
 import React, { useEffect, useRef, useState } from "react";
 import PageLayout from "../../pageLayout/pageLayout";
-import { SimpleGrid as DCSimpleGrid } from "../../simpleGrid/simpleGrid";
-import { CollectionCardModel } from "@/src/models/collectionCard";
-import CollectionDataType from "@/src/types/CollectionDataType";
-import { Card as DCCard } from "../../card/card";
+// import CollectionLanesLoading from "../../lanes/collectionLanes/collectionLanesLoading";
+// import { SimpleGrid as DCSimpleGrid } from "../../simpleGrid/simpleGrid";
+// import { CollectionCardModel } from "@/src/models/collectionCard";
+// import CollectionDataType from "@/src/types/CollectionDataType";
+// import { Card as DCCard } from "../../card/card";
 import useBreakpoints from "@/src/hooks/useBreakpoints";
 import { useTooltipOffset } from "@/src/hooks/useTooltipOffset";
 import LaneLoading from "../../lane/laneLoading";
@@ -31,6 +33,7 @@ export default function CollectionLanePage() {
   useEffect(() => {
     setIsLoaded(true);
   }, []);
+
   return (
     <PageLayout
       activePage="swimlane"
@@ -55,22 +58,9 @@ export default function CollectionLanePage() {
       </Box>
       <HorizontalRule sx={{ marginTop: "xxl", marginBottom: "xxl" }} />
       {isLoaded ? (
-        <DCSimpleGrid>
-          {mockCollections?.map((collection: CollectionDataType, index) => {
-            const collectionModel = new CollectionCardModel(collection);
-            return (
-              <DCCard
-                key={index}
-                ref={cardRef}
-                tooltipOffset={tooltipOffset}
-                id={`${index}`}
-                slug={collectionModel.title}
-                record={collectionModel}
-                isLargerThanLargeTablet={isLargerThanLargeTablet}
-              />
-            );
-          })}
-        </DCSimpleGrid>
+        <>
+          <CollectionsGrid collections={mockCollectionCards} />
+        </>
       ) : (
         <>
           <LaneLoading withTitle={false} />,
