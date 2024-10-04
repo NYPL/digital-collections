@@ -16,7 +16,7 @@ export default async function Divisions() {
   }
   return (
     <Suspense>
-      <DivisionsPage data={data} />
+      <DivisionsPage summary={data?.summary} divisions={data?.divisions} />
     </Suspense>
   );
 }

@@ -10,9 +10,10 @@ import PageLayout from "../../pageLayout/pageLayout";
 import { headerBreakpoints } from "../../../utils/breakpoints";
 import { slugToString } from "../../../utils/utils";
 import React, { useEffect, useState } from "react";
-import { ItemLane } from "../../lanes/itemLane/itemLane";
 import { CollectionsGrid } from "../../grids/collectionsGrid";
-import CollectionLanesLoading from "../../lanes/collectionLanes/collectionLanesLoading";
+import { DC_URL } from "@/src/config/constants";
+import { Lane as DCLane } from "../../lane/lane";
+import LaneLoading from "../../lane/laneLoading";
 
 export default function DivisionPage({ data }: any) {
   const params = useParams();
@@ -66,19 +67,19 @@ export default function DivisionPage({ data }: any) {
       </Box>
       <HorizontalRule sx={{ marginTop: "xxl", marginBottom: "xxl" }} />
       {isLoaded ? (
-        <ItemLane data={data} />
+        <DCLane
+          records={data.items}
+          seeMoreLink={`${DC_URL}/divisions`}
+          laneName={data.name}
+        />
       ) : (
-        <>
-          <CollectionLanesLoading withTitle={false} />
-        </>
+        <LaneLoading withTitle={false} />
       )}
       <HorizontalRule sx={{ marginTop: "xxl", marginBottom: "xxl" }} />
       {isLoaded ? (
         <CollectionsGrid data={data} />
       ) : (
-        <>
-          <CollectionLanesLoading withTitle={false} />
-        </>
+        <LaneLoading withTitle={false} />
       )}
     </PageLayout>
   );
