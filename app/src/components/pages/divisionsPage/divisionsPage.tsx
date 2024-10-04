@@ -50,7 +50,7 @@ export default function DivisionsPage({ summary, divisions }: DivisionsProps) {
               <DCLane
                 key={key}
                 records={division.collections}
-                seeMoreLink={`${DC_URL}/divisions`}
+                seeMoreLink={`/divisions`}
                 laneName={division.name}
                 laneSlug={division.slug}
               />
