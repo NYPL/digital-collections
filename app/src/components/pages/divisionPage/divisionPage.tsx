@@ -15,11 +15,17 @@ import {
 import React, { useEffect, useState, useRef } from "react";
 import PageLayout from "../../pageLayout/pageLayout";
 import { headerBreakpoints } from "../../../utils/breakpoints";
-import { ItemLane } from "../../lanes/itemLane/itemLane";
+// import { ItemLane } from "../../lanes/itemLane/itemLane";
 import { CollectionsGrid } from "../../grids/collectionsGrid";
-import CollectionLanesLoading from "../../lanes/collectionLanes/collectionLanesLoading";
+// import CollectionLanesLoading from "../../lanes/collectionLanes/collectionLanesLoading";
 import { slugToString, totalNumPages } from "../../../utils/utils";
 import useBreakpoints from "../../../hooks/useBreakpoints";
+// import { slugToString } from "../../../utils/utils";
+// import React, { useEffect, useState } from "react";
+// import { CollectionsGrid } from "../../grids/collectionsGrid";
+import { DC_URL } from "@/src/config/constants";
+import { Lane as DCLane } from "../../lane/lane";
+import LaneLoading from "../../lane/laneLoading";
 
 export default function DivisionPage({ data }: any) {
   const params = useParams();
@@ -97,11 +103,13 @@ export default function DivisionPage({ data }: any) {
       </Box>
       <HorizontalRule sx={{ marginTop: "xxl", marginBottom: "xxl" }} />
       {isLoaded ? (
-        <ItemLane data={data} />
+        <DCLane
+          records={data.items}
+          seeMoreLink={`${DC_URL}/divisions`}
+          laneName={data.name}
+        />
       ) : (
-        <>
-          <CollectionLanesLoading withTitle={false} />
-        </>
+        <LaneLoading withTitle={false} />
       )}
       <HorizontalRule sx={{ marginTop: "xxl", marginBottom: "xxl" }} />
 
@@ -119,9 +127,7 @@ export default function DivisionPage({ data }: any) {
       {isLoaded ? (
         <CollectionsGrid collections={data.collections} />
       ) : (
-        <>
-          <CollectionLanesLoading withTitle={false} />
-        </>
+        <LaneLoading withTitle={false} />
       )}
       {totalPages > 1 && (
         <Pagination
