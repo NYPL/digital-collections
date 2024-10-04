@@ -11,7 +11,6 @@ import {
 import { headerBreakpoints } from "../../../utils/breakpoints";
 
 export const CollectionsPage = ({ data }) => {
-  console.log("Data in collections page is: ", data);
   return (
     <PageLayout
       activePage="collections"
