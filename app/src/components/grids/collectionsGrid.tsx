@@ -1,11 +1,11 @@
 "use client";
 
+import React from "react";
 import { CollectionCardModel } from "../../models/collectionCard";
 import useBreakpoints from "../../hooks/useBreakpoints";
 import CollectionDataType from "../../types/CollectionDataType";
-import React from "react";
-import DCSimpleGrid from "../dcSimpleGrid/dcSimpleGrid";
-import DCCard from "../dcCard/DCCard";
+import { SimpleGrid as DCSimpleGrid } from "../simpleGrid/simpleGrid";
+import { Card as DCCard } from "../card/card";
 
 export const CollectionsGrid = ({ collections }: any) => {
   const { isLargerThanLargeTablet } = useBreakpoints();

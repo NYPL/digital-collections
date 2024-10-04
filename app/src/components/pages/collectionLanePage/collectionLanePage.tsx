@@ -11,9 +11,14 @@ import { mockCollectionCards } from "__tests__/__mocks__/data/mockCollectionCard
 import { CollectionsGrid } from "../../grids/collectionsGrid";
 import React, { useEffect, useRef, useState } from "react";
 import PageLayout from "../../pageLayout/pageLayout";
-import CollectionLanesLoading from "../../lanes/collectionLanes/collectionLanesLoading";
+// import CollectionLanesLoading from "../../lanes/collectionLanes/collectionLanesLoading";
+// import { SimpleGrid as DCSimpleGrid } from "../../simpleGrid/simpleGrid";
+// import { CollectionCardModel } from "@/src/models/collectionCard";
+// import CollectionDataType from "@/src/types/CollectionDataType";
+// import { Card as DCCard } from "../../card/card";
 import useBreakpoints from "@/src/hooks/useBreakpoints";
 import { useTooltipOffset } from "@/src/hooks/useTooltipOffset";
+import LaneLoading from "../../lane/laneLoading";
 
 export default function CollectionLanePage() {
   const params = useParams();
@@ -58,9 +63,9 @@ export default function CollectionLanePage() {
         </>
       ) : (
         <>
-          <CollectionLanesLoading withTitle={false} />,
-          <CollectionLanesLoading withTitle={false} />,
-          <CollectionLanesLoading withTitle={false} />,
+          <LaneLoading withTitle={false} />,
+          <LaneLoading withTitle={false} />,
+          <LaneLoading withTitle={false} />,
         </>
       )}
     </PageLayout>

@@ -1,18 +1,18 @@
 "use client";
-import React, { forwardRef, RefObject } from "react";
+import React, { forwardRef } from "react";
 import {
-  Card,
+  Card as ChakraCard,
   CardHeading,
   Text,
   CardContent,
   Tooltip,
   StatusBadge,
 } from "@nypl/design-system-react-components";
-import styles from "./Card.module.css";
+import styles from "./card.module.css";
 import { headerBreakpoints } from "../../utils/breakpoints";
-import { CollectionCardDataType } from "../../types/CollectionCardDataType";
 import { TRUNCATED_LENGTH } from "@/src/config/constants";
 import ItemCardDataType from "@/src/types/ItemCardDataType";
+import { CollectionCardDataType } from "../../types/CollectionCardDataType";
 import { Offset } from "@/src/hooks/useTooltipOffset";
 interface DCCardProps {
   tooltipOffset?: Offset;
@@ -28,12 +28,12 @@ function isCollectionCardDataType(
   return "numberOfDigitizedItems" in record;
 }
 
-const DCCard = forwardRef<HTMLDivElement, DCCardProps>(
+export const Card = forwardRef<HTMLDivElement, DCCardProps>(
   ({ tooltipOffset, id, isLargerThanLargeTablet, slug, record }, ref) => {
     const truncatedTitle = record.title.length > TRUNCATED_LENGTH;
     const isCollection = isCollectionCardDataType(record);
     const card = (
-      <Card
+      <ChakraCard
         ref={ref}
         id={`card-${slug}-${id}`}
         mainActionLink={record.url}
@@ -71,9 +71,17 @@ const DCCard = forwardRef<HTMLDivElement, DCCardProps>(
           id={`row-card-heading-${slug}-${id}`}
           level="h3"
           size="heading5"
-          className={styles.cardTitle}
           noOfLines={3}
-          sx={{ marginTop: "0px", marginBottom: "xs" }}
+          sx={{
+            marginTop: "0px",
+            marginBottom: "xs",
+            ":focus-within": {
+              outline: "2px solid var(--nypl-colors-ui-link-primary)",
+              "> a": {
+                outline: "none",
+              },
+            },
+          }}
         >
           {record.title}
         </CardHeading>
@@ -97,7 +105,7 @@ const DCCard = forwardRef<HTMLDivElement, DCCardProps>(
             </Text>
           )}
         </CardContent>
-      </Card>
+      </ChakraCard>
     );
     return isLargerThanLargeTablet && truncatedTitle ? (
       <Tooltip offset={tooltipOffset} content={record.title}>
@@ -109,6 +117,6 @@ const DCCard = forwardRef<HTMLDivElement, DCCardProps>(
   }
 );
 
-DCCard.displayName = "DCCard";
+Card.displayName = "DCCard";
 
-export default DCCard;
+export default Card;

@@ -2,8 +2,8 @@
 
 import useBreakpoints from "../../hooks/useBreakpoints";
 import React from "react";
-import DCSimpleGrid from "../dcSimpleGrid/dcSimpleGrid";
-import DCCard from "../dcCard/DCCard";
+import { SimpleGrid as DCSimpleGrid } from "../simpleGrid/simpleGrid";
+import { Card as DCCard } from "../card/card";
 import ItemCardDataType from "@/src/types/ItemCardDataType";
 import { ItemCardModel } from "@/src/models/itemCard";
 

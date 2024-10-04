@@ -19,7 +19,12 @@ export default function HomePage({ data }) {
             <CampaignHero featuredItemData={data.featuredItemData} />
           </div>
         }
-        contentPrimary={<HomePageMainContent data={data.swimLaneData} />}
+        contentPrimary={
+          <HomePageMainContent
+            swimlanes={data.swimLaneData.lanesWithNumItems}
+            randomNumber={data.swimLaneData.randomNumber}
+          />
+        }
       />
       <ExploreFurther />
     </PageLayout>
