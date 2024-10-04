@@ -24,7 +24,6 @@ export default function CollectionLanePage() {
   const { isLargerThanLargeTablet } = useBreakpoints();
   const cardRef = useRef<HTMLDivElement>(null);
   const tooltipOffset = useTooltipOffset(cardRef);
-  console.log("mock collection cards are: ", mockCollectionCards);
 
   useEffect(() => {
     setIsLoaded(true);
