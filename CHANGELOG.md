@@ -10,6 +10,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Updated
 
 - Refactored collection/item lanes into one `Lane` component (DR-3191)
+- Update "Divisions" link in header to link to /divisions (DR-3140)
+- Update links on /divisions page to point to /divisions/:slug pages (DR-3142)
+- Remove redirect for /divisions page (DR-3132)
+- Remove redirect for /divisions/:slug pages (DR-3133)
 
 ## [0.1.14] 2024-10-03
 
