@@ -10,7 +10,7 @@ import { ItemCardModel } from "@/src/models/itemCard";
 import { SimpleGrid as DCSimpleGrid } from "../simpleGrid/simpleGrid";
 import { Card as DCCard } from "../card/card";
 
-interface CardGridProps {
+interface CardsGridProps {
   records: CollectionDataType[] | ItemDataType[];
 }
 
@@ -20,7 +20,7 @@ function isCollectionType(
   return "numberOfDigitizedItems" in records[0];
 }
 
-export const CardsGrid = ({ records }: CardGridProps) => {
+export const CardssGrid = ({ records }: CardsGridProps) => {
   const { isLargerThanLargeTablet } = useBreakpoints();
   const isCollections = isCollectionType(records);
 
