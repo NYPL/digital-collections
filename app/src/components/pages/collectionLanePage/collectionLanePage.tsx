@@ -8,7 +8,6 @@ import { useParams } from "next/navigation";
 import { headerBreakpoints } from "../../../utils/breakpoints";
 import { slugToString } from "../../../utils/utils";
 import { mockCollections } from "__tests__/__mocks__/data/mockCollections";
-import { CollectionsGrid } from "../../grids/collectionsGrid";
 import { CardsGrid } from "../../grids/cardsGrid";
 import React, { useEffect, useRef, useState } from "react";
 import PageLayout from "../../pageLayout/pageLayout";

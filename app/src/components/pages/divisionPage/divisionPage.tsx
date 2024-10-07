@@ -15,14 +15,9 @@ import {
 import React, { useEffect, useState, useRef } from "react";
 import PageLayout from "../../pageLayout/pageLayout";
 import { headerBreakpoints } from "../../../utils/breakpoints";
-// import { ItemLane } from "../../lanes/itemLane/itemLane";
-import { CollectionsGrid } from "../../grids/collectionsGrid";
-// import CollectionLanesLoading from "../../lanes/collectionLanes/collectionLanesLoading";
+import { CardsGrid } from "../../grids/cardsGrid";
 import { slugToString, totalNumPages } from "../../../utils/utils";
 import useBreakpoints from "../../../hooks/useBreakpoints";
-// import { slugToString } from "../../../utils/utils";
-// import React, { useEffect, useState } from "react";
-// import { CollectionsGrid } from "../../grids/collectionsGrid";
 import { DC_URL } from "@/src/config/constants";
 import { Lane as DCLane } from "../../lane/lane";
 import LaneLoading from "../../lane/laneLoading";
@@ -125,7 +120,7 @@ export default function DivisionPage({ data }: any) {
       </Heading>
 
       {isLoaded ? (
-        <CollectionsGrid collections={data.collections} />
+        <CardsGrid records={data.collections} />
       ) : (
         <LaneLoading withTitle={false} />
       )}
