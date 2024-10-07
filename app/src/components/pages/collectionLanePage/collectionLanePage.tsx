@@ -9,6 +9,7 @@ import { headerBreakpoints } from "../../../utils/breakpoints";
 import { slugToString } from "../../../utils/utils";
 import { mockCollectionCards } from "__tests__/__mocks__/data/mockCollectionCards";
 import { CollectionsGrid } from "../../grids/collectionsGrid";
+import { CardsGrid } from "../../grids/cardsGrid";
 import React, { useEffect, useRef, useState } from "react";
 import PageLayout from "../../pageLayout/pageLayout";
 import useBreakpoints from "@/src/hooks/useBreakpoints";

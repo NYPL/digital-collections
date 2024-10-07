@@ -20,7 +20,7 @@ function isCollectionType(
   return "numberOfDigitizedItems" in records[0];
 }
 
-export const CardssGrid = ({ records }: CardsGridProps) => {
+export const CardsGrid = ({ records }: CardsGridProps) => {
   const { isLargerThanLargeTablet } = useBreakpoints();
   const isCollections = isCollectionType(records);
 
