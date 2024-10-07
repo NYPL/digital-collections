@@ -10,6 +10,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Updated
 
 - Refactored collection/item lanes into one `Lane` component (DR-3191)
+- Refactored collections/items grid into one `CardsGrid` component (DR-3193)
 
 ## [0.1.14] 2024-10-03
 
