@@ -122,7 +122,11 @@ export default function DivisionPage({ data }: any) {
       {isLoaded ? (
         <CardsGrid records={data.collections} />
       ) : (
-        <LaneLoading withTitle={false} />
+        <>
+          <LaneLoading withTitle={false} />
+          <LaneLoading withTitle={false} />
+          <LaneLoading withTitle={false} />
+        </>
       )}
       {totalPages > 1 && (
         <Pagination
