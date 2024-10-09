@@ -58,7 +58,7 @@ const SimpleGridComponent = forwardRef<
 
 SimpleGridComponent.displayName = "SimpleGridComponent";
 
-export const DCSimpleGrid: ChakraComponent<
+export const SimpleGrid: ChakraComponent<
   React.ForwardRefExoticComponent<
     React.PropsWithChildren<SimpleGridProps> &
       React.RefAttributes<HTMLDivElement>
@@ -66,4 +66,4 @@ export const DCSimpleGrid: ChakraComponent<
   React.PropsWithChildren<SimpleGridProps>
 > = chakra(SimpleGridComponent, { shouldForwardProp: () => true });
 
-export default DCSimpleGrid;
+export default SimpleGrid;

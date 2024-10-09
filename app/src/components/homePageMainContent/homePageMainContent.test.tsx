@@ -5,7 +5,12 @@ import { mockHomePageMainContent } from "../../../../__tests__/__mocks__/data/mo
 
 describe("homePageMainContent", () => {
   it("renders the Campaign Hero", async () => {
-    render(<HomePageMainContent data={mockHomePageMainContent.swimLaneData} />);
+    render(
+      <HomePageMainContent
+        swimlanes={mockHomePageMainContent.laneData.lanesWithNumItems}
+        randomNumber={1}
+      />
+    );
 
     await waitFor(() => {
       const firstrow = screen.getByTestId("test-collections-1");

@@ -1,36 +1,62 @@
 "use client";
 import {
   Box,
-  Flex,
   Heading,
   HorizontalRule,
   Link,
-  SimpleGrid,
-  Spacer,
+  Pagination,
 } from "@nypl/design-system-react-components";
+import {
+  useParams,
+  useSearchParams,
+  usePathname,
+  useRouter,
+} from "next/navigation";
+import React, { useEffect, useState, useRef } from "react";
 import PageLayout from "../../pageLayout/pageLayout";
-import { useParams } from "next/navigation";
 import { headerBreakpoints } from "../../../utils/breakpoints";
-import { slugToString } from "../../../utils/utils";
-import CollectionCard from "../../../components/cards/collectionCard";
-import { CollectionCardModel } from "../../../models/collectionCard";
+// import { ItemLane } from "../../lanes/itemLane/itemLane";
+import { CollectionsGrid } from "../../grids/collectionsGrid";
+// import CollectionLanesLoading from "../../lanes/collectionLanes/collectionLanesLoading";
+import { slugToString, totalNumPages } from "../../../utils/utils";
 import useBreakpoints from "../../../hooks/useBreakpoints";
-import CollectionDataType from "../../../types/CollectionDataType";
-import { mockCollections } from "../../../../../__tests__/__mocks__/data/mockCollections";
-import ItemCard from "../../../components/cards/itemCard";
-import { mockItems } from "../../../../../__tests__/__mocks__/data/mockItems";
-import { ItemCardModel } from "../../../models/itemCard";
-import React, { useEffect, useState } from "react";
-import SwimLanesLoading from "../../swimlanes/swimLanesLoading";
-import DCSimpleGrid from "../../dcSimpleGrid/dcSimpleGrid";
+// import { slugToString } from "../../../utils/utils";
+// import React, { useEffect, useState } from "react";
+// import { CollectionsGrid } from "../../grids/collectionsGrid";
+import { DC_URL } from "@/src/config/constants";
+import { Lane as DCLane } from "../../lane/lane";
+import LaneLoading from "../../lane/laneLoading";
 
-export default function DivisionPage() {
+export default function DivisionPage({ data }: any) {
   const params = useParams();
-  const { isLargerThanLargeTablet } = useBreakpoints();
   const slug = params.slug as string;
   const title = slugToString(slug);
   const pageName = `divisions|${slug}`;
   const [isLoaded, setIsLoaded] = useState(false);
+
+  const pathname = usePathname();
+  const queryParams = useSearchParams();
+  const headingRef = useRef<HTMLHeadingElement>(null);
+
+  const [currentPage, setCurrentPage] = useState(
+    Number(queryParams.get("page")) || 1
+  );
+
+  const { replace } = useRouter();
+
+  const { isLargerThanLargeTablet } = useBreakpoints();
+
+  const totalPages = totalNumPages(data.numFound, data.perPage);
+
+  const updatePageURL = async (pageNumber: number) => {
+    const params = new URLSearchParams();
+    params.set("page", pageNumber.toString());
+    setCurrentPage(pageNumber);
+    const url = `${pathname}?${params.toString()}#${data.slug}`;
+    replace(url);
+    headingRef.current?.focus;
+  };
+
   useEffect(() => {
     setIsLoaded(true);
   }, []);
@@ -41,12 +67,13 @@ export default function DivisionPage() {
       breadcrumbs={[
         { text: "Home", url: "/" },
         { text: "Divisions", url: "/divisions" },
-        { text: `${title}`, url: `/divisions/${slug}` },
+        { text: `${title}`, url: `/divisions/${data.slug}` },
       ]}
       adobeAnalyticsPageName={pageName}
     >
       <Box
         sx={{
+          maxWidth: "730px",
           display: "flex",
           flexDirection: "column",
           "> hgroup": {
@@ -64,104 +91,58 @@ export default function DivisionPage() {
           gap: "m",
         }}
       >
-        <Heading
-          level="h1"
-          text={title}
-          subtitle="The Billy Rose Theatre Division of The New York Public Library is one of the largest and most comprehensive archives devoted to the theatrical arts. Encompassing dramatic performance in all its diversity, the division is an indispensable resource for artists, writers, researchers, scholars, students, and the general public."
-        />
-        <Link type="standalone" href="#">
+        <Heading level="h1" text={title} subtitle={data.summary} />
+        <Link
+          type="standalone"
+          target="_blank"
+          href={data.nyplLink}
+          style={{ width: "fit-content" }}
+        >
           <span> Contact info and more </span>
         </Link>
       </Box>
       <HorizontalRule sx={{ marginTop: "xxl", marginBottom: "xxl" }} />
-      <Box>
-        <Flex alignItems="baseline">
-          <Heading level="h2" size="heading3">
-            {`Items in the ${title}`}
-          </Heading>
-          <Spacer />
-          <Link
-            id={`row-see-more-items-${title}`}
-            type="standalone"
-            href={`#`}
-            aria-label={`See more items in ${title}`}
-            hasVisitedState
-            __css={{
-              display: { sm: "none", md: "inline" },
-              color: "ui.primary.link",
-              fontWeight: "500 !important",
-              alignItems: "center",
-              _hover: { textDecoration: "underline 1px dotted !important" },
-            }}
-          >
-            See more
-          </Link>
-        </Flex>
-        {isLoaded ? (
-          <DCSimpleGrid>
-            {mockItems.map((item, index) => {
-              const itemModel = new ItemCardModel(item);
-              return (
-                <ItemCard
-                  key={index}
-                  id={`item-${index}-${title}`}
-                  item={itemModel}
-                  isLargerThanLargeTablet={isLargerThanLargeTablet}
-                />
-              );
-            })}
-          </DCSimpleGrid>
-        ) : (
-          <>
-            <SwimLanesLoading withTitle={false} />
-          </>
-        )}
-        <Link
-          id={`row-see-more-items-mobile-${title}`}
-          type="standalone"
-          href={`#`}
-          aria-label={`See more items in ${title}`}
-          className="smlink"
-          hasVisitedState
-          __css={{
-            display: { sm: "flex", md: "none" },
-            fontWeight: "regular",
-            justifyContent: "flex-end",
-            marginTop: "s",
-            alignItems: "center",
-            "& svg": {
-              marginTop: "1px",
-            },
-          }}
-        >
-          See more
-        </Link>
-      </Box>
-      <HorizontalRule sx={{ marginTop: "xxl", marginBottom: "xxl" }} />
-      <Heading level="h2" size="heading3">
-        {`Collections in the ${title}`}
-      </Heading>
       {isLoaded ? (
-        <DCSimpleGrid>
-          {mockCollections.map((collection: CollectionDataType, index) => {
-            const collectionModel = new CollectionCardModel(collection);
-            return (
-              <CollectionCard
-                key={index}
-                id={index}
-                slug={collectionModel.title}
-                collection={collectionModel}
-                isLargerThanLargeTablet={isLargerThanLargeTablet}
-              />
-            );
-          })}
-        </DCSimpleGrid>
+        <DCLane
+          records={data.items}
+          seeMoreLink={`${DC_URL}/divisions`}
+          laneName={data.name}
+        />
       ) : (
-        <>
-          <SwimLanesLoading withTitle={false} />,
-          <SwimLanesLoading withTitle={false} />,
-          <SwimLanesLoading withTitle={false} />
-        </>
+        <LaneLoading withTitle={false} />
+      )}
+      <HorizontalRule sx={{ marginTop: "xxl", marginBottom: "xxl" }} />
+
+      <Heading
+        ref={headingRef}
+        tabIndex={-1}
+        level="h2"
+        id={slug}
+        size="heading3"
+        style={{ width: "fit-content" }}
+      >
+        {`Collections in the ${data.name}`}
+      </Heading>
+
+      {isLoaded ? (
+        <CollectionsGrid collections={data.collections} />
+      ) : (
+        <LaneLoading withTitle={false} />
+      )}
+      {totalPages > 1 && (
+        <Pagination
+          id="pagination-id"
+          initialPage={currentPage}
+          currentPage={currentPage}
+          pageCount={totalPages}
+          onPageChange={updatePageURL}
+          sx={{
+            display: "flex",
+            justifyContent: "center",
+            gap: "s",
+            marginTop: "xxl",
+          }}
+        />
       )}
     </PageLayout>
   );

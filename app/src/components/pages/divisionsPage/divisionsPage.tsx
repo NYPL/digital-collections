@@ -3,16 +3,23 @@ import {
   Box,
   Heading,
   HorizontalRule,
+  Text,
 } from "@nypl/design-system-react-components";
 import PageLayout from "../../pageLayout/pageLayout";
 import React, { useEffect, useState } from "react";
-import { headerBreakpoints } from "../../../utils/breakpoints";
-import { mockSwimLanes } from "../../../../../__tests__/__mocks__/data/mockSwimLanes";
-import SwimLanes from "../../../components/swimlanes/swimLanes";
-import SwimLanesLoading from "../../swimlanes/swimLanesLoading";
+import { DC_URL } from "@/src/config/constants";
+import { Lane as DCLane } from "../../lane/lane";
+import LaneLoading from "../../lane/laneLoading";
+import LaneDataType from "@/src/types/Lane";
 
-export default function DivisionsPage() {
+interface DivisionsProps {
+  summary: string;
+  divisions: LaneDataType[];
+}
+
+export default function DivisionsPage({ summary, divisions }: DivisionsProps) {
   const [isLoaded, setIsLoaded] = useState(false);
+
   useEffect(() => {
     setIsLoaded(true);
   }, []);
@@ -25,32 +32,41 @@ export default function DivisionsPage() {
       ]}
       adobeAnalyticsPageName="divisions"
     >
-      <Box
-        sx={{
-          [`@media screen and (min-width: ${headerBreakpoints.smTablet})`]: {
-            maxWidth: "715px",
-          },
-          "> hgroup > p": {
-            fontWeight: "400 !important",
-          },
-        }}
-      >
-        <Heading
-          level="h1"
-          text="Divisions"
-          subtitle="The New York Public Library's Digital Collections feature diverse
-        divisions with a wide array of digitized materials. Explore the various
-        divisions to discover rich history, culture, and art."
-        />
-      </Box>
-      <HorizontalRule sx={{ marginTop: "xxl", marginBottom: "xxl" }} />
-      {isLoaded ? (
-        <SwimLanes lanesWithNumItems={mockSwimLanes.lanesWithNumItems} />
+      {divisions && divisions.length > 0 ? (
+        <>
+          <Box
+            sx={{
+              maxWidth: "730px",
+              "> hgroup > p": {
+                fontWeight: "400 !important",
+              },
+            }}
+          >
+            <Heading level="h1" text="Divisions" subtitle={summary} />
+          </Box>
+          <HorizontalRule sx={{ marginTop: "xxl", marginBottom: "s" }} />
+          {isLoaded ? (
+            divisions.map((division, key) => (
+              <DCLane
+                key={key}
+                records={division.collections}
+                seeMoreLink={`${DC_URL}/divisions`}
+                laneName={division.name}
+                laneSlug={division.slug}
+              />
+            ))
+          ) : (
+            <>
+              {[...Array(36)].map((_, index) => (
+                <LaneLoading key={index} />
+              ))}
+            </>
+          )}
+        </>
       ) : (
         <>
-          <SwimLanesLoading />,
-          <SwimLanesLoading />,
-          <SwimLanesLoading />
+          <Heading level="h1" text="Divisions" />
+          <Text sx={{ mt: "s" }}>There was an error accessing this page.</Text>
         </>
       )}
     </PageLayout>

@@ -3,28 +3,47 @@ import {
   Box,
   Heading,
   HorizontalRule,
-  SimpleGrid,
 } from "@nypl/design-system-react-components";
-import PageLayout from "../../pageLayout/pageLayout";
-
 import { useParams } from "next/navigation";
 import { headerBreakpoints } from "../../../utils/breakpoints";
 import { slugToString } from "../../../utils/utils";
-import CollectionCard from "../../../components/cards/collectionCard";
-import { CollectionCardModel } from "../../../models/collectionCard";
-import useBreakpoints from "../../../hooks/useBreakpoints";
-import CollectionDataType from "../../../types/CollectionDataType";
-import { mockCollections } from "../../../../../__tests__/__mocks__/data/mockCollections";
-import React from "react";
-import DCSimpleGrid from "../../dcSimpleGrid/dcSimpleGrid";
+import { mockCollectionCards } from "__tests__/__mocks__/data/mockCollectionCards";
+import { CollectionsGrid } from "../../grids/collectionsGrid";
+import React, { useEffect, useRef, useState } from "react";
+import PageLayout from "../../pageLayout/pageLayout";
+// import CollectionLanesLoading from "../../lanes/collectionLanes/collectionLanesLoading";
+// import { SimpleGrid as DCSimpleGrid } from "../../simpleGrid/simpleGrid";
+// import { CollectionCardModel } from "@/src/models/collectionCard";
+// import CollectionDataType from "@/src/types/CollectionDataType";
+// import { Card as DCCard } from "../../card/card";
+import useBreakpoints from "@/src/hooks/useBreakpoints";
+import { useTooltipOffset } from "@/src/hooks/useTooltipOffset";
+import LaneLoading from "../../lane/laneLoading";
 
 export default function CollectionLanePage() {
   const params = useParams();
-  const { isLargerThanLargeTablet } = useBreakpoints();
   const slug = params.slug as string;
   const title = slugToString(slug);
+  const [isLoaded, setIsLoaded] = useState(false);
+  const pageName = `collections|lane|${slug}`;
+  const { isLargerThanLargeTablet } = useBreakpoints();
+  const cardRef = useRef<HTMLDivElement>(null);
+  const tooltipOffset = useTooltipOffset(cardRef);
+
+  useEffect(() => {
+    setIsLoaded(true);
+  }, []);
+
   return (
-    <>
+    <PageLayout
+      activePage="swimlane"
+      breadcrumbs={[
+        { text: "Home", url: "/" },
+        { text: "Collections", url: "/collections" },
+        { text: `${title}`, url: `/collections/lane/${slug}` },
+      ]}
+      adobeAnalyticsPageName={pageName}
+    >
       <Box
         sx={{
           display: "flex",
@@ -38,20 +57,17 @@ export default function CollectionLanePage() {
         <Heading sx={{ marginBottom: 0 }} level="h1" text={title} />
       </Box>
       <HorizontalRule sx={{ marginTop: "xxl", marginBottom: "xxl" }} />
-      <DCSimpleGrid>
-        {mockCollections.map((collection: CollectionDataType, index) => {
-          const collectionModel = new CollectionCardModel(collection);
-          return (
-            <CollectionCard
-              key={index}
-              id={index}
-              slug={collectionModel.title}
-              collection={collectionModel}
-              isLargerThanLargeTablet={isLargerThanLargeTablet}
-            />
-          );
-        })}
-      </DCSimpleGrid>
-    </>
+      {isLoaded ? (
+        <>
+          <CollectionsGrid collections={mockCollectionCards} />
+        </>
+      ) : (
+        <>
+          <LaneLoading withTitle={false} />,
+          <LaneLoading withTitle={false} />,
+          <LaneLoading withTitle={false} />,
+        </>
+      )}
+    </PageLayout>
   );
 }
