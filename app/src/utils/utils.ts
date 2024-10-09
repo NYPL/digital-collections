@@ -4,7 +4,6 @@ import {
 } from "../config/constants";
 import { ENV_KEY } from "../types/EnvironmentType";
 import appConfig from "../../../appConfig";
-import defaultFeaturedItems from "../data/defaultFeaturedItemData";
 
 /**
  * Represents a IIIF Image API URL, which will be used globally throughout the application.
@@ -27,166 +26,7 @@ export const imageURL = (
   }/iiif/2/${imageId}/${region}/${size}/${rotation}/default.jpg`;
 };
 
-/**
- * Returns the number of digitized items in repo api.
- */
-
-export const getItemData = async (uuid: string) => {
-  const apiUrl = `${process.env.API_URL}/api/v2/items/mods_captures/${uuid}`;
-  const res = await RepoAPICall(apiUrl);
-  // console.log("res is: ", res)
-  return res;
-};
-
-/**
- * Returns the number of digitized items in repo api.
- */
-
-export const getNumDigitizedItems = async () => {
-  const apiUrl = `${process.env.API_URL}/api/v2/items/total`;
-  const res = await apiResponse(apiUrl);
-
-  const fallbackCount =
-    defaultFeaturedItems[appConfig.environment as ENV_KEY]
-      .numberOfDigitizedItems;
-  const totalItems = res?.count?.$ ? addCommas(res.count.$) : fallbackCount; // only add commas to repo api response data
-  return totalItems;
-};
-
-/**
- * Returns a map of uuids to its item count.
- */
-export const getItemsCountFromUUIDs = async (uuids: string[]) => {
-  const apiUrl = `${process.env.API_URL}/api/v2/items/counts`;
-  const response = await apiPOSTCall(apiUrl, { uuids });
-
-  if (!response?.counts?.count?.length) {
-    return {};
-  }
-
-  const counts = response.counts;
-
-  // The response is an array of objects:
-  // [
-  //   { uuid: { $: 'uuid1' }, count_value: { $: 'count1' }}
-  // ]
-  // We want to convert it to an object:
-  // {
-  //   uuid1: count1
-  //
-  const uuidCounts = counts?.count || [];
-  const cleanCounts = uuidCounts.reduce((acc: any, count: any) => {
-    acc[count.uuid["$"]] = count.count_value["$"];
-    return acc;
-  }, {});
-  return cleanCounts ? cleanCounts : {};
-};
-
-/**
- * Returns the uuid, API uri, and numResults of an item given an identifier type and identifier value.
- * @param {string} identifierType - the identifier type
- * @param {string} identifier - the identifier value
- */
-
-export const getAPIResponse = async (
-  identifierType: string,
-  identifier: string,
-  urlParam?: { [key: string]: any }
-) => {
-  const apiUrl = `${process.env.API_URL}/api/v2/items/${identifierType}/${identifier}`;
-  const apiCallValue = apiResponse(apiUrl, urlParam);
-  return apiCallValue;
-};
-
-/**
- * Returns Repo API response.
- * @param {string} apiUrl - the url to make a request to
- */
-
-export const apiResponse = async (
-  apiUrl: string,
-  urlParam?: { [key: string]: any }
-) => {
-  const data = await RepoAPICall(apiUrl, urlParam);
-  return data?.nyplAPI?.response;
-};
-
-/**
- * Returns Repo API response WITH request data.
- * @param {string} apiUrl - the url to make a request to
- * @param {[key: string]} urlParam = url parameters to use in the request
- */
-
-export const RepoAPICall = async (
-  apiUrl: string,
-  urlParam?: { [key: string]: any }
-) => {
-  const apiKey = process.env.AUTH_TOKEN;
-  const queryString = urlParam
-    ? "?" + new URLSearchParams(urlParam).toString()
-    : "";
-  apiUrl += queryString;
-
-  try {
-    const response = await fetch(apiUrl, {
-      // aggressively cache Repo API?
-      // cache: "force-cache",
-      headers: {
-        Authorization: `Token token=${apiKey}`,
-      },
-    });
-
-    if (response.status === 200) {
-      const data = await response.json();
-      return data;
-    } else {
-      return undefined;
-    }
-  } catch (error) {
-    return undefined;
-  }
-};
-
-/**
- * Makes a POST request to Repo API.
- */
-export const apiPOSTCall = async (apiUrl: string, postData: any) => {
-  const apiKey = process.env.AUTH_TOKEN;
-
-  try {
-    const response = await fetch(apiUrl, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Token token=${apiKey}`,
-      },
-      body: JSON.stringify(postData),
-    });
-
-    if (response.status === 200) {
-      const data = await response.json();
-      return data?.nyplAPI?.response;
-    } else {
-      return undefined;
-    }
-  } catch (error) {
-    return undefined;
-  }
-};
-
-export const getFeaturedImage = async () => {
-  const defaultResponse =
-    defaultFeaturedItems[appConfig.environment as ENV_KEY].featuredItem;
-  const apiResponse = await getAPIResponse("featured", "", { random: "true" });
-
-  return {
-    uuid: apiResponse?.capture?.uuid || defaultResponse.uuid,
-    title: apiResponse?.capture?.title || defaultResponse.title,
-    imageID: apiResponse?.capture?.imageID || defaultResponse.imageID,
-  };
-};
-
-function addCommas(number: string) {
+export function addCommas(number: string) {
   // Return the formatted number
   return Number(number).toLocaleString("en-US");
 }
@@ -218,7 +58,6 @@ export const trackVirtualPageView = (pagename) => {
   // Adobe does not support TS types.
   const adobeDataLayer = window["adobeDataLayer"] || [];
 
-  console.log("pagename is: ", pagename);
   adobeDataLayer.push({
     page_name: null,
     site_section: null,
@@ -245,4 +84,16 @@ export const stringToSlug = (string: string = ""): string => {
     .replace(/[^a-z0-9 -]/g, "") // remove any non-alphanumeric characters
     .replace(/\s+/g, "-") // replace spaces with hyphens
     .replace(/-+/g, "-"); // remove consecutive hyphens
+};
+
+export const parseBoolean = (value: string): boolean => {
+  return value == "true" ? true : false;
+};
+
+export const titleToDCParam = (string: string = ""): string => {
+  return string?.replace(/\s+/g, "+"); // replace spaces with +
+};
+
+export const totalNumPages = (numResults: string, perPage: string): number => {
+  return Math.ceil(parseInt(numResults) / parseInt(perPage));
 };

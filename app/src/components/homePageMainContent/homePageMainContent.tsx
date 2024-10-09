@@ -1,25 +1,53 @@
 import React from "react";
 import FeaturedContentComponent from "../featuredContent/featuredContent";
-import SwimLanes from "../swimlanes/swimLanes";
-import SwimLanesLoading from "../swimlanes/swimLanesLoading";
 import { useEffect, useState } from "react";
+import { DC_URL } from "@/src/config/constants";
+import { Lane as DCLane } from "../lane/lane";
+import LaneDataType from "@/src/types/Lane";
+import LaneLoading from "../lane/laneLoading";
 
-const HomePageMainContent = ({ data }) => {
+interface HomePageMainContentProps {
+  swimlanes: LaneDataType[];
+  randomNumber: number;
+}
+
+const HomePageMainContent = ({
+  swimlanes,
+  randomNumber,
+}: HomePageMainContentProps) => {
   const [isLoaded, setIsLoaded] = useState(false);
 
   useEffect(() => {
     setIsLoaded(true);
   }, []);
 
+  const firstSwimLane = swimlanes[0];
   return isLoaded ? (
     <>
-      <SwimLanes lanesWithNumItems={[data.lanesWithNumItems[0]]} />
-      <FeaturedContentComponent randomNumber={data.randomNumber} />
-      <SwimLanes lanesWithNumItems={data.lanesWithNumItems.slice(1)} />
+      <div style={{ marginTop: "-3rem" }} />
+      <DCLane
+        key={0}
+        records={firstSwimLane.collections}
+        seeMoreLink={`${DC_URL}/collections/lane`}
+        laneName={firstSwimLane.name}
+        laneSlug={firstSwimLane.slug}
+      />
+      <FeaturedContentComponent randomNumber={randomNumber} />
+      {swimlanes.slice(1).map((lane, key) => (
+        <DCLane
+          key={key}
+          records={lane.collections}
+          seeMoreLink={`${DC_URL}/collections/lane`}
+          laneName={lane.name}
+          laneSlug={lane.slug}
+        />
+      ))}
     </>
   ) : (
     <>
-      <SwimLanesLoading />
+      {[...Array(24)].map((_, index) => (
+        <LaneLoading key={index} />
+      ))}
     </>
   );
 };

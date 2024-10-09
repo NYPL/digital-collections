@@ -1,24 +1,27 @@
 import {
   Box,
   Menu,
-  SimpleGrid,
   Text,
+  Pagination,
 } from "@nypl/design-system-react-components";
-import { mockCollections } from "__tests__/__mocks__/data/mockCollections";
-import { useSearchParams } from "next/navigation";
-import { CollectionCardModel } from "../../models/collectionCard";
-import CollectionDataType from "../../types/CollectionDataType";
-import CollectionCard from "../cards/collectionCard";
-import useBreakpoints from "../../hooks/useBreakpoints";
-import { useRouter } from "next/navigation";
-import DCSimpleGrid from "../dcSimpleGrid/dcSimpleGrid";
+import { useSearchParams, usePathname, useRouter } from "next/navigation";
+import { CollectionsGrid } from "../grids/collectionsGrid";
+import React, { useState } from "react";
+import { ItemsGrid } from "../grids/itemsGrid";
 
-const SearchContent = () => {
+const SearchContent = ({ showFilter, isSearchPage, data }) => {
+  const isLoaded = true;
   const queryParams = useSearchParams();
   const query = queryParams.toString();
-  const { isLargerThanLargeTablet } = useBreakpoints();
 
   const router = useRouter();
+  const pathname = usePathname();
+
+  const totalPages = 3; // TODO: change to be dynamic after API hookup
+
+  const [currentPage, setCurrentPage] = useState(
+    Number(queryParams.get("page")) || 1
+  );
 
   const createQueryString = (name, value) => {
     const params = new URLSearchParams();
@@ -39,57 +42,70 @@ const SearchContent = () => {
       <h2>Search params: {query} </h2>
       <br />
       <Box sx={{ display: "flex", gap: "xs", marginBottom: "l" }}>
-        <Text sx={{ fontWeight: "500", marginBottom: 0, marginTop: "xs" }}>
-          {" "}
-          Sort by{" "}
-        </Text>{" "}
-        <Menu
-          //showSelectionAsLabel
-          showLabel
-          selectedItem="chronological-descending"
-          labelText={"Sort By"}
-          listItemsData={[
-            {
-              id: "chronological-descending",
-              label: "Newest to oldest",
-              onClick: onMenuClick,
-              type: "action",
-            },
-            {
-              id: "chronological-ascending",
-              label: "Oldest to newest",
-              onClick: onMenuClick,
-              type: "action",
-            },
-            {
-              id: "alphabetical-descending",
-              label: "Title A to Z",
-              onClick: onMenuClick,
-              type: "action",
-            },
-            {
-              id: "alphabetical-ascending",
-              label: "Title Z to A",
-              onClick: onMenuClick,
-              type: "action",
-            },
-          ]}
-        />
-      </Box>
-      <DCSimpleGrid>
-        {mockCollections.map((collection: CollectionDataType, index) => {
-          const collectionModel = new CollectionCardModel(collection);
-          return (
-            <CollectionCard
-              key={index}
-              id={index}
-              slug={collectionModel.title}
-              collection={collectionModel}
-              isLargerThanLargeTablet={isLargerThanLargeTablet}
+        {showFilter ? (
+          <>
+            <Text sx={{ fontWeight: "500", marginBottom: 0, marginTop: "xs" }}>
+              {" "}
+              Sort by{" "}
+            </Text>{" "}
+            <Menu
+              //showSelectionAsLabel
+              showLabel
+              selectedItem="chronological-descending"
+              labelText={"Sort By"}
+              listItemsData={[
+                {
+                  id: "chronological-descending",
+                  label: "Newest to oldest",
+                  onClick: onMenuClick,
+                  type: "action",
+                },
+                {
+                  id: "chronological-ascending",
+                  label: "Oldest to newest",
+                  onClick: onMenuClick,
+                  type: "action",
+                },
+                {
+                  id: "alphabetical-descending",
+                  label: "Title A to Z",
+                  onClick: onMenuClick,
+                  type: "action",
+                },
+                {
+                  id: "alphabetical-ascending",
+                  label: "Title Z to A",
+                  onClick: onMenuClick,
+                  type: "action",
+                },
+              ]}
             />
-          );
-        })}
-      </DCSimpleGrid>
+          </>
+        ) : null}
+      </Box>
+
+      {/* certainly a better way to handle this but it's annoying me. */}
+      {isLoaded && isSearchPage ? (
+        <CollectionsGrid collections={data} />
+      ) : (
+        <ItemsGrid items={data} />
+      )}
+
+      {totalPages > 1 && (
+        <Pagination
+          id="pagination-id"
+          initialPage={currentPage}
+          currentPage={currentPage}
+          pageCount={totalPages}
+          // onPageChange={updatePageURL} // TODO: pagination stuff
+          sx={{
+            display: "flex",
+            justifyContent: "center",
+            gap: "s",
+            marginTop: "xxl",
+          }}
+        />
+      )}
     </>
   );
 };

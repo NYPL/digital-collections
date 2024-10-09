@@ -1,10 +1,23 @@
 import { fireEvent, render, screen, within } from "@testing-library/react";
-import SwimLanes from "./swimLanes";
-import { mockSwimLanes } from "__tests__/__mocks__/data/mockSwimLanes";
+import { mockCollectionLanes } from "__tests__/__mocks__/data/mockCollectionLanes";
+import { DC_URL } from "@/src/config/constants";
+import { Lane as DCLane } from "./lane";
 
-describe("Swim Lanes component renders with expected props", () => {
+describe("Lanes component renders with expected collection props", () => {
   it("renders the first row", () => {
-    render(<SwimLanes lanesWithNumItems={mockSwimLanes.lanesWithNumItems} />);
+    render(
+      <>
+        {mockCollectionLanes.lanesWithNumItems.map((lane, key) => (
+          <DCLane
+            key={key}
+            seeMoreLink={`${DC_URL}/collections/lane`}
+            records={lane.collections}
+            laneName={lane.name}
+            laneSlug={lane.slug}
+          />
+        ))}
+      </>
+    );
     const firstrow = screen.getByTestId("test-collections-1");
     expect(within(firstrow).getByText("Posada Collection")).toBeInTheDocument();
     expect(within(firstrow).getByText("34 items")).toBeInTheDocument();
@@ -19,7 +32,19 @@ describe("Swim Lanes component renders with expected props", () => {
   });
 
   it("renders the second row", () => {
-    render(<SwimLanes lanesWithNumItems={mockSwimLanes.lanesWithNumItems} />);
+    render(
+      <>
+        {mockCollectionLanes.lanesWithNumItems.map((lane, key) => (
+          <DCLane
+            key={key}
+            seeMoreLink={`${DC_URL}/collections/lane`}
+            records={lane.collections}
+            laneName={lane.name}
+            laneSlug={lane.slug}
+          />
+        ))}
+      </>
+    );
     const secondrow = screen.getByTestId("test-collections-2");
     expect(
       within(secondrow).getByText("Friedman-Abeles photographs")
@@ -40,7 +65,19 @@ describe("Swim Lanes component renders with expected props", () => {
   });
 
   it("renders tooltips on >1024px width", async () => {
-    render(<SwimLanes lanesWithNumItems={mockSwimLanes.lanesWithNumItems} />);
+    render(
+      <>
+        {mockCollectionLanes.lanesWithNumItems.map((lane, key) => (
+          <DCLane
+            key={key}
+            seeMoreLink={`${DC_URL}/collections/lane`}
+            records={lane.collections}
+            laneName={lane.name}
+            laneSlug={lane.slug}
+          />
+        ))}
+      </>
+    );
     window.innerWidth = 1050;
     fireEvent(window, new Event("resize"));
     fireEvent.pointerOver(
@@ -52,7 +89,19 @@ describe("Swim Lanes component renders with expected props", () => {
     expect(tooltip).toBeInTheDocument();
   });
   it("does not render tooltips <1024px width", async () => {
-    render(<SwimLanes lanesWithNumItems={mockSwimLanes.lanesWithNumItems} />);
+    render(
+      <>
+        {mockCollectionLanes.lanesWithNumItems.map((lane, key) => (
+          <DCLane
+            key={key}
+            seeMoreLink={`${DC_URL}/collections/lane`}
+            records={lane.collections}
+            laneName={lane.name}
+            laneSlug={lane.slug}
+          />
+        ))}
+      </>
+    );
     window.innerWidth = 1000;
     fireEvent(window, new Event("resize"));
     fireEvent.pointerOver(
@@ -63,7 +112,19 @@ describe("Swim Lanes component renders with expected props", () => {
     expect(screen.queryByRole("tooltip")).not.toBeInTheDocument();
   });
   it("does not render tooltips on non-truncated titles", async () => {
-    render(<SwimLanes lanesWithNumItems={mockSwimLanes.lanesWithNumItems} />);
+    render(
+      <>
+        {mockCollectionLanes.lanesWithNumItems.map((lane, key) => (
+          <DCLane
+            key={key}
+            seeMoreLink={`${DC_URL}/collections/lane`}
+            records={lane.collections}
+            laneName={lane.name}
+            laneSlug={lane.slug}
+          />
+        ))}
+      </>
+    );
     fireEvent.pointerOver(screen.getAllByText("MAVO")[0]);
     expect(screen.queryByRole("tooltip")).not.toBeInTheDocument();
   });

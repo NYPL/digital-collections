@@ -1,4 +1,5 @@
 import Image from "next/image";
+import React from "react";
 import { useEffect, useRef, useState } from "react";
 
 const CardImage = ({ collection }) => {

@@ -7,7 +7,7 @@ export const mockCollectionCards: CollectionCardDataType[] = [
     url: "https://digitalcollections.nypl.org/collections/posada-collection#/?tab=navigation",
     imageID: "58270299",
     imageURL: "https://iiif.nypl.org/iiif/2/58270299/full/288,/0/default.jpg",
-    numItems: 34,
+    numberOfDigitizedItems: 34,
     containsOnSiteMaterials: true,
   },
   {
@@ -16,7 +16,7 @@ export const mockCollectionCards: CollectionCardDataType[] = [
     url: "https://digitalcollections.nypl.org/collections/mavo#/?tab=navigation",
     imageID: "1408153",
     imageURL: "https://iiif.nypl.org/iiif/2/58270299/full/288,/0/default.jpg",
-    numItems: 35,
+    numberOfDigitizedItems: 35,
     containsOnSiteMaterials: true,
   },
   {
@@ -25,7 +25,7 @@ export const mockCollectionCards: CollectionCardDataType[] = [
     url: "https://digitalcollections.nypl.org/collections/austin-hansen-photograph-collection#/?tab=navigation",
     imageID: "58300996",
     imageURL: "https://iiif.nypl.org/iiif/2/58270299/full/288,/0/default.jpg",
-    numItems: 65,
+    numberOfDigitizedItems: 65,
     containsOnSiteMaterials: true,
   },
   {
@@ -34,7 +34,7 @@ export const mockCollectionCards: CollectionCardDataType[] = [
     url: "https://digitalcollections.nypl.org/collections/arthur-alfonso-schomburg-papers#/?tab=navigation",
     imageID: "58591658",
     imageURL: "https://iiif.nypl.org/iiif/2/58270299/full/288,/0/default.jpg",
-    numItems: 55,
+    numberOfDigitizedItems: 55,
     containsOnSiteMaterials: true,
   },
   {
@@ -43,7 +43,7 @@ export const mockCollectionCards: CollectionCardDataType[] = [
     url: "https://digitalcollections.nypl.org/collections/friedman-abeles-photographs#/?tab=navigation",
     imageID: "58498722",
     imageURL: "https://iiif.nypl.org/iiif/2/58270299/full/288,/0/default.jpg",
-    numItems: 35,
+    numberOfDigitizedItems: 35,
     containsOnSiteMaterials: false,
   },
   {
@@ -52,7 +52,7 @@ export const mockCollectionCards: CollectionCardDataType[] = [
     url: "https://digitalcollections.nypl.org/collections/farm-security-administration-photographs#/?tab=navigation",
     imageID: "1952272",
     imageURL: "https://iiif.nypl.org/iiif/2/58270299/full/288,/0/default.jpg",
-    numItems: 36,
+    numberOfDigitizedItems: 36,
     containsOnSiteMaterials: false,
   },
   {
@@ -61,16 +61,17 @@ export const mockCollectionCards: CollectionCardDataType[] = [
     url: "https://digitalcollections.nypl.org/collections/changing-new-york#/?tab=navigation",
     imageID: "58447105",
     imageURL: "https://iiif.nypl.org/iiif/2/58270299/full/288,/0/default.jpg",
-    numItems: 37,
+    numberOfDigitizedItems: 37,
     containsOnSiteMaterials: false,
   },
   {
     uuid: "f7ffc990-c5ae-012f-eb75-58d385a7bc34",
-    title: "Diana Davies photographs",
-    url: "https://digitalcollections.nypl.org/collections/diana-davies-photographs#/?tab=navigation",
-    imageID: "1582202",
-    imageURL: "https://iiif.nypl.org/iiif/2/58270299/full/288,/0/default.jpg",
-    numItems: 38,
+    title:
+      "The Black Experience in Children's Books: Selections from Augusta Baker's Bibliographies",
+    url: "https://digitalcollections.nypl.org/collections/the-black-experience-in-childrens-books-selections-from-augusta-bakers#/?tab=about",
+    imageID: "56958645",
+    imageURL: "https://iiif.nypl.org/iiif/2/56958645/full/288,/0/default.jpg",
+    numberOfDigitizedItems: 153,
     containsOnSiteMaterials: false,
   },
 ];

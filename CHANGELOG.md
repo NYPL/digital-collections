@@ -5,6 +5,23 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## Unreleased
+
+### Updated
+
+- Refactored collection/item lanes into one `Lane` component (DR-3191)
+- Updated header on /divisions/:slug page to have a tabIndex of -1 (DR-3229)
+
+## [0.1.14] 2024-10-03
+
+### Updated
+
+- Updated to DS v3.3.2 (DR-3101)
+- Added general error boundary which catches 5xx/3xx/4xx errors other than 404 (DR-3175)
+- Refactored collection/item cards into one `DCCard` component (DR-3192)
+- Updated `/divisions` page to fetch data from Repo API (DR-3101)
+- Updated `/divisions/slug` page to fetch data from Repo API (DR-3098)
+
 ## [0.1.13] 2024-09-12
 
 ### Updated
