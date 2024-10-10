@@ -10,7 +10,7 @@ import {
 } from "@nypl/design-system-react-components";
 import { headerBreakpoints } from "../../../utils/breakpoints";
 
-export const CollectionsPage = () => {
+export const CollectionsPage = ({ data }) => {
   return (
     <PageLayout
       activePage="collections"
@@ -49,7 +49,7 @@ export const CollectionsPage = () => {
         />
       </Box>
       <HorizontalRule sx={{ marginTop: "xxl", marginBottom: "xxl" }} />
-      <SearchResults />
+      <SearchResults showFilter isSearchPage={false} data={data} />
     </PageLayout>
   );
 };

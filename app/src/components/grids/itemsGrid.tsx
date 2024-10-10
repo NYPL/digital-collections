@@ -1,25 +1,25 @@
 "use client";
 
-import React from "react";
-import { CollectionCardModel } from "../../models/collectionCard";
 import useBreakpoints from "../../hooks/useBreakpoints";
-import CollectionDataType from "../../types/CollectionDataType";
+import React from "react";
 import { SimpleGrid as DCSimpleGrid } from "../simpleGrid/simpleGrid";
 import { Card as DCCard } from "../card/card";
+import ItemCardDataType from "@/src/types/ItemCardDataType";
+import { ItemCardModel } from "@/src/models/itemCard";
 
-export const CollectionsGrid = ({ collections }: any) => {
+export const ItemsGrid = ({ items }: any) => {
+  console.log("items are: ", items);
   const { isLargerThanLargeTablet } = useBreakpoints();
 
   return (
     <DCSimpleGrid>
-      {collections?.map((collection: CollectionDataType, index) => {
-        const collectionModel = new CollectionCardModel(collection);
+      {items?.map((item: ItemCardDataType, index) => {
+        const itemModel = new ItemCardModel(item);
         return (
           <DCCard
             key={index}
             id={index}
-            slug={collectionModel.title}
-            record={collectionModel}
+            record={itemModel}
             isLargerThanLargeTablet={isLargerThanLargeTablet}
           />
         );

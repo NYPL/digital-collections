@@ -6,11 +6,15 @@ function SearchBarFallback() {
   return <>placeholder</>;
 }
 
-const SearchResults = ({}) => {
+const SearchResults = ({ showFilter, isSearchPage, data }) => {
   return (
     <>
       <Suspense fallback={<SearchBarFallback />}>
-        <SearchContent />
+        <SearchContent
+          showFilter={showFilter}
+          isSearchPage={isSearchPage}
+          data={data}
+        />
       </Suspense>
     </>
   );

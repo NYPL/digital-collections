@@ -18,7 +18,7 @@ export class CollectionCardModel {
     this.title = data.title;
     this.url =
       process.env.APP_ENV === "development"
-        ? `/collections/${stringToSlug(data.title)}#/?tab=about`
+        ? `/collections/${stringToSlug(data.title)}`
         : data.url;
     this.imageID = data.image_id || data.imageID;
     this.imageURL = imageURL(data.imageID, "full", "288,", "0");

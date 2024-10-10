@@ -7,17 +7,22 @@ import {
 } from "@nypl/design-system-react-components";
 import PageLayout from "../../pageLayout/pageLayout";
 import React, { useEffect, useState } from "react";
-import CollectionLanes from "../../lanes/collectionLanes/collectionLanes";
 import { DC_URL } from "@/src/config/constants";
-import CollectionLanesLoading from "../../lanes/collectionLanes/collectionLanesLoading";
+import { Lane as DCLane } from "../../lane/lane";
+import LaneLoading from "../../lane/laneLoading";
+import LaneDataType from "@/src/types/Lane";
 
-export default function DivisionsPage({ data }) {
+interface DivisionsProps {
+  summary: string;
+  divisions: LaneDataType[];
+}
+
+export default function DivisionsPage({ summary, divisions }: DivisionsProps) {
   const [isLoaded, setIsLoaded] = useState(false);
 
   useEffect(() => {
     setIsLoaded(true);
   }, []);
-
   return (
     <PageLayout
       activePage="divisions"
@@ -27,7 +32,7 @@ export default function DivisionsPage({ data }) {
       ]}
       adobeAnalyticsPageName="divisions"
     >
-      {data?.divisions && data.divisions.length > 0 ? (
+      {divisions && divisions.length > 0 ? (
         <>
           <Box
             sx={{
@@ -37,18 +42,23 @@ export default function DivisionsPage({ data }) {
               },
             }}
           >
-            <Heading level="h1" text="Divisions" subtitle={data?.summary} />
+            <Heading level="h1" text="Divisions" subtitle={summary} />
           </Box>
-          <HorizontalRule sx={{ marginTop: "xxl", marginBottom: "xxl" }} />
+          <HorizontalRule sx={{ marginTop: "xxl", marginBottom: "s" }} />
           {isLoaded ? (
-            <CollectionLanes
-              lanesWithNumItems={data.divisions}
-              seeMoreLink={`${DC_URL}/divisions`}
-            />
+            divisions.map((division, key) => (
+              <DCLane
+                key={key}
+                records={division.collections}
+                seeMoreLink={`${DC_URL}/divisions`}
+                laneName={division.name}
+                laneSlug={division.slug}
+              />
+            ))
           ) : (
             <>
               {[...Array(36)].map((_, index) => (
-                <CollectionLanesLoading key={index} />
+                <LaneLoading key={index} />
               ))}
             </>
           )}
