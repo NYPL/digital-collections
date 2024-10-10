@@ -3,20 +3,15 @@
 import React from "react";
 import useBreakpoints from "../../hooks/useBreakpoints";
 import CollectionDataType from "../../types/CollectionDataType";
-import { CollectionCardModel } from "../../models/collectionCard";
 import ItemDataType from "@/src/types/ItemDataType";
+import { isCollectionType } from "@/src/utils/utils";
+import { CollectionCardModel } from "../../models/collectionCard";
 import { ItemCardModel } from "@/src/models/itemCard";
 import { SimpleGrid as DCSimpleGrid } from "../simpleGrid/simpleGrid";
 import { Card as DCCard } from "../card/card";
 
 interface CardsGridProps {
   records: CollectionDataType[] | ItemDataType[];
-}
-
-function isCollectionType(
-  records: CollectionDataType[] | ItemDataType[]
-): records is CollectionDataType[] {
-  return "numberOfDigitizedItems" in records[0];
 }
 
 export const CardsGrid = ({ records }: CardsGridProps) => {
