@@ -14,6 +14,7 @@ import { TRUNCATED_LENGTH } from "@/src/config/constants";
 import ItemCardDataType from "@/src/types/ItemCardDataType";
 import { CollectionCardDataType } from "../../types/CollectionCardDataType";
 import { Offset } from "@/src/hooks/useTooltipOffset";
+import { stringToSlug } from "@/src/utils/utils";
 interface DCCardProps {
   tooltipOffset?: Offset;
   id: string;
@@ -29,10 +30,10 @@ function isCollectionCardDataType(
 }
 
 export const Card = forwardRef<HTMLDivElement, DCCardProps>(
-  ({ tooltipOffset, id, isLargerThanLargeTablet, slug, record }, ref) => {
+  ({ tooltipOffset, id, isLargerThanLargeTablet, record }, ref) => {
     const truncatedTitle = record.title.length > TRUNCATED_LENGTH;
     const isCollection = isCollectionCardDataType(record);
-    const identifier = isCollection ? `${slug}-${id}` : id;
+    const identifier = `${stringToSlug(record.title)}-${id}`; // should probably truncate
     const card = (
       <ChakraCard
         ref={ref}
