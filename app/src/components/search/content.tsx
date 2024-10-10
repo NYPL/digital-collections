@@ -4,10 +4,10 @@ import {
   Text,
   Pagination,
 } from "@nypl/design-system-react-components";
-import { useSearchParams, usePathname, useRouter } from "next/navigation";
-import { CollectionsGrid } from "../grids/collectionsGrid";
 import React, { useState } from "react";
-import { ItemsGrid } from "../grids/itemsGrid";
+import { useSearchParams, usePathname, useRouter } from "next/navigation";
+import { CardsGrid } from "../grids/cardsGrid";
+import LaneLoading from "../lane/laneLoading";
 
 const SearchContent = ({ showFilter, isSearchPage, data }) => {
   const isLoaded = true;
@@ -84,11 +84,14 @@ const SearchContent = ({ showFilter, isSearchPage, data }) => {
         ) : null}
       </Box>
 
-      {/* certainly a better way to handle this but it's annoying me. */}
-      {isLoaded && isSearchPage ? (
-        <CollectionsGrid collections={data} />
+      {isLoaded ? (
+        <CardsGrid records={data} />
       ) : (
-        <ItemsGrid items={data} />
+        <>
+          <LaneLoading withTitle={false} />,
+          <LaneLoading withTitle={false} />,
+          <LaneLoading withTitle={false} />,
+        </>
       )}
 
       {totalPages > 1 && (
