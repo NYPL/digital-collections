@@ -45,6 +45,7 @@ export const CardsGrid = ({ records }: CardsGridProps) => {
               key={index}
               id={index}
               ref={cardRef}
+              slug={stringToSlug(itemCardModel.title)}
               tooltipOffset={tooltipOffset}
               record={itemCardModel}
               isLargerThanLargeTablet={isLargerThanLargeTablet}
