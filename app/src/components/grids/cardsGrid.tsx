@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, { useRef } from "react";
 import useBreakpoints from "../../hooks/useBreakpoints";
 import CollectionDataType from "../../types/CollectionDataType";
 import ItemDataType from "@/src/types/ItemDataType";
@@ -9,6 +9,7 @@ import { CollectionCardModel } from "../../models/collectionCard";
 import { ItemCardModel } from "@/src/models/itemCard";
 import { SimpleGrid as DCSimpleGrid } from "../simpleGrid/simpleGrid";
 import { Card as DCCard } from "../card/card";
+import { useTooltipOffset } from "@/src/hooks/useTooltipOffset";
 
 interface CardsGridProps {
   records: CollectionDataType[] | ItemDataType[];
@@ -17,6 +18,8 @@ interface CardsGridProps {
 export const CardsGrid = ({ records }: CardsGridProps) => {
   const { isLargerThanLargeTablet } = useBreakpoints();
   const isCollections = isCollectionType(records);
+  const cardRef = useRef<HTMLDivElement>(null);
+  const tooltipOffset = useTooltipOffset(cardRef);
 
   return (
     <DCSimpleGrid>
@@ -27,6 +30,8 @@ export const CardsGrid = ({ records }: CardsGridProps) => {
             <DCCard
               key={index}
               id={index}
+              ref={cardRef}
+              tooltipOffset={tooltipOffset}
               slug={collectionCardModel.title}
               record={collectionCardModel}
               isLargerThanLargeTablet={isLargerThanLargeTablet}
@@ -38,6 +43,8 @@ export const CardsGrid = ({ records }: CardsGridProps) => {
             <DCCard
               key={index}
               id={index}
+              ref={cardRef}
+              tooltipOffset={tooltipOffset}
               record={itemCardModel}
               isLargerThanLargeTablet={isLargerThanLargeTablet}
             />
