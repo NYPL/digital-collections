@@ -32,16 +32,17 @@ export const Card = forwardRef<HTMLDivElement, DCCardProps>(
   ({ tooltipOffset, id, isLargerThanLargeTablet, slug, record }, ref) => {
     const truncatedTitle = record.title.length > TRUNCATED_LENGTH;
     const isCollection = isCollectionCardDataType(record);
+    const identifier = isCollection ? `${slug}-${id}` : id;
     const card = (
       <ChakraCard
         ref={ref}
-        id={`card-${slug}-${id}`}
+        id={`card-${identifier}`}
         mainActionLink={record.url}
         imageProps={
           record.imageID
             ? {
                 alt: "",
-                id: isCollection ? `image-${slug}-${id}` : `image-${id}`,
+                id: `image-${identifier}`,
                 isLazy: true,
                 aspectRatio: "twoByOne",
                 fallbackSrc: "/noImage.png",
@@ -53,7 +54,7 @@ export const Card = forwardRef<HTMLDivElement, DCCardProps>(
               }
             : {
                 alt: "",
-                id: `no-image-${id}`,
+                id: `no-image-${identifier}`,
                 isLazy: true,
                 aspectRatio: "twoByOne",
                 src: "/noImage.png",
@@ -68,7 +69,7 @@ export const Card = forwardRef<HTMLDivElement, DCCardProps>(
           )}
         </CardContent>
         <CardHeading
-          id={`row-card-heading-${slug}-${id}`}
+          id={`row-card-heading-${identifier}`}
           level="h3"
           size="heading5"
           noOfLines={3}
@@ -88,7 +89,7 @@ export const Card = forwardRef<HTMLDivElement, DCCardProps>(
         <CardContent sx={{ alignContent: "top" }}>
           {isCollection && (
             <Text
-              id={`item-count-${slug}-${id}`}
+              id={`item-count-${identifier}`}
               size="subtitle2"
               fontWeight="medium"
               __css={{
