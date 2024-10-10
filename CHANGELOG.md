@@ -7,6 +7,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+## [0.1.15] 2024-10-10
 ### Updated
 
 - Refactored collection/item lanes into one `Lane` component (DR-3191)
