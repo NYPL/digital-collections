@@ -9,7 +9,7 @@ exports.config = {
   /**
    * Array of application names.
    */
-  app_name: [`Facelift ${process.env.APP_ENV}`],
+  app_name: [`DC Facelift ${process.env.APP_ENV}`],
   /**
    * Your New Relic license key.
    */

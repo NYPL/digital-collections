@@ -3,6 +3,7 @@ import React from "react";
 import { Metadata } from "next";
 import "./globals.css";
 import { headers } from "next/headers";
+import newrelic from "@newrelic/next";
 
 export const metadata: Metadata = {
   title: "NYPL Digital Collections",
@@ -57,20 +58,36 @@ export async function generateViewport() {
     : {};
 }
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
+  if (newrelic.agent.collector.isConnected() === false) {
+    await new Promise((resolve) => {
+      newrelic.agent.on("connected", resolve);
+    });
+  }
+
+  const browserTimingHeader = newrelic.getBrowserTimingHeader({
+    hasToRemoveScriptWrapper: true,
+    allowTransactionlessInjection: true,
+  });
+
   return (
     <html lang="en">
       <head>
         <meta httpEquiv="X-UA-Compatible" content="IE=edge,chrome=1" />
       </head>
       <body>
+        <Script
+          id="nr-browser-agent"
+          dangerouslySetInnerHTML={{ __html: browserTimingHeader }}
+        />
         {/* <!-- OptinMonster --> */}
         {/* <!-- This site is converting visitors into subscribers and customers with OptinMonster - https://optinmonster.com --> */}
-        <script
+        <Script
+          id="optinmonster"
           dangerouslySetInnerHTML={{
             __html:
               "(function(d,u,ac){var s=d.createElement('script');s.type='text/javascript';s.src='https://a.omappapi.com/app/js/api.min.js';s.async=true;s.dataset.user=u;s.dataset.account=ac;d.getElementsByTagName('head')[0].appendChild(s);})(document,12468,1044);",

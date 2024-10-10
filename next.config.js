@@ -1,5 +1,7 @@
 /** @type {import('next').NextConfig} */
 
+const nrExternals = require("newrelic/load-externals");
+
 const nextConfig = {
   reactStrictMode: false,
   env: {
@@ -22,6 +24,13 @@ const nextConfig = {
     ],
   },
   generateEtags: false,
+  experimental: {
+    serverComponentsExternalPackages: ["newrelic"],
+  },
+  webpack: (config) => {
+    nrExternals(config);
+    return config;
+  },
 };
 
 module.exports = nextConfig;
