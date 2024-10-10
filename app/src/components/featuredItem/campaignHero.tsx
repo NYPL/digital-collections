@@ -8,6 +8,7 @@ import appConfig from "../../../../appConfig";
 import { FeaturedItemDataType } from "../../types/FeaturedItemDataType";
 import React from "react";
 import { ENV_KEY } from "../../types/EnvironmentType";
+import Image from "next/image";
 
 const CampaignHero = ({ featuredItemData }) => {
   const defaultFeaturedItemResponse =
@@ -36,8 +37,13 @@ const CampaignHero = ({ featuredItemData }) => {
         />
       }
       imageProps={{
-        alt: data.featuredItem.title,
-        src: data.featuredItem.foregroundImageSrc,
+        component: (
+          <Image
+            alt={data.featuredItem.title}
+            src={data.featuredItem.foregroundImageSrc}
+            fill
+          />
+        ),
         fallbackSrc: data.featuredItem.foregroundImageSrc,
         onError: (_event) => {
           handleError(_event);
