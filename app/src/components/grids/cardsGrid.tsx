@@ -5,7 +5,6 @@ import useBreakpoints from "../../hooks/useBreakpoints";
 import CollectionDataType from "../../types/CollectionDataType";
 import { CollectionCardModel } from "../../models/collectionCard";
 import ItemDataType from "@/src/types/ItemDataType";
-import ItemCardDataType from "@/src/types/ItemCardDataType";
 import { ItemCardModel } from "@/src/models/itemCard";
 import { SimpleGrid as DCSimpleGrid } from "../simpleGrid/simpleGrid";
 import { Card as DCCard } from "../card/card";
