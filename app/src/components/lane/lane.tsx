@@ -116,7 +116,6 @@ export const Lane = ({
             return (
               <DCCard
                 key={index}
-                slug={laneSlug}
                 id={`${index}`}
                 record={collectionCardModel}
                 isLargerThanLargeTablet={isLargerThanLargeTablet}

@@ -30,10 +30,12 @@ function isCollectionCardDataType(
 }
 
 export const Card = forwardRef<HTMLDivElement, DCCardProps>(
-  ({ tooltipOffset, id, isLargerThanLargeTablet, record }, ref) => {
+  ({ tooltipOffset, id, isLargerThanLargeTablet, slug, record }, ref) => {
     const truncatedTitle = record.title.length > TRUNCATED_LENGTH;
     const isCollection = isCollectionCardDataType(record);
-    const identifier = `${stringToSlug(record.title)}-${id}`; // should probably truncate
+    const identifier = slug
+      ? `${slug}-${id}`
+      : `${stringToSlug(record.title)}-${id}`; // should probably truncate
     const card = (
       <ChakraCard
         ref={ref}
