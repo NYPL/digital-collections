@@ -10,6 +10,7 @@ import { ItemCardModel } from "@/src/models/itemCard";
 import { SimpleGrid as DCSimpleGrid } from "../simpleGrid/simpleGrid";
 import { Card as DCCard } from "../card/card";
 import { useTooltipOffset } from "@/src/hooks/useTooltipOffset";
+import { stringToSlug } from "@/src/utils/utils";
 
 interface CardsGridProps {
   records: CollectionDataType[] | ItemDataType[];
@@ -32,7 +33,7 @@ export const CardsGrid = ({ records }: CardsGridProps) => {
               id={index}
               ref={cardRef}
               tooltipOffset={tooltipOffset}
-              slug={collectionCardModel.title}
+              slug={stringToSlug(collectionCardModel.title)}
               record={collectionCardModel}
               isLargerThanLargeTablet={isLargerThanLargeTablet}
             />
