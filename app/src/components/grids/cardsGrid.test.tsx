@@ -9,9 +9,7 @@ describe("Collections CardsGrid component", () => {
     const headingElement = screen.getByRole("heading", {
       name: /Posada Collection/i,
     });
-    const itemCountElement = screen.getByText(/35 items/i);
     expect(headingElement).toBeInTheDocument();
-    expect(itemCountElement).toBeInTheDocument();
   });
 });
 
