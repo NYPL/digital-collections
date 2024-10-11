@@ -5,8 +5,9 @@ import {
   SkipNavigation,
   useFeedbackBox,
   Box,
+  Button,
 } from "@nypl/design-system-react-components";
-import React, { useEffect } from "react";
+import React, { createContext, useContext, useEffect } from "react";
 import { type PropsWithChildren } from "react";
 import Header from "../header/header";
 import NotificationBanner from "../notificationBanner/notificationBanner";
@@ -21,6 +22,22 @@ interface PageLayoutProps {
   adobeAnalyticsPageName?: string;
 }
 
+type FeedbackContextType = {
+  onOpen: () => void;
+};
+
+export const FeedbackContext = createContext<FeedbackContextType | undefined>(
+  undefined
+);
+
+export const useFeedbackContext = () => {
+  const context = useContext(FeedbackContext);
+  if (!context) {
+    throw new Error("useFeedbackContext must be used within its provider");
+  }
+  return context;
+};
+
 const PageLayout = ({
   children,
   activePage,
@@ -31,9 +48,9 @@ const PageLayout = ({
   useEffect(() => {
     trackVirtualPageView(adobeAnalyticsPageName);
   });
+  const { isOpen, onClose, onOpen, FeedbackBox } = useFeedbackBox();
 
   const [view, setView] = React.useState("form");
-  const { isOpen, onClose, FeedbackBox } = useFeedbackBox();
   const onSubmit = async (values: { category: string; comment: string }) => {
     try {
       const response = await fetch("/api/feedback", {
@@ -80,40 +97,43 @@ const PageLayout = ({
       </Script>
       {/* <!-- / Adobe Analytics  --> */}
       <DSProvider>
-        <SkipNavigation />
-        <NotificationBanner />
-        <Header />
-        {activePage === "home" ||
-        activePage === "about" ||
-        activePage === "notFound" ||
-        activePage === "serverError" ? (
-          children
-        ) : (
-          <>
-            <Breadcrumbs
-              breadcrumbsType="digitalCollections"
-              breadcrumbsData={breadcrumbs || []}
-            />
-            {/* TODO: Move to TemplateAppContainer once spacing is more flexible.  --> */}
-            <Box
-              id="mainContent"
-              sx={{
-                margin: "auto",
-                maxWidth: "1280px",
-                padding: "64px 16px",
-              }}
-            >
-              {children as JSX.Element}
-            </Box>
-          </>
-        )}
-        <FeedbackBox
-          showCategoryField
-          onSubmit={onSubmit}
-          onClose={onFormClose}
-          title="Feedback"
-          view={view}
-        />
+        <FeedbackContext.Provider value={{ onOpen }}>
+          <SkipNavigation />
+          <NotificationBanner />
+          <Header />
+          {activePage === "home" ||
+          activePage === "about" ||
+          activePage === "notFound" ||
+          activePage === "serverError" ? (
+            children
+          ) : (
+            <>
+              <Breadcrumbs
+                breadcrumbsType="digitalCollections"
+                breadcrumbsData={breadcrumbs || []}
+              />
+              {/* TODO: Move to TemplateAppContainer once spacing is more flexible.  --> */}
+              <Box
+                id="mainContent"
+                sx={{
+                  margin: "auto",
+                  maxWidth: "1280px",
+                  padding: "64px 16px",
+                }}
+              >
+                {children as JSX.Element}
+              </Box>
+            </>
+          )}
+          <FeedbackBox
+            showCategoryField
+            onSubmit={onSubmit}
+            onClose={onFormClose}
+            onOpen={onOpen}
+            title="Feedback"
+            view={view}
+          />
+        </FeedbackContext.Provider>
       </DSProvider>
     </>
   );
