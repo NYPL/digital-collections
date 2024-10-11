@@ -42,12 +42,12 @@ const CampaignHero = ({ featuredItemData }) => {
             alt={data.featuredItem.title}
             src={data.featuredItem.foregroundImageSrc}
             fill
+            loading={"eager"}
+            onError={(_event) => {
+              handleError(_event);
+            }}
           />
         ),
-        fallbackSrc: data.featuredItem.foregroundImageSrc,
-        onError: (_event) => {
-          handleError(_event);
-        },
       }}
       subHeaderText={<CampaignHeroSubText featuredItem={data.featuredItem} />}
     />
