@@ -7,11 +7,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+## [0.1.15] 2024-10-10
 ### Updated
 
 - Refactored collection/item lanes into one `Lane` component (DR-3191)
 - Refactored collections/items grid into one `CardsGrid` component (DR-3193)
 - Updated header on /divisions/:slug page to have a tabIndex of -1 (DR-3229)
+- General cleanup (DR-3194)
 
 ## [0.1.14] 2024-10-03
 
