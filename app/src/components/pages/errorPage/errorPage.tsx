@@ -1,4 +1,9 @@
-import { Box, Heading, Text, Link } from "@nypl/design-system-react-components";
+import {
+  Flex,
+  Heading,
+  Text,
+  Link,
+} from "@nypl/design-system-react-components";
 import Image from "next/image";
 import useBreakpoints from "@/src/hooks/useBreakpoints";
 import { useFeedbackContext } from "@/src/context/FeedbackProvider";
@@ -7,18 +12,15 @@ export default function ErrorPage() {
   const { onOpen } = useFeedbackContext();
   const { isLargerThanLargeMobile } = useBreakpoints();
   return (
-    <Box
-      sx={{
-        display: "flex",
-        flexDirection: "column",
-        justifyContent: "center",
-        alignItems: "center",
-        marginTop: "xxl",
-        marginBottom: "xxl",
-        marginLeft: "l",
-        marginRight: "l",
-        textAlign: "center",
-      }}
+    <Flex
+      flexDir="column"
+      marginTop="xxl"
+      marginBottom="xxl"
+      marginLeft="l"
+      marginRight="l"
+      alignItems="center"
+      justifyContent="center"
+      textAlign="center"
     >
       <Image
         src="/error-img.png"
@@ -46,6 +48,6 @@ export default function ErrorPage() {
       <Link type="buttonPrimary" href="/">
         Back to Digital Collections
       </Link>
-    </Box>
+    </Flex>
   );
 }
