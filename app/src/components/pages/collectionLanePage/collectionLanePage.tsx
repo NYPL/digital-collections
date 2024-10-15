@@ -3,27 +3,46 @@ import {
   Box,
   Heading,
   HorizontalRule,
+  Pagination,
 } from "@nypl/design-system-react-components";
-import { useParams } from "next/navigation";
+import {
+  useParams,
+  usePathname,
+  useRouter,
+  useSearchParams,
+} from "next/navigation";
 import { headerBreakpoints } from "../../../utils/breakpoints";
-import { slugToString } from "../../../utils/utils";
-import { mockCollections } from "__tests__/__mocks__/data/mockCollections";
+import { slugToString, totalNumPages } from "../../../utils/utils";
 import { CardsGrid } from "../../grids/cardsGrid";
 import React, { useEffect, useRef, useState } from "react";
 import PageLayout from "../../pageLayout/pageLayout";
-import useBreakpoints from "@/src/hooks/useBreakpoints";
-import { useTooltipOffset } from "@/src/hooks/useTooltipOffset";
 import LaneLoading from "../../lane/laneLoading";
 
-export default function CollectionLanePage() {
+export default function CollectionLanePage({ data }: any) {
   const params = useParams();
   const slug = params.slug as string;
   const title = slugToString(slug);
   const [isLoaded, setIsLoaded] = useState(false);
   const pageName = `collections|lane|${slug}`;
-  const { isLargerThanLargeTablet } = useBreakpoints();
-  const cardRef = useRef<HTMLDivElement>(null);
-  const tooltipOffset = useTooltipOffset(cardRef);
+
+  const pathname = usePathname();
+  const queryParams = useSearchParams();
+
+  const [currentPage, setCurrentPage] = useState(
+    Number(queryParams.get("page")) || 1
+  );
+
+  const { replace } = useRouter();
+
+  const totalPages = totalNumPages(data.numResults, data.perPage);
+
+  const updatePageURL = async (pageNumber: number) => {
+    const params = new URLSearchParams();
+    params.set("page", pageNumber.toString());
+    setCurrentPage(pageNumber);
+    const url = `${pathname}?${params.toString()}`;
+    replace(url);
+  };
 
   useEffect(() => {
     setIsLoaded(true);
@@ -54,7 +73,7 @@ export default function CollectionLanePage() {
       <HorizontalRule sx={{ marginTop: "xxl", marginBottom: "xxl" }} />
       {isLoaded ? (
         <>
-          <CardsGrid records={mockCollections} />
+          <CardsGrid records={data.collection} />
         </>
       ) : (
         <>
@@ -62,6 +81,21 @@ export default function CollectionLanePage() {
           <LaneLoading withTitle={false} />,
           <LaneLoading withTitle={false} />,
         </>
+      )}
+      {totalPages > 1 && (
+        <Pagination
+          id="pagination-id"
+          initialPage={currentPage}
+          currentPage={currentPage}
+          pageCount={totalPages}
+          onPageChange={updatePageURL}
+          sx={{
+            display: "flex",
+            justifyContent: "center",
+            gap: "s",
+            marginTop: "xxl",
+          }}
+        />
       )}
     </PageLayout>
   );

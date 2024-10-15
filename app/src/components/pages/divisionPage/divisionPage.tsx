@@ -42,6 +42,7 @@ export default function DivisionPage({ data }: any) {
   const { isLargerThanLargeTablet } = useBreakpoints();
 
   const totalPages = totalNumPages(data.numFound, data.perPage);
+  console.log("data slug", data.slug);
 
   const updatePageURL = async (pageNumber: number) => {
     const params = new URLSearchParams();
