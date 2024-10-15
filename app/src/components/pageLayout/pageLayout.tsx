@@ -7,7 +7,7 @@ import {
   Box,
   Button,
 } from "@nypl/design-system-react-components";
-import React, { createContext, useContext, useEffect } from "react";
+import React, { useEffect } from "react";
 import { type PropsWithChildren } from "react";
 import Header from "../header/header";
 import NotificationBanner from "../notificationBanner/notificationBanner";
@@ -15,28 +15,13 @@ import Script from "next/script";
 import { BreadcrumbsDataProps } from "@nypl/design-system-react-components/dist/src/components/Breadcrumbs/Breadcrumbs";
 import { ADOBE_EMBED_URL } from "../../config/constants";
 import { trackVirtualPageView } from "../../utils/utils";
+import { FeedbackProvider } from "@/src/context/FeedbackProvider";
 
 interface PageLayoutProps {
   activePage: string;
   breadcrumbs?: BreadcrumbsDataProps[];
   adobeAnalyticsPageName?: string;
 }
-
-type FeedbackContextType = {
-  onOpen: () => void;
-};
-
-export const FeedbackContext = createContext<FeedbackContextType | undefined>(
-  undefined
-);
-
-export const useFeedbackContext = () => {
-  const context = useContext(FeedbackContext);
-  if (!context) {
-    throw new Error("useFeedbackContext must be used within its provider");
-  }
-  return context;
-};
 
 const PageLayout = ({
   children,
@@ -48,39 +33,7 @@ const PageLayout = ({
   useEffect(() => {
     trackVirtualPageView(adobeAnalyticsPageName);
   });
-  const { isOpen, onClose, onOpen, FeedbackBox } = useFeedbackBox();
 
-  const [view, setView] = React.useState("form");
-  const onSubmit = async (values: { category: string; comment: string }) => {
-    try {
-      const response = await fetch("/api/feedback", {
-        method: "POST",
-        headers: {
-          Accept: "application/json",
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(values),
-      });
-
-      if (response.ok) {
-        // ...
-        setView("confirmation");
-      } else {
-        setView("error");
-      }
-    } catch (error) {
-      // Reject the promise according to your application.
-      // And then call:
-      setView("error");
-    }
-  };
-
-  const onFormClose = () => {
-    if (isOpen) {
-      onClose();
-      setView("form");
-    }
-  };
   return (
     <>
       {/* <!-- Adobe Analytics  --> */}
@@ -97,7 +50,7 @@ const PageLayout = ({
       </Script>
       {/* <!-- / Adobe Analytics  --> */}
       <DSProvider>
-        <FeedbackContext.Provider value={{ onOpen }}>
+        <FeedbackProvider>
           <SkipNavigation />
           <NotificationBanner />
           <Header />
@@ -125,15 +78,7 @@ const PageLayout = ({
               </Box>
             </>
           )}
-          <FeedbackBox
-            showCategoryField
-            onSubmit={onSubmit}
-            onClose={onFormClose}
-            onOpen={onOpen}
-            title="Feedback"
-            view={view}
-          />
-        </FeedbackContext.Provider>
+        </FeedbackProvider>
       </DSProvider>
     </>
   );

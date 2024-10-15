@@ -1,6 +1,4 @@
-import PageLayout, {
-  FeedbackContext,
-} from "@/src/components/pageLayout/pageLayout";
+import PageLayout from "@/src/components/pageLayout/pageLayout";
 import ErrorPage from "@/src/components/pages/errorPage/errorPage";
 import { fireEvent, render, screen } from "@testing-library/react";
 import { useRouter } from "next/navigation";
@@ -11,17 +9,15 @@ jest.mock("next/navigation", () => ({
 }));
 
 describe("Error Page", () => {
-  it("renders a error message", () => {
+  it("renders an error message", () => {
     (useRouter as jest.Mock).mockImplementation(() => ({
       pathname: "/test-error",
     }));
 
-    const mockOnOpen = jest.fn();
-
     render(
-      <FeedbackContext.Provider value={{ onOpen: mockOnOpen }}>
+      <PageLayout activePage={"serverError"}>
         <ErrorPage />
-      </FeedbackContext.Provider>
+      </PageLayout>
     );
 
     const heading = screen.getByRole("heading", {
@@ -35,14 +31,10 @@ describe("Error Page", () => {
       pathname: "/test-error",
     }));
 
-    const mockOnOpen = jest.fn();
-
     render(
-      <FeedbackContext.Provider value={{ onOpen: mockOnOpen }}>
-        <PageLayout activePage={"serverError"}>
-          <ErrorPage />
-        </PageLayout>
-      </FeedbackContext.Provider>
+      <PageLayout activePage={"serverError"}>
+        <ErrorPage />
+      </PageLayout>
     );
 
     const button = screen.getByText(/contact us/);
