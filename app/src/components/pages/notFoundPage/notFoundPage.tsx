@@ -1,23 +1,25 @@
 "use client";
-import { Box, Heading, Text, Link } from "@nypl/design-system-react-components";
+import {
+  Flex,
+  Heading,
+  Text,
+  Link,
+} from "@nypl/design-system-react-components";
 import PageLayout from "../../pageLayout/pageLayout";
 import Image from "next/image";
 
 export default function NotFoundPage() {
   return (
     <PageLayout activePage="notFound">
-      <Box
-        sx={{
-          display: "flex",
-          flexDirection: "column",
-          justifyContent: "center",
-          alignItems: "center",
-          marginTop: "xxl",
-          marginBottom: "xxl",
-          marginLeft: "l",
-          marginRight: "l",
-          textAlign: "center",
-        }}
+      <Flex
+        flexDir="column"
+        marginTop="xxl"
+        marginBottom="xxl"
+        marginLeft="l"
+        marginRight="l"
+        alignItems="center"
+        justifyContent="center"
+        textAlign="center"
       >
         <Image
           src="/error-img.png"
@@ -36,7 +38,7 @@ export default function NotFoundPage() {
         <Link type="buttonPrimary" href="/">
           Back to Digital Collections
         </Link>
-      </Box>
+      </Flex>
     </PageLayout>
   );
 }
