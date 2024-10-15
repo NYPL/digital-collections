@@ -4,6 +4,8 @@ import {
 } from "../config/constants";
 import { ENV_KEY } from "../types/EnvironmentType";
 import appConfig from "../../../appConfig";
+import CollectionDataType from "@/src/types/CollectionDataType";
+import ItemDataType from "@/src/types/ItemDataType";
 
 /**
  * Represents a IIIF Image API URL, which will be used globally throughout the application.
@@ -97,3 +99,9 @@ export const titleToDCParam = (string: string = ""): string => {
 export const totalNumPages = (numResults: string, perPage: string): number => {
   return Math.ceil(parseInt(numResults) / parseInt(perPage));
 };
+
+export function isCollectionType(
+  records: CollectionDataType[] | ItemDataType[]
+): records is CollectionDataType[] {
+  return "numberOfDigitizedItems" in records[0];
+}
