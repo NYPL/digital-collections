@@ -1,14 +1,7 @@
-import { headerBreakpoints } from "@/src/utils/breakpoints";
-import {
-  Box,
-  Heading,
-  Button,
-  Text,
-  Link,
-} from "@nypl/design-system-react-components";
+import { Box, Heading, Text, Link } from "@nypl/design-system-react-components";
 import Image from "next/image";
-import { useFeedbackContext } from "../../pageLayout/pageLayout";
 import useBreakpoints from "@/src/hooks/useBreakpoints";
+import { useFeedbackContext } from "@/src/context/FeedbackProvider";
 
 export default function ErrorPage() {
   const { onOpen } = useFeedbackContext();
