@@ -1,6 +1,6 @@
 /** @type {import('next').NextConfig} */
 
-const nrExternals = require("newrelic/load-externals");
+const nrExternals = require("@newrelic/next/load-externals");
 
 const nextConfig = {
   reactStrictMode: false,

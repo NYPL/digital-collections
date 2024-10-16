@@ -3,7 +3,7 @@ import React from "react";
 import { Metadata } from "next";
 import "./globals.css";
 import { headers } from "next/headers";
-import newrelic from "@newrelic/next";
+import newrelic from "newrelic/newrelic";
 
 export const metadata: Metadata = {
   title: "NYPL Digital Collections",
