@@ -248,3 +248,15 @@ export const getDivisionData = async ({
   const res = await apiResponse(apiUrl);
   return res;
 };
+
+export const getCollectionsData = async ({
+  pageNum = 1,
+  perPage = CARDS_PER_PAGE,
+}: {
+  pageNum?: number;
+  perPage?: number;
+} = {}) => {
+  let apiUrl = `${process.env.API_URL}/api/v2/collections?page=${pageNum}&per_page=${perPage}`;
+  const res = await apiResponse(apiUrl);
+  return res;
+};
