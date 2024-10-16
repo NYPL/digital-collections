@@ -29,13 +29,11 @@ export default function ErrorPage() {
         height="68"
         style={{ marginBottom: "48px" }}
       />
-      <Heading overline="Error 500" level="h3">
-        Something went wrong on our end.
-      </Heading>
+      <Text size="overline1">ERROR 500</Text>
+      <Heading level="h3">Something went wrong on our end.</Heading>
       <Text
-        size="body1"
         sx={{
-          marginBottom: "xl",
+          marginBottom: "xxl",
         }}
       >
         We encountered an error while trying to load the page.{" "}
