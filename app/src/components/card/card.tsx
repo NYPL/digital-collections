@@ -31,6 +31,7 @@ function isCollectionCardDataType(
 
 export const Card = forwardRef<HTMLDivElement, DCCardProps>(
   ({ tooltipOffset, id, isLargerThanLargeTablet, slug, record }, ref) => {
+    //console.log(ref);
     const truncatedTitle = record.title.length > TRUNCATED_LENGTH;
     const isCollection = isCollectionCardDataType(record);
     const identifier = slug
