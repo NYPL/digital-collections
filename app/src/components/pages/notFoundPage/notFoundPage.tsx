@@ -1,30 +1,42 @@
 "use client";
-import { Box, Heading } from "@nypl/design-system-react-components";
+import {
+  Flex,
+  Heading,
+  Text,
+  Link,
+} from "@nypl/design-system-react-components";
 import PageLayout from "../../pageLayout/pageLayout";
-import Link from "next/link";
-import appConfig from "appConfig";
-import { ENV_KEY } from "@/src/types/EnvironmentType";
+import Image from "next/image";
 
 export default function NotFoundPage() {
   return (
     <PageLayout activePage="notFound">
-      <Box
-        sx={{
-          display: "flex",
-          flexDirection: "column",
-          justifyContent: "center",
-          alignItems: "center",
-          margin: "xl",
-          textAlign: "center",
-        }}
+      <Flex
+        flexDir="column"
+        marginTop="xxl"
+        marginBottom="xxl"
+        marginLeft="l"
+        marginRight="l"
+        alignItems="center"
+        justifyContent="center"
+        textAlign="center"
       >
-        <Heading level="h1">404 Not Found</Heading>
-        <p>We&apos;re sorry...</p>
-        <p>The page you were looking for doesn&apos;t exist.</p>
-        <p>
-          Return to <Link href={"/"}>Digital Collections</Link>.
-        </p>
-      </Box>
+        <Image
+          src="/error-img.png"
+          alt="Error image"
+          width="98"
+          height="68"
+          style={{ marginBottom: "48px" }}
+        />
+        <Heading level="h3">We couldn&apos;t find that page.</Heading>
+        <Text sx={{ marginBottom: "xxl" }}>
+          The page you were looking for doesn&apos;t exist or may have moved
+          elsewhere.
+        </Text>
+        <Link type="buttonPrimary" href="/">
+          Back to Digital Collections
+        </Link>
+      </Flex>
     </PageLayout>
   );
 }
