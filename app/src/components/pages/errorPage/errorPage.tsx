@@ -29,7 +29,6 @@ export default function ErrorPage() {
         height="68"
         style={{ marginBottom: "48px" }}
       />
-      <Text size="overline1">ERROR 500</Text>
       <Heading level="h3">Something went wrong on our end.</Heading>
       <Text
         sx={{

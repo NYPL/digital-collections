@@ -28,7 +28,6 @@ export default function NotFoundPage() {
           height="68"
           style={{ marginBottom: "48px" }}
         />
-        <Text size="overline1">ERROR 404</Text>
         <Heading level="h3">We couldn&apos;t find that page.</Heading>
         <Text sx={{ marginBottom: "xxl" }}>
           The page you were looking for doesn&apos;t exist or may have moved
