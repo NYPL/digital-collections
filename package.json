@@ -4,7 +4,8 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "build": "next build && cp ./CHANGELOG.md ./public/changelog.md",
+    "build": "next build",
+    "update-changelog": "cp ./CHANGELOG.md ./public/changelog.md",
     "start": "next start",
     "start:newrelic": "NODE_OPTIONS='-r @newrelic/next' next start",
     "lint": "next lint",
