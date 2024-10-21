@@ -19,18 +19,13 @@ import CollectionDataType from "@/src/types/CollectionDataType";
 import ItemDataType from "@/src/types/ItemDataType";
 import useBreakpoints from "@/src/hooks/useBreakpoints";
 import { useTooltipOffset } from "@/src/hooks/useTooltipOffset";
+import { isCollectionType } from "@/src/utils/utils";
 
 interface LaneProps {
   seeMoreLink: string;
   records: CollectionDataType[] | ItemDataType[];
   laneName: string;
   laneSlug?: string;
-}
-
-function isCollectionType(
-  records: CollectionDataType[] | ItemDataType[]
-): records is CollectionDataType[] {
-  return "numberOfDigitizedItems" in records[0];
 }
 
 export const Lane = ({
@@ -121,7 +116,6 @@ export const Lane = ({
             return (
               <DCCard
                 key={index}
-                slug={laneSlug}
                 id={`${index}`}
                 record={collectionCardModel}
                 isLargerThanLargeTablet={isLargerThanLargeTablet}

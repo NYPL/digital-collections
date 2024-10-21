@@ -6,11 +6,17 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## Unreleased
+### Updated
+- update links in QA to point internally for reverse proxy (DR-3237)
 
+## [0.1.15] 2024-10-10
 ### Updated
 
+- Updated 500 and 404 error page designs, adding link to open feedback box (DR-3203)
 - Refactored collection/item lanes into one `Lane` component (DR-3191)
+- Refactored collections/items grid into one `CardsGrid` component (DR-3193)
 - Updated header on /divisions/:slug page to have a tabIndex of -1 (DR-3229)
+- General cleanup (DR-3194)
 
 ## [0.1.14] 2024-10-03
 

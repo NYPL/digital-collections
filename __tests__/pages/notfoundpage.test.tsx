@@ -14,7 +14,9 @@ describe("Not Found Page", () => {
     }));
 
     render(<NotFoundPage />);
-    const heading = screen.getByRole("heading", { name: /404/i });
+    const heading = screen.getByRole("heading", {
+      name: /We couldn't find that page./i,
+    });
     expect(heading).toBeInTheDocument();
   });
 });
