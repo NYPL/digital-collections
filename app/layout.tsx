@@ -64,13 +64,15 @@ export default async function RootLayout({
 }: {
   children: React.ReactNode;
 }) {
+  // Not ideal but `any` for now.
+  const newRelicTyped: any = newrelic;
   // Track data for New Relic Browser
-  if (newrelic.agent.collector.isConnected() === false) {
+  if (newRelicTyped.agent.collector.isConnected() === false) {
     await new Promise((resolve) => {
-      newrelic.agent.on("connected", resolve);
+      newRelicTyped.agent.on("connected", resolve);
     });
   }
-  const browserTimingHeader = newrelic.getBrowserTimingHeader({
+  const browserTimingHeader = newRelicTyped.getBrowserTimingHeader({
     hasToRemoveScriptWrapper: true,
     allowTransactionlessInjection: true,
   });
