@@ -9,7 +9,28 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Updated
 
+- Updated links in QA to point internally for reverse proxy (DR-3237)
+- Updated how env vars are read for New Relic Browser implementation (DR-3235)
+
+## [0.1.15] 2024-10-10
+
+### Updated
+
+- Updated 500 and 404 error page designs, adding link to open feedback box (DR-3203)
+- Refactored collection/item lanes into one `Lane` component (DR-3191)
+- Refactored collections/items grid into one `CardsGrid` component (DR-3193)
+- Updated header on /divisions/:slug page to have a tabIndex of -1 (DR-3229)
+- General cleanup (DR-3194)
+
+## [0.1.14] 2024-10-03
+
+### Updated
+
+- Updated to DS v3.3.2 (DR-3101)
+- Added general error boundary which catches 5xx/3xx/4xx errors other than 404 (DR-3175)
 - Refactored collection/item cards into one `DCCard` component (DR-3192)
+- Updated `/divisions` page to fetch data from Repo API (DR-3101)
+- Updated `/divisions/slug` page to fetch data from Repo API (DR-3098)
 
 ## [0.1.13] 2024-09-12
 
@@ -19,13 +40,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Updated sticky header to take up less space on zoomed/mobile breakpoints (DR-3089)
 - Updated sticky header to add scroll padding on anchor elements (DR-3102)
 - Updated lane skeleton loader to remove visual discrepancies and no longer use hooks (DR-3171)
-- Updated `/divisions` page to fetch data from Repo API (DR-3101)
 
 ### Added
 
 - Added Adobe Analytics to top level category pages, search based pages, and item pages (DR-3061)
 - Added 404 page which catches nonexistent routes (DR-3168)
-- Added general error boundary which catches 5xx/3xx/4xx errors other than 404 (DR-3175)
 
 ## [0.1.12] 2024-08-29
 
