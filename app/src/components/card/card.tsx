@@ -41,34 +41,8 @@ export const Card = forwardRef<HTMLDivElement, DCCardProps>(
         id={`card-${slug}-${id}`}
         mainActionLink={record.url}
         imageProps={{
-          alt: "",
-          id: `image-${slug}-${id}`,
-          isLazy: true,
-          aspectRatio: "twoByOne",
           component: <CardImage record={record} />,
         }}
-        // imageProps={
-        //   record.imageID
-        //     ? {
-        //         alt: "",
-        //         id: isCollection ? `image-${slug}-${id}` : `image-${id}`,
-        //         isLazy: true,
-        //         aspectRatio: "twoByOne",
-        //         fallbackSrc: "/noImage.png",
-        //         onError: (_event) =>
-        //           console.warn(
-        //             `Card image failed to load, fallback image loaded instead. ImageURL: ${record.imageURL}`
-        //           ),
-        //         src: record.imageURL,
-        //       }
-        //     : {
-        //         alt: "",
-        //         id: `no-image-${id}`,
-        //         isLazy: true,
-        //         aspectRatio: "twoByOne",
-        //         src: "/noImage.png",
-        //       }
-        // }
       >
         <CardContent>
           {isCollection && record.containsOnSiteMaterials && (
