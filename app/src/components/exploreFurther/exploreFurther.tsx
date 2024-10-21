@@ -51,19 +51,17 @@ const ExploreFurther = () => {
             mainActionLink={item.url}
             imageProps={{
               component: (
-                <div>
-                  <Image
-                    src={`/${item.image}`}
-                    alt={""}
-                    width={225}
-                    height={126}
-                    sizes="(max-width: 600px) 100vw, 25vw"
-                    style={{
-                      width: "100%",
-                      minHeight: "100%",
-                    }}
-                  />
-                </div>
+                <Image
+                  src={`/${item.image}`}
+                  alt={""}
+                  width={225}
+                  height={126}
+                  sizes="(max-width: 600px) 100vw, 25vw"
+                  style={{
+                    width: "100%",
+                    minHeight: "100%",
+                  }}
+                />
               ),
               isAtEnd: false,
             }}
