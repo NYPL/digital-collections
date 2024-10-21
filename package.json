@@ -3,10 +3,10 @@
   "version": "0.1.1",
   "private": true,
   "scripts": {
-    "dev": "next dev",
+    "dev": "NODE_OPTIONS='-r newrelic' next dev",
     "build": "next build && cp ./CHANGELOG.md ./public/changelog.md",
     "start": "next start",
-    "start:newrelic": "NODE_OPTIONS='-r @newrelic/next' next start",
+    "start:newrelic": "NODE_OPTIONS='-r newrelic' next start",
     "lint": "next lint",
     "test": "jest --config=jest.config.ts",
     "test:API": "jest --config=jestAPI.config.ts",
@@ -32,14 +32,13 @@
     "trailingComma": "es5"
   },
   "dependencies": {
-    "@newrelic/next": "0.7.0",
     "@samvera/clover-iiif": "^2.9.0",
     "@types/node": "20.5.9",
     "@types/react": "18.2.21",
     "@types/react-dom": "18.2.7",
     "eslint": "8.48.0",
     "googleapis": "129.0.0",
-    "newrelic": "11.10.4",
+    "newrelic": "^12.3.0",
     "next": "14.2.3",
     "react": "18.2.0",
     "react-dom": "18.2.0",
