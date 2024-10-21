@@ -1,8 +1,10 @@
-import Script from "next/script";
 import React from "react";
+import newrelic from "newrelic";
 import { Metadata } from "next";
-import "./globals.css";
 import { headers } from "next/headers";
+import Script from "next/script";
+
+import "./globals.css";
 
 export const metadata: Metadata = {
   title: "NYPL Digital Collections",
@@ -57,11 +59,22 @@ export async function generateViewport() {
     : {};
 }
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
+  // Track data for New Relic Browser
+  if (newrelic.agent.collector.isConnected() === false) {
+    await new Promise((resolve) => {
+      newrelic.agent.on("connected", resolve);
+    });
+  }
+  const browserTimingHeader = newrelic.getBrowserTimingHeader({
+    hasToRemoveScriptWrapper: true,
+    allowTransactionlessInjection: true,
+  });
+
   return (
     <html lang="en">
       <head>
@@ -84,6 +97,13 @@ export default function RootLayout({
           src="https://ds-header.nypl.org/footer.min.js?containerId=nypl-footer"
           async
         ></Script>
+        <Script
+          id="nr-browser-agent"
+          // By setting the strategy to "beforeInteractive" we guarantee that
+          // the script will be added to the document's `head` element.
+          strategy="beforeInteractive"
+          dangerouslySetInnerHTML={{ __html: browserTimingHeader }}
+        />
       </body>
     </html>
   );
