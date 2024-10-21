@@ -1,8 +1,9 @@
 import Image from "next/image";
 import React from "react";
 import { useEffect, useRef, useState } from "react";
+import { isCollectionCardDataType } from "./card";
 
-const CardImage = ({ collection }) => {
+const CardImage = ({ record }) => {
   const [imageHeight, setImageHeight] = useState(144);
   const imageRef = useRef<HTMLDivElement>(null);
   useEffect(() => {
@@ -20,6 +21,7 @@ const CardImage = ({ collection }) => {
     return () => window.removeEventListener("resize", updateImageHeight);
   }, []);
 
+  const isCollection = isCollectionCardDataType(record);
   return (
     <div
       ref={imageRef}
@@ -29,15 +31,27 @@ const CardImage = ({ collection }) => {
       }}
     >
       <Image
-        src={collection.imageID ? collection.imageURL : "/noImage.png"}
+        src={record.imageID ? record.imageURL : "/noImage.png"}
         alt=""
+        id={
+          record.imageID
+            ? isCollection
+              ? `image-${record.title}-${record.imageID}`
+              : `image-${record.imageID}`
+            : `no-image-${record.imageID}`
+        }
         sizes="(max-width: 480px) 100vw, (max-width: 1024px) 50vw, 25vw"
         style={{
           width: "100%",
-          height: "auto",
+          minHeight: "100%",
         }}
         width={288}
         height={144}
+        onError={(_event) =>
+          console.warn(
+            `Card image failed to load, fallback image loaded instead. ImageURL: ${record.imageURL}`
+          )
+        }
       />
     </div>
   );
