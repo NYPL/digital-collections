@@ -15,6 +15,7 @@ import ItemCardDataType from "@/src/types/ItemCardDataType";
 import { CollectionCardDataType } from "../../types/CollectionCardDataType";
 import { Offset } from "@/src/hooks/useTooltipOffset";
 import Image from "next/image";
+import CardImage from "./cardImage";
 
 interface DCCardProps {
   tooltipOffset?: Offset;
@@ -24,7 +25,7 @@ interface DCCardProps {
   record: CollectionCardDataType | ItemCardDataType;
 }
 
-function isCollectionCardDataType(
+export function isCollectionCardDataType(
   record: CollectionCardDataType | ItemCardDataType
 ): record is CollectionCardDataType {
   return "numberOfDigitizedItems" in record;
@@ -39,35 +40,35 @@ export const Card = forwardRef<HTMLDivElement, DCCardProps>(
         ref={ref}
         id={`card-${slug}-${id}`}
         mainActionLink={record.url}
-        // imageProps={{
-        //   alt: "",
-        //   id: `image-${slug}-${id}`,
-        //   isLazy: true,
-        //   aspectRatio: "twoByOne",
-        //   component: <CardImage collection={collection} />,
-        // }}
-        imageProps={
-          record.imageID
-            ? {
-                alt: "",
-                id: isCollection ? `image-${slug}-${id}` : `image-${id}`,
-                isLazy: true,
-                aspectRatio: "twoByOne",
-                fallbackSrc: "/noImage.png",
-                onError: (_event) =>
-                  console.warn(
-                    `Card image failed to load, fallback image loaded instead. ImageURL: ${record.imageURL}`
-                  ),
-                src: record.imageURL,
-              }
-            : {
-                alt: "",
-                id: `no-image-${id}`,
-                isLazy: true,
-                aspectRatio: "twoByOne",
-                src: "/noImage.png",
-              }
-        }
+        imageProps={{
+          alt: "",
+          id: `image-${slug}-${id}`,
+          isLazy: true,
+          aspectRatio: "twoByOne",
+          component: <CardImage record={record} />,
+        }}
+        // imageProps={
+        //   record.imageID
+        //     ? {
+        //         alt: "",
+        //         id: isCollection ? `image-${slug}-${id}` : `image-${id}`,
+        //         isLazy: true,
+        //         aspectRatio: "twoByOne",
+        //         fallbackSrc: "/noImage.png",
+        //         onError: (_event) =>
+        //           console.warn(
+        //             `Card image failed to load, fallback image loaded instead. ImageURL: ${record.imageURL}`
+        //           ),
+        //         src: record.imageURL,
+        //       }
+        //     : {
+        //         alt: "",
+        //         id: `no-image-${id}`,
+        //         isLazy: true,
+        //         aspectRatio: "twoByOne",
+        //         src: "/noImage.png",
+        //       }
+        // }
       >
         <CardContent>
           {isCollection && record.containsOnSiteMaterials && (

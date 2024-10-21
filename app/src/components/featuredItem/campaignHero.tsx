@@ -37,17 +37,12 @@ const CampaignHero = ({ featuredItemData }) => {
         />
       }
       imageProps={{
-        component: (
-          <Image
-            alt={data.featuredItem.title}
-            src={data.featuredItem.foregroundImageSrc}
-            fill
-            loading={"eager"}
-            onError={(_event) => {
-              handleError(_event);
-            }}
-          />
-        ),
+        alt: data.featuredItem.title,
+        src: data.featuredItem.foregroundImageSrc,
+        fallbackSrc: data.featuredItem.foregroundImageSrc,
+        onError: (_event) => {
+          handleError(_event);
+        },
       }}
       subHeaderText={<CampaignHeroSubText featuredItem={data.featuredItem} />}
     />
