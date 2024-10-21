@@ -8,7 +8,6 @@ import appConfig from "../../../../appConfig";
 import { FeaturedItemDataType } from "../../types/FeaturedItemDataType";
 import React from "react";
 import { ENV_KEY } from "../../types/EnvironmentType";
-import Image from "next/image";
 
 const CampaignHero = ({ featuredItemData }) => {
   const defaultFeaturedItemResponse =
