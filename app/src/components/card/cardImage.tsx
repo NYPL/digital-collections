@@ -21,6 +21,9 @@ const CardImage = ({ record }) => {
     return () => window.removeEventListener("resize", updateImageHeight);
   }, []);
 
+  const [imageSrc, setImageSrc] = useState(
+    record.imageID ? record.imageURL : "/noImage.png"
+  );
   const isCollection = isCollectionCardDataType(record);
   return (
     <div
@@ -31,7 +34,7 @@ const CardImage = ({ record }) => {
       }}
     >
       <Image
-        src={record.imageID ? record.imageURL : "/noImage.png"}
+        src={imageSrc}
         alt=""
         id={
           record.imageID
@@ -47,11 +50,12 @@ const CardImage = ({ record }) => {
         }}
         width={288}
         height={144}
-        onError={(_event) =>
+        onError={(_event) => {
           console.warn(
             `Card image failed to load, fallback image loaded instead. ImageURL: ${record.imageURL}`
-          )
-        }
+          );
+          setImageSrc("/noImage.png");
+        }}
       />
     </div>
   );
