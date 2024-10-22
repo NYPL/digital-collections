@@ -1,33 +1,19 @@
 import Image from "next/image";
 import React from "react";
-import { useEffect, useRef, useState } from "react";
-import { isCollectionCardDataType } from "./card";
+import { useState } from "react";
+import { DCCardProps } from "./card";
 
-const CardImage = ({ record }) => {
-  const [imageHeight, setImageHeight] = useState(144);
-  const imageRef = useRef<HTMLDivElement>(null);
-  useEffect(() => {
-    const updateImageHeight = () => {
-      if (imageRef.current) {
-        const image = imageRef.current as HTMLElement;
-        const imageWidth = image.offsetWidth;
+interface CardImageProps extends Pick<DCCardProps, "record"> {
+  imageHeight: number;
+}
 
-        setImageHeight(0.5 * imageWidth);
-      }
-    };
-    updateImageHeight();
-    window.addEventListener("resize", updateImageHeight);
-
-    return () => window.removeEventListener("resize", updateImageHeight);
-  }, []);
-
+export const CardImage = ({ record, imageHeight }: CardImageProps) => {
   const [imageSrc, setImageSrc] = useState(
     record.imageID ? record.imageURL : "/noImage.png"
   );
-  const isCollection = isCollectionCardDataType(record);
+  const initialImageHeight = 144;
   return (
     <div
-      ref={imageRef}
       style={{
         overflow: "hidden",
         height: imageHeight,
@@ -38,21 +24,20 @@ const CardImage = ({ record }) => {
         alt=""
         id={
           record.imageID
-            ? isCollection
-              ? `image-${record.title}-${record.imageID}`
-              : `image-${record.imageID}`
+            ? `image-${record.imageID}`
             : `no-image-${record.imageID}`
         }
         sizes="(max-width: 480px) 100vw, (max-width: 1024px) 50vw, 25vw"
         style={{
           width: "100%",
           minHeight: "100%",
+          height: "auto",
         }}
-        width={288}
-        height={144}
+        width={initialImageHeight * 2}
+        height={initialImageHeight}
         onError={(_event) => {
           console.warn(
-            `Card image failed to load, fallback image loaded instead. ImageURL: ${record.imageURL}`
+            `CardImage: Card image failed to load, fallback image loaded instead. ImageURL: ${record.imageURL}`
           );
           setImageSrc("/noImage.png");
         }}

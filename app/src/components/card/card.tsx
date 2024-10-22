@@ -16,11 +16,12 @@ import { CollectionCardDataType } from "../../types/CollectionCardDataType";
 import { Offset } from "@/src/hooks/useTooltipOffset";
 import CardImage from "./cardImage";
 import { stringToSlug } from "@/src/utils/utils";
-interface DCCardProps {
+export interface DCCardProps {
   tooltipOffset?: Offset;
   id: string;
   isLargerThanLargeTablet: boolean;
   slug?: string;
+  imageHeight: number;
   record: CollectionCardDataType | ItemCardDataType;
 }
 
@@ -31,7 +32,10 @@ export function isCollectionCardDataType(
 }
 
 export const Card = forwardRef<HTMLDivElement, DCCardProps>(
-  ({ tooltipOffset, id, isLargerThanLargeTablet, slug, record }, ref) => {
+  (
+    { tooltipOffset, imageHeight, id, isLargerThanLargeTablet, slug, record },
+    ref
+  ) => {
     const truncatedTitle = record.title.length > TRUNCATED_LENGTH;
     const isCollection = isCollectionCardDataType(record);
     const identifier = slug
@@ -43,7 +47,7 @@ export const Card = forwardRef<HTMLDivElement, DCCardProps>(
         id={`card-${identifier}`}
         mainActionLink={record.url}
         imageProps={{
-          component: <CardImage record={record} />,
+          component: <CardImage imageHeight={imageHeight} record={record} />,
         }}
       >
         <CardContent>
