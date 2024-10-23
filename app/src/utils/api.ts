@@ -29,7 +29,6 @@ export const getHomePageData = async () => {
   });
 
   const newResponse = { randomNumber, lanesWithNumItems: updatedLanes };
-  console.log("new response is: ", newResponse);
   return newResponse;
 };
 
@@ -250,13 +249,25 @@ export const getDivisionData = async ({
 };
 
 export const getCollectionsData = async ({
+  title = "",
+  sortID = "chronological-descending",
   pageNum = 1,
   perPage = CARDS_PER_PAGE,
 }: {
+  title?: string;
+  sortID?: string;
   pageNum?: number;
   perPage?: number;
 } = {}) => {
-  let apiUrl = `${process.env.API_URL}/api/v2/collections?page=${pageNum}&per_page=${perPage}`;
+  // sort needs to be parameterized for repo api
+  let sortOptions = {
+    "chronological-descending": "date DESC",
+    "chronological-ascending": "date ASC",
+    "alphabetical-descending": "title DESC",
+    "alphabetical-ascending": "title ASC",
+  };
+
+  let apiUrl = `${process.env.API_URL}/api/v2/collections?page=${pageNum}&per_page=${perPage}&sort=${sortOptions[sortID]}&q=${title}`;
   const res = await apiResponse(apiUrl);
   return res;
 };

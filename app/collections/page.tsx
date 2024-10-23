@@ -1,13 +1,13 @@
 import React, { Suspense } from "react";
 import { Metadata } from "next";
 import { CollectionsPage } from "../src/components/pages/collectionsPage/collectionsPage";
-import { mockCollectionCards } from "__tests__/__mocks__/data/mockCollectionCards";
+// import { mockCollectionCards } from "__tests__/__mocks__/data/mockCollectionCards";
 import { getCollectionsData } from "@/src/utils/api";
 import { redirect } from "next/navigation";
 
 export type CollectionsProps = {
   params: { slug: string };
-  searchParams: { page: number };
+  searchParams: { page: number; sort: string; keyword: string };
 };
 
 export const metadata: Metadata = {
@@ -16,6 +16,8 @@ export const metadata: Metadata = {
 
 export default async function Collections({ searchParams }: CollectionsProps) {
   const data = await getCollectionsData({
+    title: searchParams.keyword,
+    sortID: searchParams.sort,
     pageNum: searchParams.page,
   });
 
@@ -26,7 +28,8 @@ export default async function Collections({ searchParams }: CollectionsProps) {
 
   return (
     <Suspense>
-      <CollectionsPage data={data.collection} />
+      {/* pass entire Repo API Response */}
+      <CollectionsPage data={data} />
     </Suspense>
   );
 }
