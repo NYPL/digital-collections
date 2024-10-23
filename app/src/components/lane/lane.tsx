@@ -20,6 +20,7 @@ import ItemDataType from "@/src/types/ItemDataType";
 import useBreakpoints from "@/src/hooks/useBreakpoints";
 import { useTooltipOffset } from "@/src/hooks/useTooltipOffset";
 import { isCollectionType } from "@/src/utils/utils";
+import { useCardImageHeight } from "@/src/hooks/useCardImageHeight";
 
 interface LaneProps {
   seeMoreLink: string;
@@ -37,6 +38,7 @@ export const Lane = ({
   const { isLargerThanLargeTablet } = useBreakpoints();
   const cardRef = useRef<HTMLDivElement>(null);
   const tooltipOffset = useTooltipOffset(cardRef);
+  const imageHeight = useCardImageHeight(cardRef);
   const isCollections = isCollectionType(records);
 
   const laneContents = isCollections
@@ -121,6 +123,7 @@ export const Lane = ({
                 isLargerThanLargeTablet={isLargerThanLargeTablet}
                 ref={cardRef}
                 tooltipOffset={tooltipOffset}
+                imageHeight={imageHeight}
               />
             );
           } else {
@@ -133,6 +136,7 @@ export const Lane = ({
                 isLargerThanLargeTablet={isLargerThanLargeTablet}
                 tooltipOffset={tooltipOffset}
                 ref={cardRef}
+                imageHeight={imageHeight}
               />
             );
           }
