@@ -11,23 +11,9 @@ import { ExploreFurtherDataType } from "../../types/ExploreFurtherDataType";
 import exploreFurtherData from "../../data/exploreFurtherData";
 import { headerBreakpoints } from "../../utils/breakpoints";
 import Image from "next/image";
-import researchCatalog from "../../../../public/ResearchCatalogThumbnail_v2.jpg";
-import serviceArtehouse from "../../../../public/service-artehouse.jpg";
-import serviceArchives from "../../../../public/service-archives.jpg";
-import serviceApi from "../../../../public/service-api.jpg";
-import serviceDpla from "../../../../public/service-dpla.jpg";
-
-const imageMap = {
-  "Service Archives": serviceArchives,
-  "Service Artehouse": serviceArtehouse,
-  "Service API": serviceApi,
-  "Service Digital Public Library": serviceDpla,
-  "NYPL Research Catalog": researchCatalog,
-};
 
 const ExploreFurther = () => {
   const data: ExploreFurtherDataType[] = exploreFurtherData;
-
   return (
     <Box
       sx={{
@@ -65,7 +51,7 @@ const ExploreFurther = () => {
             imageProps={{
               component: (
                 <Image
-                  src={imageMap[item.imgAlt]}
+                  src={item.image}
                   alt={""}
                   sizes="(max-width: 600px) 100vw, 25vw"
                   style={{
