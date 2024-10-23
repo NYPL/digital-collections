@@ -32,11 +32,10 @@ export default async function Division({
   if (data?.headers?.code === "404") {
     redirect("/404");
   }
-  const currentPage = Number(searchParams.page) || 1;
 
   return (
     <Suspense>
-      <DivisionPage data={data} currentPage={currentPage} />
+      <DivisionPage data={data} />
     </Suspense>
   );
 }
