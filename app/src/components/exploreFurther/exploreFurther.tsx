@@ -67,8 +67,6 @@ const ExploreFurther = () => {
                 <Image
                   src={imageMap[item.imgAlt]}
                   alt={""}
-                  width={225}
-                  height={126}
                   sizes="(max-width: 600px) 100vw, 25vw"
                   style={{
                     width: "100%",
