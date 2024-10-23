@@ -20,6 +20,7 @@ const nextConfig = {
         hostname: "iiif-qa.nypl.org",
       },
     ],
+    deviceSizes: [480, 768, 1024, 1280],
   },
   generateEtags: false,
 };

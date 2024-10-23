@@ -1,5 +1,10 @@
 import { useState, useEffect } from "react";
 
+/**
+ * Calculates the height of the image in the DCCard component as it resizes with the window,
+ * returns it to the CardImage so its parent container can cut off overflow accordingly.
+ */
+
 export function useCardImageHeight(cardRef) {
   const [imageHeight, setImageHeight] = useState(144);
   useEffect(() => {
