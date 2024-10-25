@@ -76,12 +76,22 @@ export const CollectionsPage = ({ data }) => {
     >
       <Box
         sx={{
+          maxWidth: "730px",
+          display: "flex",
+          flexDirection: "column",
+          "> hgroup": {
+            marginBottom: 0,
+          },
           [`@media screen and (min-width: ${headerBreakpoints.smTablet})`]: {
             maxWidth: "715px",
           },
           "> hgroup > p": {
             fontWeight: "400 !important",
           },
+          "> a > span": {
+            fontWeight: "500",
+          },
+          gap: "m",
         }}
       >
         <Heading
@@ -90,7 +100,7 @@ export const CollectionsPage = ({ data }) => {
           subtitle="Explore the New York Public Library's diverse collections, including digitized photographs, manuscripts, maps, and more. Start exploring by using the search bar below or browse through the collections."
         />
         <SearchBar
-          sx={{ maxWidth: "462px", marginTop: "l" }}
+          sx={{ maxWidth: "462px" }}
           id={"search-collections"}
           textInputProps={{
             isClearable: true,
@@ -109,7 +119,7 @@ export const CollectionsPage = ({ data }) => {
           Sort by{" "}
         </Text>{" "}
         <Menu
-          // showSelectionAsLabel
+          showSelectionAsLabel
           showLabel
           selectedItem="chronological-descending"
           labelText={"Sort By"}
