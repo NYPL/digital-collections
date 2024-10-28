@@ -52,7 +52,6 @@ const PageLayout = ({
       <DSProvider>
         <FeedbackProvider>
           <SkipNavigation />
-          <NotificationBanner />
           <Header />
           {activePage === "home" ||
           activePage === "about" ||
