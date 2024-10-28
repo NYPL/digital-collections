@@ -100,8 +100,13 @@ export const totalNumPages = (numResults: string, perPage: string): number => {
   return Math.ceil(parseInt(numResults) / parseInt(perPage));
 };
 
+// alright, TODO: if the api response only returns one item, it doesn't return an array but rather returns the solo object ie. search "cat"
 export function isCollectionType(
   records: CollectionDataType[] | ItemDataType[]
 ): records is CollectionDataType[] {
-  return "numberOfDigitizedItems" in records[0];
+  if (records.length >= 1) {
+    return "numberOfDigitizedItems" in records[0];
+  } else {
+    return "numberOfDigitizedItems" in records;
+  }
 }

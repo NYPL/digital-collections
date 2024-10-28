@@ -20,10 +20,10 @@ export const CardsGrid = ({ records }: CardsGridProps) => {
   const isCollections = isCollectionType(records);
   const cardRef = useRef<HTMLDivElement>(null);
   const tooltipOffset = useTooltipOffset(cardRef);
-
+  const sanitizedRecords = typeof records === "object" ? [records] : records;
   return (
     <DCSimpleGrid>
-      {records?.map((record, index) => {
+      {sanitizedRecords?.map((record, index) => {
         if (isCollections) {
           const collectionCardModel = new CollectionCardModel(record);
           return (

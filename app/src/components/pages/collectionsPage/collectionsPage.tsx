@@ -28,7 +28,7 @@ export const CollectionsPage = ({ data }) => {
   const queryParams = useSearchParams();
   const query = queryParams.toString();
   const pathname = usePathname();
-
+  const keyword = queryParams.get("keyword");
   const [isLoaded, setIsLoaded] = useState(false);
   const [currentPage, setCurrentPage] = useState(
     Number(queryParams.get("page")) || 1
@@ -36,6 +36,18 @@ export const CollectionsPage = ({ data }) => {
   const numFound = data.numFound ? data.numFound : data.numResults;
   const totalPages = totalNumPages(numFound, data.perPage);
   console.log("data: ", data);
+
+  // search
+  function handleSearch(term: string) {
+    const params = new URLSearchParams();
+    console.log(term);
+    if (term) {
+      params.set("query", term);
+    } else {
+      params.delete("query");
+    }
+    replace(`${pathname}?${queryParams.toString()}`);
+  }
 
   // pagination
   const updatePageURL = async (pageNumber: number) => {
@@ -99,6 +111,7 @@ export const CollectionsPage = ({ data }) => {
           text="Collections"
           subtitle="Explore the New York Public Library's diverse collections, including digitized photographs, manuscripts, maps, and more. Start exploring by using the search bar below or browse through the collections."
         />
+        {/* TODO: if keyword provided in the url, maybe we should set the text in the input box to be the keyword provided */}
         <SearchBar
           sx={{ maxWidth: "462px" }}
           id={"search-collections"}
@@ -106,10 +119,14 @@ export const CollectionsPage = ({ data }) => {
             isClearable: true,
             labelText: "Search by collection title",
             name: "keyword",
-            placeholder: "Search by collection title",
+            placeholder: keyword ? keyword : "Search by collection title",
           }}
           onSubmit={function (event: React.FormEvent): void {}} // fix
+          onChange={(e) => {
+            handleSearch(e.target.value);
+          }}
           labelText={""}
+          defaultValue={query}
         />
       </Box>
       <HorizontalRule sx={{ marginTop: "xxl", marginBottom: "xxl" }} />
