@@ -30,3 +30,15 @@ These environment variables control how certain elements on the page render and 
 | `GOOGLE_SHEETS_PRIVATE_KEY`  | string | ""                                                                                    |                                                                                  |
 | `SPREADSHEET_ID`             | string | ""                                                                                    |                                                                                  |
 | `NEW_RELIC_LICENSE_KEY`      | string | "true"                                                                                |                                                                                  |
+
+## New Relic Variables
+
+The following variables are needed in the global env var scope in order for New
+Relic to pick up the values, specifically in the `newrelic.js` file.
+
+These env vars are not picked up by default in Next.js' `.env.local` file. In order for this to work, the `dotenv` package is used to declare these env vars when running either `npm run dev:newrelic` or `npm run start:newrelic`.
+
+| Variable                | Type   | Value Example  | Description                                        |
+| ----------------------- | ------ | -------------- | -------------------------------------------------- |
+| `NEW_RELIC_LICENSE_KEY` | string | "true"         | Private license key. Available in parameter store. |
+| `NEW_RELIC_APP_NAME`    | string | "Facelift QA"  |                                                    |
