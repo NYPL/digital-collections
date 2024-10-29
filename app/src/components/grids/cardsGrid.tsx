@@ -10,8 +10,8 @@ import { ItemCardModel } from "@/src/models/itemCard";
 import { SimpleGrid as DCSimpleGrid } from "../simpleGrid/simpleGrid";
 import { Card as DCCard } from "../card/card";
 import { useTooltipOffset } from "@/src/hooks/useTooltipOffset";
-import { mergeRefs } from "react-merge-refs";
 import { Heading } from "@nypl/design-system-react-components";
+import { useMergeRefs } from "@chakra-ui/react";
 
 interface CardsGridProps {
   records: CollectionDataType[] | ItemDataType[];
@@ -22,7 +22,7 @@ export const CardsGrid = forwardRef<HTMLDivElement, CardsGridProps>(
     const { isLargerThanLargeTablet } = useBreakpoints();
     const isCollections = isCollectionType(records);
     const cardRef = useRef<HTMLDivElement | null>(null);
-    const refs = mergeRefs([cardRef, ref]);
+    const refs = useMergeRefs(cardRef, ref);
     const tooltipOffset = useTooltipOffset(cardRef);
     console.log("first record", records[0]);
     console.log("last record", records[records.length - 1]);
