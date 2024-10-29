@@ -25,7 +25,8 @@ export default function CollectionLanePage({ data }: any) {
   const [isLoaded, setIsLoaded] = useState(false);
   const pageName = `collections|lane|${slug}`;
 
-  const firstCardRef = useRef<HTMLDivElement>(null);
+  const firstCardRef = useRef<HTMLDivElement | null>(null);
+
   const pathname = usePathname();
   const queryParams = useSearchParams();
 
@@ -34,19 +35,17 @@ export default function CollectionLanePage({ data }: any) {
   );
 
   const { replace } = useRouter();
-  const headingRef = useRef<HTMLHeadingElement>(null);
 
   const totalPages = totalNumPages(data.numResults, data.perPage);
-  console.log("data per page", data.perPage);
 
   const updatePageURL = async (pageNumber: number) => {
     const params = new URLSearchParams();
     params.set("page", pageNumber.toString());
     setCurrentPage(pageNumber);
-    const url = `${pathname}?${params.toString()}`;
+    const url = `${pathname}?${params.toString()}#${slug}`;
     replace(url);
-    console.log("changing page");
-    firstCardRef.current?.focus;
+    const firstChild = firstCardRef.current?.children[0] as HTMLElement;
+    firstChild?.focus();
   };
 
   useEffect(() => {
@@ -73,10 +72,9 @@ export default function CollectionLanePage({ data }: any) {
           gap: "m",
         }}
       >
-        <Heading sx={{ marginBottom: 0 }} level="h1" text={title} />
+        <Heading sx={{ marginBottom: 0 }} level="h1" id={slug} text={title} />
       </Box>
       <HorizontalRule sx={{ marginTop: "xxl", marginBottom: "xxl" }} />
-      <Heading ref={headingRef}>wtf</Heading>
       {isLoaded ? (
         <>
           <CardsGrid ref={firstCardRef} records={data.collection} />

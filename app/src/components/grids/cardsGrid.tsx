@@ -19,23 +19,16 @@ interface CardsGridProps {
 }
 
 export const CardsGrid = forwardRef<HTMLDivElement, CardsGridProps>(
-  ({ records }, ref) => {
+  ({ records }, ref?) => {
     const { isLargerThanLargeTablet } = useBreakpoints();
     const isCollections = isCollectionType(records);
     const cardRef = useRef<HTMLDivElement | null>(null);
-    const refs = useMergeRefs(cardRef, ref);
     const tooltipOffset = useTooltipOffset(cardRef);
     const imageHeight = useCardImageHeight(cardRef);
-    console.log("first record", records[0]);
-    console.log("last record", records[records.length - 1]);
 
-    useEffect(() => {
-      if (cardRef.current) {
-        console.log("cardRef.current", cardRef.current);
-      }
-    }, [cardRef]);
+    //console.log("first record", records[0]);
     return (
-      <DCSimpleGrid>
+      <DCSimpleGrid ref={ref}>
         {records?.map((record, index) => {
           if (isCollections) {
             const collectionCardModel = new CollectionCardModel(record);
