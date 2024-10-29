@@ -10,10 +10,10 @@ import {
 import { ExploreFurtherDataType } from "../../types/ExploreFurtherDataType";
 import exploreFurtherData from "../../data/exploreFurtherData";
 import { headerBreakpoints } from "../../utils/breakpoints";
+import Image from "next/image";
 
 const ExploreFurther = () => {
   const data: ExploreFurtherDataType[] = exploreFurtherData;
-
   return (
     <Box
       sx={{
@@ -49,13 +49,18 @@ const ExploreFurther = () => {
             data-testid={`test-id-${index}`}
             mainActionLink={item.url}
             imageProps={{
-              alt: "",
-              aspectRatio: "sixteenByNine",
-              component: undefined,
+              component: (
+                <Image
+                  src={item.image}
+                  alt={""}
+                  sizes="(max-width: 600px) 100vw, 25vw"
+                  style={{
+                    width: "100%",
+                    minHeight: "100%",
+                  }}
+                />
+              ),
               isAtEnd: false,
-              isLazy: true,
-              size: "default",
-              src: `/${item.image}`,
             }}
             layout="row"
             sx={{

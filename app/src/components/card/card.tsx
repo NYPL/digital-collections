@@ -14,24 +14,28 @@ import { TRUNCATED_LENGTH } from "@/src/config/constants";
 import ItemCardDataType from "@/src/types/ItemCardDataType";
 import { CollectionCardDataType } from "../../types/CollectionCardDataType";
 import { Offset } from "@/src/hooks/useTooltipOffset";
+import CardImage from "./cardImage";
 import { stringToSlug } from "@/src/utils/utils";
-interface DCCardProps {
+export interface DCCardProps {
   tooltipOffset?: Offset;
   id: string;
   isLargerThanLargeTablet: boolean;
   slug?: string;
+  imageHeight: number;
   record: CollectionCardDataType | ItemCardDataType;
 }
 
-function isCollectionCardDataType(
+export function isCollectionCardDataType(
   record: CollectionCardDataType | ItemCardDataType
 ): record is CollectionCardDataType {
   return "numberOfDigitizedItems" in record;
 }
 
 export const Card = forwardRef<HTMLDivElement, DCCardProps>(
-  ({ tooltipOffset, id, isLargerThanLargeTablet, slug, record }, ref) => {
-    //console.log(ref);
+  (
+    { tooltipOffset, imageHeight, id, isLargerThanLargeTablet, slug, record },
+    ref
+  ) => {
     const truncatedTitle = record.title.length > TRUNCATED_LENGTH;
     const isCollection = isCollectionCardDataType(record);
     const identifier = slug
@@ -42,28 +46,9 @@ export const Card = forwardRef<HTMLDivElement, DCCardProps>(
         ref={ref}
         id={`card-${identifier}`}
         mainActionLink={record.url}
-        imageProps={
-          record.imageID
-            ? {
-                alt: "",
-                id: `image-${identifier}`,
-                isLazy: true,
-                aspectRatio: "twoByOne",
-                fallbackSrc: "/noImage.png",
-                onError: (_event) =>
-                  console.warn(
-                    `Card image failed to load, fallback image loaded instead. ImageURL: ${record.imageURL}`
-                  ),
-                src: record.imageURL,
-              }
-            : {
-                alt: "",
-                id: `no-image-${identifier}`,
-                isLazy: true,
-                aspectRatio: "twoByOne",
-                src: "/noImage.png",
-              }
-        }
+        imageProps={{
+          component: <CardImage imageHeight={imageHeight} record={record} />,
+        }}
       >
         <CardContent>
           {isCollection && record.containsOnSiteMaterials && (
