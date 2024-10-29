@@ -249,25 +249,24 @@ export const getDivisionData = async ({
 };
 
 export const getCollectionsData = async ({
-  title = "",
+  keyword = "",
   sortID = "chronological-descending",
   pageNum = 1,
   perPage = CARDS_PER_PAGE,
 }: {
-  title?: string;
+  keyword?: string;
   sortID?: string;
   pageNum?: number;
   perPage?: number;
 } = {}) => {
-  // sort needs to be parameterized for repo api
   let sortOptions = {
-    "chronological-descending": "date DESC",
-    "chronological-ascending": "date ASC",
-    "alphabetical-descending": "title DESC",
-    "alphabetical-ascending": "title ASC",
+    date_desc: "date DESC",
+    date_asc: "date ASC",
+    "title-desc": "title DESC",
+    "title-asc": "title ASC",
   };
 
-  let apiUrl = `${process.env.API_URL}/api/v2/collections?page=${pageNum}&per_page=${perPage}&sort=${sortOptions[sortID]}&q=${title}`;
+  let apiUrl = `${process.env.API_URL}/api/v2/collections?page=${pageNum}&per_page=${perPage}&sort=${sortOptions[sortID]}&q=${keyword}`;
   const res = await apiResponse(apiUrl);
   return res;
 };

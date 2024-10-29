@@ -7,7 +7,7 @@ import { redirect } from "next/navigation";
 
 export type CollectionsProps = {
   params: { slug: string };
-  searchParams: { page: number; sort: string; keyword: string };
+  searchParams: { page: number; sort: string; collection_keyword: string };
 };
 
 export const metadata: Metadata = {
@@ -16,7 +16,7 @@ export const metadata: Metadata = {
 
 export default async function Collections({ searchParams }: CollectionsProps) {
   const data = await getCollectionsData({
-    title: searchParams.keyword,
+    keyword: searchParams.collection_keyword,
     sortID: searchParams.sort,
     pageNum: searchParams.page,
   });
