@@ -28,43 +28,47 @@ export const CollectionsPage = ({ data }) => {
   const queryParams = useSearchParams();
   const query = queryParams.toString();
   const pathname = usePathname();
-  const keyword = queryParams.get("keyword");
+  const keyword = queryParams.get("collection_keyword");
+
   const [isLoaded, setIsLoaded] = useState(false);
   const [currentPage, setCurrentPage] = useState(
     Number(queryParams.get("page")) || 1
   );
+
   const numFound = data.numFound ? data.numFound : data.numResults;
   const totalPages = totalNumPages(numFound, data.perPage);
-  console.log("data: ", data);
+  // console.log("data: ", data);
 
   // search
-  function handleSearch(term: string) {
-    const params = new URLSearchParams();
-    console.log(term);
-    if (term) {
-      params.set("query", term);
-    } else {
-      params.delete("query");
-    }
-    replace(`${pathname}?${queryParams.toString()}`);
-  }
+  // function handleSearch(term: string) {
+  //   const params = new URLSearchParams();
+  //   console.log(term);
+  //   if (term) {
+  //     params.set("collection_keyword", term);
+  //   } else {
+  //     params.delete("collection_keyword");
+  //   }
+  //   replace(`${pathname}?${queryParams.toString()}`);
+  // }
 
   // pagination
   const updatePageURL = async (pageNumber: number) => {
     const params = new URLSearchParams();
+    console.log("params are", params);
+
     params.set("page", pageNumber.toString());
     setCurrentPage(pageNumber);
     const url = `${pathname}?${params.toString()}`;
     replace(url);
   };
 
-  // sort
   const createQueryString = (name, value) => {
     const params = new URLSearchParams();
     params.set(name, value);
     return params.toString();
   };
 
+  // sort
   function onMenuClick(id) {
     query
       ? router.push(
@@ -118,15 +122,15 @@ export const CollectionsPage = ({ data }) => {
           textInputProps={{
             isClearable: true,
             labelText: "Search by collection title",
-            name: "keyword",
-            placeholder: keyword ? keyword : "Search by collection title",
+            name: "collection_keyword",
+            placeholder: "Search by collection title",
           }}
           onSubmit={function (event: React.FormEvent): void {}} // fix
-          onChange={(e) => {
-            handleSearch(e.target.value);
-          }}
+          // onChange={(e) => {
+          //   handleSearch(e.target.value);
+          // }}
           labelText={""}
-          defaultValue={query}
+          // defaultValue={query}
         />
       </Box>
       <HorizontalRule sx={{ marginTop: "xxl", marginBottom: "xxl" }} />
@@ -138,29 +142,29 @@ export const CollectionsPage = ({ data }) => {
         <Menu
           showSelectionAsLabel
           showLabel
-          selectedItem="chronological-descending"
+          selectedItem="date-desc"
           labelText={"Sort By"}
           listItemsData={[
             {
-              id: "chronological-descending",
+              id: "date-desc",
               label: "Newest to oldest",
               onClick: onMenuClick,
               type: "action",
             },
             {
-              id: "chronological-ascending",
+              id: "date-asc",
               label: "Oldest to newest",
               onClick: onMenuClick,
               type: "action",
             },
             {
-              id: "alphabetical-descending",
+              id: "title-desc",
               label: "Title A to Z",
               onClick: onMenuClick,
               type: "action",
             },
             {
-              id: "alphabetical-ascending",
+              id: "title-asc",
               label: "Title Z to A",
               onClick: onMenuClick,
               type: "action",

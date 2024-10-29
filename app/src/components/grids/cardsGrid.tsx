@@ -17,13 +17,16 @@ interface CardsGridProps {
 
 export const CardsGrid = ({ records }: CardsGridProps) => {
   const { isLargerThanLargeTablet } = useBreakpoints();
+  console.log("typeof record", typeof records);
+  // const sanitizedRecords = typeof records === "object" ? [records] : records;
+
   const isCollections = isCollectionType(records);
   const cardRef = useRef<HTMLDivElement>(null);
   const tooltipOffset = useTooltipOffset(cardRef);
-  const sanitizedRecords = typeof records === "object" ? [records] : records;
+  // const sanitizedRecords = typeof records === "object" ? [records] : records;
   return (
     <DCSimpleGrid>
-      {sanitizedRecords?.map((record, index) => {
+      {records?.map((record, index) => {
         if (isCollections) {
           const collectionCardModel = new CollectionCardModel(record);
           return (
