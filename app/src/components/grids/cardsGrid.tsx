@@ -10,8 +10,6 @@ import { ItemCardModel } from "@/src/models/itemCard";
 import { SimpleGrid as DCSimpleGrid } from "../simpleGrid/simpleGrid";
 import { Card as DCCard } from "../card/card";
 import { useTooltipOffset } from "@/src/hooks/useTooltipOffset";
-import { Heading } from "@nypl/design-system-react-components";
-import { useMergeRefs } from "@chakra-ui/react";
 import { useCardImageHeight } from "@/src/hooks/useCardImageHeight";
 
 interface CardsGridProps {
