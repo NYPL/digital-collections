@@ -99,10 +99,10 @@ export const Card = forwardRef<HTMLDivElement, DCCardProps>(
     );
     return isLargerThanLargeTablet && truncatedTitle ? (
       <Tooltip offset={tooltipOffset} content={record.title}>
-        {card}
+        <div tabIndex={-1}>{card}</div>
       </Tooltip>
     ) : (
-      card
+      <div tabIndex={-1}>{card}</div>
     );
   }
 );
