@@ -12,6 +12,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Updated cards to use Next Image (DR-3056)
 - Updated links in QA to point internally for reverse proxy (DR-3237)
 - Updated how env vars are read for New Relic Browser implementation (DR-3235)
+- Connects swimlane landing page to Repo API (DR-3107)
 
 ## [0.1.15] 2024-10-10
 
