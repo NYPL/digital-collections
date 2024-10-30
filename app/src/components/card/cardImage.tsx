@@ -22,6 +22,7 @@ export const CardImage = ({ record, imageHeight }: CardImageProps) => {
       <Image
         src={imageSrc}
         alt=""
+        key={imageSrc}
         id={
           record.imageID
             ? `image-${record.imageID}`
