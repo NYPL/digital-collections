@@ -42,7 +42,7 @@ export default function CollectionLanePage({ data }: any) {
     const params = new URLSearchParams();
     params.set("page", pageNumber.toString());
     setCurrentPage(pageNumber);
-    const url = `${pathname}?${params.toString()}#${slug}`;
+    const url = `${pathname}?${params.toString()}}`;
     replace(url);
     const firstChild = firstCardRef.current?.children[0] as HTMLElement;
     firstChild?.focus();
