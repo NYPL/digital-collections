@@ -17,7 +17,7 @@ export class CollectionCardModel {
     this.uuid = data.uuid;
     this.title = data.title;
     this.url =
-      process.env.APP_ENV === "development"
+      process.env.APP_ENV === "development" || process.env.APP_ENV === "qa"
         ? `/collections/${stringToSlug(data.title)}`
         : data.url;
     this.imageID = data.image_id || data.imageID;

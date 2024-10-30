@@ -15,7 +15,7 @@ import {
 import React, { useEffect, useState, useRef } from "react";
 import PageLayout from "../../pageLayout/pageLayout";
 import { headerBreakpoints } from "../../../utils/breakpoints";
-import { CollectionsGrid } from "../../grids/collectionsGrid";
+import { CardsGrid } from "../../grids/cardsGrid";
 import { slugToString, totalNumPages } from "../../../utils/utils";
 import useBreakpoints from "../../../hooks/useBreakpoints";
 import { DC_URL } from "@/src/config/constants";
@@ -108,7 +108,7 @@ export default function DivisionPage({ data }: any) {
 
       <Heading
         ref={headingRef}
-        tabIndex={0}
+        tabIndex={-1}
         level="h2"
         id={slug}
         size="heading3"
@@ -118,9 +118,13 @@ export default function DivisionPage({ data }: any) {
       </Heading>
 
       {isLoaded ? (
-        <CollectionsGrid collections={data.collections} />
+        <CardsGrid records={data.collections} />
       ) : (
-        <LaneLoading withTitle={false} />
+        <>
+          <LaneLoading withTitle={false} />
+          <LaneLoading withTitle={false} />
+          <LaneLoading withTitle={false} />
+        </>
       )}
       {totalPages > 1 && (
         <Pagination

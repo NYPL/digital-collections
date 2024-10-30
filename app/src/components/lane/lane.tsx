@@ -19,18 +19,14 @@ import CollectionDataType from "@/src/types/CollectionDataType";
 import ItemDataType from "@/src/types/ItemDataType";
 import useBreakpoints from "@/src/hooks/useBreakpoints";
 import { useTooltipOffset } from "@/src/hooks/useTooltipOffset";
+import { isCollectionType } from "@/src/utils/utils";
+import { useCardImageHeight } from "@/src/hooks/useCardImageHeight";
 
 interface LaneProps {
   seeMoreLink: string;
   records: CollectionDataType[] | ItemDataType[];
   laneName: string;
   laneSlug?: string;
-}
-
-function isCollectionType(
-  records: CollectionDataType[] | ItemDataType[]
-): records is CollectionDataType[] {
-  return "numberOfDigitizedItems" in records[0];
 }
 
 export const Lane = ({
@@ -42,6 +38,7 @@ export const Lane = ({
   const { isLargerThanLargeTablet } = useBreakpoints();
   const cardRef = useRef<HTMLDivElement>(null);
   const tooltipOffset = useTooltipOffset(cardRef);
+  const imageHeight = useCardImageHeight(cardRef);
   const isCollections = isCollectionType(records);
 
   const laneContents = isCollections
@@ -121,12 +118,12 @@ export const Lane = ({
             return (
               <DCCard
                 key={index}
-                slug={laneSlug}
                 id={`${index}`}
                 record={collectionCardModel}
                 isLargerThanLargeTablet={isLargerThanLargeTablet}
                 ref={cardRef}
                 tooltipOffset={tooltipOffset}
+                imageHeight={imageHeight}
               />
             );
           } else {
@@ -139,6 +136,7 @@ export const Lane = ({
                 isLargerThanLargeTablet={isLargerThanLargeTablet}
                 tooltipOffset={tooltipOffset}
                 ref={cardRef}
+                imageHeight={imageHeight}
               />
             );
           }

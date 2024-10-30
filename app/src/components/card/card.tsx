@@ -14,51 +14,41 @@ import { TRUNCATED_LENGTH } from "@/src/config/constants";
 import ItemCardDataType from "@/src/types/ItemCardDataType";
 import { CollectionCardDataType } from "../../types/CollectionCardDataType";
 import { Offset } from "@/src/hooks/useTooltipOffset";
-interface DCCardProps {
+import CardImage from "./cardImage";
+import { stringToSlug } from "@/src/utils/utils";
+export interface DCCardProps {
   tooltipOffset?: Offset;
   id: string;
   isLargerThanLargeTablet: boolean;
   slug?: string;
+  imageHeight: number;
   record: CollectionCardDataType | ItemCardDataType;
 }
 
-function isCollectionCardDataType(
+export function isCollectionCardDataType(
   record: CollectionCardDataType | ItemCardDataType
 ): record is CollectionCardDataType {
   return "numberOfDigitizedItems" in record;
 }
 
 export const Card = forwardRef<HTMLDivElement, DCCardProps>(
-  ({ tooltipOffset, id, isLargerThanLargeTablet, slug, record }, ref) => {
+  (
+    { tooltipOffset, imageHeight, id, isLargerThanLargeTablet, slug, record },
+    ref
+  ) => {
     const truncatedTitle = record.title.length > TRUNCATED_LENGTH;
     const isCollection = isCollectionCardDataType(record);
+    const identifier = slug
+      ? `${slug}-${id}`
+      : `${stringToSlug(record.title)}-${id}`; // should probably truncate
     const card = (
       <ChakraCard
         ref={ref}
-        id={`card-${slug}-${id}`}
+        id={`card-${identifier}`}
         mainActionLink={record.url}
-        imageProps={
-          record.imageID
-            ? {
-                alt: "",
-                id: isCollection ? `image-${slug}-${id}` : `image-${id}`,
-                isLazy: true,
-                aspectRatio: "twoByOne",
-                fallbackSrc: "/noImage.png",
-                onError: (_event) =>
-                  console.warn(
-                    `Card image failed to load, fallback image loaded instead. ImageURL: ${record.imageURL}`
-                  ),
-                src: record.imageURL,
-              }
-            : {
-                alt: "",
-                id: `no-image-${id}`,
-                isLazy: true,
-                aspectRatio: "twoByOne",
-                src: "/noImage.png",
-              }
-        }
+        imageProps={{
+          component: <CardImage imageHeight={imageHeight} record={record} />,
+        }}
       >
         <CardContent>
           {isCollection && record.containsOnSiteMaterials && (
@@ -68,7 +58,7 @@ export const Card = forwardRef<HTMLDivElement, DCCardProps>(
           )}
         </CardContent>
         <CardHeading
-          id={`row-card-heading-${slug}-${id}`}
+          id={`row-card-heading-${identifier}`}
           level="h3"
           size="heading5"
           noOfLines={3}
@@ -88,7 +78,7 @@ export const Card = forwardRef<HTMLDivElement, DCCardProps>(
         <CardContent sx={{ alignContent: "top" }}>
           {isCollection && (
             <Text
-              id={`item-count-${slug}-${id}`}
+              id={`item-count-${identifier}`}
               size="subtitle2"
               fontWeight="medium"
               __css={{
