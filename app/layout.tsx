@@ -1,8 +1,10 @@
-import Script from "next/script";
 import React from "react";
+import newrelic from "newrelic";
 import { Metadata } from "next";
-import "./globals.css";
 import { headers } from "next/headers";
+import Script from "next/script";
+
+import "./globals.css";
 
 export const metadata: Metadata = {
   title: "NYPL Digital Collections",
@@ -57,11 +59,24 @@ export async function generateViewport() {
     : {};
 }
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
+  // Not ideal but `any` for now.
+  const newRelicTyped: any = newrelic;
+  // Track data for New Relic Browser
+  if (newRelicTyped?.agent?.collector?.isConnected() === false) {
+    await new Promise((resolve) => {
+      newRelicTyped?.agent?.on("connected", resolve);
+    });
+  }
+  const browserTimingHeader = newRelicTyped?.getBrowserTimingHeader({
+    hasToRemoveScriptWrapper: true,
+    allowTransactionlessInjection: true,
+  });
+
   return (
     <html lang="en">
       <head>
@@ -70,7 +85,8 @@ export default function RootLayout({
       <body>
         {/* <!-- OptinMonster --> */}
         {/* <!-- This site is converting visitors into subscribers and customers with OptinMonster - https://optinmonster.com --> */}
-        <script
+        <Script
+          id="optinmonster"
           dangerouslySetInnerHTML={{
             __html:
               "(function(d,u,ac){var s=d.createElement('script');s.type='text/javascript';s.src='https://a.omappapi.com/app/js/api.min.js';s.async=true;s.dataset.user=u;s.dataset.account=ac;d.getElementsByTagName('head')[0].appendChild(s);})(document,12468,1044);",
@@ -83,6 +99,13 @@ export default function RootLayout({
           src="https://ds-header.nypl.org/footer.min.js?containerId=nypl-footer"
           async
         ></Script>
+        <Script
+          id="nr-browser-agent"
+          // By setting the strategy to "beforeInteractive" we guarantee that
+          // the script will be added to the document's `head` element.
+          strategy="beforeInteractive"
+          dangerouslySetInnerHTML={{ __html: browserTimingHeader }}
+        />
       </body>
     </html>
   );

@@ -7,15 +7,10 @@ import {
 import { useParams } from "next/navigation";
 import { headerBreakpoints } from "../../../utils/breakpoints";
 import { slugToString } from "../../../utils/utils";
-import { mockCollectionCards } from "__tests__/__mocks__/data/mockCollectionCards";
-import { CollectionsGrid } from "../../grids/collectionsGrid";
+import { mockCollections } from "__tests__/__mocks__/data/mockCollections";
+import { CardsGrid } from "../../grids/cardsGrid";
 import React, { useEffect, useRef, useState } from "react";
 import PageLayout from "../../pageLayout/pageLayout";
-// import CollectionLanesLoading from "../../lanes/collectionLanes/collectionLanesLoading";
-// import { SimpleGrid as DCSimpleGrid } from "../../simpleGrid/simpleGrid";
-// import { CollectionCardModel } from "@/src/models/collectionCard";
-// import CollectionDataType from "@/src/types/CollectionDataType";
-// import { Card as DCCard } from "../../card/card";
 import useBreakpoints from "@/src/hooks/useBreakpoints";
 import { useTooltipOffset } from "@/src/hooks/useTooltipOffset";
 import LaneLoading from "../../lane/laneLoading";
@@ -59,7 +54,7 @@ export default function CollectionLanePage() {
       <HorizontalRule sx={{ marginTop: "xxl", marginBottom: "xxl" }} />
       {isLoaded ? (
         <>
-          <CollectionsGrid collections={mockCollectionCards} />
+          <CardsGrid records={mockCollections} />
         </>
       ) : (
         <>
