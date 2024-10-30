@@ -22,8 +22,8 @@ describe("Campaign Hero", () => {
     const mockFeaturedItemData = {
       featuredItem: {
         imageID: "1269908",
-        backgroundImageSrc: "foobar.jpg", //bad image
-        foregroundImageSrc: "foobar.jpg",
+        backgroundImageSrc: "/foobar.jpg", //bad image
+        foregroundImageSrc: "/foobar.jpg",
         uuid: "510d47e0-cb17-a3d9-e040-e00a18064a99",
         title: "Momoyogusa",
         href: "https://digitalcollections.nypl.org/items/510d47e0-cb17-a3d9-e040-e00a18064a99",
@@ -35,7 +35,7 @@ describe("Campaign Hero", () => {
       fireEvent.error(screen.getByRole("img"));
 
       expect(
-        screen.getByText("Watuppa, From water front, Brooklyn") //default fetured item title
+        screen.getByText("Watuppa, From water front, Brooklyn") //default featured item title
       ).toBeInTheDocument();
     });
   });
