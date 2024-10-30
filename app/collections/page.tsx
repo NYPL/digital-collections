@@ -22,9 +22,9 @@ export default async function Collections({ searchParams }: CollectionsProps) {
   });
 
   // Repo API returns 404s within the data.
-  if (data?.headers?.code === "404") {
-    redirect("/404");
-  }
+  // if (data?.headers?.code === "404") {
+  //   redirect("/404");
+  // }
 
   return (
     <Suspense>
