@@ -1,6 +1,6 @@
 "use client";
 
-import React, { forwardRef, useEffect, useRef } from "react";
+import React, { forwardRef, useEffect, useRef, useState } from "react";
 import useBreakpoints from "../../hooks/useBreakpoints";
 import CollectionDataType from "../../types/CollectionDataType";
 import ItemDataType from "@/src/types/ItemDataType";
@@ -11,6 +11,7 @@ import { SimpleGrid as DCSimpleGrid } from "../simpleGrid/simpleGrid";
 import { Card as DCCard } from "../card/card";
 import { useTooltipOffset } from "@/src/hooks/useTooltipOffset";
 import { useCardImageHeight } from "@/src/hooks/useCardImageHeight";
+import LaneLoading from "../lane/laneLoading";
 
 interface CardsGridProps {
   records: CollectionDataType[] | ItemDataType[];
@@ -23,9 +24,13 @@ export const CardsGrid = forwardRef<HTMLDivElement, CardsGridProps>(
     const cardRef = useRef<HTMLDivElement | null>(null);
     const tooltipOffset = useTooltipOffset(cardRef);
     const imageHeight = useCardImageHeight(cardRef);
+    const [isLoaded, setIsLoaded] = useState(false);
 
-    //console.log("first record", records[0]);
-    return (
+    useEffect(() => {
+      setIsLoaded(true);
+    }, []);
+
+    return isLoaded ? (
       <DCSimpleGrid ref={ref}>
         {records?.map((record, index) => {
           if (isCollections) {
@@ -57,6 +62,12 @@ export const CardsGrid = forwardRef<HTMLDivElement, CardsGridProps>(
           }
         })}
       </DCSimpleGrid>
+    ) : (
+      <>
+        {[...Array(Math.ceil(records.length / 4))].map((_, index) => (
+          <LaneLoading key={index} withTitle={false} />
+        ))}
+      </>
     );
   }
 );
