@@ -47,7 +47,13 @@ export const Card = forwardRef<HTMLDivElement, DCCardProps>(
         id={`card-${identifier}`}
         mainActionLink={record.url}
         imageProps={{
-          component: <CardImage imageHeight={imageHeight} record={record} />,
+          component: (
+            <CardImage
+              key={record.imageID}
+              imageHeight={imageHeight}
+              record={record}
+            />
+          ),
         }}
       >
         <CardContent>
