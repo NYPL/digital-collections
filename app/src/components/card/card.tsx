@@ -21,7 +21,6 @@ export interface DCCardProps {
   id: string;
   isLargerThanLargeTablet: boolean;
   slug?: string;
-  imageHeight: number;
   record: CollectionCardDataType | ItemCardDataType;
 }
 
@@ -32,10 +31,7 @@ export function isCollectionCardDataType(
 }
 
 export const Card = forwardRef<HTMLDivElement, DCCardProps>(
-  (
-    { tooltipOffset, imageHeight, id, isLargerThanLargeTablet, slug, record },
-    ref
-  ) => {
+  ({ tooltipOffset, id, isLargerThanLargeTablet, slug, record }, ref) => {
     const truncatedTitle = record.title.length > TRUNCATED_LENGTH;
     const isCollection = isCollectionCardDataType(record);
     const identifier = slug
@@ -46,9 +42,28 @@ export const Card = forwardRef<HTMLDivElement, DCCardProps>(
         ref={ref}
         id={`card-${identifier}`}
         mainActionLink={record.url}
-        imageProps={{
-          component: <CardImage imageHeight={imageHeight} record={record} />,
-        }}
+        imageProps={
+          record.imageID
+            ? {
+                alt: "",
+                id: `image-${identifier}`,
+                isLazy: true,
+                aspectRatio: "twoByOne",
+                fallbackSrc: "/noImage.png",
+                onError: (_event) =>
+                  console.warn(
+                    `Card image failed to load, fallback image loaded instead. ImageURL: ${record.imageURL}`
+                  ),
+                src: record.imageURL,
+              }
+            : {
+                alt: "",
+                id: `no-image-${identifier}`,
+                isLazy: true,
+                aspectRatio: "twoByOne",
+                src: "/noImage.png",
+              }
+        }
       >
         <CardContent>
           {isCollection && record.containsOnSiteMaterials && (
