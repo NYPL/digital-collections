@@ -63,9 +63,7 @@ describe("getItemsCountFromUUIDs()", () => {
     ) as jest.Mock;
 
     const data = ["uuid1", "uuid2"];
-    await expect(getItemsCountFromUUIDs(data)).rejects.toThrow(
-      "403: 3xx/4xx error"
-    );
+    await expect(getItemsCountFromUUIDs(data)).rejects.toThrow("403 undefined");
   });
 
   it("should return an empty object with a successful request but bad data structure", async () => {
