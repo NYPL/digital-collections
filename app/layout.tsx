@@ -10,9 +10,6 @@ export const metadata: Metadata = {
   title: "NYPL Digital Collections",
   description:
     "NYPL's Digital Collections is a living database featuring prints, photographs, maps, manuscripts, video, and more unique research materials.",
-  alternates: {
-    canonical: "https://digitalcollections.nypl.org/",
-  },
   openGraph: {
     title: "NYPL Digital Collections",
     description:
