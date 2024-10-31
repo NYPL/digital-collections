@@ -39,8 +39,6 @@ export default function DivisionPage({ data }: any) {
 
   const { replace } = useRouter();
 
-  const { isLargerThanLargeTablet } = useBreakpoints();
-
   const totalPages = totalNumPages(data.numFound, data.perPage);
 
   const updatePageURL = async (pageNumber: number) => {

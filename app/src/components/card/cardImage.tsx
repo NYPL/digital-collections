@@ -12,6 +12,7 @@ export const CardImage = ({ record, imageHeight }: CardImageProps) => {
     record.imageID ? record.imageURL : "/noImage.png"
   );
   const initialImageHeight = 144;
+
   return (
     <div
       style={{
@@ -21,6 +22,7 @@ export const CardImage = ({ record, imageHeight }: CardImageProps) => {
     >
       <Image
         src={imageSrc}
+        key={imageSrc}
         alt=""
         id={
           record.imageID
@@ -35,12 +37,14 @@ export const CardImage = ({ record, imageHeight }: CardImageProps) => {
         }}
         width={initialImageHeight * 2}
         height={initialImageHeight}
+        decoding="sync"
         onError={(_event) => {
           console.warn(
             `CardImage: Card image failed to load, fallback image loaded instead. ImageURL: ${record.imageURL}`
           );
           setImageSrc("/noImage.png");
         }}
+        placeholder="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mN8WQ8AAlcBas53/MIAAAAASUVORK5CYII="
       />
     </div>
   );
