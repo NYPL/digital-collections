@@ -11,7 +11,7 @@ export class ItemCardModel {
     this.uuid = data.uuid;
     this.title = data.title;
     this.url =
-      process.env.APP_ENV === "development"
+      process.env.APP_ENV === "development" || process.env.APP_ENV === "qa"
         ? `/items/${data.uuid}`
         : data.href || data.url;
     this.imageID = data.imageID;

@@ -13,7 +13,6 @@ import { headerBreakpoints } from "../../utils/breakpoints";
 
 const ExploreFurther = () => {
   const data: ExploreFurtherDataType[] = exploreFurtherData;
-
   return (
     <Box
       sx={{
@@ -55,7 +54,7 @@ const ExploreFurther = () => {
               isAtEnd: false,
               isLazy: true,
               size: "default",
-              src: `/${item.image}`,
+              src: item.imageSrc,
             }}
             layout="row"
             sx={{

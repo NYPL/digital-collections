@@ -7,8 +7,8 @@ import {
 import { useParams } from "next/navigation";
 import { headerBreakpoints } from "../../../utils/breakpoints";
 import { slugToString } from "../../../utils/utils";
-import { mockCollectionCards } from "__tests__/__mocks__/data/mockCollectionCards";
-import { CollectionsGrid } from "../../grids/collectionsGrid";
+import { mockCollections } from "__tests__/__mocks__/data/mockCollections";
+import { CardsGrid } from "../../grids/cardsGrid";
 import React, { useEffect, useRef, useState } from "react";
 import PageLayout from "../../pageLayout/pageLayout";
 import useBreakpoints from "@/src/hooks/useBreakpoints";
@@ -54,7 +54,7 @@ export default function CollectionLanePage() {
       <HorizontalRule sx={{ marginTop: "xxl", marginBottom: "xxl" }} />
       {isLoaded ? (
         <>
-          <CollectionsGrid collections={mockCollectionCards} />
+          <CardsGrid records={mockCollections} />
         </>
       ) : (
         <>
