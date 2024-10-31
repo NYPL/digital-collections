@@ -7,6 +7,7 @@ import { mockItems } from "__tests__/__mocks__/data/mockItems";
 describe("Collection DCCard component", () => {
   const mockCollectionProps = {
     cardOffset: [0, -130],
+    imageHeight: 144,
     slug: "test-slug",
     id: "1",
     isLargerThanLargeTablet: true,
@@ -15,6 +16,7 @@ describe("Collection DCCard component", () => {
 
   const mockCollectionPropsNoOnSite = {
     cardOffset: [0, -130],
+    imageHeight: 144,
     slug: "test-slug",
     id: "1",
     isLargerThanLargeTablet: true,
@@ -60,6 +62,7 @@ describe("Collection DCCard component", () => {
 describe("Item DCCard component", () => {
   const mockItemProps = {
     cardOffset: [0, -130],
+    imageHeight: 144,
     id: "1",
     isLargerThanLargeTablet: true,
     record: new ItemCardModel(mockItems[0]),
