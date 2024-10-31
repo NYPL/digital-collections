@@ -68,8 +68,13 @@ export const CollectionsPage = ({ data }) => {
   //   replace(`${pathname}?${searchParams.toString()}`);
   // }
 
-  const handleSubmit = async (e: SyntheticEvent) => {
+  // taken from research catalog
+  const handleSearchSubmit = async (e: SyntheticEvent) => {
     e.preventDefault();
+    const target = e.target as HTMLInputElement;
+    // console.log("e is: ", e)
+    // console.log("currentKeyword is: ", currentCollectionKeyword)
+    // setCurrentCollectionKeyword(target.value)
 
     const searchParams = {
       collection_keyword: currentCollectionKeyword,
@@ -82,53 +87,74 @@ export const CollectionsPage = ({ data }) => {
     await router.push(`${pathname}?${queryString}`);
   };
 
-  const handleChange = (
-    e: SyntheticEvent,
-    setValue: Dispatch<SetStateAction<string>>
-  ) => {
+  // taken from research catalog
+  const handleSearchChange = (e: SyntheticEvent, setValue) => {
     const target = e.target as HTMLInputElement;
     setValue(target.value);
   };
 
   // pagination
-  const updatePageURL = async (pageNumber: number) => {
-    const params = new URLSearchParams();
-    console.log("params in updatePageURL are", params);
+  // Question: Do we want to introduce debouncing?
+  const onPageChange = async (pageNumber: number) => {
+    // const params = new URLSearchParams();
+    // console.log("params in updatePageURL are", params);
 
-    params.set("page", pageNumber.toString());
+    // params.set("page", pageNumber.toString());
     setCurrentPage(pageNumber);
-    const url = `${pathname}?${params.toString()}`;
-    replace(url);
+
+    // const url = `${pathname}?${params.toString()}`;
+    // replace(url);
+    const queryString = createQueryStringFromObject({
+      collection_keyword: currentCollectionKeyword,
+      sort: currentSort,
+      page: pageNumber.toString(),
+    });
+    console.log("queryString is: ", queryString);
+    await router.push(`${pathname}?${queryString}`);
   };
 
   const createQueryString = (name, value) => {
     const params = new URLSearchParams();
     params.set(name, value);
-    console.log("params in createQueryString are: ", params);
-
     return params.toString();
   };
 
+  // TODO: right now, whenever a user hits earch, the url is created with all params including the defaults
   const createQueryStringFromObject = (paramObj) => {
     const params = new URLSearchParams();
-    console.log("paramObj is: ", paramObj);
+    // console.log("paramObj is: ", paramObj);
     Object.keys(paramObj).map((name, value) => {
-      console.log("name: ", name);
-      console.log("value: ", paramObj[name]);
-      params.set(name.toString(), paramObj[name].toString());
+      // console.log("name: ", name);
+      // console.log("value: ", paramObj[name]);
+      params.set(
+        name.toString(),
+        name === "page" ? paramObj[name].toString() : paramObj[name]
+      ); // TODO: only set params in new params object if param is not the default
     });
     console.log("params in createQueryStringFromObject are: ", params);
     // params.set(name, value);
     return params.toString();
   };
+
   // sort
-  function onMenuClick(id) {
-    query
-      ? router.push(
-          "/collections" + "?" + query + "&" + createQueryString("sort", id)
-        )
-      : router.push("/collections" + "?" + createQueryString("sort", id));
-  }
+  const onMenuClick = async (id) => {
+    console.log("currentSort before is: ", currentSort);
+    // console.log("id is:", id)
+    setCurrentSort(id);
+    console.log("current sort after is : ", currentSort);
+    const queryString = createQueryStringFromObject({
+      collection_keyword: currentCollectionKeyword,
+      sort: id,
+      page: currentPage,
+    });
+    console.log("queryString is: ", queryString);
+    await router.push(`${pathname}?${queryString}`);
+    // query
+    //   ? router.push(
+    //       "/collections" + "?" + query + "&" + createQueryString("sort", id)
+    //     )
+    //   : router.push("/collections" + "?" + createQueryString("sort", id));
+  };
 
   useEffect(() => {
     setIsLoaded(true);
@@ -177,14 +203,11 @@ export const CollectionsPage = ({ data }) => {
             labelText: "Search by collection title",
             name: "collection_keyword",
             placeholder: "Search by collection title", // TODO: currntCollectionKeyword
-            onChange: (e) => handleChange(e, setCurrentCollectionKeyword),
+            onChange: (e) => handleSearchChange(e, setCurrentCollectionKeyword),
           }}
-          onSubmit={handleSubmit} // TODO: fix
-          // onChange={(e) => {
-          //   handleSearch(e.target.value);
-          // }}
+          onSubmit={handleSearchSubmit} // TODO: fix
           labelText={""}
-          // defaultValue={query}
+          // defaultValue={query} //OPEN QUESTION: should the query go in the input
         />
       </Box>
       <HorizontalRule sx={{ marginTop: "xxl", marginBottom: "xxl" }} />
@@ -243,7 +266,7 @@ export const CollectionsPage = ({ data }) => {
           initialPage={currentPage}
           currentPage={currentPage}
           pageCount={totalPages}
-          onPageChange={updatePageURL} // TODO: pagination stuff
+          onPageChange={onPageChange} // TODO: pagination stuff
           sx={{
             display: "flex",
             justifyContent: "center",
@@ -255,3 +278,18 @@ export const CollectionsPage = ({ data }) => {
     </PageLayout>
   );
 };
+
+{
+  /*
+  Logic for search/pagination/filter
+  
+  If params are present in the URL, load with the provided params. Otherwise load with defaults.
+
+  User interaction
+     search submit
+     on menu click
+     on pagination 
+  when a user clicks search
+    add 
+*/
+}
