@@ -75,10 +75,9 @@ export default function CollectionLanePage({ data }: any) {
         <Heading sx={{ marginBottom: 0 }} level="h1" id={slug} text={title} />
       </Box>
       <HorizontalRule sx={{ marginTop: "xxl", marginBottom: "xxl" }} />
-      <Text
-        size="body1"
+      <Heading
+        size="heading6"
         sx={{
-          zIndex: 2,
           height: "1px",
           left: "-10000px",
           overflow: "hidden",
@@ -94,7 +93,7 @@ export default function CollectionLanePage({ data }: any) {
         tabIndex={-1}
       >
         {`Page ${currentPage} of ${totalPages}`}
-      </Text>
+      </Heading>
       <CardsGrid records={data.collection} />
       {totalPages > 1 && (
         <Pagination
