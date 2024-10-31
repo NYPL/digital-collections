@@ -8,13 +8,11 @@ import {
   Tooltip,
   StatusBadge,
 } from "@nypl/design-system-react-components";
-import styles from "./card.module.css";
 import { headerBreakpoints } from "../../utils/breakpoints";
 import { TRUNCATED_LENGTH } from "@/src/config/constants";
 import ItemCardDataType from "@/src/types/ItemCardDataType";
 import { CollectionCardDataType } from "../../types/CollectionCardDataType";
 import { Offset } from "@/src/hooks/useTooltipOffset";
-import CardImage from "./cardImage";
 import { stringToSlug } from "@/src/utils/utils";
 export interface DCCardProps {
   tooltipOffset?: Offset;

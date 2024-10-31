@@ -20,7 +20,6 @@ import ItemDataType from "@/src/types/ItemDataType";
 import useBreakpoints from "@/src/hooks/useBreakpoints";
 import { useTooltipOffset } from "@/src/hooks/useTooltipOffset";
 import { isCollectionType } from "@/src/utils/utils";
-import { useCardImageHeight } from "@/src/hooks/useCardImageHeight";
 
 interface LaneProps {
   seeMoreLink: string;

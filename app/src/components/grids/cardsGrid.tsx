@@ -10,7 +10,6 @@ import { ItemCardModel } from "@/src/models/itemCard";
 import { SimpleGrid as DCSimpleGrid } from "../simpleGrid/simpleGrid";
 import { Card as DCCard } from "../card/card";
 import { useTooltipOffset } from "@/src/hooks/useTooltipOffset";
-import { useCardImageHeight } from "@/src/hooks/useCardImageHeight";
 
 interface CardsGridProps {
   records: CollectionDataType[] | ItemDataType[];
