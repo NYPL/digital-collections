@@ -13,6 +13,7 @@ const exploreFurtherData: ExploreFurtherDataType[] = [
     url: "http://nypl.artehouse.com/perl/home.pl",
     image: serviceArtehouse,
     imgAlt: "Service Artehouse",
+    imageSrc: "/service-artehouse.jpg",
   },
   {
     title: "NYPL Archives and Manuscripts",
@@ -21,6 +22,7 @@ const exploreFurtherData: ExploreFurtherDataType[] = [
     url: "http://archives.nypl.org/",
     image: serviceArchives,
     imgAlt: "Service Archives",
+    imageSrc: "/service-archives.jpg",
   },
   {
     title: "NYPL Research Catalog",
@@ -29,6 +31,7 @@ const exploreFurtherData: ExploreFurtherDataType[] = [
     url: "https://www.nypl.org/research/research-catalog/ ",
     image: researchCatalog,
     imgAlt: "NYPL Research Catalog",
+    imageSrc: "/ResearchCatalogThumbnail_v2.jpg",
   },
   {
     title: "NYPL Digital Collections API",
@@ -37,6 +40,7 @@ const exploreFurtherData: ExploreFurtherDataType[] = [
     url: "https://api.repo.nypl.org/",
     image: serviceApi,
     imgAlt: "Service API",
+    imageSrc: "/service-api.jpg",
   },
   {
     title: "Digital Public Library of America",
@@ -45,6 +49,7 @@ const exploreFurtherData: ExploreFurtherDataType[] = [
     url: "http://dp.la/",
     image: serviceDpla,
     imgAlt: "Service Digital Public Library",
+    imageSrc: "/service-dpla.jpg",
   },
 ];
 
