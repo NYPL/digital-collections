@@ -1,7 +1,7 @@
 import data from "../../src/data/lanes";
 import type { LaneDataType } from "../../src/types/Lane";
 import { ENV_KEY } from "../../src/types/EnvironmentType";
-import { imageURL, addCommas } from "../utils/utils";
+import { imageURL, addCommas, collectionsSortOptions } from "../utils/utils";
 import appConfig from "../../../appConfig";
 import defaultFeaturedItems from "../data/defaultFeaturedItemData";
 import { CARDS_PER_PAGE } from "../config/constants";
@@ -250,23 +250,16 @@ export const getDivisionData = async ({
 
 export const getCollectionsData = async ({
   keyword = "",
-  sortID = "chronological-descending",
+  sortID = "date-desc", // TODO: rename sortID TODO: store defaults as constants
   pageNum = 1,
   perPage = CARDS_PER_PAGE,
 }: {
   keyword?: string;
   sortID?: string;
   pageNum?: number;
-  perPage?: number;
+  perPage?: number; // OPEN QUESTION: perhaps remove the "perPage" field because the API default is 48 and that is what we want.
 } = {}) => {
-  let sortOptions = {
-    date_desc: "date DESC",
-    date_asc: "date ASC",
-    "title-desc": "title DESC",
-    "title-asc": "title ASC",
-  };
-
-  let apiUrl = `${process.env.API_URL}/api/v2/collections?page=${pageNum}&per_page=${perPage}&sort=${sortOptions[sortID]}&q=${keyword}`;
+  let apiUrl = `${process.env.API_URL}/api/v2/collections?page=${pageNum}&per_page=${perPage}&sort=${collectionsSortOptions[sortID]}&q=${keyword}`;
   const res = await apiResponse(apiUrl);
   return res;
 };

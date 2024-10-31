@@ -110,3 +110,10 @@ export function isCollectionType(
     return "numberOfDigitizedItems" in records;
   }
 }
+
+export const collectionsSortOptions = {
+  date_desc: "date DESC",
+  date_asc: "date ASC",
+  "title-desc": "title DESC",
+  "title-asc": "title ASC",
+};

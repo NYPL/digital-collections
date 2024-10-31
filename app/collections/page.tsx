@@ -1,9 +1,8 @@
 import React, { Suspense } from "react";
 import { Metadata } from "next";
 import { CollectionsPage } from "../src/components/pages/collectionsPage/collectionsPage";
-// import { mockCollectionCards } from "__tests__/__mocks__/data/mockCollectionCards";
 import { getCollectionsData } from "@/src/utils/api";
-import { redirect } from "next/navigation";
+// import { redirect } from "next/navigation";
 
 export type CollectionsProps = {
   params: { slug: string };
@@ -19,7 +18,7 @@ export default async function Collections({ searchParams }: CollectionsProps) {
     keyword: searchParams.collection_keyword,
     sortID: searchParams.sort,
     pageNum: searchParams.page,
-  });
+  }); // TODO:  create model for APICollectionsData from API to clean up the data before it's sent down to the components.
 
   // Repo API returns 404s within the data.
   // if (data?.headers?.code === "404") {
