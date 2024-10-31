@@ -4,6 +4,7 @@ import {
   Heading,
   HorizontalRule,
   Pagination,
+  Text,
 } from "@nypl/design-system-react-components";
 import {
   useParams,
@@ -14,7 +15,7 @@ import {
 import { headerBreakpoints } from "../../../utils/breakpoints";
 import { slugToString, totalNumPages } from "../../../utils/utils";
 import { CardsGrid } from "../../grids/cardsGrid";
-import React, { useEffect, useRef, useState } from "react";
+import React, { Suspense, useEffect, useRef, useState } from "react";
 import PageLayout from "../../pageLayout/pageLayout";
 import LaneLoading from "../../lane/laneLoading";
 
@@ -24,8 +25,6 @@ export default function CollectionLanePage({ data }: any) {
   const title = slugToString(slug);
   const [isLoaded, setIsLoaded] = useState(false);
   const pageName = `collections|lane|${slug}`;
-
-  const firstCardRef = useRef<HTMLDivElement | null>(null);
 
   const pathname = usePathname();
   const queryParams = useSearchParams();
@@ -38,14 +37,15 @@ export default function CollectionLanePage({ data }: any) {
 
   const totalPages = totalNumPages(data.numResults, data.perPage);
 
+  const headingRef = useRef<HTMLHeadingElement>(null);
+
   const updatePageURL = async (pageNumber: number) => {
     const params = new URLSearchParams();
     params.set("page", pageNumber.toString());
     setCurrentPage(pageNumber);
     const url = `${pathname}?${params.toString()}`;
     replace(url);
-    const firstChild = firstCardRef.current?.children[0] as HTMLElement;
-    firstChild?.focus();
+    headingRef.current?.focus();
   };
 
   useEffect(() => {
@@ -75,26 +75,27 @@ export default function CollectionLanePage({ data }: any) {
         <Heading sx={{ marginBottom: 0 }} level="h1" id={slug} text={title} />
       </Box>
       <HorizontalRule sx={{ marginTop: "xxl", marginBottom: "xxl" }} />
-      {isLoaded ? (
-        <>
-          <CardsGrid ref={firstCardRef} records={data.collection} />
-        </>
-      ) : (
-        <>
-          <LaneLoading withTitle={false} />,
-          <LaneLoading withTitle={false} />,
-          <LaneLoading withTitle={false} />,
-          <LaneLoading withTitle={false} />,
-          <LaneLoading withTitle={false} />,
-          <LaneLoading withTitle={false} />,
-          <LaneLoading withTitle={false} />,
-          <LaneLoading withTitle={false} />,
-          <LaneLoading withTitle={false} />,
-          <LaneLoading withTitle={false} />,
-          <LaneLoading withTitle={false} />,
-          <LaneLoading withTitle={false} />,
-        </>
-      )}
+      <Text
+        size="body1"
+        sx={{
+          zIndex: 2,
+          height: "1px",
+          left: "-10000px",
+          overflow: "hidden",
+          width: "1px",
+          _focus: {
+            fontWeight: "400 !important",
+            height: "auto",
+            left: "1rem",
+            width: "max-content",
+          },
+        }}
+        ref={headingRef}
+        tabIndex={-1}
+      >
+        {`Page ${currentPage} of ${totalPages}`}
+      </Text>
+      <CardsGrid records={data.collection} />
       {totalPages > 1 && (
         <Pagination
           id="pagination-id"

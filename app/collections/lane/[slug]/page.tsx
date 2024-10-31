@@ -31,9 +31,5 @@ export default async function Lane({ params, searchParams }: LaneProps) {
   }
   const currentPage = Number(searchParams.page) || 1;
 
-  return (
-    <Suspense>
-      <CollectionLanePage data={data} currentPage={currentPage} />
-    </Suspense>
-  );
+  return <CollectionLanePage data={data} currentPage={currentPage} />;
 }

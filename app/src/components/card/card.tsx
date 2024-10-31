@@ -8,7 +8,6 @@ import {
   Tooltip,
   StatusBadge,
 } from "@nypl/design-system-react-components";
-import styles from "./card.module.css";
 import { headerBreakpoints } from "../../utils/breakpoints";
 import { TRUNCATED_LENGTH } from "@/src/config/constants";
 import ItemCardDataType from "@/src/types/ItemCardDataType";
@@ -41,6 +40,7 @@ export const Card = forwardRef<HTMLDivElement, DCCardProps>(
     const identifier = slug
       ? `${slug}-${id}`
       : `${stringToSlug(record.title)}-${id}`; // should probably truncate
+
     const card = (
       <ChakraCard
         ref={ref}
@@ -103,13 +103,17 @@ export const Card = forwardRef<HTMLDivElement, DCCardProps>(
         </CardContent>
       </ChakraCard>
     );
-    return isLargerThanLargeTablet && truncatedTitle ? (
-      <Tooltip offset={tooltipOffset} content={record.title}>
-        <div tabIndex={-1}>{card}</div>
-      </Tooltip>
-    ) : (
-      <div tabIndex={-1}>{card}</div>
-    );
+
+    const cardWithTooltip =
+      isLargerThanLargeTablet && truncatedTitle ? (
+        <Tooltip offset={tooltipOffset} content={record.title}>
+          {card}
+        </Tooltip>
+      ) : (
+        card
+      );
+
+    return cardWithTooltip;
   }
 );
 
