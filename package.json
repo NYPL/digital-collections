@@ -12,6 +12,7 @@
     "test": "jest --config=jest.config.ts",
     "test:API": "jest --config=jestAPI.config.ts",
     "test:all": "npm run test && npm run test:API",
+    "test:watch": "jest --watch --config=jest.config.ts",
     "test:ci": "jest --ci --config=jest.config.ts",
     "prepare": "husky install",
     "homepageImageLoadingTestQa": "node test/homepageImageLoadingTest.js",
