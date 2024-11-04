@@ -143,95 +143,7 @@ export const getItemByIdentifier = async (
   urlParam?: { [key: string]: any }
 ) => {
   const apiUrl = `${process.env.API_URL}/api/v2/items/${identifierType}/${identifier}`;
-  const apiCallValue = apiResponse(apiUrl, { params: urlParam });
-  return apiCallValue;
-};
-
-/**
- * Makes a GET or POST request to the Repo API and returns the response.
- * @param {string} apiUrl - The URL for the API request.
- * @param {object} options - Options for the request:
- *   - method: "GET" or "POST" (default is "GET").
- *   - params: URL parameters for GET requests.
- *   - body: Body data for POST requests.
- * @returns {Promise<any>} - The API response.
- */
-export const apiResponse = async (
-  apiUrl: string,
-  options?: {
-    method?: "GET" | "POST";
-    params?: { [key: string]: any };
-    body?: any;
-  }
-) => {
-  const apiKey = process.env.AUTH_TOKEN;
-  const method = options?.method || "GET";
-  const headers = {
-    Authorization: `Token token=${apiKey}`,
-    ...(method === "POST" && { "Content-Type": "application/json" }),
-  };
-  console.log(options);
-
-  if (method === "GET" && options?.params) {
-    const queryString = options?.params
-      ? "?" + new URLSearchParams(options?.params).toString()
-      : "";
-    apiUrl += queryString;
-  }
-
-  try {
-    const response = await fetch(apiUrl, {
-      method,
-      headers,
-      body: method === "POST" ? JSON.stringify(options?.body) : undefined,
-    });
-
-    if (!response.ok && response.status !== 200) {
-      throw new Error(
-        `apiResponse: ${response.status} ${
-          response.statusText ? response.statusText : ""
-        }`
-      );
-    }
-
-    const data = await response.json();
-    console.log(data);
-    return method === "GET" ? data?.nyplAPI?.response : data;
-  } catch (error) {
-    console.error(error);
-    throw new Error(`${error.message}`);
-  }
-};
-
-/**
- * Makes a POST request to Repo API.
- */
-export const apiPOSTCall = async (apiUrl: string, postData: any) => {
-  const apiKey = process.env.AUTH_TOKEN;
-  try {
-    const response = await fetch(apiUrl, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Token token=${apiKey}`,
-      },
-      body: JSON.stringify(postData),
-    });
-
-    if (response.status === 200) {
-      const data = await response.json();
-      return data;
-    } else {
-      throw new Error(
-        `apiPOSTCall: ${response.status}: ${
-          response.statusText || "3xx/4xx error"
-        }`
-      );
-    }
-  } catch (error) {
-    console.error(error);
-    throw new Error(`apiPOSTCall: ${error.message}`);
-  }
+  return apiResponse(apiUrl, { params: urlParam });
 };
 
 export const getDivisionData = async ({
@@ -253,56 +165,71 @@ export const getDivisionData = async ({
   return res;
 };
 
-// /**
-//  * Returns Repo API response.
-//  * @param {string} apiUrl - the url to make a request to
-//  */
-
-// export const apiResponse = async (
-//   apiUrl: string,
-//   urlParam?: { [key: string]: any }
-// ) => {
-//   const data = await RepoAPICall(apiUrl, urlParam);
-//   return data?.nyplAPI?.response;
-// };
-
 /**
- * Returns Repo API response WITH request data.
- * @param {string} apiUrl - the url to make a request to
- * @param {[key: string]} urlParam = url parameters to use in the request
+ * Makes a GET or POST request to the Repo API and returns the response.
+ * Times out at 7 seconds to prevent 504 crash.
+ * @param {string} apiUrl - The URL for the API request.
+ * @param {object} options - Options for the request:
+ *   - method: "GET" or "POST" (default is "GET").
+ *   - params: URL parameters for GET requests.
+ *   - body: Body data for POST requests.
+ * @returns {Promise<any>} - The API response.
  */
+export const apiResponse = async (
+  apiUrl: string,
+  options?: {
+    method?: "GET" | "POST";
+    params?: { [key: string]: any };
+    body?: any;
+  }
+) => {
+  const apiKey = process.env.AUTH_TOKEN;
+  const method = options?.method || "GET";
+  const headers = {
+    Authorization: `Token token=${apiKey}`,
+    ...(method === "POST" && { "Content-Type": "application/json" }),
+  };
 
-// export const RepoAPICall = async (
-//   apiUrl: string,
-//   urlParam?: { [key: string]: any }
-// ) => {
-//   const apiKey = process.env.AUTH_TOKEN;
-//   const queryString = urlParam
-//     ? "?" + new URLSearchParams(urlParam).toString()
-//     : "";
-//   apiUrl += queryString;
+  if (method === "GET" && options?.params) {
+    const queryString = options?.params
+      ? "?" + new URLSearchParams(options?.params).toString()
+      : "";
+    apiUrl += queryString;
+  }
 
-//   try {
-//     const response = await fetch(apiUrl, {
-//       // aggressively cache Repo API?
-//       // cache: "force-cache",
-//       headers: {
-//         Authorization: Token token=${apiKey},
-//       },
-//     });
+  const timeout = 7000;
 
-//     if (response.status === 200) {
-//       const data = await response.json();
-//       return data;
-//     } else {
-//       throw new Error(
-//         RepoAPICall: ${response.status}: ${
-//           response.statusText || "3xx/4xx error"
-//         }
-//       );
-//     }
-//   } catch (error) {
-//     console.error(error);
-//     throw new Error(RepoAPICall: ${error.message});
-//   }
-// };
+  const fetchWithTimeout = (url: string, opts: RequestInit) => {
+    return Promise.race([
+      fetch(url, opts),
+      new Promise((_, reject) =>
+        setTimeout(
+          () => reject(new Error("apiResponse: Request timed out")),
+          timeout
+        )
+      ),
+    ]);
+  };
+
+  try {
+    const response = (await fetchWithTimeout(apiUrl, {
+      method,
+      headers,
+      body: method === "POST" ? JSON.stringify(options?.body) : undefined,
+    })) as Response;
+
+    if (!response.ok && response.status !== 200) {
+      throw new Error(
+        `apiResponse: ${response.status} ${
+          response.statusText ? response.statusText : "No message"
+        }`
+      );
+    }
+
+    const data = await response.json();
+    return method === "GET" ? data?.nyplAPI?.response : data;
+  } catch (error) {
+    console.error(error);
+    throw new Error(error.message);
+  }
+};
