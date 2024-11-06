@@ -162,7 +162,9 @@ describe("apiResponse", () => {
   it("throws a timeout error if the request takes too long", async () => {
     jest.useFakeTimers();
 
-    (fetch as jest.Mock).mockImplementation(() => new Promise(() => {}));
+    (global as any).fetch = jest
+      .fn()
+      .mockImplementation(() => new Promise(() => {}));
 
     const apiCall = apiResponse(mockApiUrl);
 

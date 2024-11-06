@@ -191,9 +191,7 @@ export const apiResponse = async (
   };
 
   if (method === "GET" && options?.params) {
-    const queryString = options?.params
-      ? "?" + new URLSearchParams(options?.params).toString()
-      : "";
+    const queryString = "?" + new URLSearchParams(options?.params).toString();
     apiUrl += queryString;
   }
 
