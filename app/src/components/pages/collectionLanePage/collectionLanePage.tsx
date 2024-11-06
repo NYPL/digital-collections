@@ -74,17 +74,16 @@ export default function CollectionLanePage({ data }: any) {
       >
         <Heading sx={{ marginBottom: 0 }} level="h1" id={slug} text={title} />
       </Box>
-      <HorizontalRule sx={{ marginTop: "xxl", marginBottom: "xxl" }} />
+      <HorizontalRule sx={{ marginTop: "xxl", marginBottom: "m" }} />
       <Heading
         size="heading6"
         sx={{
-          height: "1px",
+          height: "32px",
           left: "-10000px",
           overflow: "hidden",
           width: "1px",
           _focus: {
             fontWeight: "400 !important",
-            height: "auto",
             left: "1rem",
             width: "max-content",
           },
