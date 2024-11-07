@@ -45,6 +45,7 @@ export const Card = forwardRef<HTMLDivElement, DCCardProps>(
       <ChakraCard
         ref={ref}
         id={`card-${identifier}`}
+        key={record.imageID}
         mainActionLink={record.url}
         imageProps={{
           component: <CardImage imageHeight={imageHeight} record={record} />,
