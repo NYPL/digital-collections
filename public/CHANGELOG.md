@@ -9,16 +9,17 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Updated
 
+- Updated cards to use Next Image (DR-3056)
 - Updated links in QA to point internally for reverse proxy (DR-3237)
 - Updated how env vars are read for New Relic Browser implementation (DR-3235)
+- Updated 500 and 404 error page designs, adding link to open feedback box (DR-3203)
+- Refactored collections/items grid into one `CardsGrid` component (DR-3193)
 
 ## [0.1.15] 2024-10-10
 
 ### Updated
 
-- Updated 500 and 404 error page designs, adding link to open feedback box (DR-3203)
 - Refactored collection/item lanes into one `Lane` component (DR-3191)
-- Refactored collections/items grid into one `CardsGrid` component (DR-3193)
 - Updated header on /divisions/:slug page to have a tabIndex of -1 (DR-3229)
 - General cleanup (DR-3194)
 
