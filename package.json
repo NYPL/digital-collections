@@ -5,7 +5,8 @@
   "scripts": {
     "dev": "next dev",
     "dev:newrelic": "NODE_OPTIONS='-r dotenv/config .env.local -r newrelic' next dev",
-    "build": "next build && cp ./CHANGELOG.md ./public/changelog.md",
+    "build": "next build",
+    "update-changelog": "cp ./CHANGELOG.md ./public/changelog.md",
     "start": "next start",
     "start:newrelic": "NODE_OPTIONS='-r dotenv/config .env.prod -r newrelic' next start",
     "lint": "next lint",
