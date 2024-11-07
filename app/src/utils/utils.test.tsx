@@ -1,5 +1,9 @@
 import { waitFor } from "@testing-library/react";
-import { slugToString, stringToSlug } from "./utils";
+import {
+  slugToString,
+  stringToSlug,
+  createAdobeAnalyticsPageName,
+} from "./utils";
 import { apiPOSTCall, apiResponse, getItemsCountFromUUIDs } from "./api";
 
 describe.skip("apiResponse()", () => {
@@ -190,5 +194,99 @@ describe("stringToSlug", () => {
     const input = "";
     const output = "";
     expect(stringToSlug(input)).toBe(output);
+  });
+});
+
+describe("createAdobeAnalyticsPageName generates the correct Adobe Analytics page name for: ", () => {
+  test("pages where a title is passed instead of a slug", () => {
+    expect(
+      createAdobeAnalyticsPageName("not-a-real-page", "not-a-real-slug")
+    ).toBe("not-a-real-page|not-a-real-slug");
+  });
+
+  test("the home page", () => {
+    expect(createAdobeAnalyticsPageName("home", "")).toBe("home");
+    expect(createAdobeAnalyticsPageName("home")).toBe("home");
+  });
+
+  test("the about page", () => {
+    expect(createAdobeAnalyticsPageName("about", "")).toBe("about");
+    expect(createAdobeAnalyticsPageName("about")).toBe("about");
+  });
+
+  test("the all divisions page", () => {
+    expect(createAdobeAnalyticsPageName("divisions", "")).toBe("divisions");
+    expect(createAdobeAnalyticsPageName("divisions")).toBe("divisions");
+  });
+
+  test("the divisions landing pages", () => {
+    expect(
+      createAdobeAnalyticsPageName("divisions", "This Is A Test Slug")
+    ).toBe("divisions|this-is-a-test-slug");
+    expect(
+      createAdobeAnalyticsPageName("divisions", "Billy Rose Theatre Division")
+    ).toBe("divisions|billy-rose-theatre-division");
+    expect(
+      createAdobeAnalyticsPageName(
+        "divisions",
+        "Manuscripts and Archives Division"
+      )
+    ).toBe("divisions|manuscripts-and-archives-division");
+    expect(
+      createAdobeAnalyticsPageName(
+        "divisions",
+        "Carl H. Pforzheimer Collection of Shelley and His Circle"
+      )
+    ).toBe("divisions|carl-h-pforzheimer-collection-of-shelley-and-his-circle");
+  });
+
+  test("all collections page", () => {
+    expect(createAdobeAnalyticsPageName("all-collections", "")).toBe(
+      "all-collections"
+    );
+    expect(createAdobeAnalyticsPageName("all-collections")).toBe(
+      "all-collections"
+    );
+  });
+
+  test("the swim lane landing pages", () => {
+    expect(
+      createAdobeAnalyticsPageName("collection|lane", "This Is A Test Slug")
+    ).toBe("collection|lane|this-is-a-test-slug");
+  });
+
+  test("the collections landing pages", () => {
+    expect(
+      createAdobeAnalyticsPageName("collection", "This Is A Test Slug")
+    ).toBe("collection|this-is-a-test-slug");
+  });
+
+  test("the all items pages", () => {
+    expect(createAdobeAnalyticsPageName("all-items", "")).toBe("all-items");
+    expect(createAdobeAnalyticsPageName("all-items")).toBe("all-items");
+  });
+
+  test("the item landing pages", () => {
+    expect(createAdobeAnalyticsPageName("items", "This Is A Test Slug")).toBe(
+      "items|this-is-a-test-slug"
+    );
+  });
+
+  test("the search pages", () => {
+    expect(createAdobeAnalyticsPageName("search-results", "")).toBe(
+      "search-results"
+    );
+    expect(createAdobeAnalyticsPageName("search-results")).toBe(
+      "search-results"
+    );
+  });
+
+  test("the error pages", () => {
+    expect(createAdobeAnalyticsPageName("internal-server-error")).toBe(
+      "internal-server-error"
+    );
+    expect(createAdobeAnalyticsPageName("page-not-found-error")).toBe(
+      "page-not-found-error"
+    );
   });
 });

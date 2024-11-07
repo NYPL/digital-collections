@@ -16,7 +16,11 @@ import React, { useEffect, useState, useRef } from "react";
 import PageLayout from "../../pageLayout/pageLayout";
 import { headerBreakpoints } from "../../../utils/breakpoints";
 import { CardsGrid } from "../../grids/cardsGrid";
-import { slugToString, totalNumPages } from "../../../utils/utils";
+import {
+  slugToString,
+  totalNumPages,
+  createAdobeAnalyticsPageName,
+} from "../../../utils/utils";
 import useBreakpoints from "../../../hooks/useBreakpoints";
 import { DC_URL } from "@/src/config/constants";
 import { Lane as DCLane } from "../../lane/lane";
@@ -26,7 +30,6 @@ export default function DivisionPage({ data }: any) {
   const params = useParams();
   const slug = params.slug as string;
   const title = slugToString(slug);
-  const pageName = `divisions|${slug}`;
   const [isLoaded, setIsLoaded] = useState(false);
 
   const pathname = usePathname();
@@ -64,7 +67,7 @@ export default function DivisionPage({ data }: any) {
         { text: "Divisions", url: "/divisions" },
         { text: `${title}`, url: `/divisions/${data.slug}` },
       ]}
-      adobeAnalyticsPageName={pageName}
+      adobeAnalyticsPageName={createAdobeAnalyticsPageName("divisions", slug)}
     >
       <Box
         sx={{
