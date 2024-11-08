@@ -105,3 +105,10 @@ export function isCollectionType(
 ): records is CollectionDataType[] {
   return "numberOfDigitizedItems" in records[0];
 }
+
+export const createAdobeAnalyticsPageName = (
+  base: string,
+  recordName: string = ""
+): string => {
+  return recordName ? `${base}|${stringToSlug(recordName)}` : base;
+};
