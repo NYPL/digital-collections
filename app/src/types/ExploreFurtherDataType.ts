@@ -5,5 +5,4 @@ export interface ExploreFurtherDataType {
   description: string;
   imgAlt: string;
   image: StaticImageData;
-  imageSrc: string;
 }
