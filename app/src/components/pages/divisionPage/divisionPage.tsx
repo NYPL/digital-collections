@@ -62,7 +62,7 @@ export default function DivisionPage({ data }: any) {
       breadcrumbs={[
         { text: "Home", url: "/" },
         { text: "Divisions", url: "/divisions" },
-        { text: `${title}`, url: `/divisions/${data.slug}` },
+        { text: `${data.name}`, url: `/divisions/${data.slug}` },
       ]}
       adobeAnalyticsPageName={pageName}
     >
@@ -86,7 +86,7 @@ export default function DivisionPage({ data }: any) {
           gap: "m",
         }}
       >
-        <Heading level="h1" text={title} subtitle={data.summary} />
+        <Heading level="h1" text={data.name} subtitle={data.summary} />
         <Link
           type="standalone"
           target="_blank"
