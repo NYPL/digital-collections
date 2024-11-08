@@ -1,9 +1,9 @@
 /** @type {import('next').NextConfig} */
 
-const nrExternals = require("@newrelic/next/load-externals");
+// const nrExternals = require("@newrelic/next/load-externals");
 // This is found in the codebase example but both seem to work and send data
 // correctly. Keep the above but can use the bottom for debugging.
-// const nrExternals = require('newrelic/load-externals');
+const nrExternals = require("newrelic/load-externals");
 
 const nextConfig = {
   experimental: {
