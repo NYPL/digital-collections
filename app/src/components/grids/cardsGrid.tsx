@@ -10,6 +10,7 @@ import { ItemCardModel } from "@/src/models/itemCard";
 import { SimpleGrid as DCSimpleGrid } from "../simpleGrid/simpleGrid";
 import { Card as DCCard } from "../card/card";
 import { useTooltipOffset } from "@/src/hooks/useTooltipOffset";
+import { useCardImageHeight } from "@/src/hooks/useCardImageHeight";
 
 interface CardsGridProps {
   records: CollectionDataType[] | ItemDataType[];
@@ -20,6 +21,7 @@ export const CardsGrid = ({ records }: CardsGridProps) => {
   const isCollections = isCollectionType(records);
   const cardRef = useRef<HTMLDivElement>(null);
   const tooltipOffset = useTooltipOffset(cardRef);
+  const imageHeight = useCardImageHeight(cardRef);
 
   return (
     <DCSimpleGrid>
@@ -33,6 +35,7 @@ export const CardsGrid = ({ records }: CardsGridProps) => {
               ref={cardRef}
               tooltipOffset={tooltipOffset}
               record={collectionCardModel}
+              imageHeight={imageHeight}
               isLargerThanLargeTablet={isLargerThanLargeTablet}
             />
           );
@@ -45,6 +48,7 @@ export const CardsGrid = ({ records }: CardsGridProps) => {
               ref={cardRef}
               tooltipOffset={tooltipOffset}
               record={itemCardModel}
+              imageHeight={imageHeight}
               isLargerThanLargeTablet={isLargerThanLargeTablet}
             />
           );
