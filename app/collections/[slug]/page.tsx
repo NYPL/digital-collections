@@ -3,6 +3,7 @@ import { Metadata } from "next";
 import PageLayout from "../../src/components/pageLayout/pageLayout";
 import SearchResults from "@/src/components/search/results";
 import { mockItems } from "__tests__/__mocks__/data/mockItems";
+import { createAdobeAnalyticsPageName } from "@/src/utils/utils";
 
 type CollectionProps = {
   params: { slug: string };
@@ -18,7 +19,6 @@ export async function generateMetadata({
 }
 
 export default function Collections({ params }: CollectionProps) {
-  const pageName = `collections|${params.slug}`; // TODO: make sure this is the slugified title
   return (
     <PageLayout
       activePage="lane"
@@ -30,7 +30,10 @@ export default function Collections({ params }: CollectionProps) {
           url: `/collections/${params.slug}`,
         },
       ]}
-      adobeAnalyticsPageName={pageName}
+      adobeAnalyticsPageName={createAdobeAnalyticsPageName(
+        "collections",
+        params.slug
+      )}
     >
       <SearchResults showFilter={false} isSearchPage={false} data={mockItems} />
     </PageLayout>
