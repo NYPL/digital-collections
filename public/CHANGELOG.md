@@ -13,6 +13,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Removed canonical tag to old DC (DR-3264)
 - Refactored Adobe Analytics page names (DR-3257)
 
+### Fixed
+- fixed division titles on division landing pages (DR-3274)
+
 ## [0.1.16] 2024-10-31
 
 ### Updated
