@@ -17,7 +17,6 @@ import PageLayout from "../../pageLayout/pageLayout";
 import { headerBreakpoints } from "../../../utils/breakpoints";
 import { CardsGrid } from "../../grids/cardsGrid";
 import {
-  slugToString,
   totalNumPages,
   createAdobeAnalyticsPageName,
 } from "../../../utils/utils";
@@ -29,7 +28,6 @@ import LaneLoading from "../../lane/laneLoading";
 export default function DivisionPage({ data }: any) {
   const params = useParams();
   const slug = params.slug as string;
-  const title = slugToString(slug);
   const [isLoaded, setIsLoaded] = useState(false);
 
   const pathname = usePathname();
@@ -65,7 +63,7 @@ export default function DivisionPage({ data }: any) {
       breadcrumbs={[
         { text: "Home", url: "/" },
         { text: "Divisions", url: "/divisions" },
-        { text: `${title}`, url: `/divisions/${data.slug}` },
+        { text: `${data.name}`, url: `/divisions/${data.slug}` },
       ]}
       adobeAnalyticsPageName={createAdobeAnalyticsPageName("divisions", slug)}
     >
@@ -89,7 +87,7 @@ export default function DivisionPage({ data }: any) {
           gap: "m",
         }}
       >
-        <Heading level="h1" text={title} subtitle={data.summary} />
+        <Heading level="h1" text={data.name} subtitle={data.summary} />
         <Link
           type="standalone"
           target="_blank"
