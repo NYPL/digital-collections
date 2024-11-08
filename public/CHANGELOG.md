@@ -9,6 +9,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Updated
 - Updated cards to use Next Image (DR-3056)
+- Refactored Repo API handler with added timeout errors (DR-3251)
 - Removed canonical tag to old DC (DR-3264)
 - Refactored Adobe Analytics page names (DR-3257)
 
