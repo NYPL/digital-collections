@@ -9,6 +9,7 @@ import {
   SearchBar,
 } from "@nypl/design-system-react-components";
 import { headerBreakpoints } from "../../../utils/breakpoints";
+import { createAdobeAnalyticsPageName } from "@/src/utils/utils";
 
 export const CollectionsPage = ({ data }) => {
   return (
@@ -18,7 +19,7 @@ export const CollectionsPage = ({ data }) => {
         { text: "Home", url: "/" },
         { text: "Collections", url: "/collections" },
       ]}
-      adobeAnalyticsPageName="all-collections"
+      adobeAnalyticsPageName={createAdobeAnalyticsPageName("all-collections")}
     >
       <Box
         sx={{
