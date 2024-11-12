@@ -15,6 +15,9 @@ export async function generateMetadata({
   const slug = params.slug; //  TODO: this needs to support both a slug or a uuid. we will need to update this later to check if slug is a uuid and then get the slugified title of the collection
   return {
     title: `${slug} - NYPL Digital Collections`,
+    openGraph: {
+      title: `${slug} - NYPL Digital Collections`,
+    },
   };
 }
 
