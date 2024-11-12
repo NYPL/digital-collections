@@ -26,6 +26,9 @@ export async function generateMetadata({
   params.item = item;
   return {
     title: `${item.title} - NYPL Digital Collections`, //should be item title
+    openGraph: {
+      title: `${item.title} - NYPL Digital Collections`,
+    },
   };
 }
 
