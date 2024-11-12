@@ -33,11 +33,10 @@ export default async function Division({
     redirect("/404");
   }
   const currentPage = Number(searchParams.page) || 1;
-  const randomNumber = Math.random();
 
   return (
     <Suspense>
-      <DivisionPage key={randomNumber} data={data} currentPage={currentPage} />
+      <DivisionPage data={data} currentPage={currentPage} />
     </Suspense>
   );
 }
