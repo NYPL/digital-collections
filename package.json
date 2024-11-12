@@ -35,7 +35,6 @@
     "trailingComma": "es5"
   },
   "dependencies": {
-    "@newrelic/next": "0.10.0",
     "@samvera/clover-iiif": "^2.9.0",
     "@types/node": "20.5.9",
     "@types/react": "18.2.21",
