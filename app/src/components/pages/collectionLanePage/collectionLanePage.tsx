@@ -33,7 +33,7 @@ export default function CollectionLanePage({ data }: any) {
     Number(queryParams.get("page")) || 1
   );
 
-  const { replace } = useRouter();
+  const { push } = useRouter();
 
   const totalPages = totalNumPages(data.numResults, data.perPage);
 
@@ -43,9 +43,13 @@ export default function CollectionLanePage({ data }: any) {
     const params = new URLSearchParams();
     params.set("page", pageNumber.toString());
     setCurrentPage(pageNumber);
-    const url = `${pathname}?${params.toString()}`;
-    replace(url);
-    headingRef.current?.focus();
+    const url = `${pathname}?${params.toString()}#${data.slug}`;
+    setIsLoaded(false);
+    setTimeout(() => {
+      setIsLoaded(true);
+      push(url);
+      headingRef.current?.focus();
+    }, 1500);
   };
 
   useEffect(() => {
@@ -78,22 +82,20 @@ export default function CollectionLanePage({ data }: any) {
       <Heading
         size="heading6"
         sx={{
-          height: "32px",
-          left: "-10000px",
-          overflow: "hidden",
-          width: "1px",
-          _focus: {
-            fontWeight: "400 !important",
-            left: "1rem",
-            width: "max-content",
-          },
+          width: "max-content",
         }}
         ref={headingRef}
         tabIndex={-1}
       >
         {`Page ${currentPage} of ${totalPages}`}
       </Heading>
-      <CardsGrid records={data.collection} />
+      {isLoaded ? (
+        <CardsGrid records={data.collection} />
+      ) : (
+        Array(Math.ceil(data.collection.length / 4)).fill(
+          <LaneLoading withTitle={false} />
+        )
+      )}
       {totalPages > 1 && (
         <Pagination
           id="pagination-id"
