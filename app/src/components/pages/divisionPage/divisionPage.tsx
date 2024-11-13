@@ -121,8 +121,8 @@ export default function DivisionPage({ data }: any) {
       </Heading>
 
       <Heading
-        size="heading6"
-        sx={{ fontWeight: "300" }}
+        size="tertiary"
+        sx={{ fontWeight: "500", fontSize: "16px" }}
         ref={headingRef}
         tabIndex={-1}
         width="max-content"
