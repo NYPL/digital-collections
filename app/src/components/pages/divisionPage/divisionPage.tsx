@@ -112,22 +112,18 @@ export default function DivisionPage({ data }: any) {
       <HorizontalRule sx={{ marginTop: "xxl", marginBottom: "xxl" }} />
 
       <Heading
-        level="h2"
-        id={slug}
-        size="heading3"
-        style={{ width: "fit-content" }}
-      >
-        {`Collections in the ${data.name}`}
-      </Heading>
-
-      <Heading
         size="tertiary"
-        sx={{ fontWeight: "500", fontSize: "16px" }}
+        sx={{ fontWeight: "500", fontSize: "16px", marginBottom: "m" }}
         ref={headingRef}
         tabIndex={-1}
+        id={slug}
         width="max-content"
       >
         {`Page ${data.page} of ${totalPages}`}
+      </Heading>
+
+      <Heading level="h2" size="heading3" style={{ width: "fit-content" }}>
+        {`Collections in the ${data.name}`}
       </Heading>
 
       {isLoaded ? (
