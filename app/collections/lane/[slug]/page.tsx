@@ -10,10 +10,12 @@ type LaneProps = {
 export async function generateMetadata({
   params,
 }: LaneProps): Promise<Metadata> {
-  const slug = params.slug;
   const title = slugToString(params.slug);
   return {
     title: `${title} - NYPL Digital Collections`,
+    openGraph: {
+      title: `${title} - NYPL Digital Collections`,
+    },
   };
 }
 
