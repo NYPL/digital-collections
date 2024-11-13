@@ -48,11 +48,11 @@ export default function DivisionPage({ data }: any) {
     setCurrentPage(pageNumber);
     const url = `${pathname}?${params.toString()}#${data.slug}`;
     setIsLoaded(false);
+    push(url);
     setTimeout(() => {
       setIsLoaded(true);
-      push(url);
-      headingRef.current?.focus;
-    }, 1500);
+      headingRef.current?.focus();
+    }, 2000);
   };
 
   useEffect(() => {
@@ -112,8 +112,6 @@ export default function DivisionPage({ data }: any) {
       <HorizontalRule sx={{ marginTop: "xxl", marginBottom: "xxl" }} />
 
       <Heading
-        ref={headingRef}
-        tabIndex={-1}
         level="h2"
         id={slug}
         size="heading3"
@@ -122,10 +120,20 @@ export default function DivisionPage({ data }: any) {
         {`Collections in the ${data.name}`}
       </Heading>
 
+      <Heading
+        size="heading6"
+        sx={{ fontWeight: "400" }}
+        ref={headingRef}
+        tabIndex={-1}
+        width="max-content"
+      >
+        {`Page ${data.page} of ${totalPages}`}
+      </Heading>
+
       {isLoaded ? (
         <CardsGrid records={data.collections} />
       ) : (
-        Array(Math.ceil(data.collections / 4)).fill(
+        Array(Math.ceil(data.collections.length / 4)).fill(
           <LaneLoading withTitle={false} />
         )
       )}
