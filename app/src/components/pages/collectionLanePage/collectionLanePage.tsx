@@ -24,6 +24,7 @@ export default function CollectionLanePage({ data }: any) {
   const slug = params.slug as string;
   const title = slugToString(slug);
   const [isLoaded, setIsLoaded] = useState(false);
+  const [localData, setLocalData] = useState(data);
   const pageName = `collections|lane|${slug}`;
 
   const pathname = usePathname();
@@ -33,7 +34,7 @@ export default function CollectionLanePage({ data }: any) {
     Number(queryParams.get("page")) || 1
   );
 
-  const { replace } = useRouter();
+  const { push } = useRouter();
 
   const totalPages = totalNumPages(data.numResults, data.perPage);
 
@@ -44,8 +45,28 @@ export default function CollectionLanePage({ data }: any) {
     params.set("page", pageNumber.toString());
     setCurrentPage(pageNumber);
     const url = `${pathname}?${params.toString()}`;
-    replace(url);
-    headingRef.current?.focus();
+    try {
+      setIsLoaded(false);
+      const response = await fetch(
+        `/api/collections/lane/${slug}?page=${currentPage}`,
+        {
+          method: "GET",
+        }
+      );
+
+      if (response.ok) {
+        // ...
+        console.log({ response });
+        const data = await response.json();
+        setLocalData(data);
+
+        setIsLoaded(true);
+        push(url);
+        headingRef.current?.focus();
+      } else {
+        console.log("error");
+      }
+    } catch (error) {}
   };
 
   useEffect(() => {
@@ -93,7 +114,7 @@ export default function CollectionLanePage({ data }: any) {
       >
         {`Page ${currentPage} of ${totalPages}`}
       </Heading>
-      <CardsGrid records={data.collection} />
+      <CardsGrid records={localData.collection} />
       {totalPages > 1 && (
         <Pagination
           id="pagination-id"
