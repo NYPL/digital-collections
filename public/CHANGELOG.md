@@ -8,14 +8,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## Unreleased
 
 ### Updated
+
 - Updated cards to use Next Image (DR-3056)
 - Refactored Repo API handler with added timeout errors (DR-3251)
 - Removed canonical tag to old DC (DR-3264)
-- Updated New Relic server configurations to its default settings to capture transactions (DR-3261)
 - Refactored Adobe Analytics page names (DR-3257)
+- Updated New Relic server configurations to its default settings to capture transactions (DR-3261)
 
 ### Fixed
-- fixed division titles on division landing pages (DR-3274)
+
+- Fixed division titles on division landing pages (DR-3274)
 
 ## [0.1.16] 2024-10-31
 
