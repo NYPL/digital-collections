@@ -38,9 +38,7 @@ export default function DivisionPage({ data }: any) {
     Number(queryParams.get("page")) || 1
   );
 
-  const { replace } = useRouter();
-
-  const { isLargerThanLargeTablet } = useBreakpoints();
+  const { push } = useRouter();
 
   const totalPages = totalNumPages(data.numFound, data.perPage);
 
@@ -49,8 +47,12 @@ export default function DivisionPage({ data }: any) {
     params.set("page", pageNumber.toString());
     setCurrentPage(pageNumber);
     const url = `${pathname}?${params.toString()}#${data.slug}`;
-    replace(url);
-    headingRef.current?.focus;
+    setIsLoaded(false);
+    setTimeout(() => {
+      setIsLoaded(true);
+      push(url);
+      headingRef.current?.focus;
+    }, 1500);
   };
 
   useEffect(() => {
@@ -123,11 +125,9 @@ export default function DivisionPage({ data }: any) {
       {isLoaded ? (
         <CardsGrid records={data.collections} />
       ) : (
-        <>
+        Array(Math.ceil(data.collections / 4)).fill(
           <LaneLoading withTitle={false} />
-          <LaneLoading withTitle={false} />
-          <LaneLoading withTitle={false} />
-        </>
+        )
       )}
       {totalPages > 1 && (
         <Pagination
