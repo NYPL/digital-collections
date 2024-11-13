@@ -112,3 +112,13 @@ export const createAdobeAnalyticsPageName = (
 ): string => {
   return recordName ? `${base}|${stringToSlug(recordName)}` : base;
 };
+
+export function displayResults(
+  numFound: number,
+  perPage: number,
+  page: number
+) {
+  const start = (page - 1) * perPage + 1;
+  const end = Math.min(page * perPage, numFound);
+  return `Results: ${start}-${end} of ${numFound}`;
+}

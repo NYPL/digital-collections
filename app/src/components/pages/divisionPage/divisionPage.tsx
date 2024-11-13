@@ -19,8 +19,8 @@ import { CardsGrid } from "../../grids/cardsGrid";
 import {
   totalNumPages,
   createAdobeAnalyticsPageName,
+  displayResults,
 } from "../../../utils/utils";
-import useBreakpoints from "../../../hooks/useBreakpoints";
 import { DC_URL } from "@/src/config/constants";
 import { Lane as DCLane } from "../../lane/lane";
 import LaneLoading from "../../lane/laneLoading";
@@ -112,14 +112,14 @@ export default function DivisionPage({ data }: any) {
       <HorizontalRule sx={{ marginTop: "xxl", marginBottom: "xxl" }} />
 
       <Heading
-        size="tertiary"
-        sx={{ fontWeight: "500", fontSize: "16px", marginBottom: "m" }}
+        size="heading5"
+        sx={{ marginBottom: "m" }}
         ref={headingRef}
         tabIndex={-1}
         id={slug}
         width="max-content"
       >
-        {`Page ${data.page} of ${totalPages}`}
+        {displayResults(data.numFound, data.perPage, data.page)}
       </Heading>
 
       <Heading level="h2" size="heading3" style={{ width: "fit-content" }}>

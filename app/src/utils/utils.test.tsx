@@ -2,6 +2,7 @@ import {
   slugToString,
   stringToSlug,
   createAdobeAnalyticsPageName,
+  displayResults,
 } from "./utils";
 
 // TODO:
@@ -174,5 +175,31 @@ describe("createAdobeAnalyticsPageName generates the correct Adobe Analytics pag
     expect(createAdobeAnalyticsPageName("page-not-found-error")).toBe(
       "page-not-found-error"
     );
+  });
+});
+
+describe("displayResults", () => {
+  test("displays correct result range for first page with enough results", () => {
+    expect(displayResults(100, 10, 1)).toBe("Results: 1-10 of 100");
+  });
+
+  test("displays correct result range for middle page", () => {
+    expect(displayResults(100, 10, 5)).toBe("Results: 41-50 of 100");
+  });
+
+  test("displays correct result range for last page when there are fewer results than perPage", () => {
+    expect(displayResults(45, 10, 5)).toBe("Results: 41-45 of 45");
+  });
+
+  test("displays correct result range when numFound is less than perPage", () => {
+    expect(displayResults(8, 10, 1)).toBe("Results: 1-8 of 8");
+  });
+
+  test("displays correct result range for the last page when it's the same as perPage", () => {
+    expect(displayResults(50, 10, 5)).toBe("Results: 41-50 of 50");
+  });
+
+  test("displays correct range when perPage is greater than numFound", () => {
+    expect(displayResults(5, 10, 1)).toBe("Results: 1-5 of 5");
   });
 });
