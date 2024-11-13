@@ -33,6 +33,7 @@ export const CardImage = ({ record, imageHeight }: CardImageProps) => {
           minHeight: "100%",
           height: "auto",
         }}
+        placeholder="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mN8WQ8AAlcBas53/MIAAAAASUVORK5CYII="
         width={initialImageHeight * 2}
         height={initialImageHeight}
         onError={(_event) => {
