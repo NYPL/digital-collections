@@ -4,7 +4,7 @@ const featuredContentData: FeaturedContentDataType[] = [
   {
     heading: "Spotlight on the public domain",
     overline: "Featured",
-    text: "The New York Public Library recently enhanced access to all public domain items in Digital Collections so that everyone has the freedom to enjoy and reuse these materials in almost limitless ways",
+    text: "The New York Public Library recently enhanced access to all public domain items in Digital Collections so that everyone has the freedom to enjoy and reuse these materials in almost limitless ways.",
     link: "https://publicdomain.nypl.org",
     buttonText: "Learn more",
     buttonId: "featured-learn-more",
