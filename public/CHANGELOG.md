@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+## [0.1.17] 2024-11-14
+
 ### Updated
 
 - Updated cards to use Next Image (DR-3056)
@@ -14,6 +16,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Removed canonical tag to old DC (DR-3264)
 - Refactored Adobe Analytics page names (DR-3257)
 - Updated New Relic server configurations to its default settings to capture transactions (DR-3261)
+- Updated metadata to include specific Open Graph titles (DR-3273)
 
 ### Fixed
 
