@@ -50,7 +50,7 @@ exports.config = {
       { pattern: "/api/homepage", name: "Nextjs/GET//api/homepage" },
       { pattern: "/api/feedback", name: "Nextjs/POST//api/feedback" },
       { pattern: "/api/featuredItem", name: "Nextjs/GET//api/featuredItem" },
-      { pattern: "/divisions/*", name: "/Nextjs/GET/divisions/[slug]/" },
+      { pattern: "/divisions/*", name: "/Nextjs/GET//divisions/" },
       { pattern: "/divisions", name: "Nextjs/GET//divisions" },
       { pattern: "/about", name: "Nextjs/GET//about" },
       { pattern: "/404", name: "Nextjs/GET//404" },
