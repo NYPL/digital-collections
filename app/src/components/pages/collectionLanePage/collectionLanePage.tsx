@@ -6,7 +6,10 @@ import {
 } from "@nypl/design-system-react-components";
 import { useParams } from "next/navigation";
 import { headerBreakpoints } from "../../../utils/breakpoints";
-import { slugToString } from "../../../utils/utils";
+import {
+  slugToString,
+  createAdobeAnalyticsPageName,
+} from "../../../utils/utils";
 import { mockCollections } from "__tests__/__mocks__/data/mockCollections";
 import { CardsGrid } from "../../grids/cardsGrid";
 import React, { useEffect, useRef, useState } from "react";
@@ -20,7 +23,6 @@ export default function CollectionLanePage() {
   const slug = params.slug as string;
   const title = slugToString(slug);
   const [isLoaded, setIsLoaded] = useState(false);
-  const pageName = `collections|lane|${slug}`;
   const { isLargerThanLargeTablet } = useBreakpoints();
   const cardRef = useRef<HTMLDivElement>(null);
   const tooltipOffset = useTooltipOffset(cardRef);
@@ -37,7 +39,10 @@ export default function CollectionLanePage() {
         { text: "Collections", url: "/collections" },
         { text: `${title}`, url: `/collections/lane/${slug}` },
       ]}
-      adobeAnalyticsPageName={pageName}
+      adobeAnalyticsPageName={createAdobeAnalyticsPageName(
+        "collections|lane",
+        slug
+      )}
     >
       <Box
         sx={{

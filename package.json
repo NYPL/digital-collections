@@ -5,13 +5,15 @@
   "scripts": {
     "dev": "next dev",
     "dev:newrelic": "NODE_OPTIONS='-r dotenv/config .env.local -r newrelic' next dev",
-    "build": "next build && cp ./CHANGELOG.md ./public/changelog.md",
+    "build": "next build",
+    "update-changelog": "cp ./CHANGELOG.md ./public/changelog.md",
     "start": "next start",
     "start:newrelic": "NODE_OPTIONS='-r dotenv/config .env.prod -r newrelic' next start",
     "lint": "next lint",
     "test": "jest --config=jest.config.ts",
     "test:API": "jest --config=jestAPI.config.ts",
     "test:all": "npm run test && npm run test:API",
+    "test:watch": "jest --watch --config=jest.config.ts",
     "test:ci": "jest --ci --config=jest.config.ts",
     "prepare": "husky install",
     "homepageImageLoadingTestQa": "node test/homepageImageLoadingTest.js",
@@ -33,7 +35,6 @@
     "trailingComma": "es5"
   },
   "dependencies": {
-    "@newrelic/next": "0.10.0",
     "@samvera/clover-iiif": "^2.9.0",
     "@types/node": "20.5.9",
     "@types/react": "18.2.21",
