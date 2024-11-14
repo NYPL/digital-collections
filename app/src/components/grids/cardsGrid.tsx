@@ -34,8 +34,8 @@ export const CardsGrid = ({ records }: CardsGridProps) => {
               id={index}
               ref={cardRef}
               tooltipOffset={tooltipOffset}
-              imageHeight={imageHeight}
               record={collectionCardModel}
+              imageHeight={imageHeight}
               isLargerThanLargeTablet={isLargerThanLargeTablet}
             />
           );
@@ -47,8 +47,8 @@ export const CardsGrid = ({ records }: CardsGridProps) => {
               id={index}
               ref={cardRef}
               tooltipOffset={tooltipOffset}
-              imageHeight={imageHeight}
               record={itemCardModel}
+              imageHeight={imageHeight}
               isLargerThanLargeTablet={isLargerThanLargeTablet}
             />
           );
