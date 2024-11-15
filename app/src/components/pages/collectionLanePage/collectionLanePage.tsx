@@ -13,7 +13,11 @@ import {
   useSearchParams,
 } from "next/navigation";
 import { headerBreakpoints } from "../../../utils/breakpoints";
-import { slugToString, totalNumPages } from "../../../utils/utils";
+import {
+  displayResults,
+  slugToString,
+  totalNumPages,
+} from "../../../utils/utils";
 import { CardsGrid } from "../../grids/cardsGrid";
 import React, { Suspense, useEffect, useRef, useState } from "react";
 import PageLayout from "../../pageLayout/pageLayout";
@@ -35,6 +39,8 @@ export default function CollectionLanePage({ data }: any) {
 
   const { push } = useRouter();
 
+  console.log(data);
+
   const totalPages = totalNumPages(data.numResults, data.perPage);
 
   const headingRef = useRef<HTMLHeadingElement>(null);
@@ -43,13 +49,13 @@ export default function CollectionLanePage({ data }: any) {
     const params = new URLSearchParams();
     params.set("page", pageNumber.toString());
     setCurrentPage(pageNumber);
-    const url = `${pathname}?${params.toString()}#${data.slug}`;
+    const url = `${pathname}?${params.toString()}`;
     setIsLoaded(false);
+    push(url);
     setTimeout(() => {
       setIsLoaded(true);
-      push(url);
       headingRef.current?.focus();
-    }, 1500);
+    }, 2000);
   };
 
   useEffect(() => {
@@ -78,16 +84,16 @@ export default function CollectionLanePage({ data }: any) {
       >
         <Heading sx={{ marginBottom: 0 }} level="h1" id={slug} text={title} />
       </Box>
-      <HorizontalRule sx={{ marginTop: "xxl", marginBottom: "m" }} />
+      <HorizontalRule sx={{ marginTop: "xxl", marginBottom: "xxl" }} />
       <Heading
-        size="heading6"
-        sx={{
-          width: "max-content",
-        }}
+        size="heading5"
+        sx={{ marginBottom: "l" }}
         ref={headingRef}
         tabIndex={-1}
+        id={slug}
+        width="max-content"
       >
-        {`Page ${currentPage} of ${totalPages}`}
+        {displayResults(data.numResults, data.perPage, data.page)}
       </Heading>
       {isLoaded ? (
         <CardsGrid records={data.collection} />
