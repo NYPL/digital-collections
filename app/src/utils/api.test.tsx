@@ -1,7 +1,17 @@
 import { waitFor } from "@testing-library/react";
 import { apiResponse, getItemsCountFromUUIDs } from "./api";
 
-describe("getItemsCountFromUUIDs()", () => {
+describe("getHomePageData", () => {});
+
+describe("getFeaturedItemData", () => {});
+
+describe("getFeaturedImage", () => {});
+
+describe("getItemData", () => {});
+
+describe("getNumDigitizedItems", () => {});
+
+describe("getItemsCountFromUUIDs", () => {
   it("should throw an error with a bad request", async () => {
     (global as any).fetch = jest.fn(() =>
       Promise.resolve({
@@ -61,6 +71,10 @@ describe("getItemsCountFromUUIDs()", () => {
     });
   });
 });
+
+describe("getItemByIdentifier", () => {});
+
+describe("getDivisionData", () => {});
 
 describe("apiResponse", () => {
   const mockApiUrl = "mockurl.org";
