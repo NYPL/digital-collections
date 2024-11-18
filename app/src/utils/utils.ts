@@ -113,5 +113,5 @@ export function displayResults(
 ) {
   const start = (page - 1) * perPage + 1;
   const end = Math.min(page * perPage, numFound);
-  return `Results: ${start}-${end} of ${numFound}`;
+  return `${start}-${end} of ${numFound}`;
 }
