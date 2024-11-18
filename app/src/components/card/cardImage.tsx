@@ -35,6 +35,7 @@ export const CardImage = ({ record, imageHeight }: CardImageProps) => {
           minHeight: "100%",
           height: "auto",
         }}
+        placeholder="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mN8WQ8AAlcBas53/MIAAAAASUVORK5CYII="
         width={initialImageHeight * 2}
         height={initialImageHeight}
         decoding="sync"
@@ -44,7 +45,6 @@ export const CardImage = ({ record, imageHeight }: CardImageProps) => {
           );
           setImageSrc("/noImage.png");
         }}
-        placeholder="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mN8WQ8AAlcBas53/MIAAAAASUVORK5CYII="
       />
     </div>
   );

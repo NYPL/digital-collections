@@ -38,8 +38,8 @@ export const Lane = ({
   const { isLargerThanLargeTablet } = useBreakpoints();
   const cardRef = useRef<HTMLDivElement>(null);
   const tooltipOffset = useTooltipOffset(cardRef);
-  const imageHeight = useCardImageHeight(cardRef);
   const isCollections = isCollectionType(records);
+  const imageHeight = useCardImageHeight(cardRef);
 
   const laneContents = isCollections
     ? {
@@ -121,9 +121,9 @@ export const Lane = ({
                 id={`${index}`}
                 record={collectionCardModel}
                 isLargerThanLargeTablet={isLargerThanLargeTablet}
+                imageHeight={imageHeight}
                 ref={cardRef}
                 tooltipOffset={tooltipOffset}
-                imageHeight={imageHeight}
               />
             );
           } else {
@@ -134,9 +134,9 @@ export const Lane = ({
                 id={`item-${index}-${record.title}`}
                 record={itemCardModel}
                 isLargerThanLargeTablet={isLargerThanLargeTablet}
+                imageHeight={imageHeight}
                 tooltipOffset={tooltipOffset}
                 ref={cardRef}
-                imageHeight={imageHeight}
               />
             );
           }

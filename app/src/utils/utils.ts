@@ -106,6 +106,13 @@ export function isCollectionType(
   return "numberOfDigitizedItems" in records[0];
 }
 
+export const createAdobeAnalyticsPageName = (
+  base: string,
+  recordName: string = ""
+): string => {
+  return recordName ? `${base}|${stringToSlug(recordName)}` : base;
+};
+
 export function displayResults(
   numFound: number,
   perPage: number,

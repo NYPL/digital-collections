@@ -17,7 +17,7 @@ export default function LaneLoading({ withTitle = true }) {
           <SkeletonLoader contentSize={0} showImage={false} headingSize={1} />
         </Flex>
       )}
-      <DCSimpleGrid>
+      <DCSimpleGrid marginTop="s">
         <SkeletonLoader imageAspectRatio="landscape" contentSize={1} />
         <SkeletonLoader imageAspectRatio="landscape" contentSize={1} />
         <SkeletonLoader imageAspectRatio="landscape" contentSize={1} />
