@@ -93,7 +93,8 @@ export default function CollectionLanePage({ data }: any) {
         id={slug}
         width="max-content"
       >
-        {displayResults(data.numResults, data.perPage, data.page)}
+        {`Displaying ${displayResults(data.numResults, data.perPage, data.page)}
+        results`}
       </Heading>
       {isLoaded ? (
         <CardsGrid records={data.collection} />
