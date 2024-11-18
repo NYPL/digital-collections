@@ -4,7 +4,6 @@ import {
   Heading,
   HorizontalRule,
   Pagination,
-  Text,
 } from "@nypl/design-system-react-components";
 import {
   useParams,
@@ -17,9 +16,10 @@ import {
   displayResults,
   slugToString,
   totalNumPages,
+  createAdobeAnalyticsPageName,
 } from "../../../utils/utils";
 import { CardsGrid } from "../../grids/cardsGrid";
-import React, { Suspense, useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import PageLayout from "../../pageLayout/pageLayout";
 import LaneLoading from "../../lane/laneLoading";
 
@@ -28,7 +28,6 @@ export default function CollectionLanePage({ data }: any) {
   const slug = params.slug as string;
   const title = slugToString(slug);
   const [isLoaded, setIsLoaded] = useState(false);
-  const pageName = `collections|lane|${slug}`;
 
   const pathname = usePathname();
   const queryParams = useSearchParams();
@@ -38,8 +37,6 @@ export default function CollectionLanePage({ data }: any) {
   );
 
   const { push } = useRouter();
-
-  console.log(data);
 
   const totalPages = totalNumPages(data.numResults, data.perPage);
 
@@ -70,7 +67,10 @@ export default function CollectionLanePage({ data }: any) {
         { text: "Collections", url: "/collections" },
         { text: `${title}`, url: `/collections/lane/${slug}` },
       ]}
-      adobeAnalyticsPageName={pageName}
+      adobeAnalyticsPageName={createAdobeAnalyticsPageName(
+        "collections|lane",
+        slug
+      )}
     >
       <Box
         sx={{

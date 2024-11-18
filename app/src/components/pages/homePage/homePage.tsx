@@ -6,13 +6,16 @@ import CampaignHero from "../../featuredItem/campaignHero";
 import HomePageMainContent from "../../homePageMainContent/homePageMainContent";
 import PageLayout from "../../pageLayout/pageLayout";
 import { useRouter } from "next/navigation";
-
+import { createAdobeAnalyticsPageName } from "@/src/utils/utils";
 export default function HomePage({ data }) {
   const router = useRouter();
   router?.replace("/", undefined);
 
   return (
-    <PageLayout activePage="home" adobeAnalyticsPageName="home">
+    <PageLayout
+      activePage="home"
+      adobeAnalyticsPageName={createAdobeAnalyticsPageName("home")}
+    >
       <TemplateAppContainer
         breakout={
           <div id="hero">
