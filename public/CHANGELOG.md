@@ -8,13 +8,17 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## Unreleased
 
 ## [0.2.0] 2024-11-20
+
+### Removed 
 - Remove banner that links to OG Digital Collections (DR-3263)
+
+### Updated
 - Moved `/divisions` and `/divisions/[slug]` from behind middleware, now accessible (DR-3132, DR-3133)
 - Update links on /divisions page to point to /divisions/:slug pages (DR-3142)
 
 ## [0.1.19] 2024-11-18
 
-## Updated
+### Updated
 
 - Updated collection card urls to use uuid
 - Updated item card urls to use uuid
