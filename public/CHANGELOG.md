@@ -8,7 +8,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## Unreleased
 
 ## [0.2.0] 2024-11-20
-- remove banner that links to old site (DR-3263)
+- Remove banner that links to OG Digital Collections (DR-3263)
 - Moved `/divisions` and `/divisions/[slug]` from behind middleware, now accessible (DR-3132, DR-3133)
 - Update links on /divisions page to point to /divisions/:slug pages (DR-3142)
 
@@ -50,13 +50,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Updated
 
 - Refactored collection/item lanes into one `Lane` component (DR-3191)
-- Update "Divisions" link in header to link to /divisions (DR-3140)
-- Update links on /divisions page to point to /divisions/:slug pages (DR-3142)
-
-### Removed
-
-- Remove redirect for /divisions page (DR-3132)
-- Remove redirect for /divisions/:slug pages (DR-3133)
 - Updated header on /divisions/:slug page to have a tabIndex of -1 (DR-3229)
 - General cleanup (DR-3194)
 
