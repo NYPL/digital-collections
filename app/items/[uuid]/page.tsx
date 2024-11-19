@@ -3,7 +3,7 @@ import { Metadata } from "next";
 import PageLayout from "../../src/components/pageLayout/pageLayout";
 import Item from "../../src/components/items/item";
 import { getItemData } from "../../src/utils/api";
-import { stringToSlug } from "../../src/utils/utils";
+import { createAdobeAnalyticsPageName } from "../../src/utils/utils";
 import { ItemModel } from "../../src/models/item";
 
 type ItemProps = {
@@ -26,12 +26,14 @@ export async function generateMetadata({
   params.item = item;
   return {
     title: `${item.title} - NYPL Digital Collections`, //should be item title
+    openGraph: {
+      title: `${item.title} - NYPL Digital Collections`,
+    },
   };
 }
 
 export default async function ItemPage({ params }: ItemProps) {
   const item = await getItemModel(params.uuid);
-  const pageName = `items|${stringToSlug(item.title)}`;
   return (
     <PageLayout
       activePage="item"
@@ -43,7 +45,7 @@ export default async function ItemPage({ params }: ItemProps) {
           url: `/items/${params.uuid}`,
         },
       ]}
-      adobeAnalyticsPageName={pageName}
+      adobeAnalyticsPageName={createAdobeAnalyticsPageName("items", item.title)}
     >
       <Item item={item} />
     </PageLayout>
