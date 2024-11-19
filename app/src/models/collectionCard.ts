@@ -17,7 +17,7 @@ export class CollectionCardModel {
     this.title = data.title;
     this.url =
       process.env.APP_ENV === "production"
-        ? data.url
+        ? `https://digitalcollections.nypl.org/collections/${data.uuid}`
         : `/collections/${data.uuid}`;
     this.imageID = data.image_id || data.imageID;
     this.imageURL = imageURL(data.imageID, "full", "288,", "0");
