@@ -1,9 +1,7 @@
 /** @type {import('next').NextConfig} */
-
-const nrExternals = require("@newrelic/next/load-externals");
 // This is found in the codebase example but both seem to work and send data
 // correctly. Keep the above but can use the bottom for debugging.
-// const nrExternals = require('newrelic/load-externals');
+const nrExternals = require("newrelic/load-externals");
 
 const nextConfig = {
   experimental: {
@@ -19,7 +17,7 @@ const nextConfig = {
     ADOBE_EMBED_URL: process.env.ADOBE_EMBED_URL,
     APP_ENV: process.env.APP_ENV,
     NEW_RELIC_LICENSE_KEY: process.env.NEW_RELIC_LICENSE_KEY,
-    NEW_RELIC_APP_NAME: `${process.env.NEW_RELIC_APP_NAME} ${process.env.APP_ENV}`,
+    NEW_RELIC_APP_NAME: `${process.env.NEW_RELIC_APP_NAME}`,
   },
   images: {
     remotePatterns: [
