@@ -8,7 +8,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## Unreleased
 
 ## [0.2.0] 2024-11-20
-- remove banner that links to old site (DR-3263)
+- Remove banner that links to OG Digital Collections (DR-3263)
 - Moved `/divisions` and `/divisions/[slug]` from behind middleware, now accessible (DR-3132, DR-3133)
 - Update links on /divisions page to point to /divisions/:slug pages (DR-3142)
 
