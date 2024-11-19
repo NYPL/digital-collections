@@ -5,6 +5,9 @@ import { mockCollectionCards } from "__tests__/__mocks__/data/mockCollectionCard
 
 export const metadata: Metadata = {
   title: "Collections - NYPL Digital Collections",
+  openGraph: {
+    title: "Collections - NYPL Digital Collections",
+  },
 };
 
 export default async function Collections() {
