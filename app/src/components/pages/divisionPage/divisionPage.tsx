@@ -113,13 +113,14 @@ export default function DivisionPage({ data }: any) {
 
       <Heading
         size="heading5"
-        sx={{ marginBottom: "m" }}
+        sx={{ marginBottom: "l" }}
         ref={headingRef}
         tabIndex={-1}
         id={slug}
         width="max-content"
       >
-        {displayResults(data.numFound, data.perPage, data.page)}
+        {`Displaying ${displayResults(data.numFound, data.perPage, data.page)}
+        results`}
       </Heading>
 
       <Heading level="h2" size="heading3" style={{ width: "fit-content" }}>
