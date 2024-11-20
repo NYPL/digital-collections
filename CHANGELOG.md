@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+### Updated
+
+- Refactor `getHomePageData` to pull item counts from collection endpoints (DR-3297)
+
 ## [0.2.0] 2024-11-20
 
 ### Removed

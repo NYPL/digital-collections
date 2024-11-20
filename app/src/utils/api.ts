@@ -6,6 +6,7 @@ import appConfig from "../../../appConfig";
 import defaultFeaturedItems from "../data/defaultFeaturedItemData";
 import { CARDS_PER_PAGE } from "../config/constants";
 import { DC_URL } from "../config/constants";
+import { getItemsCountFromCollections } from "./itemCount";
 
 export const getHomePageData = async () => {
   const randomNumber = Math.floor(Math.random() * 2);
@@ -15,7 +16,8 @@ export const getHomePageData = async () => {
   const allCollectionUUIDs: string[] = lanes.reduce((acc, lane) => {
     return acc.concat(lane.collections.map((collection) => collection.uuid));
   }, [] as string[]);
-  const uuidtoItemCountMap = await getItemsCountFromUUIDs(allCollectionUUIDs);
+  const uuidtoItemCountMap =
+    await getItemsCountFromCollections(allCollectionUUIDs);
 
   // Update the collections for each lane with the number of items
   const updatedLanes = lanes.map((lane) => {
