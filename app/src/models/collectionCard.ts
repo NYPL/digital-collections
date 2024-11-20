@@ -15,7 +15,10 @@ export class CollectionCardModel {
   constructor(data: any) {
     this.uuid = data.uuid;
     this.title = data.title;
-    this.url = `https://qa-digitalcollections.nypl.org/collections/${data.uuid}`;
+    this.url =
+      process.env.APP_ENV === "production"
+        ? `https://digitalcollections.nypl.org/collections/${data.uuid}`
+        : `/collections/${data.uuid}`;
     this.imageID = data.image_id || data.imageID;
     this.imageURL = imageURL(data.imageID, "full", "288,", "0");
     this.numberOfDigitizedItems =
