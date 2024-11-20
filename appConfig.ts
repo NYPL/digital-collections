@@ -3,7 +3,7 @@ const appConfig = {
   DC_URL: {
     development: "",
     qa: "",
-    production: "https://digitalcollections.nypl.org",
+    production: "",
   },
   IIIF_URL: {
     development: "https://iiif.nypl.org",
