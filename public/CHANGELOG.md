@@ -22,6 +22,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Updated
 
 - Update links on /divisions page to point to /divisions/:slug pages (DR-3142)
+- Updating pagination text on division landing page
+- Updating Next Image quality
 
 ## [0.1.19] 2024-11-18
 
