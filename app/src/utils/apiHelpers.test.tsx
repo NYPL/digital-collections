@@ -6,30 +6,12 @@ import {
 } from "./apiHelpers";
 import { apiResponse } from "./apiResponse";
 import defaultFeaturedItem from "../data/defaultFeaturedItemData";
+import {
+  mockFeaturedItemResponse,
+  mockItemResponse,
+} from "__tests__/__mocks__/data/mockApiResponses";
 
 jest.mock("./apiResponse");
-
-const mockFeaturedItemResponse = {
-  headers: { status: "success", code: "200", message: "ok" },
-  numResults: "1",
-  capture: {
-    uuid: "510d47d9-7c7c-a3d9-e040-e00a18064a99",
-    imageLinks: { imageLink: [Array] },
-    apiUri:
-      "http://api.repo.nypl.org/api/v2/items/mods/510d47d9-7c7c-a3d9-e040-e00a18064a99",
-    typeOfResource: "still image",
-    imageID: "54795",
-    sortString: "0000000001|0000000011|0000000430|0000000001",
-    itemLink:
-      "http://digitalcollections.nypl.org/items/510d47d9-7c7c-a3d9-e040-e00a18064a99",
-    highResLink: "https://link.nypl.org/3iIRPl9YEd2naebMmVbNCAA",
-    title: "View of High Bridge and the Harlem River",
-    dateDigitized: "2015-10-14T12:02:36Z",
-    rightsStatement:
-      'The New York Public Library believes that this item is in the public domain under the laws of the United States, but did not make a determination as to its copyright status under the copyright laws of other countries. This item may not be in the public domain under the laws of other countries. Though not required, if you want to credit us as the source, please use the following statement, "From The New York Public Library," and provide a link back to the item on our Digital Collections site. Doing so helps us track how our collection is used and helps justify freely releasing even more content in the future.',
-    rightsStatementURI: "http://rightsstatements.org/vocab/NoC-US/1.0/",
-  },
-};
 
 beforeEach(() => {
   jest.clearAllMocks();
@@ -41,7 +23,17 @@ describe("getFeaturedItemData", () => {});
 
 describe("getFeaturedImage", () => {});
 
-describe("getItemData", () => {});
+describe("getItemData", () => {
+  it("returns expected item", async () => {
+    (apiResponse as jest.Mock).mockResolvedValueOnce(
+      Promise.resolve(mockItemResponse)
+    );
+    const item = await getRandomFeaturedItem();
+    expect(item).toEqual(mockItemResponse);
+    expect(item).toHaveProperty("capture");
+    expect(item).toHaveProperty("mods");
+  });
+});
 
 describe("getNumDigitizedItems", () => {
   it("returns the correct numDigitizedItems", async () => {
@@ -120,7 +112,7 @@ describe("getItemsCountFromUUIDs", () => {
 });
 
 describe("getRandomFeaturedItem", () => {
-  it("returns correct item", async () => {
+  it("returns expected item", async () => {
     (apiResponse as jest.Mock).mockResolvedValueOnce(
       Promise.resolve(mockFeaturedItemResponse)
     );
