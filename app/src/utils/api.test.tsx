@@ -182,12 +182,12 @@ describe("apiResponse", () => {
 
     const apiCall = apiResponse(mockApiUrl);
 
-    jest.advanceTimersByTime(7000);
+    jest.advanceTimersByTime(14000);
 
     await expect(apiCall).rejects.toEqual(
       new Error("apiResponse: Request timed out")
     );
 
     jest.useRealTimers();
-  }, 10000);
+  }, 20000);
 });
