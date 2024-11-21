@@ -1,11 +1,12 @@
-import data from "../../src/data/lanes";
-import type { LaneDataType } from "../../src/types/Lane";
-import { ENV_KEY } from "../../src/types/EnvironmentType";
-import { imageURL, addCommas } from "../utils/utils";
+import data from "../data/lanes";
+import type { LaneDataType } from "../types/Lane";
+import { ENV_KEY } from "../types/EnvironmentType";
+import { imageURL, addCommas } from "./utils";
 import appConfig from "../../../appConfig";
 import defaultFeaturedItems from "../data/defaultFeaturedItemData";
 import { CARDS_PER_PAGE } from "../config/constants";
 import { DC_URL } from "../config/constants";
+import { apiResponse } from "./apiResponse";
 
 export const getHomePageData = async () => {
   const randomNumber = Math.floor(Math.random() * 2);
@@ -65,9 +66,7 @@ export const getFeaturedItemData = async () => {
 export const getFeaturedImage = async () => {
   const defaultResponse =
     defaultFeaturedItems[appConfig.environment as ENV_KEY].featuredItem;
-  const apiResponse = await getItemByIdentifier("featured", "", {
-    random: "true",
-  });
+  const apiResponse = await getRandomFeaturedItem();
 
   return {
     uuid: apiResponse?.capture?.uuid || defaultResponse.uuid,
@@ -132,18 +131,17 @@ export const getItemsCountFromUUIDs = async (uuids: string[]) => {
 };
 
 /**
- * Returns the uuid, API uri, and numResults of an item given an identifier type and identifier value.
- * @param {string} identifierType - the identifier type
- * @param {string} identifier - the identifier value
+ * Returns a random featured item from set list.
  */
 
-export const getItemByIdentifier = async (
-  identifierType: string,
-  identifier: string,
-  urlParam?: { [key: string]: any }
-) => {
-  const apiUrl = `${process.env.API_URL}/api/v2/items/${identifierType}/${identifier}`;
-  return apiResponse(apiUrl, { params: urlParam });
+export const getRandomFeaturedItem = async () => {
+  const apiUrl = `${process.env.API_URL}/api/v2/items/featured`;
+  const res = await apiResponse(apiUrl, {
+    params: {
+      random: "true",
+    },
+  });
+  return res;
 };
 
 export const getDivisionData = async ({
@@ -163,71 +161,4 @@ export const getDivisionData = async ({
 
   const res = await apiResponse(apiUrl);
   return res;
-};
-
-/**
- * Makes a GET or POST request to the Repo API and returns the response.
- * Times out at 7 seconds to prevent 504 crash.
- * @param {string} apiUrl - The URL for the API request.
- * @param {object} options - Options for the request:
- *   - method: "GET" or "POST" (default is "GET").
- *   - params: URL parameters for GET requests.
- *   - body: Body data for POST requests.
- * @returns {Promise<any>} - The API response.
- */
-export const apiResponse = async (
-  apiUrl: string,
-  options?: {
-    method?: "GET" | "POST";
-    params?: { [key: string]: any };
-    body?: any;
-  }
-) => {
-  const apiKey = process.env.AUTH_TOKEN;
-  const method = options?.method || "GET";
-  const headers = {
-    Authorization: `Token token=${apiKey}`,
-    ...(method === "POST" && { "Content-Type": "application/json" }),
-  };
-
-  if (method === "GET" && options?.params) {
-    const queryString = "?" + new URLSearchParams(options?.params).toString();
-    apiUrl += queryString;
-  }
-
-  const timeout = 14000;
-
-  const fetchWithTimeout = (url: string, opts: RequestInit) => {
-    return Promise.race([
-      fetch(url, opts),
-      new Promise((_, reject) =>
-        setTimeout(
-          () => reject(new Error("apiResponse: Request timed out")),
-          timeout
-        )
-      ),
-    ]);
-  };
-
-  try {
-    const response = (await fetchWithTimeout(apiUrl, {
-      method,
-      headers,
-      body: method === "POST" ? JSON.stringify(options?.body) : undefined,
-    })) as Response;
-
-    if (!response.ok && response.status !== 200) {
-      throw new Error(
-        `apiResponse: ${response.status} ${
-          response.statusText ? response.statusText : "No message"
-        }`
-      );
-    }
-
-    const data = await response.json();
-    return method === "GET" ? data?.nyplAPI?.response : data;
-  } catch (error) {
-    console.error(error);
-    throw new Error(error.message);
-  }
 };
