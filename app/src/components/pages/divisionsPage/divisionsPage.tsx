@@ -33,7 +33,7 @@ export default function DivisionsPage({ summary, divisions }: DivisionsProps) {
       ]}
       adobeAnalyticsPageName={createAdobeAnalyticsPageName("divisions")}
     >
-      {divisions && divisions?.length > 0 ? (
+      {divisions && divisions.length > 0 ? (
         <>
           <Box
             sx={{
