@@ -45,4 +45,4 @@ jobs:
 
       - name: Update ECS service
         run: |
-          aws ecs update-service --cluster new-digitalcollections --service new-digitalcollections --force-new-deployment
+          aws ecs update-service --cluster new-digitalcollections-prod --service new-digitalcollections-prod --force-new-deployment
