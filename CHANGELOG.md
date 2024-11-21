@@ -7,15 +7,49 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+## [0.2.3] 2024-11-21
+
+### Updated
+
+- Update timeout on API request to 14 seconds
+
+## [0.2.2] 2024-11-20
+
+### Updated
+
+- Update production DC_URL in appConfig.ts file
+
+## [0.2.1] 2024-11-20
+
+### Updated
+
+- Update collection links to be relative
+
+## [0.2.0] 2024-11-20
+
+### Removed
+
+- Remove banner that links to OG Digital Collections (DR-3263)
+
+### Updated
+
+- Update links on /divisions page to point to /divisions/:slug pages (DR-3142)
+- Updating pagination text on division landing page
+- Updating Next Image quality
+
 ## [0.1.19] 2024-11-18
 
-## Updated
+### Updated
 
+- Moved `/divisions` and `/divisions/[slug]` from behind middleware, now accessible (DR-3132, DR-3133)
 - Updated collection card urls to use uuid
-- Moved `/divisions` and `/divisions/[slug]` from behind middleware, now accessible
 - Updated item card urls to use uuid
 - Updated collection card urls to use legacy url
 - Updated prod ECS cluster name to `new-digitalcollections-prod`
+
+## [0.1.18] 2024-11-18
+
+- merged into 0.1.19
 
 ## [0.1.17] 2024-11-14
 

@@ -209,7 +209,7 @@ export const apiResponse = async (
     apiUrl += queryString;
   }
 
-  const timeout = 7000;
+  const timeout = 14000;
 
   const fetchWithTimeout = (url: string, opts: RequestInit) => {
     return Promise.race([
