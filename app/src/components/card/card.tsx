@@ -40,6 +40,7 @@ export const Card = forwardRef<HTMLDivElement, DCCardProps>(
     const identifier = slug
       ? `${slug}-${id}`
       : `${stringToSlug(record.title)}-${id}`; // should probably truncate
+
     const card = (
       <ChakraCard
         ref={ref}
@@ -47,7 +48,13 @@ export const Card = forwardRef<HTMLDivElement, DCCardProps>(
         id={`card-${identifier}`}
         mainActionLink={record.url}
         imageProps={{
-          component: <CardImage imageHeight={imageHeight} record={record} />,
+          component: (
+            <CardImage
+              key={record.imageID}
+              imageHeight={imageHeight}
+              record={record}
+            />
+          ),
         }}
       >
         <CardContent>
@@ -97,13 +104,17 @@ export const Card = forwardRef<HTMLDivElement, DCCardProps>(
         </CardContent>
       </ChakraCard>
     );
-    return isLargerThanLargeTablet && truncatedTitle ? (
-      <Tooltip offset={tooltipOffset} content={record.title}>
-        {card}
-      </Tooltip>
-    ) : (
-      card
-    );
+
+    const cardWithTooltip =
+      isLargerThanLargeTablet && truncatedTitle ? (
+        <Tooltip offset={tooltipOffset} content={record.title}>
+          {card}
+        </Tooltip>
+      ) : (
+        card
+      );
+
+    return cardWithTooltip;
   }
 );
 
