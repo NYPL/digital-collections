@@ -1,8 +1,6 @@
 import data from "../../src/data/lanes";
 import type { LaneDataType } from "../../src/types/Lane";
-import { ENV_KEY } from "../../src/types/EnvironmentType";
 import { imageURL, addCommas } from "../utils/utils";
-import appConfig from "../../../appConfig";
 import defaultFeaturedItems from "../data/defaultFeaturedItemData";
 import { CARDS_PER_PAGE } from "../config/constants";
 import { DC_URL } from "../config/constants";
@@ -63,8 +61,7 @@ export const getFeaturedItemData = async () => {
 };
 
 export const getFeaturedImage = async () => {
-  const defaultResponse =
-    defaultFeaturedItems[appConfig.environment as ENV_KEY].featuredItem;
+  const defaultResponse = defaultFeaturedItems.featuredItem;
   const apiResponse = await getItemByIdentifier("featured", "", {
     random: "true",
   });
@@ -94,9 +91,7 @@ export const getNumDigitizedItems = async () => {
   const apiUrl = `${process.env.API_URL}/api/v2/items/total`;
   const res = await apiResponse(apiUrl);
 
-  const fallbackCount =
-    defaultFeaturedItems[appConfig.environment as ENV_KEY]
-      .numberOfDigitizedItems;
+  const fallbackCount = defaultFeaturedItems.numberOfDigitizedItems;
   const totalItems = res?.count?.$ ? addCommas(res.count.$) : fallbackCount; // only add commas to repo api response data
   return totalItems;
 };
