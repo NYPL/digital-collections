@@ -1,5 +1,8 @@
-import { waitFor } from "@testing-library/react";
 import {
+  getDivisionData,
+  getFeaturedImage,
+  getFeaturedItemData,
+  getHomePageData,
   getItemsCountFromUUIDs,
   getNumDigitizedItems,
   getRandomFeaturedItem,
@@ -17,21 +20,84 @@ beforeEach(() => {
   jest.clearAllMocks();
 });
 
-describe("getHomePageData", () => {});
-
-describe("getFeaturedItemData", () => {});
-
-describe("getFeaturedImage", () => {});
-
-describe("getItemData", () => {
-  it("returns expected item", async () => {
+describe("getHomePageData", () => {
+  it("creates response containing random number and all 7 lanes", async () => {
     (apiResponse as jest.Mock).mockResolvedValueOnce(
-      Promise.resolve(mockItemResponse)
+      Promise.resolve({
+        nyplAPI: {
+          response: {
+            counts: {
+              count: [
+                {
+                  uuid: { $: "test" },
+                  count_value: { $: "10" },
+                },
+              ],
+            },
+          },
+        },
+      })
     );
-    const item = await getRandomFeaturedItem();
-    expect(item).toEqual(mockItemResponse);
-    expect(item).toHaveProperty("capture");
-    expect(item).toHaveProperty("mods");
+    const result = await getHomePageData();
+    expect(apiResponse as jest.Mock).toHaveBeenCalled();
+    expect([0, 1]).toContain(result.randomNumber);
+    expect(result.lanesWithNumItems.length).toEqual(7);
+    // Test uuid response doesn't match the collection uuid, so all of these should be 0.
+    expect(
+      result.lanesWithNumItems[0].collections[3].numberOfDigitizedItems
+    ).toEqual("0");
+  });
+});
+
+describe("getFeaturedItemData", () => {
+  it("creates response containing featuredItem and numDigitizedItems", async () => {
+    const result = await getFeaturedItemData();
+
+    // Fallback values:
+    expect(result.numberOfDigitizedItems).toEqual("875,861");
+    expect(result.featuredItem.imageID).toEqual(
+      defaultFeaturedItem.production.featuredItem.imageID
+    );
+  });
+});
+
+describe("getDivisionData", () => {
+  it("forms the correct request from params", async () => {
+    const result = await getDivisionData({
+      slug: "testSlug",
+      pageNum: 1,
+      perPage: 3,
+    });
+
+    expect(apiResponse as jest.Mock).toHaveBeenCalledWith(
+      `${process.env.API_URL}/api/v2/divisions/testSlug?page=1&per_page=3`
+    );
+  });
+  it("returns successful response", async () => {
+    (apiResponse as jest.Mock).mockResolvedValueOnce(
+      Promise.resolve({
+        headers: { status: "success", code: "200", message: "ok" },
+        summary: "divisions test",
+        divisions: [
+          {
+            name: "Billy Rose Theatre Division",
+            slug: "billy-rose-theatre-division",
+            collections: [],
+          },
+          {
+            name: "Carl H. Pforzheimer Collection of Shelley and His Circle",
+            slug: "carl-h-pforzheimer-collection-of-shelley-and-his-circle",
+            collections: [],
+          },
+        ],
+      })
+    );
+    const result = await getDivisionData({
+      pageNum: 1,
+      perPage: 2,
+    });
+    expect(result.divisions.length).toEqual(2);
+    expect(result).toHaveProperty("summary");
   });
 });
 
@@ -122,4 +188,25 @@ describe("getRandomFeaturedItem", () => {
   });
 });
 
-describe("getDivisionData", () => {});
+describe("getFeaturedImage", () => {
+  it("returns expected item", async () => {
+    (apiResponse as jest.Mock).mockResolvedValueOnce(
+      Promise.resolve(defaultFeaturedItem["production"].featuredItem)
+    );
+    const item = await getFeaturedImage();
+    expect(item).toHaveProperty("imageID");
+    expect(item.imageID).toEqual("482815");
+  });
+});
+
+describe("getItemData", () => {
+  it("returns expected item", async () => {
+    (apiResponse as jest.Mock).mockResolvedValueOnce(
+      Promise.resolve(mockItemResponse)
+    );
+    const item = await getRandomFeaturedItem();
+    expect(item).toEqual(mockItemResponse);
+    expect(item).toHaveProperty("capture");
+    expect(item).toHaveProperty("mods");
+  });
+});
