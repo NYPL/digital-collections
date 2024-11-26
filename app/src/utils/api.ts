@@ -165,6 +165,20 @@ export const getDivisionData = async ({
   return res;
 };
 
+export const getLaneData = async ({
+  pageNum = 1,
+  perPage = CARDS_PER_PAGE,
+  slug,
+}: {
+  pageNum?: number;
+  perPage?: number;
+  slug?: string;
+} = {}) => {
+  let apiUrl = `${process.env.API_URL}/api/v2/collections?genre=${slug}&page=${pageNum}&per_page=${perPage}`;
+  const res = await apiResponse(apiUrl);
+  return res;
+};
+
 /**
  * Makes a GET or POST request to the Repo API and returns the response.
  * Times out at 7 seconds to prevent 504 crash.
