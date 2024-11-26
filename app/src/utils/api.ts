@@ -5,7 +5,6 @@ import { imageURL, addCommas } from "../utils/utils";
 import appConfig from "../../../appConfig";
 import defaultFeaturedItems from "../data/defaultFeaturedItemData";
 import { CARDS_PER_PAGE } from "../config/constants";
-import { DC_URL } from "../config/constants";
 
 export const getHomePageData = async () => {
   const randomNumber = Math.floor(Math.random() * 2);
@@ -53,7 +52,7 @@ export const getFeaturedItemData = async () => {
     ),
     uuid: featuredImageData.uuid,
     title: featuredImageData.title,
-    href: `${DC_URL}/items/${featuredImageData.uuid}`,
+    href: `/items/${featuredImageData.uuid}`,
   };
   const newResponse = {
     featuredItem: featuredItemObject,

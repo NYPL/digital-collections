@@ -1,7 +1,6 @@
 import React from "react";
 import FeaturedContentComponent from "../featuredContent/featuredContent";
 import { useEffect, useState } from "react";
-// import { DC_URL } from "@/src/config/constants";
 import { Lane as DCLane } from "../lane/lane";
 import LaneDataType from "@/src/types/Lane";
 import LaneLoading from "../lane/laneLoading";
