@@ -6,6 +6,19 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## Unreleased
+
+## [0.2.4] 2024-11-26
+
+### Updated
+
+- Updated Next.js to patch vulnerabilities.
+
+## [0.2.3] 2024-11-21
+
+### Updated
+
+- Update timeout on API request to 14 seconds
+
 ## [0.2.2] 2024-11-20
 
 ### Updated
