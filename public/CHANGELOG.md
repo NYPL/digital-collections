@@ -57,16 +57,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - merged into 0.1.19
 
-## [0.1.19] 2024-11-18
-
-## Updated
-
-- Updated collection card urls to use uuid
-- Moved `/divisions` and `/divisions/[slug]` from behind middleware, now accessible
-- Updated item card urls to use uuid
-- Updated collection card urls to use legacy url
-- Updated prod ECS cluster name to `new-digitalcollections-prod`
-
 ## [0.1.17] 2024-11-14
 
 ### Updated
