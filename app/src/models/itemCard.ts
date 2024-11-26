@@ -12,6 +12,6 @@ export class ItemCardModel {
     this.title = data.title;
     this.url = `/items/${data.uuid}`;
     this.imageID = data.imageID;
-    this.imageURL = imageURL(data.imageID, "full", "288,", "0");
+    this.imageURL = imageURL(data.imageID, "square", "!288,288", "0");
   }
 }
