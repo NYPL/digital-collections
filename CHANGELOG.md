@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+### Added
+
+- Added tests for API helpers (DR-3271)
+
 ## [0.2.3] 2024-11-21
 
 ### Updated
