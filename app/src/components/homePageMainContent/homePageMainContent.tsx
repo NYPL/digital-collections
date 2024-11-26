@@ -1,7 +1,7 @@
 import React from "react";
 import FeaturedContentComponent from "../featuredContent/featuredContent";
 import { useEffect, useState } from "react";
-import { DC_URL } from "@/src/config/constants";
+// import { DC_URL } from "@/src/config/constants";
 import { Lane as DCLane } from "../lane/lane";
 import LaneDataType from "@/src/types/Lane";
 import LaneLoading from "../lane/laneLoading";
@@ -28,7 +28,7 @@ const HomePageMainContent = ({
       <DCLane
         key={0}
         records={firstSwimLane.collections}
-        seeMoreLink={`${DC_URL}/collections/lane`}
+        seeMoreLink={`/collections/lane`}
         laneName={firstSwimLane.name}
         laneSlug={firstSwimLane.slug}
       />
@@ -37,7 +37,7 @@ const HomePageMainContent = ({
         <DCLane
           key={key}
           records={lane.collections}
-          seeMoreLink={`${DC_URL}/collections/lane`}
+          seeMoreLink={`/collections/lane`}
           laneName={lane.name}
           laneSlug={lane.slug}
         />
