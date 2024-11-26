@@ -1,6 +1,6 @@
 /**
  * Makes a GET or POST request to the Repo API and returns the response.
- * Times out at 7 seconds to prevent 504 crash.
+ * Times out at 14 seconds to prevent 504 crash.
  * @param {string} apiUrl - The URL for the API request.
  * @param {object} options - Options for the request:
  *   - method: "GET" or "POST" (default is "GET").
