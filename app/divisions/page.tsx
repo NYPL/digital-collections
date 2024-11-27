@@ -13,7 +13,6 @@ export const metadata: Metadata = {
 
 export default async function Divisions() {
   const data = await getDivisionData();
-  console.log(data);
   // Repo API returns 404s within the data.
   if (data?.headers?.code === "404") {
     redirect("/404");

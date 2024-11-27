@@ -3,6 +3,7 @@ import {
   getFeaturedImage,
   getFeaturedItemData,
   getHomePageData,
+  getItemData,
   getItemsCountFromUUIDs,
   getNumDigitizedItems,
   getRandomFeaturedItem,
@@ -42,7 +43,7 @@ describe("getHomePageData", () => {
     expect(apiResponse as jest.Mock).toHaveBeenCalled();
     expect([0, 1]).toContain(result.randomNumber);
     expect(result.lanesWithNumItems.length).toEqual(7);
-    // Test uuid response doesn't match the collection uuid, so all of these should be 0.
+    // Fallback data (all 0s).
     expect(
       result.lanesWithNumItems[0].collections[3].numberOfDigitizedItems
     ).toEqual("0");
@@ -52,8 +53,17 @@ describe("getHomePageData", () => {
 describe("getFeaturedItemData", () => {
   it("creates response containing featuredItem and numDigitizedItems", async () => {
     const result = await getFeaturedItemData();
-
-    // Fallback values:
+    expect(apiResponse as jest.Mock).toHaveBeenCalledTimes(2);
+    expect(apiResponse as jest.Mock).toHaveBeenNthCalledWith(
+      1,
+      "https://api.repo.nypl.org/api/v2/items/featured",
+      { params: { random: "true" } }
+    );
+    expect(apiResponse as jest.Mock).toHaveBeenNthCalledWith(
+      2,
+      "https://api.repo.nypl.org/api/v2/items/total"
+    );
+    // Fallback data.
     expect(result.numberOfDigitizedItems).toEqual("875,861");
     expect(result.featuredItem.imageID).toEqual(
       defaultFeaturedItem.production.featuredItem.imageID
@@ -62,8 +72,8 @@ describe("getFeaturedItemData", () => {
 });
 
 describe("getDivisionData", () => {
-  it("forms the correct request from params", async () => {
-    const result = await getDivisionData({
+  it("forms the correct request from params with slug", async () => {
+    await getDivisionData({
       slug: "testSlug",
       pageNum: 1,
       perPage: 3,
@@ -73,6 +83,15 @@ describe("getDivisionData", () => {
       `${process.env.API_URL}/api/v2/divisions/testSlug?page=1&per_page=3`
     );
   });
+
+  it("forms the correct request from no params", async () => {
+    await getDivisionData();
+
+    expect(apiResponse as jest.Mock).toHaveBeenCalledWith(
+      `${process.env.API_URL}/api/v2/divisions`
+    );
+  });
+
   it("returns successful response", async () => {
     (apiResponse as jest.Mock).mockResolvedValueOnce(
       Promise.resolve({
@@ -92,10 +111,7 @@ describe("getDivisionData", () => {
         ],
       })
     );
-    const result = await getDivisionData({
-      pageNum: 1,
-      perPage: 2,
-    });
+    const result = await getDivisionData();
     expect(result.divisions.length).toEqual(2);
     expect(result).toHaveProperty("summary");
   });
@@ -111,7 +127,9 @@ describe("getNumDigitizedItems", () => {
       })
     );
     const result = await getNumDigitizedItems();
-
+    expect(apiResponse as jest.Mock).toHaveBeenCalledWith(
+      "https://api.repo.nypl.org/api/v2/items/total"
+    );
     expect(result).toEqual("78");
   });
 
@@ -120,6 +138,7 @@ describe("getNumDigitizedItems", () => {
 
     const result = await getNumDigitizedItems();
 
+    // Fallback data.
     expect(result).toEqual(
       defaultFeaturedItem["development"].numberOfDigitizedItems
     );
@@ -183,19 +202,34 @@ describe("getRandomFeaturedItem", () => {
       Promise.resolve(mockFeaturedItemResponse)
     );
     const item = await getRandomFeaturedItem();
+    expect(apiResponse as jest.Mock).toHaveBeenCalledWith(
+      "https://api.repo.nypl.org/api/v2/items/featured",
+      { params: { random: "true" } }
+    );
     expect(item).toEqual(mockFeaturedItemResponse);
     expect(item).toHaveProperty("capture");
+    expect(item.numResults).toEqual("1");
   });
 });
 
 describe("getFeaturedImage", () => {
-  it("returns expected item", async () => {
+  it("returns expected image", async () => {
     (apiResponse as jest.Mock).mockResolvedValueOnce(
       Promise.resolve(defaultFeaturedItem["production"].featuredItem)
     );
-    const item = await getFeaturedImage();
-    expect(item).toHaveProperty("imageID");
-    expect(item.imageID).toEqual("482815");
+    const imageData = await getFeaturedImage();
+    expect(apiResponse as jest.Mock).toHaveBeenCalledWith(
+      "https://api.repo.nypl.org/api/v2/items/featured",
+      { params: { random: "true" } }
+    );
+
+    // Fallback data.
+    expect(imageData.imageID).toEqual("482815");
+
+    expect(imageData).toHaveProperty("uuid");
+    expect(imageData).toHaveProperty("imageID");
+    expect(imageData).toHaveProperty("title");
+    expect(imageData).not.toHaveProperty("capture");
   });
 });
 
@@ -204,7 +238,10 @@ describe("getItemData", () => {
     (apiResponse as jest.Mock).mockResolvedValueOnce(
       Promise.resolve(mockItemResponse)
     );
-    const item = await getRandomFeaturedItem();
+    const item = await getItemData("uuid1");
+    expect(apiResponse as jest.Mock).toHaveBeenCalledWith(
+      "https://api.repo.nypl.org/api/v2/items/mods_captures/uuid1"
+    );
     expect(item).toEqual(mockItemResponse);
     expect(item).toHaveProperty("capture");
     expect(item).toHaveProperty("mods");
