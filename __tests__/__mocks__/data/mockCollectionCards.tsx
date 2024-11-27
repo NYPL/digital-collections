@@ -6,7 +6,8 @@ export const mockCollectionCards: CollectionCardDataType[] = [
     title: "Posada Collection",
     url: "https://digitalcollections.nypl.org/collections/posada-collection#/?tab=navigation",
     imageID: "58270299",
-    imageURL: "https://iiif.nypl.org/iiif/2/58270299/full/288,/0/default.jpg",
+    imageURL:
+      "https://iiif.nypl.org/iiif/2/58270299/square/!288,288/0/default.jpg",
     numberOfDigitizedItems: 34,
     containsOnSiteMaterials: true,
   },
@@ -15,7 +16,8 @@ export const mockCollectionCards: CollectionCardDataType[] = [
     title: "MAVO",
     url: "https://digitalcollections.nypl.org/collections/mavo#/?tab=navigation",
     imageID: "1408153",
-    imageURL: "https://iiif.nypl.org/iiif/2/58270299/full/288,/0/default.jpg",
+    imageURL:
+      "https://iiif.nypl.org/iiif/2/58270299/square/!288,288/0/default.jpg",
     numberOfDigitizedItems: 35,
     containsOnSiteMaterials: true,
   },
@@ -24,7 +26,8 @@ export const mockCollectionCards: CollectionCardDataType[] = [
     title: "Austin Hansen photograph collection",
     url: "https://digitalcollections.nypl.org/collections/austin-hansen-photograph-collection#/?tab=navigation",
     imageID: "58300996",
-    imageURL: "https://iiif.nypl.org/iiif/2/58270299/full/288,/0/default.jpg",
+    imageURL:
+      "https://iiif.nypl.org/iiif/2/58270299/square/!288,288/0/default.jpg",
     numberOfDigitizedItems: 65,
     containsOnSiteMaterials: true,
   },
@@ -33,7 +36,8 @@ export const mockCollectionCards: CollectionCardDataType[] = [
     title: "Arthur Alfonso Schomburg papers",
     url: "https://digitalcollections.nypl.org/collections/arthur-alfonso-schomburg-papers#/?tab=navigation",
     imageID: "58591658",
-    imageURL: "https://iiif.nypl.org/iiif/2/58270299/full/288,/0/default.jpg",
+    imageURL:
+      "https://iiif.nypl.org/iiif/2/58270299/square/!288,288/0/default.jpg",
     numberOfDigitizedItems: 55,
     containsOnSiteMaterials: true,
   },
@@ -42,7 +46,8 @@ export const mockCollectionCards: CollectionCardDataType[] = [
     title: "Friedman-Abeles photographs",
     url: "https://digitalcollections.nypl.org/collections/friedman-abeles-photographs#/?tab=navigation",
     imageID: "58498722",
-    imageURL: "https://iiif.nypl.org/iiif/2/58270299/full/288,/0/default.jpg",
+    imageURL:
+      "https://iiif.nypl.org/iiif/2/58270299/square/!288,288/0/default.jpg",
     numberOfDigitizedItems: 35,
     containsOnSiteMaterials: false,
   },
@@ -51,7 +56,8 @@ export const mockCollectionCards: CollectionCardDataType[] = [
     title: "Farm Security Administration Photographs",
     url: "https://digitalcollections.nypl.org/collections/farm-security-administration-photographs#/?tab=navigation",
     imageID: "1952272",
-    imageURL: "https://iiif.nypl.org/iiif/2/58270299/full/288,/0/default.jpg",
+    imageURL:
+      "https://iiif.nypl.org/iiif/2/58270299/square/!288,288/0/default.jpg",
     numberOfDigitizedItems: 36,
     containsOnSiteMaterials: false,
   },
@@ -60,7 +66,8 @@ export const mockCollectionCards: CollectionCardDataType[] = [
     title: "Changing New York",
     url: "https://digitalcollections.nypl.org/collections/changing-new-york#/?tab=navigation",
     imageID: "58447105",
-    imageURL: "https://iiif.nypl.org/iiif/2/58270299/full/288,/0/default.jpg",
+    imageURL:
+      "https://iiif.nypl.org/iiif/2/58270299/square/!288,288/0/default.jpg",
     numberOfDigitizedItems: 37,
     containsOnSiteMaterials: false,
   },
@@ -70,7 +77,8 @@ export const mockCollectionCards: CollectionCardDataType[] = [
       "The Black Experience in Children's Books: Selections from Augusta Baker's Bibliographies",
     url: "https://digitalcollections.nypl.org/collections/the-black-experience-in-childrens-books-selections-from-augusta-bakers#/?tab=about",
     imageID: "56958645",
-    imageURL: "https://iiif.nypl.org/iiif/2/56958645/full/288,/0/default.jpg",
+    imageURL:
+      "https://iiif.nypl.org/iiif/2/56958645/square/!288,288/0/default.jpg",
     numberOfDigitizedItems: 153,
     containsOnSiteMaterials: false,
   },
