@@ -245,3 +245,26 @@ export const apiResponse = async (
     throw new Error(error.message);
   }
 };
+
+export const getCollectionsData = async ({
+  keyword = "",
+  sortID = "chronological-descending",
+  pageNum = 1,
+  perPage = CARDS_PER_PAGE,
+}: {
+  keyword?: string;
+  sortID?: string;
+  pageNum?: number;
+  perPage?: number;
+} = {}) => {
+  let sortOptions = {
+    date_desc: "date DESC",
+    date_asc: "date ASC",
+    "title-desc": "title DESC",
+    "title-asc": "title ASC",
+  };
+
+  let apiUrl = `${process.env.API_URL}/api/v2/collections?page=${pageNum}&per_page=${perPage}&sort=${sortOptions[sortID]}&q=${keyword}`;
+  const res = await apiResponse(apiUrl);
+  return res;
+};
