@@ -56,12 +56,12 @@ describe("getFeaturedItemData", () => {
     expect(apiResponse as jest.Mock).toHaveBeenCalledTimes(2);
     expect(apiResponse as jest.Mock).toHaveBeenNthCalledWith(
       1,
-      "https://api.repo.nypl.org/api/v2/items/featured",
+      `${process.env.API_URL}/api/v2/items/featured`,
       { params: { random: "true" } }
     );
     expect(apiResponse as jest.Mock).toHaveBeenNthCalledWith(
       2,
-      "https://api.repo.nypl.org/api/v2/items/total"
+      `${process.env.API_URL}/api/v2/items/total`
     );
     // Fallback data.
     expect(result.numberOfDigitizedItems).toEqual("875,861");
@@ -128,7 +128,7 @@ describe("getNumDigitizedItems", () => {
     );
     const result = await getNumDigitizedItems();
     expect(apiResponse as jest.Mock).toHaveBeenCalledWith(
-      "https://api.repo.nypl.org/api/v2/items/total"
+      `${process.env.API_URL}/api/v2/items/total`
     );
     expect(result).toEqual("78");
   });
@@ -203,7 +203,7 @@ describe("getRandomFeaturedItem", () => {
     );
     const item = await getRandomFeaturedItem();
     expect(apiResponse as jest.Mock).toHaveBeenCalledWith(
-      "https://api.repo.nypl.org/api/v2/items/featured",
+      `${process.env.API_URL}/api/v2/items/featured`,
       { params: { random: "true" } }
     );
     expect(item).toEqual(mockFeaturedItemResponse);
@@ -219,7 +219,7 @@ describe("getFeaturedImage", () => {
     );
     const imageData = await getFeaturedImage();
     expect(apiResponse as jest.Mock).toHaveBeenCalledWith(
-      "https://api.repo.nypl.org/api/v2/items/featured",
+      `${process.env.API_URL}/api/v2/items/featured`,
       { params: { random: "true" } }
     );
 
@@ -249,7 +249,7 @@ describe("getItemData", () => {
     );
     const item = await getItemData("uuid1");
     expect(apiResponse as jest.Mock).toHaveBeenCalledWith(
-      "https://api.repo.nypl.org/api/v2/items/mods_captures/uuid1"
+      `${process.env.API_URL}/api/v2/items/mods_captures/uuid1`
     );
     expect(item).toEqual(mockItemResponse);
     expect(item).toHaveProperty("capture");
