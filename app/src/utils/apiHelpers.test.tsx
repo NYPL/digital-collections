@@ -223,13 +223,22 @@ describe("getFeaturedImage", () => {
       { params: { random: "true" } }
     );
 
-    // Fallback data.
     expect(imageData.imageID).toEqual("482815");
-
     expect(imageData).toHaveProperty("uuid");
     expect(imageData).toHaveProperty("imageID");
     expect(imageData).toHaveProperty("title");
     expect(imageData).not.toHaveProperty("capture");
+  });
+
+  it("returns the fallback featured image on empty response", async () => {
+    (apiResponse as jest.Mock).mockResolvedValueOnce(Promise.resolve({}));
+
+    const imageData = await getFeaturedImage();
+
+    // Fallback data.
+    expect(imageData.uuid).toEqual(
+      defaultFeaturedItem["development"].featuredItem.uuid
+    );
   });
 });
 
