@@ -164,15 +164,17 @@ export const getDivisionData = async ({
 };
 
 export const getLaneData = async ({
+  slug,
   pageNum = 1,
   perPage = CARDS_PER_PAGE,
-  slug,
 }: {
+  slug: string;
   pageNum?: number;
   perPage?: number;
-  slug?: string;
-} = {}) => {
-  let apiUrl = `${process.env.API_URL}/api/v2/collections?genre=${slug}&page=${pageNum}&per_page=${perPage}`;
-  const res = await apiResponse(apiUrl);
-  return res;
+}) => {
+  if (!slug) {
+    throw new Error("Slug is required in getLaneData()");
+  }
+  const apiUrl = `${process.env.API_URL}/api/v2/collections?genre=${slug}&page=${pageNum}&per_page=${perPage}`;
+  return await apiResponse(apiUrl);
 };

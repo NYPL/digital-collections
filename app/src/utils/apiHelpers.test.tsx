@@ -5,6 +5,7 @@ import {
   getHomePageData,
   getItemData,
   getItemsCountFromUUIDs,
+  getLaneData,
   getNumDigitizedItems,
   getRandomFeaturedItem,
 } from "./apiHelpers";
@@ -114,6 +115,83 @@ describe("getDivisionData", () => {
     const result = await getDivisionData();
     expect(result.divisions.length).toEqual(2);
     expect(result).toHaveProperty("summary");
+  });
+});
+
+describe("getLaneData", () => {
+  it("forms the correct request from params with slug", async () => {
+    await getLaneData({
+      slug: "testSlug",
+      pageNum: 1,
+      perPage: 3,
+    });
+
+    expect(apiResponse as jest.Mock).toHaveBeenCalledWith(
+      `${process.env.API_URL}/api/v2/collections?genre=testSlug&page=1&per_page=3`
+    );
+  });
+
+  it("forms the correct request from no page params", async () => {
+    await getLaneData({ slug: "testSlug" });
+    expect(apiResponse as jest.Mock).toHaveBeenCalledWith(
+      `${process.env.API_URL}/api/v2/collections?genre=testSlug&page=1&per_page=48`
+    );
+  });
+
+  it("returns successful response", async () => {
+    (apiResponse as jest.Mock).mockResolvedValueOnce(
+      Promise.resolve({
+        headers: {
+          status: "200",
+          code: "200",
+          message: "Collections retrieved successfully",
+        },
+        genre: "recently digitized collections",
+        numResults: "4689",
+        page: "1",
+        perPage: "48",
+        collection: [
+          {
+            title: "Edward Harrigan papers",
+            uuid: "e4d9e770-8b49-013d-5581-0242ac110002",
+            url: "https://digitalcollections.nypl.org/collections/e4d9e770-8b49-013d-5581-0242ac110002",
+            apiUri:
+              "https://api.repo.nypl.org/api/v2/collections/e4d9e770-8b49-013d-5581-0242ac110002",
+            imageID: "3932292",
+            containsOnSiteMaterials: "false",
+            numItems: "1",
+            numberOfDigitizedItems: "1",
+          },
+          {
+            title: "Die Bauwelt ",
+            uuid: "1f182f10-78ed-013d-5352-0242ac110004",
+            url: "https://digitalcollections.nypl.org/collections/1f182f10-78ed-013d-5352-0242ac110004",
+            apiUri:
+              "https://api.repo.nypl.org/api/v2/collections/1f182f10-78ed-013d-5352-0242ac110004",
+            imageID: "58928925",
+            containsOnSiteMaterials: "false",
+            numItems: "2",
+            numberOfDigitizedItems: "2",
+          },
+          {
+            title: "Velhagen & Klasings Monatshefte",
+            uuid: "2f151240-6247-013d-50f1-0242ac110004",
+            url: "https://digitalcollections.nypl.org/collections/2f151240-6247-013d-50f1-0242ac110004",
+            apiUri:
+              "https://api.repo.nypl.org/api/v2/collections/2f151240-6247-013d-50f1-0242ac110004",
+            imageID: "58928893",
+            containsOnSiteMaterials: "false",
+            numItems: "1",
+            numberOfDigitizedItems: "1",
+          },
+        ],
+      })
+    );
+    const result = await getLaneData({
+      slug: "recently-digitized-collections",
+    });
+    expect(result.collection.length).toEqual(3);
+    expect(result).toHaveProperty("genre");
   });
 });
 
