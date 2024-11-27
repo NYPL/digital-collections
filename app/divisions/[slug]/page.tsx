@@ -17,6 +17,9 @@ export async function generateMetadata({
   const slug = slugToString(params.slug);
   return {
     title: `${slug} - NYPL Digital Collections`,
+    openGraph: {
+      title: `${slug} - NYPL Digital Collections`,
+    },
   };
 }
 

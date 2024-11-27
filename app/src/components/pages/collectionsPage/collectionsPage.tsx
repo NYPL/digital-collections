@@ -22,6 +22,7 @@ import { CardsGrid } from "../../grids/cardsGrid";
 import LaneLoading from "../../lane/laneLoading";
 import { slugToString, totalNumPages } from "../../../utils/utils";
 import type { SyntheticEvent } from "react";
+import { createAdobeAnalyticsPageName } from "@/src/utils/utils";
 
 export const CollectionsPage = ({ data }) => {
   const router = useRouter();
@@ -167,7 +168,7 @@ export const CollectionsPage = ({ data }) => {
         { text: "Home", url: "/" },
         { text: "Collections", url: "/collections" },
       ]}
-      adobeAnalyticsPageName="all-collections"
+      adobeAnalyticsPageName={createAdobeAnalyticsPageName("all-collections")}
     >
       <Box
         sx={{

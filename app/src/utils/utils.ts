@@ -112,8 +112,25 @@ export function isCollectionType(
 }
 
 export const collectionsSortOptions = {
-  date_desc: "date DESC",
-  date_asc: "date ASC",
+  "date-desc": "date DESC",
+  "date-asc": "date ASC",
   "title-desc": "title DESC",
   "title-asc": "title ASC",
 };
+
+export const createAdobeAnalyticsPageName = (
+  base: string,
+  recordName: string = ""
+): string => {
+  return recordName ? `${base}|${stringToSlug(recordName)}` : base;
+};
+
+export function displayResults(
+  numFound: number,
+  perPage: number,
+  page: number
+) {
+  const start = (page - 1) * perPage + 1;
+  const end = Math.min(page * perPage, numFound);
+  return `${start}-${end} of ${numFound}`;
+}

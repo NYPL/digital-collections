@@ -11,6 +11,9 @@ export type CollectionsProps = {
 
 export const metadata: Metadata = {
   title: "Collections - NYPL Digital Collections",
+  openGraph: {
+    title: "Collections - NYPL Digital Collections",
+  },
 };
 
 export default async function Collections({ searchParams }: CollectionsProps) {
