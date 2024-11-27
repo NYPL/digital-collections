@@ -1,17 +1,19 @@
 {
   "name": "digital-collections",
-  "version": "0.1.1",
+  "version": "0.2.2",
   "private": true,
   "scripts": {
     "dev": "next dev",
     "dev:newrelic": "NODE_OPTIONS='-r dotenv/config .env.local -r newrelic' next dev",
-    "build": "next build && cp ./CHANGELOG.md ./public/changelog.md",
+    "build": "next build",
+    "update-changelog": "cp ./CHANGELOG.md ./public/changelog.md",
     "start": "next start",
     "start:newrelic": "NODE_OPTIONS='-r dotenv/config .env.prod -r newrelic' next start",
     "lint": "next lint",
     "test": "jest --config=jest.config.ts",
     "test:API": "jest --config=jestAPI.config.ts",
     "test:all": "npm run test && npm run test:API",
+    "test:watch": "jest --watch --config=jest.config.ts",
     "test:ci": "jest --ci --config=jest.config.ts",
     "prepare": "husky install",
     "homepageImageLoadingTestQa": "node test/homepageImageLoadingTest.js",
@@ -33,7 +35,6 @@
     "trailingComma": "es5"
   },
   "dependencies": {
-    "@newrelic/next": "0.10.0",
     "@samvera/clover-iiif": "^2.9.0",
     "@types/node": "20.5.9",
     "@types/react": "18.2.21",
@@ -42,9 +43,10 @@
     "eslint": "8.48.0",
     "googleapis": "129.0.0",
     "newrelic": "12.5.1",
-    "next": "14.2.3",
+    "next": "14.2.18",
     "react": "18.2.0",
     "react-dom": "18.2.0",
+    "sharp": "0.33.5",
     "ts-node": "10.9.1",
     "typescript": "4.9.5",
     "ua-parser-js": "^1.0.38",
@@ -52,7 +54,7 @@
     "winston": "3.9.0"
   },
   "devDependencies": {
-    "@nypl/design-system-react-components": "3.3.2",
+    "@nypl/design-system-react-components": "3.4.0",
     "@testing-library/jest-dom": "6.1.4",
     "@testing-library/react": "14.0.0",
     "@types/jest": "29.5.5",

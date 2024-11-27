@@ -11,6 +11,7 @@ import { DC_URL } from "@/src/config/constants";
 import { Lane as DCLane } from "../../lane/lane";
 import LaneLoading from "../../lane/laneLoading";
 import LaneDataType from "@/src/types/Lane";
+import { createAdobeAnalyticsPageName } from "@/src/utils/utils";
 
 interface DivisionsProps {
   summary: string;
@@ -30,7 +31,7 @@ export default function DivisionsPage({ summary, divisions }: DivisionsProps) {
         { text: "Home", url: "/" },
         { text: "Divisions", url: "/divisions" },
       ]}
-      adobeAnalyticsPageName="divisions"
+      adobeAnalyticsPageName={createAdobeAnalyticsPageName("divisions")}
     >
       {divisions && divisions.length > 0 ? (
         <>
@@ -50,7 +51,7 @@ export default function DivisionsPage({ summary, divisions }: DivisionsProps) {
               <DCLane
                 key={key}
                 records={division.collections}
-                seeMoreLink={`${DC_URL}/divisions`}
+                seeMoreLink={`/divisions`}
                 laneName={division.name}
                 laneSlug={division.slug}
               />

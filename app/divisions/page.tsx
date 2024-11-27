@@ -6,6 +6,9 @@ import { redirect } from "next/navigation";
 
 export const metadata: Metadata = {
   title: "Divisions - NYPL Digital Collections",
+  openGraph: {
+    title: "Divisions - NYPL Digital Collections",
+  },
 };
 
 export default async function Divisions() {

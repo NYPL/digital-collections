@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useRef } from "react";
+import React, { forwardRef, useEffect, useRef, useState } from "react";
 import useBreakpoints from "../../hooks/useBreakpoints";
 import CollectionDataType from "../../types/CollectionDataType";
 import ItemDataType from "@/src/types/ItemDataType";
@@ -10,49 +10,66 @@ import { ItemCardModel } from "@/src/models/itemCard";
 import { SimpleGrid as DCSimpleGrid } from "../simpleGrid/simpleGrid";
 import { Card as DCCard } from "../card/card";
 import { useTooltipOffset } from "@/src/hooks/useTooltipOffset";
+import { useCardImageHeight } from "@/src/hooks/useCardImageHeight";
+import LaneLoading from "../lane/laneLoading";
 
 interface CardsGridProps {
   records: CollectionDataType[] | ItemDataType[];
 }
 
-export const CardsGrid = ({ records }: CardsGridProps) => {
-  const { isLargerThanLargeTablet } = useBreakpoints();
-  console.log("typeof record", typeof records);
-  // const sanitizedRecords = typeof records === "object" ? [records] : records;
+export const CardsGrid = forwardRef<HTMLDivElement, CardsGridProps>(
+  ({ records }, ref?) => {
+    const { isLargerThanLargeTablet } = useBreakpoints();
+    const isCollections = isCollectionType(records);
+    const cardRef = useRef<HTMLDivElement | null>(null);
+    const tooltipOffset = useTooltipOffset(cardRef);
+    const imageHeight = useCardImageHeight(cardRef);
+    const [isLoaded, setIsLoaded] = useState(false);
 
-  const isCollections = isCollectionType(records);
-  const cardRef = useRef<HTMLDivElement>(null);
-  const tooltipOffset = useTooltipOffset(cardRef);
-  // const sanitizedRecords = typeof records === "object" ? [records] : records;
-  return (
-    <DCSimpleGrid>
-      {records?.map((record, index) => {
-        if (isCollections) {
-          const collectionCardModel = new CollectionCardModel(record);
-          return (
-            <DCCard
-              key={index}
-              id={index}
-              ref={cardRef}
-              tooltipOffset={tooltipOffset}
-              record={collectionCardModel}
-              isLargerThanLargeTablet={isLargerThanLargeTablet}
-            />
-          );
-        } else {
-          const itemCardModel = new ItemCardModel(record);
-          return (
-            <DCCard
-              key={index}
-              id={index}
-              ref={cardRef}
-              tooltipOffset={tooltipOffset}
-              record={itemCardModel}
-              isLargerThanLargeTablet={isLargerThanLargeTablet}
-            />
-          );
-        }
-      })}
-    </DCSimpleGrid>
-  );
-};
+    useEffect(() => {
+      setIsLoaded(true);
+    }, []);
+
+    return isLoaded ? (
+      <DCSimpleGrid ref={ref}>
+        {records?.map((record, index) => {
+          if (isCollections) {
+            const collectionCardModel = new CollectionCardModel(record);
+            return (
+              <DCCard
+                key={index}
+                id={index}
+                ref={cardRef}
+                tooltipOffset={tooltipOffset}
+                imageHeight={imageHeight}
+                record={collectionCardModel}
+                isLargerThanLargeTablet={isLargerThanLargeTablet}
+              />
+            );
+          } else {
+            const itemCardModel = new ItemCardModel(record);
+            return (
+              <DCCard
+                key={index}
+                id={index}
+                ref={cardRef}
+                tooltipOffset={tooltipOffset}
+                imageHeight={imageHeight}
+                record={itemCardModel}
+                isLargerThanLargeTablet={isLargerThanLargeTablet}
+              />
+            );
+          }
+        })}
+      </DCSimpleGrid>
+    ) : (
+      <>
+        {[...Array(Math.ceil(records.length / 4))].map((_, index) => (
+          <LaneLoading key={index} withTitle={false} />
+        ))}
+      </>
+    );
+  }
+);
+
+CardsGrid.displayName = "CardsGrid";

@@ -40,6 +40,7 @@ const SimpleGridComponent = forwardRef<
       className={className}
       gap={gap}
       id={id}
+      tabIndex={-1}
       ref={ref}
       {...rest}
       sx={{

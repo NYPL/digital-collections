@@ -9,16 +9,87 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Updated
 
+- Update thumbnail logic so thumbnails are never restricted (DR-3293)
+
+## [0.2.4] 2024-11-26
+
+### Updated
+
+- Updated Next.js to `14.2.18` to patch vulnerabilities.
+
+## [0.2.3] 2024-11-21
+
+### Updated
+
+- Update timeout on API request to 14 seconds
+
+## [0.2.2] 2024-11-20
+
+### Updated
+
+- Update production DC_URL in appConfig.ts file
+
+## [0.2.1] 2024-11-20
+
+### Updated
+
+- Update collection links to be relative
+
+## [0.2.0] 2024-11-20
+
+### Removed
+
+- Remove banner that links to OG Digital Collections (DR-3263)
+
+### Updated
+
+- Update links on /divisions page to point to /divisions/:slug pages (DR-3142)
+- Updating pagination text on division landing page
+- Updating Next Image quality
+
+## [0.1.19] 2024-11-18
+
+### Updated
+
+- Moved `/divisions` and `/divisions/[slug]` from behind middleware, now accessible (DR-3132, DR-3133)
+- Updated collection card urls to use uuid
+- Updated item card urls to use uuid
+- Updated collection card urls to use legacy url
+- Updated prod ECS cluster name to `new-digitalcollections-prod`
+
+## [0.1.18] 2024-11-18
+
+- merged into 0.1.19
+
+## [0.1.17] 2024-11-14
+
+### Updated
+
+- Updated cards to use Next Image (DR-3056)
+- Refactored Repo API handler with added timeout errors (DR-3251)
+- Removed canonical tag to old DC (DR-3264)
+- Refactored Adobe Analytics page names (DR-3257)
+- Updated New Relic server configurations to its default settings to capture transactions (DR-3261)
+- Updated metadata to include specific Open Graph titles (DR-3273)
+
+### Fixed
+
+- Fixed division titles on division landing pages (DR-3274)
+
+## [0.1.16] 2024-10-31
+
+### Updated
+
 - Updated links in QA to point internally for reverse proxy (DR-3237)
 - Updated how env vars are read for New Relic Browser implementation (DR-3235)
+- Refactored collections/items grid into one `CardsGrid` component (DR-3193)
+- Updated 500 and 404 error page designs, adding link to open feedback box (DR-3203)
 
 ## [0.1.15] 2024-10-10
 
 ### Updated
 
-- Updated 500 and 404 error page designs, adding link to open feedback box (DR-3203)
 - Refactored collection/item lanes into one `Lane` component (DR-3191)
-- Refactored collections/items grid into one `CardsGrid` component (DR-3193)
 - Updated header on /divisions/:slug page to have a tabIndex of -1 (DR-3229)
 - General cleanup (DR-3194)
 

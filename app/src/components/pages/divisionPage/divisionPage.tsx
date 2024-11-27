@@ -16,7 +16,11 @@ import React, { useEffect, useState, useRef } from "react";
 import PageLayout from "../../pageLayout/pageLayout";
 import { headerBreakpoints } from "../../../utils/breakpoints";
 import { CardsGrid } from "../../grids/cardsGrid";
-import { slugToString, totalNumPages } from "../../../utils/utils";
+import {
+  totalNumPages,
+  createAdobeAnalyticsPageName,
+  displayResults,
+} from "../../../utils/utils";
 import { DC_URL } from "@/src/config/constants";
 import { Lane as DCLane } from "../../lane/lane";
 import LaneLoading from "../../lane/laneLoading";
@@ -24,8 +28,6 @@ import LaneLoading from "../../lane/laneLoading";
 export default function DivisionPage({ data }: any) {
   const params = useParams();
   const slug = params.slug as string;
-  const title = slugToString(slug);
-  const pageName = `divisions|${slug}`;
   const [isLoaded, setIsLoaded] = useState(false);
 
   const pathname = usePathname();
@@ -36,7 +38,7 @@ export default function DivisionPage({ data }: any) {
     Number(queryParams.get("page")) || 1
   );
 
-  const { replace } = useRouter();
+  const { push } = useRouter();
 
   const totalPages = totalNumPages(data.numFound, data.perPage);
 
@@ -45,8 +47,12 @@ export default function DivisionPage({ data }: any) {
     params.set("page", pageNumber.toString());
     setCurrentPage(pageNumber);
     const url = `${pathname}?${params.toString()}#${data.slug}`;
-    replace(url);
-    headingRef.current?.focus;
+    setIsLoaded(false);
+    push(url);
+    setTimeout(() => {
+      setIsLoaded(true);
+      headingRef.current?.focus();
+    }, 2000);
   };
 
   useEffect(() => {
@@ -59,9 +65,9 @@ export default function DivisionPage({ data }: any) {
       breadcrumbs={[
         { text: "Home", url: "/" },
         { text: "Divisions", url: "/divisions" },
-        { text: `${title}`, url: `/divisions/${data.slug}` },
+        { text: `${data.name}`, url: `/divisions/${data.slug}` },
       ]}
-      adobeAnalyticsPageName={pageName}
+      adobeAnalyticsPageName={createAdobeAnalyticsPageName("divisions", slug)}
     >
       <Box
         sx={{
@@ -83,7 +89,7 @@ export default function DivisionPage({ data }: any) {
           gap: "m",
         }}
       >
-        <Heading level="h1" text={title} subtitle={data.summary} />
+        <Heading level="h1" text={data.name} subtitle={data.summary} />
         <Link
           type="standalone"
           target="_blank"
@@ -106,24 +112,27 @@ export default function DivisionPage({ data }: any) {
       <HorizontalRule sx={{ marginTop: "xxl", marginBottom: "xxl" }} />
 
       <Heading
+        size="heading5"
+        sx={{ marginBottom: "l" }}
         ref={headingRef}
         tabIndex={-1}
-        level="h2"
         id={slug}
-        size="heading3"
-        style={{ width: "fit-content" }}
+        width="max-content"
       >
+        {`Displaying ${displayResults(data.numFound, data.perPage, data.page)}
+        results`}
+      </Heading>
+
+      <Heading level="h2" size="heading3" style={{ width: "fit-content" }}>
         {`Collections in the ${data.name}`}
       </Heading>
 
       {isLoaded ? (
         <CardsGrid records={data.collections} />
       ) : (
-        <>
+        Array(Math.ceil(data.collections.length / 4)).fill(
           <LaneLoading withTitle={false} />
-          <LaneLoading withTitle={false} />
-          <LaneLoading withTitle={false} />
-        </>
+        )
       )}
       {totalPages > 1 && (
         <Pagination
