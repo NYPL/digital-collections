@@ -116,28 +116,19 @@ describe("getDivisionData", () => {
     expect(result.divisions.length).toEqual(2);
     expect(result).toHaveProperty("summary");
   });
+
+  it("handles error response", async () => {
+    (apiResponse as jest.Mock).mockRejectedValue(
+      new Error("apiResponse: Request timed out")
+    );
+
+    await expect(getDivisionData()).rejects.toThrow(
+      new Error("apiResponse: Request timed out")
+    );
+  });
 });
 
 describe("getLaneData", () => {
-  it("forms the correct request from params with slug", async () => {
-    await getLaneData({
-      slug: "testSlug",
-      pageNum: 1,
-      perPage: 3,
-    });
-
-    expect(apiResponse as jest.Mock).toHaveBeenCalledWith(
-      `${process.env.API_URL}/api/v2/collections?genre=testSlug&page=1&per_page=3`
-    );
-  });
-
-  it("forms the correct request from no page params", async () => {
-    await getLaneData({ slug: "testSlug" });
-    expect(apiResponse as jest.Mock).toHaveBeenCalledWith(
-      `${process.env.API_URL}/api/v2/collections?genre=testSlug&page=1&per_page=48`
-    );
-  });
-
   it("returns successful response", async () => {
     (apiResponse as jest.Mock).mockResolvedValueOnce(
       Promise.resolve({
@@ -192,6 +183,54 @@ describe("getLaneData", () => {
     });
     expect(result.collection.length).toEqual(3);
     expect(result).toHaveProperty("genre");
+  });
+
+  it("handles error response", async () => {
+    (apiResponse as jest.Mock).mockRejectedValue(
+      new Error("apiResponse: Request timed out")
+    );
+
+    await expect(getLaneData({ slug: "testSlug" })).rejects.toThrow(
+      new Error("apiResponse: Request timed out")
+    );
+  });
+
+  it("forms the correct request from params with slug", async () => {
+    (apiResponse as jest.Mock).mockResolvedValueOnce(
+      Promise.resolve({
+        headers: {
+          status: "200",
+          code: "200",
+          message: "Collections retrieved successfully",
+        },
+      })
+    );
+
+    await getLaneData({
+      slug: "testSlug",
+      pageNum: 1,
+      perPage: 3,
+    });
+
+    expect(apiResponse as jest.Mock).toHaveBeenCalledWith(
+      `${process.env.API_URL}/api/v2/collections?genre=testSlug&page=1&per_page=3`
+    );
+  });
+
+  it("forms the correct request from no page params", async () => {
+    (apiResponse as jest.Mock).mockResolvedValueOnce(
+      Promise.resolve({
+        headers: {
+          status: "200",
+          code: "200",
+          message: "Collections retrieved successfully",
+        },
+      })
+    );
+    await getLaneData({ slug: "testSlug" });
+    expect(apiResponse as jest.Mock).toHaveBeenCalledWith(
+      `${process.env.API_URL}/api/v2/collections?genre=testSlug&page=1&per_page=48`
+    );
   });
 });
 
