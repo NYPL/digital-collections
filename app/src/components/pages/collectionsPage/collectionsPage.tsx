@@ -43,7 +43,12 @@ export const CollectionsPage = ({ data }) => {
       sort: currentSort,
       page: currentPage,
     });
+    setIsLoaded(false);
     await push(`${pathname}?${queryString}`);
+    setTimeout(() => {
+      setIsLoaded(true);
+      headingRef.current?.focus();
+    }, 2000);
   };
 
   // I'm not actually sure if this is necessary but it's in the research catalog
@@ -61,8 +66,12 @@ export const CollectionsPage = ({ data }) => {
       sort: currentSort,
       page: pageNumber.toString(),
     });
-    console.log("queryString is: ", queryString);
+    setIsLoaded(false);
     await push(`${pathname}?${queryString}`);
+    setTimeout(() => {
+      setIsLoaded(true);
+      headingRef.current?.focus();
+    }, 2000);
   };
 
   // TODO: right now, whenever a user hits earch, the url is created with all params including the defaults.
@@ -87,7 +96,12 @@ export const CollectionsPage = ({ data }) => {
       sort: id,
       page: currentPage,
     });
+    setIsLoaded(false);
     await push(`${pathname}?${queryString}`);
+    setTimeout(() => {
+      setIsLoaded(true);
+      headingRef.current?.focus();
+    }, 2000);
   };
 
   useEffect(() => {
