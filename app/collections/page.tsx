@@ -31,7 +31,8 @@ export default async function Collections({ searchParams }: CollectionsProps) {
   return (
     <Suspense>
       {/* pass entire Repo API Response */}
-      <CollectionsPage data={data} />
+      {/* searchParams: { page: number; sort: string; collection_keyword: string }; */}
+      <CollectionsPage data={data} params={searchParams} />
     </Suspense>
   );
 }
