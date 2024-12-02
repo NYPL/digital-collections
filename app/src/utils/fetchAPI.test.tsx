@@ -1,6 +1,6 @@
-import { fetchAPI } from "./fetchApi";
+import { fetchApi } from "./fetchApi";
 
-describe("fetchAPI", () => {
+describe("fetchApi", () => {
   const mockApiUrl = "mockurl.org";
   const mockAuthToken = "mockAuthToken";
 
@@ -18,7 +18,7 @@ describe("fetchAPI", () => {
       })
     ) as jest.Mock;
 
-    const response = await fetchAPI(mockApiUrl);
+    const response = await fetchApi(mockApiUrl);
     expect(fetch).toHaveBeenCalledWith(mockApiUrl, {
       method: "GET",
       headers: {
@@ -40,7 +40,7 @@ describe("fetchAPI", () => {
       })
     ) as jest.Mock;
 
-    const response = await fetchAPI(mockApiUrl, {
+    const response = await fetchApi(mockApiUrl, {
       method: "POST",
       body: mockBody,
     });
@@ -67,7 +67,7 @@ describe("fetchAPI", () => {
       })
     ) as jest.Mock;
 
-    const response = await fetchAPI(mockApiUrl, {
+    const response = await fetchApi(mockApiUrl, {
       params: mockParams,
     });
 
@@ -92,8 +92,8 @@ describe("fetchAPI", () => {
       })
     ) as jest.Mock;
 
-    await expect(fetchAPI(mockApiUrl)).rejects.toEqual(
-      new Error("fetchAPI: 500 Internal Server Error")
+    await expect(fetchApi(mockApiUrl)).rejects.toEqual(
+      new Error("fetchApi: 500 Internal Server Error")
     );
   });
 
@@ -104,12 +104,12 @@ describe("fetchAPI", () => {
       .fn()
       .mockImplementation(() => new Promise(() => {}));
 
-    const apiCall = fetchAPI(mockApiUrl);
+    const apiCall = fetchApi(mockApiUrl);
 
     jest.advanceTimersByTime(14000);
 
     await expect(apiCall).rejects.toEqual(
-      new Error("fetchAPI: Request timed out")
+      new Error("fetchApi: Request timed out")
     );
 
     jest.useRealTimers();

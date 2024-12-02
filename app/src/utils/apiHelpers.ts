@@ -6,7 +6,7 @@ import appConfig from "../../../appConfig";
 import defaultFeaturedItems from "../data/defaultFeaturedItemData";
 import { CARDS_PER_PAGE } from "../config/constants";
 import { DC_URL } from "../config/constants";
-import { fetchAPI } from "./fetchApi";
+import { fetchApi } from "./fetchApi";
 
 export const getHomePageData = async () => {
   const randomNumber = Math.floor(Math.random() * 2);
@@ -81,7 +81,7 @@ export const getFeaturedImage = async () => {
 
 export const getItemData = async (uuid: string) => {
   const apiUrl = `${process.env.API_URL}/api/v2/items/mods_captures/${uuid}`;
-  const res = await fetchAPI(apiUrl);
+  const res = await fetchApi(apiUrl);
   return res;
 };
 
@@ -91,7 +91,7 @@ export const getItemData = async (uuid: string) => {
 
 export const getNumDigitizedItems = async () => {
   const apiUrl = `${process.env.API_URL}/api/v2/items/total`;
-  const res = await fetchAPI(apiUrl);
+  const res = await fetchApi(apiUrl);
 
   const fallbackCount =
     defaultFeaturedItems[appConfig.environment as ENV_KEY]
@@ -105,7 +105,7 @@ export const getNumDigitizedItems = async () => {
  */
 export const getItemsCountFromUUIDs = async (uuids: string[]) => {
   const apiUrl = `${process.env.API_URL}/api/v2/items/counts`;
-  const response = await fetchAPI(apiUrl, {
+  const response = await fetchApi(apiUrl, {
     method: "POST",
     body: { uuids },
   });
@@ -136,7 +136,7 @@ export const getItemsCountFromUUIDs = async (uuids: string[]) => {
 
 export const getRandomFeaturedItem = async () => {
   const apiUrl = `${process.env.API_URL}/api/v2/items/featured`;
-  const res = await fetchAPI(apiUrl, {
+  const res = await fetchApi(apiUrl, {
     params: {
       random: "true",
     },
@@ -159,7 +159,7 @@ export const getDivisionData = async ({
     apiUrl += `/${slug}?page=${pageNum}&per_page=${perPage}`;
   }
 
-  const res = await fetchAPI(apiUrl);
+  const res = await fetchApi(apiUrl);
   return res;
 };
 
@@ -173,5 +173,5 @@ export const getLaneData = async ({
   perPage?: number;
 }) => {
   const apiUrl = `${process.env.API_URL}/api/v2/collections?genre=${slug}&page=${pageNum}&per_page=${perPage}`;
-  return await fetchAPI(apiUrl);
+  return await fetchApi(apiUrl);
 };
