@@ -214,10 +214,3 @@ export const CollectionsPage = ({ data }) => {
     </PageLayout>
   );
 };
-
-/* 
-  https://api.repo.nypl.org/api/v2/collections?page=1&per_page=48&sort=date%20ASC&q=billy
-  https://api.repo.nypl.org/api/v2/collections?page=2&per_page=48&sort=date%20ASC&q=billy // status 404 
-
-  https://api.repo.nypl.org/api/v2/collections?page=1&per_page=48&sort=date%20ASC&q=cat // one collection returned in response as object and not array
-*/
