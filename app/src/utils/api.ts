@@ -176,10 +176,10 @@ export const getCollectionsData = async ({
   perPage?: number; // OPEN QUESTION: perhaps remove the "perPage" field because the API default is 48 and that is what we want.
 } = {}) => {
   let apiUrl = `${process.env.API_URL}/api/v2/collections?page=${pageNum}&per_page=${perPage}&sort=${collectionsSortOptions[sortID]}&q=${keyword}`;
-  console.log("apiUrl is: ", apiUrl);
   const res = await apiResponse(apiUrl);
   return res;
 };
+
 export const getLaneData = async ({
   pageNum = 1,
   perPage = CARDS_PER_PAGE,
@@ -223,7 +223,6 @@ export const apiResponse = async (
     const queryString = "?" + new URLSearchParams(options?.params).toString();
     apiUrl += queryString;
   }
-  console.log("API Url is: ", apiUrl);
 
   const timeout = 14000;
 
