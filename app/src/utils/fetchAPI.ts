@@ -8,7 +8,7 @@
  *   - body: Body data for POST requests.
  * @returns {Promise<any>} - The API response.
  */
-export const apiResponse = async (
+export const fetchAPI = async (
   apiUrl: string,
   options?: {
     method?: "GET" | "POST";
@@ -35,7 +35,7 @@ export const apiResponse = async (
       fetch(url, opts),
       new Promise((_, reject) =>
         setTimeout(
-          () => reject(new Error("apiResponse: Request timed out")),
+          () => reject(new Error("fetchAPI: Request timed out")),
           timeout
         )
       ),
@@ -51,7 +51,7 @@ export const apiResponse = async (
 
     if (!response.ok && response.status !== 200) {
       throw new Error(
-        `apiResponse: ${response.status} ${
+        `fetchAPI: ${response.status} ${
           response.statusText ? response.statusText : "No message"
         }`
       );
