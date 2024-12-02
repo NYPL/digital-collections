@@ -52,7 +52,7 @@ const searchSchema = {
         url: "string",
         imageID: "string | null",
         imageURL: "string",
-        containsMultipleImages: "booleam",
+        containsMultipleImages: "boolean",
       },
       {
         uuid: "string",
@@ -60,7 +60,7 @@ const searchSchema = {
         url: "string",
         imageID: "string | null",
         imageURL: "string",
-        containsMultipleImages: "booleam",
+        containsMultipleImages: "boolean",
       },
       {
         uuid: "string",
@@ -68,7 +68,7 @@ const searchSchema = {
         url: "string",
         imageID: "string | null",
         imageURL: "string",
-        containsMultipleImages: "booleam",
+        containsMultipleImages: "boolean",
       },
     ],
   },
