@@ -11,12 +11,7 @@ import {
   Text,
   Pagination,
 } from "@nypl/design-system-react-components";
-import {
-  useParams,
-  useSearchParams,
-  usePathname,
-  useRouter,
-} from "next/navigation";
+import { useSearchParams, usePathname, useRouter } from "next/navigation";
 import { headerBreakpoints } from "../../../utils/breakpoints";
 import { CardsGrid } from "../../grids/cardsGrid";
 import LaneLoading from "../../lane/laneLoading";
@@ -25,11 +20,8 @@ import type { SyntheticEvent } from "react";
 import { createAdobeAnalyticsPageName } from "@/src/utils/utils";
 
 export const CollectionsPage = ({ data }) => {
-  const router = useRouter();
-
   const { push } = useRouter();
   const searchParams = useSearchParams();
-  const query = searchParams.toString();
   const pathname = usePathname();
   const [isLoaded, setIsLoaded] = useState(false);
 
@@ -44,7 +36,6 @@ export const CollectionsPage = ({ data }) => {
 
   const handleSearchSubmit = async (e: SyntheticEvent) => {
     e.preventDefault();
-    const target = e.target as HTMLInputElement;
     const queryString = createQueryStringFromObject({
       collection_keyword: currentCollectionKeyword,
       sort: currentSort,
@@ -191,7 +182,13 @@ export const CollectionsPage = ({ data }) => {
       </Box>
 
       {isLoaded ? (
-        <CardsGrid records={data.collection} />
+        <CardsGrid
+          records={
+            typeof data.collection === "object"
+              ? [data.collection]
+              : data.collection
+          }
+        />
       ) : (
         <>
           <LaneLoading withTitle={false} />,
@@ -218,3 +215,10 @@ export const CollectionsPage = ({ data }) => {
     </PageLayout>
   );
 };
+
+/* 
+  https://api.repo.nypl.org/api/v2/collections?page=1&per_page=48&sort=date%20ASC&q=billy
+  https://api.repo.nypl.org/api/v2/collections?page=2&per_page=48&sort=date%20ASC&q=billy // status 404 
+
+  https://api.repo.nypl.org/api/v2/collections?page=1&per_page=48&sort=date%20ASC&q=cat // one collection returned in response as object and not array
+*/
