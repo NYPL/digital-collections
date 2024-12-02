@@ -223,6 +223,7 @@ export const apiResponse = async (
     const queryString = "?" + new URLSearchParams(options?.params).toString();
     apiUrl += queryString;
   }
+  console.log("API Url is: ", apiUrl);
 
   const timeout = 14000;
 
