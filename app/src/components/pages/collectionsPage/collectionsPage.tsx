@@ -1,6 +1,6 @@
 "use client";
 import PageLayout from "../../pageLayout/pageLayout";
-import React, { useState, useEffect } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import {
   Box,
   Heading,
@@ -14,7 +14,7 @@ import { useSearchParams, usePathname, useRouter } from "next/navigation";
 import { headerBreakpoints } from "../../../utils/breakpoints";
 import { CardsGrid } from "../../grids/cardsGrid";
 import LaneLoading from "../../lane/laneLoading";
-import { totalNumPages } from "../../../utils/utils";
+import { displayResults, totalNumPages } from "../../../utils/utils";
 import type { SyntheticEvent } from "react";
 import { createAdobeAnalyticsPageName } from "@/src/utils/utils";
 
@@ -23,6 +23,9 @@ export const CollectionsPage = ({ data }) => {
   const searchParams = useSearchParams();
   const pathname = usePathname();
   const [isLoaded, setIsLoaded] = useState(false);
+
+  const collections = data.collection; // typeof data.collection === "object" ? [data.collection] : data.collection // this breaks empty search
+  const headingRef = useRef<HTMLHeadingElement>(null);
 
   // pagination
   const numFound = data.numFound ? data.numFound : data.numResults;
@@ -179,21 +182,23 @@ export const CollectionsPage = ({ data }) => {
           ]}
         />
       </Box>
-
+      <Heading
+        size="heading5"
+        sx={{ marginBottom: "l" }}
+        ref={headingRef}
+        tabIndex={-1}
+        id={"all-collections-page"}
+        width="max-content"
+      >
+        {`Displaying ${displayResults(data.numResults, data.perPage, data.page)}
+        results`}
+      </Heading>
       {isLoaded ? (
-        <CardsGrid
-          records={
-            typeof data.collection === "object"
-              ? [data.collection]
-              : data.collection
-          }
-        />
+        <CardsGrid records={collections} />
       ) : (
-        <>
-          <LaneLoading withTitle={false} />,
-          <LaneLoading withTitle={false} />,
-          <LaneLoading withTitle={false} />,
-        </>
+        Array(Math.ceil(collections.length / 4)).fill(
+          <LaneLoading withTitle={false} />
+        )
       )}
 
       {totalPages > 1 && (
