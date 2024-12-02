@@ -1,7 +1,6 @@
 "use client";
 import PageLayout from "../../pageLayout/pageLayout";
 import React, { useState, useEffect } from "react";
-import SearchResults from "../../search/results";
 import {
   Box,
   Heading,
@@ -15,7 +14,7 @@ import { useSearchParams, usePathname, useRouter } from "next/navigation";
 import { headerBreakpoints } from "../../../utils/breakpoints";
 import { CardsGrid } from "../../grids/cardsGrid";
 import LaneLoading from "../../lane/laneLoading";
-import { slugToString, totalNumPages } from "../../../utils/utils";
+import { totalNumPages } from "../../../utils/utils";
 import type { SyntheticEvent } from "react";
 import { createAdobeAnalyticsPageName } from "@/src/utils/utils";
 
@@ -137,7 +136,7 @@ export const CollectionsPage = ({ data }) => {
             defaultValue: currentCollectionKeyword,
             onChange: (e) => handleSearchChange(e),
           }}
-          onSubmit={handleSearchSubmit} // TODO: fix
+          onSubmit={handleSearchSubmit}
           labelText={""}
         />
       </Box>
@@ -150,7 +149,7 @@ export const CollectionsPage = ({ data }) => {
         <Menu
           showSelectionAsLabel
           showLabel
-          selectedItem={currentSort} // TODO: currentSort
+          selectedItem={currentSort}
           labelText={"Sort By"}
           listItemsData={[
             {
@@ -203,7 +202,7 @@ export const CollectionsPage = ({ data }) => {
           initialPage={currentPage}
           currentPage={currentPage}
           pageCount={totalPages}
-          onPageChange={onPageChange} // TODO: pagination stuff
+          onPageChange={onPageChange}
           sx={{
             display: "flex",
             justifyContent: "center",
