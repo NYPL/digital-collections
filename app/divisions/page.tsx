@@ -1,7 +1,7 @@
 import React, { Suspense } from "react";
 import { Metadata } from "next";
 import DivisionsPage from "../src/components/pages/divisionsPage/divisionsPage";
-import { getDivisionData } from "@/src/utils/api";
+import { getDivisionData } from "@/src/utils/apiHelpers";
 import { redirect } from "next/navigation";
 
 export const metadata: Metadata = {
