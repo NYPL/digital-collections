@@ -9,14 +9,14 @@ import {
   getNumDigitizedItems,
   getRandomFeaturedItem,
 } from "./apiHelpers";
-import { apiResponse } from "./apiResponse";
+import { fetchAPI } from "./fetchApi";
 import defaultFeaturedItem from "../data/defaultFeaturedItemData";
 import {
   mockFeaturedItemResponse,
   mockItemResponse,
 } from "__tests__/__mocks__/data/mockApiResponses";
 
-jest.mock("./apiResponse");
+jest.mock("./fetchAPI");
 
 beforeEach(() => {
   jest.clearAllMocks();
@@ -24,7 +24,7 @@ beforeEach(() => {
 
 describe("getHomePageData", () => {
   it("creates response containing random number and all 7 lanes", async () => {
-    (apiResponse as jest.Mock).mockResolvedValueOnce(
+    (fetchAPI as jest.Mock).mockResolvedValueOnce(
       Promise.resolve({
         nyplAPI: {
           response: {
@@ -41,7 +41,7 @@ describe("getHomePageData", () => {
       })
     );
     const result = await getHomePageData();
-    expect(apiResponse as jest.Mock).toHaveBeenCalled();
+    expect(fetchAPI as jest.Mock).toHaveBeenCalled();
     expect([0, 1]).toContain(result.randomNumber);
     expect(result.lanesWithNumItems.length).toEqual(7);
     // Fallback data (all 0s).
@@ -54,13 +54,13 @@ describe("getHomePageData", () => {
 describe("getFeaturedItemData", () => {
   it("creates response containing featuredItem and numDigitizedItems", async () => {
     const result = await getFeaturedItemData();
-    expect(apiResponse as jest.Mock).toHaveBeenCalledTimes(2);
-    expect(apiResponse as jest.Mock).toHaveBeenNthCalledWith(
+    expect(fetchAPI as jest.Mock).toHaveBeenCalledTimes(2);
+    expect(fetchAPI as jest.Mock).toHaveBeenNthCalledWith(
       1,
       `${process.env.API_URL}/api/v2/items/featured`,
       { params: { random: "true" } }
     );
-    expect(apiResponse as jest.Mock).toHaveBeenNthCalledWith(
+    expect(fetchAPI as jest.Mock).toHaveBeenNthCalledWith(
       2,
       `${process.env.API_URL}/api/v2/items/total`
     );
@@ -80,7 +80,7 @@ describe("getDivisionData", () => {
       perPage: 3,
     });
 
-    expect(apiResponse as jest.Mock).toHaveBeenCalledWith(
+    expect(fetchAPI as jest.Mock).toHaveBeenCalledWith(
       `${process.env.API_URL}/api/v2/divisions/testSlug?page=1&per_page=3`
     );
   });
@@ -88,13 +88,13 @@ describe("getDivisionData", () => {
   it("forms the correct request from no params", async () => {
     await getDivisionData();
 
-    expect(apiResponse as jest.Mock).toHaveBeenCalledWith(
+    expect(fetchAPI as jest.Mock).toHaveBeenCalledWith(
       `${process.env.API_URL}/api/v2/divisions`
     );
   });
 
   it("returns successful response", async () => {
-    (apiResponse as jest.Mock).mockResolvedValueOnce(
+    (fetchAPI as jest.Mock).mockResolvedValueOnce(
       Promise.resolve({
         headers: { status: "success", code: "200", message: "ok" },
         summary: "divisions test",
@@ -118,19 +118,19 @@ describe("getDivisionData", () => {
   });
 
   it("handles error response", async () => {
-    (apiResponse as jest.Mock).mockRejectedValue(
-      new Error("apiResponse: Request timed out")
+    (fetchAPI as jest.Mock).mockRejectedValue(
+      new Error("fetchAPI: Request timed out")
     );
 
     await expect(getDivisionData()).rejects.toThrow(
-      new Error("apiResponse: Request timed out")
+      new Error("fetchAPI: Request timed out")
     );
   });
 });
 
 describe("getLaneData", () => {
   it("returns successful response", async () => {
-    (apiResponse as jest.Mock).mockResolvedValueOnce(
+    (fetchAPI as jest.Mock).mockResolvedValueOnce(
       Promise.resolve({
         headers: {
           status: "200",
@@ -186,17 +186,17 @@ describe("getLaneData", () => {
   });
 
   it("handles error response", async () => {
-    (apiResponse as jest.Mock).mockRejectedValue(
-      new Error("apiResponse: Request timed out")
+    (fetchAPI as jest.Mock).mockRejectedValue(
+      new Error("fetchAPI: Request timed out")
     );
 
     await expect(getLaneData({ slug: "testSlug" })).rejects.toThrow(
-      new Error("apiResponse: Request timed out")
+      new Error("fetchAPI: Request timed out")
     );
   });
 
   it("forms the correct request from params with slug", async () => {
-    (apiResponse as jest.Mock).mockResolvedValueOnce(
+    (fetchAPI as jest.Mock).mockResolvedValueOnce(
       Promise.resolve({
         headers: {
           status: "200",
@@ -212,13 +212,13 @@ describe("getLaneData", () => {
       perPage: 3,
     });
 
-    expect(apiResponse as jest.Mock).toHaveBeenCalledWith(
+    expect(fetchAPI as jest.Mock).toHaveBeenCalledWith(
       `${process.env.API_URL}/api/v2/collections?genre=testSlug&page=1&per_page=3`
     );
   });
 
   it("forms the correct request from no page params", async () => {
-    (apiResponse as jest.Mock).mockResolvedValueOnce(
+    (fetchAPI as jest.Mock).mockResolvedValueOnce(
       Promise.resolve({
         headers: {
           status: "200",
@@ -228,7 +228,7 @@ describe("getLaneData", () => {
       })
     );
     await getLaneData({ slug: "testSlug" });
-    expect(apiResponse as jest.Mock).toHaveBeenCalledWith(
+    expect(fetchAPI as jest.Mock).toHaveBeenCalledWith(
       `${process.env.API_URL}/api/v2/collections?genre=testSlug&page=1&per_page=48`
     );
   });
@@ -236,7 +236,7 @@ describe("getLaneData", () => {
 
 describe("getNumDigitizedItems", () => {
   it("returns the correct numDigitizedItems", async () => {
-    (apiResponse as jest.Mock).mockResolvedValueOnce(
+    (fetchAPI as jest.Mock).mockResolvedValueOnce(
       Promise.resolve({
         count: {
           $: 78,
@@ -244,14 +244,14 @@ describe("getNumDigitizedItems", () => {
       })
     );
     const result = await getNumDigitizedItems();
-    expect(apiResponse as jest.Mock).toHaveBeenCalledWith(
+    expect(fetchAPI as jest.Mock).toHaveBeenCalledWith(
       `${process.env.API_URL}/api/v2/items/total`
     );
     expect(result).toEqual("78");
   });
 
   it("returns the fallback numDigitizedItems on empty response", async () => {
-    (apiResponse as jest.Mock).mockResolvedValueOnce(Promise.resolve({}));
+    (fetchAPI as jest.Mock).mockResolvedValueOnce(Promise.resolve({}));
 
     const result = await getNumDigitizedItems();
 
@@ -264,7 +264,7 @@ describe("getNumDigitizedItems", () => {
 
 describe("getItemsCountFromUUIDs", () => {
   it("should return the correct numItems for each UUID", async () => {
-    (apiResponse as jest.Mock).mockResolvedValueOnce(
+    (fetchAPI as jest.Mock).mockResolvedValueOnce(
       Promise.resolve({
         nyplAPI: {
           response: {
@@ -291,7 +291,7 @@ describe("getItemsCountFromUUIDs", () => {
 
   it("should handle missing count field gracefully", async () => {
     const uuids = ["uuid1", "uuid2", "uuid3"];
-    (apiResponse as jest.Mock).mockResolvedValueOnce(
+    (fetchAPI as jest.Mock).mockResolvedValueOnce(
       Promise.resolve({
         nyplAPI: {
           response: {
@@ -315,11 +315,11 @@ describe("getItemsCountFromUUIDs", () => {
 
 describe("getRandomFeaturedItem", () => {
   it("returns expected item", async () => {
-    (apiResponse as jest.Mock).mockResolvedValueOnce(
+    (fetchAPI as jest.Mock).mockResolvedValueOnce(
       Promise.resolve(mockFeaturedItemResponse)
     );
     const item = await getRandomFeaturedItem();
-    expect(apiResponse as jest.Mock).toHaveBeenCalledWith(
+    expect(fetchAPI as jest.Mock).toHaveBeenCalledWith(
       `${process.env.API_URL}/api/v2/items/featured`,
       { params: { random: "true" } }
     );
@@ -331,11 +331,11 @@ describe("getRandomFeaturedItem", () => {
 
 describe("getFeaturedImage", () => {
   it("returns expected image", async () => {
-    (apiResponse as jest.Mock).mockResolvedValueOnce(
+    (fetchAPI as jest.Mock).mockResolvedValueOnce(
       Promise.resolve(defaultFeaturedItem["production"].featuredItem)
     );
     const imageData = await getFeaturedImage();
-    expect(apiResponse as jest.Mock).toHaveBeenCalledWith(
+    expect(fetchAPI as jest.Mock).toHaveBeenCalledWith(
       `${process.env.API_URL}/api/v2/items/featured`,
       { params: { random: "true" } }
     );
@@ -348,7 +348,7 @@ describe("getFeaturedImage", () => {
   });
 
   it("returns the fallback featured image on empty response", async () => {
-    (apiResponse as jest.Mock).mockResolvedValueOnce(Promise.resolve({}));
+    (fetchAPI as jest.Mock).mockResolvedValueOnce(Promise.resolve({}));
 
     const imageData = await getFeaturedImage();
 
@@ -361,11 +361,11 @@ describe("getFeaturedImage", () => {
 
 describe("getItemData", () => {
   it("returns expected item", async () => {
-    (apiResponse as jest.Mock).mockResolvedValueOnce(
+    (fetchAPI as jest.Mock).mockResolvedValueOnce(
       Promise.resolve(mockItemResponse)
     );
     const item = await getItemData("uuid1");
-    expect(apiResponse as jest.Mock).toHaveBeenCalledWith(
+    expect(fetchAPI as jest.Mock).toHaveBeenCalledWith(
       `${process.env.API_URL}/api/v2/items/mods_captures/uuid1`
     );
     expect(item).toEqual(mockItemResponse);
