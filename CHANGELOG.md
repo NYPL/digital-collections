@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+### Removed
+
+- Removed new relic files from frontend (DR-3311)
+
 ### Updated
 
 - Update thumbnail logic so thumbnails are never restricted (DR-3293)
