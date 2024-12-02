@@ -172,9 +172,6 @@ export const getLaneData = async ({
   pageNum?: number;
   perPage?: number;
 }) => {
-  if (!slug) {
-    throw new Error("Slug is required in getLaneData()");
-  }
   const apiUrl = `${process.env.API_URL}/api/v2/collections?genre=${slug}&page=${pageNum}&per_page=${perPage}`;
   return await apiResponse(apiUrl);
 };
