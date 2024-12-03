@@ -3,7 +3,6 @@ import appConfig from "../../../appConfig";
 
 export const BASE_URL = "/";
 export const SITE_NAME = "NYPL Digital Collections";
-export const DC_URL = appConfig.DC_URL[appConfig.environment as ENV_KEY];
 
 // String used to namespace Digital Collection events in Adobe Analytics
 export const ADOBE_ANALYTICS_SITE_SECTION = "Digital Collections";

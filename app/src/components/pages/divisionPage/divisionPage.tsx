@@ -21,7 +21,6 @@ import {
   createAdobeAnalyticsPageName,
   displayResults,
 } from "../../../utils/utils";
-import { DC_URL } from "@/src/config/constants";
 import { Lane as DCLane } from "../../lane/lane";
 import LaneLoading from "../../lane/laneLoading";
 
@@ -103,7 +102,7 @@ export default function DivisionPage({ data }: any) {
       {isLoaded ? (
         <DCLane
           records={data.items}
-          seeMoreLink={`${DC_URL}/divisions`}
+          seeMoreLink={`/divisions`}
           laneName={data.name}
         />
       ) : (
