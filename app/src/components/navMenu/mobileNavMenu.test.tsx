@@ -2,7 +2,6 @@ import React from "react";
 import { render, fireEvent, screen } from "@testing-library/react";
 import "@testing-library/jest-dom";
 import MobileNavMenu from "./mobileNavMenu";
-import { DC_URL } from "@/src/config/constants";
 
 describe("Mobile nav menu component", () => {
   it("renders mobile nav menu component", () => {
@@ -26,15 +25,15 @@ describe("Mobile nav menu component", () => {
     fireEvent.click(screen.getByLabelText("Open Navigation"));
     expect(screen.getByLabelText("Items")).toHaveAttribute(
       "href",
-      `${DC_URL}/search/index?utf8=%E2%9C%93&keywords=`
+      `/search/index?utf8=%E2%9C%93&keywords=`
     );
     expect(screen.getByLabelText("Divisions")).toHaveAttribute(
       "href",
-      `${DC_URL}/divisions`
+      `/divisions`
     );
     expect(screen.getByLabelText("Collections")).toHaveAttribute(
       "href",
-      `${DC_URL}/collections`
+      `/collections`
     );
     expect(screen.getByLabelText("About")).toHaveAttribute("href", `/about`);
   });
