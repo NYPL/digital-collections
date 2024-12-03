@@ -7,7 +7,7 @@ const defaultFeaturedItem: FeaturedItemDataType = {
     foregroundImageSrc: "/482815.jpg",
     uuid: "510d47d9-4f93-a3d9-e040-e00a18064a99",
     title: "Watuppa, From water front, Brooklyn",
-    href: "https://qa-digitalcollections.nypl.org/items/510d47d9-4f93-a3d9-e040-e00a18064a99",
+    href: "/items/510d47d9-4f93-a3d9-e040-e00a18064a99",
   },
   numberOfDigitizedItems: "1,059,731",
 };
