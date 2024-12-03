@@ -194,6 +194,6 @@ export const getCollectionsData = async ({
   };
 
   let apiUrl = `${process.env.API_URL}/api/v2/collections?page=${pageNum}&per_page=${perPage}&sort=${sortOptions[sortID]}&q=${keyword}`;
-  const res = await apiResponse(apiUrl);
+  const res = await fetchApi(apiUrl);
   return res;
 };
