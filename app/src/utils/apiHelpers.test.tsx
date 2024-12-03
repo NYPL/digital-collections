@@ -65,9 +65,9 @@ describe("getFeaturedItemData", () => {
       `${process.env.API_URL}/api/v2/items/total`
     );
     // Fallback data.
-    expect(result.numberOfDigitizedItems).toEqual("875,861");
+    expect(result.numberOfDigitizedItems).toEqual("1,059,731");
     expect(result.featuredItem.imageID).toEqual(
-      defaultFeaturedItem.production.featuredItem.imageID
+      defaultFeaturedItem.featuredItem.imageID
     );
   });
 });
@@ -256,9 +256,7 @@ describe("getNumDigitizedItems", () => {
     const result = await getNumDigitizedItems();
 
     // Fallback data.
-    expect(result).toEqual(
-      defaultFeaturedItem["development"].numberOfDigitizedItems
-    );
+    expect(result).toEqual(defaultFeaturedItem.numberOfDigitizedItems);
   });
 });
 
@@ -332,7 +330,7 @@ describe("getRandomFeaturedItem", () => {
 describe("getFeaturedImage", () => {
   it("returns expected image", async () => {
     (fetchApi as jest.Mock).mockResolvedValueOnce(
-      Promise.resolve(defaultFeaturedItem["production"].featuredItem)
+      Promise.resolve(defaultFeaturedItem.featuredItem)
     );
     const imageData = await getFeaturedImage();
     expect(fetchApi as jest.Mock).toHaveBeenCalledWith(
@@ -353,9 +351,7 @@ describe("getFeaturedImage", () => {
     const imageData = await getFeaturedImage();
 
     // Fallback data.
-    expect(imageData.uuid).toEqual(
-      defaultFeaturedItem["development"].featuredItem.uuid
-    );
+    expect(imageData.uuid).toEqual(defaultFeaturedItem.featuredItem.uuid);
   });
 });
 
