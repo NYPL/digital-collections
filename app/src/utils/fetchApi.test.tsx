@@ -1,68 +1,6 @@
-import { waitFor } from "@testing-library/react";
-import { apiResponse, getItemsCountFromUUIDs } from "./api";
+import { fetchApi } from "./fetchApi";
 
-describe("getItemsCountFromUUIDs()", () => {
-  it("should throw an error with a bad request", async () => {
-    (global as any).fetch = jest.fn(() =>
-      Promise.resolve({
-        status: 403,
-        json: () => Promise.resolve({ nyplAPI: { response: "success" } }),
-      })
-    ) as jest.Mock;
-
-    const data = ["uuid1", "uuid2"];
-    await expect(getItemsCountFromUUIDs(data)).rejects.toEqual(
-      new Error("apiResponse: 403 No message")
-    );
-  });
-
-  it("should return an empty object with a successful request but bad data structure", async () => {
-    (global as any).fetch = jest.fn(() =>
-      Promise.resolve({
-        status: 200,
-        json: () => Promise.resolve({ nyplAPI: { response: { counts: {} } } }),
-      })
-    ) as jest.Mock;
-
-    const data = ["uuid1", "uuid2"];
-
-    await waitFor(async () => {
-      expect(await getItemsCountFromUUIDs(data)).toEqual({});
-    });
-  });
-
-  it("should return a map of all the uuids passed with their item count", async () => {
-    (global as any).fetch = jest.fn(() =>
-      Promise.resolve({
-        status: 200,
-        json: () =>
-          Promise.resolve({
-            nyplAPI: {
-              response: {
-                counts: {
-                  count: [
-                    { uuid: { $: "uuid1" }, count_value: { $: "10" } },
-                    { uuid: { $: "uuid2" }, count_value: { $: "45" } },
-                  ],
-                },
-              },
-            },
-          }),
-      })
-    ) as jest.Mock;
-
-    const data = ["uuid1", "uuid2"];
-
-    await waitFor(async () => {
-      expect(await getItemsCountFromUUIDs(data)).toEqual({
-        uuid1: "10",
-        uuid2: "45",
-      });
-    });
-  });
-});
-
-describe("apiResponse", () => {
+describe("fetchApi", () => {
   const mockApiUrl = "mockurl.org";
   const mockAuthToken = "mockAuthToken";
 
@@ -80,7 +18,7 @@ describe("apiResponse", () => {
       })
     ) as jest.Mock;
 
-    const response = await apiResponse(mockApiUrl);
+    const response = await fetchApi(mockApiUrl);
     expect(fetch).toHaveBeenCalledWith(mockApiUrl, {
       method: "GET",
       headers: {
@@ -102,7 +40,7 @@ describe("apiResponse", () => {
       })
     ) as jest.Mock;
 
-    const response = await apiResponse(mockApiUrl, {
+    const response = await fetchApi(mockApiUrl, {
       method: "POST",
       body: mockBody,
     });
@@ -129,7 +67,7 @@ describe("apiResponse", () => {
       })
     ) as jest.Mock;
 
-    const response = await apiResponse(mockApiUrl, {
+    const response = await fetchApi(mockApiUrl, {
       params: mockParams,
     });
 
@@ -154,8 +92,8 @@ describe("apiResponse", () => {
       })
     ) as jest.Mock;
 
-    await expect(apiResponse(mockApiUrl)).rejects.toEqual(
-      new Error("apiResponse: 500 Internal Server Error")
+    await expect(fetchApi(mockApiUrl)).rejects.toEqual(
+      new Error("fetchApi: 500 Internal Server Error")
     );
   });
 
@@ -166,12 +104,12 @@ describe("apiResponse", () => {
       .fn()
       .mockImplementation(() => new Promise(() => {}));
 
-    const apiCall = apiResponse(mockApiUrl);
+    const apiCall = fetchApi(mockApiUrl);
 
     jest.advanceTimersByTime(14000);
 
     await expect(apiCall).rejects.toEqual(
-      new Error("apiResponse: Request timed out")
+      new Error("fetchApi: Request timed out")
     );
 
     jest.useRealTimers();

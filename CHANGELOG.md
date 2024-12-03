@@ -7,8 +7,23 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
-## Removed
+### Removed
 - removed unneccessary variables post reverse proxy launch
+- Removed new relic files from frontend (DR-3311)
+
+### Added
+
+- Added tests for API helpers (DR-3271)
+
+### Updated
+
+- Update thumbnail logic so thumbnails are never restricted (DR-3293)
+
+## [0.2.4] 2024-11-26
+
+### Updated
+
+- Updated Next.js to `14.2.18` to patch vulnerabilities.
 
 ## [0.2.3] 2024-11-21
 

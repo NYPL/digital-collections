@@ -2,7 +2,7 @@ import { Metadata } from "next";
 import React from "react";
 import DivisionPage from "../../src/components/pages/divisionPage/divisionPage";
 import { slugToString } from "../../src/utils/utils";
-import { getDivisionData } from "../../src/utils/api";
+import { getDivisionData } from "../../src/utils/apiHelpers";
 import { Suspense } from "react";
 import { redirect } from "next/navigation";
 
