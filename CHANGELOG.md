@@ -18,6 +18,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Updated
 
 - Update thumbnail logic so thumbnails are never restricted (DR-3293)
+- Update feedback form credentials to use official DR service account (DR-2794)
 
 ## [0.2.4] 2024-11-26
 
