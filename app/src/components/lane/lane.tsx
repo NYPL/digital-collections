@@ -10,7 +10,6 @@ import {
 } from "@nypl/design-system-react-components";
 import { Card as DCCard } from "../card/card";
 import { SimpleGrid as DCSimpleGrid } from "../simpleGrid/simpleGrid";
-import { DC_URL } from "@/src/config/constants";
 import { headerBreakpoints } from "@/src/utils/breakpoints";
 import { titleToDCParam } from "@/src/utils/utils";
 import { ItemCardModel } from "@/src/models/itemCard";
@@ -54,7 +53,7 @@ export const Lane = ({
         heading: `Items in the ${laneName}`,
         headingId: `row-heading-${laneName}`,
         seeMoreLinkId: `row-see-more-items-${laneName}`,
-        seeMoreLinkHref: `${DC_URL}/search/index?filters[divisionFullname_mtxt_s][]=${titleToDCParam(
+        seeMoreLinkHref: `/search/index?filters[divisionFullname_mtxt_s][]=${titleToDCParam(
           laneName
         )}`,
         seeMoreAriaLabel: `See more items in ${laneName}`,
