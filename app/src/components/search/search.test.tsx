@@ -3,7 +3,6 @@ import { render, fireEvent, screen } from "@testing-library/react";
 import "@testing-library/jest-dom";
 import Search from "./search";
 import { useRouter } from "next/navigation";
-import { DC_URL } from "../../config/constants";
 
 jest.mock("next/navigation", () => ({
   useRouter: jest.fn(),
@@ -27,7 +26,7 @@ describe("Search component", () => {
     });
     fireEvent.submit(getByLabelText("Search Digital Collections"));
     expect(mockRouter.push).toHaveBeenCalledWith(
-      `${DC_URL}/search/index?keywords=test%20word`
+      `/search/index?keywords=test%20word`
     );
   });
 
@@ -45,7 +44,7 @@ describe("Search component", () => {
     fireEvent.submit(screen.getByLabelText("Search Digital Collections"));
 
     expect(mockRouter.push).toHaveBeenCalledWith(
-      `${DC_URL}/search/index?utf8=✓&filters%5Brights%5D=pd&keywords=test%20words`
+      `/search/index?utf8=✓&filters%5Brights%5D=pd&keywords=test%20words`
     );
   });
 });

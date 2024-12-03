@@ -2,7 +2,7 @@ import React, { Suspense } from "react";
 import { Metadata } from "next";
 import CollectionLanePage from "@/src/components/pages/collectionLanePage/collectionLanePage";
 import { slugToString } from "@/src/utils/utils";
-import { getLaneData } from "@/src/utils/api";
+import { getLaneData } from "@/src/utils/apiHelpers";
 import { redirect } from "next/navigation";
 
 type LaneProps = {
