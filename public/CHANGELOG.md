@@ -11,9 +11,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Removed new relic files from frontend (DR-3311)
 
+### Added
+
+- Added tests for API helpers (DR-3271)
+
+
 ### Updated
 
 - Update thumbnail logic so thumbnails are never restricted (DR-3293)
+
 
 ## [0.2.4] 2024-11-26
 
