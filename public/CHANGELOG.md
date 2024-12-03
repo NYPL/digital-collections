@@ -9,6 +9,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Updated
 - refactored implementation of default featured item & updated default number of digitized items (DR-3305)
 
+### Updated
+
+- Update thumbnail logic so thumbnails are never restricted (DR-3293)
+
 ## [0.2.4] 2024-11-26
 
 ### Updated
