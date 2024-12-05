@@ -5,7 +5,6 @@ import { Box, SearchBar } from "@nypl/design-system-react-components";
 import { useRouter } from "next/navigation";
 import PublicDomainFilter from "../publicDomainFilter/publicDomainFilter";
 import { headerBreakpoints } from "../../utils/breakpoints";
-import { DC_URL } from "../../config/constants";
 
 const Search = () => {
   const router = useRouter();
@@ -15,7 +14,6 @@ const Search = () => {
   const handleSubmit = (event) => {
     event.preventDefault();
     const searchUrl =
-      DC_URL +
       `/search/index?` +
       (publicDomainOnly ? `utf8=✓&filters%5Brights%5D=pd&` : ``) +
       `keywords=${encodeURIComponent(keywords)}`;

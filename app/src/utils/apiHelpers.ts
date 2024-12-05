@@ -1,11 +1,9 @@
 import data from "../../src/data/lanes";
 import type { LaneDataType } from "../../src/types/Lane";
-import { ENV_KEY } from "../../src/types/EnvironmentType";
 import { imageURL, addCommas, collectionsSortOptions } from "../utils/utils";
-import appConfig from "../../../appConfig";
 import defaultFeaturedItems from "../data/defaultFeaturedItemData";
 import { CARDS_PER_PAGE } from "../config/constants";
-import { DC_URL } from "../config/constants";
+import { fetchApi } from "./fetchApi";
 
 export const getHomePageData = async () => {
   const randomNumber = Math.floor(Math.random() * 2);
@@ -52,7 +50,7 @@ export const getFeaturedItemData = async () => {
     ),
     uuid: featuredImageData.uuid,
     title: featuredImageData.title,
-    href: `${DC_URL}/items/${featuredImageData.uuid}`,
+    href: `/items/${featuredImageData.uuid}`,
   };
   const newResponse = {
     featuredItem: featuredItemObject,
@@ -62,11 +60,8 @@ export const getFeaturedItemData = async () => {
 };
 
 export const getFeaturedImage = async () => {
-  const defaultResponse =
-    defaultFeaturedItems[appConfig.environment as ENV_KEY].featuredItem;
-  const apiResponse = await getItemByIdentifier("featured", "", {
-    random: "true",
-  });
+  const defaultResponse = defaultFeaturedItems.featuredItem;
+  const apiResponse = await getRandomFeaturedItem();
 
   return {
     uuid: apiResponse?.capture?.uuid || defaultResponse.uuid,
@@ -81,7 +76,7 @@ export const getFeaturedImage = async () => {
 
 export const getItemData = async (uuid: string) => {
   const apiUrl = `${process.env.API_URL}/api/v2/items/mods_captures/${uuid}`;
-  const res = await apiResponse(apiUrl);
+  const res = await fetchApi(apiUrl);
   return res;
 };
 
@@ -91,11 +86,9 @@ export const getItemData = async (uuid: string) => {
 
 export const getNumDigitizedItems = async () => {
   const apiUrl = `${process.env.API_URL}/api/v2/items/total`;
-  const res = await apiResponse(apiUrl);
+  const res = await fetchApi(apiUrl);
 
-  const fallbackCount =
-    defaultFeaturedItems[appConfig.environment as ENV_KEY]
-      .numberOfDigitizedItems;
+  const fallbackCount = defaultFeaturedItems.numberOfDigitizedItems;
   const totalItems = res?.count?.$ ? addCommas(res.count.$) : fallbackCount; // only add commas to repo api response data
   return totalItems;
 };
@@ -105,7 +98,7 @@ export const getNumDigitizedItems = async () => {
  */
 export const getItemsCountFromUUIDs = async (uuids: string[]) => {
   const apiUrl = `${process.env.API_URL}/api/v2/items/counts`;
-  const response = await apiResponse(apiUrl, {
+  const response = await fetchApi(apiUrl, {
     method: "POST",
     body: { uuids },
   });
@@ -131,18 +124,17 @@ export const getItemsCountFromUUIDs = async (uuids: string[]) => {
 };
 
 /**
- * Returns the uuid, API uri, and numResults of an item given an identifier type and identifier value.
- * @param {string} identifierType - the identifier type
- * @param {string} identifier - the identifier value
+ * Returns a random featured item from set list.
  */
 
-export const getItemByIdentifier = async (
-  identifierType: string,
-  identifier: string,
-  urlParam?: { [key: string]: any }
-) => {
-  const apiUrl = `${process.env.API_URL}/api/v2/items/${identifierType}/${identifier}`;
-  return apiResponse(apiUrl, { params: urlParam });
+export const getRandomFeaturedItem = async () => {
+  const apiUrl = `${process.env.API_URL}/api/v2/items/featured`;
+  const res = await fetchApi(apiUrl, {
+    params: {
+      random: "true",
+    },
+  });
+  return res;
 };
 
 export const getDivisionData = async ({
@@ -160,7 +152,7 @@ export const getDivisionData = async ({
     apiUrl += `/${slug}?page=${pageNum}&per_page=${perPage}`;
   }
 
-  const res = await apiResponse(apiUrl);
+  const res = await fetchApi(apiUrl);
   return res;
 };
 
@@ -176,87 +168,19 @@ export const getCollectionsData = async ({
   perPage?: number; // OPEN QUESTION: perhaps remove the "perPage" field because the API default is 48 and that is what we want.
 } = {}) => {
   let apiUrl = `${process.env.API_URL}/api/v2/collections?page=${pageNum}&per_page=${perPage}&sort=${collectionsSortOptions[sortID]}&q=${keyword}`;
-  const res = await apiResponse(apiUrl);
+  const res = await fetchApi(apiUrl);
   return res;
 };
 
 export const getLaneData = async ({
+  slug,
   pageNum = 1,
   perPage = CARDS_PER_PAGE,
-  slug,
 }: {
+  slug: string;
   pageNum?: number;
   perPage?: number;
-  slug?: string;
-} = {}) => {
-  let apiUrl = `${process.env.API_URL}/api/v2/collections?genre=${slug}&page=${pageNum}&per_page=${perPage}`;
-  const res = await apiResponse(apiUrl);
-  return res;
-};
-
-/**
- * Makes a GET or POST request to the Repo API and returns the response.
- * Times out at 7 seconds to prevent 504 crash.
- * @param {string} apiUrl - The URL for the API request.
- * @param {object} options - Options for the request:
- *   - method: "GET" or "POST" (default is "GET").
- *   - params: URL parameters for GET requests.
- *   - body: Body data for POST requests.
- * @returns {Promise<any>} - The API response.
- */
-export const apiResponse = async (
-  apiUrl: string,
-  options?: {
-    method?: "GET" | "POST";
-    params?: { [key: string]: any };
-    body?: any;
-  }
-) => {
-  const apiKey = process.env.AUTH_TOKEN;
-  const method = options?.method || "GET";
-  const headers = {
-    Authorization: `Token token=${apiKey}`,
-    ...(method === "POST" && { "Content-Type": "application/json" }),
-  };
-
-  if (method === "GET" && options?.params) {
-    const queryString = "?" + new URLSearchParams(options?.params).toString();
-    apiUrl += queryString;
-  }
-
-  const timeout = 14000;
-
-  const fetchWithTimeout = (url: string, opts: RequestInit) => {
-    return Promise.race([
-      fetch(url, opts),
-      new Promise((_, reject) =>
-        setTimeout(
-          () => reject(new Error("apiResponse: Request timed out")),
-          timeout
-        )
-      ),
-    ]);
-  };
-
-  try {
-    const response = (await fetchWithTimeout(apiUrl, {
-      method,
-      headers,
-      body: method === "POST" ? JSON.stringify(options?.body) : undefined,
-    })) as Response;
-
-    if (!response.ok && response.status !== 200) {
-      throw new Error(
-        `apiResponse: ${response.status} ${
-          response.statusText ? response.statusText : "No message"
-        }`
-      );
-    }
-
-    const data = await response.json();
-    return method === "GET" ? data?.nyplAPI?.response : data;
-  } catch (error) {
-    console.error(error);
-    throw new Error(error.message);
-  }
+}) => {
+  const apiUrl = `${process.env.API_URL}/api/v2/collections?genre=${slug}&page=${pageNum}&per_page=${perPage}`;
+  return await fetchApi(apiUrl);
 };

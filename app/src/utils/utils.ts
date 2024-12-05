@@ -2,8 +2,6 @@ import {
   ADOBE_ANALYTICS_SITE_SECTION,
   ADOBE_ANALYTICS_DC_PREFIX,
 } from "../config/constants";
-import { ENV_KEY } from "../types/EnvironmentType";
-import appConfig from "../../../appConfig";
 import CollectionDataType from "@/src/types/CollectionDataType";
 import ItemDataType from "@/src/types/ItemDataType";
 
@@ -23,9 +21,7 @@ export const imageURL = (
   size = "!1600,1600",
   rotation = "0"
 ) => {
-  return `${
-    appConfig.IIIF_URL[appConfig.environment as ENV_KEY]
-  }/iiif/2/${imageId}/${region}/${size}/${rotation}/default.jpg`;
+  return `https://iiif.nypl.org/iiif/2/${imageId}/${region}/${size}/${rotation}/default.jpg`;
 };
 
 export function addCommas(number: string) {
