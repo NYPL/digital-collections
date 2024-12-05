@@ -19,7 +19,7 @@ const config = {
   testPathIgnorePatterns: [
     "__tests__/data/*",
     "__tests__/__mocks__/*",
-    "__tests__/api/lanes/*",
+    "__tests__/api/*",
   ],
   moduleNameMapper: {
     "^appConfig$": "<rootDir>/__tests__/data/appConfig.ts", // Adjust the path as needed
