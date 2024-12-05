@@ -1,17 +1,14 @@
 import { Hero } from "@nypl/design-system-react-components";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import CampaignHeroSubText from "./campaignHeroSubText";
 import CampaignHeroHeading from "./campaignHeroHeading";
 import CampaignHeroLoading from "./campaignHeroLoading";
 import defaultFeaturedItem from "../../data/defaultFeaturedItemData";
-import appConfig from "../../../../appConfig";
 import { FeaturedItemDataType } from "../../types/FeaturedItemDataType";
 import React from "react";
-import { ENV_KEY } from "../../types/EnvironmentType";
 
 const CampaignHero = ({ featuredItemData }) => {
-  const defaultFeaturedItemResponse =
-    defaultFeaturedItem[appConfig["environment"] as ENV_KEY];
+  const defaultFeaturedItemResponse = defaultFeaturedItem;
 
   const [data, setData] = useState<FeaturedItemDataType>(
     featuredItemData || defaultFeaturedItemResponse

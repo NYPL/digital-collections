@@ -26,7 +26,7 @@ describe("Campaign Hero", () => {
         foregroundImageSrc: "/foobar.jpg",
         uuid: "510d47e0-cb17-a3d9-e040-e00a18064a99",
         title: "Momoyogusa",
-        href: "https://digitalcollections.nypl.org/items/510d47e0-cb17-a3d9-e040-e00a18064a99",
+        href: "/items/510d47e0-cb17-a3d9-e040-e00a18064a99",
       },
       numberOfDigitizedItems: "876,067",
     };
