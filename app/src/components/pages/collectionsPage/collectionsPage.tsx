@@ -17,16 +17,21 @@ import LaneLoading from "../../lane/laneLoading";
 import { displayResults, totalNumPages } from "../../../utils/utils";
 import type { SyntheticEvent } from "react";
 import { createAdobeAnalyticsPageName } from "@/src/utils/utils";
+import NoResultsFound from "../../results/noResultsFound";
 
 export const CollectionsPage = ({ data }) => {
   const { push } = useRouter();
   const searchParams = useSearchParams();
   const pathname = usePathname();
   const [isLoaded, setIsLoaded] = useState(false);
+  let collections = [];
 
-  const collections = Array.isArray(data.collection)
-    ? data.collection
-    : [data.collection];
+  if (data.headers.message === "Collections retrieved successfully") {
+    collections = Array.isArray(data.collection)
+      ? data.collection
+      : [data.collection];
+  }
+
   const headingRef = useRef<HTMLHeadingElement>(null);
 
   // pagination
@@ -160,57 +165,70 @@ export const CollectionsPage = ({ data }) => {
         />
       </Box>
       <HorizontalRule sx={{ marginTop: "xxl", marginBottom: "xxl" }} />
-      <Box sx={{ display: "flex", gap: "xs", marginBottom: "l" }}>
-        <Text sx={{ fontWeight: "500", marginBottom: 0, marginTop: "xs" }}>
-          {" "}
-          Sort by{" "}
-        </Text>{" "}
-        <Menu
-          showSelectionAsLabel
-          showLabel
-          selectedItem={currentSort}
-          labelText={"Sort By"}
-          listItemsData={[
-            {
-              id: "date-desc",
-              label: "Newest to oldest",
-              onClick: onMenuClick,
-              type: "action",
-            },
-            {
-              id: "date-asc",
-              label: "Oldest to newest",
-              onClick: onMenuClick,
-              type: "action",
-            },
-            {
-              id: "title-desc",
-              label: "Title A to Z",
-              onClick: onMenuClick,
-              type: "action",
-            },
-            {
-              id: "title-asc",
-              label: "Title Z to A",
-              onClick: onMenuClick,
-              type: "action",
-            },
-          ]}
-        />
-      </Box>
-      <Heading
-        size="heading5"
-        sx={{ marginBottom: "l" }}
-        ref={headingRef}
-        tabIndex={-1}
-        id={"all-collections-page"}
-        width="max-content"
-      >
-        {`Displaying ${displayResults(data.numResults, data.perPage, data.page)}
-        results`}
-      </Heading>
+
       {isLoaded ? (
-        <CardsGrid records={collections} />
+        collections.length > 0 ? (
+          <>
+            <Box sx={{ display: "flex", gap: "xs", marginBottom: "l" }}>
+              <Text
+                sx={{ fontWeight: "500", marginBottom: 0, marginTop: "xs" }}
+              >
+                {" "}
+                Sort by{" "}
+              </Text>{" "}
+              <Menu
+                showSelectionAsLabel
+                showLabel
+                selectedItem={currentSort}
+                labelText={"Sort By"}
+                listItemsData={[
+                  {
+                    id: "date-desc",
+                    label: "Newest to oldest",
+                    onClick: onMenuClick,
+                    type: "action",
+                  },
+                  {
+                    id: "date-asc",
+                    label: "Oldest to newest",
+                    onClick: onMenuClick,
+                    type: "action",
+                  },
+                  {
+                    id: "title-desc",
+                    label: "Title A to Z",
+                    onClick: onMenuClick,
+                    type: "action",
+                  },
+                  {
+                    id: "title-asc",
+                    label: "Title Z to A",
+                    onClick: onMenuClick,
+                    type: "action",
+                  },
+                ]}
+              />
+            </Box>
+            <Heading
+              size="heading5"
+              sx={{ marginBottom: "l" }}
+              ref={headingRef}
+              tabIndex={-1}
+              id={"all-collections-page"}
+              width="max-content"
+            >
+              {`Displaying ${displayResults(
+                data.numResults,
+                data.perPage,
+                data.page
+              )}
+            results`}
+            </Heading>
+            <CardsGrid records={collections} />
+          </>
+        ) : (
+          <NoResultsFound searchTerm={currentCollectionKeyword} />
+        )
       ) : (
         Array(Math.ceil(collections.length / 4)).fill(
           <LaneLoading withTitle={false} />

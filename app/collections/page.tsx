@@ -24,7 +24,10 @@ export default async function Collections({ searchParams }: CollectionsProps) {
   }); // TODO: create model for APICollectionsData from API to clean up the data before it's sent down to the components.
 
   // Repo API returns 404s within the data.
-  if (data?.headers?.code === "404") {
+  if (
+    data?.headers?.code === "404" &&
+    data?.headers?.message !== "No collections found"
+  ) {
     redirect("/404");
   }
 
