@@ -1,5 +1,5 @@
 import HomePage from "./src/components/pages/homePage/homePage";
-import { getHomePageData, getFeaturedItemData } from "@/src/utils/api";
+import { getHomePageData, getFeaturedItemData } from "@/src/utils/apiHelpers";
 import { FeaturedItemDataType } from "../app/src/types/FeaturedItemDataType";
 import { revalidatePath } from "next/cache";
 
