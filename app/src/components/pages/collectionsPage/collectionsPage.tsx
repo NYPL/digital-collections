@@ -23,10 +23,10 @@ export const CollectionsPage = ({ data }) => {
   const searchParams = useSearchParams();
   const pathname = usePathname();
   const [isLoaded, setIsLoaded] = useState(false);
-  // console.log("typeof data.collection is: ", typeof data.collection)
-  // console.log(" data.collection.length? ", typeof data.collection?.length)
 
-  const collections = data.collection; //typeof data.collection === "array" ? data.collection : [data.collection] //: data.collection // this breaks empty search
+  const collections = Array.isArray(data.collection)
+    ? data.collection
+    : [data.collection];
   const headingRef = useRef<HTMLHeadingElement>(null);
 
   // pagination
