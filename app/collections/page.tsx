@@ -1,7 +1,7 @@
 import React, { Suspense } from "react";
 import { Metadata } from "next";
 import { CollectionsPage } from "../src/components/pages/collectionsPage/collectionsPage";
-import { getCollectionsData } from "@/src/utils/api";
+import { getCollectionsData } from "@/src/utils/apiHelpers";
 import { redirect } from "next/navigation";
 
 export type CollectionsProps = {
