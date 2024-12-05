@@ -106,12 +106,12 @@ describe("fetchApi", () => {
 
     const apiCall = fetchApi(mockApiUrl);
 
-    jest.advanceTimersByTime(14000);
+    jest.advanceTimersByTime(10000);
 
     await expect(apiCall).rejects.toEqual(
       new Error("fetchApi: Request timed out")
     );
 
     jest.useRealTimers();
-  }, 20000);
+  }, 15000);
 });
