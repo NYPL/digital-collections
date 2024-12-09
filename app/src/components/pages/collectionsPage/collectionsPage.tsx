@@ -68,12 +68,13 @@ export function CollectionsPage({ data, params }) {
       headingRef.current?.focus();
     }, 2000);
   };
+
   const handleSearchSubmit = async (e: SyntheticEvent) => {
     e.preventDefault();
     const queryString = createCollectionsQueryStringFromObject({
       collection_keyword: currentCollectionKeyword,
       sort: currentSort,
-      page: currentPage,
+      page: DEFAULT_PAGE_NUM,
     });
     handleLoadingState(queryString);
   };
@@ -86,7 +87,6 @@ export function CollectionsPage({ data, params }) {
   // pagination
   // Question: Do we want to introduce debouncing?
   const onPageChange = async (pageNumber: number) => {
-    // currentPage = pageNumber;
     setCurrentPage(pageNumber);
     const queryString = createCollectionsQueryStringFromObject({
       collection_keyword: currentCollectionKeyword,
