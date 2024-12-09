@@ -14,7 +14,11 @@ import { useSearchParams, usePathname, useRouter } from "next/navigation";
 import { headerBreakpoints } from "../../../utils/breakpoints";
 import { CardsGrid } from "../../grids/cardsGrid";
 import LaneLoading from "../../lane/laneLoading";
-import { displayResults, totalNumPages } from "../../../utils/utils";
+import {
+  displayResults,
+  totalNumPages,
+  createQueryStringFromObject,
+} from "../../../utils/utils";
 import type { SyntheticEvent } from "react";
 import { createAdobeAnalyticsPageName } from "@/src/utils/utils";
 import NoResultsFound from "../../results/noResultsFound";
@@ -81,18 +85,18 @@ export const CollectionsPage = ({ data }) => {
     }, 2000);
   };
 
-  // TODO: right now, whenever a user hits earch, the url is created with all params including the defaults.
-  // Perhaps the query string should only include the values that are not defaults.
-  const createQueryStringFromObject = (paramObj) => {
-    const params = new URLSearchParams();
-    Object.keys(paramObj).map((name, value) => {
-      params.set(
-        name.toString(),
-        name === "page" ? paramObj[name].toString() : paramObj[name]
-      );
-    });
-    return params.toString();
-  };
+  // // TODO: right now, whenever a user hits earch, the url is created with all params including the defaults.
+  // // Perhaps the query string should only include the values that are not defaults.
+  // const createQueryStringFromObject = (paramObj) => {
+  //   const params = new URLSearchParams();
+  //   Object.keys(paramObj).map((name, value) => {
+  //     params.set(
+  //       name.toString(),
+  //       name === "page" ? paramObj[name].toString() : paramObj[name]
+  //     );
+  //   });
+  //   return params.toString();
+  // };
 
   // sort
   const onMenuClick = async (id) => {
@@ -195,13 +199,13 @@ export const CollectionsPage = ({ data }) => {
                     type: "action",
                   },
                   {
-                    id: "title-desc",
+                    id: "title-asc",
                     label: "Title A to Z",
                     onClick: onMenuClick,
                     type: "action",
                   },
                   {
-                    id: "title-asc",
+                    id: "title-desc",
                     label: "Title Z to A",
                     onClick: onMenuClick,
                     type: "action",
