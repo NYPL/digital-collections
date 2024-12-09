@@ -27,8 +27,6 @@ import {
   DEFAULT_COLLECTION_SORT,
   DEFAULT_SEARCH_TERM,
 } from "@/src/config/constants";
-import { useLoadingState } from "@/src/hooks/useLoadingState";
-import { query } from "winston";
 
 export function CollectionsPage({ data, params }) {
   const { push } = useRouter();
@@ -71,10 +69,12 @@ export function CollectionsPage({ data, params }) {
 
   const handleSearchSubmit = async (e: SyntheticEvent) => {
     e.preventDefault();
+    setCurrentPage(DEFAULT_PAGE_NUM);
+    setCurrentSort(DEFAULT_COLLECTION_SORT);
     const queryString = createCollectionsQueryStringFromObject({
       collection_keyword: currentCollectionKeyword,
       sort: currentSort,
-      page: DEFAULT_PAGE_NUM,
+      page: currentPage,
     });
     handleLoadingState(queryString);
   };
