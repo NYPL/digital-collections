@@ -85,19 +85,6 @@ export const CollectionsPage = ({ data }) => {
     }, 2000);
   };
 
-  // // TODO: right now, whenever a user hits earch, the url is created with all params including the defaults.
-  // // Perhaps the query string should only include the values that are not defaults.
-  // const createQueryStringFromObject = (paramObj) => {
-  //   const params = new URLSearchParams();
-  //   Object.keys(paramObj).map((name, value) => {
-  //     params.set(
-  //       name.toString(),
-  //       name === "page" ? paramObj[name].toString() : paramObj[name]
-  //     );
-  //   });
-  //   return params.toString();
-  // };
-
   // sort
   const onMenuClick = async (id) => {
     console.log("currentSort before is: ", currentSort);
