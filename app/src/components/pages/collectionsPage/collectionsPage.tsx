@@ -147,6 +147,9 @@ export const CollectionsPage = ({ data, params }) => {
           id={"search-collections"}
           textInputProps={{
             isClearable: true,
+            isClearableCallback: () => {
+              setCurrentCollectionKeyword("");
+            },
             labelText: "Search by collection title",
             name: "collection_keyword",
             placeholder: "Search by collection title",
