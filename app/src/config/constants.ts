@@ -13,3 +13,7 @@ export const ADOBE_EMBED_URL =
 export const TRUNCATED_LENGTH = 80;
 
 export const CARDS_PER_PAGE = 48;
+
+export const DEFAULT_PAGE_NUM = 1;
+export const DEFAULT_COLLECTION_SORT = "date-desc";
+export const DEFAULT_SEARCH_TERM = "";

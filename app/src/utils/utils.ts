@@ -1,6 +1,9 @@
 import {
   ADOBE_ANALYTICS_SITE_SECTION,
   ADOBE_ANALYTICS_DC_PREFIX,
+  DEFAULT_SEARCH_TERM,
+  DEFAULT_PAGE_NUM,
+  DEFAULT_COLLECTION_SORT,
 } from "../config/constants";
 import CollectionDataType from "@/src/types/CollectionDataType";
 import ItemDataType from "@/src/types/ItemDataType";
@@ -102,6 +105,13 @@ export function isCollectionType(
   return "numberOfDigitizedItems" in records[0];
 }
 
+export const collectionsSortOptions = {
+  "date-desc": "date DESC",
+  "date-asc": "date ASC",
+  "title-desc": "title DESC",
+  "title-asc": "title ASC",
+};
+
 export const createAdobeAnalyticsPageName = (
   base: string,
   recordName: string = ""
@@ -118,3 +128,31 @@ export function displayResults(
   const end = Math.min(page * perPage, numFound);
   return `${start}-${end} of ${numFound}`;
 }
+
+export const createQueryStringFromObject = (paramObj) => {
+  const params = new URLSearchParams();
+  Object.keys(paramObj).map((name, value) => {
+    params.set(
+      name.toString(),
+      name === "page" ? paramObj[name].toString() : paramObj[name]
+    );
+  });
+  return params.toString();
+};
+
+export const createCollectionsQueryStringFromObject = (paramObj) => {
+  const newParams = {};
+  Object.keys(paramObj).map((key) => {
+    if (
+      !(
+        paramObj[key] === DEFAULT_SEARCH_TERM ||
+        paramObj[key] === DEFAULT_PAGE_NUM ||
+        paramObj[key] === DEFAULT_PAGE_NUM.toString() ||
+        paramObj[key] === DEFAULT_COLLECTION_SORT
+      )
+    ) {
+      newParams[key] = paramObj[key];
+    }
+  });
+  return createQueryStringFromObject(newParams);
+};
