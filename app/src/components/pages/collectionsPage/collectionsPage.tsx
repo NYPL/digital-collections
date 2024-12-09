@@ -96,8 +96,6 @@ export const CollectionsPage = ({ data }) => {
 
   // sort
   const onMenuClick = async (id) => {
-    console.log("currentSort before is: ", currentSort);
-    console.log("current sort after is : ", currentSort);
     const queryString = createQueryStringFromObject({
       collection_keyword: currentCollectionKeyword,
       sort: id,
