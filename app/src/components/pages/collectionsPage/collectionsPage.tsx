@@ -22,6 +22,11 @@ import {
 import type { SyntheticEvent } from "react";
 import { createAdobeAnalyticsPageName } from "@/src/utils/utils";
 import NoResultsFound from "../../results/noResultsFound";
+import {
+  DEFAULT_PAGE_NUM,
+  DEFAULT_COLLECTION_SORT,
+  DEFAULT_SEARCH_TERM,
+} from "@/src/config/constants";
 
 export const CollectionsPage = ({ data }) => {
   const { push } = useRouter();
@@ -43,9 +48,13 @@ export const CollectionsPage = ({ data }) => {
   const totalPages = totalNumPages(numFound, data.perPage);
 
   // defaults
-  let currentPage = Number(searchParams.get("page")) || 1;
-  let currentSort = searchParams.get("sort") || "date-desc";
-  let currentCollectionKeyword = searchParams.get("collection_keyword") || "";
+  let currentPage = Number(searchParams.get("page")) || DEFAULT_PAGE_NUM;
+  let currentSort = searchParams.get("sort") || DEFAULT_COLLECTION_SORT;
+
+  const [currentCollectionKeyword, setCurrentCollectionKeyword] =
+    useState<string>(
+      searchParams.get("collection_keyword") || DEFAULT_SEARCH_TERM
+    );
 
   const handleSearchSubmit = async (e: SyntheticEvent) => {
     e.preventDefault();
@@ -65,7 +74,7 @@ export const CollectionsPage = ({ data }) => {
   // I'm not actually sure if this is necessary but it's in the research catalog
   const handleSearchChange = (e: SyntheticEvent) => {
     const target = e.target as HTMLInputElement;
-    currentCollectionKeyword = target.value;
+    setCurrentCollectionKeyword(target.value);
   };
 
   // pagination
