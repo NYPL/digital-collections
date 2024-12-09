@@ -43,14 +43,14 @@ export const CollectionsPage = ({ data, params }) => {
   const headingRef = useRef<HTMLHeadingElement>(null);
 
   // pagination
-  const numFound = data.numFound ? data.numFound : data.numResults;
+  const numFound = data.numFound || data.numResults;
   const totalPages = totalNumPages(numFound, data.perPage);
 
   // set defaults
-  let currentPage = Number(params["page"]) || DEFAULT_PAGE_NUM;
-  let currentSort = params["sort"] || DEFAULT_COLLECTION_SORT;
+  let currentPage = Number(params.page) || DEFAULT_PAGE_NUM;
+  let currentSort = params.sort || DEFAULT_COLLECTION_SORT;
   const [currentCollectionKeyword, setCurrentCollectionKeyword] =
-    useState<string>(params["collection_keyword"] || DEFAULT_SEARCH_TERM);
+    useState<string>(params.collection_keyword || DEFAULT_SEARCH_TERM);
 
   const handleSearchSubmit = async (e: SyntheticEvent) => {
     e.preventDefault();
