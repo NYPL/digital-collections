@@ -7,7 +7,7 @@ import {
 } from "../config/constants";
 import CollectionDataType from "@/src/types/CollectionDataType";
 import ItemDataType from "@/src/types/ItemDataType";
-import { URLSearchParams } from "url";
+
 /**
  * Represents a IIIF Image API URL, which will be used globally throughout the application.
  * IIIF Image API has several params, the ones we are the most concerned about are Region, Size, and Rotation.
@@ -129,8 +129,6 @@ export function displayResults(
   return `${start}-${end} of ${numFound}`;
 }
 
-// TODO: right now, whenever a user hits earch, the url is created with all params including the defaults.
-// Perhaps the query string should only include the values that are not defaults.
 export const createQueryStringFromObject = (paramObj) => {
   const params = new URLSearchParams();
   Object.keys(paramObj).map((name, value) => {

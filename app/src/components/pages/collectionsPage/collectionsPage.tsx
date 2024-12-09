@@ -17,7 +17,7 @@ import LaneLoading from "../../lane/laneLoading";
 import {
   displayResults,
   totalNumPages,
-  createQueryStringFromObject,
+  createCollectionsQueryStringFromObject,
 } from "../../../utils/utils";
 import type { SyntheticEvent } from "react";
 import { createAdobeAnalyticsPageName } from "@/src/utils/utils";
@@ -54,7 +54,7 @@ export const CollectionsPage = ({ data, params }) => {
 
   const handleSearchSubmit = async (e: SyntheticEvent) => {
     e.preventDefault();
-    const queryString = createQueryStringFromObject({
+    const queryString = createCollectionsQueryStringFromObject({
       collection_keyword: currentCollectionKeyword,
       sort: currentSort,
       page: currentPage,
@@ -76,7 +76,7 @@ export const CollectionsPage = ({ data, params }) => {
   // Question: Do we want to introduce debouncing?
   const onPageChange = async (pageNumber: number) => {
     currentPage = pageNumber;
-    const queryString = createQueryStringFromObject({
+    const queryString = createCollectionsQueryStringFromObject({
       collection_keyword: currentCollectionKeyword,
       sort: currentSort,
       page: pageNumber.toString(),
@@ -91,7 +91,7 @@ export const CollectionsPage = ({ data, params }) => {
 
   // sort
   const onMenuClick = async (id) => {
-    const queryString = createQueryStringFromObject({
+    const queryString = createCollectionsQueryStringFromObject({
       collection_keyword: currentCollectionKeyword,
       sort: id,
       page: currentPage,
