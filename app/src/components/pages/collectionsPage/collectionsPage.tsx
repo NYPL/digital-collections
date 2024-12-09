@@ -27,8 +27,10 @@ import {
   DEFAULT_COLLECTION_SORT,
   DEFAULT_SEARCH_TERM,
 } from "@/src/config/constants";
+import { useLoadingState } from "@/src/hooks/useLoadingState";
+import { query } from "winston";
 
-export const CollectionsPage = ({ data, params }) => {
+export function CollectionsPage({ data, params }) {
   const { push } = useRouter();
   const pathname = usePathname();
   const [isLoaded, setIsLoaded] = useState(false);
@@ -58,6 +60,14 @@ export const CollectionsPage = ({ data, params }) => {
   const [currentCollectionKeyword, setCurrentCollectionKeyword] =
     useState<string>(params.collection_keyword || DEFAULT_SEARCH_TERM);
 
+  const handleLoadingState = async (queryString) => {
+    setIsLoaded(false);
+    await push(`${pathname}?${queryString}`);
+    setTimeout(() => {
+      setIsLoaded(true);
+      headingRef.current?.focus();
+    }, 2000);
+  };
   const handleSearchSubmit = async (e: SyntheticEvent) => {
     e.preventDefault();
     const queryString = createCollectionsQueryStringFromObject({
@@ -65,12 +75,7 @@ export const CollectionsPage = ({ data, params }) => {
       sort: currentSort,
       page: currentPage,
     });
-    setIsLoaded(false);
-    await push(`${pathname}?${queryString}`);
-    setTimeout(() => {
-      setIsLoaded(true);
-      headingRef.current?.focus();
-    }, 2000);
+    handleLoadingState(queryString);
   };
 
   const handleSearchChange = (e: SyntheticEvent) => {
@@ -88,12 +93,7 @@ export const CollectionsPage = ({ data, params }) => {
       sort: currentSort,
       page: pageNumber.toString(),
     });
-    setIsLoaded(false);
-    await push(`${pathname}?${queryString}`);
-    setTimeout(() => {
-      setIsLoaded(true);
-      headingRef.current?.focus();
-    }, 2000);
+    handleLoadingState(queryString);
   };
 
   // sort
@@ -104,12 +104,7 @@ export const CollectionsPage = ({ data, params }) => {
       sort: id,
       page: currentPage,
     });
-    setIsLoaded(false);
-    await push(`${pathname}?${queryString}`);
-    setTimeout(() => {
-      setIsLoaded(true);
-      headingRef.current?.focus();
-    }, 2000);
+    handleLoadingState(queryString);
   };
 
   useEffect(() => {
@@ -258,4 +253,4 @@ export const CollectionsPage = ({ data, params }) => {
       )}
     </PageLayout>
   );
-};
+}
