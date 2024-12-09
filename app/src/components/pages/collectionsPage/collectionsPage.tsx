@@ -47,8 +47,14 @@ export const CollectionsPage = ({ data, params }) => {
   const totalPages = totalNumPages(numFound, data.perPage);
 
   // set defaults
-  let currentPage = Number(params.page) || DEFAULT_PAGE_NUM;
-  let currentSort = params.sort || DEFAULT_COLLECTION_SORT;
+  const [currentPage, setCurrentPage] = useState<number>(
+    params.page || DEFAULT_PAGE_NUM
+  );
+
+  const [currentSort, setCurrentSort] = useState<string>(
+    params.sort || DEFAULT_COLLECTION_SORT
+  );
+
   const [currentCollectionKeyword, setCurrentCollectionKeyword] =
     useState<string>(params.collection_keyword || DEFAULT_SEARCH_TERM);
 
@@ -75,7 +81,8 @@ export const CollectionsPage = ({ data, params }) => {
   // pagination
   // Question: Do we want to introduce debouncing?
   const onPageChange = async (pageNumber: number) => {
-    currentPage = pageNumber;
+    // currentPage = pageNumber;
+    setCurrentPage(pageNumber);
     const queryString = createCollectionsQueryStringFromObject({
       collection_keyword: currentCollectionKeyword,
       sort: currentSort,
@@ -91,6 +98,7 @@ export const CollectionsPage = ({ data, params }) => {
 
   // sort
   const onMenuClick = async (id) => {
+    setCurrentSort(id);
     const queryString = createCollectionsQueryStringFromObject({
       collection_keyword: currentCollectionKeyword,
       sort: id,
@@ -220,6 +228,7 @@ export const CollectionsPage = ({ data, params }) => {
         {`Displaying ${displayResults(data.numResults, data.perPage, data.page)}
             results`}
       </Heading>
+
       {isLoaded ? (
         collections.length > 0 ? (
           <CardsGrid records={collections} />
