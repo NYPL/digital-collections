@@ -161,69 +161,72 @@ export const CollectionsPage = ({ data, params }) => {
         />
       </Box>
       <HorizontalRule sx={{ marginTop: "xxl", marginBottom: "xxl" }} />
-
+      <Box
+        sx={
+          collections?.length > 0
+            ? { display: "flex", gap: "xs", marginBottom: "l" }
+            : { display: "none", gap: "xs", marginBottom: "l" }
+        }
+      >
+        <Text sx={{ fontWeight: "500", marginBottom: 0, marginTop: "xs" }}>
+          {" "}
+          Sort by{" "}
+        </Text>{" "}
+        <Menu
+          showSelectionAsLabel
+          showLabel
+          selectedItem={currentSort}
+          labelText={"Sort By"}
+          listItemsData={[
+            {
+              id: "date-desc",
+              label: "Newest to oldest",
+              onClick: onMenuClick,
+              type: "action",
+            },
+            {
+              id: "date-asc",
+              label: "Oldest to newest",
+              onClick: onMenuClick,
+              type: "action",
+            },
+            {
+              id: "title-asc",
+              label: "Title A to Z",
+              onClick: onMenuClick,
+              type: "action",
+            },
+            {
+              id: "title-desc",
+              label: "Title Z to A",
+              onClick: onMenuClick,
+              type: "action",
+            },
+          ]}
+        />
+      </Box>
+      <Heading
+        size="heading5"
+        sx={
+          collections?.length > 0
+            ? { marginBottom: "l" }
+            : { display: "none", marginBottom: "l" }
+        }
+        ref={headingRef}
+        tabIndex={-1}
+        id={"all-collections-page"}
+        width="max-content"
+      >
+        {`Displaying ${displayResults(data.numResults, data.perPage, data.page)}
+            results`}
+      </Heading>
       {isLoaded ? (
         collections.length > 0 ? (
           <>
-            <Box sx={{ display: "flex", gap: "xs", marginBottom: "l" }}>
-              <Text
-                sx={{ fontWeight: "500", marginBottom: 0, marginTop: "xs" }}
-              >
-                {" "}
-                Sort by{" "}
-              </Text>{" "}
-              <Menu
-                showSelectionAsLabel
-                showLabel
-                selectedItem={currentSort}
-                labelText={"Sort By"}
-                listItemsData={[
-                  {
-                    id: "date-desc",
-                    label: "Newest to oldest",
-                    onClick: onMenuClick,
-                    type: "action",
-                  },
-                  {
-                    id: "date-asc",
-                    label: "Oldest to newest",
-                    onClick: onMenuClick,
-                    type: "action",
-                  },
-                  {
-                    id: "title-asc",
-                    label: "Title A to Z",
-                    onClick: onMenuClick,
-                    type: "action",
-                  },
-                  {
-                    id: "title-desc",
-                    label: "Title Z to A",
-                    onClick: onMenuClick,
-                    type: "action",
-                  },
-                ]}
-              />
-            </Box>
-            <Heading
-              size="heading5"
-              sx={{ marginBottom: "l" }}
-              ref={headingRef}
-              tabIndex={-1}
-              id={"all-collections-page"}
-              width="max-content"
-            >
-              {`Displaying ${displayResults(
-                data.numResults,
-                data.perPage,
-                data.page
-              )}
-            results`}
-            </Heading>
             <CardsGrid records={collections} />
           </>
         ) : (
-          <NoResultsFound searchTerm={currentCollectionKeyword} />
+          <NoResultsFound searchTerm={params.collection_keyword} />
         )
       ) : (
         Array(Math.ceil(collections.length / 4)).fill(
