@@ -1,10 +1,13 @@
 import {
   ADOBE_ANALYTICS_SITE_SECTION,
   ADOBE_ANALYTICS_DC_PREFIX,
+  DEFAULT_SEARCH_TERM,
+  DEFAULT_PAGE_NUM,
+  DEFAULT_COLLECTION_SORT,
 } from "../config/constants";
 import CollectionDataType from "@/src/types/CollectionDataType";
 import ItemDataType from "@/src/types/ItemDataType";
-
+import { URLSearchParams } from "url";
 /**
  * Represents a IIIF Image API URL, which will be used globally throughout the application.
  * IIIF Image API has several params, the ones we are the most concerned about are Region, Size, and Rotation.
@@ -139,4 +142,19 @@ export const createQueryStringFromObject = (paramObj) => {
   return params.toString();
 };
 
-// paramObj options:
+export const createCollectionsQueryStringFromObject = (paramObj) => {
+  const newParams = {};
+  Object.keys(paramObj).map((key) => {
+    if (
+      !(
+        paramObj[key] === DEFAULT_SEARCH_TERM ||
+        paramObj[key] === DEFAULT_PAGE_NUM ||
+        paramObj[key] === DEFAULT_PAGE_NUM.toString() ||
+        paramObj[key] === DEFAULT_COLLECTION_SORT
+      )
+    ) {
+      newParams[key] = paramObj[key];
+    }
+  });
+  return createQueryStringFromObject(newParams);
+};
