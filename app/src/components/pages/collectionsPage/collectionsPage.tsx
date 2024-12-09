@@ -148,7 +148,7 @@ export const CollectionsPage = ({ data, params }) => {
           textInputProps={{
             isClearable: true,
             isClearableCallback: () => {
-              setCurrentCollectionKeyword("");
+              setCurrentCollectionKeyword(DEFAULT_SEARCH_TERM);
             },
             labelText: "Search by collection title",
             name: "collection_keyword",
