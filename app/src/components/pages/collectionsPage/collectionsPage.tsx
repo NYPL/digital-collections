@@ -10,7 +10,7 @@ import {
   Text,
   Pagination,
 } from "@nypl/design-system-react-components";
-import { useSearchParams, usePathname, useRouter } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { headerBreakpoints } from "../../../utils/breakpoints";
 import { CardsGrid } from "../../grids/cardsGrid";
 import LaneLoading from "../../lane/laneLoading";
@@ -28,9 +28,8 @@ import {
   DEFAULT_SEARCH_TERM,
 } from "@/src/config/constants";
 
-export const CollectionsPage = ({ data }) => {
+export const CollectionsPage = ({ data, params }) => {
   const { push } = useRouter();
-  const searchParams = useSearchParams();
   const pathname = usePathname();
   const [isLoaded, setIsLoaded] = useState(false);
   let collections = [];
@@ -47,14 +46,11 @@ export const CollectionsPage = ({ data }) => {
   const numFound = data.numFound ? data.numFound : data.numResults;
   const totalPages = totalNumPages(numFound, data.perPage);
 
-  // defaults
-  let currentPage = Number(searchParams.get("page")) || DEFAULT_PAGE_NUM;
-  let currentSort = searchParams.get("sort") || DEFAULT_COLLECTION_SORT;
-
+  // set defaults
+  let currentPage = Number(params["page"]) || DEFAULT_PAGE_NUM;
+  let currentSort = params["sort"] || DEFAULT_COLLECTION_SORT;
   const [currentCollectionKeyword, setCurrentCollectionKeyword] =
-    useState<string>(
-      searchParams.get("collection_keyword") || DEFAULT_SEARCH_TERM
-    );
+    useState<string>(params["collection_keyword"] || DEFAULT_SEARCH_TERM);
 
   const handleSearchSubmit = async (e: SyntheticEvent) => {
     e.preventDefault();
@@ -71,7 +67,6 @@ export const CollectionsPage = ({ data }) => {
     }, 2000);
   };
 
-  // I'm not actually sure if this is necessary but it's in the research catalog
   const handleSearchChange = (e: SyntheticEvent) => {
     const target = e.target as HTMLInputElement;
     setCurrentCollectionKeyword(target.value);
