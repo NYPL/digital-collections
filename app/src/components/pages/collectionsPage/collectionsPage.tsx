@@ -222,9 +222,7 @@ export const CollectionsPage = ({ data, params }) => {
       </Heading>
       {isLoaded ? (
         collections.length > 0 ? (
-          <>
-            <CardsGrid records={collections} />
-          </>
+          <CardsGrid records={collections} />
         ) : (
           <NoResultsFound searchTerm={params.collection_keyword} />
         )
