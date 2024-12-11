@@ -42,23 +42,21 @@ export function CollectionsPage({ data, params }) {
 
   const headingRef = useRef<HTMLHeadingElement>(null);
 
-  // pagination
   const numFound = data.numFound || data.numResults;
   const totalPages = totalNumPages(numFound, data.perPage);
 
-  // set defaults
   const [currentPage, setCurrentPage] = useState<number>(
-    params.page || DEFAULT_PAGE_NUM
+    Number(params.page) || Number(DEFAULT_PAGE_NUM)
   );
 
   const [currentSort, setCurrentSort] = useState<string>(
     params.sort || DEFAULT_COLLECTION_SORT
   );
 
-  const [currentCollectionKeyword, setCurrentCollectionKeyword] =
-    useState<string>(params.collection_keyword || DEFAULT_SEARCH_TERM);
+  const [currentCollectionKeywords, setcurrentCollectionKeywords] =
+    useState<string>(params.collection_keywords || DEFAULT_SEARCH_TERM);
 
-  const handleLoadingState = async (queryString) => {
+  const updateURL = async (queryString) => {
     setIsLoaded(false);
     await push(`${pathname}?${queryString}`);
     setTimeout(() => {
@@ -69,42 +67,41 @@ export function CollectionsPage({ data, params }) {
 
   const handleSearchSubmit = async (e: SyntheticEvent) => {
     e.preventDefault();
-    setCurrentPage(DEFAULT_PAGE_NUM);
+    setCurrentPage(Number(DEFAULT_PAGE_NUM));
     setCurrentSort(DEFAULT_COLLECTION_SORT);
     const queryString = createCollectionsQueryStringFromObject({
-      collection_keyword: currentCollectionKeyword,
+      collection_keywords: currentCollectionKeywords,
       sort: currentSort,
       page: currentPage,
     });
-    handleLoadingState(queryString);
+    updateURL(queryString);
   };
 
   const handleSearchChange = (e: SyntheticEvent) => {
     const target = e.target as HTMLInputElement;
-    setCurrentCollectionKeyword(target.value);
+    setcurrentCollectionKeywords(target.value);
   };
 
   // pagination
-  // Question: Do we want to introduce debouncing?
   const onPageChange = async (pageNumber: number) => {
     setCurrentPage(pageNumber);
     const queryString = createCollectionsQueryStringFromObject({
-      collection_keyword: currentCollectionKeyword,
+      collection_keywords: currentCollectionKeywords,
       sort: currentSort,
       page: pageNumber.toString(),
     });
-    handleLoadingState(queryString);
+    updateURL(queryString);
   };
 
   // sort
   const onMenuClick = async (id) => {
     setCurrentSort(id);
     const queryString = createCollectionsQueryStringFromObject({
-      collection_keyword: currentCollectionKeyword,
+      collection_keywords: currentCollectionKeywords,
       sort: id,
       page: currentPage,
     });
-    handleLoadingState(queryString);
+    updateURL(queryString);
   };
 
   useEffect(() => {
@@ -151,12 +148,12 @@ export function CollectionsPage({ data, params }) {
           textInputProps={{
             isClearable: true,
             isClearableCallback: () => {
-              setCurrentCollectionKeyword(DEFAULT_SEARCH_TERM);
+              setcurrentCollectionKeywords(DEFAULT_SEARCH_TERM);
             },
             labelText: "Search by collection title",
-            name: "collection_keyword",
+            name: "collection_keywords",
             placeholder: "Search by collection title",
-            defaultValue: currentCollectionKeyword,
+            defaultValue: currentCollectionKeywords,
             onChange: (e) => handleSearchChange(e),
           }}
           onSubmit={handleSearchSubmit}
@@ -217,7 +214,7 @@ export function CollectionsPage({ data, params }) {
         }
         ref={headingRef}
         tabIndex={-1}
-        id={"all-collections-page"}
+        id="all-collections-page"
         width="max-content"
       >
         {`Displaying ${displayResults(data.numResults, data.perPage, data.page)}
@@ -228,7 +225,7 @@ export function CollectionsPage({ data, params }) {
         collections.length > 0 ? (
           <CardsGrid records={collections} />
         ) : (
-          <NoResultsFound searchTerm={params.collection_keyword} />
+          <NoResultsFound searchTerm={params.collection_keywords} />
         )
       ) : (
         Array(Math.ceil(collections.length / 4)).fill(

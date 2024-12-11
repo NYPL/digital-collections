@@ -2,7 +2,12 @@ import data from "../../src/data/lanes";
 import type { LaneDataType } from "../../src/types/Lane";
 import { imageURL, addCommas, collectionsSortOptions } from "../utils/utils";
 import defaultFeaturedItems from "../data/defaultFeaturedItemData";
-import { CARDS_PER_PAGE } from "../config/constants";
+import {
+  CARDS_PER_PAGE,
+  DEFAULT_COLLECTION_SORT,
+  DEFAULT_PAGE_NUM,
+  DEFAULT_SEARCH_TERM,
+} from "../config/constants";
 import { fetchApi } from "./fetchApi";
 
 export const getHomePageData = async () => {
@@ -157,15 +162,15 @@ export const getDivisionData = async ({
 };
 
 export const getCollectionsData = async ({
-  keyword = "",
-  sortID = "date-desc", // TODO: rename sortID TODO: store defaults as constants
-  pageNum = 1,
+  keyword = DEFAULT_SEARCH_TERM,
+  sortID = DEFAULT_COLLECTION_SORT,
+  pageNum = DEFAULT_PAGE_NUM,
   perPage = CARDS_PER_PAGE,
 }: {
   keyword?: string;
   sortID?: string;
-  pageNum?: number;
-  perPage?: number; // OPEN QUESTION: perhaps remove the "perPage" field because the API default is 48 and that is what we want.
+  pageNum?: string;
+  perPage?: number;
 } = {}) => {
   let apiUrl = `${process.env.API_URL}/api/v2/collections?page=${pageNum}&per_page=${perPage}&sort=${collectionsSortOptions[sortID]}&q=${keyword}`;
   const res = await fetchApi(apiUrl);
