@@ -15,6 +15,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 
 - Added tests for API helpers (DR-3271)
+- Added `/healthcheck` endpoint (DR-3304)
 
 ### Updated
 
