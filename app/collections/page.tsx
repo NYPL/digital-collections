@@ -6,7 +6,7 @@ import { redirect } from "next/navigation";
 
 export type CollectionsProps = {
   params: { slug: string };
-  searchParams: { page: number; sort: string; collection_keyword: string };
+  searchParams: { page: string; sort: string; collection_keyword: string };
 };
 
 export const metadata: Metadata = {
