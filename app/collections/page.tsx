@@ -6,7 +6,7 @@ import { redirect } from "next/navigation";
 
 export type CollectionsProps = {
   params: { slug: string };
-  searchParams: { page: string; sort: string; collection_keyword: string };
+  searchParams: { page: string; sort: string; collection_keywords: string };
 };
 
 export const metadata: Metadata = {
@@ -18,10 +18,10 @@ export const metadata: Metadata = {
 
 export default async function Collections({ searchParams }: CollectionsProps) {
   const data = await getCollectionsData({
-    keyword: searchParams.collection_keyword,
+    keyword: searchParams.collection_keywords,
     sortID: searchParams.sort,
     pageNum: searchParams.page,
-  }); // TODO: create model for APICollectionsData from API to clean up the data before it's sent down to the components.
+  });
 
   // Repo API returns 404s within the data.
   if (
@@ -33,7 +33,6 @@ export default async function Collections({ searchParams }: CollectionsProps) {
 
   return (
     <Suspense>
-      {/* pass entire Repo API Response */}
       <CollectionsPage data={data} params={searchParams} />
     </Suspense>
   );

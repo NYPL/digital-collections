@@ -62,17 +62,19 @@ export function CollectionsPage({ data, params }) {
     setTimeout(() => {
       setIsLoaded(true);
       headingRef.current?.focus();
-    }, 2000);
+    }, 1000);
   };
 
   const handleSearchSubmit = async (e: SyntheticEvent) => {
     e.preventDefault();
+    // something is so weird about state here.
+    // change the values in the object passed down to createCollectionsQueryStringFromObject to be currentPage and currentSort and tell me if it works for you....
     setCurrentPage(Number(DEFAULT_PAGE_NUM));
     setCurrentSort(DEFAULT_COLLECTION_SORT);
     const queryString = createCollectionsQueryStringFromObject({
       collection_keywords: currentCollectionKeywords,
-      sort: currentSort,
-      page: currentPage,
+      sort: DEFAULT_COLLECTION_SORT,
+      page: DEFAULT_PAGE_NUM,
     });
     updateURL(queryString);
   };
@@ -82,7 +84,6 @@ export function CollectionsPage({ data, params }) {
     setcurrentCollectionKeywords(target.value);
   };
 
-  // pagination
   const onPageChange = async (pageNumber: number) => {
     setCurrentPage(pageNumber);
     const queryString = createCollectionsQueryStringFromObject({
@@ -93,7 +94,6 @@ export function CollectionsPage({ data, params }) {
     updateURL(queryString);
   };
 
-  // sort
   const onMenuClick = async (id) => {
     setCurrentSort(id);
     const queryString = createCollectionsQueryStringFromObject({

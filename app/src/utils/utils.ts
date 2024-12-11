@@ -131,28 +131,25 @@ export function displayResults(
 
 export const createQueryStringFromObject = (paramObj) => {
   const params = new URLSearchParams();
-  Object.keys(paramObj).map((name, value) => {
-    params.set(
-      name.toString(),
-      name === "page" ? paramObj[name].toString() : paramObj[name]
-    );
+  Object.keys(paramObj).forEach((name) => {
+    params.set(name.toString(), paramObj[name]);
   });
   return params.toString();
 };
 
 export const createCollectionsQueryStringFromObject = (paramObj) => {
   const newParams = {};
-  Object.keys(paramObj).map((key) => {
-    if (
-      !(
-        paramObj[key] === DEFAULT_SEARCH_TERM ||
-        paramObj[key] === DEFAULT_PAGE_NUM ||
-        paramObj[key] === DEFAULT_PAGE_NUM.toString() ||
-        paramObj[key] === DEFAULT_COLLECTION_SORT
-      )
-    ) {
+  const defaultValues = [
+    DEFAULT_SEARCH_TERM,
+    DEFAULT_PAGE_NUM,
+    DEFAULT_PAGE_NUM.toString(),
+    DEFAULT_COLLECTION_SORT,
+  ];
+  Object.keys(paramObj).forEach((key) => {
+    if (!defaultValues.includes(paramObj[key])) {
       newParams[key] = paramObj[key];
     }
   });
+
   return createQueryStringFromObject(newParams);
 };
