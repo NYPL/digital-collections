@@ -7,7 +7,7 @@ import {
 } from "../config/constants";
 import CollectionDataType from "@/src/types/CollectionDataType";
 import ItemDataType from "@/src/types/ItemDataType";
-
+import CollectionSearchParams from "../types/CollectionSearchParams";
 /**
  * Represents a IIIF Image API URL, which will be used globally throughout the application.
  * IIIF Image API has several params, the ones we are the most concerned about are Region, Size, and Rotation.
@@ -129,27 +129,29 @@ export function displayResults(
   return `${start}-${end} of ${numFound}`;
 }
 
-export const createQueryStringFromObject = (paramObj) => {
+export const createQueryStringFromHash = (hash) => {
   const params = new URLSearchParams();
-  Object.keys(paramObj).forEach((name) => {
-    params.set(name.toString(), paramObj[name]);
+  Object.keys(hash).forEach((name) => {
+    params.set(name.toString(), hash[name]);
   });
   return params.toString();
 };
 
-export const createCollectionsQueryStringFromObject = (paramObj) => {
+export const createCollectionsQueryStringFromHash = (
+  paramsHash: CollectionSearchParams
+) => {
   const newParams = {};
   const defaultValues = [
     DEFAULT_SEARCH_TERM,
     DEFAULT_PAGE_NUM,
-    DEFAULT_PAGE_NUM.toString(),
     DEFAULT_COLLECTION_SORT,
   ];
-  Object.keys(paramObj).forEach((key) => {
-    if (!defaultValues.includes(paramObj[key])) {
-      newParams[key] = paramObj[key];
+
+  Object.keys(paramsHash).forEach((key) => {
+    if (!defaultValues.includes(paramsHash[key])) {
+      newParams[key] = paramsHash[key];
     }
   });
 
-  return createQueryStringFromObject(newParams);
+  return createQueryStringFromHash(newParams);
 };

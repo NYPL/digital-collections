@@ -17,7 +17,7 @@ import LaneLoading from "../../lane/laneLoading";
 import {
   displayResults,
   totalNumPages,
-  createCollectionsQueryStringFromObject,
+  createCollectionsQueryStringFromHash,
 } from "../../../utils/utils";
 import type { SyntheticEvent } from "react";
 import { createAdobeAnalyticsPageName } from "@/src/utils/utils";
@@ -28,12 +28,17 @@ import {
   DEFAULT_SEARCH_TERM,
 } from "@/src/config/constants";
 
-export function CollectionsPage({ data, params }) {
+export function CollectionsPage({ data, params, renderCollections }) {
   const { push } = useRouter();
   const pathname = usePathname();
   const [isLoaded, setIsLoaded] = useState(false);
   let collections = [];
 
+  // if (data.collections !== undefined) {
+  //   collections = Array.isArray(data.collection)
+  //     ? data.collection
+  //     : [data.collection];
+  // }
   if (data.headers.message === "Collections retrieved successfully") {
     collections = Array.isArray(data.collection)
       ? data.collection
@@ -71,7 +76,7 @@ export function CollectionsPage({ data, params }) {
     // change the values in the object passed down to createCollectionsQueryStringFromObject to be currentPage and currentSort and tell me if it works for you....
     setCurrentPage(Number(DEFAULT_PAGE_NUM));
     setCurrentSort(DEFAULT_COLLECTION_SORT);
-    const queryString = createCollectionsQueryStringFromObject({
+    const queryString = createCollectionsQueryStringFromHash({
       collection_keywords: currentCollectionKeywords,
       sort: DEFAULT_COLLECTION_SORT,
       page: DEFAULT_PAGE_NUM,
@@ -86,7 +91,7 @@ export function CollectionsPage({ data, params }) {
 
   const onPageChange = async (pageNumber: number) => {
     setCurrentPage(pageNumber);
-    const queryString = createCollectionsQueryStringFromObject({
+    const queryString = createCollectionsQueryStringFromHash({
       collection_keywords: currentCollectionKeywords,
       sort: currentSort,
       page: pageNumber.toString(),
@@ -96,7 +101,7 @@ export function CollectionsPage({ data, params }) {
 
   const onMenuClick = async (id) => {
     setCurrentSort(id);
-    const queryString = createCollectionsQueryStringFromObject({
+    const queryString = createCollectionsQueryStringFromHash({
       collection_keywords: currentCollectionKeywords,
       sort: id,
       page: currentPage,
