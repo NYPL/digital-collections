@@ -3,8 +3,8 @@ import {
   stringToSlug,
   createAdobeAnalyticsPageName,
   displayResults,
-  createQueryStringFromObject,
-  createCollectionsQueryStringFromObject,
+  createQueryStringFromHash,
+  createCollectionsQueryStringFromHash,
 } from "./utils";
 import {
   DEFAULT_PAGE_NUM,
@@ -211,13 +211,13 @@ describe("displayResults", () => {
   });
 });
 
-describe("createQueryStringFromObject generates the correct query string: ", () => {
+describe("createQueryStringFromHash generates the correct query string: ", () => {
   test("when the values are all empty", () => {
-    expect(createQueryStringFromObject({})).toBe("");
+    expect(createQueryStringFromHash({})).toBe("");
   });
   test("when there are multiple values", () => {
     expect(
-      createQueryStringFromObject({
+      createQueryStringFromHash({
         dog: "cat",
         help: "me",
         this_is: "aTest",
@@ -226,18 +226,18 @@ describe("createQueryStringFromObject generates the correct query string: ", () 
   });
 });
 
-describe("createCollectionsQueryStringFromObject generates the correct query string: ", () => {
+describe("createCollectionsQueryStringFromHash generates the correct query string: ", () => {
   test("when the values are all empty or all defaults", () => {
     expect(
-      createCollectionsQueryStringFromObject({
-        collection_keyword: "",
+      createCollectionsQueryStringFromHash({
+        collection_keywords: "",
         sort: "",
         page: "",
       })
     ).toBe("");
     expect(
-      createCollectionsQueryStringFromObject({
-        collection_keyword: DEFAULT_SEARCH_TERM,
+      createCollectionsQueryStringFromHash({
+        collection_keywords: DEFAULT_SEARCH_TERM,
         sort: DEFAULT_COLLECTION_SORT,
         page: DEFAULT_PAGE_NUM,
       })
@@ -246,37 +246,37 @@ describe("createCollectionsQueryStringFromObject generates the correct query str
 
   test("when the values are all set to a non-default value", () => {
     expect(
-      createCollectionsQueryStringFromObject({
-        collection_keyword: "cat",
+      createCollectionsQueryStringFromHash({
+        collection_keywords: "cat",
         sort: "title-desc",
         page: "2",
       })
-    ).toBe("collection_keyword=cat&sort=title-desc&page=2");
+    ).toBe("collection_keywords=cat&sort=title-desc&page=2");
   });
 
-  test("collection_keyword search values are set correctly", () => {
+  test("collection_keywords search values are set correctly", () => {
     // empty sort and page num, not default keyword
     expect(
-      createCollectionsQueryStringFromObject({
-        collection_keyword: "cat",
+      createCollectionsQueryStringFromHash({
+        collection_keywords: "cat",
         sort: "",
         page: "",
       })
-    ).toBe("collection_keyword=cat");
+    ).toBe("collection_keywords=cat");
 
     // default sort and page num, not default keyword
     expect(
-      createCollectionsQueryStringFromObject({
-        collection_keyword: "cat",
+      createCollectionsQueryStringFromHash({
+        collection_keywords: "cat",
         sort: DEFAULT_COLLECTION_SORT,
         page: DEFAULT_PAGE_NUM,
       })
-    ).toBe("collection_keyword=cat");
+    ).toBe("collection_keywords=cat");
 
     // default keyword, page num and sort are not default
     expect(
-      createCollectionsQueryStringFromObject({
-        collection_keyword: DEFAULT_SEARCH_TERM,
+      createCollectionsQueryStringFromHash({
+        collection_keywords: DEFAULT_SEARCH_TERM,
         sort: "title-desc",
         page: "2",
       })
@@ -287,8 +287,8 @@ describe("createCollectionsQueryStringFromObject generates the correct query str
     // sort
     // only sort, keyword is default and page is empty
     expect(
-      createCollectionsQueryStringFromObject({
-        collection_keyword: DEFAULT_SEARCH_TERM,
+      createCollectionsQueryStringFromHash({
+        collection_keywords: DEFAULT_SEARCH_TERM,
         sort: "title-desc",
         page: "",
       })
@@ -296,8 +296,8 @@ describe("createCollectionsQueryStringFromObject generates the correct query str
 
     // default keyword and page num, not default sort
     expect(
-      createCollectionsQueryStringFromObject({
-        collection_keyword: DEFAULT_SEARCH_TERM,
+      createCollectionsQueryStringFromHash({
+        collection_keywords: DEFAULT_SEARCH_TERM,
         sort: "title-desc",
         page: DEFAULT_PAGE_NUM,
       })
@@ -305,19 +305,19 @@ describe("createCollectionsQueryStringFromObject generates the correct query str
 
     // default sort, not default page or keyword
     expect(
-      createCollectionsQueryStringFromObject({
-        collection_keyword: "cat",
+      createCollectionsQueryStringFromHash({
+        collection_keywords: "cat",
         sort: DEFAULT_COLLECTION_SORT,
         page: "2",
       })
-    ).toBe("collection_keyword=cat&page=2");
+    ).toBe("collection_keywords=cat&page=2");
   });
 
   test("page num values are set correctly: ", () => {
     // default keyword and sort, not default page num
     expect(
-      createCollectionsQueryStringFromObject({
-        collection_keyword: DEFAULT_SEARCH_TERM,
+      createCollectionsQueryStringFromHash({
+        collection_keywords: DEFAULT_SEARCH_TERM,
         sort: DEFAULT_COLLECTION_SORT,
         page: "2",
       })
@@ -325,17 +325,17 @@ describe("createCollectionsQueryStringFromObject generates the correct query str
 
     // default keyword and sort, not default page num. page num is integer.
     expect(
-      createCollectionsQueryStringFromObject({
-        collection_keyword: DEFAULT_SEARCH_TERM,
+      createCollectionsQueryStringFromHash({
+        collection_keywords: DEFAULT_SEARCH_TERM,
         sort: DEFAULT_COLLECTION_SORT,
         page: 2,
       })
     ).toBe("page=2");
 
-    // only page num, sort and collection_keyword are empty
+    // only page num, sort and collection_keywords are empty
     expect(
-      createCollectionsQueryStringFromObject({
-        collection_keyword: DEFAULT_SEARCH_TERM,
+      createCollectionsQueryStringFromHash({
+        collection_keywords: DEFAULT_SEARCH_TERM,
         sort: "",
         page: "2",
       })
@@ -343,11 +343,11 @@ describe("createCollectionsQueryStringFromObject generates the correct query str
 
     // default page num, key word and sort are not default
     expect(
-      createCollectionsQueryStringFromObject({
-        collection_keyword: "cat",
+      createCollectionsQueryStringFromHash({
+        collection_keywords: "cat",
         sort: "title-desc",
         page: "1",
       })
-    ).toBe("collection_keyword=cat&sort=title-desc");
+    ).toBe("collection_keywords=cat&sort=title-desc");
   });
 });

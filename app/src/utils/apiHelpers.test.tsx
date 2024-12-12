@@ -8,6 +8,7 @@ import {
   getLaneData,
   getNumDigitizedItems,
   getRandomFeaturedItem,
+  getCollectionsData,
 } from "./apiHelpers";
 import { fetchApi } from "./fetchApi";
 import defaultFeaturedItem from "../data/defaultFeaturedItemData";
@@ -369,3 +370,19 @@ describe("getItemData", () => {
     expect(item).toHaveProperty("mods");
   });
 });
+
+// describe("getCollectionsData", () => {
+//   it("returns expected results", async () => {
+//     (fetchApi as jest.Mock).mockResolvedValueOnce(
+//       Promise.resolve(getCollectionsData)
+//     );
+//     const collections = await getCollectionsData("uuid1");
+//     expect(fetchApi as jest.Mock).toHaveBeenCalledWith(
+//      `${process.env.API_URL}/api/v2/collections?page=1&per_page=48&sort=&q=`
+//     );
+
+//     expect(collections).toEqual(mockPaginatedCollections);
+//     expect(collections).toHaveProperty("capture");
+//     expect(collections).toHaveProperty("mods");
+//   });
+// });

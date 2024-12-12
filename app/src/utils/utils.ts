@@ -105,13 +105,6 @@ export function isCollectionType(
   return "numberOfDigitizedItems" in records[0];
 }
 
-export const collectionsSortOptions = {
-  "date-desc": "date DESC",
-  "date-asc": "date ASC",
-  "title-desc": "title DESC",
-  "title-asc": "title ASC",
-};
-
 export const createAdobeAnalyticsPageName = (
   base: string,
   recordName: string = ""
