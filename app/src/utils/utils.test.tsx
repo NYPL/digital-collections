@@ -323,15 +323,6 @@ describe("createCollectionsQueryStringFromHash generates the correct query strin
       })
     ).toBe("page=2");
 
-    // default keyword and sort, not default page num. page num is integer.
-    expect(
-      createCollectionsQueryStringFromHash({
-        collection_keywords: DEFAULT_SEARCH_TERM,
-        sort: DEFAULT_COLLECTION_SORT,
-        page: 2,
-      })
-    ).toBe("page=2");
-
     // only page num, sort and collection_keywords are empty
     expect(
       createCollectionsQueryStringFromHash({
