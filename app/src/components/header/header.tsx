@@ -61,10 +61,10 @@ const Header = () => {
           <DCLogo isMobile={false} />
           <Box
             sx={{
-              display: "none",
+              display: "block",
               [`@media screen and (min-width: ${headerBreakpoints.smTablet}px)`]:
                 {
-                  display: isScrolled ? "block" : "none",
+                  display: isScrollingUp ? "block" : "none",
                 },
               [`@media screen and (min-width: ${headerBreakpoints.lgTablet}px)`]:
                 {
@@ -117,7 +117,7 @@ const Header = () => {
               display: "none",
               [`@media screen and (min-width: ${headerBreakpoints.lgTablet}px)`]:
                 {
-                  display: isScrolled ? "block" : "none",
+                  display: isScrollingUp ? "block" : "none",
                 },
             }}
           >
