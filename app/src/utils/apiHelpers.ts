@@ -1,12 +1,13 @@
 import data from "../../src/data/lanes";
 import type { LaneDataType } from "../../src/types/Lane";
-import { imageURL, addCommas, collectionsSortOptions } from "../utils/utils";
+import { imageURL, addCommas } from "../utils/utils";
 import defaultFeaturedItems from "../data/defaultFeaturedItemData";
 import {
   CARDS_PER_PAGE,
   DEFAULT_COLLECTION_SORT,
   DEFAULT_PAGE_NUM,
   DEFAULT_SEARCH_TERM,
+  COLLECTION_SORT_OPTIONS,
 } from "../config/constants";
 import { fetchApi } from "./fetchApi";
 
@@ -172,7 +173,7 @@ export const getCollectionsData = async ({
   pageNum?: string;
   perPage?: number;
 } = {}) => {
-  let apiUrl = `${process.env.API_URL}/api/v2/collections?page=${pageNum}&per_page=${perPage}&sort=${collectionsSortOptions[sortID]}&q=${keyword}`;
+  let apiUrl = `${process.env.API_URL}/api/v2/collections?page=${pageNum}&per_page=${perPage}&sort=${COLLECTION_SORT_OPTIONS[sortID]}&q=${keyword}`;
   const res = await fetchApi(apiUrl);
   return res;
 };
