@@ -28,7 +28,7 @@ import {
   DEFAULT_SEARCH_TERM,
 } from "@/src/config/constants";
 
-export function CollectionsPage({ data, params, renderCollections }) {
+export function CollectionsPage({ data, params }) {
   const { push } = useRouter();
   const pathname = usePathname();
   const [isLoaded, setIsLoaded] = useState(false);
@@ -104,7 +104,7 @@ export function CollectionsPage({ data, params, renderCollections }) {
     const queryString = createCollectionsQueryStringFromHash({
       collection_keywords: currentCollectionKeywords,
       sort: id,
-      page: currentPage,
+      page: String(currentPage),
     });
     updateURL(queryString);
   };
