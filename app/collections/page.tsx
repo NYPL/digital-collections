@@ -3,10 +3,10 @@ import { Metadata } from "next";
 import { CollectionsPage } from "../src/components/pages/collectionsPage/collectionsPage";
 import { getCollectionsData } from "@/src/utils/apiHelpers";
 import { redirect } from "next/navigation";
-
+import CollectionSearchParams from "@/src/types/CollectionSearchParams";
 export type CollectionsProps = {
   params: { slug: string };
-  searchParams: { page: string; sort: string; collection_keywords: string };
+  searchParams: CollectionSearchParams;
 };
 
 export const metadata: Metadata = {
@@ -32,7 +32,7 @@ export default async function Collections({ searchParams }: CollectionsProps) {
   }
 
   const renderCollections =
-    data?.collection !== undefined && data?.collection?.nil;
+    data?.collection !== undefined && !data?.collection?.nil;
 
   return (
     <Suspense>
