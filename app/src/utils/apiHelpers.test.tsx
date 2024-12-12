@@ -15,6 +15,7 @@ import defaultFeaturedItem from "../data/defaultFeaturedItemData";
 import {
   mockFeaturedItemResponse,
   mockItemResponse,
+  mockCollectionsResponse,
 } from "__tests__/__mocks__/data/mockApiResponses";
 
 jest.mock("./fetchApi");
@@ -371,18 +372,42 @@ describe("getItemData", () => {
   });
 });
 
-// describe("getCollectionsData", () => {
-//   it("returns expected results", async () => {
-//     (fetchApi as jest.Mock).mockResolvedValueOnce(
-//       Promise.resolve(getCollectionsData)
-//     );
-//     const collections = await getCollectionsData("uuid1");
-//     expect(fetchApi as jest.Mock).toHaveBeenCalledWith(
-//      `${process.env.API_URL}/api/v2/collections?page=1&per_page=48&sort=&q=`
-//     );
+describe("getCollectionsData", () => {
+  it("returns expected results", async () => {
+    (fetchApi as jest.Mock).mockResolvedValueOnce(
+      Promise.resolve(mockCollectionsResponse)
+    );
+    const collections = await getCollectionsData({
+      keyword: "cat",
+      sortID: "date-asc",
+      pageNum: "2",
+    });
 
-//     expect(collections).toEqual(mockPaginatedCollections);
-//     expect(collections).toHaveProperty("capture");
-//     expect(collections).toHaveProperty("mods");
-//   });
-// });
+    expect(fetchApi as jest.Mock).toHaveBeenCalledWith(
+      `${process.env.API_URL}/api/v2/collections?page=2&per_page=48&sort=date ASC&q=cat`
+    );
+
+    expect(collections).toEqual(mockCollectionsResponse);
+    expect(collections).toHaveProperty("collection");
+    expect(collections).toHaveProperty("perPage");
+    expect(collections).toHaveProperty("page");
+    expect(collections).toHaveProperty("numResults");
+  });
+
+  it("returns default search when given no params", async () => {
+    (fetchApi as jest.Mock).mockResolvedValueOnce(
+      Promise.resolve(mockCollectionsResponse)
+    );
+    const collections = await getCollectionsData();
+
+    expect(fetchApi as jest.Mock).toHaveBeenCalledWith(
+      `${process.env.API_URL}/api/v2/collections?page=1&per_page=48&sort=date DESC&q=`
+    );
+
+    expect(collections).toEqual(mockCollectionsResponse);
+    expect(collections).toHaveProperty("collection");
+    expect(collections).toHaveProperty("perPage");
+    expect(collections).toHaveProperty("page");
+    expect(collections).toHaveProperty("numResults");
+  });
+});
