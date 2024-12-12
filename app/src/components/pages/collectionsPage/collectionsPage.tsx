@@ -28,18 +28,13 @@ import {
   DEFAULT_SEARCH_TERM,
 } from "@/src/config/constants";
 
-export function CollectionsPage({ data, params }) {
+export function CollectionsPage({ data, params, renderCollections }) {
   const { push } = useRouter();
   const pathname = usePathname();
   const [isLoaded, setIsLoaded] = useState(false);
   let collections = [];
 
-  // if (data.collections !== undefined) {
-  //   collections = Array.isArray(data.collection)
-  //     ? data.collection
-  //     : [data.collection];
-  // }
-  if (data.headers.message === "Collections retrieved successfully") {
+  if (renderCollections) {
     collections = Array.isArray(data.collection)
       ? data.collection
       : [data.collection];

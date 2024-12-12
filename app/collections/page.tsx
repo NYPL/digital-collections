@@ -31,9 +31,16 @@ export default async function Collections({ searchParams }: CollectionsProps) {
     redirect("/404");
   }
 
+  const renderCollections =
+    data?.collection !== undefined && data?.collection?.nil;
+
   return (
     <Suspense>
-      <CollectionsPage data={data} params={searchParams} />
+      <CollectionsPage
+        data={data}
+        params={searchParams}
+        renderCollections={renderCollections}
+      />
     </Suspense>
   );
 }
