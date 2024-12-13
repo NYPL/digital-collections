@@ -58,7 +58,7 @@ export function CollectionsPage({ data, params, renderCollections }) {
 
   const updateURL = async (queryString) => {
     setIsLoaded(false);
-    await push(`${pathname}?${queryString}`);
+    await push(`${pathname}?${queryString}#collections`);
     setTimeout(() => {
       setIsLoaded(true);
       headingRef.current?.focus();
@@ -214,7 +214,7 @@ export function CollectionsPage({ data, params, renderCollections }) {
         }
         ref={headingRef}
         tabIndex={-1}
-        id="all-collections-page"
+        id="collections"
         width="max-content"
       >
         {`Displaying ${displayResults(data.numResults, data.perPage, data.page)}
