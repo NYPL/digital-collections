@@ -33,7 +33,7 @@ export default async function Collections({ searchParams }: CollectionsProps) {
 
   const renderCollections =
     data?.collection !== undefined && !data?.collection?.nil;
-
+  console.log("data is: ", data);
   return (
     <Suspense>
       <CollectionsPage
