@@ -17,7 +17,7 @@ import LaneLoading from "../../lane/laneLoading";
 import {
   displayResults,
   totalNumPages,
-  createCollectionsQueryStringFromHash,
+  createCollectionsQueryStringFromObject,
 } from "../../../utils/utils";
 import type { SyntheticEvent } from "react";
 import { createAdobeAnalyticsPageName } from "@/src/utils/utils";
@@ -71,7 +71,7 @@ export function CollectionsPage({ data, params, renderCollections }) {
     // change the values in the object passed down to createCollectionsQueryStringFromObject to be currentPage and currentSort and tell me if it works for you....
     setCurrentPage(Number(DEFAULT_PAGE_NUM));
     setCurrentSort(DEFAULT_COLLECTION_SORT);
-    const queryString = createCollectionsQueryStringFromHash({
+    const queryString = createCollectionsQueryStringFromObject({
       collection_keywords: currentCollectionKeywords,
       sort: DEFAULT_COLLECTION_SORT,
       page: DEFAULT_PAGE_NUM,
@@ -86,7 +86,7 @@ export function CollectionsPage({ data, params, renderCollections }) {
 
   const onPageChange = async (pageNumber: number) => {
     setCurrentPage(pageNumber);
-    const queryString = createCollectionsQueryStringFromHash({
+    const queryString = createCollectionsQueryStringFromObject({
       collection_keywords: currentCollectionKeywords,
       sort: currentSort,
       page: pageNumber.toString(),
@@ -96,7 +96,7 @@ export function CollectionsPage({ data, params, renderCollections }) {
 
   const onMenuClick = async (id) => {
     setCurrentSort(id);
-    const queryString = createCollectionsQueryStringFromHash({
+    const queryString = createCollectionsQueryStringFromObject({
       collection_keywords: currentCollectionKeywords,
       sort: id,
       page: String(currentPage),
@@ -162,11 +162,11 @@ export function CollectionsPage({ data, params, renderCollections }) {
       </Box>
       <HorizontalRule sx={{ marginTop: "xxl", marginBottom: "xxl" }} />
       <Box
-        sx={
-          collections?.length > 0
-            ? { display: "flex", gap: "xs", marginBottom: "l" }
-            : { display: "none", gap: "xs", marginBottom: "l" }
-        }
+        sx={{
+          display: collections?.length > 0 ? "flex" : "none",
+          gap: "xs",
+          marginBottom: "l",
+        }}
       >
         <Text sx={{ fontWeight: "500", marginBottom: 0, marginTop: "xs" }}>
           {" "}
