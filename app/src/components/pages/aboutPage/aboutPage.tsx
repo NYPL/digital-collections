@@ -5,12 +5,16 @@ import PageLayout from "../../pageLayout/pageLayout";
 import { createAdobeAnalyticsPageName } from "@/src/utils/utils";
 
 export default function AboutPage() {
-  function createSection(heading: React.JSX.Element, body: React.JSX.Element) {
+  function createSection(
+    heading: React.JSX.Element,
+    body: React.JSX.Element,
+    key
+  ) {
     return (
-      <>
+      <div key={key}>
         {heading}
         {body}
-      </>
+      </div>
     );
   }
 
@@ -29,8 +33,8 @@ export default function AboutPage() {
           },
         }}
       >
-        {aboutPageElements.map((section) =>
-          createSection(section.heading, section.body)
+        {aboutPageElements.map((section, index) =>
+          createSection(section.heading, section.body, index)
         )}
       </Box>
     </PageLayout>
