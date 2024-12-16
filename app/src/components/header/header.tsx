@@ -62,10 +62,6 @@ const Header = () => {
           <Box
             sx={{
               display: "block",
-              [`@media screen and (min-width: ${headerBreakpoints.smTablet}px)`]:
-                {
-                  display: isScrollingUp ? "block" : "none",
-                },
               [`@media screen and (min-width: ${headerBreakpoints.lgTablet}px)`]:
                 {
                   display: "none",
