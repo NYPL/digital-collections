@@ -129,9 +129,9 @@ export default function DivisionPage({ data }: any) {
       {isLoaded ? (
         <CardsGrid records={data.collections} />
       ) : (
-        Array(Math.ceil(data.collections.length / 4)).map((_, index) => (
-          <LaneLoading key={index} withTitle={false} />
-        ))
+        Array(Math.ceil(data.collections.length / 4)).fill(
+          <LaneLoading withTitle={false} />
+        )
       )}
       {totalPages > 1 && (
         <Pagination
