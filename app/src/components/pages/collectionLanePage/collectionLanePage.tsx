@@ -99,9 +99,15 @@ export default function CollectionLanePage({ data }: any) {
       {isLoaded ? (
         <CardsGrid records={data.collection} />
       ) : (
-        Array(Math.ceil(data.collection.length / 4)).fill(
-          <LaneLoading withTitle={false} />
-        )
+        Array(Math.ceil(data.collections.length / 4))
+          .fill(null)
+          .map((_, index) => (
+            <LaneLoading
+              id={`lane-loading-${index}`}
+              key={`lane-loading-${index}`}
+              withTitle={false}
+            />
+          ))
       )}
       {totalPages > 1 && (
         <Pagination
