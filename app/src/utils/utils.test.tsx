@@ -3,8 +3,8 @@ import {
   stringToSlug,
   createAdobeAnalyticsPageName,
   displayResults,
-  createQueryStringFromHash,
-  createCollectionsQueryStringFromHash,
+  createQueryStringFromObject,
+  createCollectionsQueryStringFromObject,
 } from "./utils";
 import {
   DEFAULT_PAGE_NUM,
@@ -211,13 +211,13 @@ describe("displayResults", () => {
   });
 });
 
-describe("createQueryStringFromHash generates the correct query string: ", () => {
+describe("createQueryStringFromObject generates the correct query string: ", () => {
   test("when the values are all empty", () => {
-    expect(createQueryStringFromHash({})).toBe("");
+    expect(createQueryStringFromObject({})).toBe("");
   });
   test("when there are multiple values", () => {
     expect(
-      createQueryStringFromHash({
+      createQueryStringFromObject({
         dog: "cat",
         help: "me",
         this_is: "aTest",
@@ -226,17 +226,17 @@ describe("createQueryStringFromHash generates the correct query string: ", () =>
   });
 });
 
-describe("createCollectionsQueryStringFromHash generates the correct query string: ", () => {
+describe("createCollectionsQueryStringFromObject generates the correct query string: ", () => {
   test("when the values are all empty or all defaults", () => {
     expect(
-      createCollectionsQueryStringFromHash({
+      createCollectionsQueryStringFromObject({
         collection_keywords: "",
         sort: "",
         page: "",
       })
     ).toBe("");
     expect(
-      createCollectionsQueryStringFromHash({
+      createCollectionsQueryStringFromObject({
         collection_keywords: DEFAULT_SEARCH_TERM,
         sort: DEFAULT_COLLECTION_SORT,
         page: DEFAULT_PAGE_NUM,
@@ -246,7 +246,7 @@ describe("createCollectionsQueryStringFromHash generates the correct query strin
 
   test("when the values are all set to a non-default value", () => {
     expect(
-      createCollectionsQueryStringFromHash({
+      createCollectionsQueryStringFromObject({
         collection_keywords: "cat",
         sort: "title-desc",
         page: "2",
@@ -257,7 +257,7 @@ describe("createCollectionsQueryStringFromHash generates the correct query strin
   test("collection_keywords search values are set correctly", () => {
     // empty sort and page num, not default keyword
     expect(
-      createCollectionsQueryStringFromHash({
+      createCollectionsQueryStringFromObject({
         collection_keywords: "cat",
         sort: "",
         page: "",
@@ -266,7 +266,7 @@ describe("createCollectionsQueryStringFromHash generates the correct query strin
 
     // default sort and page num, not default keyword
     expect(
-      createCollectionsQueryStringFromHash({
+      createCollectionsQueryStringFromObject({
         collection_keywords: "cat",
         sort: DEFAULT_COLLECTION_SORT,
         page: DEFAULT_PAGE_NUM,
@@ -275,7 +275,7 @@ describe("createCollectionsQueryStringFromHash generates the correct query strin
 
     // default keyword, page num and sort are not default
     expect(
-      createCollectionsQueryStringFromHash({
+      createCollectionsQueryStringFromObject({
         collection_keywords: DEFAULT_SEARCH_TERM,
         sort: "title-desc",
         page: "2",
@@ -287,7 +287,7 @@ describe("createCollectionsQueryStringFromHash generates the correct query strin
     // sort
     // only sort, keyword is default and page is empty
     expect(
-      createCollectionsQueryStringFromHash({
+      createCollectionsQueryStringFromObject({
         collection_keywords: DEFAULT_SEARCH_TERM,
         sort: "title-desc",
         page: "",
@@ -296,7 +296,7 @@ describe("createCollectionsQueryStringFromHash generates the correct query strin
 
     // default keyword and page num, not default sort
     expect(
-      createCollectionsQueryStringFromHash({
+      createCollectionsQueryStringFromObject({
         collection_keywords: DEFAULT_SEARCH_TERM,
         sort: "title-desc",
         page: DEFAULT_PAGE_NUM,
@@ -305,7 +305,7 @@ describe("createCollectionsQueryStringFromHash generates the correct query strin
 
     // default sort, not default page or keyword
     expect(
-      createCollectionsQueryStringFromHash({
+      createCollectionsQueryStringFromObject({
         collection_keywords: "cat",
         sort: DEFAULT_COLLECTION_SORT,
         page: "2",
@@ -316,7 +316,7 @@ describe("createCollectionsQueryStringFromHash generates the correct query strin
   test("page num values are set correctly: ", () => {
     // default keyword and sort, not default page num
     expect(
-      createCollectionsQueryStringFromHash({
+      createCollectionsQueryStringFromObject({
         collection_keywords: DEFAULT_SEARCH_TERM,
         sort: DEFAULT_COLLECTION_SORT,
         page: "2",
@@ -325,7 +325,7 @@ describe("createCollectionsQueryStringFromHash generates the correct query strin
 
     // only page num, sort and collection_keywords are empty
     expect(
-      createCollectionsQueryStringFromHash({
+      createCollectionsQueryStringFromObject({
         collection_keywords: DEFAULT_SEARCH_TERM,
         sort: "",
         page: "2",
@@ -334,7 +334,7 @@ describe("createCollectionsQueryStringFromHash generates the correct query strin
 
     // default page num, key word and sort are not default
     expect(
-      createCollectionsQueryStringFromHash({
+      createCollectionsQueryStringFromObject({
         collection_keywords: "cat",
         sort: "title-desc",
         page: "1",

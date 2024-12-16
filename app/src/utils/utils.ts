@@ -122,16 +122,16 @@ export function displayResults(
   return `${start}-${end} of ${numFound}`;
 }
 
-export const createQueryStringFromHash = (hash) => {
+export const createQueryStringFromObject = (object) => {
   const params = new URLSearchParams();
-  Object.keys(hash).forEach((name) => {
-    params.set(name.toString(), hash[name]);
+  Object.keys(object).forEach((name) => {
+    params.set(name.toString(), object[name]);
   });
   return params.toString();
 };
 
-export const createCollectionsQueryStringFromHash = (
-  paramsHash: CollectionSearchParams
+export const createCollectionsQueryStringFromObject = (
+  paramsObject: CollectionSearchParams
 ) => {
   const newParams = {};
   const defaultValues = [
@@ -140,11 +140,11 @@ export const createCollectionsQueryStringFromHash = (
     DEFAULT_COLLECTION_SORT,
   ];
 
-  Object.keys(paramsHash).forEach((key) => {
-    if (!defaultValues.includes(paramsHash[key])) {
-      newParams[key] = paramsHash[key];
+  Object.keys(paramsObject).forEach((key) => {
+    if (!defaultValues.includes(paramsObject[key])) {
+      newParams[key] = paramsObject[key];
     }
   });
 
-  return createQueryStringFromHash(newParams);
+  return createQueryStringFromObject(newParams);
 };
