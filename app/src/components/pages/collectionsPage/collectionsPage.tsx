@@ -207,11 +207,10 @@ export function CollectionsPage({ data, params, renderCollections }) {
       </Box>
       <Heading
         size="heading5"
-        sx={
-          collections?.length > 0
-            ? { marginBottom: "l" }
-            : { display: "none", marginBottom: "l" }
-        }
+        sx={{
+          display: collections?.length > 0 ? "flex" : "none",
+          marginBottom: "l",
+        }}
         ref={headingRef}
         tabIndex={-1}
         id="collections"

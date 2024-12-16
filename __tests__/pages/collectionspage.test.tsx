@@ -10,7 +10,7 @@ jest.mock("next/navigation", () => ({
   usePathname: jest.fn(),
 }));
 
-describe.skip("Homepage Accessibility", () => {
+describe.skip("Collections page Accessibility", () => {
   const searchParams = {
     collection_keywords: "flower",
     sort: "title-asc",
