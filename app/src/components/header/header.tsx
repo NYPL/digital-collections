@@ -26,7 +26,7 @@ const Header = () => {
       position="sticky"
       id="header"
       top={0}
-      zIndex={999}
+      zIndex={99999}
       bgColor="ui.white"
       sx={{
         [`@media screen and (min-width: ${headerBreakpoints.smTablet}px)`]: {
