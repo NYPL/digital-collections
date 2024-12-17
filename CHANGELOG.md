@@ -23,6 +23,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Update thumbnail logic so thumbnails are never restricted (DR-3293)
 - Update feedback form credentials to use official DR service account (DR-2794)
 - Update timeout on API request to 10 seconds (DR-3304)
+- Update header to expand on scroll up on desktop (DR-3322)
 
 ## [0.2.4] 2024-11-26
 
