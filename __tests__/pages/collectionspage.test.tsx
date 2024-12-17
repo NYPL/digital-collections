@@ -3,7 +3,6 @@ import { axe } from "jest-axe";
 import React from "react";
 import { mockCollectionsResponse } from "__tests__/__mocks__/data/mockApiResponses";
 import { CollectionsPage } from "@/src/components/pages/collectionsPage/collectionsPage";
-import CollectionSearchParams from "@/src/types/CollectionSearchParams";
 
 jest.mock("next/navigation", () => ({
   useRouter: jest.fn(),

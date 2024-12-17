@@ -58,7 +58,7 @@ export function CollectionsPage({ data, params, renderCollections }) {
 
   const updateURL = async (queryString) => {
     setIsLoaded(false);
-    await push(`${pathname}?${queryString}#collections`);
+    await push(`${pathname}?${queryString}`);
     setTimeout(() => {
       setIsLoaded(true);
       headingRef.current?.focus();
@@ -91,7 +91,7 @@ export function CollectionsPage({ data, params, renderCollections }) {
       sort: currentSort,
       page: pageNumber.toString(),
     });
-    updateURL(queryString);
+    updateURL(`${queryString}#collections`);
   };
 
   const onMenuClick = async (id) => {
