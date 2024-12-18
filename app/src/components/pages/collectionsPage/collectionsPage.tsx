@@ -28,6 +28,7 @@ import {
   DEFAULT_PAGE_NUM,
   DEFAULT_COLLECTION_SORT,
   DEFAULT_SEARCH_TERM,
+  COLLECTION_SORT_LABELS,
 } from "@/src/config/constants";
 
 export function CollectionsPage({ data, params, renderCollections }) {
@@ -190,15 +191,10 @@ export function CollectionsPage({ data, params, renderCollections }) {
             marginBottom: "l",
           }}
         >
-          <Text sx={{ fontWeight: "500", marginBottom: 0, marginTop: "xs" }}>
-            {" "}
-            Sort by{" "}
-          </Text>{" "}
           <Menu
-            showSelectionAsLabel
             showLabel
             selectedItem={currentSort}
-            labelText={"Sort By"}
+            labelText={`Sort by: ${COLLECTION_SORT_LABELS[currentSort]}`}
             listItemsData={[
               {
                 id: "date-desc",
