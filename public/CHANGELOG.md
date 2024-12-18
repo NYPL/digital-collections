@@ -9,18 +9,22 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Removed
 
-- removed unneccessary variables post reverse proxy launch
+- Removed unnecessary variables post reverse proxy launch
 - Removed new relic files from frontend (DR-3311)
 
 ### Added
 
 - Added tests for API helpers (DR-3271)
+- Added `/healthcheck` endpoint (DR-3304)
 
 ### Updated
-
-- refactored implementation of default featured item & updated default number of digitized items (DR-3305)
+- Update `/collections` page to fetch data from Repo API and meet designs (DR-3100)
+- Update `/collections/lane/:slug` page to fetch data from Repo API (DR-3701)
+- Refactored implementation of default featured item & updated default number of digitized items (DR-3305)
 - Update thumbnail logic so thumbnails are never restricted (DR-3293)
 - Update feedback form credentials to use official DR service account (DR-2794)
+- Update timeout on API request to 10 seconds (DR-3304)
+- Update header to expand on scroll up on desktop (DR-3322)
 
 ## [0.2.4] 2024-11-26
 
