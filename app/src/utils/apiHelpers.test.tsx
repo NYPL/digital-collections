@@ -8,12 +8,14 @@ import {
   getLaneData,
   getNumDigitizedItems,
   getRandomFeaturedItem,
+  getCollectionsData,
 } from "./apiHelpers";
 import { fetchApi } from "./fetchApi";
 import defaultFeaturedItem from "../data/defaultFeaturedItemData";
 import {
   mockFeaturedItemResponse,
   mockItemResponse,
+  mockCollectionsResponse,
 } from "__tests__/__mocks__/data/mockApiResponses";
 
 jest.mock("./fetchApi");
@@ -367,5 +369,45 @@ describe("getItemData", () => {
     expect(item).toEqual(mockItemResponse);
     expect(item).toHaveProperty("capture");
     expect(item).toHaveProperty("mods");
+  });
+});
+
+describe("getCollectionsData", () => {
+  it("returns expected results", async () => {
+    (fetchApi as jest.Mock).mockResolvedValueOnce(
+      Promise.resolve(mockCollectionsResponse)
+    );
+    const collections = await getCollectionsData({
+      keyword: "cat",
+      sortID: "date-asc",
+      pageNum: "2",
+    });
+
+    expect(fetchApi as jest.Mock).toHaveBeenCalledWith(
+      `${process.env.API_URL}/api/v2/collections?page=2&per_page=48&sort=date ASC&q=cat`
+    );
+
+    expect(collections).toEqual(mockCollectionsResponse);
+    expect(collections).toHaveProperty("collection");
+    expect(collections).toHaveProperty("perPage");
+    expect(collections).toHaveProperty("page");
+    expect(collections).toHaveProperty("numResults");
+  });
+
+  it("returns default search when given no params", async () => {
+    (fetchApi as jest.Mock).mockResolvedValueOnce(
+      Promise.resolve(mockCollectionsResponse)
+    );
+    const collections = await getCollectionsData();
+
+    expect(fetchApi as jest.Mock).toHaveBeenCalledWith(
+      `${process.env.API_URL}/api/v2/collections?page=1&per_page=48&sort=date DESC&q=`
+    );
+
+    expect(collections).toEqual(mockCollectionsResponse);
+    expect(collections).toHaveProperty("collection");
+    expect(collections).toHaveProperty("perPage");
+    expect(collections).toHaveProperty("page");
+    expect(collections).toHaveProperty("numResults");
   });
 });
