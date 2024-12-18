@@ -1,8 +1,14 @@
-import data from "../data/lanes";
-import type { LaneDataType } from "../types/Lane";
-import { imageURL, addCommas } from "./utils";
+import data from "../../src/data/lanes";
+import type { LaneDataType } from "../../src/types/Lane";
+import { imageURL, addCommas } from "../utils/utils";
 import defaultFeaturedItems from "../data/defaultFeaturedItemData";
-import { CARDS_PER_PAGE } from "../config/constants";
+import {
+  CARDS_PER_PAGE,
+  DEFAULT_COLLECTION_SORT,
+  DEFAULT_PAGE_NUM,
+  DEFAULT_SEARCH_TERM,
+  COLLECTION_SORT_OPTIONS,
+} from "../config/constants";
 import { fetchApi } from "./fetchApi";
 
 export const getHomePageData = async () => {
@@ -152,6 +158,22 @@ export const getDivisionData = async ({
     apiUrl += `/${slug}?page=${pageNum}&per_page=${perPage}`;
   }
 
+  const res = await fetchApi(apiUrl);
+  return res;
+};
+
+export const getCollectionsData = async ({
+  keyword = DEFAULT_SEARCH_TERM,
+  sortID = DEFAULT_COLLECTION_SORT,
+  pageNum = DEFAULT_PAGE_NUM,
+  perPage = CARDS_PER_PAGE,
+}: {
+  keyword?: string;
+  sortID?: string;
+  pageNum?: string;
+  perPage?: number;
+} = {}) => {
+  let apiUrl = `${process.env.API_URL}/api/v2/collections?page=${pageNum}&per_page=${perPage}&sort=${COLLECTION_SORT_OPTIONS[sortID]}&q=${keyword}`;
   const res = await fetchApi(apiUrl);
   return res;
 };
