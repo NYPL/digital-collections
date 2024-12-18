@@ -164,7 +164,7 @@ export function CollectionsPage({ data, params, renderCollections }) {
         />
       </Box>
       <HorizontalRule sx={{ marginTop: "xxl", marginBottom: "xxl" }} />
-      <Flex>
+      <Flex sx={{ alignItems: "center" }}>
         <Heading
           size="heading5"
           sx={{
