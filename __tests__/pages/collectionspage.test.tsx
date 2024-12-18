@@ -3,11 +3,18 @@ import { axe } from "jest-axe";
 import React from "react";
 import { mockCollectionsResponse } from "__tests__/__mocks__/data/mockApiResponses";
 import { CollectionsPage } from "@/src/components/pages/collectionsPage/collectionsPage";
+import { useRouter } from "next/navigation";
 
 jest.mock("next/navigation", () => ({
   useRouter: jest.fn(),
   usePathname: jest.fn(),
 }));
+
+beforeEach(() => {
+  (useRouter as jest.Mock).mockImplementation(() => ({
+    pathname: "/collections",
+  }));
+});
 
 describe.skip("Collections page Accessibility", () => {
   const searchParams = {
