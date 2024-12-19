@@ -62,6 +62,7 @@ const PageLayout = ({
               <Breadcrumbs
                 breadcrumbsType="digitalCollections"
                 breadcrumbsData={breadcrumbs || []}
+                aria-label={activePage}
               />
               {/* TODO: Move to TemplateAppContainer once spacing is more flexible.  --> */}
               <Box
