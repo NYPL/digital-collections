@@ -64,9 +64,15 @@ export const CardsGrid = forwardRef<HTMLDivElement, CardsGridProps>(
       </DCSimpleGrid>
     ) : (
       <>
-        {[...Array(Math.ceil(records.length / 4))].map((_, index) => (
-          <LaneLoading key={index} withTitle={false} />
-        ))}
+        {Array(Math.ceil(records.length / 4))
+          .fill(null)
+          .map((_, index) => (
+            <LaneLoading
+              id={`lane-loading-${index}`}
+              key={`lane-loading-${index}`}
+              withTitle={false}
+            />
+          ))}
       </>
     );
   }

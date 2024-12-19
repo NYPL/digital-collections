@@ -15,7 +15,7 @@ const CampaignHero = ({ featuredItemData }) => {
   );
 
   const handleError = (e: React.SyntheticEvent<HTMLImageElement, Event>) => {
-    console.log("error loading campaign hero:", e);
+    console.log("Error loading campaign hero:", e);
     setData(defaultFeaturedItemResponse);
   };
 

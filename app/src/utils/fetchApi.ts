@@ -1,3 +1,4 @@
+import logger from "logger";
 /**
  * Makes a GET or POST request to the Repo API and returns the response.
  * Times out at 10 seconds to prevent 504 crash.
@@ -41,6 +42,7 @@ export const fetchApi = async (
       ),
     ]);
   };
+  logger.error("test error from fetch API");
 
   try {
     const response = (await fetchWithTimeout(apiUrl, {
@@ -48,7 +50,6 @@ export const fetchApi = async (
       headers,
       body: method === "POST" ? JSON.stringify(options?.body) : undefined,
     })) as Response;
-
     if (!response.ok && response.status !== 200) {
       throw new Error(
         `fetchApi: ${response.status} ${
@@ -56,11 +57,10 @@ export const fetchApi = async (
         }`
       );
     }
-
     const data = await response.json();
     return method === "GET" ? data?.nyplAPI?.response : data;
   } catch (error) {
-    console.error(error);
+    logger.error(error);
     throw new Error(error.message);
   }
 };
