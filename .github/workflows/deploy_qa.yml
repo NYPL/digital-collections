@@ -5,6 +5,7 @@ on:
   push:
     branches:
       - qa
+      - DR-3325/clean-up-logging
 
 permissions:
   id-token: write
