@@ -19,6 +19,11 @@ interface DivisionsProps {
 
 export default function DivisionsPage({ summary, divisions }: DivisionsProps) {
   const [isLoaded, setIsLoaded] = useState(false);
+  if ((window as any).newrelic) {
+    (window as any).newrelic.log("test log from divisions page", {
+      level: "info",
+    });
+  }
 
   useEffect(() => {
     setIsLoaded(true);
