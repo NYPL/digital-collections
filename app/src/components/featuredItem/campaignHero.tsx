@@ -15,7 +15,11 @@ const CampaignHero = ({ featuredItemData }) => {
   );
 
   const handleError = (e: React.SyntheticEvent<HTMLImageElement, Event>) => {
-    console.log("Error loading campaign hero:", e);
+    if ((window as any).newrelic) {
+      (window as any).newrelic.log("Error loading campaign hero", {
+        level: "warn",
+      });
+    }
     setData(defaultFeaturedItemResponse);
   };
 

@@ -17,7 +17,6 @@ const config = {
     "__tests__/data/*",
     "__tests__/pages/*",
     "__tests__/__mocks__/*",
-    "__tests__/api/featuredItem",
     "app/*",
   ],
   moduleNameMapper: {

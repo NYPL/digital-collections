@@ -42,7 +42,6 @@ export const fetchApi = async (
       ),
     ]);
   };
-  logger.error("test error from fetch API");
 
   try {
     const response = (await fetchWithTimeout(apiUrl, {
