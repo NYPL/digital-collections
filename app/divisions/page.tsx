@@ -17,13 +17,6 @@ export default async function Divisions() {
   if (data?.headers?.code === "404") {
     redirect("/404");
   }
-
-  if ((window as any).newrelic) {
-    (window as any).newrelic.log("test log from divisions server component", {
-      level: "error",
-    });
-  }
-
   return (
     <Suspense>
       <DivisionsPage summary={data?.summary} divisions={data?.divisions} />
