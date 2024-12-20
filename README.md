@@ -346,11 +346,11 @@ This app is currently on a reverse proxy with ["old" Digital Collections](https:
 
 Our branches (in order of stability are):
 
-| Branch     | Environment | AWS Account    | Cluster                                       | Link To Application                                                                    |
-| :--------- | :---------- | :------------- | :-------------------------------------------- | :------------------------------------------------------------------------------------- |
-| main       | development |                |                                               | [localhost:3000](http://localhost:3000)                                                |
-| qa         | qa          | nypl-dams-dev  | nyplorg-dc-rp-qa AND dc-frontend-qa           | [https://qa-digitalcollections.nypl.org/](https://qa-new-digitalcollections.nypl.org/) |
-| production | production  | nypl-dams-prod | nyplorg-dc-rp-prod AND new-digitalcollections | [https://digitalcollections.nypl.org/](https://digitalcollections.nypl.org/)           |
+| Branch     | Environment | AWS Account    | Cluster                | Link To Application                                                                    |
+| :--------- | :---------- | :------------- | :--------------------- | :------------------------------------------------------------------------------------- |
+| main       | development |                |                        | [localhost:3000](http://localhost:3000)                                                |
+| qa         | qa          | nypl-dams-dev  | dc-frontend-qa         | [https://qa-digitalcollections.nypl.org/](https://qa-new-digitalcollections.nypl.org/) |
+| production | production  | nypl-dams-prod | new-digitalcollections | [https://digitalcollections.nypl.org/](https://digitalcollections.nypl.org/)           |
 
 ## Git workflow
 

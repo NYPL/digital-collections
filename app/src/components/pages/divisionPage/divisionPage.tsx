@@ -106,7 +106,7 @@ export default function DivisionPage({ data }: any) {
           laneName={data.name}
         />
       ) : (
-        <LaneLoading id={"unloaded"} withTitle={false} />
+        <LaneLoading id="unloaded" withTitle={false} />
       )}
       <HorizontalRule sx={{ marginTop: "xxl", marginBottom: "xxl" }} />
 
