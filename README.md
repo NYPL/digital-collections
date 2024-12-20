@@ -332,7 +332,7 @@ We structure our logs according to these [NYPL standards](https://github.com/NYP
 Do NOT use `console.log` if you want to add a permanent log, and make sure to clean up your debugging `console.log`s, because they will clutter Cloudwatch and New Relic.
 
 On the server side, DO use `logger.[some NYPL log level](message: string)`.  
-On the client side, DO use `newrelic.log(message: string, {level: 'debug|error|info|trace|warn'})` OR `newrelic.error(message: string)` (New Relic log levels only partially correspond to NYPL log levels).
+On the client side...
 
 ## Github Actions
 
