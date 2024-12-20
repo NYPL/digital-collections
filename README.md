@@ -12,7 +12,7 @@ This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next
 - [Getting started with Docker](#getting-started-with-docker)
 - [Getting started with Next.js](#getting-started-with-nextjs)
 - [Environment variables](#environment-variables)
-- [IIF](#iif)
+- [IIIF](#iiif)
 - [New Relic](#new-relic)
 - [Fonts](#fonts)
 
@@ -346,11 +346,11 @@ This app is currently on a reverse proxy with ["old" Digital Collections](https:
 
 Our branches (in order of stability are):
 
-| Branch     | Environment | AWS Account    | Cluster                                       | Link To Application                                                                                                                                                   |
-| :--------- | :---------- | :------------- | :-------------------------------------------- | :-------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| main       | development |                |                                               | [localhost:3000](http://localhost:3000)                                                                                                                               |
-| qa         | qa          | nypl-dams-dev  | nyplorg-dc-rp-qa                              | [https://qa-digitalcollections.nypl.org/](https://qa-new-digitalcollections.nypl.org/)                                                                                |
-| production | production  | nypl-dams-prod | nyplorg-dc-rp-prod AND new-digitalcollections | [https://digitalcollections.nypl.org/](https://digitalcollections.nypl.org/) AND [https://new-digitalcollections.nypl.org/](https://new-digitalcollections.nypl.org/) |
+| Branch     | Environment | AWS Account    | Cluster                                       | Link To Application                                                                    |
+| :--------- | :---------- | :------------- | :-------------------------------------------- | :------------------------------------------------------------------------------------- |
+| main       | development |                |                                               | [localhost:3000](http://localhost:3000)                                                |
+| qa         | qa          | nypl-dams-dev  | nyplorg-dc-rp-qa AND dc-frontend-qa           | [https://qa-digitalcollections.nypl.org/](https://qa-new-digitalcollections.nypl.org/) |
+| production | production  | nypl-dams-prod | nyplorg-dc-rp-prod AND new-digitalcollections | [https://digitalcollections.nypl.org/](https://digitalcollections.nypl.org/)           |
 
 ## Git workflow
 
