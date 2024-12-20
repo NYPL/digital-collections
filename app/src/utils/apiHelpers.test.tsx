@@ -15,8 +15,9 @@ import defaultFeaturedItem from "../data/defaultFeaturedItemData";
 import {
   mockFeaturedItemResponse,
   mockItemResponse,
-  mockCollectionsResponse,
 } from "__tests__/__mocks__/data/mockApiResponses";
+
+import { mockCollectionsResponse } from "__tests__/__mocks__/data/api/mockCollectionsResponse";
 
 jest.mock("./fetchApi");
 
