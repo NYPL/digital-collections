@@ -16,3 +16,10 @@ global.ResizeObserver = jest.fn().mockImplementation(() => ({
   unobserve: jest.fn(),
   disconnect: jest.fn(),
 }));
+
+(global as any).setImmediate = Object.assign(
+  (fn: (...args: any[]) => void, ...args: any[]) => setTimeout(fn, 0, ...args),
+  {
+    __promisify__: () => Promise.resolve(), // Add the __promisify__ property
+  }
+);
