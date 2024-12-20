@@ -161,7 +161,6 @@ export function CollectionsPage({ data, params, renderCollections }) {
           }}
           onSubmit={handleSearchSubmit}
           labelText="Search Collections by title"
-          aria-label="Search Collections by title"
         />
       </Box>
       <HorizontalRule sx={{ marginTop: "xxl", marginBottom: "xxl" }} />
