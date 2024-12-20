@@ -58,7 +58,7 @@ export default function DivisionsPage({ summary, divisions }: DivisionsProps) {
           ) : (
             <>
               {[...Array(36)].map((_, index) => (
-                <LaneLoading key={index} />
+                <LaneLoading id={index} key={index} />
               ))}
             </>
           )}

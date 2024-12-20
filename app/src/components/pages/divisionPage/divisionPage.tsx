@@ -106,7 +106,7 @@ export default function DivisionPage({ data }: any) {
           laneName={data.name}
         />
       ) : (
-        <LaneLoading withTitle={false} />
+        <LaneLoading id="unloaded" withTitle={false} />
       )}
       <HorizontalRule sx={{ marginTop: "xxl", marginBottom: "xxl" }} />
 
@@ -129,9 +129,15 @@ export default function DivisionPage({ data }: any) {
       {isLoaded ? (
         <CardsGrid records={data.collections} />
       ) : (
-        Array(Math.ceil(data.collections.length / 4)).fill(
-          <LaneLoading withTitle={false} />
-        )
+        Array(Math.ceil(data.collections.length / 4))
+          .fill(null)
+          .map((_, index) => (
+            <LaneLoading
+              id={`lane-loading-${index}`}
+              key={`lane-loading-${index}`}
+              withTitle={false}
+            />
+          ))
       )}
       {totalPages > 1 && (
         <Pagination
