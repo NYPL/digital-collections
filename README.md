@@ -331,7 +331,7 @@ Serverside logs for this project's `qa` and `production` branches can be found i
 
 Clientside _errors_ can be found in New Relic under `Facelift production or Facelift QA > Browser > Errors`.
 
-Clientside _logs_ that are not errors can be found under `Facelift production or Facelift QA > Browser > Logs`.
+Clientside _logs_ (not necessarily errors) can be found under `Facelift production or Facelift QA > Browser > Logs`.
 
 Serverside logs also appear in New Relic under APM Logs and general Logs (query "facelift").
 
