@@ -43,8 +43,6 @@ export const fetchApi = async (
     ]);
   };
 
-  logger.info("test info from fetch API");
-
   try {
     const response = (await fetchWithTimeout(apiUrl, {
       method,
