@@ -1,5 +1,4 @@
 "use client";
-
 import React, { useState, useRef, useEffect } from "react";
 import {
   Box,
@@ -7,7 +6,6 @@ import {
   HorizontalRule,
   SearchBar,
   Menu,
-  Text,
   Pagination,
   Flex,
   Spacer,
@@ -26,6 +24,7 @@ import {
   DEFAULT_PAGE_NUM,
   DEFAULT_COLLECTION_SORT,
   DEFAULT_SEARCH_TERM,
+  COLLECTION_SORT_LABELS,
 } from "@/src/config/constants";
 import { SearchManager } from "@/src/utils/searchManager";
 import { headerBreakpoints } from "@/src/utils/breakpoints";
@@ -49,17 +48,13 @@ export function CollectionsPage({ data, params, renderCollections }) {
     initialSort: params.sort || DEFAULT_COLLECTION_SORT,
     initialKeywords: params.collection_keywords || DEFAULT_SEARCH_TERM,
     updateURL: async (queryString: string) => {
-      setIsLoaded(false);
       await push(`${pathname}?${queryString}`);
     },
   });
 
   useEffect(() => {
     setIsLoaded(true);
-    setTimeout(() => {
-      headingRef.current?.focus();
-    }, 1000);
-  }, [isLoaded]);
+  }, []);
 
   return (
     <PageLayout
@@ -116,10 +111,13 @@ export function CollectionsPage({ data, params, renderCollections }) {
         />
       </Box>
       <HorizontalRule sx={{ marginTop: "xxl", marginBottom: "xxl" }} />
-      <Flex>
+      <Flex sx={{ alignItems: "center" }}>
         <Heading
           size="heading5"
-          sx={{ display: collections.length > 0 ? "flex" : "none" }}
+          sx={{
+            display: collections?.length > 0 ? "flex" : "none",
+            marginBottom: "l",
+          }}
           ref={headingRef}
           tabIndex={-1}
           id="collections"
@@ -129,17 +127,23 @@ export function CollectionsPage({ data, params, renderCollections }) {
             data.numResults,
             data.perPage,
             data.page
-          )} results`}
+          )}
+            results`}
         </Heading>
         <Spacer />
         <Box
-          sx={{ display: collections.length > 0 ? "flex" : "none", gap: "xs" }}
+          sx={{
+            display: collections?.length > 0 ? "flex" : "none",
+            gap: "xs",
+            marginBottom: "l",
+          }}
         >
-          <Text sx={{ fontWeight: "500" }}>Sort by</Text>
           <Menu
-            showSelectionAsLabel
+            showLabel
             selectedItem={searchManager.currentSort}
-            labelText="Sort By"
+            labelText={`Sort by: ${
+              COLLECTION_SORT_LABELS[searchManager.currentSort]
+            }`}
             listItemsData={[
               {
                 id: "date-desc",
@@ -180,9 +184,19 @@ export function CollectionsPage({ data, params, renderCollections }) {
       )}
       {totalPages > 1 && (
         <Pagination
+          id="pagination-id"
           currentPage={searchManager.currentPage}
+          initialPage={searchManager.currentPage}
           pageCount={totalPages}
-          onPageChange={searchManager.handlePageChange}
+          onPageChange={(newPage) => {
+            searchManager.handlePageChange(newPage);
+          }}
+          sx={{
+            display: "flex",
+            justifyContent: "center",
+            gap: "s",
+            marginTop: "xxl",
+          }}
         />
       )}
     </PageLayout>
