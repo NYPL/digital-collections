@@ -9,6 +9,11 @@ import React from "react";
 
 const CampaignHero = ({ featuredItemData }) => {
   const defaultFeaturedItemResponse = defaultFeaturedItem;
+  if ((window as any).newrelic) {
+    (window as any).newrelic.log("Loading campaign hero", {
+      level: "info",
+    });
+  }
 
   const [data, setData] = useState<FeaturedItemDataType>(
     featuredItemData || defaultFeaturedItemResponse

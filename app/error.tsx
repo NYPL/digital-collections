@@ -13,10 +13,10 @@ export default function Error({
   useEffect(() => {
     console.error(error);
 
-    // Send error to New Relic
-    if ((window as any).newrelic) {
-      (window as any).newrelic.noticeError(error);
-    }
+    // // Send error to New Relic
+    // if ((window as any).newrelic) {
+    //   (window as any).newrelic.noticeError(error);
+    // }
   }, [error]);
 
   return (
