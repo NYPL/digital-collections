@@ -174,7 +174,6 @@ export const getCollectionsData = async ({
   perPage?: number;
 } = {}) => {
   let apiUrl = `${process.env.API_URL}/api/v2/collections?page=${pageNum}&per_page=${perPage}&sort=${COLLECTION_SORT_OPTIONS[sortID]}&q=${keyword}`;
-  console.log("apiUrl is: ", apiUrl);
   const res = await fetchApi(apiUrl);
   return res;
 };

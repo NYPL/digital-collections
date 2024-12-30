@@ -9,6 +9,8 @@ import {
   Menu,
   Text,
   Pagination,
+  Flex,
+  Spacer,
 } from "@nypl/design-system-react-components";
 import { usePathname, useRouter } from "next/navigation";
 import { headerBreakpoints } from "../../../utils/breakpoints";
@@ -17,7 +19,7 @@ import LaneLoading from "../../lane/laneLoading";
 import {
   displayResults,
   totalNumPages,
-  createCollectionsQueryStringFromHash,
+  createCollectionsQueryStringFromObject,
 } from "../../../utils/utils";
 import type { SyntheticEvent } from "react";
 import { createAdobeAnalyticsPageName } from "@/src/utils/utils";
@@ -58,7 +60,7 @@ export function CollectionsPage({ data, params, renderCollections }) {
 
   const updateURL = async (queryString) => {
     setIsLoaded(false);
-    await push(`${pathname}?${queryString}#collections`);
+    await push(`${pathname}?${queryString}`);
     setTimeout(() => {
       setIsLoaded(true);
       headingRef.current?.focus();
@@ -71,7 +73,7 @@ export function CollectionsPage({ data, params, renderCollections }) {
     // change the values in the object passed down to createCollectionsQueryStringFromObject to be currentPage and currentSort and tell me if it works for you....
     setCurrentPage(Number(DEFAULT_PAGE_NUM));
     setCurrentSort(DEFAULT_COLLECTION_SORT);
-    const queryString = createCollectionsQueryStringFromHash({
+    const queryString = createCollectionsQueryStringFromObject({
       collection_keywords: currentCollectionKeywords,
       sort: DEFAULT_COLLECTION_SORT,
       page: DEFAULT_PAGE_NUM,
@@ -86,22 +88,22 @@ export function CollectionsPage({ data, params, renderCollections }) {
 
   const onPageChange = async (pageNumber: number) => {
     setCurrentPage(pageNumber);
-    const queryString = createCollectionsQueryStringFromHash({
+    const queryString = createCollectionsQueryStringFromObject({
       collection_keywords: currentCollectionKeywords,
       sort: currentSort,
       page: pageNumber.toString(),
     });
-    updateURL(queryString);
+    updateURL(`${queryString}#collections`);
   };
 
   const onMenuClick = async (id) => {
     setCurrentSort(id);
-    const queryString = createCollectionsQueryStringFromHash({
+    const queryString = createCollectionsQueryStringFromObject({
       collection_keywords: currentCollectionKeywords,
       sort: id,
       page: String(currentPage),
     });
-    updateURL(queryString);
+    updateURL(`${queryString}#collections`);
   };
 
   useEffect(() => {
@@ -161,64 +163,71 @@ export function CollectionsPage({ data, params, renderCollections }) {
         />
       </Box>
       <HorizontalRule sx={{ marginTop: "xxl", marginBottom: "xxl" }} />
-      <Box
-        sx={
-          collections?.length > 0
-            ? { display: "flex", gap: "xs", marginBottom: "l" }
-            : { display: "none", gap: "xs", marginBottom: "l" }
-        }
-      >
-        <Text sx={{ fontWeight: "500", marginBottom: 0, marginTop: "xs" }}>
-          {" "}
-          Sort by{" "}
-        </Text>{" "}
-        <Menu
-          showSelectionAsLabel
-          showLabel
-          selectedItem={currentSort}
-          labelText={"Sort By"}
-          listItemsData={[
-            {
-              id: "date-desc",
-              label: "Newest to oldest",
-              onClick: onMenuClick,
-              type: "action",
-            },
-            {
-              id: "date-asc",
-              label: "Oldest to newest",
-              onClick: onMenuClick,
-              type: "action",
-            },
-            {
-              id: "title-asc",
-              label: "Title A to Z",
-              onClick: onMenuClick,
-              type: "action",
-            },
-            {
-              id: "title-desc",
-              label: "Title Z to A",
-              onClick: onMenuClick,
-              type: "action",
-            },
-          ]}
-        />
-      </Box>
-      <Heading
-        size="heading5"
-        sx={{
-          display: collections?.length > 0 ? "flex" : "none",
-          marginBottom: "l",
-        }}
-        ref={headingRef}
-        tabIndex={-1}
-        id="collections"
-        width="max-content"
-      >
-        {`Displaying ${displayResults(data.numResults, data.perPage, data.page)}
+      <Flex>
+        <Heading
+          size="heading5"
+          sx={{
+            display: collections?.length > 0 ? "flex" : "none",
+            marginBottom: "l",
+          }}
+          ref={headingRef}
+          tabIndex={-1}
+          id="collections"
+          width="max-content"
+        >
+          {`Displaying ${displayResults(
+            data.numResults,
+            data.perPage,
+            data.page
+          )}
             results`}
-      </Heading>
+        </Heading>
+        <Spacer />
+        <Box
+          sx={{
+            display: collections?.length > 0 ? "flex" : "none",
+            gap: "xs",
+            marginBottom: "l",
+          }}
+        >
+          <Text sx={{ fontWeight: "500", marginBottom: 0, marginTop: "xs" }}>
+            {" "}
+            Sort by{" "}
+          </Text>{" "}
+          <Menu
+            showSelectionAsLabel
+            showLabel
+            selectedItem={currentSort}
+            labelText={"Sort By"}
+            listItemsData={[
+              {
+                id: "date-desc",
+                label: "Newest to oldest",
+                onClick: onMenuClick,
+                type: "action",
+              },
+              {
+                id: "date-asc",
+                label: "Oldest to newest",
+                onClick: onMenuClick,
+                type: "action",
+              },
+              {
+                id: "title-asc",
+                label: "Title A to Z",
+                onClick: onMenuClick,
+                type: "action",
+              },
+              {
+                id: "title-desc",
+                label: "Title Z to A",
+                onClick: onMenuClick,
+                type: "action",
+              },
+            ]}
+          />
+        </Box>
+      </Flex>
 
       {isLoaded ? (
         collections.length > 0 ? (
