@@ -48,7 +48,7 @@ export function CollectionsPage({ data, params, renderCollections }) {
     initialSort: params.sort || DEFAULT_COLLECTION_SORT,
     initialKeywords: params.collection_keywords || DEFAULT_SEARCH_TERM,
     updateURL: async (queryString: string) => {
-      await push(`${pathname}?${queryString}`);
+      push(`${pathname}?${queryString}`);
     },
   });
 

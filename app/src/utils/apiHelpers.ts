@@ -170,7 +170,7 @@ export const getCollectionsData = async ({
 }: {
   keyword?: string;
   sortID?: string;
-  pageNum?: string;
+  pageNum?: number;
   perPage?: number;
 } = {}) => {
   let apiUrl = `${process.env.API_URL}/api/v2/collections?page=${pageNum}&per_page=${perPage}&sort=${COLLECTION_SORT_OPTIONS[sortID]}&q=${keyword}`;
@@ -189,4 +189,18 @@ export const getLaneData = async ({
 }) => {
   const apiUrl = `${process.env.API_URL}/api/v2/collections?genre=${slug}&page=${pageNum}&per_page=${perPage}`;
   return await fetchApi(apiUrl);
+};
+
+export const getSearchData = async ({
+  keywords = DEFAULT_SEARCH_TERM,
+  pageNum = DEFAULT_PAGE_NUM,
+  perPage = CARDS_PER_PAGE,
+}: {
+  keywords?: string;
+  pageNum?: number;
+  perPage?: number;
+} = {}) => {
+  let apiUrl = `${process.env.API_URL}/api/v2/items/search?q=${keywords}&page=${pageNum}&per_page=${perPage}`;
+  const res = await fetchApi(apiUrl);
+  return res;
 };

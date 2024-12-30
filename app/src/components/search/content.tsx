@@ -3,11 +3,15 @@ import {
   Menu,
   Text,
   Pagination,
+  Heading,
+  Spacer,
 } from "@nypl/design-system-react-components";
 import React, { useState } from "react";
-import { useSearchParams, usePathname, useRouter } from "next/navigation";
+import { useSearchParams, useRouter } from "next/navigation";
 import { CardsGrid } from "../grids/cardsGrid";
 import LaneLoading from "../lane/laneLoading";
+import { displayResults } from "@/src/utils/utils";
+import { CARDS_PER_PAGE } from "@/src/config/constants";
 
 const SearchContent = ({ showFilter, isSearchPage, data }) => {
   const isLoaded = true;
@@ -38,7 +42,40 @@ const SearchContent = ({ showFilter, isSearchPage, data }) => {
 
   return (
     <>
-      <Box sx={{ display: "flex", gap: "xs", marginBottom: "l" }}>
+      <Box
+        sx={{
+          position: "absolute",
+          left: 0,
+          width: "100%",
+          gap: "xs",
+          marginTop: "-xxl",
+          paddingLeft: "225px",
+          paddingTop: "m",
+          background: "ui.bg.default",
+        }}
+      >
+        <Heading
+          size="heading2"
+          sx={{
+            display: "flex",
+            marginBottom: "l",
+          }}
+          width="max-content"
+        >
+          {`Displaying ${displayResults(data.numResults, 25, currentPage)}
+                    results`}
+        </Heading>
+        <Heading
+          size="heading4"
+          sx={{
+            display: "flex",
+            marginBottom: "l",
+          }}
+          width="max-content"
+        >
+          Refine your search
+        </Heading>
+
         {showFilter ? (
           <>
             <Text sx={{ fontWeight: "500", marginBottom: 0, marginTop: "xs" }}>
@@ -81,8 +118,9 @@ const SearchContent = ({ showFilter, isSearchPage, data }) => {
         ) : null}
       </Box>
 
+      <Box sx={{ height: "200px" }} />
       {isLoaded ? (
-        <CardsGrid records={data} />
+        <CardsGrid records={data.result} />
       ) : (
         <>
           <LaneLoading withTitle={false} />,
