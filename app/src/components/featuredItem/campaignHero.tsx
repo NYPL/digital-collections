@@ -1,5 +1,5 @@
 import { Hero } from "@nypl/design-system-react-components";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import CampaignHeroSubText from "./campaignHeroSubText";
 import CampaignHeroHeading from "./campaignHeroHeading";
 import CampaignHeroLoading from "./campaignHeroLoading";
@@ -8,9 +8,11 @@ import { FeaturedItemDataType } from "../../types/FeaturedItemDataType";
 import React from "react";
 
 const CampaignHero = ({ featuredItemData }) => {
-  if ((window as any).newrelic) {
-    (window as any).newrelic.noticeError("Testing error for campaign hero");
-  }
+  useEffect(() => {
+    if ((window as any).newrelic) {
+      (window as any).newrelic.noticeError("Testing error for campaign hero");
+    }
+  }, []);
   const defaultFeaturedItemResponse = defaultFeaturedItem;
 
   const [data, setData] = useState<FeaturedItemDataType>(
