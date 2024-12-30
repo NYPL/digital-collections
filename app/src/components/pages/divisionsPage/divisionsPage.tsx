@@ -22,6 +22,7 @@ export default function DivisionsPage({ summary, divisions }: DivisionsProps) {
 
   useEffect(() => {
     setIsLoaded(true);
+    console.log("Does this go to NR");
   }, []);
 
   return (

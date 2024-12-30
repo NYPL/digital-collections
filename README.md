@@ -325,14 +325,51 @@ $ npm run lint
 
 ## Logging
 
-This project uses Winston for serverside logging, and New Relic for clientside logging. Serverside logs for this project's `qa` and `production` branches can be found in AWS Cloudwatch under the nypl-dams-dev and nypl-dams-prod accounts, and clientside logs can be found in New Relic (Digital Collections (prod/qa) > Browser > errors). For Vercel deployments, logging will appear in the console.
+### Where do I find logs?
+
+Serverside logs for this project's `qa` and `production` branches can be found in AWS Cloudwatch under the `nypl-dams-dev` and `nypl-dams-prod` accounts.
+
+Clientside _errors_ can be found in New Relic under `Facelift production or Facelift QA > Browser > Errors`.
+
+Clientside _logs_ can be found under `Facelift production or Facelift QA > Browser > Logs`.
+
+Serverside logs also appear in New Relic under APM Logs and general Logs (query "facelift").
+
+For Vercel deployments, logging will appear in the console.
+
+### How do I add logs?
 
 We structure our logs according to these [NYPL standards](https://github.com/NYPL/engineering-general/blob/main/standards/logging.md). See `logger.js` for the formatting and storage of logs.
 
-Do NOT use `console.log` if you want to add a permanent log, and make sure to clean up your debugging `console.log`s, because they will clutter Cloudwatch and New Relic.
+You SHOULD NOT use `console.log` if you want to add a _permanent_ log, and make sure to clean up your debugging `console.log`s, because they will clutter Cloudwatch and New Relic.
 
-On the server side, DO use `logger.[some NYPL log level](message: string)`.  
-On the client side...
+On the server side, you SHOULD use `logger.[some NYPL log level](message: string)`.
+
+On the client side, we already use an error boundary (`error.tsx`) to handle uncaught exceptions, which sends errors to New Relic like this:
+
+```
+useEffect(() => {
+    if ((window as any).newrelic) {
+      (window as any).newrelic.noticeError(error);
+    }
+  }, [error]);
+```
+
+If you want to add other client side _errors_, you SHOULD use `newrelic.noticeError(message: string)` as above.
+
+If you want to add a client side _log_, you SHOULD use `newrelic.log(message: string, {level: 'debug|error|info|trace|warn'})`, for example:
+
+```
+useEffect(() => {
+    if ((window as any).newrelic) {
+      (window as any).newrelic.log("Test log at info level", {
+        level: "info",
+      });
+    }
+  }, []);
+```
+
+New Relic logs need to be in a `useEffect` because we have to check that New Relic is enabled in the window.
 
 ## Github Actions
 
