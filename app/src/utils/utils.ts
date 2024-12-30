@@ -133,6 +133,7 @@ export const createQueryStringFromObject = (object) => {
 export const createCollectionsQueryStringFromObject = (
   paramsObject: CollectionSearchParams
 ) => {
+  console.log(paramsObject);
   const newParams = {};
   const defaultValues = [
     DEFAULT_SEARCH_TERM,

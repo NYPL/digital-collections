@@ -1,5 +1,5 @@
 "use client";
-import PageLayout from "../../pageLayout/pageLayout";
+
 import React, { useState, useRef, useEffect } from "react";
 import {
   Box,
@@ -12,103 +12,54 @@ import {
   Flex,
   Spacer,
 } from "@nypl/design-system-react-components";
+import PageLayout from "../../pageLayout/pageLayout";
 import { usePathname, useRouter } from "next/navigation";
-import { headerBreakpoints } from "../../../utils/breakpoints";
-import { CardsGrid } from "../../grids/cardsGrid";
-import LaneLoading from "../../lane/laneLoading";
 import {
+  createAdobeAnalyticsPageName,
   displayResults,
   totalNumPages,
-  createCollectionsQueryStringFromObject,
 } from "../../../utils/utils";
-import type { SyntheticEvent } from "react";
-import { createAdobeAnalyticsPageName } from "@/src/utils/utils";
 import NoResultsFound from "../../results/noResultsFound";
+import LaneLoading from "../../lane/laneLoading";
+import { CardsGrid } from "../../grids/cardsGrid";
 import {
   DEFAULT_PAGE_NUM,
   DEFAULT_COLLECTION_SORT,
   DEFAULT_SEARCH_TERM,
 } from "@/src/config/constants";
+import { SearchManager } from "@/src/utils/searchManager";
+import { headerBreakpoints } from "@/src/utils/breakpoints";
 
 export function CollectionsPage({ data, params, renderCollections }) {
   const { push } = useRouter();
   const pathname = usePathname();
-  const [isLoaded, setIsLoaded] = useState(false);
-  let collections = [];
-
-  if (renderCollections) {
-    collections = Array.isArray(data.collection)
-      ? data.collection
-      : [data.collection];
-  }
-
   const headingRef = useRef<HTMLHeadingElement>(null);
 
+  const [isLoaded, setIsLoaded] = useState(false);
   const numFound = data.numFound || data.numResults;
   const totalPages = totalNumPages(numFound, data.perPage);
+  const collections = renderCollections
+    ? Array.isArray(data.collection)
+      ? data.collection
+      : [data.collection]
+    : [];
 
-  const [currentPage, setCurrentPage] = useState<number>(
-    Number(params.page) || Number(DEFAULT_PAGE_NUM)
-  );
-
-  const [currentSort, setCurrentSort] = useState<string>(
-    params.sort || DEFAULT_COLLECTION_SORT
-  );
-
-  const [currentCollectionKeywords, setcurrentCollectionKeywords] =
-    useState<string>(params.collection_keywords || DEFAULT_SEARCH_TERM);
-
-  const updateURL = async (queryString) => {
-    setIsLoaded(false);
-    await push(`${pathname}?${queryString}`);
-    setTimeout(() => {
-      setIsLoaded(true);
-      headingRef.current?.focus();
-    }, 1000);
-  };
-
-  const handleSearchSubmit = async (e: SyntheticEvent) => {
-    e.preventDefault();
-    // something is so weird about state here.
-    // change the values in the object passed down to createCollectionsQueryStringFromObject to be currentPage and currentSort and tell me if it works for you....
-    setCurrentPage(Number(DEFAULT_PAGE_NUM));
-    setCurrentSort(DEFAULT_COLLECTION_SORT);
-    const queryString = createCollectionsQueryStringFromObject({
-      collection_keywords: currentCollectionKeywords,
-      sort: DEFAULT_COLLECTION_SORT,
-      page: DEFAULT_PAGE_NUM,
-    });
-    updateURL(queryString);
-  };
-
-  const handleSearchChange = (e: SyntheticEvent) => {
-    const target = e.target as HTMLInputElement;
-    setcurrentCollectionKeywords(target.value);
-  };
-
-  const onPageChange = async (pageNumber: number) => {
-    setCurrentPage(pageNumber);
-    const queryString = createCollectionsQueryStringFromObject({
-      collection_keywords: currentCollectionKeywords,
-      sort: currentSort,
-      page: pageNumber.toString(),
-    });
-    updateURL(`${queryString}#collections`);
-  };
-
-  const onMenuClick = async (id) => {
-    setCurrentSort(id);
-    const queryString = createCollectionsQueryStringFromObject({
-      collection_keywords: currentCollectionKeywords,
-      sort: id,
-      page: String(currentPage),
-    });
-    updateURL(`${queryString}#collections`);
-  };
+  const searchManager = new SearchManager({
+    initialPage: Number(params.page) || DEFAULT_PAGE_NUM,
+    initialSort: params.sort || DEFAULT_COLLECTION_SORT,
+    initialKeywords: params.collection_keywords || DEFAULT_SEARCH_TERM,
+    updateURL: async (queryString: string) => {
+      setIsLoaded(false);
+      await push(`${pathname}?${queryString}`);
+    },
+  });
 
   useEffect(() => {
     setIsLoaded(true);
-  }, []);
+    setTimeout(() => {
+      headingRef.current?.focus();
+    }, 1000);
+  }, [isLoaded]);
 
   return (
     <PageLayout
@@ -146,30 +97,29 @@ export function CollectionsPage({ data, params, renderCollections }) {
         />
         <SearchBar
           sx={{ maxWidth: "462px" }}
-          id={"search-collections"}
+          id="search-collections"
           textInputProps={{
             isClearable: true,
-            isClearableCallback: () => {
-              setcurrentCollectionKeywords(DEFAULT_SEARCH_TERM);
-            },
+            isClearableCallback: () =>
+              searchManager.handleSearchChange(DEFAULT_SEARCH_TERM),
             labelText: "Search by collection title",
             name: "collection_keywords",
             placeholder: "Search by collection title",
-            defaultValue: currentCollectionKeywords,
-            onChange: (e) => handleSearchChange(e),
+            defaultValue: searchManager.currentKeywords,
+            onChange: (e) =>
+              searchManager.handleSearchChange(
+                (e.target as HTMLInputElement).value
+              ),
           }}
-          onSubmit={handleSearchSubmit}
-          labelText={""}
+          onSubmit={() => searchManager.handleSearchSubmit}
+          labelText=""
         />
       </Box>
       <HorizontalRule sx={{ marginTop: "xxl", marginBottom: "xxl" }} />
       <Flex>
         <Heading
           size="heading5"
-          sx={{
-            display: collections?.length > 0 ? "flex" : "none",
-            marginBottom: "l",
-          }}
+          sx={{ display: collections.length > 0 ? "flex" : "none" }}
           ref={headingRef}
           tabIndex={-1}
           id="collections"
@@ -179,56 +129,46 @@ export function CollectionsPage({ data, params, renderCollections }) {
             data.numResults,
             data.perPage,
             data.page
-          )}
-            results`}
+          )} results`}
         </Heading>
         <Spacer />
         <Box
-          sx={{
-            display: collections?.length > 0 ? "flex" : "none",
-            gap: "xs",
-            marginBottom: "l",
-          }}
+          sx={{ display: collections.length > 0 ? "flex" : "none", gap: "xs" }}
         >
-          <Text sx={{ fontWeight: "500", marginBottom: 0, marginTop: "xs" }}>
-            {" "}
-            Sort by{" "}
-          </Text>{" "}
+          <Text sx={{ fontWeight: "500" }}>Sort by</Text>
           <Menu
             showSelectionAsLabel
-            showLabel
-            selectedItem={currentSort}
-            labelText={"Sort By"}
+            selectedItem={searchManager.currentSort}
+            labelText="Sort By"
             listItemsData={[
               {
                 id: "date-desc",
                 label: "Newest to oldest",
-                onClick: onMenuClick,
+                onClick: () => searchManager.handleSortChange("date-desc"),
                 type: "action",
               },
               {
                 id: "date-asc",
                 label: "Oldest to newest",
-                onClick: onMenuClick,
+                onClick: () => searchManager.handleSortChange("date-asc"),
                 type: "action",
               },
               {
                 id: "title-asc",
                 label: "Title A to Z",
-                onClick: onMenuClick,
+                onClick: () => searchManager.handleSortChange("title-asc"),
                 type: "action",
               },
               {
                 id: "title-desc",
                 label: "Title Z to A",
-                onClick: onMenuClick,
+                onClick: () => searchManager.handleSortChange("title-desc"),
                 type: "action",
               },
             ]}
           />
         </Box>
       </Flex>
-
       {isLoaded ? (
         collections.length > 0 ? (
           <CardsGrid records={collections} />
@@ -236,24 +176,13 @@ export function CollectionsPage({ data, params, renderCollections }) {
           <NoResultsFound searchTerm={params.collection_keywords} />
         )
       ) : (
-        Array(Math.ceil(collections.length / 4)).fill(
-          <LaneLoading withTitle={false} />
-        )
+        <LaneLoading withTitle={false} />
       )}
-
       {totalPages > 1 && (
         <Pagination
-          id="pagination-id"
-          initialPage={currentPage}
-          currentPage={currentPage}
+          currentPage={searchManager.currentPage}
           pageCount={totalPages}
-          onPageChange={onPageChange}
-          sx={{
-            display: "flex",
-            justifyContent: "center",
-            gap: "s",
-            marginTop: "xxl",
-          }}
+          onPageChange={searchManager.handlePageChange}
         />
       )}
     </PageLayout>
