@@ -331,7 +331,7 @@ Serverside logs for this project's `qa` and `production` branches can be found i
 
 Clientside _errors_ can be found in New Relic under `Facelift production or Facelift QA > Browser > Errors`.
 
-Clientside _logs_ can be found under `Facelift production or Facelift QA > Browser > Logs`.
+Clientside _logs_ that are not errors can be found under `Facelift production or Facelift QA > Browser > Logs`.
 
 Serverside logs also appear in New Relic under APM Logs and general Logs (query "facelift").
 
@@ -341,7 +341,7 @@ For Vercel deployments, logging will appear in the console.
 
 We structure our logs according to these [NYPL standards](https://github.com/NYPL/engineering-general/blob/main/standards/logging.md). See `logger.js` for the formatting and storage of logs.
 
-You SHOULD NOT use `console.log` if you want to add a _permanent_ log, and make sure to clean up your debugging `console.log`s, because they will clutter Cloudwatch and New Relic.
+You SHOULD NOT use `console.log` if you want to add a _permanent_ log, and make sure to clean up your debugging `console.log`s, because they will clutter Cloudwatch.
 
 On the server side, you SHOULD use `logger.[some NYPL log level](message: string)`.
 
@@ -355,9 +355,9 @@ useEffect(() => {
   }, [error]);
 ```
 
-If you want to add other client side _errors_, you SHOULD use `newrelic.noticeError(message: string)` as above.
+If you want to add other client side _error logs_, you SHOULD use `newrelic.noticeError(message: string)` as above.
 
-If you want to add a client side _log_, you SHOULD use `newrelic.log(message: string, {level: 'debug|error|info|trace|warn'})`, for example:
+If you want to add a client side _log_ (that's not necessarily an error), you SHOULD use `newrelic.log(message: string, {level: 'debug|error|info|trace|warn'})`, for example:
 
 ```
 useEffect(() => {

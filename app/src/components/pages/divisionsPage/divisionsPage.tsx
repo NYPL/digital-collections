@@ -22,7 +22,11 @@ export default function DivisionsPage({ summary, divisions }: DivisionsProps) {
 
   useEffect(() => {
     setIsLoaded(true);
-    console.log("Does this go to NR");
+    if ((window as any).newrelic) {
+      (window as any).newrelic.log("Test log at error level", {
+        level: "error",
+      });
+    }
   }, []);
 
   return (
