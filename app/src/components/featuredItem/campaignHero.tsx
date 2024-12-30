@@ -8,12 +8,10 @@ import { FeaturedItemDataType } from "../../types/FeaturedItemDataType";
 import React from "react";
 
 const CampaignHero = ({ featuredItemData }) => {
-  const defaultFeaturedItemResponse = defaultFeaturedItem;
   if ((window as any).newrelic) {
-    (window as any).newrelic.log("Loading campaign hero", {
-      level: "info",
-    });
+    (window as any).newrelic.noticeError("Testing error for campaign hero");
   }
+  const defaultFeaturedItemResponse = defaultFeaturedItem;
 
   const [data, setData] = useState<FeaturedItemDataType>(
     featuredItemData || defaultFeaturedItemResponse
@@ -21,9 +19,7 @@ const CampaignHero = ({ featuredItemData }) => {
 
   const handleError = (e: React.SyntheticEvent<HTMLImageElement, Event>) => {
     if ((window as any).newrelic) {
-      (window as any).newrelic.log("Error loading campaign hero", {
-        level: "warn",
-      });
+      (window as any).newrelic.noticeError("Error loading campaign hero");
     }
     setData(defaultFeaturedItemResponse);
   };

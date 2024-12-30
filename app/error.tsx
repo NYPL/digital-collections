@@ -11,12 +11,12 @@ export default function Error({
   error: Error & { digest?: string };
 }) {
   useEffect(() => {
-    console.error(error);
+    // console.error(error);
 
-    // // Send error to New Relic
-    // if ((window as any).newrelic) {
-    //   (window as any).newrelic.noticeError(error);
-    // }
+    // Send error to New Relic
+    if ((window as any).newrelic) {
+      (window as any).newrelic.noticeError(error);
+    }
   }, [error]);
 
   return (
