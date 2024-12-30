@@ -8,11 +8,6 @@ import { FeaturedItemDataType } from "../../types/FeaturedItemDataType";
 import React from "react";
 
 const CampaignHero = ({ featuredItemData }) => {
-  useEffect(() => {
-    if ((window as any).newrelic) {
-      (window as any).newrelic.noticeError("Testing error for campaign hero");
-    }
-  }, []);
   const defaultFeaturedItemResponse = defaultFeaturedItem;
 
   const [data, setData] = useState<FeaturedItemDataType>(
