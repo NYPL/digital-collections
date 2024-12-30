@@ -43,6 +43,8 @@ export const fetchApi = async (
     ]);
   };
 
+  logger.warn("test warning from fetch API");
+
   try {
     const response = (await fetchWithTimeout(apiUrl, {
       method,

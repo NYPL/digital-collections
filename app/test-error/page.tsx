@@ -3,6 +3,6 @@ import { useEffect } from "react";
 
 export default function TestError() {
   useEffect(() => {
-    throw new Error("Test error for New Relic");
+    throw new Error("Test error");
   }, []);
 }
