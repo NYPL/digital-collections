@@ -22,7 +22,6 @@ These environment variables control how certain elements on the page render and 
 | Variable                     | Type   | Value Example                                                                         | Description                                                                      |
 | ---------------------------- | ------ | ------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------- |
 | `APP_ENV`                    | string | "development"                                                                         | App environment key used to determine various environment-specific app settings. |
-| `DC_URL`                     | string | "" or "https://qa-digitalcollections.nypl.org" or https://digitalcollections.nypl.org | The base URL of the DC url, either points locally or externally to legacy DC.    |
 | `API_URL`                    | string | "https://api.repo.nypl.org" or "https://qa.api.repo.nypl.org"                         | base url for Repo API calls.                                                     |
 | `AUTH_TOKEN`                 | string | ""                                                                                    | Auth token for Repo API.                                                         |
 | `ADOBE_EMBED_URL`            | string | ""                                                                                    | Url endpoint used for Adobe Analytics event tracking.                            |

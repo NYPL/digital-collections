@@ -2,7 +2,7 @@ import { Metadata } from "next";
 import React from "react";
 import DivisionPage from "../../src/components/pages/divisionPage/divisionPage";
 import { slugToString } from "../../src/utils/utils";
-import { getDivisionData } from "../../src/utils/api";
+import { getDivisionData } from "../../src/utils/apiHelpers";
 import { Suspense } from "react";
 import { redirect } from "next/navigation";
 
@@ -35,11 +35,10 @@ export default async function Division({
   if (data?.headers?.code === "404") {
     redirect("/404");
   }
-  const currentPage = Number(searchParams.page) || 1;
 
   return (
     <Suspense>
-      <DivisionPage data={data} currentPage={currentPage} />
+      <DivisionPage data={data} />
     </Suspense>
   );
 }

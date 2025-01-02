@@ -1,5 +1,5 @@
 import { NextResponse, NextRequest } from "next/server";
-import { getHomePageData } from "@/src/utils/api";
+import { getHomePageData } from "@/src/utils/apiHelpers";
 export const fetchCache = "force-no-store";
 
 export const GET = async (request: NextRequest, response: NextResponse) => {

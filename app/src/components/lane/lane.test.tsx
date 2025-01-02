@@ -1,6 +1,5 @@
 import { fireEvent, render, screen, within } from "@testing-library/react";
 import { mockCollectionLanes } from "__tests__/__mocks__/data/mockCollectionLanes";
-import { DC_URL } from "@/src/config/constants";
 import { Lane as DCLane } from "./lane";
 
 describe("Lanes component renders with expected collection props", () => {
@@ -10,7 +9,7 @@ describe("Lanes component renders with expected collection props", () => {
         {mockCollectionLanes.lanesWithNumItems.map((lane, key) => (
           <DCLane
             key={key}
-            seeMoreLink={`${DC_URL}/collections/lane`}
+            seeMoreLink={`/collections/lane`}
             records={lane.collections}
             laneName={lane.name}
             laneSlug={lane.slug}
@@ -37,7 +36,7 @@ describe("Lanes component renders with expected collection props", () => {
         {mockCollectionLanes.lanesWithNumItems.map((lane, key) => (
           <DCLane
             key={key}
-            seeMoreLink={`${DC_URL}/collections/lane`}
+            seeMoreLink={`/collections/lane`}
             records={lane.collections}
             laneName={lane.name}
             laneSlug={lane.slug}
@@ -70,7 +69,7 @@ describe("Lanes component renders with expected collection props", () => {
         {mockCollectionLanes.lanesWithNumItems.map((lane, key) => (
           <DCLane
             key={key}
-            seeMoreLink={`${DC_URL}/collections/lane`}
+            seeMoreLink={`/collections/lane`}
             records={lane.collections}
             laneName={lane.name}
             laneSlug={lane.slug}
@@ -94,7 +93,7 @@ describe("Lanes component renders with expected collection props", () => {
         {mockCollectionLanes.lanesWithNumItems.map((lane, key) => (
           <DCLane
             key={key}
-            seeMoreLink={`${DC_URL}/collections/lane`}
+            seeMoreLink={`/collections/lane`}
             records={lane.collections}
             laneName={lane.name}
             laneSlug={lane.slug}
@@ -117,7 +116,7 @@ describe("Lanes component renders with expected collection props", () => {
         {mockCollectionLanes.lanesWithNumItems.map((lane, key) => (
           <DCLane
             key={key}
-            seeMoreLink={`${DC_URL}/collections/lane`}
+            seeMoreLink={`/collections/lane`}
             records={lane.collections}
             laneName={lane.name}
             laneSlug={lane.slug}
