@@ -7,6 +7,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+### Updated
+
+- Update copy of sort menu for the all collections page (DR-3323)
+- Update `/collections` page to fetch data from Repo API and meet designs (DR-3100)
+- Update `/collections/lane/:slug` page to fetch data from Repo API (DR-3701)
+
 ## [0.2.5] 2025-01-02
 
 ### Removed
