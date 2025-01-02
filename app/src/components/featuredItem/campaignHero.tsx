@@ -1,5 +1,5 @@
 import { Hero } from "@nypl/design-system-react-components";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import CampaignHeroSubText from "./campaignHeroSubText";
 import CampaignHeroHeading from "./campaignHeroHeading";
 import CampaignHeroLoading from "./campaignHeroLoading";
@@ -16,7 +16,9 @@ const CampaignHero = ({ featuredItemData }) => {
 
   const handleError = (e: React.SyntheticEvent<HTMLImageElement, Event>) => {
     if ((window as any).newrelic) {
-      (window as any).newrelic.noticeError("Error loading campaign hero");
+      (window as any).newrelic.noticeError(
+        "Error loading campaign hero default image"
+      );
     }
     setData(defaultFeaturedItemResponse);
   };

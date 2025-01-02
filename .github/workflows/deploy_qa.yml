@@ -5,7 +5,6 @@ on:
   push:
     branches:
       - qa
-      - DR-3325/clean-up-logging
 
 permissions:
   id-token: write
@@ -13,6 +12,7 @@ permissions:
 
 env:
   AWS_DEFAULT_REGION: us-east-1
+  LOCAL_TAG_NAME: dc-frontend:${{ github.ref_name }}-${{ github.run_number }}
 
 jobs:
   deploy:
@@ -26,12 +26,6 @@ jobs:
         with:
           role-to-assume: arn:aws:iam::685731035297:role/GithubActionsDeployerRole
           aws-region: us-east-1
-
-      - name: Sanitize LOCAL_TAG_NAME
-        id: define_tag
-        run: |
-          SANITIZED_REF_NAME=$(echo "${{github.ref_name}}" | tr '/' '-')
-          echo "LOCAL_TAG_NAME=dc-frontend:${SANITIZED_REF_NAME}-${{ github.run_number }}" >> $GITHUB_ENV
 
       - name: Log in to Amazon ECR
         id: login-ecr
