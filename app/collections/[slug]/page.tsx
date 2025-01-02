@@ -38,7 +38,7 @@ export default function Collections({ params }: CollectionProps) {
         params.slug
       )}
     >
-      <SearchResults showFilter={false} isSearchPage={false} data={mockItems} />
+      <SearchResults showFilter={false} params={params} data={mockItems} />
     </PageLayout>
   );
 }

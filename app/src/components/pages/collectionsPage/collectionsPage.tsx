@@ -50,6 +50,7 @@ export function CollectionsPage({ data, params, renderCollections }) {
     updateURL: async (queryString: string) => {
       push(`${pathname}?${queryString}`);
     },
+    isCollectionSearch: true,
   });
 
   useEffect(() => {
