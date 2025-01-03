@@ -23,6 +23,7 @@ export default function DivisionsPage({ summary, divisions }: DivisionsProps) {
   useEffect(() => {
     setIsLoaded(true);
   }, []);
+
   return (
     <PageLayout
       activePage="divisions"
@@ -58,7 +59,7 @@ export default function DivisionsPage({ summary, divisions }: DivisionsProps) {
           ) : (
             <>
               {[...Array(36)].map((_, index) => (
-                <LaneLoading key={index} />
+                <LaneLoading id={index} key={index} />
               ))}
             </>
           )}

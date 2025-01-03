@@ -1,24 +1,51 @@
 # Digital Collections App
 
-This is the Repo for the Digital Collections app using the DS (internally referred to as "DC Facelift")
+This is the repo for the Digital Collections app (internally referred to as "DC Facelift"), using the [Reservoir](https://github.com/NYPL/nypl-design-system) design system.
 
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
-## Getting Started With Node
+## Table of contents
 
-First, install Dependencies:
+### Setup and dependencies
+
+- [Getting started with Node](#getting-started-with-node)
+- [Getting started with Docker](#getting-started-with-docker)
+- [Getting started with Next.js](#getting-started-with-nextjs)
+- [Environment variables](#environment-variables)
+- [IIIF](#iiif)
+- [New Relic](#new-relic)
+- [Fonts](#fonts)
+
+### Developing
+
+- [Testing and test scripts](#testing)
+- [Linting and formatting](#linting-and-formatting)
+- [Logging](#logging)
+
+### Deploying
+
+- [Github Actions](#github-actions)
+- [Branches and AWS configuration](#branches-and-aws-configuration)
+- [Git workflow](#git-workflow)
+- [Versioning and naming](#release-naming-strategy)
+- [Deployments](#deployments)
+- [Summary of project phases](summary-of-project-phases)
+
+## Getting started with Node
+
+First, install dependencies:
 
 ```bash
 npm install
 ```
 
-Use node version 18 or higher. If you have nvm installed on your local machine, use the following command to use node 18.
+Use Node version 18 or higher. If you have nvm installed on your local machine, use the following command to use Node 18.
 
 ```bash
 nvm use
 ```
 
-If you don't already have node 18 installed on your machine, you can install it using:
+If you don't already have Node 18 installed on your machine, you can install it using:
 
 ```bash
 nvm install 18
@@ -38,105 +65,9 @@ Open [http://localhost:3000](http://localhost:3000) with your browser to see the
 
 You can start editing the page by modifying `pages/index.tsx`. The page auto-updates as you edit the file.
 
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.ts`.
-
 The `app/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
 
-### New Relic Start
-
-If New Relic needs to run locally, run `npm run dev:newrelic`. You must have `NEW_NEW_RELIC_LICENSE_KEY` and `NEW_RELIC_APP_NAME` declared in `.env.local` in order for this to run successfully.
-
-## Environment Variables
-
-A quick note on environment variables
-
-Use `.env.local` for local development.
-
-### Local development
-
-All variables should be declared in `.env.local` for local development. For local development, we don't have to worry about Server and Client env vars and where they come from.
-
-### QA/Production environments
-
-#### Server Side Environment Variables
-
-If a variable is required ONLY on the SERVER side (ie. in an api endpoint), then the variable can be declared in the AWS Task Definition.
-
-SERVER side methods in Next.js read environments at RUN TIME, which means they have access to environment variables on the server - these can be found by running `env` in the bash terminal or referenced within the app as `process.env.ENV`. These variables can/should be managed in QA and Production environments by updating the Task Definition and/or Cloud Formation Templates.
-
-SERVER side references of environment variables can use `process.env.ENV`
-
-#### Client Side Environment Variables
-
-If a variable is required ONLY on the CLIENT, the environment variable needs to be declared in `appConfig.ts`.
-
-CLIENT side methods in Next.js only have access to environment variables that are declared at BUILD TIME, which means they DO NOT have access to environment variables on the server and thus do not have access to `process.env.ENV`. These variables should be managed in QA and Production environments by either hard coding them in `appConfig.ts` AND/OR declaring them in the Dockerfile and travis.yml.
-
-Currently, the only CLIENT side environment variable that we use is `APP_ENV`. APP_ENV drives the logic to choose between several env variables that are hard coded in `appConfig.ts`.
-
-Example:
-
-```
-const appConfig = {
-  environment: process.env.APP_ENV || "development",
-  adobeEmbedUrl: {
-    development:
-      "https://assets.adobedtm.com/1a9376472d37/8519dfce636d/launch-bf8436264b01-development.min.js",
-    qa: "https://assets.adobedtm.com/1a9376472d37/8519dfce636d/launch-bf8436264b01-development.min.js",
-    production:
-      "https://assets.adobedtm.com/1a9376472d37/8519dfce636d/launch-672b7e7f98ee.min.js",
-  },
-};
-```
-
-In the future we may want to create a /config endpoint to pass environment variables from SERVER to CLIENT.
-
-### Swim Lanes API Endpoints
-
-The following endpoints are currently available at http://localhost:3000/api/lanes/
-
-- [/books-and-periodicals](http://localhost:3000/api/lanes/books-and-periodicals)
-- [/fliers-and-ephemera](http://localhost:3000/api/lanes/fliers-and-ephemera)
-- [/manuscripts-and-correspondence](http://localhost:3000/api/lanes/manuscripts-and-correspondence)
-- [/maps](http://localhost:3000/api/lanes/maps)
-- [/photographs](http://localhost:3000/api/lanes/photographs)
-- [/prints-and-drawings](http://localhost:3000/api/lanes/prints-and-drawings)
-- [/recently-digitized-collections](http://localhost:3000/api/lanes/recently-digitized-collections)
-
-\*\* Note: What would usually be a query parameter is really a route parameter with Next, so `api/lanes/example`
-is equivalent to `api/lanes/?slug=example`.
-
-### Individual lane
-
-| Request method | Route                                  |
-| -------------- | -------------------------------------- |
-| GET            | ex. `/api/lanes/books-and-periodicals` |
-
-Path is slugified lane title. Returns respective JSON for that lane.
-
-### All lanes
-
-| Request method | Route        |
-| -------------- | ------------ |
-| GET            | `/api/lanes` |
-
-Returns JSON containing all lanes.
-
-### Featured Items - GET /api/featuredItems
-
----
-
-Returns JSON containing all featured items' image data.
-
-#### Note for future
-
-These endpoints will change (as DC homepage is built out) to be dynamically generated from another source instead of getting static data.
-
-## Fonts
-
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
-
-## Getting Started With Docker
+## Getting started with Docker
 
 First, install ["Docker"](https://www.docker.com/) on your local machine.
 
@@ -241,7 +172,7 @@ and the following to restart the stopped container:
 $ docker-compose start
 ```
 
-## Next.js
+## Getting started with Next.js
 
 Next.js is a frontend Javascript framework with server-side rendering.
 
@@ -269,7 +200,7 @@ project/
 
 Folders define routes, and paths of nested folders should end in a single "leaf": a `page.tsx` file. Dynamic routes are wrapped in brackets. For example, the route `app/blog/[slug]/page.js` would map to url `/blog/c` where the slug is `c`.
 
-## Learn More
+### Learn More
 
 To learn more about Next.js, take a look at the following resources:
 
@@ -278,95 +209,60 @@ To learn more about Next.js, take a look at the following resources:
 
 You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
 
-## Vercel
+## Environment variables
 
-We use Vercel for internal purposes. Pull requests get deployed via Vercel for VQA and accessibility review. We do not formally deploy the app to qa and production using Vercel. We use Travis for this instead.
+Use `.env.local` for local development.
 
-If you need access to the instance, please contact someone from the NYPL team.
+### Local development
+
+All variables should be declared in `.env.local` for local development. For local development, we don't have to worry about server and client environment variables and where they come from.
+
+### Serverside environment variables
+
+If a variable is required ONLY on the SERVER side (ie. in an API endpoint), then the variable can be declared in the AWS Task Definition.
+
+SERVER side methods in Next.js read environments at RUN TIME, which means they have access to environment variables on the server - these can be found by running `env` in the bash terminal or referenced within the app as `process.env.ENV`. These variables can/should be managed in `qa` and `production` environments by updating the Task Definition and/or Cloud Formation Templates.
+
+SERVER side references of environment variables can use `process.env.ENV`
+
+### Clientside environment variables
+
+If a variable is required ONLY on the CLIENT, the environment variable needs to be declared in `appConfig.ts`.
+
+CLIENT side methods in Next.js only have access to environment variables that are declared at BUILD TIME, which means they DO NOT have access to environment variables on the server and thus do not have access to `process.env.ENV`. These variables should be managed in `qa` and `production environments` by either hard coding them in `appConfig.ts` AND/OR declaring them in the Dockerfile.
+
+Currently, the only CLIENT side environment variable that we use is `APP_ENV`. APP_ENV drives the logic to choose between several env variables that are hard coded in `appConfig.ts`.
+
+Example:
+
+```
+const appConfig = {
+  environment: process.env.APP_ENV || "development",
+  adobeEmbedUrl: {
+    development:
+      "https://assets.adobedtm.com/1a9376472d37/8519dfce636d/launch-bf8436264b01-development.min.js",
+    qa: "https://assets.adobedtm.com/1a9376472d37/8519dfce636d/launch-bf8436264b01-development.min.js",
+    production:
+      "https://assets.adobedtm.com/1a9376472d37/8519dfce636d/launch-672b7e7f98ee.min.js",
+  },
+};
+```
+
+In the future we may want to create a /config endpoint to pass environment variables from SERVER to CLIENT.
 
 ## IIIF
 
-For this application, we will be using [IIIF](https://iiif.io/) as our image server.
+For this application, we use [IIIF](https://iiif.io/) as our image server.
 
-We have a local instance of IIIF Served via [Cantaloupe](https://github.com/NYPL/cantaloupe). We will use the [IIIF Image API](https://iiif.io/api/image/2.0/) to access images with our Cantaloupe server. We currently support v2.0 and have plans to upgrade our Cantaloupe server to support v [3.0](https://iiif.io/api/image/3.0/).
+We have a local instance of IIIF served via [Cantaloupe](https://github.com/NYPL/cantaloupe). We will use the [IIIF Image API](https://iiif.io/api/image/2.0/) to access images with our Cantaloupe server. We currently support v2.0 and have plans to upgrade our Cantaloupe server to support v [3.0](https://iiif.io/api/image/3.0/).
 
-### IIIF Image API Parameters
+## New Relic
 
-#### REGION
+If New Relic needs to run locally, run `npm run dev:newrelic`. You must have `NEW_RELIC_LICENSE_KEY` and `NEW_RELIC_APP_NAME` declared in `.env.local` in order for this to run successfully.
 
-The region parameter defines the rectangular portion of the full image to be returned. Region can be specified by pixel coordinates, percentage or by the value “full”, which specifies that the entire image should be returned.
+## Fonts
 
-| Value       | Description                                                                                                                                                                                                                                                                                                                                                                                                                                                         |
-| :---------- | :------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| full        | the complete image is returned, without any cropping.                                                                                                                                                                                                                                                                                                                                                                                                               |
-| square      | the region is defined as an area where the width and height are both equal to the length of the shorter dimension of the complete image. The region may be positioned anywhere in the longer dimension of the image content at the server’s discretion, and centered is often a reasonable default.                                                                                                                                                                 |
-| x,y,w,h     | The region of the full image to be returned is specified in terms of absolute pixel values. The value of x represents the number of pixels from the 0 position on the horizontal axis. The value of y represents the number of pixels from the 0 position on the vertical axis. Thus the x,y position 0,0 is the upper left-most pixel of the image. w represents the width of the region and h represents the height of the region in pixels.                      |
-| pct:x,y,w,h | The region to be returned is specified as a sequence of percentages of the full image’s dimensions,as reported in the image information document. Thus, x represents the number of pixels from the 0 position on the horizontal axis, calculated as a percentage of the reported width. w represents the width of the region, also calculated as a percentage of the reported width. The same applies to y and h respectively. These may be floating point numbers. |
-
-If the request specifies a region which extends beyond the dimensions reported in the image information document, then the service should return an image cropped at the image’s edge, rather than adding empty space.
-
-If the requested region’s height or width is zero, or if the region is entirely outside the bounds of the reported dimensions, then the server should return a 400 status code.
-
-If the request specifies a region which extends beyond the dimensions reported in the image information document, then the service should return an image cropped at the image’s edge, rather than adding empty space.
-
-If the requested region’s height or width is zero, or if the region is entirely outside the bounds of the reported dimensions, then the server should return a 400 status code.
-
-#### SIZE
-
-The size parameter determines the dimensions to which the extracted region is to be scaled.
-
-| Value | Description                                                                                                                                                                                                                                                                                                                                                                                             |
-| :---- | :------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| full  | The image or region is not scaled, and is returned at its full size. Note deprecation warning.                                                                                                                                                                                                                                                                                                          |
-| max   | The image or region is returned at the maximum size available, as indicated by maxWidth, maxHeight, maxArea in the profile description. This is the same as full if none of these properties are provided.                                                                                                                                                                                              |
-| w,    | The image or region should be scaled so that its width is exactly equal to w, and the height will be a calculated value that maintains the aspect ratio of the extracted region.                                                                                                                                                                                                                        |
-| ,h    | The image or region should be scaled so that its height is exactly equal to h, and the width will be a calculated value that maintains the aspect ratio of the extracted region.                                                                                                                                                                                                                        |
-| pct:n | The width and height of the returned image is scaled to n% of the width and height of the extracted region. The aspect ratio of the returned image is the same as that of the extracted region.                                                                                                                                                                                                         |
-| w,h   | The width and height of the returned image are exactly w and h. The aspect ratio of the returned image may be different than the extracted region, resulting in a distorted image.                                                                                                                                                                                                                      |
-| !w,h  | The image content is scaled for the best fit such that the resulting width and height are less than or equal to the requested width and height. The exact scaling may be determined by the service provider, based on characteristics including image quality and system performance. The dimensions of the returned image content are calculated to maintain the aspect ratio of the extracted region. |
-
-If the resulting height or width is zero, then the server should return a 400 (bad request) status code.
-The image server may support scaling above the full size of the extracted region.
-
-Deprecation Warning: The size keyword `full` will be replaced in favor of `max` in version 3.0. Until that time,
-the `w,` syntax should be considered the canonical form of request for the `max` size, unless `max` is equivalent to `full`.
-
-Feedback is welcome via iiif-discuss or on the Github issue.
-
-#### ROTATION
-
-The rotation parameter specifies mirroring and rotation.
-A leading exclamation mark (“!”) indicates that the image should be mirrored by reflection on the vertical axis
-before any rotation is applied.
-The numerical value represents the number of degrees of clockwise rotation, and may be any floating point number from 0 to 360.
-
-| Value | Description                                             |
-| :---- | :------------------------------------------------------ |
-| n     | The degrees of clockwise rotation from 0 up to 360.     |
-| !n    | The image should be mirrored and then rotated as above. |
-
-A rotation value that is out of range or unsupported should result in a 400 status code.
-
-In most cases a rotation will change the width and height dimensions of the returned image.
-
-The service should return an image that contains all of the image contents requested in the
-region and size parameters, even if the dimensions of the returned image file are different
-than specified in the size parameter.
-
-The image contents should not be scaled as a result of the rotation, and there should be no
-additional space between the corners of the rotated image contents and the bounding box of the returned image content.
-
-For rotations which are not multiples of 90 degrees, it is recommended that the client request the image in a format
-that supports transparency, such as PNG, and that the server return the image with a transparent background.
-There is no facility in the API for the client to request a particular background color or other fill pattern.
-
-### Other IIIF Notes
-
-#### Order of operations:
-
-Region THEN Size THEN Rotation THEN Quality THEN Format
-
-Note: Do not need to worry about Quality or Format for this application.
+This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
 
 ## Testing
 
@@ -398,7 +294,7 @@ If you want to run tests on only one specific file, run:
 $ npm test -- src/[path/to/file]
 ```
 
-## Test Scripts
+### Test scripts
 
 To run the homepage swimlane image loading test script against the qa environment, run
 
@@ -416,7 +312,7 @@ npm run homepageImageLoadingTestProd
 
 The test waits for the 24 swim lane images to load, including the 12 that load after scrolling, and has succeeded if it does not time out. It simulates a single user loading the homepage one time.
 
-## Linting and Formatting
+## Linting and formatting
 
 The Digital Collections app will use `eslint` and `prettier` to lint and then format code on `git commit`.
 You can lint your code independently of this by running:
@@ -425,21 +321,73 @@ You can lint your code independently of this by running:
 $ npm run lint
 ```
 
+## Logging
+
+### Where do I find logs?
+
+Serverside logs for this project's `qa` and `production` branches can be found in AWS Cloudwatch under the `nypl-dams-dev` and `nypl-dams-prod` accounts.
+
+Clientside _errors_ can be found in New Relic under `Facelift production or Facelift QA > Browser > Errors`.
+
+Clientside _logs_ (not necessarily errors) can be found under `Facelift production or Facelift QA > Browser > Logs`.
+
+Serverside logs also appear in New Relic under APM Logs and general Logs (query "facelift").
+
+For Vercel deployments, logging will appear in the console.
+
+### How do I add logs?
+
+We structure our logs according to these [NYPL standards](https://github.com/NYPL/engineering-general/blob/main/standards/logging.md). See `logger.js` for the formatting and storage of logs.
+
+You SHOULD NOT use `console.log` if you want to add a _permanent_ log, and make sure to clean up your debugging `console.log`s, because they will clutter Cloudwatch.
+
+On the server side, you SHOULD use `logger.[some NYPL log level](message: string)`.
+
+On the client side, we already use an error boundary (`error.tsx`) to handle uncaught exceptions, which sends errors to New Relic like this:
+
+```
+useEffect(() => {
+    if ((window as any).newrelic) {
+      (window as any).newrelic.noticeError(error);
+    }
+  }, [error]);
+```
+
+If you want to add other client side _error logs_, you SHOULD use `newrelic.noticeError(message: string)` as above.
+
+If you want to add a client side _log_ (that's not necessarily an error), you SHOULD use `newrelic.log(message: string, {level: 'debug|error|info|trace|warn'})`, for example:
+
+```
+useEffect(() => {
+    if ((window as any).newrelic) {
+      (window as any).newrelic.log("Test log at info level", {
+        level: "info",
+      });
+    }
+  }, []);
+```
+
+New Relic logs need to be in a `useEffect` because we have to check that New Relic is enabled in the window.
+
 ## Github Actions
 
 All pushes to this repo will be checked with `npm test` and `npm lint`.
+QA deployments are automatically triggered by pushing changes to the qa branch. qa is deployed to AWS via Github Actions.
+Production deployments for this repo require a PR to the production branch. Once merged, production is deployed to AWS via Github Actions.
 
-## Git Workflow
+## Branches and AWS environments
+
+This app is currently on a reverse proxy with ["old" Digital Collections](https://github.com/NYPL/digitalreadingroom), which is no longer being updated. The [reverse proxy repo](https://github.com/NYPL/nypl-dc-rp) configuration sets which paths are redirected to old and new (for QA and production).
 
 Our branches (in order of stability are):
 
-| Branch     | Environment | AWS Account    | Cluster                | Link To Application                                                                        |
-| :--------- | :---------- | :------------- | :--------------------- | :----------------------------------------------------------------------------------------- |
-| main       | development |                |                        | [localhost:3000](http://localhost:3000)                                                    |
-| qa         | qa          | nypl-dams-dev  | dc-frontend-qa         | [https://qa-new-digitalcollections.nypl.org/](https://qa-new-digitalcollections.nypl.org/) |
-| production | production  | nypl-dams-prod | new-digitalcollections | [https://new-digitalcollections.nypl.org/](https://new-digitalcollections.nypl.org/)       |
+| Branch     | Environment | AWS Account    | Cluster                | Link To Application                                                                |
+| :--------- | :---------- | :------------- | :--------------------- | :--------------------------------------------------------------------------------- |
+| main       | development |                |                        | [localhost:3000](http://localhost:3000)                                            |
+| qa         | qa          | nypl-dams-dev  | dc-frontend-qa         | [https://qa-digitalcollections.nypl.org/](https://qa-digitalcollections.nypl.org/) |
+| production | production  | nypl-dams-prod | new-digitalcollections | [https://digitalcollections.nypl.org/](https://digitalcollections.nypl.org/)       |
 
-## Contributing
+## Git workflow
 
 1.  Feature branches are cut from `main` using
 
@@ -448,45 +396,49 @@ Our branches (in order of stability are):
 2.  Add your changes to the CHANGELOG.md file under `## [Unreleased]`. See [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) for formatting docs.
 3.  Create a pull request of the `feature` branch _into_ `main`.
 4.  After a feature branch has approved accessibility review and VQA, merge `feature` branch into `main`, then merge `main` branch into `qa` for testing. Merging can be done manually or with a pull request. Pushing the changes to the remote branch will automatically trigger a deployment to the `qa` environment.
+
+    4a. If you introduced a new path in your PR, update the reverse proxy QA configuration so that it will be accessible in the `qa` environment.
+
 5.  After QA has tested and approved cut a `release` branch off of `qa` using our Release Naming Strategy. Please see Release Naming Strategy for details on how we plan to number our releases during the initial rollout of this project.
 
-`git checkout -b release/x.y.z`.
+    `git checkout -b release/x.y.z`.
 
-(see tagged releases or changelog for last version)
+    (see tagged releases or changelog for last version)
 
-6. Update CHANGELOG.md in release branch by moving updates from unreleased into the new release section.
+6.  Update CHANGELOG.md in release branch by moving updates from unreleased into the new release section.
 
-   ie. `## [2.4.13] - 04-21-2023`
+    ie. `## [2.4.13] - 04-21-2023`
 
-7. Commit and push changes to release branch.
-8. The `production` branch is protected. When the release is ready, create a pull request to merge `release` branch to `production`. Pushing to `production` will automatically deploy to the production environment.
-9. Immediately after merging release to production, finish the release. This is done by backmerging the release to `qa` and `main` followed by creating the tags/release on github using these commands:
+7.  Commit and push changes to release branch.
+8.  The `production` branch is protected. When the release is ready, create a pull request to merge `release` branch to `production`. Pushing to `production` will automatically deploy to the production environment.
+9.  Immediately after merging release to production, finish the release. This is done by backmerging the release to `qa` and `main` followed by creating the tags/release on github using these commands:
 
-   `$ git tag -a x.y.z`
-   `$ git push origin --tags`
+    `$ git tag -a x.y.z`
+    `$ git push origin --tags`
 
-### Release Naming Strategy
+    9a. If you introduced a new path in your PR, update the reverse proxy production configuration (merging the change you already made in 4a!) so it will be accessible in the `production` environment.
 
-This project is in the beginning phases of its development. We will use a custom versioning system inspired by Semantic Versioning while we migrate the functionality of the digitalreadingroom app to this app. Once all of the initial Phase (as defined in the [Product Brief](https://docs.google.com/document/d/187LA6VjOaDdXA6xRZYv_gqgNzJcAyuSPIZoenVH2L3w)) is complete, this repo will use [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
+### Release naming strategy
 
-### Versioning system:
+This project is in the middle of its development. We will use a custom versioning system inspired by Semantic Versioning while we migrate the functionality of the digitalreadingroom app to this app. Once all of the initial phases (as defined in the [Product Brief](https://docs.google.com/document/d/187LA6VjOaDdXA6xRZYv_gqgNzJcAyuSPIZoenVH2L3w)) are complete, this repo will use [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-MAJOR: all of the Phases are complete
-MINOR: phase, set of features required to meet the mvp of a Phase as defined in the Product Brief or TAD.
-PATCH: feature or hotfix that supports a component or section of the mvp of a Phase
+### Versioning system
+
+MAJOR: all phases are complete
+MINOR: phase, set of features required to meet the MVP of a phase as defined in the Product Brief or TAD.
+PATCH: feature or hotfix that supports a component or section of the MVP of a phase
 
 Format: MAJOR.MINOR.PATCH
 
-## Deployment
+### Deployments
 
-Deployment:
 PR previews and `main` are all deployed to Vercel. Merges to `main` trigger automatic deployments to Vercel.
 
 QA deployments are automatically triggered by pushing changes to the `qa` branch. `qa` is deployed to AWS [via Github Actions](https://github.com/NYPL/digital-collections/blob/production/.github/workflows/deploy_qa.yml).
 
 Production deployments for this repo require a PR to the `production` branch. Once merged, `production` is deployed to AWS [via Github Actions](https://github.com/NYPL/digital-collections/blob/production/.github/workflows/deploy_production.yml).
 
-### Summary of Phases (to be removed later?)
+### Summary of project phases
 
 #### 1. Home Page
 
