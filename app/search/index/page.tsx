@@ -32,7 +32,7 @@ export default async function Search({ searchParams }: SearchProps) {
         ""
       )} //TODO: if there are no query params, page name should be createAdobeAnalyticsPageName("all-items", "")
     >
-      <SearchContent params={searchParams} showFilter={false} data={data} />
+      <SearchContent params={searchParams} data={data} />
     </PageLayout>
   );
 }

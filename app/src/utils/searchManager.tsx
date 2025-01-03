@@ -63,7 +63,6 @@ export class SearchManager {
 
   async handlePageChange(pageNumber: number) {
     this.currentPage = pageNumber;
-    console.log("this is current keywords", this.currentKeywords);
 
     const queryString = this.isCollectionSearch
       ? createCollectionsQueryStringFromObject({
