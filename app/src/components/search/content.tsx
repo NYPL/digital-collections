@@ -85,9 +85,9 @@ const SearchContent = ({ showFilter, isSearchPage, data }) => {
         <CardsGrid records={data} />
       ) : (
         <>
-          <LaneLoading withTitle={false} />,
-          <LaneLoading withTitle={false} />,
-          <LaneLoading withTitle={false} />,
+          <LaneLoading id={1} withTitle={false} />,
+          <LaneLoading id={2} withTitle={false} />,
+          <LaneLoading id={3} withTitle={false} />,
         </>
       )}
 
