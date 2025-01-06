@@ -234,7 +234,7 @@ export function CollectionsPage({ data, params, renderCollections }) {
         )
       ) : (
         Array(Math.ceil(collections.length / 4)).fill(
-          <LaneLoading withTitle={false} />
+          <LaneLoading id="lane-loading" withTitle={false} />
         )
       )}
 
