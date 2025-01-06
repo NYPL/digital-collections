@@ -27,6 +27,6 @@ export const COLLECTION_SORT_OPTIONS = {
 export const COLLECTION_SORT_LABELS = {
   "date-desc": "Newest to oldest",
   "date-asc": "Oldest to newest",
-  "title-desc": "Title A to Z",
-  "title-asc": "Title Z to A",
+  "title-desc": "Title Z to A",
+  "title-asc": "Title A to Z",
 };
