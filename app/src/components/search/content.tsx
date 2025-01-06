@@ -119,9 +119,9 @@ const SearchContent = ({ params, data }) => {
         <CardsGrid records={data.result} />
       ) : (
         <>
-          <LaneLoading withTitle={false} />,
-          <LaneLoading withTitle={false} />,
-          <LaneLoading withTitle={false} />,
+          <LaneLoading id={1} withTitle={false} />,
+          <LaneLoading id={2} withTitle={false} />,
+          <LaneLoading id={3} withTitle={false} />,
         </>
       )}
 

@@ -108,7 +108,8 @@ export function CollectionsPage({ data, params, renderCollections }) {
               ),
           }}
           onSubmit={() => searchManager.handleSearchSubmit}
-          labelText=""
+          labelText="Search collections by title"
+          aria-label="Search collections by title"
         />
       </Box>
       <HorizontalRule sx={{ marginTop: "xxl", marginBottom: "xxl" }} />
@@ -181,7 +182,9 @@ export function CollectionsPage({ data, params, renderCollections }) {
           <NoResultsFound searchTerm={params.collection_keywords} />
         )
       ) : (
-        <LaneLoading withTitle={false} />
+        Array(Math.ceil(collections.length / 4)).fill(
+          <LaneLoading id="lane-loading" withTitle={false} />
+        )
       )}
       {totalPages > 1 && (
         <Pagination
