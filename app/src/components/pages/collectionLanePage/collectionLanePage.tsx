@@ -99,7 +99,7 @@ export default function CollectionLanePage({ data }: any) {
       {isLoaded ? (
         <CardsGrid records={data.collection} />
       ) : (
-        Array(Math.ceil(data.collections.length / 4))
+        Array(Math.ceil(data.collection?.length / 4))
           .fill(null)
           .map((_, index) => (
             <LaneLoading
