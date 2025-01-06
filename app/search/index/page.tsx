@@ -6,23 +6,25 @@ import SearchContent from "@/src/components/search/content";
 
 export interface SearchParams {
   keywords: string;
-  sorts: string;
+  sort: string;
   filters: string[];
-  pageNum: number;
+  page: number;
 }
 
 export type SearchProps = {
-  params: { slug: string };
   searchParams: SearchParams;
 };
 
 export default async function Search({ searchParams }: SearchProps) {
+  const pageName = !searchParams.keywords ? "all-items" : "search-results";
+
   const data = await getSearchData({
-    keywords: searchParams.keywords,
-    sorts: searchParams.sorts,
+    keywords: searchParams.keywords || "type_s:Item",
+    sort: searchParams.sort,
     filters: searchParams.filters,
-    pageNum: searchParams.pageNum,
+    pageNum: searchParams.page,
   });
+
   return (
     <PageLayout
       activePage="search"
@@ -30,10 +32,7 @@ export default async function Search({ searchParams }: SearchProps) {
         { text: "Home", url: "/" },
         { text: "Keyword Search", url: "/search/index" },
       ]}
-      adobeAnalyticsPageName={createAdobeAnalyticsPageName(
-        "search-results",
-        ""
-      )} //TODO: if there are no query params, page name should be createAdobeAnalyticsPageName("all-items", "")
+      adobeAnalyticsPageName={createAdobeAnalyticsPageName(pageName, "")}
     >
       <SearchContent params={searchParams} data={data} />
     </PageLayout>

@@ -25,6 +25,7 @@ import {
   DEFAULT_COLLECTION_SORT,
   DEFAULT_SEARCH_TERM,
   COLLECTION_SORT_LABELS,
+  DEFAULT_FILTER,
 } from "@/src/config/constants";
 import { SearchManager } from "@/src/utils/searchManager";
 import { headerBreakpoints } from "@/src/utils/breakpoints";
@@ -46,6 +47,7 @@ export function CollectionsPage({ data, params, renderCollections }) {
   const searchManager = new SearchManager({
     initialPage: Number(params.page) || DEFAULT_PAGE_NUM,
     initialSort: params.sort || DEFAULT_COLLECTION_SORT,
+    initialFilters: params.filters || DEFAULT_FILTER,
     initialKeywords: params.collection_keywords || DEFAULT_SEARCH_TERM,
     updateURL: async (queryString: string) => {
       push(`${pathname}?${queryString}`);

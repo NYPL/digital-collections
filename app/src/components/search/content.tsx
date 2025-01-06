@@ -13,9 +13,10 @@ import { displayResults, totalNumPages } from "@/src/utils/utils";
 import {
   CARDS_PER_PAGE,
   COLLECTION_SORT_LABELS,
-  DEFAULT_COLLECTION_SORT,
+  DEFAULT_FILTER,
   DEFAULT_PAGE_NUM,
   DEFAULT_SEARCH_TERM,
+  DEFAULT_SORT,
 } from "@/src/config/constants";
 import { SearchManager } from "@/src/utils/searchManager";
 
@@ -26,7 +27,8 @@ const SearchContent = ({ params, data }) => {
   const pathname = usePathname();
   const searchManager = new SearchManager({
     initialPage: Number(params.page) || DEFAULT_PAGE_NUM,
-    initialSort: params.sort || DEFAULT_COLLECTION_SORT,
+    initialSort: params.sort || DEFAULT_SORT,
+    initialFilters: params.filters || DEFAULT_FILTER,
     initialKeywords: params.keywords || DEFAULT_SEARCH_TERM,
     updateURL: async (queryString: string) => {
       push(`${pathname}?${queryString}`);
