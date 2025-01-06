@@ -6,8 +6,9 @@ import SearchContent from "@/src/components/search/content";
 
 export interface SearchParams {
   keywords: string;
-  sort: string;
-  page: number;
+  sorts: string;
+  filters: string[];
+  pageNum: number;
 }
 
 export type SearchProps = {
@@ -18,7 +19,9 @@ export type SearchProps = {
 export default async function Search({ searchParams }: SearchProps) {
   const data = await getSearchData({
     keywords: searchParams.keywords,
-    pageNum: searchParams.page,
+    sorts: searchParams.sorts,
+    filters: searchParams.filters,
+    pageNum: searchParams.pageNum,
   });
   return (
     <PageLayout

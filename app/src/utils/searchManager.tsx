@@ -1,4 +1,5 @@
 import {
+  DEFAULT_ALL_SORT,
   DEFAULT_COLLECTION_SORT,
   DEFAULT_PAGE_NUM,
   DEFAULT_SEARCH_TERM,
@@ -51,6 +52,7 @@ export class SearchManager {
     } else {
       const queryString = createQueryStringFromObject({
         keywords: this.currentKeywords,
+        sort: this.currentSort,
         page: this.currentPage,
       });
       await this.updateURL(queryString);
@@ -72,6 +74,7 @@ export class SearchManager {
         })
       : createQueryStringFromObject({
           keywords: this.currentKeywords,
+          sort: this.currentSort,
           page: pageNumber,
         });
 
@@ -103,8 +106,15 @@ export class SearchManager {
 
 const createQueryStringFromObject = (object) => {
   const params = new URLSearchParams();
+  const defaultValues = [
+    DEFAULT_SEARCH_TERM,
+    DEFAULT_PAGE_NUM,
+    DEFAULT_ALL_SORT,
+  ];
   Object.keys(object).forEach((name) => {
-    params.set(name.toString(), object[name]);
+    if (!defaultValues.includes(object[name])) {
+      params.set(name.toString(), object[name]);
+    }
   });
   return params.toString();
 };

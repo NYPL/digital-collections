@@ -7,6 +7,7 @@ import {
   DEFAULT_COLLECTION_SORT,
   DEFAULT_PAGE_NUM,
   DEFAULT_SEARCH_TERM,
+  DEFAULT_ALL_SORT,
   COLLECTION_SORT_OPTIONS,
 } from "../config/constants";
 import { fetchApi } from "./fetchApi";
@@ -193,14 +194,18 @@ export const getLaneData = async ({
 
 export const getSearchData = async ({
   keywords = DEFAULT_SEARCH_TERM,
+  sorts = DEFAULT_ALL_SORT,
+  filters = [""],
   pageNum = DEFAULT_PAGE_NUM,
   perPage = CARDS_PER_PAGE,
 }: {
   keywords?: string;
+  sorts?: string;
+  filters?: string[];
   pageNum?: number;
   perPage?: number;
 } = {}) => {
-  let apiUrl = `${process.env.API_URL}/api/v2/items/search?q=${keywords}&page=${pageNum}&per_page=${perPage}`;
+  let apiUrl = `${process.env.API_URL}/api/v2/items/search?q=${keywords}&sort=${sorts}&page=${pageNum}&per_page=${perPage}`;
   const res = await fetchApi(apiUrl);
   return res;
 };

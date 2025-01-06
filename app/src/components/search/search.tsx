@@ -5,6 +5,7 @@ import { Box, SearchBar } from "@nypl/design-system-react-components";
 import { useRouter } from "next/navigation";
 import PublicDomainFilter from "../publicDomainFilter/publicDomainFilter";
 import { headerBreakpoints } from "../../utils/breakpoints";
+//import { SearchManager } from "@/src/utils/searchManager";
 
 const Search = () => {
   const router = useRouter();
@@ -27,6 +28,16 @@ const Search = () => {
   const handleCheckChange = (isChecked: boolean): void => {
     setPublicDomainOnly(isChecked);
   };
+
+  // const searchManager = new SearchManager({
+  //   initialPage: Number(params.page) || DEFAULT_PAGE_NUM,
+  //   initialSort: params.sort || DEFAULT_COLLECTION_SORT,
+  //   initialKeywords: params.collection_keywords || DEFAULT_SEARCH_TERM,
+  //   updateURL: async (queryString: string) => {
+  //     push(`${pathname}?${queryString}`);
+  //   },
+  //   isCollectionSearch: true,
+  // });
 
   return (
     <>

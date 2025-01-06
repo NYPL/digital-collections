@@ -4,6 +4,7 @@ import {
   DEFAULT_SEARCH_TERM,
   DEFAULT_PAGE_NUM,
   DEFAULT_COLLECTION_SORT,
+  DEFAULT_ALL_SORT,
 } from "../config/constants";
 import CollectionDataType from "@/src/types/CollectionDataType";
 import ItemDataType from "@/src/types/ItemDataType";
@@ -122,30 +123,38 @@ export function displayResults(
   return `${start}-${end} of ${numFound}`;
 }
 
-export const createQueryStringFromObject = (object) => {
-  const params = new URLSearchParams();
-  Object.keys(object).forEach((name) => {
-    params.set(name.toString(), object[name]);
-  });
-  return params.toString();
-};
+// export const createQueryStringFromObject = (object) => {
+//   const newParams = {};
+//   const defaultValues = [
+//     DEFAULT_SEARCH_TERM,
+//     DEFAULT_PAGE_NUM,
+//     DEFAULT_ALL_SORT,
+//   ];
 
-export const createCollectionsQueryStringFromObject = (
-  paramsObject: CollectionSearchParams
-) => {
-  console.log(paramsObject);
-  const newParams = {};
-  const defaultValues = [
-    DEFAULT_SEARCH_TERM,
-    DEFAULT_PAGE_NUM,
-    DEFAULT_COLLECTION_SORT,
-  ];
+//   Object.keys(object).forEach((key) => {
+//     if (!defaultValues.includes(object[key])) {
+//       newParams[key] = object[key];
+//     }
+//   });
 
-  Object.keys(paramsObject).forEach((key) => {
-    if (!defaultValues.includes(paramsObject[key])) {
-      newParams[key] = paramsObject[key];
-    }
-  });
+//   return newParams.toString();
+// };
 
-  return createQueryStringFromObject(newParams);
-};
+// export const createCollectionsQueryStringFromObject = (
+//   paramsObject: CollectionSearchParams
+// ) => {
+//   const newParams = {};
+//   const defaultValues = [
+//     DEFAULT_SEARCH_TERM,
+//     DEFAULT_PAGE_NUM,
+//     DEFAULT_COLLECTION_SORT,
+//   ];
+
+//   Object.keys(paramsObject).forEach((key) => {
+//     if (!defaultValues.includes(paramsObject[key])) {
+//       newParams[key] = paramsObject[key];
+//     }
+//   });
+
+//   return newParams.toString();
+// };
