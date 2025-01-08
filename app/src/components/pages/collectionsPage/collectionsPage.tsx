@@ -44,7 +44,7 @@ export function CollectionsPage({ data, params, renderCollections }) {
       : [data.collection]
     : [];
 
-  const searchManager = new SearchManager({
+  const collectionSearchManager = new SearchManager({
     initialPage: Number(params.page) || DEFAULT_PAGE_NUM,
     initialSort: params.sort || DEFAULT_COLLECTION_SORT,
     initialFilters: params.filters || DEFAULT_FILTERS,
@@ -96,18 +96,18 @@ export function CollectionsPage({ data, params, renderCollections }) {
           textInputProps={{
             isClearable: true,
             isClearableCallback: () =>
-              searchManager.handleKeywordChange(DEFAULT_SEARCH_TERM),
+              collectionSearchManager.handleKeywordChange(DEFAULT_SEARCH_TERM),
             labelText: "Search by collection title",
             name: "collection_keywords",
             placeholder: "Search by collection title",
-            defaultValue: searchManager.currentKeywords,
+            defaultValue: collectionSearchManager.currentKeywords,
             onChange: (e) =>
-              searchManager.handleKeywordChange(
+              collectionSearchManager.handleKeywordChange(
                 (e.target as HTMLInputElement).value
               ),
           }}
           onSubmit={() => {
-            push(`${pathname}?${searchManager.handleSearchSubmit()}`);
+            push(`${pathname}?${collectionSearchManager.handleSearchSubmit()}`);
           }}
           labelText="Search collections by title"
           aria-label="Search collections by title"
@@ -143,9 +143,9 @@ export function CollectionsPage({ data, params, renderCollections }) {
         >
           <Menu
             showLabel
-            selectedItem={searchManager.currentSort}
+            selectedItem={collectionSearchManager.currentSort}
             labelText={`Sort by: ${
-              COLLECTION_SORT_LABELS[searchManager.currentSort]
+              COLLECTION_SORT_LABELS[collectionSearchManager.currentSort]
             }`}
             listItemsData={[
               {
@@ -153,7 +153,9 @@ export function CollectionsPage({ data, params, renderCollections }) {
                 label: "Newest to oldest",
                 onClick: () => {
                   push(
-                    `${pathname}?${searchManager.handleSortChange("date-desc")}`
+                    `${pathname}?${collectionSearchManager.handleSortChange(
+                      "date-desc"
+                    )}`
                   );
                 },
                 type: "action",
@@ -163,7 +165,9 @@ export function CollectionsPage({ data, params, renderCollections }) {
                 label: "Oldest to newest",
                 onClick: () => {
                   push(
-                    `${pathname}?${searchManager.handleSortChange("date-asc")}`
+                    `${pathname}?${collectionSearchManager.handleSortChange(
+                      "date-asc"
+                    )}`
                   );
                 },
                 type: "action",
@@ -173,7 +177,9 @@ export function CollectionsPage({ data, params, renderCollections }) {
                 label: "Title A to Z",
                 onClick: () => {
                   push(
-                    `${pathname}?${searchManager.handleSortChange("title-asc")}`
+                    `${pathname}?${collectionSearchManager.handleSortChange(
+                      "title-asc"
+                    )}`
                   );
                 },
                 type: "action",
@@ -183,7 +189,7 @@ export function CollectionsPage({ data, params, renderCollections }) {
                 label: "Title Z to A",
                 onClick: () => {
                   push(
-                    `${pathname}?${searchManager.handleSortChange(
+                    `${pathname}?${collectionSearchManager.handleSortChange(
                       "title-desc"
                     )}`
                   );
@@ -208,11 +214,13 @@ export function CollectionsPage({ data, params, renderCollections }) {
       {totalPages > 1 && (
         <Pagination
           id="pagination-id"
-          currentPage={searchManager.currentPage}
-          initialPage={searchManager.currentPage}
+          currentPage={collectionSearchManager.currentPage}
+          initialPage={collectionSearchManager.currentPage}
           pageCount={totalPages}
           onPageChange={(newPage) => {
-            push(`${pathname}?${searchManager.handlePageChange(newPage)}`);
+            push(
+              `${pathname}?${collectionSearchManager.handlePageChange(newPage)}`
+            );
           }}
           sx={{
             display: "flex",
