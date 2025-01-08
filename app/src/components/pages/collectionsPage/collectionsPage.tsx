@@ -49,9 +49,6 @@ export function CollectionsPage({ data, params, renderCollections }) {
     initialSort: params.sort || DEFAULT_COLLECTION_SORT,
     initialFilters: params.filters || DEFAULT_FILTERS,
     initialKeywords: params.collection_keywords || DEFAULT_SEARCH_TERM,
-    updateURL: async (queryString: string) => {
-      push(`${pathname}?${queryString}`);
-    },
     isCollectionSearch: true,
   });
 
@@ -99,17 +96,19 @@ export function CollectionsPage({ data, params, renderCollections }) {
           textInputProps={{
             isClearable: true,
             isClearableCallback: () =>
-              searchManager.handleSearchChange(DEFAULT_SEARCH_TERM),
+              searchManager.handleKeywordChange(DEFAULT_SEARCH_TERM),
             labelText: "Search by collection title",
             name: "collection_keywords",
             placeholder: "Search by collection title",
             defaultValue: searchManager.currentKeywords,
             onChange: (e) =>
-              searchManager.handleSearchChange(
+              searchManager.handleKeywordChange(
                 (e.target as HTMLInputElement).value
               ),
           }}
-          onSubmit={() => searchManager.handleSearchSubmit}
+          onSubmit={() => {
+            push(`${pathname}?${searchManager.handleSearchSubmit()}`);
+          }}
           labelText="Search collections by title"
           aria-label="Search collections by title"
         />
@@ -152,25 +151,43 @@ export function CollectionsPage({ data, params, renderCollections }) {
               {
                 id: "date-desc",
                 label: "Newest to oldest",
-                onClick: () => searchManager.handleSortChange("date-desc"),
+                onClick: () => {
+                  push(
+                    `${pathname}?${searchManager.handleSortChange("date-desc")}`
+                  );
+                },
                 type: "action",
               },
               {
                 id: "date-asc",
                 label: "Oldest to newest",
-                onClick: () => searchManager.handleSortChange("date-asc"),
+                onClick: () => {
+                  push(
+                    `${pathname}?${searchManager.handleSortChange("date-asc")}`
+                  );
+                },
                 type: "action",
               },
               {
                 id: "title-asc",
                 label: "Title A to Z",
-                onClick: () => searchManager.handleSortChange("title-asc"),
+                onClick: () => {
+                  push(
+                    `${pathname}?${searchManager.handleSortChange("title-asc")}`
+                  );
+                },
                 type: "action",
               },
               {
                 id: "title-desc",
                 label: "Title Z to A",
-                onClick: () => searchManager.handleSortChange("title-desc"),
+                onClick: () => {
+                  push(
+                    `${pathname}?${searchManager.handleSortChange(
+                      "title-desc"
+                    )}`
+                  );
+                },
                 type: "action",
               },
             ]}
@@ -195,7 +212,7 @@ export function CollectionsPage({ data, params, renderCollections }) {
           initialPage={searchManager.currentPage}
           pageCount={totalPages}
           onPageChange={(newPage) => {
-            searchManager.handlePageChange(newPage);
+            push(`${pathname}?${searchManager.handlePageChange(newPage)}`);
           }}
           sx={{
             display: "flex",

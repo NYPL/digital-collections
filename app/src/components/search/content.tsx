@@ -14,9 +14,12 @@ import LaneLoading from "../lane/laneLoading";
 import { displayResults, totalNumPages } from "@/src/utils/utils";
 import { CARDS_PER_PAGE, COLLECTION_SORT_LABELS } from "@/src/config/constants";
 import { useSearchContext } from "@/src/context/SearchContext";
+import { usePathname, useRouter } from "next/navigation";
 
 const SearchContent = ({ data }) => {
   const [isLoaded, setIsLoaded] = useState(false);
+  const pathname = usePathname();
+  const { push } = useRouter();
   const totalPages = totalNumPages(data.numResults, CARDS_PER_PAGE.toString());
   const { searchManager } = useSearchContext();
 
@@ -93,7 +96,12 @@ const SearchContent = ({ data }) => {
         <Button
           buttonType="secondary"
           onClick={() => {
-            searchManager.handleAddFilter({ filter: "rights", value: "pd" });
+            push(
+              `${pathname}?${searchManager.handleAddFilter({
+                filter: "rights",
+                value: "pd",
+              })}`
+            );
             setActiveFilters(
               searchManager.currentFilters.map((filter) => ({
                 id: filter.value,
@@ -109,10 +117,12 @@ const SearchContent = ({ data }) => {
         <Button
           buttonType="secondary"
           onClick={() => {
-            searchManager.handleAddFilter({
-              filter: "topic",
-              value: "musicals",
-            });
+            push(
+              `${pathname}?${searchManager.handleAddFilter({
+                filter: "topic",
+                value: "musicals",
+              })}`
+            );
             setActiveFilters(
               searchManager.currentFilters.map((filter) => ({
                 id: filter.value,
@@ -141,27 +151,43 @@ const SearchContent = ({ data }) => {
           }`}
           listItemsData={[
             {
-              id: "chronological-descending",
+              id: "date-desc",
               label: "Newest to oldest",
-              onClick: () => searchManager.handleSortChange("date-desc"),
+              onClick: () => {
+                push(
+                  `${pathname}?${searchManager.handleSortChange("date-desc")}`
+                );
+              },
               type: "action",
             },
             {
-              id: "chronological-ascending",
+              id: "date-asc",
               label: "Oldest to newest",
-              onClick: () => searchManager.handleSortChange("date-asc"),
+              onClick: () => {
+                push(
+                  `${pathname}?${searchManager.handleSortChange("date-asc")}`
+                );
+              },
               type: "action",
             },
             {
-              id: "alphabetical-descending",
+              id: "title-asc",
               label: "Title A to Z",
-              onClick: () => searchManager.handleSortChange("title-asc"),
+              onClick: () => {
+                push(
+                  `${pathname}?${searchManager.handleSortChange("title-asc")}`
+                );
+              },
               type: "action",
             },
             {
-              id: "alphabetical-ascending",
+              id: "title-desc",
               label: "Title Z to A",
-              onClick: () => searchManager.handleSortChange("title-desc"),
+              onClick: () => {
+                push(
+                  `${pathname}?${searchManager.handleSortChange("title-desc")}`
+                );
+              },
               type: "action",
             },
           ]}
@@ -185,7 +211,7 @@ const SearchContent = ({ data }) => {
           initialPage={searchManager.currentPage}
           pageCount={totalPages}
           onPageChange={(newPage) => {
-            searchManager.handlePageChange(newPage);
+            push(`${pathname}?${searchManager.handlePageChange(newPage)}`);
           }}
           sx={{
             display: "flex",

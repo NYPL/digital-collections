@@ -1,6 +1,6 @@
 "use client";
 import React, { createContext, useContext, useMemo } from "react";
-import { useRouter, usePathname, useSearchParams } from "next/navigation";
+import { usePathname, useSearchParams } from "next/navigation";
 import {
   DEFAULT_PAGE_NUM,
   DEFAULT_SORT,
@@ -16,7 +16,6 @@ interface SearchContextType {
 const SearchContext = createContext<SearchContextType | undefined>(undefined);
 
 export const SearchProvider = ({ children }: { children: React.ReactNode }) => {
-  const { push } = useRouter();
   const pathname = usePathname();
   const searchParams = useSearchParams();
 
@@ -30,12 +29,9 @@ export const SearchProvider = ({ children }: { children: React.ReactNode }) => {
         ? (JSON.parse(params.filters) as Filter[])
         : DEFAULT_FILTERS,
       initialKeywords: params.keywords || DEFAULT_SEARCH_TERM,
-      updateURL: async (queryString: string) => {
-        push(`${pathname}?${queryString}`);
-      },
       isCollectionSearch: params.isCollectionSearch === "true",
     });
-  }, [pathname, searchParams, push]);
+  }, [pathname, searchParams]);
 
   return (
     <SearchContext.Provider value={{ searchManager }}>

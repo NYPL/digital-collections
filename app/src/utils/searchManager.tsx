@@ -23,7 +23,6 @@ export class SearchManager {
   currentSort: string;
   currentKeywords: string;
   currentFilters: Filter[];
-  updateURL: (queryString: string) => Promise<void>;
   isCollectionSearch: boolean;
 
   constructor({
@@ -31,37 +30,33 @@ export class SearchManager {
     initialSort,
     initialFilters,
     initialKeywords,
-    updateURL,
     isCollectionSearch = false,
   }: {
     initialPage: number;
     initialSort: string;
     initialFilters: Filter[];
     initialKeywords: string;
-    updateURL: (queryString: string) => Promise<void>;
     isCollectionSearch?: boolean;
   }) {
     this.currentPage = initialPage;
     this.currentSort = initialSort;
     this.currentFilters = initialFilters;
     this.currentKeywords = initialKeywords;
-    this.updateURL = updateURL;
     this.isCollectionSearch = isCollectionSearch;
   }
 
-  async handleSearchSubmit() {
+  handleSearchSubmit() {
     this.currentPage = DEFAULT_PAGE_NUM;
+    let queryString;
 
     if (this.isCollectionSearch) {
       this.currentSort = DEFAULT_COLLECTION_SORT;
-      const queryString = filterCollectionsQueryStringFromObject({
+      queryString = filterCollectionsQueryStringFromObject({
         collection_keywords: this.currentKeywords,
         sort: this.currentSort,
         page: this.currentPage,
       });
-      await this.updateURL(queryString);
     } else {
-      let queryString = "";
       if (this.currentKeywords && this.currentKeywords.length > 0) {
         queryString = filterQueryStringFromObject({
           keywords: this.currentKeywords,
@@ -69,16 +64,18 @@ export class SearchManager {
           page: this.currentPage,
           filters: this.currentFilters,
         });
+      } else {
+        queryString = "";
       }
-      await this.updateURL(queryString);
     }
+    return queryString;
   }
 
-  handleSearchChange(value: string) {
+  handleKeywordChange(value: string) {
     this.currentKeywords = value;
   }
 
-  async handlePageChange(pageNumber: number) {
+  handlePageChange(pageNumber: number) {
     this.currentPage = pageNumber;
 
     const queryString = this.isCollectionSearch
@@ -94,12 +91,10 @@ export class SearchManager {
           filters: this.currentFilters,
         });
 
-    await this.updateURL(
-      this.isCollectionSearch ? `${queryString}#collections` : queryString
-    );
+    return queryString;
   }
 
-  async handleSortChange(id: string) {
+  handleSortChange(id: string) {
     this.currentSort = id;
 
     if (this.isCollectionSearch) {
@@ -108,7 +103,7 @@ export class SearchManager {
         sort: id,
         page: this.currentPage,
       });
-      await this.updateURL(`${queryString}#collections`);
+      return `${queryString}#collections`;
     } else {
       const queryString = filterQueryStringFromObject({
         keywords: this.currentKeywords,
@@ -116,7 +111,7 @@ export class SearchManager {
         page: this.currentPage,
         filters: this.currentFilters,
       });
-      await this.updateURL(queryString);
+      return queryString;
     }
   }
 
@@ -137,10 +132,10 @@ export class SearchManager {
       page: this.currentPage,
       filters: this.currentFilters,
     });
-    await this.updateURL(queryString);
+    return queryString;
   }
 
-  async handleRemoveFilter(filterToRemove: Filter) {
+  handleRemoveFilter(filterToRemove: Filter) {
     this.currentFilters = this.currentFilters.filter(
       (filter) =>
         !(
@@ -163,10 +158,10 @@ export class SearchManager {
             page: this.currentPage,
           });
 
-    await this.updateURL(queryString);
+    return queryString;
   }
 
-  async clearAllFilters() {
+  clearAllFilters() {
     this.currentFilters = [];
     this.currentPage = DEFAULT_PAGE_NUM;
 
@@ -177,7 +172,7 @@ export class SearchManager {
       filters: [],
     });
 
-    await this.updateURL(queryString);
+    return queryString;
   }
 }
 

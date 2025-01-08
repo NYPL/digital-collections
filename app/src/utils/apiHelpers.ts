@@ -207,7 +207,7 @@ export const getSearchData = async ({
   pageNum?: number;
   perPage?: number;
 } = {}) => {
-  let apiUrl = `${process.env.API_URL}/api/v2/items/search?q=${keywords}&sort=${sort}&page=${pageNum}&per_page=${perPage}`;
+  let apiUrl = `${process.env.API_URL}/api/v2/items/search?q=${keywords}${filters}&sort=${sort}&page=${pageNum}&per_page=${perPage}`;
   console.log("apiUrl being called", apiUrl);
   const res = await fetchApi(apiUrl);
   return res;
