@@ -4,7 +4,7 @@ import {
   DEFAULT_COLLECTION_SORT,
   DEFAULT_PAGE_NUM,
   DEFAULT_SEARCH_TERM,
-  DEFAULT_FILTER,
+  DEFAULT_FILTERS,
 } from "../config/constants";
 
 export interface CollectionSearchParams {
@@ -13,11 +13,16 @@ export interface CollectionSearchParams {
   page: number;
 }
 
+export type Filter = {
+  filter: string;
+  value: string;
+};
+
 export class SearchManager {
   currentPage: number;
   currentSort: string;
   currentKeywords: string;
-  currentFilters: string[];
+  currentFilters: Filter[];
   updateURL: (queryString: string) => Promise<void>;
   isCollectionSearch: boolean;
 
@@ -31,7 +36,7 @@ export class SearchManager {
   }: {
     initialPage: number;
     initialSort: string;
-    initialFilters: string[];
+    initialFilters: Filter[];
     initialKeywords: string;
     updateURL: (queryString: string) => Promise<void>;
     isCollectionSearch?: boolean;
@@ -74,7 +79,6 @@ export class SearchManager {
   }
 
   async handlePageChange(pageNumber: number) {
-    console.log("page number", pageNumber);
     this.currentPage = pageNumber;
 
     const queryString = this.isCollectionSearch
@@ -90,7 +94,6 @@ export class SearchManager {
           filters: this.currentFilters,
         });
 
-    console.log("query string", queryString);
     await this.updateURL(
       this.isCollectionSearch ? `${queryString}#collections` : queryString
     );
@@ -116,6 +119,45 @@ export class SearchManager {
       await this.updateURL(queryString);
     }
   }
+
+  async handleAddFilter(newFilter: Filter) {
+    this.currentFilters = [...this.currentFilters, newFilter];
+
+    const queryString = filterQueryStringFromObject({
+      keywords: this.currentKeywords,
+      sort: this.currentSort,
+      page: this.currentPage,
+      filters: [...this.currentFilters, newFilter],
+    });
+    console.log("adding a filter", [...this.currentFilters, newFilter]);
+    await this.updateURL(queryString);
+  }
+
+  async handleRemoveFilter(filterToRemove: Filter) {
+    this.currentFilters = this.currentFilters.filter(
+      (filter) =>
+        !(
+          filter.filter === filterToRemove.filter &&
+          filter.value === filterToRemove.value
+        )
+    );
+
+    const queryString =
+      this.currentFilters.length > 0
+        ? filterQueryStringFromObject({
+            keywords: this.currentKeywords,
+            sort: this.currentSort,
+            page: this.currentPage,
+            filters: this.currentFilters,
+          })
+        : filterQueryStringFromObject({
+            keywords: this.currentKeywords,
+            sort: this.currentSort,
+            page: this.currentPage,
+          });
+
+    await this.updateURL(queryString);
+  }
 }
 
 const filterCollectionsQueryStringFromObject = (
@@ -137,18 +179,30 @@ const filterCollectionsQueryStringFromObject = (
   return createQueryStringFromObject(newParams);
 };
 
-const filterQueryStringFromObject = (paramsObject: SearchParams) => {
-  const newParams = {};
+const filterQueryStringFromObject = (paramsObject) => {
+  const newParams: Record<string, any> = {};
   const defaultValues = [
     DEFAULT_SEARCH_TERM,
-    DEFAULT_FILTER,
+    DEFAULT_FILTERS,
     DEFAULT_PAGE_NUM,
     DEFAULT_SORT,
   ];
 
   Object.keys(paramsObject).forEach((key) => {
-    if (!defaultValues.includes(paramsObject[key])) {
-      newParams[key] = paramsObject[key];
+    const value = paramsObject[key];
+
+    if (key === "filters" && Array.isArray(value)) {
+      value.forEach(({ filter, value }, index) => {
+        if (index === 0) {
+          // Add `filters` prefix for the first filter
+          newParams[`filters[${filter}]`] = value;
+        } else {
+          // Use `[key]=value` format for subsequent filters
+          newParams[`[${filter}]`] = value;
+        }
+      });
+    } else if (!defaultValues.includes(value)) {
+      newParams[key] = value;
     }
   });
 
@@ -158,8 +212,9 @@ const filterQueryStringFromObject = (paramsObject: SearchParams) => {
 const createQueryStringFromObject = (object) => {
   const params = new URLSearchParams();
 
-  Object.keys(object).forEach((name) => {
-    params.set(name.toString(), object[name]);
+  Object.keys(object).forEach((key) => {
+    params.set(key, object[key]);
   });
+
   return params.toString();
 };

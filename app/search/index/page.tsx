@@ -3,13 +3,22 @@ import PageLayout from "../../src/components/pageLayout/pageLayout";
 import { createAdobeAnalyticsPageName } from "@/src/utils/utils";
 import { getSearchData } from "@/src/utils/apiHelpers";
 import SearchContent from "@/src/components/search/content";
+import { Metadata } from "next";
+import { Filter } from "@/src/utils/searchManager";
 
 export interface SearchParams {
   keywords: string;
   sort: string;
-  filters: string[];
+  filters: Filter[];
   page: number;
 }
+
+export const metadata: Metadata = {
+  title: "Search results - NYPL Digital Collections",
+  openGraph: {
+    title: "Search results - NYPL Digital Collections",
+  },
+};
 
 export type SearchProps = {
   searchParams: SearchParams;

@@ -3,9 +3,7 @@ import {
   Breadcrumbs,
   DSProvider,
   SkipNavigation,
-  useFeedbackBox,
   Box,
-  Button,
 } from "@nypl/design-system-react-components";
 import React, { useEffect } from "react";
 import { type PropsWithChildren } from "react";
@@ -15,11 +13,13 @@ import { BreadcrumbsDataProps } from "@nypl/design-system-react-components/dist/
 import { ADOBE_EMBED_URL } from "../../config/constants";
 import { trackVirtualPageView } from "../../utils/utils";
 import { FeedbackProvider } from "@/src/context/FeedbackProvider";
+import { SearchParams } from "@/search/index/page";
 
 interface PageLayoutProps {
   activePage: string;
   breadcrumbs?: BreadcrumbsDataProps[];
   adobeAnalyticsPageName?: string;
+  searchParams?: SearchParams;
 }
 
 const PageLayout = ({
@@ -27,6 +27,7 @@ const PageLayout = ({
   activePage,
   breadcrumbs,
   adobeAnalyticsPageName,
+  searchParams,
 }: PropsWithChildren<PageLayoutProps>) => {
   // Track page view events to Adobe Analytics
   useEffect(() => {
@@ -51,7 +52,7 @@ const PageLayout = ({
       <DSProvider>
         <FeedbackProvider>
           <SkipNavigation />
-          <Header />
+          <Header searchParams={searchParams} />
           {activePage === "home" ||
           activePage === "about" ||
           activePage === "notFound" ||

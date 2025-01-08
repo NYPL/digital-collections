@@ -9,9 +9,10 @@ import {
   DEFAULT_SEARCH_TERM,
   COLLECTION_SORT_OPTIONS,
   DEFAULT_SORT,
-  DEFAULT_FILTER,
+  DEFAULT_FILTERS,
 } from "../config/constants";
 import { fetchApi } from "./fetchApi";
+import { Filter } from "./searchManager";
 
 export const getHomePageData = async () => {
   const randomNumber = Math.floor(Math.random() * 2);
@@ -175,7 +176,6 @@ export const getCollectionsData = async ({
   pageNum?: number;
   perPage?: number;
 } = {}) => {
-  console.log("hitting this");
   let apiUrl = `${process.env.API_URL}/api/v2/collections?page=${pageNum}&per_page=${perPage}&sort=${COLLECTION_SORT_OPTIONS[sortID]}&q=${keyword}`;
   const res = await fetchApi(apiUrl);
   return res;
@@ -197,18 +197,18 @@ export const getLaneData = async ({
 export const getSearchData = async ({
   keywords = DEFAULT_SEARCH_TERM,
   sort = DEFAULT_SORT,
-  filters = DEFAULT_FILTER,
+  filters = DEFAULT_FILTERS,
   pageNum = DEFAULT_PAGE_NUM,
   perPage = CARDS_PER_PAGE,
 }: {
   keywords?: string;
   sort?: string;
-  filters?: string[];
+  filters?: Filter[];
   pageNum?: number;
   perPage?: number;
 } = {}) => {
   let apiUrl = `${process.env.API_URL}/api/v2/items/search?q=${keywords}&sort=${sort}&page=${pageNum}&per_page=${perPage}`;
-  console.log(apiUrl);
+  console.log("apiUrl being called", apiUrl);
   const res = await fetchApi(apiUrl);
   return res;
 };

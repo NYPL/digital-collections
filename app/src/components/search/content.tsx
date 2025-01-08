@@ -4,6 +4,10 @@ import {
   Menu,
   Pagination,
   Heading,
+  FilterBarInline,
+  TagSetFilterDataProps,
+  TagSet,
+  Button,
 } from "@nypl/design-system-react-components";
 import React, { useEffect, useState } from "react";
 import { useRouter, usePathname } from "next/navigation";
@@ -13,7 +17,7 @@ import { displayResults, totalNumPages } from "@/src/utils/utils";
 import {
   CARDS_PER_PAGE,
   COLLECTION_SORT_LABELS,
-  DEFAULT_FILTER,
+  DEFAULT_FILTERS,
   DEFAULT_PAGE_NUM,
   DEFAULT_SEARCH_TERM,
   DEFAULT_SORT,
@@ -28,7 +32,7 @@ const SearchContent = ({ params, data }) => {
   const searchManager = new SearchManager({
     initialPage: Number(params.page) || DEFAULT_PAGE_NUM,
     initialSort: params.sort || DEFAULT_SORT,
-    initialFilters: params.filters || DEFAULT_FILTER,
+    initialFilters: params.filters || DEFAULT_FILTERS,
     initialKeywords: params.keywords || DEFAULT_SEARCH_TERM,
     updateURL: async (queryString: string) => {
       push(`${pathname}?${queryString}`);
@@ -39,6 +43,35 @@ const SearchContent = ({ params, data }) => {
   useEffect(() => {
     setIsLoaded(true);
   }, []);
+
+  console.log(
+    searchManager.currentFilters,
+    searchManager.currentFilters?.map((filter) => ({
+      id: filter.value,
+      label: filter.value,
+    }))
+  );
+
+  const [activeFilters, setActiveFilters] = useState<TagSetFilterDataProps[]>(
+    searchManager.currentFilters
+      ? searchManager.currentFilters.map((filter) => ({
+          id: filter.value,
+          label: filter.value,
+        }))
+      : []
+  );
+
+  const handleOnClick = (tagSet) => {
+    if (tagSet.id === "clear-filters") {
+      setActiveFilters([]);
+      return;
+    }
+    setActiveFilters((prevFilters) =>
+      prevFilters.filter((tag) => {
+        return tag.id !== tagSet.id;
+      })
+    );
+  };
 
   return (
     <>
@@ -81,7 +114,31 @@ const SearchContent = ({ params, data }) => {
         </Heading>
       </Box>
 
-      <Box marginTop="150px" marginBottom="20px">
+      <Box
+        marginTop="150px"
+        marginBottom="20px"
+        display="flex"
+        flexDir="row"
+        gap="m"
+      >
+        <Button
+          buttonType="secondary"
+          onClick={() => {
+            searchManager.handleAddFilter({ filter: "rights", value: "pd" });
+          }}
+          id={"add-public-domain"}
+        >
+          {" "}
+          Add public domain filter{" "}
+        </Button>
+
+        <TagSet
+          isDismissible
+          id="search-filter-tags"
+          onClick={handleOnClick}
+          tagSetData={activeFilters}
+          type="filter"
+        />
         <Menu
           showLabel
           selectedItem={searchManager.currentSort}

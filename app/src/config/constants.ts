@@ -18,7 +18,7 @@ export const DEFAULT_PAGE_NUM = 1;
 export const DEFAULT_COLLECTION_SORT = "date-desc";
 export const DEFAULT_SORT = "date-desc";
 export const DEFAULT_SEARCH_TERM = "";
-export const DEFAULT_FILTER = [""];
+export const DEFAULT_FILTERS = [];
 
 export const COLLECTION_SORT_OPTIONS = {
   "date-desc": "date DESC",
