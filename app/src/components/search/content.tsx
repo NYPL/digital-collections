@@ -23,6 +23,14 @@ const SearchContent = ({ data }) => {
   const totalPages = totalNumPages(data.numResults, CARDS_PER_PAGE.toString());
   const { searchManager } = useSearchContext();
 
+  const updateURL = async (queryString) => {
+    setIsLoaded(false);
+    await push(`${pathname}?${queryString}`);
+    setTimeout(() => {
+      setIsLoaded(true);
+    }, 1000);
+  };
+
   useEffect(() => {
     setIsLoaded(true);
   }, []);
