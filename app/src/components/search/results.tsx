@@ -6,7 +6,7 @@ const SearchResults = ({ data, params }) => {
   return (
     <>
       <Suspense>
-        <SearchContent params={params} data={data} />
+        <SearchContent data={data} />
       </Suspense>
     </>
   );

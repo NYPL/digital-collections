@@ -4,72 +4,41 @@ import {
   Menu,
   Pagination,
   Heading,
-  FilterBarInline,
   TagSetFilterDataProps,
   TagSet,
   Button,
 } from "@nypl/design-system-react-components";
 import React, { useEffect, useState } from "react";
-import { useRouter, usePathname } from "next/navigation";
 import { CardsGrid } from "../grids/cardsGrid";
 import LaneLoading from "../lane/laneLoading";
 import { displayResults, totalNumPages } from "@/src/utils/utils";
-import {
-  CARDS_PER_PAGE,
-  COLLECTION_SORT_LABELS,
-  DEFAULT_FILTERS,
-  DEFAULT_PAGE_NUM,
-  DEFAULT_SEARCH_TERM,
-  DEFAULT_SORT,
-} from "@/src/config/constants";
-import { SearchManager } from "@/src/utils/searchManager";
+import { CARDS_PER_PAGE, COLLECTION_SORT_LABELS } from "@/src/config/constants";
+import { useSearchContext } from "@/src/context/SearchContext";
 
-const SearchContent = ({ params, data }) => {
+const SearchContent = ({ data }) => {
   const [isLoaded, setIsLoaded] = useState(false);
   const totalPages = totalNumPages(data.numResults, CARDS_PER_PAGE.toString());
-  const { push } = useRouter();
-  const pathname = usePathname();
-  const searchManager = new SearchManager({
-    initialPage: Number(params.page) || DEFAULT_PAGE_NUM,
-    initialSort: params.sort || DEFAULT_SORT,
-    initialFilters: params.filters || DEFAULT_FILTERS,
-    initialKeywords: params.keywords || DEFAULT_SEARCH_TERM,
-    updateURL: async (queryString: string) => {
-      push(`${pathname}?${queryString}`);
-    },
-    isCollectionSearch: false,
-  });
+  const { searchManager } = useSearchContext();
 
   useEffect(() => {
     setIsLoaded(true);
   }, []);
 
-  console.log(
-    searchManager.currentFilters,
-    searchManager.currentFilters?.map((filter) => ({
+  const [activeFilters, setActiveFilters] = useState<TagSetFilterDataProps[]>(
+    searchManager.currentFilters.map((filter) => ({
       id: filter.value,
       label: filter.value,
     }))
   );
 
-  const [activeFilters, setActiveFilters] = useState<TagSetFilterDataProps[]>(
-    searchManager.currentFilters
-      ? searchManager.currentFilters.map((filter) => ({
-          id: filter.value,
-          label: filter.value,
-        }))
-      : []
-  );
-
   const handleOnClick = (tagSet) => {
     if (tagSet.id === "clear-filters") {
       setActiveFilters([]);
+      searchManager.clearAllFilters();
       return;
     }
     setActiveFilters((prevFilters) =>
-      prevFilters.filter((tag) => {
-        return tag.id !== tagSet.id;
-      })
+      prevFilters.filter((tag) => tag.id !== tagSet.id)
     );
   };
 
@@ -125,11 +94,36 @@ const SearchContent = ({ params, data }) => {
           buttonType="secondary"
           onClick={() => {
             searchManager.handleAddFilter({ filter: "rights", value: "pd" });
+            setActiveFilters(
+              searchManager.currentFilters.map((filter) => ({
+                id: filter.value,
+                label: filter.value,
+              }))
+            );
           }}
           id={"add-public-domain"}
         >
           {" "}
           Add public domain filter{" "}
+        </Button>
+        <Button
+          buttonType="secondary"
+          onClick={() => {
+            searchManager.handleAddFilter({
+              filter: "topic",
+              value: "musicals",
+            });
+            setActiveFilters(
+              searchManager.currentFilters.map((filter) => ({
+                id: filter.value,
+                label: filter.value,
+              }))
+            );
+          }}
+          id={"add-musicals"}
+        >
+          {" "}
+          Add musical filter{" "}
         </Button>
 
         <TagSet

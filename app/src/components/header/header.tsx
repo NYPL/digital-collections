@@ -14,7 +14,7 @@ import MobileNavMenu from "../navMenu/mobileNavMenu";
 import { headerBreakpoints } from "../../utils/breakpoints";
 import useScrollDirection from "../../hooks/useScrollDirection";
 
-const Header = ({ searchParams }) => {
+const Header = () => {
   useStickyMargin();
   const isScrolled = useScrolled("header");
   const isScrollingUp = useScrollDirection();

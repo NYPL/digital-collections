@@ -13,13 +13,12 @@ import { BreadcrumbsDataProps } from "@nypl/design-system-react-components/dist/
 import { ADOBE_EMBED_URL } from "../../config/constants";
 import { trackVirtualPageView } from "../../utils/utils";
 import { FeedbackProvider } from "@/src/context/FeedbackProvider";
-import { SearchParams } from "@/search/index/page";
+import { SearchProvider } from "@/src/context/SearchContext";
 
 interface PageLayoutProps {
   activePage: string;
   breadcrumbs?: BreadcrumbsDataProps[];
   adobeAnalyticsPageName?: string;
-  searchParams?: SearchParams;
 }
 
 const PageLayout = ({
@@ -27,7 +26,6 @@ const PageLayout = ({
   activePage,
   breadcrumbs,
   adobeAnalyticsPageName,
-  searchParams,
 }: PropsWithChildren<PageLayoutProps>) => {
   // Track page view events to Adobe Analytics
   useEffect(() => {
@@ -50,35 +48,37 @@ const PageLayout = ({
       </Script>
       {/* <!-- / Adobe Analytics  --> */}
       <DSProvider>
-        <FeedbackProvider>
-          <SkipNavigation />
-          <Header searchParams={searchParams} />
-          {activePage === "home" ||
-          activePage === "about" ||
-          activePage === "notFound" ||
-          activePage === "serverError" ? (
-            children
-          ) : (
-            <>
-              <Breadcrumbs
-                breadcrumbsType="digitalCollections"
-                breadcrumbsData={breadcrumbs || []}
-                aria-label={activePage}
-              />
-              {/* TODO: Move to TemplateAppContainer once spacing is more flexible.  --> */}
-              <Box
-                id="mainContent"
-                sx={{
-                  margin: "auto",
-                  maxWidth: "1280px",
-                  padding: "64px 16px",
-                }}
-              >
-                {children as JSX.Element}
-              </Box>
-            </>
-          )}
-        </FeedbackProvider>
+        <SearchProvider>
+          <FeedbackProvider>
+            <SkipNavigation />
+            <Header />
+            {activePage === "home" ||
+            activePage === "about" ||
+            activePage === "notFound" ||
+            activePage === "serverError" ? (
+              children
+            ) : (
+              <>
+                <Breadcrumbs
+                  breadcrumbsType="digitalCollections"
+                  breadcrumbsData={breadcrumbs || []}
+                  aria-label={activePage}
+                />
+                {/* TODO: Move to TemplateAppContainer once spacing is more flexible.  --> */}
+                <Box
+                  id="mainContent"
+                  sx={{
+                    margin: "auto",
+                    maxWidth: "1280px",
+                    padding: "64px 16px",
+                  }}
+                >
+                  {children as JSX.Element}
+                </Box>
+              </>
+            )}
+          </FeedbackProvider>
+        </SearchProvider>
       </DSProvider>
     </>
   );

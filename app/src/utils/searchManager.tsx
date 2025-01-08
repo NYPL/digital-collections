@@ -121,15 +121,22 @@ export class SearchManager {
   }
 
   async handleAddFilter(newFilter: Filter) {
-    this.currentFilters = [...this.currentFilters, newFilter];
+    const filterExists = this.currentFilters.some(
+      (filter) =>
+        filter.filter === newFilter.filter && filter.value === newFilter.value
+    );
+
+    if (!filterExists) {
+      console.log("adding a filter");
+      this.currentFilters = [...this.currentFilters, newFilter];
+    }
 
     const queryString = filterQueryStringFromObject({
       keywords: this.currentKeywords,
       sort: this.currentSort,
       page: this.currentPage,
-      filters: [...this.currentFilters, newFilter],
+      filters: this.currentFilters,
     });
-    console.log("adding a filter", [...this.currentFilters, newFilter]);
     await this.updateURL(queryString);
   }
 
@@ -155,6 +162,20 @@ export class SearchManager {
             sort: this.currentSort,
             page: this.currentPage,
           });
+
+    await this.updateURL(queryString);
+  }
+
+  async clearAllFilters() {
+    this.currentFilters = [];
+    this.currentPage = DEFAULT_PAGE_NUM;
+
+    const queryString = filterQueryStringFromObject({
+      keywords: this.currentKeywords,
+      sort: this.currentSort,
+      page: this.currentPage,
+      filters: [],
+    });
 
     await this.updateURL(queryString);
   }
@@ -191,15 +212,9 @@ const filterQueryStringFromObject = (paramsObject) => {
   Object.keys(paramsObject).forEach((key) => {
     const value = paramsObject[key];
 
-    if (key === "filters" && Array.isArray(value)) {
-      value.forEach(({ filter, value }, index) => {
-        if (index === 0) {
-          // Add `filters` prefix for the first filter
-          newParams[`filters[${filter}]`] = value;
-        } else {
-          // Use `[key]=value` format for subsequent filters
-          newParams[`[${filter}]`] = value;
-        }
+    if (key === "filters" && Array.isArray(value) && value.length > 0) {
+      value.forEach(({ filter, value }) => {
+        newParams[`filters[${filter}]`] = value;
       });
     } else if (!defaultValues.includes(value)) {
       newParams[key] = value;
