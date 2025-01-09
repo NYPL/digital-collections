@@ -12,6 +12,10 @@ const Search = () => {
   const pathname = usePathname();
   const { searchManager } = useSearchContext();
 
+  const updateURL = async (queryString) => {
+    push(`${pathname}?${queryString}`);
+  };
+
   return (
     <>
       <Box
@@ -39,7 +43,7 @@ const Search = () => {
           onSubmit={(e) => {
             e.preventDefault();
             const searchQuery = searchManager.handleSearchSubmit();
-            push(`/search/index?${searchQuery}`);
+            updateURL(`/search/index?${searchQuery}`);
           }}
           textInputProps={{
             name: "keywords",
@@ -83,12 +87,7 @@ const Search = () => {
               },
           }}
         />
-        <PublicDomainFilter
-          onCheckChange={searchManager.handleAddFilter({
-            filter: "rights",
-            value: "pd",
-          })}
-        />
+        <PublicDomainFilter onCheckChange={() => {}} />
       </Box>
     </>
   );

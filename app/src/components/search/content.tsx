@@ -23,22 +23,9 @@ const SearchContent = ({ data }) => {
   const totalPages = totalNumPages(data.numResults, CARDS_PER_PAGE.toString());
   const { searchManager } = useSearchContext();
 
-  const [activeFilters, setActiveFilters] = useState<TagSetFilterDataProps[]>(
-    searchManager.currentFilters.map((filter) => ({
-      id: filter.value,
-      label: filter.value,
-    }))
-  );
-
   const updateURL = async (queryString) => {
     setIsLoaded(false);
     push(`${pathname}?${queryString}`);
-    setActiveFilters(
-      searchManager.currentFilters.map((filter) => ({
-        id: filter.value,
-        label: filter.value,
-      }))
-    );
     setTimeout(() => {
       setIsLoaded(true);
     }, 1000);
@@ -48,14 +35,13 @@ const SearchContent = ({ data }) => {
     setIsLoaded(true);
   }, []);
 
-  const handleOnClick = (tagSet) => {
-    if (tagSet.id === "clear-filters") {
-      setActiveFilters([]);
-      searchManager.clearAllFilters();
+  console.log("current filters", searchManager.currentFilters);
+
+  const handleOnClick = (tag) => {
+    if (tag.id === "clear-filters") {
+      updateURL(searchManager.clearAllFilters());
     } else {
-      setActiveFilters((prevFilters) =>
-        prevFilters.filter((tag) => tag.id !== tagSet.id)
-      );
+      updateURL(searchManager.handleRemoveFilter(tag.id));
     }
   };
 
@@ -142,7 +128,10 @@ const SearchContent = ({ data }) => {
           isDismissible
           id="search-filter-tags"
           onClick={handleOnClick}
-          tagSetData={activeFilters}
+          tagSetData={searchManager.currentFilters.map((filter) => ({
+            id: filter.value,
+            label: filter.value,
+          }))}
           type="filter"
         />
         <Menu

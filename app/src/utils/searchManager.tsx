@@ -6,6 +6,7 @@ import {
   DEFAULT_SEARCH_TERM,
   DEFAULT_FILTERS,
 } from "../config/constants";
+import { filterToString } from "../context/SearchContext";
 
 export interface CollectionSearchParams {
   collection_keywords: string;
@@ -122,8 +123,9 @@ export class SearchManager {
       keywords: this.currentKeywords,
       sort: this.currentSort,
       page: this.currentPage,
-      filters: this.currentFilters,
+      filters: filterToString(this.currentFilters),
     });
+    console.log("handleAddFilters filters", this.currentFilters);
     return queryString;
   }
 
@@ -142,7 +144,7 @@ export class SearchManager {
             keywords: this.currentKeywords,
             sort: this.currentSort,
             page: this.currentPage,
-            filters: this.currentFilters,
+            filters: filterToString(this.currentFilters),
           })
         : filterQueryStringFromObject({
             keywords: this.currentKeywords,
@@ -161,7 +163,7 @@ export class SearchManager {
       keywords: this.currentKeywords,
       sort: this.currentSort,
       page: this.currentPage,
-      filters: [],
+      filters: filterToString(this.currentFilters),
     });
 
     return queryString;
@@ -199,11 +201,7 @@ const filterQueryStringFromObject = (paramsObject) => {
   Object.keys(paramsObject).forEach((key) => {
     const value = paramsObject[key];
 
-    if (key === "filters" && Array.isArray(value) && value.length > 0) {
-      value.forEach(({ filter, value }) => {
-        newParams[`filters[${filter}]`] = value;
-      });
-    } else if (!defaultValues.includes(value)) {
+    if (!defaultValues.includes(value)) {
       newParams[key] = value;
     }
   });

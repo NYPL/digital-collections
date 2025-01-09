@@ -13,11 +13,37 @@ interface SearchContextType {
   searchManager: SearchManager;
 }
 
+export const stringToFilter = (filtersString: string | null): Filter[] => {
+  console.log("filtersString", filtersString);
+  if (!filtersString) return [];
+
+  const res = filtersString
+    .split(",")
+    .map((filterPair) => {
+      const match = filterPair.match(/^\[(\w+)=(.+)\]$/);
+      if (match) {
+        const [, filter, value] = match;
+        return { filter, value };
+      }
+      return null;
+    })
+    .filter((filter): filter is Filter => filter !== null);
+  console.log("hello");
+  console.log("parsed filters", res);
+  return res;
+};
+
+export const filterToString = (filters: Filter[]): string => {
+  if (!filters || filters.length === 0) return "";
+
+  return filters.map(({ filter, value }) => `[${filter}=${value}]`).join(",");
+};
+
 const SearchContext = createContext<SearchContextType | undefined>(undefined);
 
 export const SearchProvider = ({ children }: { children: React.ReactNode }) => {
   const pathname = usePathname();
-  const searchParams = useSearchParams();
+  const searchParams = new URLSearchParams();
 
   const searchManager = useMemo(() => {
     const params = Object.fromEntries(searchParams.entries());
@@ -25,9 +51,7 @@ export const SearchProvider = ({ children }: { children: React.ReactNode }) => {
     return new SearchManager({
       initialPage: Number(params.page) || DEFAULT_PAGE_NUM,
       initialSort: params.sort || DEFAULT_SORT,
-      initialFilters: params.filters
-        ? (JSON.parse(params.filters) as Filter[])
-        : DEFAULT_FILTERS,
+      initialFilters: stringToFilter(params.filters || "") || DEFAULT_FILTERS,
       initialKeywords: params.keywords || DEFAULT_SEARCH_TERM,
       isCollectionSearch: params.isCollectionSearch === "true",
     });
