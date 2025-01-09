@@ -5,7 +5,6 @@ import {
   DEFAULT_PAGE_NUM,
   DEFAULT_SORT,
   DEFAULT_SEARCH_TERM,
-  DEFAULT_FILTERS,
 } from "../config/constants";
 import { Filter, SearchManager } from "../utils/searchManager";
 
@@ -43,7 +42,7 @@ const SearchContext = createContext<SearchContextType | undefined>(undefined);
 
 export const SearchProvider = ({ children }: { children: React.ReactNode }) => {
   const pathname = usePathname();
-  const searchParams = new URLSearchParams();
+  const searchParams = useSearchParams();
 
   const searchManager = useMemo(() => {
     const params = Object.fromEntries(searchParams.entries());
@@ -51,7 +50,7 @@ export const SearchProvider = ({ children }: { children: React.ReactNode }) => {
     return new SearchManager({
       initialPage: Number(params.page) || DEFAULT_PAGE_NUM,
       initialSort: params.sort || DEFAULT_SORT,
-      initialFilters: stringToFilter(params.filters || "") || DEFAULT_FILTERS,
+      initialFilters: stringToFilter(params.filters),
       initialKeywords: params.keywords || DEFAULT_SEARCH_TERM,
       isCollectionSearch: params.isCollectionSearch === "true",
     });

@@ -43,7 +43,7 @@ const Search = () => {
           onSubmit={(e) => {
             e.preventDefault();
             const searchQuery = searchManager.handleSearchSubmit();
-            updateURL(`/search/index?${searchQuery}`);
+            updateURL(searchQuery);
           }}
           textInputProps={{
             name: "keywords",
