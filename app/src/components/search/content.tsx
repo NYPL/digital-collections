@@ -23,9 +23,22 @@ const SearchContent = ({ data }) => {
   const totalPages = totalNumPages(data.numResults, CARDS_PER_PAGE.toString());
   const { searchManager } = useSearchContext();
 
+  const [activeFilters, setActiveFilters] = useState<TagSetFilterDataProps[]>(
+    searchManager.currentFilters.map((filter) => ({
+      id: filter.value,
+      label: filter.value,
+    }))
+  );
+
   const updateURL = async (queryString) => {
     setIsLoaded(false);
-    await push(`${pathname}?${queryString}`);
+    push(`${pathname}?${queryString}`);
+    setActiveFilters(
+      searchManager.currentFilters.map((filter) => ({
+        id: filter.value,
+        label: filter.value,
+      }))
+    );
     setTimeout(() => {
       setIsLoaded(true);
     }, 1000);
@@ -35,22 +48,15 @@ const SearchContent = ({ data }) => {
     setIsLoaded(true);
   }, []);
 
-  const [activeFilters, setActiveFilters] = useState<TagSetFilterDataProps[]>(
-    searchManager.currentFilters.map((filter) => ({
-      id: filter.value,
-      label: filter.value,
-    }))
-  );
-
   const handleOnClick = (tagSet) => {
     if (tagSet.id === "clear-filters") {
       setActiveFilters([]);
       searchManager.clearAllFilters();
-      return;
+    } else {
+      setActiveFilters((prevFilters) =>
+        prevFilters.filter((tag) => tag.id !== tagSet.id)
+      );
     }
-    setActiveFilters((prevFilters) =>
-      prevFilters.filter((tag) => tag.id !== tagSet.id)
-    );
   };
 
   return (
@@ -104,17 +110,11 @@ const SearchContent = ({ data }) => {
         <Button
           buttonType="secondary"
           onClick={() => {
-            push(
-              `${pathname}?${searchManager.handleAddFilter({
+            updateURL(
+              searchManager.handleAddFilter({
                 filter: "rights",
-                value: "pd",
-              })}`
-            );
-            setActiveFilters(
-              searchManager.currentFilters.map((filter) => ({
-                id: filter.value,
-                label: filter.value,
-              }))
+                value: "public domain",
+              })
             );
           }}
           id={"add-public-domain"}
@@ -125,17 +125,11 @@ const SearchContent = ({ data }) => {
         <Button
           buttonType="secondary"
           onClick={() => {
-            push(
-              `${pathname}?${searchManager.handleAddFilter({
+            updateURL(
+              searchManager.handleAddFilter({
                 filter: "topic",
                 value: "musicals",
-              })}`
-            );
-            setActiveFilters(
-              searchManager.currentFilters.map((filter) => ({
-                id: filter.value,
-                label: filter.value,
-              }))
+              })
             );
           }}
           id={"add-musicals"}
@@ -162,9 +156,7 @@ const SearchContent = ({ data }) => {
               id: "date-desc",
               label: "Newest to oldest",
               onClick: () => {
-                push(
-                  `${pathname}?${searchManager.handleSortChange("date-desc")}`
-                );
+                updateURL(searchManager.handleSortChange("date-desc"));
               },
               type: "action",
             },
@@ -172,9 +164,7 @@ const SearchContent = ({ data }) => {
               id: "date-asc",
               label: "Oldest to newest",
               onClick: () => {
-                push(
-                  `${pathname}?${searchManager.handleSortChange("date-asc")}`
-                );
+                updateURL(searchManager.handleSortChange("date-asc"));
               },
               type: "action",
             },
@@ -182,9 +172,7 @@ const SearchContent = ({ data }) => {
               id: "title-asc",
               label: "Title A to Z",
               onClick: () => {
-                push(
-                  `${pathname}?${searchManager.handleSortChange("title-asc")}`
-                );
+                updateURL(searchManager.handleSortChange("title-asc"));
               },
               type: "action",
             },
@@ -192,9 +180,7 @@ const SearchContent = ({ data }) => {
               id: "title-desc",
               label: "Title Z to A",
               onClick: () => {
-                push(
-                  `${pathname}?${searchManager.handleSortChange("title-desc")}`
-                );
+                updateURL(searchManager.handleSortChange("title-desc"));
               },
               type: "action",
             },
@@ -219,7 +205,7 @@ const SearchContent = ({ data }) => {
           initialPage={searchManager.currentPage}
           pageCount={totalPages}
           onPageChange={(newPage) => {
-            push(`${pathname}?${searchManager.handlePageChange(newPage)}`);
+            updateURL(searchManager.handlePageChange(newPage));
           }}
           sx={{
             display: "flex",

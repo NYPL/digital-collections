@@ -36,14 +36,10 @@ const Search = () => {
           id="searchbar"
           invalidText="Could not find the item"
           labelText="Search Digital Collections"
-          onSubmit={() => {
+          onSubmit={(e) => {
+            e.preventDefault();
             const searchQuery = searchManager.handleSearchSubmit();
-            const targetPath =
-              pathname === "/search/index"
-                ? `/search/index?${searchQuery}`
-                : `/search/index`;
-
-            push(targetPath);
+            push(`/search/index?${searchQuery}`);
           }}
           textInputProps={{
             name: "keywords",

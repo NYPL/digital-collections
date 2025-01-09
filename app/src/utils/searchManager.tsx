@@ -115,16 +115,8 @@ export class SearchManager {
     }
   }
 
-  async handleAddFilter(newFilter: Filter) {
-    const filterExists = this.currentFilters.some(
-      (filter) =>
-        filter.filter === newFilter.filter && filter.value === newFilter.value
-    );
-
-    if (!filterExists) {
-      console.log("adding a filter");
-      this.currentFilters = [...this.currentFilters, newFilter];
-    }
+  handleAddFilter(newFilter: Filter) {
+    this.currentFilters = [...this.currentFilters, newFilter];
 
     const queryString = filterQueryStringFromObject({
       keywords: this.currentKeywords,
