@@ -35,8 +35,6 @@ const SearchContent = ({ data }) => {
     setIsLoaded(true);
   }, []);
 
-  console.log("current filters", searchManager.currentFilters);
-
   const handleOnClick = (tag) => {
     if (tag.id === "clear-filters") {
       updateURL(searchManager.clearAllFilters());

@@ -13,7 +13,6 @@ interface SearchContextType {
 }
 
 export const stringToFilter = (filtersString: string | null): Filter[] => {
-  console.log("filtersString", filtersString);
   if (!filtersString) return [];
 
   const res = filtersString
@@ -27,8 +26,6 @@ export const stringToFilter = (filtersString: string | null): Filter[] => {
       return null;
     })
     .filter((filter): filter is Filter => filter !== null);
-  console.log("hello");
-  console.log("parsed filters", res);
   return res;
 };
 

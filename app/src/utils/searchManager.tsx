@@ -1,4 +1,3 @@
-import { SearchParams } from "@/search/index/page";
 import {
   DEFAULT_SORT,
   DEFAULT_COLLECTION_SORT,
@@ -125,7 +124,6 @@ export class SearchManager {
       page: this.currentPage,
       filters: filterToString(this.currentFilters),
     });
-    console.log("handleAddFilters filters", this.currentFilters);
     return queryString;
   }
 
@@ -200,7 +198,6 @@ const filterQueryStringFromObject = (paramsObject) => {
 
   Object.keys(paramsObject).forEach((key) => {
     const value = paramsObject[key];
-
     if (!defaultValues.includes(value)) {
       newParams[key] = value;
     }
