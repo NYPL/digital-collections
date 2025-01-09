@@ -13,7 +13,7 @@ const Search = () => {
   const { searchManager } = useSearchContext();
 
   const updateURL = async (queryString) => {
-    push(`${pathname}?${queryString}`);
+    push(`/search/index?${queryString}`);
   };
 
   return (
