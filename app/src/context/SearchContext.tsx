@@ -24,6 +24,7 @@ export const stringToFilter = (filtersString: string | null): Filter[] => {
   const res = filtersString
     .split(",")
     .map((filterPair) => {
+      //??
       const match = filterPair.match(/^\[(\w+)=(.+)\]$/);
       if (match) {
         const [, filter, value] = match;
@@ -71,7 +72,6 @@ export const SearchProvider = ({ children }: { children: React.ReactNode }) => {
 
   useEffect(() => {
     const params = Object.fromEntries(searchParams.entries());
-
     searchManagerRef.current.update({
       page: Number(params.page) || DEFAULT_PAGE_NUM,
       sort: params.sort || DEFAULT_SORT,
@@ -91,7 +91,7 @@ export const SearchProvider = ({ children }: { children: React.ReactNode }) => {
 export const useSearchContext = (): SearchContextType => {
   const context = useContext(SearchContext);
   if (!context) {
-    throw new Error("useSearchContext must be used within the SearchProvider");
+    throw new Error("useSearchContext must be inside SearchProvider");
   }
   return context;
 };

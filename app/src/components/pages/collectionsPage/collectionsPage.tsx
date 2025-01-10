@@ -52,6 +52,14 @@ export function CollectionsPage({ data, params, renderCollections }) {
     isCollectionSearch: true,
   });
 
+  const updateURL = async (queryString) => {
+    setIsLoaded(false);
+    push(`${pathname}?${queryString}`);
+    setTimeout(() => {
+      setIsLoaded(true);
+    }, 1000);
+  };
+
   useEffect(() => {
     setIsLoaded(true);
   }, []);
@@ -107,7 +115,7 @@ export function CollectionsPage({ data, params, renderCollections }) {
               ),
           }}
           onSubmit={() => {
-            push(`${pathname}?${collectionSearchManager.handleSearchSubmit()}`);
+            updateURL(collectionSearchManager.handleSearchSubmit());
           }}
           labelText="Search collections by title"
           aria-label="Search collections by title"
@@ -152,10 +160,8 @@ export function CollectionsPage({ data, params, renderCollections }) {
                 id: "date-desc",
                 label: "Newest to oldest",
                 onClick: () => {
-                  push(
-                    `${pathname}?${collectionSearchManager.handleSortChange(
-                      "date-desc"
-                    )}`
+                  updateURL(
+                    collectionSearchManager.handleSortChange("date-desc")
                   );
                 },
                 type: "action",
@@ -164,10 +170,8 @@ export function CollectionsPage({ data, params, renderCollections }) {
                 id: "date-asc",
                 label: "Oldest to newest",
                 onClick: () => {
-                  push(
-                    `${pathname}?${collectionSearchManager.handleSortChange(
-                      "date-asc"
-                    )}`
+                  updateURL(
+                    collectionSearchManager.handleSortChange("date-asc")
                   );
                 },
                 type: "action",
@@ -176,10 +180,8 @@ export function CollectionsPage({ data, params, renderCollections }) {
                 id: "title-asc",
                 label: "Title A to Z",
                 onClick: () => {
-                  push(
-                    `${pathname}?${collectionSearchManager.handleSortChange(
-                      "title-asc"
-                    )}`
+                  updateURL(
+                    collectionSearchManager.handleSortChange("title-asc")
                   );
                 },
                 type: "action",
@@ -188,10 +190,8 @@ export function CollectionsPage({ data, params, renderCollections }) {
                 id: "title-desc",
                 label: "Title Z to A",
                 onClick: () => {
-                  push(
-                    `${pathname}?${collectionSearchManager.handleSortChange(
-                      "title-desc"
-                    )}`
+                  updateURL(
+                    collectionSearchManager.handleSortChange("title-desc")
                   );
                 },
                 type: "action",
@@ -218,9 +218,7 @@ export function CollectionsPage({ data, params, renderCollections }) {
           initialPage={collectionSearchManager.currentPage}
           pageCount={totalPages}
           onPageChange={(newPage) => {
-            push(
-              `${pathname}?${collectionSearchManager.handlePageChange(newPage)}`
-            );
+            updateURL(collectionSearchManager.handlePageChange(newPage));
           }}
           sx={{
             display: "flex",

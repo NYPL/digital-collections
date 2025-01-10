@@ -14,6 +14,7 @@ const Search = () => {
   const { searchManager } = useSearchContext();
 
   const updateURL = async (queryString) => {
+    // Always from /search/index? when called from search bar in the header
     push(`/search/index?${queryString}`);
   };
 
