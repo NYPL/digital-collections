@@ -1,5 +1,11 @@
 "use client";
-import React, { createContext, useContext, useMemo } from "react";
+import React, {
+  createContext,
+  useContext,
+  useEffect,
+  useMemo,
+  useRef,
+} from "react";
 import { usePathname, useSearchParams } from "next/navigation";
 import {
   DEFAULT_PAGE_NUM,
@@ -41,20 +47,42 @@ export const SearchProvider = ({ children }: { children: React.ReactNode }) => {
   const pathname = usePathname();
   const searchParams = useSearchParams();
 
-  const searchManager = useMemo(() => {
+  // const searchManager = useMemo(() => {
+  //   const params = Object.fromEntries(searchParams.entries());
+
+  //   return new SearchManager({
+  //     initialPage: Number(params.page) || DEFAULT_PAGE_NUM,
+  //     initialSort: params.sort || DEFAULT_SORT,
+  //     initialFilters: stringToFilter(params.filters),
+  //     initialKeywords: params.keywords || DEFAULT_SEARCH_TERM,
+  //     isCollectionSearch: params.isCollectionSearch === "true",
+  //   });
+  // }, [pathname, searchParams]);
+
+  const searchManagerRef = useRef<SearchManager>(
+    new SearchManager({
+      initialPage: DEFAULT_PAGE_NUM,
+      initialSort: DEFAULT_SORT,
+      initialFilters: [],
+      initialKeywords: DEFAULT_SEARCH_TERM,
+      isCollectionSearch: false,
+    })
+  );
+
+  useEffect(() => {
     const params = Object.fromEntries(searchParams.entries());
 
-    return new SearchManager({
-      initialPage: Number(params.page) || DEFAULT_PAGE_NUM,
-      initialSort: params.sort || DEFAULT_SORT,
-      initialFilters: stringToFilter(params.filters),
-      initialKeywords: params.keywords || DEFAULT_SEARCH_TERM,
+    searchManagerRef.current.update({
+      page: Number(params.page) || DEFAULT_PAGE_NUM,
+      sort: params.sort || DEFAULT_SORT,
+      filters: stringToFilter(params.filters),
+      keywords: params.keywords || DEFAULT_SEARCH_TERM,
       isCollectionSearch: params.isCollectionSearch === "true",
     });
   }, [pathname, searchParams]);
 
   return (
-    <SearchContext.Provider value={{ searchManager }}>
+    <SearchContext.Provider value={{ searchManager: searchManagerRef.current }}>
       {children}
     </SearchContext.Provider>
   );

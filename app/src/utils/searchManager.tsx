@@ -25,32 +25,99 @@ export class SearchManager {
   currentFilters: Filter[];
   isCollectionSearch: boolean;
 
-  constructor({
-    initialPage,
-    initialSort,
-    initialFilters,
-    initialKeywords,
-    isCollectionSearch = false,
-  }: {
+  constructor(config: {
     initialPage: number;
     initialSort: string;
     initialFilters: Filter[];
     initialKeywords: string;
-    isCollectionSearch?: boolean;
+    isCollectionSearch: boolean;
   }) {
-    this.currentPage = initialPage;
-    this.currentSort = initialSort;
-    this.currentFilters = initialFilters;
-    this.currentKeywords = initialKeywords;
-    this.isCollectionSearch = isCollectionSearch;
+    this.currentPage = config.initialPage;
+    this.currentSort = config.initialSort;
+    this.currentFilters = config.initialFilters;
+    this.currentKeywords = config.initialKeywords;
+    this.isCollectionSearch = config.isCollectionSearch;
   }
 
+  update(config: {
+    page?: number;
+    sort?: string;
+    filters?: Filter[];
+    keywords?: string;
+    isCollectionSearch?: boolean;
+  }) {
+    if (config.page !== undefined) this.currentPage = config.page;
+    if (config.sort !== undefined) this.currentSort = config.sort;
+    if (config.filters !== undefined) this.currentFilters = config.filters;
+    if (config.keywords !== undefined) this.currentKeywords = config.keywords;
+    if (config.isCollectionSearch !== undefined)
+      this.isCollectionSearch = config.isCollectionSearch;
+  }
+
+  // export class SearchManager {
+  //   currentPage: number;
+  //   currentSort: string;
+  //   currentKeywords: string;
+  //   currentFilters: Filter[];
+  //   isCollectionSearch: boolean;
+
+  //   constructor({
+  //     initialPage,
+  //     initialSort,
+  //     initialFilters,
+  //     initialKeywords,
+  //     isCollectionSearch = false,
+  //   }: {
+  //     initialPage: number;
+  //     initialSort: string;
+  //     initialFilters: Filter[];
+  //     initialKeywords: string;
+  //     isCollectionSearch?: boolean;
+  //   }) {
+  //     this.currentPage = initialPage;
+  //     this.currentSort = initialSort;
+  //     this.currentFilters = initialFilters;
+  //     this.currentKeywords = initialKeywords;
+  //     this.isCollectionSearch = isCollectionSearch;
+  //   }
+
+  // handleSearchSubmit() {
+  //   this.currentPage = DEFAULT_PAGE_NUM;
+  //   let queryString;
+
+  //   if (this.isCollectionSearch) {
+  //     this.currentSort = DEFAULT_COLLECTION_SORT;
+  //     queryString = filterCollectionsQueryStringFromObject({
+  //       collection_keywords: this.currentKeywords,
+  //       sort: this.currentSort,
+  //       page: this.currentPage,
+  //     });
+  //   } else {
+  //     if (this.currentKeywords && this.currentKeywords.length > 0) {
+  //       queryString = filterQueryStringFromObject({
+  //         keywords: this.currentKeywords,
+  //         sort: this.currentSort,
+  //         page: this.currentPage,
+  //         filters: this.currentFilters,
+  //       });
+  //     } else {
+  //       queryString = "";
+  //     }
+  //   }
+  //   return queryString;
+  // }
+
   handleSearchSubmit() {
+    // Reset to default values for a new search
     this.currentPage = DEFAULT_PAGE_NUM;
+    this.currentFilters = [];
+    this.currentSort = this.isCollectionSearch
+      ? DEFAULT_COLLECTION_SORT
+      : DEFAULT_SORT;
+
     let queryString;
 
     if (this.isCollectionSearch) {
-      this.currentSort = DEFAULT_COLLECTION_SORT;
       queryString = filterCollectionsQueryStringFromObject({
         collection_keywords: this.currentKeywords,
         sort: this.currentSort,
@@ -62,7 +129,7 @@ export class SearchManager {
           keywords: this.currentKeywords,
           sort: this.currentSort,
           page: this.currentPage,
-          filters: this.currentFilters,
+          filters: filterToString(this.currentFilters),
         });
       } else {
         queryString = "";
@@ -88,7 +155,7 @@ export class SearchManager {
           keywords: this.currentKeywords,
           sort: this.currentSort,
           page: pageNumber,
-          filters: this.currentFilters,
+          filters: filterToString(this.currentFilters),
         });
 
     return queryString;
@@ -109,7 +176,7 @@ export class SearchManager {
         keywords: this.currentKeywords,
         sort: id,
         page: this.currentPage,
-        filters: this.currentFilters,
+        filters: filterToString(this.currentFilters),
       });
       return queryString;
     }
