@@ -39,9 +39,19 @@ const SearchContent = ({ data }) => {
     if (tag.id === "clear-filters") {
       updateURL(searchManager.clearAllFilters());
     } else {
-      updateURL(searchManager.handleRemoveFilter(tag.id));
+      const filterToRemove = searchManager.currentFilters?.find(
+        (filter) => filter.value === tag.id
+      );
+      if (filterToRemove) {
+        updateURL(searchManager.handleRemoveFilter(filterToRemove));
+      }
     }
   };
+
+  searchManager.currentFilters.map((filter) => ({
+    id: filter.value,
+    label: filter.value,
+  }));
 
   return (
     <>
