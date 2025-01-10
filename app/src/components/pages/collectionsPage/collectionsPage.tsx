@@ -230,7 +230,10 @@ export function CollectionsPage({ data, params, renderCollections }) {
         collections.length > 0 ? (
           <CardsGrid records={collections} />
         ) : (
-          <NoResultsFound searchTerm={params.collection_keywords} />
+          <NoResultsFound
+            searchTerm={params.collection_keywords}
+            page={params.page}
+          />
         )
       ) : (
         Array(Math.ceil(collections.length / 4)).fill(

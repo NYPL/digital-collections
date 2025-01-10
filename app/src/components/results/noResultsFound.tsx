@@ -6,8 +6,11 @@ import {
 } from "@nypl/design-system-react-components";
 import styles from "../../styles/Collections.module.css";
 
-export default function NoResultsFound({ searchTerm }) {
-  const headingText = `No Results for "${searchTerm}"`;
+export default function NoResultsFound({ searchTerm, page }) {
+  const headingText = searchTerm
+    ? `No results for "${searchTerm}"
+    ${page > 1 ? `found on page ${page}` : ``}`
+    : "No results";
   return (
     <Flex
       flexDir="column"
