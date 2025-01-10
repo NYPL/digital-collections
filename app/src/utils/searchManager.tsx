@@ -54,61 +54,7 @@ export class SearchManager {
       this.isCollectionSearch = config.isCollectionSearch;
   }
 
-  // export class SearchManager {
-  //   currentPage: number;
-  //   currentSort: string;
-  //   currentKeywords: string;
-  //   currentFilters: Filter[];
-  //   isCollectionSearch: boolean;
-
-  //   constructor({
-  //     initialPage,
-  //     initialSort,
-  //     initialFilters,
-  //     initialKeywords,
-  //     isCollectionSearch = false,
-  //   }: {
-  //     initialPage: number;
-  //     initialSort: string;
-  //     initialFilters: Filter[];
-  //     initialKeywords: string;
-  //     isCollectionSearch?: boolean;
-  //   }) {
-  //     this.currentPage = initialPage;
-  //     this.currentSort = initialSort;
-  //     this.currentFilters = initialFilters;
-  //     this.currentKeywords = initialKeywords;
-  //     this.isCollectionSearch = isCollectionSearch;
-  //   }
-
-  // handleSearchSubmit() {
-  //   this.currentPage = DEFAULT_PAGE_NUM;
-  //   let queryString;
-
-  //   if (this.isCollectionSearch) {
-  //     this.currentSort = DEFAULT_COLLECTION_SORT;
-  //     queryString = filterCollectionsQueryStringFromObject({
-  //       collection_keywords: this.currentKeywords,
-  //       sort: this.currentSort,
-  //       page: this.currentPage,
-  //     });
-  //   } else {
-  //     if (this.currentKeywords && this.currentKeywords.length > 0) {
-  //       queryString = filterQueryStringFromObject({
-  //         keywords: this.currentKeywords,
-  //         sort: this.currentSort,
-  //         page: this.currentPage,
-  //         filters: this.currentFilters,
-  //       });
-  //     } else {
-  //       queryString = "";
-  //     }
-  //   }
-  //   return queryString;
-  // }
-
   handleSearchSubmit() {
-    // Reset to default values for a new search
     this.currentPage = DEFAULT_PAGE_NUM;
     this.currentFilters = [];
     this.currentSort = this.isCollectionSearch

@@ -10,6 +10,7 @@ import { useSearchContext } from "@/src/context/SearchContext";
 const Search = () => {
   const { push } = useRouter();
   const pathname = usePathname();
+  const [pdFilter, setPdFilter] = useState(false);
   const { searchManager } = useSearchContext();
 
   const updateURL = async (queryString) => {
@@ -36,13 +37,24 @@ const Search = () => {
           },
         }}
       >
+        {/*  <form
+          action="/search/index"
+          method="get"
+          onSubmit={searchManager.handleSearchSubmit()}
+        > */}
         <SearchBar
           id="searchbar"
           invalidText="Could not find the item"
           labelText="Search Digital Collections"
           onSubmit={(e) => {
             e.preventDefault();
-            const searchQuery = searchManager.handleSearchSubmit();
+            let searchQuery = searchManager.handleSearchSubmit();
+            if (pdFilter) {
+              searchQuery = searchManager.handleAddFilter({
+                filter: "rights",
+                value: "pd",
+              });
+            }
             updateURL(searchQuery);
           }}
           textInputProps={{
@@ -87,7 +99,11 @@ const Search = () => {
               },
           }}
         />
-        <PublicDomainFilter onCheckChange={() => {}} />
+        <PublicDomainFilter
+          onCheckChange={(isChecked) =>
+            isChecked ? setPdFilter(true) : setPdFilter(false)
+          }
+        />
       </Box>
     </>
   );
