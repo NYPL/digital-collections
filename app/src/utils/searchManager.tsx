@@ -64,11 +64,14 @@ export class SearchManager {
     let queryString;
 
     if (this.isCollectionSearch) {
-      queryString = filterCollectionsQueryStringFromObject({
-        collection_keywords: this.currentKeywords,
-        sort: this.currentSort,
-        page: this.currentPage,
-      });
+      queryString = filterQueryStringFromObject(
+        {
+          collection_keywords: this.currentKeywords,
+          sort: this.currentSort,
+          page: this.currentPage,
+        },
+        this.isCollectionSearch
+      );
     } else {
       if (this.currentKeywords && this.currentKeywords.length > 0) {
         queryString = filterQueryStringFromObject({
@@ -92,11 +95,14 @@ export class SearchManager {
     this.currentPage = pageNumber;
 
     const queryString = this.isCollectionSearch
-      ? filterCollectionsQueryStringFromObject({
-          collection_keywords: this.currentKeywords,
-          sort: this.currentSort,
-          page: pageNumber,
-        })
+      ? filterQueryStringFromObject(
+          {
+            collection_keywords: this.currentKeywords,
+            sort: this.currentSort,
+            page: pageNumber,
+          },
+          this.isCollectionSearch
+        )
       : filterQueryStringFromObject({
           keywords: this.currentKeywords,
           sort: this.currentSort,
@@ -111,11 +117,14 @@ export class SearchManager {
     this.currentSort = id;
 
     if (this.isCollectionSearch) {
-      const queryString = filterCollectionsQueryStringFromObject({
-        collection_keywords: this.currentKeywords,
-        sort: id,
-        page: this.currentPage,
-      });
+      const queryString = filterQueryStringFromObject(
+        {
+          collection_keywords: this.currentKeywords,
+          sort: id,
+          page: this.currentPage,
+        },
+        this.isCollectionSearch
+      );
       return `${queryString}#collections`;
     } else {
       const queryString = filterQueryStringFromObject({
@@ -181,33 +190,14 @@ export class SearchManager {
   }
 }
 
-const filterCollectionsQueryStringFromObject = (
-  paramsObject: CollectionSearchParams
+const filterQueryStringFromObject = (
+  paramsObject,
+  isCollectionSearch = false
 ) => {
   const newParams = {};
-  const defaultValues = [
-    DEFAULT_SEARCH_TERM,
-    DEFAULT_PAGE_NUM,
-    DEFAULT_COLLECTION_SORT,
-  ];
-
-  Object.keys(paramsObject).forEach((key) => {
-    if (!defaultValues.includes(paramsObject[key])) {
-      newParams[key] = paramsObject[key];
-    }
-  });
-
-  return createQueryStringFromObject(newParams);
-};
-
-const filterQueryStringFromObject = (paramsObject) => {
-  const newParams: Record<string, any> = {};
-  const defaultValues = [
-    DEFAULT_SEARCH_TERM,
-    DEFAULT_FILTERS,
-    DEFAULT_PAGE_NUM,
-    DEFAULT_SORT,
-  ];
+  const defaultValues = isCollectionSearch
+    ? [DEFAULT_SEARCH_TERM, DEFAULT_PAGE_NUM, DEFAULT_COLLECTION_SORT]
+    : [DEFAULT_SEARCH_TERM, DEFAULT_FILTERS, DEFAULT_PAGE_NUM, DEFAULT_SORT];
 
   Object.keys(paramsObject).forEach((key) => {
     const value = paramsObject[key];
