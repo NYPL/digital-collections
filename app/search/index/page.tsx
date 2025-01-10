@@ -1,28 +1,49 @@
 import React from "react";
 import PageLayout from "../../src/components/pageLayout/pageLayout";
-import SearchResults from "../../src/components/search/results";
-import { mockItems } from "../../../__tests__/__mocks__/data/mockItems"; // TODO: render mockItems
 import { createAdobeAnalyticsPageName } from "@/src/utils/utils";
+import { getSearchData } from "@/src/utils/apiHelpers";
+import SearchContent from "@/src/components/search/content";
+import { Metadata } from "next";
+import { Filter } from "@/src/utils/searchManager";
 
-export type SearchProps = {
-  params: { slug: string };
-  searchParams: { page: string };
+export interface SearchParams {
+  keywords: string;
+  sort: string;
+  filters: Filter[];
+  page: number;
+}
+
+export const metadata: Metadata = {
+  title: "Search results - NYPL Digital Collections",
+  openGraph: {
+    title: "Search results - NYPL Digital Collections",
+  },
 };
 
-export default async function Search() {
+export type SearchProps = {
+  searchParams: SearchParams;
+};
+
+export default async function Search({ searchParams }: SearchProps) {
+  const pageName = !searchParams.keywords ? "all-items" : "search-results";
+
+  const data = await getSearchData({
+    keywords: searchParams.keywords || "type_s:Item",
+    sort: searchParams.sort,
+    filters: searchParams.filters,
+    pageNum: searchParams.page,
+  });
+
   return (
     <PageLayout
-      activePage="collections"
+      activePage="search"
       breadcrumbs={[
         { text: "Home", url: "/" },
         { text: "Keyword Search", url: "/search/index" },
       ]}
-      adobeAnalyticsPageName={createAdobeAnalyticsPageName(
-        "search-results",
-        ""
-      )} //TODO: if there are no query params, page name should be createAdobeAnalyticsPageName("all-items", "")
+      adobeAnalyticsPageName={createAdobeAnalyticsPageName(pageName, "")}
     >
-      <SearchResults showFilter={false} isSearchPage data={mockItems} />
+      <SearchContent data={data} />
     </PageLayout>
   );
 }

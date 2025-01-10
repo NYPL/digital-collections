@@ -1,88 +1,192 @@
+"use client";
 import {
   Box,
   Menu,
-  Text,
   Pagination,
+  Heading,
+  TagSetFilterDataProps,
+  TagSet,
+  Button,
 } from "@nypl/design-system-react-components";
-import React, { useState } from "react";
-import { useSearchParams, usePathname, useRouter } from "next/navigation";
+import React, { useEffect, useState } from "react";
 import { CardsGrid } from "../grids/cardsGrid";
 import LaneLoading from "../lane/laneLoading";
+import { displayResults, totalNumPages } from "@/src/utils/utils";
+import { CARDS_PER_PAGE, COLLECTION_SORT_LABELS } from "@/src/config/constants";
+import { useSearchContext } from "@/src/context/SearchContext";
+import { usePathname, useRouter } from "next/navigation";
 
-const SearchContent = ({ showFilter, isSearchPage, data }) => {
-  const isLoaded = true;
-  const queryParams = useSearchParams();
-  const query = queryParams.toString();
+const SearchContent = ({ data }) => {
+  const [isLoaded, setIsLoaded] = useState(false);
+  const pathname = usePathname();
+  const { push } = useRouter();
+  const totalPages = totalNumPages(data.numResults, CARDS_PER_PAGE.toString());
+  const { searchManager } = useSearchContext();
 
-  const router = useRouter();
-
-  const totalPages = 3; // TODO: change to be dynamic after API hookup
-
-  const [currentPage, setCurrentPage] = useState(
-    Number(queryParams.get("page")) || 1
-  );
-
-  const createQueryString = (name, value) => {
-    const params = new URLSearchParams();
-    params.set(name, value);
-    return params.toString();
+  const updateURL = async (queryString) => {
+    setIsLoaded(false);
+    push(`${pathname}?${queryString}`);
+    setTimeout(() => {
+      setIsLoaded(true);
+    }, 1000);
   };
 
-  function onMenuClick(id) {
-    query
-      ? router.push(
-          "/collections" + "?" + query + "&" + createQueryString("sort", id)
-        )
-      : router.push("/collections" + "?" + createQueryString("sort", id));
-  }
+  useEffect(() => {
+    setIsLoaded(true);
+  }, []);
+
+  const handleOnClick = (tag) => {
+    if (tag.id === "clear-filters") {
+      updateURL(searchManager.clearAllFilters());
+    } else {
+      const filterToRemove = searchManager.currentFilters?.find(
+        (filter) => filter.value === tag.id
+      );
+      if (filterToRemove) {
+        updateURL(searchManager.handleRemoveFilter(filterToRemove));
+      }
+    }
+  };
+
+  searchManager.currentFilters.map((filter) => ({
+    id: filter.value,
+    label: filter.value,
+  }));
 
   return (
     <>
-      <Box sx={{ display: "flex", gap: "xs", marginBottom: "l" }}>
-        {showFilter ? (
-          <>
-            <Text sx={{ fontWeight: "500", marginBottom: 0, marginTop: "xs" }}>
-              {" "}
-              Sort by{" "}
-            </Text>{" "}
-            <Menu
-              //showSelectionAsLabel
-              showLabel
-              selectedItem="chronological-descending"
-              labelText={"Sort By"}
-              listItemsData={[
-                {
-                  id: "chronological-descending",
-                  label: "Newest to oldest",
-                  onClick: onMenuClick,
-                  type: "action",
-                },
-                {
-                  id: "chronological-ascending",
-                  label: "Oldest to newest",
-                  onClick: onMenuClick,
-                  type: "action",
-                },
-                {
-                  id: "alphabetical-descending",
-                  label: "Title A to Z",
-                  onClick: onMenuClick,
-                  type: "action",
-                },
-                {
-                  id: "alphabetical-ascending",
-                  label: "Title Z to A",
-                  onClick: onMenuClick,
-                  type: "action",
-                },
-              ]}
-            />
-          </>
-        ) : null}
+      <Box
+        sx={{
+          position: "absolute",
+          left: 0,
+          width: "100%",
+          gap: "xs",
+          marginTop: "-xxl",
+          paddingLeft: "225px",
+          paddingTop: "m",
+          background: "ui.bg.default",
+        }}
+      >
+        <Heading
+          size="heading2"
+          sx={{
+            display: "flex",
+            marginBottom: "l",
+          }}
+          width="max-content"
+        >
+          {`Displaying ${displayResults(
+            data.numResults,
+            CARDS_PER_PAGE,
+            searchManager.currentPage
+          )}
+                    results`}
+        </Heading>
+        <Heading
+          size="heading4"
+          sx={{
+            display: "flex",
+            marginBottom: "l",
+          }}
+          width="max-content"
+        >
+          Refine your search
+        </Heading>
       </Box>
 
-      {isLoaded ? (
-        <CardsGrid records={data} />
+      <Box
+        marginTop="150px"
+        marginBottom="20px"
+        display="flex"
+        flexDir="row"
+        gap="m"
+      >
+        <Button
+          buttonType="secondary"
+          onClick={() => {
+            updateURL(
+              searchManager.handleAddFilter({
+                filter: "rights",
+                value: "public domain",
+              })
+            );
+          }}
+          id={"add-public-domain"}
+        >
+          {" "}
+          Add public domain filter{" "}
+        </Button>
+        <Button
+          buttonType="secondary"
+          onClick={() => {
+            updateURL(
+              searchManager.handleAddFilter({
+                filter: "topic",
+                value: "musicals",
+              })
+            );
+          }}
+          id={"add-musicals"}
+        >
+          {" "}
+          Add musical filter{" "}
+        </Button>
+
+        <TagSet
+          isDismissible
+          id="search-filter-tags"
+          onClick={handleOnClick}
+          tagSetData={searchManager.currentFilters.map((filter) => ({
+            id: filter.value,
+            label: filter.value,
+          }))}
+          type="filter"
+        />
+        <Menu
+          showLabel
+          selectedItem={searchManager.currentSort}
+          labelText={`Sort by: ${
+            COLLECTION_SORT_LABELS[searchManager.currentSort]
+          }`}
+          listItemsData={[
+            {
+              id: "date-desc",
+              label: "Newest to oldest",
+              onClick: () => {
+                updateURL(searchManager.handleSortChange("date-desc"));
+              },
+              type: "action",
+            },
+            {
+              id: "date-asc",
+              label: "Oldest to newest",
+              onClick: () => {
+                updateURL(searchManager.handleSortChange("date-asc"));
+              },
+              type: "action",
+            },
+            {
+              id: "title-asc",
+              label: "Title A to Z",
+              onClick: () => {
+                updateURL(searchManager.handleSortChange("title-asc"));
+              },
+              type: "action",
+            },
+            {
+              id: "title-desc",
+              label: "Title Z to A",
+              onClick: () => {
+                updateURL(searchManager.handleSortChange("title-desc"));
+              },
+              type: "action",
+            },
+          ]}
+        />
+      </Box>
+
+      {isLoaded && data.result ? (
+        <CardsGrid records={data.result} />
       ) : (
         <>
           <LaneLoading id={1} withTitle={false} />,
@@ -94,10 +198,12 @@ const SearchContent = ({ showFilter, isSearchPage, data }) => {
       {totalPages > 1 && (
         <Pagination
           id="pagination-id"
-          initialPage={currentPage}
-          currentPage={currentPage}
+          currentPage={searchManager.currentPage}
+          initialPage={searchManager.currentPage}
           pageCount={totalPages}
-          // onPageChange={updatePageURL} // TODO: pagination stuff
+          onPageChange={(newPage) => {
+            updateURL(searchManager.handlePageChange(newPage));
+          }}
           sx={{
             display: "flex",
             justifyContent: "center",

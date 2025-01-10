@@ -2,19 +2,11 @@
 import { Suspense } from "react";
 import SearchContent from "./content";
 
-function SearchBarFallback() {
-  return <>placeholder</>;
-}
-
-const SearchResults = ({ showFilter, isSearchPage, data }) => {
+const SearchResults = ({ data, params }) => {
   return (
     <>
-      <Suspense fallback={<SearchBarFallback />}>
-        <SearchContent
-          showFilter={showFilter}
-          isSearchPage={isSearchPage}
-          data={data}
-        />
+      <Suspense>
+        <SearchContent data={data} />
       </Suspense>
     </>
   );

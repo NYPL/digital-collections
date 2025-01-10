@@ -2,30 +2,20 @@
 "use client";
 import React, { FormEvent, useState } from "react";
 import { Box, SearchBar } from "@nypl/design-system-react-components";
-import { useRouter } from "next/navigation";
+import { useRouter, usePathname } from "next/navigation";
 import PublicDomainFilter from "../publicDomainFilter/publicDomainFilter";
 import { headerBreakpoints } from "../../utils/breakpoints";
+import { useSearchContext } from "@/src/context/SearchContext";
 
 const Search = () => {
-  const router = useRouter();
-  const [keywords, setKeywords] = useState("");
-  const [publicDomainOnly, setPublicDomainOnly] = useState(false);
+  const { push } = useRouter();
+  const pathname = usePathname();
+  const [pdFilter, setPdFilter] = useState(false);
+  const { searchManager } = useSearchContext();
 
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    const searchUrl =
-      `/search/index?` +
-      (publicDomainOnly ? `utf8=✓&filters%5Brights%5D=pd&` : ``) +
-      `keywords=${encodeURIComponent(keywords)}`;
-    router.push(searchUrl);
-  };
-
-  const handleTextChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setKeywords(event.target.value);
-  };
-
-  const handleCheckChange = (isChecked: boolean): void => {
-    setPublicDomainOnly(isChecked);
+  const updateURL = async (queryString) => {
+    // Always from /search/index? when called from search bar in the header
+    push(`/search/index?${queryString}`);
   };
 
   return (
@@ -48,16 +38,34 @@ const Search = () => {
           },
         }}
       >
+        {/*  <form
+          action="/search/index"
+          method="get"
+          onSubmit={searchManager.handleSearchSubmit()}
+        > */}
         <SearchBar
           id="searchbar"
           invalidText="Could not find the item"
           labelText="Search Digital Collections"
-          onSubmit={(event) => handleSubmit(event)}
+          onSubmit={(e) => {
+            e.preventDefault();
+            let searchQuery = searchManager.handleSearchSubmit();
+            if (pdFilter) {
+              searchQuery = searchManager.handleAddFilter({
+                filter: "rights",
+                value: "pd",
+              });
+            }
+            updateURL(searchQuery);
+          }}
           textInputProps={{
+            name: "keywords",
             labelText: "Search keyword(s)",
-            name: "textInputName",
-            onChange: handleTextChange,
-            value: keywords,
+            onChange: (e) =>
+              searchManager.handleKeywordChange(
+                (e.target as HTMLInputElement).value
+              ),
+
             placeholder: "Search keyword(s)",
           }}
           sx={{
@@ -92,7 +100,11 @@ const Search = () => {
               },
           }}
         />
-        <PublicDomainFilter onCheckChange={handleCheckChange} />
+        <PublicDomainFilter
+          onCheckChange={(isChecked) =>
+            isChecked ? setPdFilter(true) : setPdFilter(false)
+          }
+        />
       </Box>
     </>
   );
