@@ -7,9 +7,9 @@ import {
 import styles from "../../styles/Collections.module.css";
 
 export default function NoResultsFound({ searchTerm, page }) {
-  const headingText = `No Results for "${searchTerm}"${
-    page > 1 ? `, page ${page}` : ``
-  }`;
+  const headingText = searchTerm
+    ? `No Results for "${searchTerm}"${page > 1 ? `, page ${page}` : ``}`
+    : "No Results";
   return (
     <Flex
       flexDir="column"
