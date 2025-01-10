@@ -26,7 +26,7 @@ export default async function Collections({ searchParams }: CollectionsProps) {
   // Repo API returns 404s within the data.
   if (
     data?.headers?.code === "404" &&
-    data?.headers?.message !== "No collections found"
+    data?.headers?.message === "No collections found"
   ) {
     redirect("/404");
   }
