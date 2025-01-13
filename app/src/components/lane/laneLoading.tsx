@@ -6,11 +6,12 @@ import {
 import React from "react";
 import { SimpleGrid as DCSimpleGrid } from "../simpleGrid/simpleGrid";
 
-export default function LaneLoading({ withTitle = true }) {
+export default function LaneLoading({ id, withTitle = true }) {
   return (
     <Box
       data-testid="collectionlane-skeleton-loader-1"
       sx={{ marginBottom: "l" }}
+      key={id}
     >
       {withTitle && (
         <Flex>

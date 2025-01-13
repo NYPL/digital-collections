@@ -45,7 +45,7 @@ const HomePageMainContent = ({
   ) : (
     <>
       {[...Array(24)].map((_, index) => (
-        <LaneLoading key={index} />
+        <LaneLoading id={index} key={index} />
       ))}
     </>
   );
