@@ -15,7 +15,8 @@ export const fetchApi = async (
     method?: "GET" | "POST";
     params?: { [key: string]: any };
     body?: any;
-  }
+  },
+  cacheTime?: number
 ) => {
   const apiKey = process.env.AUTH_TOKEN;
   const method = options?.method || "GET";
@@ -48,6 +49,7 @@ export const fetchApi = async (
       method,
       headers,
       body: method === "POST" ? JSON.stringify(options?.body) : undefined,
+      ...(cacheTime && { next: { revalidate: cacheTime } }),
     })) as Response;
     if (!response.ok && response.status !== 200) {
       throw new Error(
