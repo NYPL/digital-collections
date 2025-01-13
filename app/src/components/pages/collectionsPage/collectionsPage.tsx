@@ -161,7 +161,7 @@ export function CollectionsPage({ data, params, renderCollections }) {
           }}
           onSubmit={handleSearchSubmit}
           labelText="Search Collections by title"
-          aria-label="Search Collections by title"
+          aria-label="Search collections by title"
         />
       </Box>
       <HorizontalRule sx={{ marginTop: "xxl", marginBottom: "xxl" }} />
@@ -230,11 +230,14 @@ export function CollectionsPage({ data, params, renderCollections }) {
         collections.length > 0 ? (
           <CardsGrid records={collections} />
         ) : (
-          <NoResultsFound searchTerm={params.collection_keywords} />
+          <NoResultsFound
+            searchTerm={params.collection_keywords}
+            page={params.page}
+          />
         )
       ) : (
         Array(Math.ceil(collections.length / 4)).fill(
-          <LaneLoading withTitle={false} />
+          <LaneLoading id="lane-loading" withTitle={false} />
         )
       )}
 
