@@ -18,7 +18,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
-- Added "no results" view for the `/collections` page (DR-3324)
+- Added "no results" view for the `/collections` page (DR-3324, DR-3357)
 
 ## [0.2.5] 2025-1-02
 
@@ -40,6 +40,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Update timeout on API request to 10 seconds (DR-3304)
 - Update header to expand on scroll up on desktop (DR-3322)
 - Update google-site-verification meta tag (DR-3332)
+- Updated `/collections` no results logic (DR-3357)
 
 ## [0.2.4] 2024-11-26
 
