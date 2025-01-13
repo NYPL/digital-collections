@@ -4,16 +4,16 @@ import React from "react";
 import { mockDivisionResponse } from "__tests__/__mocks__/data/api/mockDivisionResponse";
 import {
   useRouter,
-  useParams,
   useSearchParams,
+  useParams,
   usePathname,
 } from "next/navigation";
 import DivisionPage from "@/src/components/pages/divisionPage/divisionPage";
 
 jest.mock("next/navigation", () => ({
   useRouter: jest.fn(),
-  useParams: jest.fn(),
   useSearchParams: jest.fn(),
+  useParams: jest.fn(),
   usePathname: jest.fn(),
 }));
 
@@ -23,10 +23,10 @@ beforeEach(() => {
   }));
 });
 
-describe("Division page accessibility", () => {
+describe("Collection swimlane landing page accessibility", () => {
   it("passes axe accessibility test", async () => {
     (useParams as jest.Mock).mockReturnValue({
-      slug: "billy-rose-theatre-division",
+      slug: "recently-digitized-collections",
     });
     (useSearchParams as jest.Mock).mockReturnValue({
       get: jest.fn((key: string) => {

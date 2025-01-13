@@ -16,7 +16,7 @@ beforeEach(() => {
   }));
 });
 
-describe.skip("Divisions page Accessibility", () => {
+describe("All divisions page accessibility", () => {
   it("passes axe accessibility test", async () => {
     const { container } = render(
       <DivisionsPage
