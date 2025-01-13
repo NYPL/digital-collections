@@ -9,7 +9,7 @@ jest.mock("next/navigation", () => ({
   usePathname: jest.fn(),
 }));
 
-describe.skip("Homepage Accessibility", () => {
+describe("Homepage accessibility", () => {
   it("passes axe accessibility test", async () => {
     const { container } = render(<HomePage data={mockHomePageMainContent} />);
     expect(await axe(container)).toHaveNoViolations();

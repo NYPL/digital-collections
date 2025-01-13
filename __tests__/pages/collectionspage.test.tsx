@@ -16,7 +16,7 @@ beforeEach(() => {
   }));
 });
 
-describe("Collections page Accessibility", () => {
+describe("All collections page accessibility", () => {
   const searchParams = {
     collection_keywords: "flower",
     sort: "title-asc",
