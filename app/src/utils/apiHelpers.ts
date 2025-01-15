@@ -1,10 +1,14 @@
-import data from "../data/lanes";
-import type { LaneDataType } from "../types/Lane";
-import { ENV_KEY } from "../types/EnvironmentType";
-import { imageURL, addCommas } from "./utils";
-import appConfig from "../../../appConfig";
+import data from "../../src/data/lanes";
+import type { LaneDataType } from "../../src/types/Lane";
+import { imageURL, addCommas } from "../utils/utils";
 import defaultFeaturedItems from "../data/defaultFeaturedItemData";
-import { CARDS_PER_PAGE } from "../config/constants";
+import {
+  CARDS_PER_PAGE,
+  DEFAULT_COLLECTION_SORT,
+  DEFAULT_PAGE_NUM,
+  DEFAULT_SEARCH_TERM,
+  COLLECTION_SORT_OPTIONS,
+} from "../config/constants";
 import { fetchApi } from "./fetchApi";
 
 export const getHomePageData = async () => {
@@ -29,7 +33,6 @@ export const getHomePageData = async () => {
   });
 
   const newResponse = { randomNumber, lanesWithNumItems: updatedLanes };
-  console.log("new response is: ", newResponse);
   return newResponse;
 };
 
@@ -63,8 +66,7 @@ export const getFeaturedItemData = async () => {
 };
 
 export const getFeaturedImage = async () => {
-  const defaultResponse =
-    defaultFeaturedItems[appConfig.environment as ENV_KEY].featuredItem;
+  const defaultResponse = defaultFeaturedItems.featuredItem;
   const apiResponse = await getRandomFeaturedItem();
 
   return {
@@ -92,9 +94,7 @@ export const getNumDigitizedItems = async () => {
   const apiUrl = `${process.env.API_URL}/api/v2/items/total`;
   const res = await fetchApi(apiUrl);
 
-  const fallbackCount =
-    defaultFeaturedItems[appConfig.environment as ENV_KEY]
-      .numberOfDigitizedItems;
+  const fallbackCount = defaultFeaturedItems.numberOfDigitizedItems;
   const totalItems = res?.count?.$ ? addCommas(res.count.$) : fallbackCount; // only add commas to repo api response data
   return totalItems;
 };
@@ -158,6 +158,22 @@ export const getDivisionData = async ({
     apiUrl += `/${slug}?page=${pageNum}&per_page=${perPage}`;
   }
 
+  const res = await fetchApi(apiUrl);
+  return res;
+};
+
+export const getCollectionsData = async ({
+  keyword = DEFAULT_SEARCH_TERM,
+  sortID = DEFAULT_COLLECTION_SORT,
+  pageNum = DEFAULT_PAGE_NUM,
+  perPage = CARDS_PER_PAGE,
+}: {
+  keyword?: string;
+  sortID?: string;
+  pageNum?: string;
+  perPage?: number;
+} = {}) => {
+  let apiUrl = `${process.env.API_URL}/api/v2/collections?page=${pageNum}&per_page=${perPage}&sort=${COLLECTION_SORT_OPTIONS[sortID]}&q=${keyword}`;
   const res = await fetchApi(apiUrl);
   return res;
 };

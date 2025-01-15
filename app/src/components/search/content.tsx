@@ -15,7 +15,6 @@ const SearchContent = ({ showFilter, isSearchPage, data }) => {
   const query = queryParams.toString();
 
   const router = useRouter();
-  const pathname = usePathname();
 
   const totalPages = 3; // TODO: change to be dynamic after API hookup
 
@@ -39,8 +38,6 @@ const SearchContent = ({ showFilter, isSearchPage, data }) => {
 
   return (
     <>
-      <h2>Search params: {query} </h2>
-      <br />
       <Box sx={{ display: "flex", gap: "xs", marginBottom: "l" }}>
         {showFilter ? (
           <>
@@ -88,9 +85,9 @@ const SearchContent = ({ showFilter, isSearchPage, data }) => {
         <CardsGrid records={data} />
       ) : (
         <>
-          <LaneLoading withTitle={false} />,
-          <LaneLoading withTitle={false} />,
-          <LaneLoading withTitle={false} />,
+          <LaneLoading id={1} withTitle={false} />,
+          <LaneLoading id={2} withTitle={false} />,
+          <LaneLoading id={3} withTitle={false} />,
         </>
       )}
 

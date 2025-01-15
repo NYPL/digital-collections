@@ -26,7 +26,7 @@ const Header = () => {
       position="sticky"
       id="header"
       top={0}
-      zIndex={999}
+      zIndex={99999}
       bgColor="ui.white"
       sx={{
         [`@media screen and (min-width: ${headerBreakpoints.smTablet}px)`]: {
@@ -61,11 +61,7 @@ const Header = () => {
           <DCLogo isMobile={false} />
           <Box
             sx={{
-              display: "none",
-              [`@media screen and (min-width: ${headerBreakpoints.smTablet}px)`]:
-                {
-                  display: isScrolled ? "block" : "none",
-                },
+              display: "block",
               [`@media screen and (min-width: ${headerBreakpoints.lgTablet}px)`]:
                 {
                   display: "none",
@@ -117,7 +113,7 @@ const Header = () => {
               display: "none",
               [`@media screen and (min-width: ${headerBreakpoints.lgTablet}px)`]:
                 {
-                  display: isScrolled ? "block" : "none",
+                  display: isScrollingUp ? "block" : "none",
                 },
             }}
           >
