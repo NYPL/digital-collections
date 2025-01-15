@@ -37,6 +37,9 @@ ENV NODE_ENV=production
 # Build the app!
 RUN npm run build
 
+# Copy .next to temp location for deployment
+RUN cp -Rpf /app/.next /tmp/.next
+
 # Explicitly set port 3000 as open to requests.
 EXPOSE 3000
 
