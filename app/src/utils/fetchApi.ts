@@ -7,8 +7,8 @@ import logger from "logger";
  *   - method: "GET" or "POST" (default is "GET").
  *   - params: URL parameters for GET requests.
  *   - body: Body data for POST requests.
- *   - cacheTime: The revalidation period (in seconds).
- *   - cacheSetting: The cache strategy, default is 'force-cache'.
+ *   - cacheTime: The serverside revalidation period (in seconds).
+ *   - cacheSetting: The browser cache strategy, default is 'force-cache'.
  * @returns {Promise<any>} - The API response.
  */
 export const fetchApi = async (
