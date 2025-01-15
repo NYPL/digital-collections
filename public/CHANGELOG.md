@@ -7,6 +7,21 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+## [0.2.6] 2025-1-09
+
+### Updated
+
+- Updated copy of sort menu for the all collections page (DR-3323)
+- Updated `/collections` page to fetch data from Repo API and meet designs (DR-3100)
+- Updated `/collections/lane/:slug` page to fetch data from Repo API (DR-3701)
+- Cleaned up and documented logging standards for New Relic and Cloudwatch (DR-3325)
+
+### Added
+
+- Added "no results" view for the `/collections` page (DR-3324)
+
+## [0.2.5] 2025-1-02
+
 ### Removed
 
 - Removed unnecessary variables post reverse proxy launch
@@ -18,9 +33,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Added `/healthcheck` endpoint (DR-3304)
 
 ### Updated
-- Update copy of sort menu for the all collections page (DR-3323)
-- Update `/collections` page to fetch data from Repo API and meet designs (DR-3100)
-- Update `/collections/lane/:slug` page to fetch data from Repo API (DR-3701)
+
 - Refactored implementation of default featured item & updated default number of digitized items (DR-3305)
 - Update thumbnail logic so thumbnails are never restricted (DR-3293)
 - Update feedback form credentials to use official DR service account (DR-2794)
