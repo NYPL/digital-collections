@@ -7,6 +7,8 @@ import logger from "logger";
  *   - method: "GET" or "POST" (default is "GET").
  *   - params: URL parameters for GET requests.
  *   - body: Body data for POST requests.
+ *   - cacheTime: The revalidation period (in seconds).
+ *   - cacheSetting: The cache strategy, default is 'force-cache'.
  * @returns {Promise<any>} - The API response.
  */
 export const fetchApi = async (
@@ -15,8 +17,9 @@ export const fetchApi = async (
     method?: "GET" | "POST";
     params?: { [key: string]: any };
     body?: any;
-  },
-  cacheTime?: number
+    cacheTime?: number;
+    cacheSetting?: RequestCache;
+  }
 ) => {
   const apiKey = process.env.AUTH_TOKEN;
   const method = options?.method || "GET";
@@ -33,6 +36,7 @@ export const fetchApi = async (
   const timeout = 10000;
 
   const fetchWithTimeout = (url: string, opts: RequestInit) => {
+    console.log(url, opts);
     return Promise.race([
       fetch(url, opts),
       new Promise((_, reject) =>
@@ -49,7 +53,8 @@ export const fetchApi = async (
       method,
       headers,
       body: method === "POST" ? JSON.stringify(options?.body) : undefined,
-      ...(cacheTime && { next: { revalidate: cacheTime } }),
+      ...(options?.cacheTime && { next: { revalidate: options.cacheTime } }),
+      ...(options?.cacheSetting && { cache: options.cacheSetting }),
     })) as Response;
     if (!response.ok && response.status !== 200) {
       throw new Error(

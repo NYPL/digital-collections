@@ -84,6 +84,32 @@ describe("fetchApi", () => {
     expect(response).toEqual("mockGetResponseWithParams");
   });
 
+  it("adds caching options to GET requests", async () => {
+    const mockResponse = { nyplAPI: { response: "mockResponse" } };
+    (global as any).fetch = jest.fn(() =>
+      Promise.resolve({
+        ok: true,
+        status: 200,
+        json: async () => mockResponse,
+      })
+    ) as jest.Mock;
+
+    const response = await fetchApi(mockApiUrl, {
+      cacheTime: 3600,
+      cacheSetting: "no-store",
+    });
+    expect(fetch).toHaveBeenCalledWith(mockApiUrl, {
+      method: "GET",
+      headers: {
+        Authorization: `Token token=${mockAuthToken}`,
+      },
+      body: undefined,
+      cache: "no-store",
+      next: { revalidate: 3600 },
+    });
+    expect(response).toEqual("mockResponse");
+  });
+
   it("throws an error for non-200 status", async () => {
     (global as any).fetch = jest.fn(() =>
       Promise.resolve({
