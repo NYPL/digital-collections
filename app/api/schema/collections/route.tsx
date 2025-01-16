@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import collectionsSchema from "../../../../src/data/schemas/collectionsSchema";
+import collectionsSchema from "../../../src/data/schemas/collectionsSchema";
 
 export const GET = async () => {
   return NextResponse.json(collectionsSchema, { status: 200 });
