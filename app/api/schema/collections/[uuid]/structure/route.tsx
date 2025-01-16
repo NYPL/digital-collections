@@ -5,4 +5,4 @@ export const GET = async () => {
   return NextResponse.json(collectionsStructureSchema, { status: 200 });
 };
 
-// http://localhost:3000/api/collections/:uuid/structure
+// http://localhost:3000/api/schema/collections/:uuid/structure
