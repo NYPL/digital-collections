@@ -146,7 +146,38 @@ export function CollectionsPage({ data, params, renderCollections }) {
           subtitle="Explore the New York Public Library's diverse collections, including digitized photographs, manuscripts, maps, and more. Start exploring by using the search bar below or browse through the collections."
         />
         <SearchBar
-          sx={{ maxWidth: "462px" }}
+          sx={{
+            maxWidth: "462px",
+            flexFlow: "row nowrap",
+            button: {
+              borderRadius: "0px 2px 2px 0px",
+              "> svg": {
+                width: "14px",
+                height: "14px",
+              },
+              paddingTop: "xs",
+              paddingBottom: "xs",
+              paddingLeft: "s !important",
+              paddingRight: "s !important",
+              "> span": {
+                display: "block !important",
+              },
+            },
+            [`@media screen and (max-width: ${headerBreakpoints.lgMobile}px)`]:
+              {
+                button: {
+                  padding: "xs !important",
+                  gap: 0,
+                  "> span": {
+                    display: "none !important",
+                  },
+                  "> svg": {
+                    width: "18px",
+                    height: "18px",
+                  },
+                },
+              },
+          }}
           id={"search-collections"}
           textInputProps={{
             isClearable: true,
@@ -160,7 +191,7 @@ export function CollectionsPage({ data, params, renderCollections }) {
             onChange: (e) => handleSearchChange(e),
           }}
           onSubmit={handleSearchSubmit}
-          labelText="Search Collections by title"
+          labelText="Search collections by title"
           aria-label="Search collections by title"
         />
       </Box>
