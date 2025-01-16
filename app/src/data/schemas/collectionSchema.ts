@@ -7,6 +7,8 @@ const collectionObject = {
   imageURL: "string",
   numberOfDigitizedItems: "number",
   containsOnSiteMaterials: "boolean",
+  highlights: "{ highlighted_field_name:[ string ] }",
+  firstIndexed_dt: "date",
 };
 
 export default collectionObject;
