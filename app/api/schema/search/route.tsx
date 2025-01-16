@@ -5,4 +5,4 @@ export const GET = async () => {
   return NextResponse.json(searchSchema, { status: 200 });
 };
 
-// http://localhost:3000/api/search
+// http://localhost:3000/api/schema/search
