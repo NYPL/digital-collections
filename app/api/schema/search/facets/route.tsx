@@ -5,4 +5,4 @@ export const GET = async () => {
   return NextResponse.json(searchFacetsSchema, { status: 200 });
 };
 
-// http://localhost:3000/api/search/facets
+// http://localhost:3000/api/schema/search/facets
