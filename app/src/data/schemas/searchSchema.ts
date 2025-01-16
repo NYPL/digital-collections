@@ -1,10 +1,5 @@
 const searchSchema = {
   response: {
-    headers: {
-      status: "200",
-      code: "200",
-      message: "some copy",
-    },
     // Keyword included in search
     keyword: "string",
     // Pagination fields
