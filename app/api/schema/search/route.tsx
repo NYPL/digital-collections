@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import searchSchema from "../../src/data/schemas/searchSchema";
+import searchSchema from "../../../src/data/schemas/searchSchema";
 
 export const GET = async () => {
   return NextResponse.json(searchSchema, { status: 200 });
