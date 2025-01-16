@@ -1,18 +1,20 @@
 const searchSchema = {
-  // Sort fields
-  // Filter fields
-  // Keyword included in search
   response: {
     headers: {
       status: "200",
       code: "200",
       message: "some copy",
     },
+    // Keyword included in search
+    keyword: "string",
     // Pagination fields
-    numResults: "6",
-    page: "1",
-    perPage: "40",
-    sort: "title DESC",
+    numResults: "integer",
+    page: "integer",
+    perPage: "integer",
+    // Sort fields
+    sort: "string ie: title DESC",
+    // Filter fields
+    filterField: "string",
     // Results
     results: [
       {
@@ -24,6 +26,8 @@ const searchSchema = {
         imageURL: "string",
         numberOfDigitizedItems: "number",
         containsOnSiteMaterials: "boolean",
+        highlights: "{ highlighted_field_name:[ string ] }",
+        firstIndexed_dt: "date",
       },
       {
         uuid: "string",
@@ -34,6 +38,8 @@ const searchSchema = {
         imageURL: "string",
         contentType: "image | multiple images | audio | video | pdf",
         onSiteOnly: "boolean",
+        highlights: "{ highlighted_field_name:[ string ] }",
+        firstIndexed_dt: "date",
       },
       {
         uuid: "string",
@@ -44,6 +50,8 @@ const searchSchema = {
         imageURL: "string",
         numberOfDigitizedItems: "number",
         containsOnSiteMaterials: "boolean",
+        highlights: "{ highlighted_field_name:[ string ] }",
+        firstIndexed_dt: "date",
       },
       {
         uuid: "string",
@@ -54,6 +62,8 @@ const searchSchema = {
         imageURL: "string",
         contentType: "image | multiple images | audio | video | pdf",
         onSiteOnly: "boolean",
+        highlights: "{ highlighted_field_name:[ string ] }",
+        firstIndexed_dt: "date",
       },
     ],
   },
