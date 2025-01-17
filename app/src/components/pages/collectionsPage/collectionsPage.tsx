@@ -44,13 +44,15 @@ export function CollectionsPage({ data, params, renderCollections }) {
       : [data.collection]
     : [];
 
-  const collectionSearchManager = new SearchManager({
-    initialPage: Number(params.page) || DEFAULT_PAGE_NUM,
-    initialSort: params.sort || DEFAULT_COLLECTION_SORT,
-    initialFilters: params.filters || DEFAULT_FILTERS,
-    initialKeywords: params.collection_keywords || DEFAULT_SEARCH_TERM,
-    isCollectionSearch: true,
-  });
+  const collectionSearchManager = useRef<SearchManager>(
+    new SearchManager({
+      initialPage: Number(params.page) || DEFAULT_PAGE_NUM,
+      initialSort: params.sort || DEFAULT_COLLECTION_SORT,
+      initialFilters: params.filters || DEFAULT_FILTERS,
+      initialKeywords: params.collection_keywords || DEFAULT_SEARCH_TERM,
+      isCollectionSearch: true,
+    })
+  ).current;
 
   const updateURL = async (queryString) => {
     setIsLoaded(false);
