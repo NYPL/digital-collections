@@ -25,7 +25,11 @@ import {
 import { SearchManager } from "@/src/utils/searchManager";
 import { headerBreakpoints } from "@/src/utils/breakpoints";
 
-export function CollectionsPage({ data, params, renderCollections }) {
+export function CollectionsPage({
+  data,
+  collectionSearchParams,
+  renderCollections,
+}) {
   const { push } = useRouter();
   const pathname = usePathname();
   const headingRef = useRef<HTMLHeadingElement>(null);
@@ -40,10 +44,11 @@ export function CollectionsPage({ data, params, renderCollections }) {
     : [];
 
   const collectionSearchManager = new SearchManager({
-    initialPage: Number(params.page) || DEFAULT_PAGE_NUM,
-    initialSort: params.sort || DEFAULT_COLLECTION_SORT,
-    initialFilters: params.filters || DEFAULT_FILTERS,
-    initialKeywords: params.collection_keywords || DEFAULT_SEARCH_TERM,
+    initialPage: Number(collectionSearchParams?.page) || DEFAULT_PAGE_NUM,
+    initialSort: collectionSearchParams?.sort || DEFAULT_COLLECTION_SORT,
+    initialFilters: collectionSearchParams?.filters || DEFAULT_FILTERS,
+    initialKeywords:
+      collectionSearchParams?.collection_keywords || DEFAULT_SEARCH_TERM,
     isCollectionSearch: true,
   });
 
@@ -52,6 +57,7 @@ export function CollectionsPage({ data, params, renderCollections }) {
     push(`${pathname}?${queryString}`);
     setTimeout(() => {
       setIsLoaded(true);
+      headingRef.current?.focus();
     }, 1000);
   };
 
@@ -192,7 +198,9 @@ export function CollectionsPage({ data, params, renderCollections }) {
         collections.length > 0 ? (
           <CardsGrid records={collections} />
         ) : (
-          <NoResultsFound searchTerm={params.collection_keywords} />
+          <NoResultsFound
+            searchTerm={collectionSearchParams.collection_keywords}
+          />
         )
       ) : (
         Array(Math.ceil(collections.length / 4)).fill(

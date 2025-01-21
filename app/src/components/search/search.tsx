@@ -2,14 +2,13 @@
 "use client";
 import React, { FormEvent, useState } from "react";
 import { Box, SearchBar } from "@nypl/design-system-react-components";
-import { useRouter, usePathname } from "next/navigation";
+import { useRouter } from "next/navigation";
 import PublicDomainFilter from "../publicDomainFilter/publicDomainFilter";
 import { headerBreakpoints } from "../../utils/breakpoints";
 import { useSearchContext } from "@/src/context/SearchContext";
 
 const Search = () => {
   const { push } = useRouter();
-  const pathname = usePathname();
   const [pdFilter, setPdFilter] = useState(false);
   const { searchManager } = useSearchContext();
 

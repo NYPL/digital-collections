@@ -33,21 +33,6 @@ export class SearchManager {
     this.isCollectionSearch = config.isCollectionSearch;
   }
 
-  update(config: {
-    page?: number;
-    sort?: string;
-    filters?: Filter[];
-    keywords?: string;
-    isCollectionSearch?: boolean;
-  }) {
-    if (config.page !== undefined) this.currentPage = config.page;
-    if (config.sort !== undefined) this.currentSort = config.sort;
-    if (config.filters !== undefined) this.currentFilters = config.filters;
-    if (config.keywords !== undefined) this.currentKeywords = config.keywords;
-    if (config.isCollectionSearch !== undefined)
-      this.isCollectionSearch = config.isCollectionSearch;
-  }
-
   handleSearchSubmit() {
     this.currentPage = DEFAULT_PAGE_NUM;
     this.currentFilters = [];

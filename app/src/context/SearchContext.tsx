@@ -98,14 +98,12 @@
 
 "use client";
 import React, { createContext, useContext } from "react";
-import { useSearchParams } from "next/navigation";
 import {
   DEFAULT_PAGE_NUM,
   DEFAULT_SORT,
   DEFAULT_SEARCH_TERM,
 } from "../config/constants";
 import { Filter, SearchManager } from "../utils/searchManager";
-import { SearchParams } from "@/search/index/page";
 
 interface SearchContextType {
   searchManager: SearchManager;
@@ -138,18 +136,15 @@ export const SearchProvider = ({
   searchParams,
   children,
 }: {
-  searchParams;
+  searchParams?;
   children: React.ReactNode;
 }) => {
-  //const pathname = usePathname(); // this doesn't need to be a dependency (Perhaps)
-  //const searchParams = useSearchParams(); // Forces re-render when params change
-
   const searchManager = new SearchManager({
-    initialPage: Number(searchParams.page) || DEFAULT_PAGE_NUM,
-    initialSort: searchParams.sort || DEFAULT_SORT,
-    initialFilters: stringToFilter(searchParams.filters),
-    initialKeywords: searchParams.keywords || DEFAULT_SEARCH_TERM,
-    isCollectionSearch: searchParams.isCollectionSearch === "true",
+    initialPage: Number(searchParams?.page) || DEFAULT_PAGE_NUM,
+    initialSort: searchParams?.sort || DEFAULT_SORT,
+    initialFilters: stringToFilter(searchParams?.filters),
+    initialKeywords: searchParams?.keywords || DEFAULT_SEARCH_TERM,
+    isCollectionSearch: searchParams?.isCollectionSearch === "true",
   });
 
   return (

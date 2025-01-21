@@ -42,7 +42,7 @@ export default async function Search({ searchParams }: SearchProps) {
         { text: "Keyword Search", url: "/search/index" },
       ]}
       adobeAnalyticsPageName={createAdobeAnalyticsPageName(pageName, "")}
-      searchParams={searchParams}
+      searchParams={searchParams} //!
     >
       <SearchContent data={data} />
     </PageLayout>

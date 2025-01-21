@@ -1,4 +1,4 @@
-import React, { Suspense } from "react";
+import React from "react";
 import { Metadata } from "next";
 import { CollectionsPage } from "../src/components/pages/collectionsPage/collectionsPage";
 import { getCollectionsData } from "@/src/utils/apiHelpers";
@@ -36,22 +36,19 @@ export default async function Collections({ searchParams }: CollectionsProps) {
   const renderCollections =
     data?.collection !== undefined && !data?.collection?.nil;
   return (
-    <Suspense>
-      <PageLayout
-        activePage="collections"
-        breadcrumbs={[
-          { text: "Home", url: "/" },
-          { text: "Collections", url: "/collections" },
-        ]}
-        adobeAnalyticsPageName={createAdobeAnalyticsPageName("all-collections")}
-        searchParams={searchParams}
-      >
-        <CollectionsPage
-          params={searchParams}
-          data={data}
-          renderCollections={renderCollections}
-        />
-      </PageLayout>
-    </Suspense>
+    <PageLayout
+      activePage="collections"
+      breadcrumbs={[
+        { text: "Home", url: "/" },
+        { text: "Collections", url: "/collections" },
+      ]}
+      adobeAnalyticsPageName={createAdobeAnalyticsPageName("all-collections")}
+    >
+      <CollectionsPage
+        collectionSearchParams={searchParams}
+        data={data}
+        renderCollections={renderCollections}
+      />
+    </PageLayout>
   );
 }
