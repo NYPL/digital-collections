@@ -7,12 +7,6 @@ import {
 } from "../config/constants";
 import { filterToString } from "../context/SearchContext";
 
-export interface CollectionSearchParams {
-  collection_keywords: string;
-  sort: string;
-  page: number;
-}
-
 export type Filter = {
   filter: string;
   value: string;
@@ -61,7 +55,7 @@ export class SearchManager {
       ? DEFAULT_COLLECTION_SORT
       : DEFAULT_SORT;
 
-    let queryString;
+    let queryString = "";
 
     if (this.isCollectionSearch) {
       queryString = filterQueryStringFromObject(
@@ -72,17 +66,13 @@ export class SearchManager {
         },
         this.isCollectionSearch
       );
-    } else {
-      if (this.currentKeywords && this.currentKeywords.length > 0) {
-        queryString = filterQueryStringFromObject({
-          keywords: this.currentKeywords,
-          sort: this.currentSort,
-          page: this.currentPage,
-          filters: filterToString(this.currentFilters),
-        });
-      } else {
-        queryString = "";
-      }
+    } else if (this.currentKeywords && this.currentKeywords.length > 0) {
+      queryString = filterQueryStringFromObject({
+        keywords: this.currentKeywords,
+        sort: this.currentSort,
+        page: this.currentPage,
+        filters: filterToString(this.currentFilters),
+      });
     }
     return queryString;
   }
