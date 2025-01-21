@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+## Updated
+
+- Public domain link correction (DR-3378)
+
 ## [0.2.6] 2025-1-13
 
 ### Updated
