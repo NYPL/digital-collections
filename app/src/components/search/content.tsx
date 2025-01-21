@@ -48,11 +48,6 @@ const SearchContent = ({ data }) => {
     }
   };
 
-  searchManager.currentFilters.map((filter) => ({
-    id: filter.value,
-    label: filter.value,
-  }));
-
   return (
     <>
       <Box

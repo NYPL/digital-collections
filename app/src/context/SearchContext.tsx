@@ -98,7 +98,7 @@
 
 "use client";
 import React, { createContext, useContext } from "react";
-import { usePathname, useSearchParams } from "next/navigation";
+import { useSearchParams } from "next/navigation";
 import {
   DEFAULT_PAGE_NUM,
   DEFAULT_SORT,
@@ -134,8 +134,8 @@ export const filterToString = (filters: Filter[]): string => {
 const SearchContext = createContext<SearchContextType | undefined>(undefined);
 
 export const SearchProvider = ({ children }: { children: React.ReactNode }) => {
-  //const pathname = usePathname();
-  const searchParams = useSearchParams(); // Forces re-render
+  //const pathname = usePathname(); // this doesn't need to be a dependency (Perhaps)
+  const searchParams = useSearchParams(); // Forces re-render when params change
 
   const params = Object.fromEntries(searchParams.entries());
 

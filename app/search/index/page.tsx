@@ -25,7 +25,7 @@ export type SearchProps = {
 };
 
 export default async function Search({ searchParams }: SearchProps) {
-  const pageName = !searchParams.keywords ? "all-items" : "search-results";
+  const pageName = searchParams.keywords ? "search-results" : "all-items";
 
   const data = await getSearchData({
     keywords: searchParams.keywords || "type_s:Item",
