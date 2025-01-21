@@ -10,13 +10,8 @@ import {
   Flex,
   Spacer,
 } from "@nypl/design-system-react-components";
-import PageLayout from "../../pageLayout/pageLayout";
 import { usePathname, useRouter } from "next/navigation";
-import {
-  createAdobeAnalyticsPageName,
-  displayResults,
-  totalNumPages,
-} from "../../../utils/utils";
+import { displayResults, totalNumPages } from "../../../utils/utils";
 import NoResultsFound from "../../results/noResultsFound";
 import LaneLoading from "../../lane/laneLoading";
 import { CardsGrid } from "../../grids/cardsGrid";
@@ -44,15 +39,13 @@ export function CollectionsPage({ data, params, renderCollections }) {
       : [data.collection]
     : [];
 
-  const collectionSearchManager = useRef<SearchManager>(
-    new SearchManager({
-      initialPage: Number(params.page) || DEFAULT_PAGE_NUM,
-      initialSort: params.sort || DEFAULT_COLLECTION_SORT,
-      initialFilters: params.filters || DEFAULT_FILTERS,
-      initialKeywords: params.collection_keywords || DEFAULT_SEARCH_TERM,
-      isCollectionSearch: true,
-    })
-  ).current;
+  const collectionSearchManager = new SearchManager({
+    initialPage: Number(params.page) || DEFAULT_PAGE_NUM,
+    initialSort: params.sort || DEFAULT_COLLECTION_SORT,
+    initialFilters: params.filters || DEFAULT_FILTERS,
+    initialKeywords: params.collection_keywords || DEFAULT_SEARCH_TERM,
+    isCollectionSearch: true,
+  });
 
   const updateURL = async (queryString) => {
     setIsLoaded(false);
@@ -67,14 +60,7 @@ export function CollectionsPage({ data, params, renderCollections }) {
   }, []);
 
   return (
-    <PageLayout
-      activePage="collections"
-      breadcrumbs={[
-        { text: "Home", url: "/" },
-        { text: "Collections", url: "/collections" },
-      ]}
-      adobeAnalyticsPageName={createAdobeAnalyticsPageName("all-collections")}
-    >
+    <>
       <Box
         sx={{
           maxWidth: "730px",
@@ -230,6 +216,6 @@ export function CollectionsPage({ data, params, renderCollections }) {
           }}
         />
       )}
-    </PageLayout>
+    </>
   );
 }

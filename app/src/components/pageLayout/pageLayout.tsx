@@ -14,11 +14,14 @@ import { ADOBE_EMBED_URL } from "../../config/constants";
 import { trackVirtualPageView } from "../../utils/utils";
 import { FeedbackProvider } from "@/src/context/FeedbackProvider";
 import { SearchProvider } from "@/src/context/SearchContext";
+import { SearchParams } from "@/search/index/page";
+import CollectionSearchParams from "@/src/types/CollectionSearchParams";
 
 interface PageLayoutProps {
   activePage: string;
   breadcrumbs?: BreadcrumbsDataProps[];
   adobeAnalyticsPageName?: string;
+  searchParams?: SearchParams | CollectionSearchParams;
 }
 
 const PageLayout = ({
@@ -26,6 +29,7 @@ const PageLayout = ({
   activePage,
   breadcrumbs,
   adobeAnalyticsPageName,
+  searchParams,
 }: PropsWithChildren<PageLayoutProps>) => {
   // Track page view events to Adobe Analytics
   useEffect(() => {
@@ -48,7 +52,7 @@ const PageLayout = ({
       </Script>
       {/* <!-- / Adobe Analytics  --> */}
       <DSProvider>
-        <SearchProvider>
+        <SearchProvider searchParams={searchParams}>
           <FeedbackProvider>
             <SkipNavigation />
             <Header />

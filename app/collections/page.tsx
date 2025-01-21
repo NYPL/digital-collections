@@ -4,6 +4,8 @@ import { CollectionsPage } from "../src/components/pages/collectionsPage/collect
 import { getCollectionsData } from "@/src/utils/apiHelpers";
 import { redirect } from "next/navigation";
 import CollectionSearchParams from "@/src/types/CollectionSearchParams";
+import PageLayout from "@/src/components/pageLayout/pageLayout";
+import { createAdobeAnalyticsPageName } from "@/src/utils/utils";
 export type CollectionsProps = {
   params: { slug: string };
   searchParams: CollectionSearchParams;
@@ -35,11 +37,21 @@ export default async function Collections({ searchParams }: CollectionsProps) {
     data?.collection !== undefined && !data?.collection?.nil;
   return (
     <Suspense>
-      <CollectionsPage
-        data={data}
-        params={searchParams}
-        renderCollections={renderCollections}
-      />
+      <PageLayout
+        activePage="collections"
+        breadcrumbs={[
+          { text: "Home", url: "/" },
+          { text: "Collections", url: "/collections" },
+        ]}
+        adobeAnalyticsPageName={createAdobeAnalyticsPageName("all-collections")}
+        searchParams={searchParams}
+      >
+        <CollectionsPage
+          params={searchParams}
+          data={data}
+          renderCollections={renderCollections}
+        />
+      </PageLayout>
     </Suspense>
   );
 }

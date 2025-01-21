@@ -105,6 +105,7 @@ import {
   DEFAULT_SEARCH_TERM,
 } from "../config/constants";
 import { Filter, SearchManager } from "../utils/searchManager";
+import { SearchParams } from "@/search/index/page";
 
 interface SearchContextType {
   searchManager: SearchManager;
@@ -133,18 +134,22 @@ export const filterToString = (filters: Filter[]): string => {
 
 const SearchContext = createContext<SearchContextType | undefined>(undefined);
 
-export const SearchProvider = ({ children }: { children: React.ReactNode }) => {
+export const SearchProvider = ({
+  searchParams,
+  children,
+}: {
+  searchParams;
+  children: React.ReactNode;
+}) => {
   //const pathname = usePathname(); // this doesn't need to be a dependency (Perhaps)
-  const searchParams = useSearchParams(); // Forces re-render when params change
-
-  const params = Object.fromEntries(searchParams.entries());
+  //const searchParams = useSearchParams(); // Forces re-render when params change
 
   const searchManager = new SearchManager({
-    initialPage: Number(params.page) || DEFAULT_PAGE_NUM,
-    initialSort: params.sort || DEFAULT_SORT,
-    initialFilters: stringToFilter(params.filters),
-    initialKeywords: params.keywords || DEFAULT_SEARCH_TERM,
-    isCollectionSearch: params.isCollectionSearch === "true",
+    initialPage: Number(searchParams.page) || DEFAULT_PAGE_NUM,
+    initialSort: searchParams.sort || DEFAULT_SORT,
+    initialFilters: stringToFilter(searchParams.filters),
+    initialKeywords: searchParams.keywords || DEFAULT_SEARCH_TERM,
+    isCollectionSearch: searchParams.isCollectionSearch === "true",
   });
 
   return (
