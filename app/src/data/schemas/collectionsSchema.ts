@@ -1,8 +1,8 @@
 const collectionsSchema = {
   response: {
-    numResults: "6",
-    page: "1",
-    perPage: "40",
+    numResults: "integer",
+    page: "integer",
+    perPage: "integer",
     // move from "collection" to "collections"
     collections: [
       {
@@ -12,7 +12,7 @@ const collectionsSchema = {
         imageID: "string",
         numberOfDigitizedItems: "string", // remove numItems
         containsAVMaterial: "boolean",
-        constainsOnSiteMaterials: "boolean",
+        containsOnSiteMaterials: "boolean",
       },
       {
         title: "string",
@@ -21,7 +21,7 @@ const collectionsSchema = {
         imageID: "string",
         numberOfDigitizedItems: "string",
         containsAVMaterial: "boolean",
-        constainsOnSiteMaterials: "boolean",
+        containsOnSiteMaterials: "boolean",
       },
       {
         title: "string",
@@ -30,7 +30,7 @@ const collectionsSchema = {
         imageID: "string",
         numberOfDigitizedItems: "string",
         containsAVMaterial: "boolean",
-        constainsOnSiteMaterials: "boolean",
+        containsOnSiteMaterials: "boolean",
       },
       {
         title: "string",
@@ -39,7 +39,7 @@ const collectionsSchema = {
         imageID: "string",
         numberOfDigitizedItems: "string",
         containsAVMaterial: "boolean",
-        constainsOnSiteMaterials: "boolean",
+        containsOnSiteMaterials: "boolean",
       },
     ],
   },
