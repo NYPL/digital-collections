@@ -67,8 +67,6 @@ export class SearchManager {
   }
 
   handlePageChange(pageNumber: number) {
-    this.currentPage = pageNumber;
-
     const queryString = this.isCollectionSearch
       ? filterQueryStringFromObject(
           {
@@ -89,8 +87,6 @@ export class SearchManager {
   }
 
   handleSortChange(id: string) {
-    this.currentSort = id;
-
     if (this.isCollectionSearch) {
       const queryString = filterQueryStringFromObject(
         {
