@@ -109,33 +109,31 @@ export class SearchManager {
   }
 
   handleAddFilter(newFilter: Filter) {
-    this.currentFilters = [...this.currentFilters, newFilter];
-
     const queryString = filterQueryStringFromObject({
       keywords: this.currentKeywords,
       sort: this.currentSort,
       page: this.currentPage,
-      filters: filterToString(this.currentFilters),
+      filters: filterToString([...this.currentFilters, newFilter]),
     });
     return queryString;
   }
 
   handleRemoveFilter(filterToRemove: Filter) {
-    this.currentFilters = this.currentFilters.filter(
-      (filter) =>
-        !(
-          filter.filter === filterToRemove.filter &&
-          filter.value === filterToRemove.value
-        )
-    );
-
     const queryString =
       this.currentFilters.length > 0
         ? filterQueryStringFromObject({
             keywords: this.currentKeywords,
             sort: this.currentSort,
             page: this.currentPage,
-            filters: filterToString(this.currentFilters),
+            filters: filterToString(
+              this.currentFilters.filter(
+                (filter) =>
+                  !(
+                    filter.filter === filterToRemove.filter &&
+                    filter.value === filterToRemove.value
+                  )
+              )
+            ),
           })
         : filterQueryStringFromObject({
             keywords: this.currentKeywords,
@@ -147,14 +145,11 @@ export class SearchManager {
   }
 
   clearAllFilters() {
-    this.currentFilters = [];
-    this.currentPage = DEFAULT_PAGE_NUM;
-
     const queryString = filterQueryStringFromObject({
       keywords: this.currentKeywords,
       sort: this.currentSort,
-      page: this.currentPage,
-      filters: filterToString(this.currentFilters),
+      page: DEFAULT_PAGE_NUM,
+      filters: filterToString([]),
     });
 
     return queryString;
