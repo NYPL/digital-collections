@@ -12,7 +12,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## Updated
 
 - Public domain link correction (DR-3378)
-- Updating middleware to no longer include `/collections` and `collections/lane/:slug`
+- Updated middleware to no longer include `/collections` and `collections/lane/:slug`
+- Updated QA cluster name
 
 ## [0.2.6] 2025-01-13
 
