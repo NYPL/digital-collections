@@ -8,43 +8,37 @@ const collectionsSchema = {
     perPage: "integer",
     // Sort fields
     sort: "string ie: title DESC",
-    // Filter fields
-    filterField: "string",
     // move from "collection" to "collections"
     collections: [
       {
         title: "string",
         uuid: "string",
-        url: "string",
-        imageID: "string",
-        numberOfDigitizedItems: "string", // remove numItems
+        imageID: "string | null",
+        numberOfDigitizedItems: "integer", // remove numItems
         containsAVMaterial: "boolean",
         containsOnSiteMaterial: "boolean",
       },
       {
         title: "string",
         uuid: "string",
-        url: "string",
-        imageID: "string",
-        numberOfDigitizedItems: "string", // remove numItems
+        imageID: "string | null",
+        numberOfDigitizedItems: "integer", // remove numItems
         containsAVMaterial: "boolean",
         containsOnSiteMaterial: "boolean",
       },
       {
         title: "string",
         uuid: "string",
-        url: "string",
-        imageID: "string",
-        numberOfDigitizedItems: "string", // remove numItems
+        imageID: "string | null",
+        numberOfDigitizedItems: "integer", // remove numItems
         containsAVMaterial: "boolean",
         containsOnSiteMaterial: "boolean",
       },
       {
         title: "string",
         uuid: "string",
-        url: "string",
-        imageID: "string",
-        numberOfDigitizedItems: "string", // remove numItems
+        imageID: "string | null",
+        numberOfDigitizedItems: "integer", // remove numItems
         containsAVMaterial: "boolean",
         containsOnSiteMaterial: "boolean",
       },
