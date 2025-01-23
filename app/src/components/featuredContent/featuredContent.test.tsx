@@ -16,7 +16,10 @@ describe("Featured Content component renders with expected props", () => {
       );
 
       const button = within(component).getByTestId("featured-learn-more");
-      expect(button).toHaveAttribute("href", "https://publicdomain.nypl.org");
+      expect(button).toHaveAttribute(
+        "href",
+        "https://www.nypl.org/research/resources/public-domain-collections"
+      );
     });
   });
 
