@@ -7,7 +7,7 @@ export function middleware(request: NextRequest) {
     return NextResponse.next();
   }
   // Excluding /collections and /collections/lane/[slug] from matcher
-  if (url.startsWith("/collections/lane/") || url === "/collections") {
+  else if (url.startsWith("/collections/lane/") || url === "/collections") {
     return NextResponse.next();
   } else {
     return NextResponse.redirect(new URL("/", request.url));
