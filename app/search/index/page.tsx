@@ -2,7 +2,7 @@ import React from "react";
 import PageLayout from "../../src/components/pageLayout/pageLayout";
 import { mockItems } from "../../../__tests__/__mocks__/data/mockItems"; // TODO: render mockItems
 import { createAdobeAnalyticsPageName } from "@/src/utils/utils";
-import SearchContent from "@/src/components/search/content";
+import SearchPage from "@/src/components/pages/searchPage/searchPage";
 
 export type SearchProps = {
   params: { slug: string };
@@ -22,7 +22,7 @@ export default async function Search() {
         ""
       )} //TODO: if there are no query params, page name should be createAdobeAnalyticsPageName("all-items", "")
     >
-      <SearchContent data={mockItems} />
+      <SearchPage data={[...mockItems, ...mockItems]} />
     </PageLayout>
   );
 }
