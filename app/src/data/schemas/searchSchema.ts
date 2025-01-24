@@ -45,7 +45,6 @@ const searchSchema = {
         uuid: "string",
         recordType: "collection | sub-collection | item",
         title: "string",
-        url: "string", // probably don't need?
         imageID: "string | null",
         numberOfDigitizedItems: "number",
         containsOnSiteMaterial: "boolean",
@@ -59,7 +58,6 @@ const searchSchema = {
         uuid: "string",
         recordType: "collection | sub-collection | item",
         title: "string",
-        url: "string", // probably don't need?
         imageID: "string | null",
         numberOfDigitizedItems: "number",
         containsOnSiteMaterial: "boolean",
@@ -73,7 +71,6 @@ const searchSchema = {
         uuid: "string",
         recordType: "collection | sub-collection | item",
         title: "string",
-        url: "string", // probably don't need?
         imageID: "string | null",
         numberOfDigitizedItems: "number",
         containsOnSiteMaterial: "boolean",
