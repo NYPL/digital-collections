@@ -9,7 +9,36 @@ const searchSchema = {
     // Sort fields
     sort: "string ie: title DESC",
     // Filter fields
-    filterField: "string", // copy subject to change
+    // facets are an array of objects past in the request body
+    filterByPublicDomain = "boolean",
+    filterByAvailableOnline = "boolean",
+    filterByOnSiteOnly = "boolean",
+    facets: [
+      {
+        rootCollection_rootCollectionUUID_s: {
+          facet_counts: {
+            facet_queries: {
+              uuid: "integer",
+            },
+            facet_fields: {
+              rootCollection_rootCollectionUUID_s: ["string||uuid", "integer"],
+            },
+          },
+        },
+      },
+      {
+        topic_mtxt_s: {
+          facet_counts: {
+            facet_queries: {
+              string: "integer",
+            },
+            facet_fields: {
+              topic_mtxt_s: ["string", "integer"],
+            },
+          },
+        },
+      },
+    ],
     // Results
     results: [
       {
