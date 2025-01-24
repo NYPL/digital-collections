@@ -1,3 +1,4 @@
+"use client";
 import {
   Box,
   Menu,
@@ -5,11 +6,11 @@ import {
   Pagination,
 } from "@nypl/design-system-react-components";
 import React, { useState } from "react";
-import { useSearchParams, usePathname, useRouter } from "next/navigation";
+import { useSearchParams, useRouter } from "next/navigation";
 import { CardsGrid } from "../grids/cardsGrid";
 import LaneLoading from "../lane/laneLoading";
 
-const SearchContent = ({ showFilter, isSearchPage, data }) => {
+const SearchContent = ({ data }) => {
   const isLoaded = true;
   const queryParams = useSearchParams();
   const query = queryParams.toString();
@@ -38,47 +39,46 @@ const SearchContent = ({ showFilter, isSearchPage, data }) => {
 
   return (
     <>
+      <Box sx={{ height: "285px", background: "ui.bg.default" }} />
       <Box sx={{ display: "flex", gap: "xs", marginBottom: "l" }}>
-        {showFilter ? (
-          <>
-            <Text sx={{ fontWeight: "500", marginBottom: 0, marginTop: "xs" }}>
-              {" "}
-              Sort by{" "}
-            </Text>{" "}
-            <Menu
-              //showSelectionAsLabel
-              showLabel
-              selectedItem="chronological-descending"
-              labelText={"Sort By"}
-              listItemsData={[
-                {
-                  id: "chronological-descending",
-                  label: "Newest to oldest",
-                  onClick: onMenuClick,
-                  type: "action",
-                },
-                {
-                  id: "chronological-ascending",
-                  label: "Oldest to newest",
-                  onClick: onMenuClick,
-                  type: "action",
-                },
-                {
-                  id: "alphabetical-descending",
-                  label: "Title A to Z",
-                  onClick: onMenuClick,
-                  type: "action",
-                },
-                {
-                  id: "alphabetical-ascending",
-                  label: "Title Z to A",
-                  onClick: onMenuClick,
-                  type: "action",
-                },
-              ]}
-            />
-          </>
-        ) : null}
+        <>
+          <Text sx={{ fontWeight: "500", marginBottom: 0, marginTop: "xs" }}>
+            {" "}
+            Sort by{" "}
+          </Text>{" "}
+          <Menu
+            //showSelectionAsLabel
+            showLabel
+            selectedItem="chronological-descending"
+            labelText={"Sort By"}
+            listItemsData={[
+              {
+                id: "chronological-descending",
+                label: "Newest to oldest",
+                onClick: onMenuClick,
+                type: "action",
+              },
+              {
+                id: "chronological-ascending",
+                label: "Oldest to newest",
+                onClick: onMenuClick,
+                type: "action",
+              },
+              {
+                id: "alphabetical-descending",
+                label: "Title A to Z",
+                onClick: onMenuClick,
+                type: "action",
+              },
+              {
+                id: "alphabetical-ascending",
+                label: "Title Z to A",
+                onClick: onMenuClick,
+                type: "action",
+              },
+            ]}
+          />
+        </>
       </Box>
 
       {isLoaded ? (

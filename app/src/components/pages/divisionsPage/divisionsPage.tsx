@@ -33,43 +33,54 @@ export default function DivisionsPage({ summary, divisions }: DivisionsProps) {
       ]}
       adobeAnalyticsPageName={createAdobeAnalyticsPageName("divisions")}
     >
-      {divisions && divisions.length > 0 ? (
-        <>
-          <Box
-            sx={{
-              maxWidth: "730px",
-              "> hgroup > p": {
-                fontWeight: "400 !important",
-              },
-            }}
-          >
-            <Heading level="h1" text="Divisions" subtitle={summary} />
-          </Box>
-          <HorizontalRule sx={{ marginTop: "xxl", marginBottom: "s" }} />
-          {isLoaded ? (
-            divisions.map((division, key) => (
-              <DCLane
-                key={key}
-                records={division.collections}
-                seeMoreLink={`/divisions`}
-                laneName={division.name}
-                laneSlug={division.slug}
-              />
-            ))
-          ) : (
-            <>
-              {[...Array(36)].map((_, index) => (
-                <LaneLoading id={index} key={index} />
-              ))}
-            </>
-          )}
-        </>
-      ) : (
-        <>
-          <Heading level="h1" text="Divisions" />
-          <Text sx={{ mt: "s" }}>There was an error accessing this page.</Text>
-        </>
-      )}
+      <Box
+        id="mainContent"
+        sx={{
+          margin: "auto",
+          maxWidth: "1280px",
+          padding: "64px 16px",
+        }}
+      >
+        {divisions && divisions.length > 0 ? (
+          <>
+            <Box
+              sx={{
+                maxWidth: "730px",
+                "> hgroup > p": {
+                  fontWeight: "400 !important",
+                },
+              }}
+            >
+              <Heading level="h1" text="Divisions" subtitle={summary} />
+            </Box>
+            <HorizontalRule sx={{ marginTop: "xxl", marginBottom: "s" }} />
+            {isLoaded ? (
+              divisions.map((division, key) => (
+                <DCLane
+                  key={key}
+                  records={division.collections}
+                  seeMoreLink={`/divisions`}
+                  laneName={division.name}
+                  laneSlug={division.slug}
+                />
+              ))
+            ) : (
+              <>
+                {[...Array(36)].map((_, index) => (
+                  <LaneLoading id={index} key={index} />
+                ))}
+              </>
+            )}
+          </>
+        ) : (
+          <>
+            <Heading level="h1" text="Divisions" />
+            <Text sx={{ mt: "s" }}>
+              There was an error accessing this page.
+            </Text>
+          </>
+        )}
+      </Box>
     </PageLayout>
   );
 }
