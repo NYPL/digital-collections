@@ -31,20 +31,20 @@ const exampleMultiSelect = (name: string) => {
       selectedItems={{}}
       items={[
         {
-          id: "architecture",
-          name: "Architecture",
+          id: name,
+          name: name,
         },
         {
-          id: "art_history",
-          name: "Art History",
+          id: `${name}1`,
+          name: `${name}1`,
         },
         {
-          id: "design",
-          name: "Design",
+          id: `${name}2`,
+          name: `${name}2`,
         },
         {
-          id: "business",
-          name: "Business",
+          id: `${name}3`,
+          name: `${name}3`,
         },
       ]}
       onChange={() => {}}
