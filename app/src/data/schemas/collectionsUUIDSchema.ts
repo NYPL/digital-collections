@@ -1,6 +1,6 @@
 const collectionsUUIDSchema = {
   response: {
-    // TODO: Awaiting product requirements
+    TODO: "Awaiting product requirements",
   },
 };
 
