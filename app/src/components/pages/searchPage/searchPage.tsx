@@ -22,9 +22,8 @@ const SearchPage = ({ data }) => {
     <Box id="mainContent">
       <Box
         sx={{
-          height: "min-content",
           background: "ui.bg.default",
-          padding: "m",
+          padding: "l",
           marginBottom: "m",
         }}
       >
