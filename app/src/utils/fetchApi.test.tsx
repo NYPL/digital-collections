@@ -1,6 +1,6 @@
 import { fetchApi } from "./fetchApi";
 
-describe.skip("fetchApi", () => {
+describe("fetchApi", () => {
   const mockApiUrl = "mockurl.org";
   const mockAuthToken = "mockAuthToken";
 
