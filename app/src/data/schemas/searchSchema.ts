@@ -17,25 +17,107 @@ const searchSchema = {
     // filterByOnSiteOnly: "boolean",
     facets: [
       {
-        rootCollection_rootCollectionUUID_s: {
-          facet_counts: {
-            facet_queries: {
-              uuid: "integer",
-            },
-            facet_fields: {
-              rootCollection_rootCollectionUUID_s: ["string||uuid", "integer"],
-            },
-          },
-        },
-      },
-      {
         topic_mtxt_s: {
           facet_counts: {
             facet_queries: {
               string: "integer",
             },
             facet_fields: {
-              topic_mtxt_s: ["string", "integer"],
+              topic_mtxt_s: ["string", "integer", "string", "integer"],
+            },
+          },
+        },
+      },
+      {
+        namePart_mtxt_s: {
+          facet_counts: {
+            facet_queries: {
+              string: "integer",
+            },
+            facet_fields: {
+              namePart_mtxt_s: ["string", "integer", "string", "integer"],
+            },
+          },
+        },
+      },
+      {
+        rootCollection_rootCollectionUUID_s: {
+          facet_counts: {
+            facet_queries: {
+              uuid: "integer",
+            },
+            facet_fields: {
+              rootCollection_rootCollectionUUID_s: [
+                "string||uuid",
+                "integer",
+                "string||uuid",
+                "integer",
+              ],
+            },
+          },
+        },
+      },
+      {
+        placeTerm_mtxt_s: {
+          facet_counts: {
+            facet_queries: {
+              string: "integer",
+            },
+            facet_fields: {
+              placeTerm_mtxt_s: ["string", "integer", "string", "integer"],
+            },
+          },
+        },
+      },
+      {
+        genre_mtxt_s: {
+          facet_counts: {
+            facet_queries: {
+              string: "integer",
+            },
+            facet_fields: {
+              genre_mtxt_s: ["string", "integer", "string", "integer"],
+            },
+          },
+        },
+      },
+      {
+        publisher_mtxt_s: {
+          facet_counts: {
+            facet_queries: {
+              string: "integer",
+            },
+            facet_fields: {
+              publisher_mtxt_s: ["string", "integer", "string", "integer"],
+            },
+          },
+        },
+      },
+      {
+        divisionFullname_mtxt_s: {
+          facet_counts: {
+            facet_queries: {
+              string: "integer",
+            },
+            facet_fields: {
+              divisionFullname_mtxt_s: [
+                "string",
+                "integer",
+                "string",
+                "integer",
+              ],
+            },
+          },
+        },
+      },
+      {
+        typeOfResource_mtxt_s: {
+          facet_counts: {
+            facet_queries: {
+              string: "integer",
+            },
+            facet_fields: {
+              typeOfResource_mtxt_s: ["string", "integer", "string", "integer"],
             },
           },
         },
