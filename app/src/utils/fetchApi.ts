@@ -44,6 +44,7 @@ export const fetchApi = async (
   };
 
   try {
+    console.log("Trying apiUrl in fetchApi", apiUrl);
     const response = (await fetchWithTimeout(apiUrl, {
       method,
       headers,
@@ -59,7 +60,7 @@ export const fetchApi = async (
     const data = await response.json();
     return method === "GET" ? data?.nyplAPI?.response : data;
   } catch (error) {
-    logger.error(error);
-    throw new Error(error.message);
+    logger.error("FetchApi final error:", error);
+    // throw new Error(error.message);
   }
 };
