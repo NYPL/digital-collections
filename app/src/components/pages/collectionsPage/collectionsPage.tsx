@@ -120,14 +120,7 @@ export function CollectionsPage({ data, params, renderCollections }) {
       ]}
       adobeAnalyticsPageName={createAdobeAnalyticsPageName("all-collections")}
     >
-      <Box
-        id="mainContent"
-        sx={{
-          margin: "auto",
-          maxWidth: "1280px",
-          padding: "64px 16px",
-        }}
-      >
+      <>
         <Box
           sx={{
             maxWidth: "730px",
@@ -264,7 +257,7 @@ export function CollectionsPage({ data, params, renderCollections }) {
             }}
           />
         )}
-      </Box>
+      </>
     </PageLayout>
   );
 }

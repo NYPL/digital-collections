@@ -68,14 +68,7 @@ export default function DivisionPage({ data }: any) {
       ]}
       adobeAnalyticsPageName={createAdobeAnalyticsPageName("divisions", slug)}
     >
-      <Box
-        id="mainContent"
-        sx={{
-          margin: "auto",
-          maxWidth: "1280px",
-          padding: "64px 16px",
-        }}
-      >
+      <>
         <Box
           sx={{
             maxWidth: "730px",
@@ -162,7 +155,7 @@ export default function DivisionPage({ data }: any) {
             }}
           />
         )}
-      </Box>
+      </>
     </PageLayout>
   );
 }

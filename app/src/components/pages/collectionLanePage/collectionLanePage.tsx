@@ -72,14 +72,7 @@ export default function CollectionLanePage({ data }: any) {
         slug
       )}
     >
-      <Box
-        id="mainContent"
-        sx={{
-          margin: "auto",
-          maxWidth: "1280px",
-          padding: "64px 16px",
-        }}
-      >
+      <>
         <Box
           sx={{
             display: "flex",
@@ -136,7 +129,7 @@ export default function CollectionLanePage({ data }: any) {
             }}
           />
         )}
-      </Box>
+      </>
     </PageLayout>
   );
 }

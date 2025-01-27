@@ -53,7 +53,9 @@ const PageLayout = ({
           {activePage === "home" ||
           activePage === "about" ||
           activePage === "notFound" ||
-          activePage === "serverError" ? (
+          activePage === "serverError" ||
+          activePage === "search" ||
+          activePage === "collection" ? (
             children
           ) : (
             <>
@@ -63,7 +65,16 @@ const PageLayout = ({
                 aria-label={activePage}
               />
               {/* TODO: Move to TemplateAppContainer once spacing is more flexible.  --> */}
-              {children as JSX.Element}
+              <Box
+                id="mainContent"
+                sx={{
+                  margin: "auto",
+                  maxWidth: "1280px",
+                  padding: "64px 16px",
+                }}
+              >
+                {children as JSX.Element}
+              </Box>
             </>
           )}
         </FeedbackProvider>
