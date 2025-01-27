@@ -38,7 +38,10 @@ export default function Collection({ params }: CollectionProps) {
         params.slug
       )}
     >
-      <CollectionPage slug={"Example collection"} data={mockItems} />
+      <CollectionPage
+        slug={"Example collection"}
+        data={[...mockItems, ...mockItems]}
+      />
     </PageLayout>
   );
 }

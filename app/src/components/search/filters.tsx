@@ -25,7 +25,6 @@ const exampleFacetCategories = [
 const exampleMultiSelect = (name: string) => {
   return (
     <MultiSelect
-      sx={{ width: "-webkit-fill-available" }}
       id={`${name}-select`}
       buttonText={name}
       selectedItems={{}}
