@@ -9,23 +9,12 @@ import {
   TagSet,
   Link,
   Icon,
-  VStack,
 } from "@nypl/design-system-react-components";
 import React from "react";
 import { CARDS_PER_PAGE } from "@/src/config/constants";
 import { displayResults } from "@/src/utils/utils";
 import Filters from "../../search/filters";
-import { mockCollectionCards } from "__tests__/__mocks__/data/mockCollectionCards";
-import Card from "@/src/components/card/card";
-
-const exampleResultProps = {
-  cardOffset: [0, -130],
-  imageHeight: 144,
-  slug: "test-slug",
-  id: "1",
-  isLargerThanLargeTablet: true,
-  record: mockCollectionCards[0],
-};
+import { CardsGrid } from "../../grids/cardsGrid";
 
 const SearchPage = ({ data }) => {
   const totalPages = 10;
@@ -85,12 +74,7 @@ const SearchPage = ({ data }) => {
         )}
                     results`}</Heading>
 
-        <VStack marginTop="l" width="400px">
-          <Card {...exampleResultProps} />
-          <Card {...exampleResultProps} />
-          <Card {...exampleResultProps} />
-          <Card {...exampleResultProps} />
-        </VStack>
+        <CardsGrid records={data} />
         <Flex marginTop="xxl" marginBottom="xxl" alignContent="center">
           <Link
             minWidth="100px"
