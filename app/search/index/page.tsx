@@ -12,7 +12,7 @@ export type SearchProps = {
 export default async function Search() {
   return (
     <PageLayout
-      activePage="collections"
+      activePage="search"
       breadcrumbs={[
         { text: "Home", url: "/" },
         { text: "Keyword Search", url: "/search/index" },

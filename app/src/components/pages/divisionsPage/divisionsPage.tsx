@@ -33,14 +33,7 @@ export default function DivisionsPage({ summary, divisions }: DivisionsProps) {
       ]}
       adobeAnalyticsPageName={createAdobeAnalyticsPageName("divisions")}
     >
-      <Box
-        id="mainContent"
-        sx={{
-          margin: "auto",
-          maxWidth: "1280px",
-          padding: "64px 16px",
-        }}
-      >
+      <>
         {divisions && divisions.length > 0 ? (
           <>
             <Box
@@ -80,7 +73,7 @@ export default function DivisionsPage({ summary, divisions }: DivisionsProps) {
             </Text>
           </>
         )}
-      </Box>
+      </>
     </PageLayout>
   );
 }
