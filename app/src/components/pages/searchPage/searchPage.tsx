@@ -67,11 +67,11 @@ const SearchPage = ({ data }) => {
           />
         </Flex>
         <HorizontalRule />
-        <Heading marginTop="xl" size="heading5">{`Displaying ${displayResults(
-          data.numResults,
-          CARDS_PER_PAGE,
-          1
-        )}
+        <Heading
+          tabIndex={-1}
+          marginTop="xl"
+          size="heading5"
+        >{`Displaying ${displayResults(data.numResults, CARDS_PER_PAGE, 1)}
                     results`}</Heading>
 
         <CardsGrid records={data} />
@@ -85,12 +85,7 @@ const SearchPage = ({ data }) => {
             href="#"
           >
             Back to top{"  "}
-            <Icon
-              name="arrow"
-              sx={{ "> svg": { fill: "ui.link" } }}
-              iconRotation="rotate180"
-              size="xsmall"
-            />
+            <Icon name="arrow" iconRotation="rotate180" size="xsmall" />
           </Link>
           {totalPages > 1 && (
             <Pagination

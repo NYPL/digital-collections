@@ -104,7 +104,7 @@ const Filters = () => {
       <Button
         id={"see-more-filters"}
         buttonType="secondary"
-        onClick={() => setIsExpanded(!isExpanded)}
+        onClick={() => setIsExpanded((prev) => !prev)}
       >
         {isExpanded ? "Less filter options" : "See all filter options"}
       </Button>
