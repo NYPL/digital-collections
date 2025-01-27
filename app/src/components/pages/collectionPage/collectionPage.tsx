@@ -10,10 +10,15 @@ import {
   Button,
   Link,
   SearchBar,
+  Icon,
+  Pagination,
 } from "@nypl/design-system-react-components";
 import React from "react";
 import Filters from "../../search/filters";
 import { headerBreakpoints } from "@/src/utils/breakpoints";
+import { CardsGrid } from "../../grids/cardsGrid";
+import { displayResults } from "@/src/utils/utils";
+import { CARDS_PER_PAGE } from "@/src/config/constants";
 
 const textLink = (href, text) => {
   return (
@@ -80,14 +85,14 @@ const CollectionPage = ({ slug, data }) => {
           />
         </Flex>
         <HorizontalRule />
-        <Flex marginTop="l" marginBottom="l" flexDir="column">
-          <Heading size="heading6" marginBottom="s">
+        <Flex marginTop="m" marginBottom="m" flexDir="column">
+          <Heading size="heading6" marginBottom="xs">
             Collection data
           </Heading>
-          <Text marginBottom="s">
+          <Text marginBottom="xs">
             This collection is also available in Archives & Manuscripts
           </Text>
-          <ButtonGroup marginBottom="l">
+          <ButtonGroup marginBottom="m">
             <Button buttonType="secondary" id="finding-aid-btn">
               View Finding Aid
             </Button>
@@ -98,13 +103,14 @@ const CollectionPage = ({ slug, data }) => {
           <Text size="overline1" marginBottom="xs">
             Dates / Origin
           </Text>
-          <Text>
-            Date created: {textLink("/search/index?year_begin=1800", "1800")}
+          <Text marginBottom="m">
+            Date created: {textLink("/search/index?year_begin=1800", "1800")}{" "}
+            (approximate)
           </Text>
           <Text size="overline1" marginBottom="xs">
             Library Locations
           </Text>
-          <Text>
+          <Text marginBottom="m">
             {textLink(
               "/divisions/billy-rose-theatre-division",
               "Example division"
@@ -114,25 +120,36 @@ const CollectionPage = ({ slug, data }) => {
             See more collection data
           </Link>
         </Flex>
-        <Flex gap="xxxl">
+        <Flex gap="xxl" sx={{ flexDir: { base: "column", md: "row" } }}>
           <Box
             sx={{
               background: "ui.bg.default",
               padding: "l",
               height: "400px",
+              minWidth: "300px",
+              justifyItems: "center",
             }}
           >
             <Heading size="heading6">Collection structure</Heading>
           </Box>
-          <Flex>
-            <Box
+          <Box width="100%">
+            <Flex
+              flexDir="column"
               sx={{
                 background: "ui.bg.default",
-                padding: "l",
-                height: "109px",
-                width: "934px",
+                paddingTop: "s",
+                paddingBottom: "s",
+                paddingLeft: "m",
+                paddingRight: "m",
+                marginBottom: "l",
               }}
             >
+              <Heading
+                sx={{ marginBottom: "xs", fontSize: "16px !important" }}
+                size="heading6"
+              >
+                Search this collection:
+              </Heading>
               <SearchBar
                 id="searchbar"
                 invalidText="Could not find the item"
@@ -144,6 +161,7 @@ const CollectionPage = ({ slug, data }) => {
                   placeholder: "Search this collection by item title",
                 }}
                 sx={{
+                  width: "fill",
                   flexFlow: "row nowrap",
                   button: {
                     borderRadius: "0px 2px 2px 0px",
@@ -175,8 +193,44 @@ const CollectionPage = ({ slug, data }) => {
                     },
                 }}
               />
-            </Box>
-          </Flex>
+            </Flex>
+            <Heading
+              marginTop="xl"
+              size="heading5"
+              tabIndex={-1}
+            >{`Displaying ${displayResults(data.numResults, CARDS_PER_PAGE, 1)}
+                                results`}</Heading>
+            <CardsGrid records={data} />
+            <Flex marginTop="xxl" marginBottom="xxl" alignContent="center">
+              <Link
+                minWidth="100px"
+                isUnderlined={false}
+                hasVisitedState={false}
+                gap="xxs"
+                type="action"
+                href="#"
+              >
+                Back to top{"  "}
+                <Icon
+                  name="arrow"
+                  sx={{ "> svg": { fill: "ui.link" } }}
+                  iconRotation="rotate180"
+                  size="xsmall"
+                />
+              </Link>
+
+              <Pagination
+                id="pagination-id"
+                initialPage={1}
+                currentPage={1}
+                pageCount={10}
+                sx={{
+                  justifyContent: "flex-end",
+                  gap: "s",
+                }}
+              />
+            </Flex>
+          </Box>
         </Flex>
       </Box>
     </Box>
