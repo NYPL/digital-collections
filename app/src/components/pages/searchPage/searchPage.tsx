@@ -53,7 +53,7 @@ const SearchPage = ({ data }) => {
             {`Displaying ${displayResults(data.numResults, CARDS_PER_PAGE, 1)}
                     results for "keyword"`}
           </Heading>
-          <Filters />
+          <Filters isCollection={false} />
         </Box>
       </Box>
       <Box
