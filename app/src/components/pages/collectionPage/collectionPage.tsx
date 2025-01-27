@@ -211,12 +211,7 @@ const CollectionPage = ({ slug, data }) => {
                 href="#"
               >
                 Back to top{"  "}
-                <Icon
-                  name="arrow"
-                  sx={{ "> svg": { fill: "ui.link" } }}
-                  iconRotation="rotate180"
-                  size="xsmall"
-                />
+                <Icon name="arrow" iconRotation="rotate180" size="xsmall" />
               </Link>
 
               <Pagination
