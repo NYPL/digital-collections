@@ -9,6 +9,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
+- Added skeleton for collection page (DR-3361)
 - Added skeleton for search page and filter component (DR-3364)
 
 ## [0.3.0] 2025-01-23
