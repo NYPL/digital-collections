@@ -3,9 +3,7 @@ import {
   Breadcrumbs,
   DSProvider,
   SkipNavigation,
-  useFeedbackBox,
   Box,
-  Button,
 } from "@nypl/design-system-react-components";
 import React, { useEffect } from "react";
 import { type PropsWithChildren } from "react";
@@ -55,7 +53,9 @@ const PageLayout = ({
           {activePage === "home" ||
           activePage === "about" ||
           activePage === "notFound" ||
-          activePage === "serverError" ? (
+          activePage === "serverError" ||
+          activePage === "search" ||
+          activePage === "collection" ? (
             children
           ) : (
             <>

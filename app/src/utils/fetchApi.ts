@@ -44,11 +44,15 @@ export const fetchApi = async (
   };
 
   try {
+    logger.error(`fetchWithTimeout: ${method} ${apiUrl}`);
     const response = (await fetchWithTimeout(apiUrl, {
       method,
       headers,
       body: method === "POST" ? JSON.stringify(options?.body) : undefined,
     })) as Response;
+
+    logger.error(`fetchWithTimeout response: ${response}`);
+    logger.error(`fetchWithTimeout response.status: ${response.status}`);
     if (!response.ok && response.status !== 200) {
       throw new Error(
         `fetchApi: ${response.status} ${
@@ -59,7 +63,7 @@ export const fetchApi = async (
     const data = await response.json();
     return method === "GET" ? data?.nyplAPI?.response : data;
   } catch (error) {
-    logger.error(error);
+    logger.error("FetchApi final error:", error);
     throw new Error(error.message);
   }
 };
