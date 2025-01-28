@@ -8,7 +8,7 @@ const searchSchema = {
     perPage: "integer",
     // The fields below would not be returned if not passed
     sort: "string ie: title DESC",
-    booleanFilter: "publicDomain | availableOnline | onSiteMaterial",
+    rightsFilter: "publicDomain | availableOnline | onSiteMaterial",
     dateStart: "integer ie: 1800",
     dateEnd: "integer ie: 1900",
     // Filter fields
