@@ -52,6 +52,7 @@ const CollectionPage = ({ slug, data }) => {
           sx={{ paddingLeft: { base: 0, xl: "s" } }}
         >
           <Heading
+            level="h1"
             size="heading2"
             sx={{
               maxWidth: "1250px",
@@ -60,7 +61,7 @@ const CollectionPage = ({ slug, data }) => {
           >
             {slug}
           </Heading>
-          <Filters isCollection={true} />
+          <Filters headingText="Refine your results" />
         </Box>
       </Box>
       <Box
@@ -144,13 +145,15 @@ const CollectionPage = ({ slug, data }) => {
                 marginBottom: "l",
               }}
             >
-              <Heading
-                sx={{ marginBottom: "xs", fontSize: "16px !important" }}
-                size="heading6"
-              >
-                Search this collection:
-              </Heading>
               <SearchBar
+                headingText={
+                  <Heading
+                    sx={{ marginBottom: "xs", fontSize: "16px !important" }}
+                    size="heading6"
+                  >
+                    Search this collection:
+                  </Heading>
+                }
                 id="searchbar"
                 invalidText="Could not find the item"
                 labelText="Search this collection by item title"
