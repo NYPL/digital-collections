@@ -6,11 +6,13 @@ const searchSchema = {
     numResults: "integer",
     page: "integer",
     perPage: "integer",
-    // Sort fields
+    // The fields below would not be returned if not passed
     sort: "string ie: title DESC",
+    booleanFilter: "publicDomain | availableOnline | onSiteMaterial",
+    dateStart: "integer ie: 1800",
+    dateEnd: "integer ie: 1900",
     // Filter fields
     // facets are an array of objects past in the request body
-    booleanFilter: "publicDomain | availableOnline | onSiteMaterial | null",
     facets: [
       {
         topic: {
@@ -129,7 +131,8 @@ const searchSchema = {
         numberOfDigitizedItems: "number",
         containsOnSiteMaterial: "boolean",
         containsAVMaterial: "boolean", // keeping bc the logic exists and it's already there
-        containsMultipleCaptures: "boolean", // used to determine whether or not an item should display the "multiple images" tag
+        containsMultipleCaptures: "boolean", // used to determine whether or not an item should display the "multiple images" tag,
+        // ^^ will only be returned on item
         contentType: "image | audio | video | pdf | null", // null
         highlights: { highlighted_field_name: ["string"] },
         firstIndexed_dt: "date",
