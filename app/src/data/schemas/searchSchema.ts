@@ -10,14 +10,12 @@ const searchSchema = {
     sort: "string ie: title DESC",
     // Filter fields
     // facets are an array of objects past in the request body
-
-    // TODO: Still awaiting product approval for these
-    // filterByPublicDomain: "boolean",
-    // filterByAvailableOnline: "boolean",
-    // filterByOnSiteOnly: "boolean",
+    filterByPublicDomain: "boolean",
+    filterByAvailableOnline: "boolean",
+    filterByOnSiteOnly: "boolean",
     facets: [
       {
-        topic_mtxt_s: {
+        topic: {
           facet_counts: {
             facet_queries: {
               string: "integer",
@@ -29,7 +27,7 @@ const searchSchema = {
         },
       },
       {
-        namePart_mtxt_s: {
+        name: {
           facet_counts: {
             facet_queries: {
               string: "integer",
@@ -41,7 +39,7 @@ const searchSchema = {
         },
       },
       {
-        rootCollection_rootCollectionUUID_s: {
+        collection: {
           facet_counts: {
             facet_queries: {
               uuid: "integer",
@@ -58,7 +56,7 @@ const searchSchema = {
         },
       },
       {
-        placeTerm_mtxt_s: {
+        place: {
           facet_counts: {
             facet_queries: {
               string: "integer",
@@ -70,7 +68,7 @@ const searchSchema = {
         },
       },
       {
-        genre_mtxt_s: {
+        genre: {
           facet_counts: {
             facet_queries: {
               string: "integer",
@@ -82,7 +80,7 @@ const searchSchema = {
         },
       },
       {
-        publisher_mtxt_s: {
+        publisher: {
           facet_counts: {
             facet_queries: {
               string: "integer",
@@ -94,7 +92,7 @@ const searchSchema = {
         },
       },
       {
-        divisionFullname_mtxt_s: {
+        division: {
           facet_counts: {
             facet_queries: {
               string: "integer",
@@ -111,7 +109,7 @@ const searchSchema = {
         },
       },
       {
-        typeOfResource_mtxt_s: {
+        type: {
           facet_counts: {
             facet_queries: {
               string: "integer",
