@@ -1,7 +1,6 @@
 import React from "react";
 import { Metadata } from "next";
 import PageLayout from "../../src/components/pageLayout/pageLayout";
-import SearchResults from "@/src/components/search/results";
 import { mockItems } from "__tests__/__mocks__/data/mockItems";
 import { createAdobeAnalyticsPageName } from "@/src/utils/utils";
 
@@ -21,7 +20,7 @@ export async function generateMetadata({
   };
 }
 
-export default function Collections({ params }: CollectionProps) {
+export default function Collection({ params }: CollectionProps) {
   return (
     <PageLayout
       activePage="lane"
@@ -37,8 +36,6 @@ export default function Collections({ params }: CollectionProps) {
         "collections",
         params.slug
       )}
-    >
-      <SearchResults showFilter={false} isSearchPage={false} data={mockItems} />
-    </PageLayout>
+    ></PageLayout>
   );
 }

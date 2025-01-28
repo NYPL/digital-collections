@@ -72,58 +72,64 @@ export default function CollectionLanePage({ data }: any) {
         slug
       )}
     >
-      <Box
-        sx={{
-          display: "flex",
-          flexDirection: "column",
-          [`@media screen and (min-width: ${headerBreakpoints.smTablet})`]: {
-            maxWidth: "715px",
-          },
-          gap: "m",
-        }}
-      >
-        <Heading sx={{ marginBottom: 0 }} level="h1" id={slug} text={title} />
-      </Box>
-      <HorizontalRule sx={{ marginTop: "xxl", marginBottom: "xxl" }} />
-      <Heading
-        size="heading5"
-        sx={{ marginBottom: "l" }}
-        ref={headingRef}
-        tabIndex={-1}
-        id={slug}
-        width="max-content"
-      >
-        {`Displaying ${displayResults(data.numResults, data.perPage, data.page)}
-        results`}
-      </Heading>
-      {isLoaded ? (
-        <CardsGrid records={data.collection} />
-      ) : (
-        Array(Math.ceil(data.collection?.length / 4))
-          .fill(null)
-          .map((_, index) => (
-            <LaneLoading
-              id={`lane-loading-${index}`}
-              key={`lane-loading-${index}`}
-              withTitle={false}
-            />
-          ))
-      )}
-      {totalPages > 1 && (
-        <Pagination
-          id="pagination-id"
-          initialPage={currentPage}
-          currentPage={currentPage}
-          pageCount={totalPages}
-          onPageChange={updatePageURL}
+      <>
+        <Box
           sx={{
             display: "flex",
-            justifyContent: "center",
-            gap: "s",
-            marginTop: "xxl",
+            flexDirection: "column",
+            [`@media screen and (min-width: ${headerBreakpoints.smTablet})`]: {
+              maxWidth: "715px",
+            },
+            gap: "m",
           }}
-        />
-      )}
+        >
+          <Heading sx={{ marginBottom: 0 }} level="h1" id={slug} text={title} />
+        </Box>
+        <HorizontalRule sx={{ marginTop: "xxl", marginBottom: "xxl" }} />
+        <Heading
+          size="heading5"
+          sx={{ marginBottom: "l" }}
+          ref={headingRef}
+          tabIndex={-1}
+          id={slug}
+          width="max-content"
+        >
+          {`Displaying ${displayResults(
+            data.numResults,
+            data.perPage,
+            data.page
+          )}
+        results`}
+        </Heading>
+        {isLoaded ? (
+          <CardsGrid records={data.collection} />
+        ) : (
+          Array(Math.ceil(data.collection?.length / 4))
+            .fill(null)
+            .map((_, index) => (
+              <LaneLoading
+                id={`lane-loading-${index}`}
+                key={`lane-loading-${index}`}
+                withTitle={false}
+              />
+            ))
+        )}
+        {totalPages > 1 && (
+          <Pagination
+            id="pagination-id"
+            initialPage={currentPage}
+            currentPage={currentPage}
+            pageCount={totalPages}
+            onPageChange={updatePageURL}
+            sx={{
+              display: "flex",
+              justifyContent: "center",
+              gap: "s",
+              marginTop: "xxl",
+            }}
+          />
+        )}
+      </>
     </PageLayout>
   );
 }
