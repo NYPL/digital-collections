@@ -51,6 +51,8 @@ export const fetchApi = async (
       body: method === "POST" ? JSON.stringify(options?.body) : undefined,
     })) as Response;
 
+    logger.error(`fetchWithTimeout response: ${response}`);
+    logger.error(`fetchWithTimeout response.status: ${response.status}`);
     if (!response.ok && response.status !== 200) {
       throw new Error(
         `fetchApi: ${response.status} ${
@@ -59,8 +61,6 @@ export const fetchApi = async (
       );
     }
     const data = await response.json();
-    logger.error(`fetchWithTimeout data: ${data}`);
-    logger.error(`fetchWithTimeout data.nyplApi: ${data?.nyplAPI}`);
     return method === "GET" ? data?.nyplAPI?.response : data;
   } catch (error) {
     logger.error("FetchApi final error:", error);
