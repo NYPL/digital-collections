@@ -51,14 +51,12 @@ const exampleMultiSelect = (name: string) => {
   );
 };
 
-const Filters = ({ isCollection }) => {
+const Filters = ({ headingText }) => {
   const [isExpanded, setIsExpanded] = useState(false);
 
   return (
     <>
-      <Heading size="heading4">
-        {`Refine your ${isCollection ? "results" : "search"}`}
-      </Heading>
+      <Heading size="heading4">{headingText}</Heading>
       <Grid
         templateColumns="repeat(4, 1fr)"
         marginBottom="m"
