@@ -1,18 +1,18 @@
 const searchSchema = {
   response: {
-    // Keyword included in search
+    // Keyword
     keyword: "string",
     // Pagination fields
     numResults: "integer",
     page: "integer",
     perPage: "integer",
-    // The fields below would not be returned if not passed
+    // Filters:
+    // The 5 fields below would not be returned if not requested
     sort: "string ie: title DESC",
     rightsFilter: "publicDomain | availableOnline | onSiteMaterial",
     dateStart: "integer ie: 1800",
     dateEnd: "integer ie: 1900",
-    // Filter fields
-    // facets are an array of objects past in the request body
+    // Facets are an array of objects passed in the request body
     facets: [
       {
         topic: {
