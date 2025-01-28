@@ -120,142 +120,144 @@ export function CollectionsPage({ data, params, renderCollections }) {
       ]}
       adobeAnalyticsPageName={createAdobeAnalyticsPageName("all-collections")}
     >
-      <Box
-        sx={{
-          maxWidth: "730px",
-          display: "flex",
-          flexDirection: "column",
-          "> hgroup": {
-            marginBottom: 0,
-          },
-          [`@media screen and (min-width: ${headerBreakpoints.smTablet})`]: {
-            maxWidth: "715px",
-          },
-          "> hgroup > p": {
-            fontWeight: "400 !important",
-          },
-          "> a > span": {
-            fontWeight: "500",
-          },
-          gap: "m",
-        }}
-      >
-        <Heading
-          level="h1"
-          text="Collections"
-          subtitle="Explore the New York Public Library's diverse collections, including digitized photographs, manuscripts, maps, and more. Start exploring by using the search bar below or browse through the collections."
-        />
-        <SearchBar
-          sx={{ maxWidth: "462px" }}
-          id={"search-collections"}
-          textInputProps={{
-            isClearable: true,
-            isClearableCallback: () => {
-              setcurrentCollectionKeywords(DEFAULT_SEARCH_TERM);
-            },
-            labelText: "Search by collection title",
-            name: "collection_keywords",
-            placeholder: "Search by collection title",
-            defaultValue: currentCollectionKeywords,
-            onChange: (e) => handleSearchChange(e),
-          }}
-          onSubmit={handleSearchSubmit}
-          labelText="Search Collections by title"
-          aria-label="Search collections by title"
-        />
-      </Box>
-      <HorizontalRule sx={{ marginTop: "xxl", marginBottom: "xxl" }} />
-      <Flex sx={{ alignItems: "center" }}>
-        <Heading
-          size="heading5"
-          sx={{
-            display: collections?.length > 0 ? "flex" : "none",
-            marginBottom: "l",
-          }}
-          ref={headingRef}
-          tabIndex={-1}
-          id="collections"
-          width="max-content"
-        >
-          {`Displaying ${displayResults(
-            data.numResults,
-            data.perPage,
-            data.page
-          )}
-            results`}
-        </Heading>
-        <Spacer />
+      <>
         <Box
           sx={{
-            display: collections?.length > 0 ? "flex" : "none",
-            gap: "xs",
-            marginBottom: "l",
+            maxWidth: "730px",
+            display: "flex",
+            flexDirection: "column",
+            "> hgroup": {
+              marginBottom: 0,
+            },
+            [`@media screen and (min-width: ${headerBreakpoints.smTablet})`]: {
+              maxWidth: "715px",
+            },
+            "> hgroup > p": {
+              fontWeight: "400 !important",
+            },
+            "> a > span": {
+              fontWeight: "500",
+            },
+            gap: "m",
           }}
         >
-          <Menu
-            showLabel
-            selectedItem={currentSort}
-            labelText={`Sort by: ${COLLECTION_SORT_LABELS[currentSort]}`}
-            listItemsData={[
-              {
-                id: "date-desc",
-                label: "Newest to oldest",
-                onClick: onMenuClick,
-                type: "action",
+          <Heading
+            level="h1"
+            text="Collections"
+            subtitle="Explore the New York Public Library's diverse collections, including digitized photographs, manuscripts, maps, and more. Start exploring by using the search bar below or browse through the collections."
+          />
+          <SearchBar
+            sx={{ maxWidth: "462px" }}
+            id={"search-collections"}
+            textInputProps={{
+              isClearable: true,
+              isClearableCallback: () => {
+                setcurrentCollectionKeywords(DEFAULT_SEARCH_TERM);
               },
-              {
-                id: "date-asc",
-                label: "Oldest to newest",
-                onClick: onMenuClick,
-                type: "action",
-              },
-              {
-                id: "title-asc",
-                label: "Title A to Z",
-                onClick: onMenuClick,
-                type: "action",
-              },
-              {
-                id: "title-desc",
-                label: "Title Z to A",
-                onClick: onMenuClick,
-                type: "action",
-              },
-            ]}
+              labelText: "Search by collection title",
+              name: "collection_keywords",
+              placeholder: "Search by collection title",
+              defaultValue: currentCollectionKeywords,
+              onChange: (e) => handleSearchChange(e),
+            }}
+            onSubmit={handleSearchSubmit}
+            labelText="Search Collections by title"
+            aria-label="Search collections by title"
           />
         </Box>
-      </Flex>
+        <HorizontalRule sx={{ marginTop: "xxl", marginBottom: "xxl" }} />
+        <Flex sx={{ alignItems: "center" }}>
+          <Heading
+            size="heading5"
+            sx={{
+              display: collections?.length > 0 ? "flex" : "none",
+              marginBottom: "l",
+            }}
+            ref={headingRef}
+            tabIndex={-1}
+            id="collections"
+            width="max-content"
+          >
+            {`Displaying ${displayResults(
+              data.numResults,
+              data.perPage,
+              data.page
+            )}
+            results`}
+          </Heading>
+          <Spacer />
+          <Box
+            sx={{
+              display: collections?.length > 0 ? "flex" : "none",
+              gap: "xs",
+              marginBottom: "l",
+            }}
+          >
+            <Menu
+              showLabel
+              selectedItem={currentSort}
+              labelText={`Sort by: ${COLLECTION_SORT_LABELS[currentSort]}`}
+              listItemsData={[
+                {
+                  id: "date-desc",
+                  label: "Newest to oldest",
+                  onClick: onMenuClick,
+                  type: "action",
+                },
+                {
+                  id: "date-asc",
+                  label: "Oldest to newest",
+                  onClick: onMenuClick,
+                  type: "action",
+                },
+                {
+                  id: "title-asc",
+                  label: "Title A to Z",
+                  onClick: onMenuClick,
+                  type: "action",
+                },
+                {
+                  id: "title-desc",
+                  label: "Title Z to A",
+                  onClick: onMenuClick,
+                  type: "action",
+                },
+              ]}
+            />
+          </Box>
+        </Flex>
 
-      {isLoaded ? (
-        collections.length > 0 ? (
-          <CardsGrid records={collections} />
+        {isLoaded ? (
+          collections.length > 0 ? (
+            <CardsGrid records={collections} />
+          ) : (
+            <NoResultsFound
+              searchTerm={params.collection_keywords}
+              page={params.page}
+            />
+          )
         ) : (
-          <NoResultsFound
-            searchTerm={params.collection_keywords}
-            page={params.page}
-          />
-        )
-      ) : (
-        Array(Math.ceil(collections.length / 4)).fill(
-          <LaneLoading id="lane-loading" withTitle={false} />
-        )
-      )}
+          Array(Math.ceil(collections.length / 4)).fill(
+            <LaneLoading id="lane-loading" withTitle={false} />
+          )
+        )}
 
-      {totalPages > 1 && (
-        <Pagination
-          id="pagination-id"
-          initialPage={currentPage}
-          currentPage={currentPage}
-          pageCount={totalPages}
-          onPageChange={onPageChange}
-          sx={{
-            display: "flex",
-            justifyContent: "center",
-            gap: "s",
-            marginTop: "xxl",
-          }}
-        />
-      )}
+        {totalPages > 1 && (
+          <Pagination
+            id="pagination-id"
+            initialPage={currentPage}
+            currentPage={currentPage}
+            pageCount={totalPages}
+            onPageChange={onPageChange}
+            sx={{
+              display: "flex",
+              justifyContent: "center",
+              gap: "s",
+              marginTop: "xxl",
+            }}
+          />
+        )}
+      </>
     </PageLayout>
   );
 }
