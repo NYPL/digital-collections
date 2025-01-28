@@ -10,9 +10,7 @@ const searchSchema = {
     sort: "string ie: title DESC",
     // Filter fields
     // facets are an array of objects past in the request body
-    filterByPublicDomain: "boolean",
-    filterByAvailableOnline: "boolean",
-    filterByOnSiteOnly: "boolean",
+    booleanFilter: "publicDomain | availableOnline | onSiteMaterial | null",
     facets: [
       {
         topic: {
