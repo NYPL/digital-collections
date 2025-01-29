@@ -1,4 +1,4 @@
-import { imageURL } from "../utils/utils";
+import { imageURL, getHighlightText } from "../utils/utils";
 
 export class SearchCardModel {
   title: string;
@@ -26,7 +26,7 @@ export class SearchCardModel {
     this.containsAVMaterial = data.containsAVMaterial;
     this.containsMultipleCaptures = data.containsMultipleCaptures;
     this.contentType = data.contentType;
-    this.highlights = data.highlights;
+    this.highlights = getHighlightText(data.highlights);
     this.firstIndexed = data.firstIndexed_dt;
   }
 }

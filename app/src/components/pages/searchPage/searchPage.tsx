@@ -15,7 +15,6 @@ import React from "react";
 import { CARDS_PER_PAGE } from "@/src/config/constants";
 import { displayResults } from "@/src/utils/utils";
 import Filters from "../../search/filters";
-import { CardsGrid } from "../../grids/cardsGrid";
 import { mockSearchCards } from "__tests__/__mocks__/data/mockSearchCards";
 import SearchCard from "../../card/searchCard";
 

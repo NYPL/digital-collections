@@ -122,6 +122,12 @@ export function displayResults(
   return `${start}-${end} of ${numFound}`;
 }
 
+export function getHighlightText(
+  highlights: Record<string, string[]>
+): string[] {
+  return Object.values(highlights).flat();
+}
+
 export const createQueryStringFromObject = (object) => {
   const params = new URLSearchParams();
   Object.keys(object).forEach((name) => {
