@@ -18,6 +18,7 @@ import Filters from "../../search/filters";
 import { mockSearchCards } from "__tests__/__mocks__/data/mockSearchCards";
 import SearchCard from "../../card/searchCard";
 import SearchCardsGrid from "../../grids/searchCardsGrid";
+import { mockSearchResponse } from "__tests__/__mocks__/data/mockSearchResponse";
 
 const SearchPage = ({ data }) => {
   const totalPages = 10;
@@ -80,10 +81,10 @@ const SearchPage = ({ data }) => {
         >{`Displaying ${displayResults(data.numResults, CARDS_PER_PAGE, 1)}
                     results`}</Heading>
 
-        {mockSearchCards.map((result) => {
-          return <SearchCard key={result.imageID} result={result} />;
-        })}
-        <SearchCardsGrid results={mockSearchCards} />
+        <SearchCardsGrid
+          keywords={["in"]}
+          results={mockSearchResponse.results}
+        />
         <Flex marginTop="xxl" marginBottom="xxl" alignContent="center">
           <Link
             minWidth="100px"
