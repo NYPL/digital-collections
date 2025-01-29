@@ -1,6 +1,11 @@
 const collectionsUUIDSchema = {
   response: {
-    TODO: "Awaiting product requirements",
+    title: "string",
+    uuid: "string",
+    // finding aid link
+    // catalog link
+    keyDate: "string", // date created? So not when it was indexed
+    // parent division
   },
 };
 
