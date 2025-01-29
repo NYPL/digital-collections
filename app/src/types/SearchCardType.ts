@@ -1,5 +1,5 @@
-export type SearchResultRecordType = "collection" | "sub-collection" | "item";
-export type SearchResultContentType = "image" | "audio" | "video" | "pdf";
+export type SearchResultRecordType = "Collection" | "Sub-collection" | "Item";
+export type SearchResultContentType = "Image" | "Audio" | "Video" | "PDF";
 export interface SearchCardType {
   title: string;
   uuid: string;

@@ -5,20 +5,10 @@ import {
   CardHeading,
   Text,
   CardContent,
-  Tooltip,
   StatusBadge,
-  Button,
-  CardActions,
-  Link,
   TagSet,
+  Flex,
 } from "@nypl/design-system-react-components";
-import { headerBreakpoints } from "../../utils/breakpoints";
-import { TRUNCATED_LENGTH } from "@/src/config/constants";
-import ItemCardDataType from "@/src/types/ItemCardDataType";
-import { CollectionCardDataType } from "../../types/CollectionCardDataType";
-import { Offset } from "@/src/hooks/useTooltipOffset";
-import { stringToSlug } from "@/src/utils/utils";
-import CardImage from "./cardImage";
 import SearchCardType, {
   SearchResultContentType,
   SearchResultRecordType,
@@ -31,21 +21,22 @@ export interface SearchCardProps {
 const onSiteMaterialBadge = (recordType: SearchResultRecordType) => {
   return (
     <StatusBadge sx={{ marginBottom: "0px" }} type="informative">
-      {recordType === "item"
+      {recordType === "Item"
         ? "Available onsite only"
         : "Contains on-site materials"}
     </StatusBadge>
   );
 };
 
-const contentTypeTag = (contentType: SearchResultContentType) => {
-  return (
-    <TagSet
-      onClick={() => {}}
-      tagSetData={[{ id: "content-type", label: contentType }]}
-      type="filter"
-    />
-  );
+const contentTypeTag = (
+  recordType: SearchResultRecordType,
+  contentType: SearchResultContentType
+) => {
+  const displayData =
+    recordType === "Item"
+      ? [{ id: "content-type", label: contentType }]
+      : [{ id: "record-type", label: recordType }];
+  return <TagSet onClick={() => {}} tagSetData={displayData} type="filter" />;
 };
 
 export const SearchCard = ({ result }: SearchCardProps) => {
@@ -70,9 +61,15 @@ export const SearchCard = ({ result }: SearchCardProps) => {
         {result.title}
       </CardHeading>
       <CardContent>
-        {result.containsOnSiteMaterial &&
-          onSiteMaterialBadge(result.recordType)}
-        {result.contentType && contentTypeTag(result.contentType)}
+        <Flex flexDir="column" gap="xs">
+          {result.containsOnSiteMaterial &&
+            onSiteMaterialBadge(result.recordType)}
+          {result.highlights?.length > 0 && (
+            <Text margin="0">{result.highlights}</Text>
+          )}
+          {result.contentType &&
+            contentTypeTag(result.recordType, result.contentType)}
+        </Flex>
       </CardContent>
     </Card>
   );
