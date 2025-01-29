@@ -62,7 +62,7 @@ const CollectionPage = ({ slug, data }) => {
           >
             {slug}
           </Heading>
-          <Filters headingText="Refine your results" />
+          <Filters headingText="Search this collection" />
         </Box>
       </Box>
       <Box

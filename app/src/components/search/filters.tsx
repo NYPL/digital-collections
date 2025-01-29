@@ -1,12 +1,15 @@
 import React, { useState } from "react";
 import {
   Button,
-  Checkbox,
-  CheckboxGroup,
+  Text,
+  Flex,
   Grid,
   Heading,
   Icon,
   MultiSelect,
+  Radio,
+  RadioGroup,
+  TextInput,
   Tooltip,
 } from "@nypl/design-system-react-components";
 
@@ -19,7 +22,6 @@ const exampleFacetCategories = [
   "Publishers",
   "Division",
   "Type",
-  "Date Range",
 ];
 
 const exampleMultiSelect = (name: string) => {
@@ -71,8 +73,27 @@ const Filters = ({ headingText }) => {
       </Grid>
       {isExpanded && (
         <>
-          <Heading size="heading4">Show only:</Heading>
-          <CheckboxGroup
+          <Heading size="heading6">Date range:</Heading>
+          <Flex gap="s" alignItems="center" marginBottom="m">
+            <TextInput
+              width="100px"
+              id="dateStart"
+              labelText="Start year"
+              placeholder="Start year"
+              showLabel={false}
+            />
+            <Text sx={{ marginBottom: "0" }}> to </Text>
+            <TextInput
+              width="100px"
+              id="dateStart"
+              labelText="End year"
+              showLabel={false}
+              placeholder="End year"
+            />
+            <Button id="date-filter-btn">Apply dates</Button>
+          </Flex>
+          <Heading size="heading6">Show only:</Heading>
+          <RadioGroup
             name="show-only-filters"
             id="show-only-filters"
             labelText="Show Only"
@@ -80,10 +101,18 @@ const Filters = ({ headingText }) => {
             layout="row"
             marginBottom="m"
           >
-            <Checkbox id="pd-checkbox" labelText="Public domain" />
-            <Checkbox id="online-checkbox" labelText="Available online" />
-            <Checkbox
-              id="onsite-checkbox"
+            <Radio
+              id="pd-checkbox"
+              labelText="Public domain"
+              value="pd-radio"
+            />
+            <Radio
+              id="online-radio"
+              labelText="Available online"
+              value="online-radio"
+            />
+            <Radio
+              id="onsite-radio"
               labelText={
                 <Tooltip content="Somethin about on-site materials...missing copy">
                   <span>
@@ -96,8 +125,9 @@ const Filters = ({ headingText }) => {
                   </span>
                 </Tooltip>
               }
+              value="onsite-radio"
             />
-          </CheckboxGroup>
+          </RadioGroup>
         </>
       )}
       <Button
