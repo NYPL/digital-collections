@@ -51,7 +51,10 @@ const SearchPage = ({ data }) => {
       <Box
         maxWidth="1280px"
         mx="auto"
-        sx={{ paddingLeft: { base: 0, xl: "s" } }}
+        sx={{
+          paddingLeft: { base: "m", xl: "s" },
+          paddingRight: { base: "m", xl: "s" },
+        }}
       >
         <HorizontalRule />
         <Flex alignContent="center" gap="xs">

@@ -28,6 +28,7 @@ const textLink = (href, text) => {
         textDecorationLine: "underline",
         lineHeight: "150%",
         textUnderlinePosition: "from-font",
+        textDecorationThickness: "1px",
       }}
       href={href}
     >
@@ -61,16 +62,19 @@ const CollectionPage = ({ slug, data }) => {
           >
             {slug}
           </Heading>
-          <Filters headingText="Refine your results" />
+          <Filters headingText="Search this collection" />
         </Box>
       </Box>
       <Box
         maxWidth="1280px"
         mx="auto"
-        sx={{ paddingLeft: { base: 0, xl: "s" } }}
+        sx={{
+          paddingLeft: { base: "m", xl: "s" },
+          paddingRight: { base: "m", xl: "s" },
+        }}
       >
         <HorizontalRule />
-        <Flex alignContent="center" gap="xs">
+        <Flex alignContent="center" alignItems="center" gap="xs">
           <Text size="subtitle2" sx={{ margin: 0, fontWeight: 400 }}>
             Filters applied:
           </Text>
@@ -121,7 +125,12 @@ const CollectionPage = ({ slug, data }) => {
             See more collection data
           </Link>
         </Flex>
-        <Flex gap="xxl" sx={{ flexDir: { base: "column", md: "row" } }}>
+        <Flex
+          gap="xxl"
+          sx={{
+            flexDir: { base: "column", md: "row" },
+          }}
+        >
           <Box
             sx={{
               background: "ui.bg.default",
