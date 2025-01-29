@@ -28,6 +28,7 @@ const textLink = (href, text) => {
         textDecorationLine: "underline",
         lineHeight: "150%",
         textUnderlinePosition: "from-font",
+        textDecorationThickness: "1px",
       }}
       href={href}
     >
