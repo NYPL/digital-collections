@@ -13,7 +13,7 @@ export const mockSearchCards: SearchCardType[] = [
     recordType: "collection",
     containsAVMaterial: false,
     contentType: "image",
-    highlights: [],
+    highlights: ["Christopher Walken in the stage production Kid Champion"],
     firstIndexed: "1907-01-01T00:00:00Z",
   },
   {
@@ -29,7 +29,7 @@ export const mockSearchCards: SearchCardType[] = [
     containsAVMaterial: false,
     containsMultipleCaptures: false,
     contentType: "image",
-    highlights: [],
+    highlights: ["Sarah sitting in tree"],
     firstIndexed: "1907-02-01T00:00:00Z",
   },
   {
