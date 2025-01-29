@@ -60,7 +60,7 @@ export const mockSearchCards: SearchCardType[] = [
     containsOnSiteMaterial: true,
     containsAVMaterial: false,
     containsMultipleCaptures: true,
-    contentType: "PDF",
+    contentType: "Image",
     highlights: ["Reading in room"],
     firstIndexed: "1908-02-01T00:00:00Z",
   },
