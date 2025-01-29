@@ -16,11 +16,12 @@ import SearchCardType, {
 
 export interface SearchCardProps {
   result: SearchCardType;
+  keywords: string[];
 }
 
 const onSiteMaterialBadge = (recordType: SearchResultRecordType) => {
   return (
-    <StatusBadge sx={{ marginBottom: "0px" }} type="informative">
+    <StatusBadge sx={{ margin: "0p" }} type="informative">
       {recordType === "Item"
         ? "Available onsite only"
         : "Contains on-site materials"}
@@ -34,12 +35,44 @@ const contentTypeTag = (
 ) => {
   const displayData =
     recordType === "Item"
-      ? [{ id: "content-type", label: contentType }]
+      ? [{ id: "content-type", label: contentType ? contentType : "" }]
       : [{ id: "record-type", label: recordType }];
-  return <TagSet onClick={() => {}} tagSetData={displayData} type="filter" />;
+  return (
+    <TagSet
+      onClick={() => {}}
+      tagSetData={displayData}
+      type="filter"
+      sx={{ margin: 0 }}
+    />
+  );
 };
 
-export const SearchCard = ({ result }: SearchCardProps) => {
+const highlightedText = ({ text, keywords }) => {
+  if (!text || !keywords.length) return text;
+  const words = text.split(" ");
+  return (
+    <span>
+      {words.map((word, index) => {
+        const isKeyword = keywords.some(
+          (keyword) => keyword.toLowerCase() === word.toLowerCase()
+        );
+
+        return (
+          <span key={index}>
+            {isKeyword ? (
+              <span style={{ backgroundColor: "yellow" }}>{word}</span>
+            ) : (
+              word
+            )}
+            {index < words.length - 1 ? " " : ""}
+          </span>
+        );
+      })}
+    </span>
+  );
+};
+
+export const SearchCard = ({ result, keywords }: SearchCardProps) => {
   return (
     <Card
       id={result.uuid}
@@ -64,11 +97,12 @@ export const SearchCard = ({ result }: SearchCardProps) => {
         <Flex flexDir="column" gap="xs">
           {result.containsOnSiteMaterial &&
             onSiteMaterialBadge(result.recordType)}
-          {result.highlights?.length > 0 && (
-            <Text margin="0">{result.highlights}</Text>
-          )}
-          {result.contentType &&
-            contentTypeTag(result.recordType, result.contentType)}
+          {keywords?.length > 0 &&
+            highlightedText({
+              text: result.highlights[0],
+              keywords: keywords,
+            })}
+          {contentTypeTag(result.recordType, result.contentType)}
         </Flex>
       </CardContent>
     </Card>

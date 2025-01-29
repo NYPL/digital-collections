@@ -122,11 +122,15 @@ export function displayResults(
   return `${start}-${end} of ${numFound}`;
 }
 
-export function getHighlightText(
+export function getDescriptionText(
   highlights: Record<string, string[]>
 ): string[] {
   return Object.values(highlights).flat();
 }
+
+export const capitalize = (text: string): string => {
+  return text.charAt(0).toUpperCase() + text.slice(1);
+};
 
 export const createQueryStringFromObject = (object) => {
   const params = new URLSearchParams();

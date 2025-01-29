@@ -2,7 +2,7 @@ import {
   SearchResultContentType,
   SearchResultRecordType,
 } from "../types/SearchCardType";
-import { imageURL, getHighlightText } from "../utils/utils";
+import { imageURL, getDescriptionText, capitalize } from "../utils/utils";
 
 export class SearchCardModel {
   title: string;
@@ -22,15 +22,21 @@ export class SearchCardModel {
   constructor(data: any) {
     this.title = data.title;
     this.uuid = data.uuid;
-    this.recordType = data.recordType;
+    this.url =
+      data.recordType === "item"
+        ? `/items/${data.uuid}`
+        : `/collections/${data.uuid}`;
+    this.recordType = capitalize(data.recordType) as SearchResultRecordType;
     this.imageID = data.imageID;
     this.imageURL = imageURL(data.imageID, "square", "!288,288", "0");
     this.numberOfDigitizedItems = data.numberOfDigitizedItems;
     this.containsOnSiteMaterial = data.containsOnSiteMaterial;
     this.containsAVMaterial = data.containsAVMaterial;
     this.containsMultipleCaptures = data.containsMultipleCaptures;
-    this.contentType = data.contentType;
-    this.highlights = getHighlightText(data.highlights);
+    this.contentType = data.contentType
+      ? (capitalize(data.contentType) as SearchResultContentType)
+      : null;
+    this.highlights = getDescriptionText(data.highlights);
     this.firstIndexed = data.firstIndexed_dt;
   }
 }
