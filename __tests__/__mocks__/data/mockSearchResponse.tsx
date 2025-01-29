@@ -59,7 +59,7 @@ export const mockSearchResponse = {
       containsOnSiteMaterial: false,
       containsAVMaterial: false,
       containsMultipleCaptures: true,
-      contentType: "PDF",
+      contentType: "image",
       highlights: {
         mainTitle_st: ["Reading in room"],
       },

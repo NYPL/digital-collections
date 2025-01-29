@@ -9,14 +9,11 @@ import {
   TagSet,
   Link,
   Icon,
-  Spacer,
 } from "@nypl/design-system-react-components";
 import React from "react";
 import { CARDS_PER_PAGE } from "@/src/config/constants";
 import { displayResults } from "@/src/utils/utils";
 import Filters from "../../search/filters";
-import { mockSearchCards } from "__tests__/__mocks__/data/mockSearchCards";
-import SearchCard from "../../card/searchCard";
 import SearchCardsGrid from "../../grids/searchCardsGrid";
 import { mockSearchResponse } from "__tests__/__mocks__/data/mockSearchResponse";
 
