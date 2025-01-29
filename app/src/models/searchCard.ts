@@ -1,3 +1,7 @@
+import {
+  SearchResultContentType,
+  SearchResultRecordType,
+} from "../types/SearchCardType";
 import { imageURL, getHighlightText } from "../utils/utils";
 
 export class SearchCardModel {
@@ -6,12 +10,12 @@ export class SearchCardModel {
   url: string;
   imageID: string;
   imageURL: string;
-  recordType: "collection" | "sub-collection" | "item";
+  recordType: SearchResultRecordType;
   numberOfDigitizedItems: number;
   containsOnSiteMaterial: boolean;
   containsAVMaterial: boolean;
   containsMultipleCaptures?: boolean;
-  contentType: "image" | "audio" | "video" | "pdf";
+  contentType: SearchResultContentType;
   highlights: string[];
   firstIndexed: string;
 

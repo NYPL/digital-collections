@@ -17,6 +17,7 @@ import { displayResults } from "@/src/utils/utils";
 import Filters from "../../search/filters";
 import { mockSearchCards } from "__tests__/__mocks__/data/mockSearchCards";
 import SearchCard from "../../card/searchCard";
+import SearchCardsGrid from "../../grids/searchCardsGrid";
 
 const SearchPage = ({ data }) => {
   const totalPages = 10;
@@ -79,6 +80,7 @@ const SearchPage = ({ data }) => {
         {mockSearchCards.map((result) => {
           return <SearchCard key={result.imageID} result={result} />;
         })}
+        <SearchCardsGrid results={mockSearchCards} />
         <Flex marginTop="xxl" marginBottom="xxl" alignContent="center">
           <Link
             minWidth="100px"
