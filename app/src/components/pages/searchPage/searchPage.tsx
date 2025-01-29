@@ -9,12 +9,15 @@ import {
   TagSet,
   Link,
   Icon,
+  Spacer,
 } from "@nypl/design-system-react-components";
 import React from "react";
 import { CARDS_PER_PAGE } from "@/src/config/constants";
 import { displayResults } from "@/src/utils/utils";
 import Filters from "../../search/filters";
 import { CardsGrid } from "../../grids/cardsGrid";
+import { mockSearchCards } from "__tests__/__mocks__/data/mockSearchCards";
+import SearchCard from "../../card/searchCard";
 
 const SearchPage = ({ data }) => {
   const totalPages = 10;
@@ -74,7 +77,9 @@ const SearchPage = ({ data }) => {
         >{`Displaying ${displayResults(data.numResults, CARDS_PER_PAGE, 1)}
                     results`}</Heading>
 
-        <CardsGrid records={data} />
+        {mockSearchCards.map((result) => {
+          return <SearchCard key={result.imageID} result={result} />;
+        })}
         <Flex marginTop="xxl" marginBottom="xxl" alignContent="center">
           <Link
             minWidth="100px"
