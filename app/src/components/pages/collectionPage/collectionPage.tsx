@@ -17,13 +17,8 @@ import {
 import React from "react";
 import Filters from "../../search/filters";
 import { headerBreakpoints } from "@/src/utils/breakpoints";
-import { CardsGrid } from "../../grids/cardsGrid";
 import { displayResults } from "@/src/utils/utils";
-import {
-  CARDS_PER_PAGE,
-  COLLECTION_SORT_LABELS,
-  SEARCH_SORT_LABELS,
-} from "@/src/config/constants";
+import { CARDS_PER_PAGE, SEARCH_SORT_LABELS } from "@/src/config/constants";
 import { mockSearchResponse } from "__tests__/__mocks__/data/mockSearchResponse";
 import SearchCardsGrid from "../../grids/searchCardsGrid";
 
@@ -80,7 +75,6 @@ const CollectionPage = ({ slug, data }) => {
           paddingRight: { base: "m", xl: "s" },
         }}
       >
-        <HorizontalRule />
         <Flex alignContent="center" alignItems="center" gap="xs">
           <Text size="subtitle2" sx={{ margin: 0, fontWeight: 400 }}>
             Filters applied:
