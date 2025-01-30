@@ -12,13 +12,20 @@ import {
   SearchBar,
   Icon,
   Pagination,
+  Menu,
 } from "@nypl/design-system-react-components";
 import React from "react";
 import Filters from "../../search/filters";
 import { headerBreakpoints } from "@/src/utils/breakpoints";
 import { CardsGrid } from "../../grids/cardsGrid";
 import { displayResults } from "@/src/utils/utils";
-import { CARDS_PER_PAGE } from "@/src/config/constants";
+import {
+  CARDS_PER_PAGE,
+  COLLECTION_SORT_LABELS,
+  SEARCH_SORT_LABELS,
+} from "@/src/config/constants";
+import { mockSearchResponse } from "__tests__/__mocks__/data/mockSearchResponse";
+import SearchCardsGrid from "../../grids/searchCardsGrid";
 
 const textLink = (href, text) => {
   return (
@@ -206,13 +213,40 @@ const CollectionPage = ({ slug, data }) => {
                 }}
               />
             </Flex>
-            <Heading
+            <Flex
               marginTop="xl"
-              size="heading5"
-              tabIndex={-1}
-            >{`Displaying ${displayResults(data.numResults, CARDS_PER_PAGE, 1)}
+              marginBottom="s"
+              alignItems="center"
+              justifyContent="space-between"
+            >
+              <Heading
+                size="heading5"
+                tabIndex={-1}
+                margin="0"
+              >{`Displaying ${displayResults(
+                data.numResults,
+                CARDS_PER_PAGE,
+                1
+              )}
                                 results`}</Heading>
-            <CardsGrid records={data} />
+              <Menu
+                showLabel
+                selectedItem={"relevance"}
+                labelText={`Sort by: ${SEARCH_SORT_LABELS["relevance"]}`}
+                listItemsData={Object.entries(SEARCH_SORT_LABELS).map(
+                  ([id, label]) => ({
+                    id,
+                    label,
+                    onClick: () => {},
+                    type: "action",
+                  })
+                )}
+              />
+            </Flex>
+            <SearchCardsGrid
+              keywords={["example"]}
+              results={mockSearchResponse.results}
+            />
             <Flex marginTop="xxl" marginBottom="xxl" alignContent="center">
               <Link
                 minWidth="100px"
