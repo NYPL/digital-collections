@@ -10,7 +10,6 @@ import {
   Flex,
 } from "@nypl/design-system-react-components";
 import SearchCardType, {
-  SearchResultContentType,
   SearchResultRecordType,
 } from "@/src/types/SearchCardType";
 
@@ -29,18 +28,18 @@ const onSiteMaterialBadge = (recordType: SearchResultRecordType) => {
   );
 };
 
-const contentTypeTag = (
-  recordType: SearchResultRecordType,
-  contentType: SearchResultContentType
-) => {
-  const displayData =
-    recordType === "Item"
-      ? [{ id: "content-type", label: contentType ? contentType : "" }]
-      : [{ id: "record-type", label: recordType }];
+const contentTypeTag = (result: SearchCardType) => {
+  const displayLabel =
+    result.recordType === "Item"
+      ? result.contentType === "Image" && result.containsMultipleCaptures
+        ? "Multiple images"
+        : result.contentType
+      : result.recordType;
+
   return (
     <TagSet
       onClick={() => {}}
-      tagSetData={displayData}
+      tagSetData={[{ id: "type", label: displayLabel ? displayLabel : "" }]}
       type="filter"
       sx={{ margin: 0 }}
     />
@@ -90,7 +89,7 @@ export const SearchCard = ({ result, keywords }: SearchCardProps) => {
       layout="row"
       mainActionLink={result.url}
     >
-      <CardHeading level="h3" size="heading5" marginBottom="xxs">
+      <CardHeading level="h3" size="heading5" marginBottom="xs">
         {result.title}
       </CardHeading>
       <CardContent>
@@ -102,7 +101,7 @@ export const SearchCard = ({ result, keywords }: SearchCardProps) => {
               text: result.highlights[0],
               keywords: keywords,
             })}
-          {contentTypeTag(result.recordType, result.contentType)}
+          {contentTypeTag(result)}
         </Flex>
       </CardContent>
     </Card>

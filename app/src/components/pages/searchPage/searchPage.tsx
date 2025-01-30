@@ -41,7 +41,7 @@ const SearchPage = ({ data }) => {
             }}
           >
             {`Displaying ${displayResults(data.numResults, CARDS_PER_PAGE, 1)}
-                    results for "keyword"`}
+                    results for "example"`}
           </Heading>
           <Filters headingText="Refine your search" />
         </Box>
@@ -78,10 +78,7 @@ const SearchPage = ({ data }) => {
         >{`Displaying ${displayResults(data.numResults, CARDS_PER_PAGE, 1)}
                     results`}</Heading>
 
-        <SearchCardsGrid
-          keywords={["in"]}
-          results={mockSearchResponse.results}
-        />
+        <SearchCardsGrid keywords={[]} results={mockSearchResponse.results} />
         <Flex marginTop="xxl" marginBottom="xxl" alignContent="center">
           <Link
             minWidth="100px"
