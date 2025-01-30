@@ -268,7 +268,7 @@ export function CollectionsPage({ data, params, renderCollections }) {
             />
           )
         ) : (
-          Array(Math.ceil(collections.length / 4)).fill(
+          Array(Math.max(Math.ceil(collections.length / 4), 1)).fill(
             <LaneLoading id="lane-loading" withTitle={false} />
           )
         )}
