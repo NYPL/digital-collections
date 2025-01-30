@@ -13,7 +13,9 @@ export const mockSearchCards: SearchCardType[] = [
     recordType: "Collection",
     containsAVMaterial: false,
     contentType: null,
-    highlights: ["Christopher Walken in the stage production Kid Champion"],
+    highlights: [
+      "Christopher Walken examples in the stage production example Kid Champion",
+    ],
     firstIndexed: "1907-01-01T00:00:00Z",
   },
   {
@@ -29,7 +31,7 @@ export const mockSearchCards: SearchCardType[] = [
     containsAVMaterial: false,
     containsMultipleCaptures: false,
     contentType: "Image",
-    highlights: ["Sarah sitting in tree"],
+    highlights: ["Sarah example sitting in tree"],
     firstIndexed: "1907-02-01T00:00:00Z",
   },
   {
@@ -44,7 +46,7 @@ export const mockSearchCards: SearchCardType[] = [
     recordType: "Sub-collection",
     containsAVMaterial: true,
     contentType: null,
-    highlights: ["Farm in photographs"],
+    highlights: ["Farm in example photographs"],
     firstIndexed: "1907-02-01T00:00:00Z",
   },
   {
@@ -61,7 +63,7 @@ export const mockSearchCards: SearchCardType[] = [
     containsAVMaterial: false,
     containsMultipleCaptures: true,
     contentType: "Image",
-    highlights: ["Reading in room"],
+    highlights: ["Reading in example room"],
     firstIndexed: "1908-02-01T00:00:00Z",
   },
 ];
