@@ -45,4 +45,4 @@ jobs:
 
       - name: Update ECS service
         run: |
-          aws ecs update-service --cluster dc-frontend-qa --service dc-frontend-qa --force-new-deployment
+          aws ecs update-service --cluster new-digitalcollections-qa --service new-digitalcollections-qa --force-new-deployment

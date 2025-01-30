@@ -59,7 +59,6 @@ export const fetchApi = async (
     const data = await response.json();
     return method === "GET" ? data?.nyplAPI?.response : data;
   } catch (error) {
-    logger.error(error);
     throw new Error(error.message);
   }
 };

@@ -11,7 +11,24 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Updated all page accessibility tests and updated to DS v3.5.3 (DR-3342)
 
-## [0.2.6] 2025-1-13
+### Added
+
+- Added skeleton for collection page (DR-3361)
+- Added skeleton for search page and filter component (DR-3364)
+
+### Removed
+
+- Removed DCF middleware file so that only RP handles redirects (DR-3309)
+
+## [0.3.0] 2025-01-23
+
+## Updated
+
+- Public domain link correction (DR-3378)
+- Updated middleware to no longer include `/collections` and `collections/lane/:slug`
+- Updated QA cluster name
+
+## [0.2.6] 2025-01-13
 
 ### Updated
 
@@ -24,7 +41,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Added "no results" view for the `/collections` page (DR-3324, DR-3357)
 
-## [0.2.5] 2025-1-02
+## [0.2.5] 2025-01-02
 
 ### Removed
 
