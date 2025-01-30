@@ -109,7 +109,7 @@ export const getItemsCountFromUUIDs = async (uuids: string[]) => {
     body: { uuids },
   });
 
-  const { counts } = response.nyplAPI.response;
+  const { counts } = response?.nyplAPI?.response;
   if (!counts?.count?.length) {
     return {};
   }

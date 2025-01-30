@@ -1,9 +1,9 @@
 import React from "react";
 import { Metadata } from "next";
 import PageLayout from "../../src/components/pageLayout/pageLayout";
-import SearchResults from "@/src/components/search/results";
 import { mockItems } from "__tests__/__mocks__/data/mockItems";
 import { createAdobeAnalyticsPageName } from "@/src/utils/utils";
+import CollectionPage from "@/src/components/pages/collectionPage/collectionPage";
 
 type CollectionProps = {
   params: { slug: string };
@@ -21,10 +21,10 @@ export async function generateMetadata({
   };
 }
 
-export default function Collections({ params }: CollectionProps) {
+export default function Collection({ params }: CollectionProps) {
   return (
     <PageLayout
-      activePage="lane"
+      activePage="collection"
       breadcrumbs={[
         { text: "Home", url: "/" },
         { text: "Collections", url: "/collections" },
@@ -38,7 +38,10 @@ export default function Collections({ params }: CollectionProps) {
         params.slug
       )}
     >
-      <SearchResults showFilter={false} isSearchPage={false} data={mockItems} />
+      <CollectionPage
+        slug={"Example collection"}
+        data={[...mockItems, ...mockItems]}
+      />
     </PageLayout>
   );
 }
