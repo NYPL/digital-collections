@@ -1,12 +1,15 @@
 import React, { useState } from "react";
 import {
   Button,
-  Checkbox,
-  CheckboxGroup,
+  Text,
+  Flex,
   Grid,
   Heading,
   Icon,
   MultiSelect,
+  Radio,
+  RadioGroup,
+  TextInput,
   Tooltip,
 } from "@nypl/design-system-react-components";
 
@@ -19,13 +22,11 @@ const exampleFacetCategories = [
   "Publishers",
   "Division",
   "Type",
-  "Date Range",
 ];
 
 const exampleMultiSelect = (name: string) => {
   return (
     <MultiSelect
-      sx={{ width: "-webkit-fill-available" }}
       id={`${name}-select`}
       buttonText={name}
       selectedItems={{}}
@@ -52,12 +53,12 @@ const exampleMultiSelect = (name: string) => {
   );
 };
 
-const Filters = () => {
+const Filters = ({ headingText }) => {
   const [isExpanded, setIsExpanded] = useState(false);
 
   return (
     <>
-      <Heading size="heading4">Refine your search</Heading>
+      <Heading size="heading4">{headingText}</Heading>
       <Grid
         templateColumns="repeat(4, 1fr)"
         marginBottom="m"
@@ -72,8 +73,27 @@ const Filters = () => {
       </Grid>
       {isExpanded && (
         <>
-          <Heading size="heading4">Show only:</Heading>
-          <CheckboxGroup
+          <Heading size="heading6">Date range:</Heading>
+          <Flex gap="s" alignItems="center" marginBottom="m">
+            <TextInput
+              width="100px"
+              id="dateStart"
+              labelText="Start year"
+              placeholder="Start year"
+              showLabel={false}
+            />
+            <Text sx={{ marginBottom: "0" }}> to </Text>
+            <TextInput
+              width="100px"
+              id="dateStart"
+              labelText="End year"
+              showLabel={false}
+              placeholder="End year"
+            />
+            <Button id="date-filter-btn">Apply dates</Button>
+          </Flex>
+          <Heading size="heading6">Show only:</Heading>
+          <RadioGroup
             name="show-only-filters"
             id="show-only-filters"
             labelText="Show Only"
@@ -81,10 +101,18 @@ const Filters = () => {
             layout="row"
             marginBottom="m"
           >
-            <Checkbox id="pd-checkbox" labelText="Public domain" />
-            <Checkbox id="online-checkbox" labelText="Available online" />
-            <Checkbox
-              id="onsite-checkbox"
+            <Radio
+              id="pd-checkbox"
+              labelText="Public domain"
+              value="pd-radio"
+            />
+            <Radio
+              id="online-radio"
+              labelText="Available online"
+              value="online-radio"
+            />
+            <Radio
+              id="onsite-radio"
               labelText={
                 <Tooltip content="Somethin about on-site materials...missing copy">
                   <span>
@@ -97,8 +125,9 @@ const Filters = () => {
                   </span>
                 </Tooltip>
               }
+              value="onsite-radio"
             />
-          </CheckboxGroup>
+          </RadioGroup>
         </>
       )}
       <Button
