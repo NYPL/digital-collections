@@ -39,7 +39,9 @@ const contentTypeTag = (result: SearchCardType) => {
   return (
     <TagSet
       onClick={() => {}}
-      tagSetData={[{ id: "type", label: displayLabel ? displayLabel : "" }]}
+      tagSetData={[
+        { id: `type-${result.uuid}`, label: displayLabel ? displayLabel : "" },
+      ]}
       type="filter"
       sx={{ margin: 0 }}
     />
