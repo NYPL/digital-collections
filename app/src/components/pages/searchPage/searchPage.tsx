@@ -55,7 +55,6 @@ const SearchPage = ({ data }) => {
           paddingRight: { base: "m", xl: "s" },
         }}
       >
-        <HorizontalRule />
         <Flex alignContent="center" gap="xs">
           <Text size="subtitle2" sx={{ margin: 0, fontWeight: 400 }}>
             Filters applied:
