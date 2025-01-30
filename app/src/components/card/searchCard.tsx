@@ -90,7 +90,7 @@ export const SearchCard = ({ result, keywords }: SearchCardProps) => {
       layout="row"
       mainActionLink={result.url}
     >
-      <CardHeading level="h3" size="heading5">
+      <CardHeading level="h3" size="heading5" marginBottom="xxs">
         {result.title}
       </CardHeading>
       <CardContent>
