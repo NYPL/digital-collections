@@ -1,8 +1,8 @@
 import React from "react";
 import PageLayout from "../../src/components/pageLayout/pageLayout";
-import SearchResults from "../../src/components/search/results";
 import { mockItems } from "../../../__tests__/__mocks__/data/mockItems"; // TODO: render mockItems
 import { createAdobeAnalyticsPageName } from "@/src/utils/utils";
+import SearchPage from "@/src/components/pages/searchPage/searchPage";
 
 export type SearchProps = {
   params: { slug: string };
@@ -12,7 +12,7 @@ export type SearchProps = {
 export default async function Search() {
   return (
     <PageLayout
-      activePage="collections"
+      activePage="search"
       breadcrumbs={[
         { text: "Home", url: "/" },
         { text: "Keyword Search", url: "/search/index" },
@@ -22,7 +22,7 @@ export default async function Search() {
         ""
       )} //TODO: if there are no query params, page name should be createAdobeAnalyticsPageName("all-items", "")
     >
-      <SearchResults showFilter={false} isSearchPage data={mockItems} />
+      <SearchPage data={[...mockItems, ...mockItems]} />
     </PageLayout>
   );
 }
