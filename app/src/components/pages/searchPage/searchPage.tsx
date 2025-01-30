@@ -9,9 +9,10 @@ import {
   TagSet,
   Link,
   Icon,
+  Menu,
 } from "@nypl/design-system-react-components";
 import React from "react";
-import { CARDS_PER_PAGE } from "@/src/config/constants";
+import { CARDS_PER_PAGE, SEARCH_SORT_LABELS } from "@/src/config/constants";
 import { displayResults } from "@/src/utils/utils";
 import Filters from "../../search/filters";
 import SearchCardsGrid from "../../grids/searchCardsGrid";
@@ -71,14 +72,36 @@ const SearchPage = ({ data }) => {
           />
         </Flex>
         <HorizontalRule />
-        <Heading
-          tabIndex={-1}
+        <Flex
           marginTop="xl"
-          size="heading5"
-        >{`Displaying ${displayResults(data.numResults, CARDS_PER_PAGE, 1)}
-                    results`}</Heading>
-
-        <SearchCardsGrid keywords={[]} results={mockSearchResponse.results} />
+          marginBottom="s"
+          alignItems="center"
+          justifyContent="space-between"
+        >
+          <Heading
+            size="heading5"
+            tabIndex={-1}
+            margin="0"
+          >{`Displaying ${displayResults(data.numResults, CARDS_PER_PAGE, 1)}
+                                        results`}</Heading>
+          <Menu
+            showLabel
+            selectedItem={"relevance"}
+            labelText={`Sort by: ${SEARCH_SORT_LABELS["relevance"]}`}
+            listItemsData={Object.entries(SEARCH_SORT_LABELS).map(
+              ([id, label]) => ({
+                id,
+                label,
+                onClick: () => {},
+                type: "action",
+              })
+            )}
+          />
+        </Flex>
+        <SearchCardsGrid
+          keywords={["example"]}
+          results={mockSearchResponse.results}
+        />
         <Flex marginTop="xxl" marginBottom="xxl" alignContent="center">
           <Link
             minWidth="100px"
