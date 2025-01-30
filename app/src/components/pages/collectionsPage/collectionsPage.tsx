@@ -65,7 +65,7 @@ export function CollectionsPage({ data, params, renderCollections }) {
     setTimeout(() => {
       setIsLoaded(true);
       headingRef.current?.focus();
-    }, 1000);
+    }, 2000);
   };
 
   const handleSearchSubmit = async (e: SyntheticEvent) => {
