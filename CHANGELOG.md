@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+### Updated
+
+- Updated all page accessibility tests and updated to DS v3.5.3 (DR-3342)
+
 ## [0.2.6] 2025-1-13
 
 ### Updated
