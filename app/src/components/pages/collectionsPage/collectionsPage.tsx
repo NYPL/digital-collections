@@ -120,175 +120,173 @@ export function CollectionsPage({ data, params, renderCollections }) {
       ]}
       adobeAnalyticsPageName={createAdobeAnalyticsPageName("all-collections")}
     >
-      <>
-        <Box
+      <Box
+        sx={{
+          maxWidth: "730px",
+          display: "flex",
+          flexDirection: "column",
+          "> hgroup": {
+            marginBottom: 0,
+          },
+          [`@media screen and (min-width: ${headerBreakpoints.smTablet})`]: {
+            maxWidth: "715px",
+          },
+          "> hgroup > p": {
+            fontWeight: "400 !important",
+          },
+          "> a > span": {
+            fontWeight: "500",
+          },
+          gap: "m",
+        }}
+      >
+        <Heading
+          level="h1"
+          text="Collections"
+          subtitle="Explore the New York Public Library's diverse collections, including digitized photographs, manuscripts, maps, and more. Start exploring by using the search bar below or browse through the collections."
+        />
+        <SearchBar
           sx={{
-            maxWidth: "730px",
-            display: "flex",
-            flexDirection: "column",
-            "> hgroup": {
-              marginBottom: 0,
-            },
-            [`@media screen and (min-width: ${headerBreakpoints.smTablet})`]: {
-              maxWidth: "715px",
-            },
-            "> hgroup > p": {
-              fontWeight: "400 !important",
-            },
-            "> a > span": {
-              fontWeight: "500",
-            },
-            gap: "m",
-          }}
-        >
-          <Heading
-            level="h1"
-            text="Collections"
-            subtitle="Explore the New York Public Library's diverse collections, including digitized photographs, manuscripts, maps, and more. Start exploring by using the search bar below or browse through the collections."
-          />
-          <SearchBar
-            sx={{
-              maxWidth: "462px",
-              flexFlow: "row nowrap",
-              button: {
-                borderRadius: "0px 2px 2px 0px",
-                "> svg": {
-                  width: "14px",
-                  height: "14px",
-                },
-                paddingTop: "xs",
-                paddingBottom: "xs",
-                paddingLeft: "s !important",
-                paddingRight: "s !important",
-                "> span": {
-                  display: "block !important",
-                },
+            maxWidth: "462px",
+            flexFlow: "row nowrap",
+            button: {
+              borderRadius: "0px 2px 2px 0px",
+              "> svg": {
+                width: "14px",
+                height: "14px",
               },
-              [`@media screen and (max-width: ${headerBreakpoints.lgMobile}px)`]:
-                {
-                  button: {
-                    padding: "xs !important",
-                    gap: 0,
-                    "> span": {
-                      display: "none !important",
-                    },
-                    "> svg": {
-                      width: "18px",
-                      height: "18px",
-                    },
+              paddingTop: "xs",
+              paddingBottom: "xs",
+              paddingLeft: "s !important",
+              paddingRight: "s !important",
+              "> span": {
+                display: "block !important",
+              },
+            },
+            [`@media screen and (max-width: ${headerBreakpoints.lgMobile}px)`]:
+              {
+                button: {
+                  padding: "xs !important",
+                  gap: 0,
+                  "> span": {
+                    display: "none !important",
+                  },
+                  "> svg": {
+                    width: "18px",
+                    height: "18px",
                   },
                 },
-            }}
-            id={"search-collections"}
-            textInputProps={{
-              isClearable: true,
-              isClearableCallback: () => {
-                setcurrentCollectionKeywords(DEFAULT_SEARCH_TERM);
               },
-              labelText: "Search by collection title",
-              name: "collection_keywords",
-              placeholder: "Search by collection title",
-              defaultValue: currentCollectionKeywords,
-              onChange: (e) => handleSearchChange(e),
-            }}
-            onSubmit={handleSearchSubmit}
-            labelText="Search collections by title"
-            aria-label="Search collections by title"
+          }}
+          id={"search-collections"}
+          textInputProps={{
+            isClearable: true,
+            isClearableCallback: () => {
+              setcurrentCollectionKeywords(DEFAULT_SEARCH_TERM);
+            },
+            labelText: "Search by collection title",
+            name: "collection_keywords",
+            placeholder: "Search by collection title",
+            defaultValue: currentCollectionKeywords,
+            onChange: (e) => handleSearchChange(e),
+          }}
+          onSubmit={handleSearchSubmit}
+          labelText="Search collections by title"
+          aria-label="Search collections by title"
+        />
+      </Box>
+      <HorizontalRule sx={{ marginTop: "xxl", marginBottom: "xxl" }} />
+      <Flex sx={{ alignItems: "center" }}>
+        <Heading
+          size="heading5"
+          sx={{
+            display: collections?.length > 0 ? "flex" : "none",
+            marginBottom: "l",
+          }}
+          ref={headingRef}
+          tabIndex={-1}
+          id="collections"
+          width="max-content"
+        >
+          {`Displaying ${displayResults(
+            data.numResults,
+            data.perPage,
+            data.page
+          )}
+            results`}
+        </Heading>
+        <Spacer />
+        <Box
+          sx={{
+            display: collections?.length > 0 ? "flex" : "none",
+            gap: "xs",
+            marginBottom: "l",
+          }}
+        >
+          <Menu
+            showLabel
+            selectedItem={currentSort}
+            labelText={`Sort by: ${COLLECTION_SORT_LABELS[currentSort]}`}
+            listItemsData={[
+              {
+                id: "date-desc",
+                label: "Newest to oldest",
+                onClick: onMenuClick,
+                type: "action",
+              },
+              {
+                id: "date-asc",
+                label: "Oldest to newest",
+                onClick: onMenuClick,
+                type: "action",
+              },
+              {
+                id: "title-asc",
+                label: "Title A to Z",
+                onClick: onMenuClick,
+                type: "action",
+              },
+              {
+                id: "title-desc",
+                label: "Title Z to A",
+                onClick: onMenuClick,
+                type: "action",
+              },
+            ]}
           />
         </Box>
-        <HorizontalRule sx={{ marginTop: "xxl", marginBottom: "xxl" }} />
-        <Flex sx={{ alignItems: "center" }}>
-          <Heading
-            size="heading5"
-            sx={{
-              display: collections?.length > 0 ? "flex" : "none",
-              marginBottom: "l",
-            }}
-            ref={headingRef}
-            tabIndex={-1}
-            id="collections"
-            width="max-content"
-          >
-            {`Displaying ${displayResults(
-              data.numResults,
-              data.perPage,
-              data.page
-            )}
-            results`}
-          </Heading>
-          <Spacer />
-          <Box
-            sx={{
-              display: collections?.length > 0 ? "flex" : "none",
-              gap: "xs",
-              marginBottom: "l",
-            }}
-          >
-            <Menu
-              showLabel
-              selectedItem={currentSort}
-              labelText={`Sort by: ${COLLECTION_SORT_LABELS[currentSort]}`}
-              listItemsData={[
-                {
-                  id: "date-desc",
-                  label: "Newest to oldest",
-                  onClick: onMenuClick,
-                  type: "action",
-                },
-                {
-                  id: "date-asc",
-                  label: "Oldest to newest",
-                  onClick: onMenuClick,
-                  type: "action",
-                },
-                {
-                  id: "title-asc",
-                  label: "Title A to Z",
-                  onClick: onMenuClick,
-                  type: "action",
-                },
-                {
-                  id: "title-desc",
-                  label: "Title Z to A",
-                  onClick: onMenuClick,
-                  type: "action",
-                },
-              ]}
-            />
-          </Box>
-        </Flex>
+      </Flex>
 
-        {isLoaded ? (
-          collections.length > 0 ? (
-            <CardsGrid records={collections} />
-          ) : (
-            <NoResultsFound
-              searchTerm={params.collection_keywords}
-              page={params.page}
-            />
-          )
+      {isLoaded ? (
+        collections.length > 0 ? (
+          <CardsGrid records={collections} />
         ) : (
-          Array(Math.max(Math.ceil(collections.length / 4), 1)).fill(
-            <LaneLoading id="lane-loading" withTitle={false} />
-          )
-        )}
-
-        {totalPages > 1 && (
-          <Pagination
-            id="pagination-id"
-            initialPage={currentPage}
-            currentPage={currentPage}
-            pageCount={totalPages}
-            onPageChange={onPageChange}
-            sx={{
-              display: "flex",
-              justifyContent: "center",
-              gap: "s",
-              marginTop: "xxl",
-            }}
+          <NoResultsFound
+            searchTerm={params.collection_keywords}
+            page={params.page}
           />
-        )}
-      </>
+        )
+      ) : (
+        Array(Math.max(Math.ceil(collections.length / 4), 1)).fill(
+          <LaneLoading id="lane-loading" withTitle={false} />
+        )
+      )}
+
+      {totalPages > 1 && (
+        <Pagination
+          id="pagination-id"
+          initialPage={currentPage}
+          currentPage={currentPage}
+          pageCount={totalPages}
+          onPageChange={onPageChange}
+          sx={{
+            display: "flex",
+            justifyContent: "center",
+            gap: "s",
+            marginTop: "xxl",
+          }}
+        />
+      )}
     </PageLayout>
   );
 }
