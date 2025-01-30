@@ -3,6 +3,7 @@ import { Metadata } from "next";
 import PageLayout from "../../src/components/pageLayout/pageLayout";
 import { mockItems } from "__tests__/__mocks__/data/mockItems";
 import { createAdobeAnalyticsPageName } from "@/src/utils/utils";
+import CollectionPage from "@/src/components/pages/collectionPage/collectionPage";
 
 type CollectionProps = {
   params: { slug: string };
@@ -23,7 +24,7 @@ export async function generateMetadata({
 export default function Collection({ params }: CollectionProps) {
   return (
     <PageLayout
-      activePage="lane"
+      activePage="collection"
       breadcrumbs={[
         { text: "Home", url: "/" },
         { text: "Collections", url: "/collections" },
@@ -36,6 +37,11 @@ export default function Collection({ params }: CollectionProps) {
         "collections",
         params.slug
       )}
-    ></PageLayout>
+    >
+      <CollectionPage
+        slug={"Example collection"}
+        data={[...mockItems, ...mockItems]}
+      />
+    </PageLayout>
   );
 }

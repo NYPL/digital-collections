@@ -42,13 +42,16 @@ const SearchPage = ({ data }) => {
             {`Displaying ${displayResults(data.numResults, CARDS_PER_PAGE, 1)}
                     results for "keyword"`}
           </Heading>
-          <Filters />
+          <Filters headingText="Refine your search" />
         </Box>
       </Box>
       <Box
         maxWidth="1280px"
         mx="auto"
-        sx={{ paddingLeft: { base: 0, xl: "s" } }}
+        sx={{
+          paddingLeft: { base: "m", xl: "s" },
+          paddingRight: { base: "m", xl: "s" },
+        }}
       >
         <HorizontalRule />
         <Flex alignContent="center" gap="xs">
