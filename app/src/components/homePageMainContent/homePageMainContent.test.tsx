@@ -7,7 +7,7 @@ describe("homePageMainContent", () => {
   it("renders the Campaign Hero", async () => {
     render(
       <HomePageMainContent
-        swimlanes={mockHomePageMainContent.laneData.lanesWithNumItems}
+        swimlanes={mockHomePageMainContent.swimLaneData.lanesWithNumItems}
         randomNumber={1}
       />
     );

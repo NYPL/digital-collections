@@ -7,7 +7,7 @@ jest.mock("next/navigation", () => ({
   useRouter: jest.fn(),
 }));
 
-describe("Not Found Page", () => {
+describe("Not found page", () => {
   it("renders a 404 error message", () => {
     (useRouter as jest.Mock).mockImplementation(() => ({
       pathname: "/404",

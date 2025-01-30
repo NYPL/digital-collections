@@ -8,7 +8,7 @@ jest.mock("next/navigation", () => ({
   useRouter: jest.fn(),
 }));
 
-describe("Error Page", () => {
+describe("Error page", () => {
   it("renders an error message", () => {
     (useRouter as jest.Mock).mockImplementation(() => ({
       pathname: "/test-error",
