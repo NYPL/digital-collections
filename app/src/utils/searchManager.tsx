@@ -95,6 +95,7 @@ abstract class BaseSearchManager implements SearchManager {
   }
 
   clearAllFilters() {
+    this.currentFilters = [];
     return this.createQueryString({
       keywords: this.currentKeywords,
       sort: this.currentSort,
@@ -189,7 +190,6 @@ export class SearchManagerFactory {
     isCollectionSearch: boolean;
   }): SearchManager {
     const { isCollectionSearch, ...baseConfig } = config;
-
     return isCollectionSearch
       ? new CollectionSearchManager(baseConfig)
       : new GeneralSearchManager(baseConfig);
@@ -206,7 +206,6 @@ const filterQueryStringFromObject = (paramsObject: Record<string, any>) => {
       newParams[key] = value;
     }
   });
-
   return createQueryStringFromObject(newParams);
 };
 
