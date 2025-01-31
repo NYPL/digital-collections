@@ -15,10 +15,16 @@ import { CARDS_PER_PAGE } from "@/src/config/constants";
 import { displayResults, totalNumPages } from "@/src/utils/utils";
 import Filters from "../../search/filters";
 import { useSearchContext } from "@/src/context/SearchProvider";
+import { usePathname, useRouter } from "next/navigation";
 
 const SearchPage = ({ data }) => {
   const { searchManager } = useSearchContext();
   const totalPages = totalNumPages(data.numResults, CARDS_PER_PAGE);
+  const { push } = useRouter();
+  const pathname = usePathname();
+  const updateURL = async (queryString) => {
+    push(`${pathname}?${queryString}`);
+  };
   return (
     <Box id="mainContent">
       <Box
@@ -40,7 +46,11 @@ const SearchPage = ({ data }) => {
               marginBottom: "m",
             }}
           >
-            {`Displaying ${displayResults(data.numResults, CARDS_PER_PAGE, 1)}
+            {`Displaying ${displayResults(
+              data.numResults,
+              CARDS_PER_PAGE,
+              searchManager.page
+            )}
                     results for "${searchManager.keywords}"`}
           </Heading>
           <Filters headingText="Refine your search" />
@@ -75,7 +85,11 @@ const SearchPage = ({ data }) => {
           tabIndex={-1}
           marginTop="xl"
           size="heading5"
-        >{`Displaying ${displayResults(data.numResults, CARDS_PER_PAGE, 1)}
+        >{`Displaying ${displayResults(
+          data.numResults,
+          CARDS_PER_PAGE,
+          searchManager.page
+        )}
                     results`}</Heading>
 
         <Flex marginTop="xxl" marginBottom="xxl" alignContent="center">
@@ -93,9 +107,12 @@ const SearchPage = ({ data }) => {
           {totalPages > 1 && (
             <Pagination
               id="pagination-id"
-              initialPage={1}
-              currentPage={1}
+              initialPage={searchManager.page}
+              currentPage={searchManager.page}
               pageCount={totalPages}
+              onPageChange={(newPage) => {
+                updateURL(searchManager.handlePageChange(newPage));
+              }}
               sx={{
                 justifyContent: "flex-end",
                 gap: "s",
