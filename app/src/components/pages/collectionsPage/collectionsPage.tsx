@@ -181,6 +181,7 @@ export function CollectionsPage({ data, collectionSearchParams }) {
                 id: "date-desc",
                 label: "Newest to oldest",
                 onClick: () => {
+                  setIsLoaded(false);
                   updateURL(
                     collectionSearchManager.handleSortChange("date-desc")
                   );
@@ -191,6 +192,7 @@ export function CollectionsPage({ data, collectionSearchParams }) {
                 id: "date-asc",
                 label: "Oldest to newest",
                 onClick: () => {
+                  setIsLoaded(false);
                   updateURL(
                     collectionSearchManager.handleSortChange("date-asc")
                   );
@@ -201,6 +203,7 @@ export function CollectionsPage({ data, collectionSearchParams }) {
                 id: "title-asc",
                 label: "Title A to Z",
                 onClick: () => {
+                  setIsLoaded(false);
                   updateURL(
                     collectionSearchManager.handleSortChange("title-asc")
                   );
@@ -211,6 +214,7 @@ export function CollectionsPage({ data, collectionSearchParams }) {
                 id: "title-desc",
                 label: "Title Z to A",
                 onClick: () => {
+                  setIsLoaded(false);
                   updateURL(
                     collectionSearchManager.handleSortChange("title-desc")
                   );
@@ -242,6 +246,7 @@ export function CollectionsPage({ data, collectionSearchParams }) {
           initialPage={collectionSearchManager.page}
           pageCount={totalPages}
           onPageChange={(newPage) => {
+            setIsLoaded(false);
             updateURL(collectionSearchManager.handlePageChange(newPage));
           }}
           sx={{
