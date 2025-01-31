@@ -1,9 +1,10 @@
 import React from "react";
 import PageLayout from "../../src/components/pageLayout/pageLayout";
-import { mockItems } from "../../../__tests__/__mocks__/data/mockItems";
 import { createAdobeAnalyticsPageName } from "@/src/utils/utils";
-import SearchPage from "@/src/components/pages/searchPage/searchPage";
+import { getSearchData } from "@/src/utils/apiHelpers";
+import { Metadata } from "next";
 import { Filter } from "@/src/utils/searchManager";
+import SearchPage from "@/src/components/pages/searchPage/searchPage";
 
 export interface SearchParams {
   keywords: string;
@@ -12,12 +13,27 @@ export interface SearchParams {
   page: number;
 }
 
+export const metadata: Metadata = {
+  title: "Search results - NYPL Digital Collections",
+  openGraph: {
+    title: "Search results - NYPL Digital Collections",
+  },
+};
+
 export type SearchProps = {
-  params: { slug: string };
   searchParams: SearchParams;
 };
 
-export default async function Search() {
+export default async function Search({ searchParams }: SearchProps) {
+  const pageName = searchParams.keywords ? "search-results" : "all-items";
+
+  const data = await getSearchData({
+    keyword: searchParams.keywords || "type_s:Item",
+    sort: searchParams.sort,
+    filters: searchParams.filters,
+    page: searchParams.page,
+  });
+
   return (
     <PageLayout
       activePage="search"
@@ -25,12 +41,10 @@ export default async function Search() {
         { text: "Home", url: "/" },
         { text: "Keyword Search", url: "/search/index" },
       ]}
-      adobeAnalyticsPageName={createAdobeAnalyticsPageName(
-        "search-results",
-        ""
-      )}
+      adobeAnalyticsPageName={createAdobeAnalyticsPageName(pageName, "")}
+      searchParams={searchParams} //!
     >
-      <SearchPage data={[...mockItems, ...mockItems]} />
+      <SearchPage data={data} />
     </PageLayout>
   );
 }

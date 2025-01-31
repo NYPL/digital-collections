@@ -380,8 +380,8 @@ describe("getCollectionsData", () => {
     );
     const collections = await getCollectionsData({
       keyword: "cat",
-      sortID: "date-asc",
-      pageNum: "2",
+      sort: "date-asc",
+      page: 2,
     });
 
     expect(fetchApi as jest.Mock).toHaveBeenCalledWith(

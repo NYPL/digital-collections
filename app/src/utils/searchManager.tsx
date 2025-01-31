@@ -43,8 +43,6 @@ abstract class BaseSearchManager implements SearchManager {
     this.currentKeywords = config.initialKeywords;
   }
 
-  abstract handleSearchSubmit(): string;
-
   get keywords() {
     return this.currentKeywords;
   }
@@ -64,13 +62,14 @@ abstract class BaseSearchManager implements SearchManager {
   handleKeywordChange(value: string) {
     this.currentKeywords = value;
   }
+
   abstract handlePageChange(pageNumber: number): string;
   abstract handleSortChange(id: string): string;
+  abstract handleSearchSubmit(): string;
 
   handleAddFilter(newFilter: Filter) {
     const updatedFilters = [...this.currentFilters, newFilter];
     this.currentFilters = updatedFilters;
-
     return this.createQueryString({
       keywords: this.currentKeywords,
       sort: this.currentSort,
@@ -217,6 +216,5 @@ const createQueryStringFromObject = (object: Record<string, string>) => {
   Object.keys(object).forEach((key) => {
     params.set(key, object[key]);
   });
-
   return params.toString();
 };

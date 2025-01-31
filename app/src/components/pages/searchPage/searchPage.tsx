@@ -12,12 +12,13 @@ import {
 } from "@nypl/design-system-react-components";
 import React from "react";
 import { CARDS_PER_PAGE } from "@/src/config/constants";
-import { displayResults } from "@/src/utils/utils";
+import { displayResults, totalNumPages } from "@/src/utils/utils";
 import Filters from "../../search/filters";
-import { CardsGrid } from "../../grids/cardsGrid";
+import { useSearchContext } from "@/src/context/SearchProvider";
 
 const SearchPage = ({ data }) => {
-  const totalPages = 10;
+  const { searchManager } = useSearchContext();
+  const totalPages = totalNumPages(data.numResults, CARDS_PER_PAGE);
   return (
     <Box id="mainContent">
       <Box
@@ -40,7 +41,7 @@ const SearchPage = ({ data }) => {
             }}
           >
             {`Displaying ${displayResults(data.numResults, CARDS_PER_PAGE, 1)}
-                    results for "keyword"`}
+                    results for "${searchManager.keywords}"`}
           </Heading>
           <Filters headingText="Refine your search" />
         </Box>
@@ -77,7 +78,6 @@ const SearchPage = ({ data }) => {
         >{`Displaying ${displayResults(data.numResults, CARDS_PER_PAGE, 1)}
                     results`}</Heading>
 
-        <CardsGrid records={data} />
         <Flex marginTop="xxl" marginBottom="xxl" alignContent="center">
           <Link
             minWidth="100px"
