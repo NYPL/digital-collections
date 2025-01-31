@@ -64,16 +64,18 @@ abstract class BaseSearchManager implements SearchManager {
   handleKeywordChange(value: string) {
     this.currentKeywords = value;
   }
-
   abstract handlePageChange(pageNumber: number): string;
   abstract handleSortChange(id: string): string;
 
   handleAddFilter(newFilter: Filter) {
+    const updatedFilters = [...this.currentFilters, newFilter];
+    this.currentFilters = updatedFilters;
+
     return this.createQueryString({
       keywords: this.currentKeywords,
       sort: this.currentSort,
       page: this.currentPage,
-      filters: filterToString([...this.currentFilters, newFilter]),
+      filters: filterToString(updatedFilters),
     });
   }
 
@@ -85,7 +87,6 @@ abstract class BaseSearchManager implements SearchManager {
           filter.value === filterToRemove.value
         )
     );
-
     return this.createQueryString({
       keywords: this.currentKeywords,
       sort: this.currentSort,
@@ -106,7 +107,7 @@ abstract class BaseSearchManager implements SearchManager {
   protected abstract createQueryString(params: Record<string, any>): string;
 }
 
-class GeneralSearchManager extends BaseSearchManager {
+export class GeneralSearchManager extends BaseSearchManager {
   handleSearchSubmit() {
     this.currentPage = DEFAULT_PAGE_NUM;
     this.currentFilters = [];
@@ -120,6 +121,7 @@ class GeneralSearchManager extends BaseSearchManager {
   }
 
   handlePageChange(pageNumber: number) {
+    this.currentPage = pageNumber;
     return this.createQueryString({
       keywords: this.currentKeywords,
       sort: this.currentSort,
@@ -128,10 +130,11 @@ class GeneralSearchManager extends BaseSearchManager {
     });
   }
 
-  handleSortChange(id: string) {
+  handleSortChange(sort: string) {
+    this.currentSort = sort;
     return this.createQueryString({
       keywords: this.currentKeywords,
-      sort: id,
+      sort: sort,
       page: this.currentPage,
       filters: filterToString(this.currentFilters),
     });
@@ -142,7 +145,7 @@ class GeneralSearchManager extends BaseSearchManager {
   }
 }
 
-class CollectionSearchManager extends BaseSearchManager {
+export class CollectionSearchManager extends BaseSearchManager {
   handleSearchSubmit() {
     this.currentPage = DEFAULT_PAGE_NUM;
     this.currentFilters = [];
@@ -156,6 +159,7 @@ class CollectionSearchManager extends BaseSearchManager {
   }
 
   handlePageChange(pageNumber: number) {
+    this.currentPage = pageNumber;
     return this.createQueryString({
       collection_keywords: this.currentKeywords,
       sort: this.currentSort,
@@ -163,10 +167,11 @@ class CollectionSearchManager extends BaseSearchManager {
     });
   }
 
-  handleSortChange(id: string) {
+  handleSortChange(sort: string) {
+    this.currentSort = sort;
     return `${this.createQueryString({
       collection_keywords: this.currentKeywords,
-      sort: id,
+      sort: sort,
       page: this.currentPage,
     })}`;
   }
