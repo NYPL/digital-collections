@@ -20,7 +20,6 @@ import {
   DEFAULT_COLLECTION_SORT,
   DEFAULT_SEARCH_TERM,
   COLLECTION_SORT_LABELS,
-  DEFAULT_FILTERS,
 } from "@/src/config/constants";
 import { SearchManagerFactory } from "@/src/utils/searchManager";
 import { headerBreakpoints } from "@/src/utils/breakpoints";
@@ -41,7 +40,6 @@ export function CollectionsPage({ data, collectionSearchParams }) {
   const collectionSearchManager = SearchManagerFactory.createSearchManager({
     initialPage: Number(collectionSearchParams?.page) || DEFAULT_PAGE_NUM,
     initialSort: collectionSearchParams?.sort || DEFAULT_COLLECTION_SORT,
-    initialFilters: collectionSearchParams?.filters || DEFAULT_FILTERS,
     initialKeywords:
       collectionSearchParams?.collection_keywords || DEFAULT_SEARCH_TERM,
     isCollectionSearch: true,
@@ -52,9 +50,16 @@ export function CollectionsPage({ data, collectionSearchParams }) {
     push(`${pathname}?${queryString}`);
   };
 
+  const isPopulatedSearch =
+    collectionSearchManager.keywords !== DEFAULT_SEARCH_TERM ||
+    collectionSearchManager.sort !== DEFAULT_COLLECTION_SORT ||
+    collectionSearchManager.page !== DEFAULT_PAGE_NUM;
+
   useEffect(() => {
     setIsLoaded(true);
-    headingRef.current?.focus();
+    if (isPopulatedSearch) {
+      headingRef.current?.focus();
+    }
   }, [data]);
 
   return (

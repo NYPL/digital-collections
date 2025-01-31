@@ -34,12 +34,12 @@ abstract class BaseSearchManager implements SearchManager {
   constructor(config: {
     initialPage: number;
     initialSort: string;
-    initialFilters: Filter[];
+    initialFilters?: Filter[];
     initialKeywords: string;
   }) {
     this.currentPage = config.initialPage;
     this.currentSort = config.initialSort;
-    this.currentFilters = config.initialFilters;
+    this.currentFilters = config.initialFilters || [];
     this.currentKeywords = config.initialKeywords;
   }
 
@@ -185,7 +185,7 @@ export class SearchManagerFactory {
   static createSearchManager(config: {
     initialPage: number;
     initialSort: string;
-    initialFilters: Filter[];
+    initialFilters?: Filter[];
     initialKeywords: string;
     isCollectionSearch: boolean;
   }): SearchManager {
