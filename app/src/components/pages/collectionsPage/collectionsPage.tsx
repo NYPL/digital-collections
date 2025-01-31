@@ -32,9 +32,11 @@ export function CollectionsPage({ data, collectionSearchParams }) {
 
   const [isLoaded, setIsLoaded] = useState(false);
   const totalPages = totalNumPages(data.numResults, data.perPage);
-  const collections = Array.isArray(data.collection)
-    ? data.collection
-    : [data.collection];
+  const collections = data.collection
+    ? Array.isArray(data.collection)
+      ? data.collection
+      : [data.collection]
+    : [];
 
   const collectionSearchManager = SearchManagerFactory.createSearchManager({
     initialPage: Number(collectionSearchParams?.page) || DEFAULT_PAGE_NUM,
