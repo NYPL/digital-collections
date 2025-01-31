@@ -2,12 +2,13 @@ import SearchPage from "@/src/components/pages/searchPage/searchPage";
 import { SearchProvider } from "@/src/context/SearchProvider";
 import { render } from "@testing-library/react";
 import { mockItems } from "__tests__/__mocks__/data/mockItems";
-
 import { axe } from "jest-axe";
 import React from "react";
 
 jest.mock("next/navigation", () => ({
-  useRouter: jest.fn(),
+  useRouter: () => ({
+    push: jest.fn(),
+  }),
   usePathname: jest.fn(),
 }));
 
