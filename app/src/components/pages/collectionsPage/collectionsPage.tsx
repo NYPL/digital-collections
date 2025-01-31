@@ -227,7 +227,7 @@ export function CollectionsPage({
         ) : (
           <NoResultsFound
             searchTerm={collectionSearchParams.collection_keywords}
-            page={undefined}
+            page={collectionSearchParams.page}
           />
         )
       ) : (

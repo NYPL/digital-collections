@@ -21,8 +21,8 @@ export const metadata: Metadata = {
 export default async function Collections({ searchParams }: CollectionsProps) {
   const data = await getCollectionsData({
     keyword: searchParams.collection_keywords,
-    sortID: searchParams.sort,
-    pageNum: searchParams.page,
+    sort: searchParams.sort,
+    page: searchParams.page,
   });
 
   // Repo API returns 404s within the data.
