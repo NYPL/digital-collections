@@ -17,6 +17,7 @@ const collectionsSchema = {
         numberOfDigitizedItems: "integer", // remove numItems
         containsAVMaterial: "boolean",
         containsOnSiteMaterial: "boolean",
+        firstIndexed: "datetime",
       },
       {
         title: "string",
@@ -25,6 +26,7 @@ const collectionsSchema = {
         numberOfDigitizedItems: "integer", // remove numItems
         containsAVMaterial: "boolean",
         containsOnSiteMaterial: "boolean",
+        firstIndexed: "datetime",
       },
       {
         title: "string",
@@ -33,6 +35,7 @@ const collectionsSchema = {
         numberOfDigitizedItems: "integer", // remove numItems
         containsAVMaterial: "boolean",
         containsOnSiteMaterial: "boolean",
+        firstIndexed: "datetime",
       },
       {
         title: "string",
@@ -41,6 +44,7 @@ const collectionsSchema = {
         numberOfDigitizedItems: "integer", // remove numItems
         containsAVMaterial: "boolean",
         containsOnSiteMaterial: "boolean",
+        firstIndexed: "datetime",
       },
     ],
   },
