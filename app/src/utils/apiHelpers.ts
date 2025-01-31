@@ -164,16 +164,16 @@ export const getDivisionData = async ({
 
 export const getCollectionsData = async ({
   keyword = DEFAULT_SEARCH_TERM,
-  sortID = DEFAULT_COLLECTION_SORT,
-  pageNum = DEFAULT_PAGE_NUM,
+  sort = DEFAULT_COLLECTION_SORT,
+  page = DEFAULT_PAGE_NUM,
   perPage = CARDS_PER_PAGE,
 }: {
   keyword?: string;
-  sortID?: string;
-  pageNum?: number;
+  sort?: string;
+  page?: number;
   perPage?: number;
 } = {}) => {
-  let apiUrl = `${process.env.API_URL}/api/v2/collections?page=${pageNum}&per_page=${perPage}&sort=${COLLECTION_SORT_OPTIONS[sortID]}&q=${keyword}`;
+  let apiUrl = `${process.env.API_URL}/api/v2/collections?page=${page}&per_page=${perPage}&sort=${COLLECTION_SORT_OPTIONS[sort]}&q=${keyword}`;
   const res = await fetchApi(apiUrl);
   return res;
 };
