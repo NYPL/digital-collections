@@ -46,7 +46,6 @@ export function CollectionsPage({ data, collectionSearchParams }) {
   });
 
   const updateURL = async (queryString: string) => {
-    setIsLoaded(false);
     push(`${pathname}?${queryString}`);
   };
 
