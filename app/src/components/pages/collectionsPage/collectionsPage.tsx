@@ -22,7 +22,7 @@ import {
   COLLECTION_SORT_LABELS,
   DEFAULT_FILTERS,
 } from "@/src/config/constants";
-import { SearchManager } from "@/src/utils/searchManager";
+import { SearchManagerFactory } from "@/src/utils/searchManager";
 import { headerBreakpoints } from "@/src/utils/breakpoints";
 
 export function CollectionsPage({
@@ -43,7 +43,7 @@ export function CollectionsPage({
       : [data.collection]
     : [];
 
-  const collectionSearchManager = new SearchManager({
+  const collectionSearchManager = SearchManagerFactory.createSearchManager({
     initialPage: Number(collectionSearchParams?.page) || DEFAULT_PAGE_NUM,
     initialSort: collectionSearchParams?.sort || DEFAULT_COLLECTION_SORT,
     initialFilters: collectionSearchParams?.filters || DEFAULT_FILTERS,
@@ -52,7 +52,7 @@ export function CollectionsPage({
     isCollectionSearch: true,
   });
 
-  const updateURL = async (queryString) => {
+  const updateURL = async (queryString: string) => {
     setIsLoaded(false);
     push(`${pathname}?${queryString}`);
     setTimeout(() => {
@@ -102,7 +102,7 @@ export function CollectionsPage({
             labelText: "Search by collection title",
             name: "collection_keywords",
             placeholder: "Search by collection title",
-            defaultValue: collectionSearchManager.currentKeywords,
+            defaultValue: collectionSearchManager.keywords,
             onChange: (e) =>
               collectionSearchManager.handleKeywordChange(
                 (e.target as HTMLInputElement).value
@@ -145,9 +145,9 @@ export function CollectionsPage({
         >
           <Menu
             showLabel
-            selectedItem={collectionSearchManager.currentSort}
+            selectedItem={collectionSearchManager.sort}
             labelText={`Sort by: ${
-              COLLECTION_SORT_LABELS[collectionSearchManager.currentSort]
+              COLLECTION_SORT_LABELS[collectionSearchManager.sort]
             }`}
             listItemsData={[
               {
@@ -211,8 +211,8 @@ export function CollectionsPage({
       {totalPages > 1 && (
         <Pagination
           id="pagination-id"
-          currentPage={collectionSearchManager.currentPage}
-          initialPage={collectionSearchManager.currentPage}
+          currentPage={collectionSearchManager.page}
+          initialPage={collectionSearchManager.page}
           pageCount={totalPages}
           onPageChange={(newPage) => {
             updateURL(collectionSearchManager.handlePageChange(newPage));

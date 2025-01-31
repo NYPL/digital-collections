@@ -5,7 +5,11 @@ import {
   DEFAULT_SORT,
   DEFAULT_SEARCH_TERM,
 } from "../config/constants";
-import { Filter, SearchManager } from "../utils/searchManager";
+import {
+  Filter,
+  SearchManager,
+  SearchManagerFactory,
+} from "../utils/searchManager";
 
 interface SearchContextType {
   searchManager: SearchManager;
@@ -41,12 +45,12 @@ export const SearchProvider = ({
   searchParams?;
   children: React.ReactNode;
 }) => {
-  const searchManager = new SearchManager({
+  const searchManager = SearchManagerFactory.createSearchManager({
     initialPage: Number(searchParams?.page) || DEFAULT_PAGE_NUM,
     initialSort: searchParams?.sort || DEFAULT_SORT,
     initialFilters: stringToFilter(searchParams?.filters),
     initialKeywords: searchParams?.keywords || DEFAULT_SEARCH_TERM,
-    isCollectionSearch: searchParams?.isCollectionSearch === "true",
+    isCollectionSearch: false,
   });
 
   return (
