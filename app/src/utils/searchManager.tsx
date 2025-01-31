@@ -168,7 +168,7 @@ class CollectionSearchManager extends BaseSearchManager {
       collection_keywords: this.currentKeywords,
       sort: id,
       page: this.currentPage,
-    })}#collections`;
+    })}`;
   }
 
   protected createQueryString(params: Record<string, any>) {
