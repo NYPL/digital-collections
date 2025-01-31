@@ -13,13 +13,12 @@ import {
 } from "@nypl/design-system-react-components";
 import React from "react";
 import { CARDS_PER_PAGE, SEARCH_SORT_LABELS } from "@/src/config/constants";
-import { displayResults } from "@/src/utils/utils";
+import { displayResults, totalNumPages } from "@/src/utils/utils";
 import Filters from "../../search/filters";
 import SearchCardsGrid from "../../grids/searchCardsGrid";
-import { mockSearchResponse } from "__tests__/__mocks__/data/mockSearchResponse";
 
 const SearchPage = ({ data }) => {
-  const totalPages = 10;
+  const totalPages = totalNumPages(data.numResults, CARDS_PER_PAGE);
   return (
     <Box id="mainContent">
       <Box
@@ -42,7 +41,7 @@ const SearchPage = ({ data }) => {
             }}
           >
             {`Displaying ${displayResults(data.numResults, CARDS_PER_PAGE, 1)}
-                    results for "example"`}
+                    results for "${data.keyword}"`}
           </Heading>
           <Filters headingText="Refine your search" />
         </Box>
@@ -97,10 +96,7 @@ const SearchPage = ({ data }) => {
             )}
           />
         </Flex>
-        <SearchCardsGrid
-          keywords={["example"]}
-          results={mockSearchResponse.results}
-        />
+        <SearchCardsGrid keywords={data.keyword} results={data.results} />
         <Flex marginTop="xxl" marginBottom="xxl" alignContent="center">
           <Link
             minWidth="100px"
@@ -117,7 +113,7 @@ const SearchPage = ({ data }) => {
             <Pagination
               id="pagination-id"
               initialPage={1}
-              currentPage={1}
+              currentPage={data.page}
               pageCount={totalPages}
               sx={{
                 justifyContent: "flex-end",

@@ -3,7 +3,6 @@ import React from "react";
 import {
   Card,
   CardHeading,
-  Text,
   CardContent,
   StatusBadge,
   TagSet,
@@ -15,7 +14,7 @@ import SearchCardType, {
 
 export interface SearchCardProps {
   result: SearchCardType;
-  keywords: string[];
+  keywords: string;
 }
 
 const onSiteMaterialBadge = (recordType: SearchResultRecordType) => {
@@ -48,9 +47,10 @@ const contentTypeTag = (result: SearchCardType) => {
   );
 };
 
-const highlightedText = ({ text, keywords }) => {
-  if (!text || !keywords.length) return text;
+const highlightedText = ({ text, keyword }) => {
+  if (!text || !keyword) return text;
   const words = text.split(" ");
+  const keywords = keyword.split(" ");
   return (
     <span>
       {words.map((word, index) => {
@@ -101,7 +101,7 @@ export const SearchCard = ({ result, keywords }: SearchCardProps) => {
           {keywords?.length > 0 &&
             highlightedText({
               text: result.highlights[0],
-              keywords: keywords,
+              keyword: keywords,
             })}
           {contentTypeTag(result)}
         </Flex>

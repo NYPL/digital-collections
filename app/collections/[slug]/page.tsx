@@ -1,9 +1,9 @@
 import React from "react";
 import { Metadata } from "next";
 import PageLayout from "../../src/components/pageLayout/pageLayout";
-import { mockItems } from "__tests__/__mocks__/data/mockItems";
 import { createAdobeAnalyticsPageName } from "@/src/utils/utils";
 import CollectionPage from "@/src/components/pages/collectionPage/collectionPage";
+import { mockSearchResponse } from "__tests__/__mocks__/data/mockSearchResponse";
 
 type CollectionProps = {
   params: { slug: string };
@@ -38,10 +38,7 @@ export default function Collection({ params }: CollectionProps) {
         params.slug
       )}
     >
-      <CollectionPage
-        slug={"Example collection"}
-        data={[...mockItems, ...mockItems]}
-      />
+      <CollectionPage slug={"Example collection"} data={mockSearchResponse} />
     </PageLayout>
   );
 }
