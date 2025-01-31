@@ -33,7 +33,7 @@ export const stringToFilter = (filtersString: string | null): Filter[] => {
 
 export const filterToString = (filters: Filter[]): string => {
   if (!filters || filters.length === 0) return "";
-  return filters.map(({ filter, value }) => `[${filter}=${value}]`).join(",");
+  return filters.map(({ filter, value }) => `[${filter}=${value}]`).join("");
 };
 
 const SearchContext = createContext<SearchContextType | undefined>(undefined);
