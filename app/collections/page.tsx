@@ -33,8 +33,6 @@ export default async function Collections({ searchParams }: CollectionsProps) {
     redirect("/404");
   }
 
-  const renderCollections =
-    data?.collection !== undefined && !data?.collection?.nil;
   return (
     <PageLayout
       activePage="collections"
@@ -44,11 +42,7 @@ export default async function Collections({ searchParams }: CollectionsProps) {
       ]}
       adobeAnalyticsPageName={createAdobeAnalyticsPageName("all-collections")}
     >
-      <CollectionsPage
-        collectionSearchParams={searchParams}
-        data={data}
-        renderCollections={renderCollections}
-      />
+      <CollectionsPage collectionSearchParams={searchParams} data={data} />
     </PageLayout>
   );
 }

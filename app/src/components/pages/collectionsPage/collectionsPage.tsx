@@ -25,22 +25,16 @@ import {
 import { SearchManagerFactory } from "@/src/utils/searchManager";
 import { headerBreakpoints } from "@/src/utils/breakpoints";
 
-export function CollectionsPage({
-  data,
-  collectionSearchParams,
-  renderCollections,
-}) {
+export function CollectionsPage({ data, collectionSearchParams }) {
   const { push } = useRouter();
   const pathname = usePathname();
   const headingRef = useRef<HTMLHeadingElement>(null);
 
   const [isLoaded, setIsLoaded] = useState(false);
   const totalPages = totalNumPages(data.numResults, data.perPage);
-  const collections = renderCollections
-    ? Array.isArray(data.collection)
-      ? data.collection
-      : [data.collection]
-    : [];
+  const collections = Array.isArray(data.collection)
+    ? data.collection
+    : [data.collection];
 
   const collectionSearchManager = SearchManagerFactory.createSearchManager({
     initialPage: Number(collectionSearchParams?.page) || DEFAULT_PAGE_NUM,
