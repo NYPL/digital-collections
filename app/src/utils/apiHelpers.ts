@@ -170,7 +170,7 @@ export const getCollectionsData = async ({
 }: {
   keyword?: string;
   sortID?: string;
-  pageNum?: string;
+  pageNum?: number;
   perPage?: number;
 } = {}) => {
   let apiUrl = `${process.env.API_URL}/api/v2/collections?page=${pageNum}&per_page=${perPage}&sort=${COLLECTION_SORT_OPTIONS[sortID]}&q=${keyword}`;
