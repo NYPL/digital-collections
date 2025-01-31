@@ -237,10 +237,7 @@ const CollectionPage = ({ slug, data }) => {
                 )}
               />
             </Flex>
-            <SearchCardsGrid
-              keywords={["example"]}
-              results={mockSearchResponse.results}
-            />
+            <SearchCardsGrid keywords={data.keyword} results={data.results} />
             <Flex marginTop="xxl" marginBottom="xxl" alignContent="center">
               <Link
                 minWidth="100px"

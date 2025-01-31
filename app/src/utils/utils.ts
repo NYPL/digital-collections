@@ -95,8 +95,8 @@ export const titleToDCParam = (string: string = ""): string => {
   return string?.replace(/\s+/g, "+"); // replace spaces with +
 };
 
-export const totalNumPages = (numResults: string, perPage: string): number => {
-  return Math.ceil(parseInt(numResults) / parseInt(perPage));
+export const totalNumPages = (numResults: string, perPage: number): number => {
+  return Math.ceil(parseInt(numResults) / perPage);
 };
 
 export function isCollectionType(

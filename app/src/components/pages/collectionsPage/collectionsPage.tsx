@@ -29,6 +29,7 @@ import {
   DEFAULT_COLLECTION_SORT,
   DEFAULT_SEARCH_TERM,
   COLLECTION_SORT_LABELS,
+  CARDS_PER_PAGE,
 } from "@/src/config/constants";
 
 export function CollectionsPage({ data, params, renderCollections }) {
@@ -46,7 +47,7 @@ export function CollectionsPage({ data, params, renderCollections }) {
   const headingRef = useRef<HTMLHeadingElement>(null);
 
   const numFound = data.numFound || data.numResults;
-  const totalPages = totalNumPages(numFound, data.perPage);
+  const totalPages = totalNumPages(numFound, CARDS_PER_PAGE);
 
   const [currentPage, setCurrentPage] = useState<number>(
     Number(params.page) || Number(DEFAULT_PAGE_NUM)

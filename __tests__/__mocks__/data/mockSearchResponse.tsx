@@ -1,5 +1,5 @@
 export const mockSearchResponse = {
-  keyword: "in",
+  keyword: "example",
   numResults: 4,
   page: 1,
   perPage: 48,
@@ -27,8 +27,8 @@ export const mockSearchResponse = {
       imageID: "58886955",
       numberOfDigitizedItems: 1,
       containsOnSiteMaterial: false,
-      containsAVMaterial: false, // keeping bc the logic exists and it's already there
-      containsMultipleCaptures: false, // used to determine whether or not an item should display the "multiple images" tag
+      containsAVMaterial: false,
+      containsMultipleCaptures: false,
       contentType: "image",
       highlights: {
         mainTitle_st: ["Sarah example sitting in tree"],
