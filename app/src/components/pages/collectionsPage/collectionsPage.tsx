@@ -7,7 +7,6 @@ import {
   HorizontalRule,
   SearchBar,
   Menu,
-  Text,
   Pagination,
   Flex,
   Spacer,
