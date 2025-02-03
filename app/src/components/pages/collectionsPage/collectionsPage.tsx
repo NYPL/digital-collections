@@ -1,5 +1,5 @@
 "use client";
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState, useRef, useEffect, Suspense, lazy } from "react";
 import {
   Box,
   Heading,
@@ -29,7 +29,7 @@ export function CollectionsPage({ data, collectionSearchParams }) {
   const pathname = usePathname();
   const headingRef = useRef<HTMLHeadingElement>(null);
 
-  const [isLoaded, setIsLoaded] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
   const totalPages = totalNumPages(data.numResults, data.perPage);
   const collections = data.collection
     ? Array.isArray(data.collection)
@@ -55,7 +55,7 @@ export function CollectionsPage({ data, collectionSearchParams }) {
     collectionSearchManager.page !== DEFAULT_PAGE_NUM;
 
   useEffect(() => {
-    setIsLoaded(true);
+    setIsLoading(false);
     if (isPopulatedSearch) {
       headingRef.current?.focus();
     }
@@ -181,7 +181,7 @@ export function CollectionsPage({ data, collectionSearchParams }) {
                 id: "date-desc",
                 label: "Newest to oldest",
                 onClick: () => {
-                  setIsLoaded(false);
+                  setIsLoading(true);
                   updateURL(
                     collectionSearchManager.handleSortChange("date-desc")
                   );
@@ -192,7 +192,7 @@ export function CollectionsPage({ data, collectionSearchParams }) {
                 id: "date-asc",
                 label: "Oldest to newest",
                 onClick: () => {
-                  setIsLoaded(false);
+                  setIsLoading(true);
                   updateURL(
                     collectionSearchManager.handleSortChange("date-asc")
                   );
@@ -203,7 +203,7 @@ export function CollectionsPage({ data, collectionSearchParams }) {
                 id: "title-asc",
                 label: "Title A to Z",
                 onClick: () => {
-                  setIsLoaded(false);
+                  setIsLoading(true);
                   updateURL(
                     collectionSearchManager.handleSortChange("title-asc")
                   );
@@ -214,7 +214,7 @@ export function CollectionsPage({ data, collectionSearchParams }) {
                 id: "title-desc",
                 label: "Title Z to A",
                 onClick: () => {
-                  setIsLoaded(false);
+                  setIsLoading(true);
                   updateURL(
                     collectionSearchManager.handleSortChange("title-desc")
                   );
@@ -225,19 +225,23 @@ export function CollectionsPage({ data, collectionSearchParams }) {
           />
         </Box>
       </Flex>
-      {isLoaded ? (
-        collections.length > 0 ? (
-          <CardsGrid records={collections} />
-        ) : (
-          <NoResultsFound
-            searchTerm={collectionSearchParams.collection_keywords}
-            page={collectionSearchParams.page}
-          />
-        )
+      {isLoading ? (
+        Array(12).fill(<LaneLoading id="lane-loading" withTitle={false} />)
       ) : (
-        Array(Math.max(Math.ceil(collections.length / 4), 1)).fill(
-          <LaneLoading id="lane-loading" withTitle={false} />
-        )
+        <Suspense
+          fallback={Array(12).fill(
+            <LaneLoading id="lane-loading" withTitle={false} />
+          )}
+        >
+          {collections.length > 0 ? (
+            <CardsGrid records={collections} />
+          ) : (
+            <NoResultsFound
+              searchTerm={collectionSearchParams.collection_keywords}
+              page={collectionSearchParams.page}
+            />
+          )}
+        </Suspense>
       )}
       {totalPages > 1 && (
         <Pagination
@@ -246,7 +250,7 @@ export function CollectionsPage({ data, collectionSearchParams }) {
           initialPage={collectionSearchManager.page}
           pageCount={totalPages}
           onPageChange={(newPage) => {
-            setIsLoaded(false);
+            setIsLoading(true);
             updateURL(collectionSearchManager.handlePageChange(newPage));
           }}
           sx={{
