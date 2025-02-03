@@ -6,8 +6,8 @@ const collectionsUUIDSchema = {
   bNumber: "number", //to be used in a nypl.org/research/research-catalog/bib/ url
   keyDate: "string",
   yearBegin: "datetime",
-  divisionTitle: "string", //divisionFullName
-  divisionSlug: "string", //divisionShortName - this will be manually pulled from database, slug for division
+  divisionTitle: "string", //divisionFullName_mtxt_s
+  divisionSlug: "string", //this will be manually pulled from database, slug for division
   shelfLocator: "string", //shelfLocator_mtxt_s
   genres: "string[]",
   topics: "string[]", //topic_mtxt_s
