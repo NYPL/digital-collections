@@ -2,13 +2,12 @@ const collectionsUUIDSchema = {
   response: {
     title: "string",
     uuid: "string",
+    // where is all the info/headers under "About" coming from– that should be combined into this endpoint
     // finding aid link
     // catalog link
-    // archives link (is it available in archives)
+    // archives link (is it available in archives, this can be if archive id is returned)
     keyDate: "string", // date created? So not when it was indexed
     // library locations (parent division?)
-    // parent division
-    // description
 
     // topics: many
     // genres: many
@@ -20,10 +19,6 @@ const collectionsUUIDSchema = {
     // COLLECTION STRUCTURE
     // currently, it's at least the title on every subcollection?
     // it's the number of results when you hit /subcollections
-
-    //
-    // physical description ? Not in designs
-    // names ? Not in designs
   },
 };
 
