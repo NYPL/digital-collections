@@ -13,7 +13,7 @@ const collectionsSchema = {
       title: "string",
       uuid: "string",
       imageID: "string | null",
-      numberOfDigitizedItems: "integer", // remove numItems
+      numberOfDigitizedItems: "integer",
       containsAVMaterial: "boolean",
       containsOnSiteMaterial: "boolean",
       firstIndexed: "datetime",
@@ -22,7 +22,7 @@ const collectionsSchema = {
       title: "string",
       uuid: "string",
       imageID: "string | null",
-      numberOfDigitizedItems: "integer", // remove numItems
+      numberOfDigitizedItems: "integer",
       containsAVMaterial: "boolean",
       containsOnSiteMaterial: "boolean",
       firstIndexed: "datetime",
@@ -31,7 +31,7 @@ const collectionsSchema = {
       title: "string",
       uuid: "string",
       imageID: "string | null",
-      numberOfDigitizedItems: "integer", // remove numItems
+      numberOfDigitizedItems: "integer",
       containsAVMaterial: "boolean",
       containsOnSiteMaterial: "boolean",
       firstIndexed: "datetime",
@@ -40,7 +40,7 @@ const collectionsSchema = {
       title: "string",
       uuid: "string",
       imageID: "string | null",
-      numberOfDigitizedItems: "integer", // remove numItems
+      numberOfDigitizedItems: "integer",
       containsAVMaterial: "boolean",
       containsOnSiteMaterial: "boolean",
       firstIndexed: "datetime",
