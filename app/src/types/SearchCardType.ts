@@ -5,6 +5,8 @@ export type SearchResultContentType =
   | "Video"
   | "PDF"
   | null;
+
+export type SearchResultHighlightType = { field: string; text: string }[];
 export interface SearchCardType {
   title: string;
   uuid: string;

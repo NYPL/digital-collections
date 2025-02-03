@@ -122,10 +122,16 @@ export function displayResults(
   return `${start}-${end} of ${numFound}`;
 }
 
-export function getDescriptionText(
-  highlights: Record<string, string[]>
-): string[] {
-  return Object.values(highlights).flat();
+export function formatHighlightText(highlights) {
+  const result = Object.entries(highlights)
+    .map(([field, values]) => {
+      return (values as string[]).map((text) => ({
+        field,
+        text,
+      }));
+    })
+    .flat();
+  return result;
 }
 
 export const capitalize = (text: string): string => {

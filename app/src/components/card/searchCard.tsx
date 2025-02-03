@@ -49,9 +49,8 @@ const contentTypeTag = (result: SearchCardType) => {
   );
 };
 
-const highlightedText = ({ text, keyword }) => {
-  if (!text || !keyword) return text;
-  const words = text.split(" ");
+const highlightedText = ({ highlight, keyword }) => {
+  const words = highlight.text.split(" ");
   const keywords = keyword.split(" ");
   return (
     <Box
@@ -68,7 +67,7 @@ const highlightedText = ({ text, keyword }) => {
           display: "inline",
         }}
       >
-        Title:{" "}
+        {highlight.field}:{" "}
       </Text>
       {words.map((word, index) => {
         const isKeyword = keywords.some(
@@ -99,6 +98,7 @@ const highlightedText = ({ text, keyword }) => {
 };
 
 export const SearchCard = ({ result, keywords }: SearchCardProps) => {
+  console.log(result.highlights);
   return (
     <Card
       id={result.uuid}
@@ -125,7 +125,7 @@ export const SearchCard = ({ result, keywords }: SearchCardProps) => {
             onSiteMaterialBadge(result.recordType)}
           {keywords?.length > 0 &&
             highlightedText({
-              text: result.highlights[0],
+              highlight: result.highlights[0],
               keyword: keywords,
             })}
           {contentTypeTag(result)}
