@@ -7,6 +7,7 @@ import {
   StatusBadge,
   TagSet,
   Flex,
+  Text,
 } from "@nypl/design-system-react-components";
 import SearchCardType, {
   SearchResultRecordType,
@@ -53,6 +54,15 @@ const highlightedText = ({ text, keyword }) => {
   const keywords = keyword.split(" ");
   return (
     <span>
+      <Text
+        sx={{
+          fontWeight: "400",
+          margin: 0,
+          display: "inline",
+        }}
+      >
+        Title:{" "}
+      </Text>
       {words.map((word, index) => {
         const isKeyword = keywords.some(
           (keyword) => keyword.toLowerCase() === word.toLowerCase()
@@ -61,7 +71,15 @@ const highlightedText = ({ text, keyword }) => {
         return (
           <span key={index}>
             {isKeyword ? (
-              <span style={{ backgroundColor: "yellow" }}>{word}</span>
+              <Text
+                sx={{
+                  backgroundColor: "rgba(249, 224, 142, 0.70)",
+                  margin: 0,
+                  display: "inline",
+                }}
+              >
+                {word}
+              </Text>
             ) : (
               word
             )}
