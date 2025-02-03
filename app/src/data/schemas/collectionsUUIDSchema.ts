@@ -8,7 +8,7 @@ const collectionsUUIDSchema = {
   yearBegin: "datetime",
   divisionTitle: "string", //divisionFullName
   divisionSlug: "string", //divisionShortName - this will be manually pulled from database, slug for division
-  shelfLocator: "string", //shelfLocator_mtxt_s (NYPL cleaned off)
+  shelfLocator: "string", //shelfLocator_mtxt_s
   genres: "string[]",
   topics: "string[]", //topic_mtxt_s
   typeOfResource: "string[]",
