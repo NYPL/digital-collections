@@ -194,6 +194,19 @@ export const getLaneData = async ({
   return await fetchApi(apiUrl);
 };
 
+/**
+ * Fetches search results based on the provided parameters, for /search/index and /collections/[uuid] pages.
+ *
+ * @param {Object} params - The parameters for the search query.
+ * @param {string} [params.keyword=DEFAULT_SEARCH_TERM] - The search keyword(s) to query for.
+ * @param {string} [params.sort=DEFAULT_SORT] - The sorting method to apply to the search results.
+ * @param {Filter[]} [params.filters=DEFAULT_FILTERS] - An array of filters to apply to the search results.
+ * @param {number} [params.page=DEFAULT_PAGE_NUM] - The page number.
+ * @param {number} [params.perPage=CARDS_PER_PAGE] - The number of items to retrieve per page.
+ *
+ * @returns {Promise<any>}
+ */
+
 export const getSearchData = async ({
   keyword = DEFAULT_SEARCH_TERM,
   sort = DEFAULT_SORT,
@@ -208,7 +221,6 @@ export const getSearchData = async ({
   perPage?: number;
 } = {}) => {
   let apiUrl = `${process.env.API_URL}/api/v2/items/search?q=${keyword}${filters}&sort=${sort}&page=${page}&per_page=${perPage}`;
-  console.log("apiUrl being called", apiUrl);
   const res = await fetchApi(apiUrl);
   return res;
 };
