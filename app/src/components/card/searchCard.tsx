@@ -8,6 +8,7 @@ import {
   TagSet,
   Flex,
   Text,
+  Box,
 } from "@nypl/design-system-react-components";
 import SearchCardType, {
   SearchResultRecordType,
@@ -53,7 +54,13 @@ const highlightedText = ({ text, keyword }) => {
   const words = text.split(" ");
   const keywords = keyword.split(" ");
   return (
-    <span>
+    <Box
+      sx={{
+        [`@media screen and (max-width: 600px)`]: {
+          display: "none",
+        },
+      }}
+    >
       <Text
         sx={{
           fontWeight: "400",
@@ -87,7 +94,7 @@ const highlightedText = ({ text, keyword }) => {
           </span>
         );
       })}
-    </span>
+    </Box>
   );
 };
 
@@ -109,7 +116,7 @@ export const SearchCard = ({ result, keywords }: SearchCardProps) => {
       layout="row"
       mainActionLink={result.url}
     >
-      <CardHeading level="h3" size="heading5" marginBottom="xs">
+      <CardHeading level="h3" size="heading5" marginBottom="xxs">
         {result.title}
       </CardHeading>
       <CardContent>
