@@ -71,10 +71,14 @@ const SearchPage = ({ data }) => {
         </Flex>
         <HorizontalRule />
         <Flex
-          marginTop="xl"
-          marginBottom="s"
-          alignItems="center"
           justifyContent="space-between"
+          sx={{
+            marginTop: { base: "m", md: "xl" },
+            marginBottom: { base: "m", md: "s" },
+            flexDir: { base: "column", md: "row" },
+            gap: "m",
+            alignItems: { base: "flex-start", md: "center" },
+          }}
         >
           <Heading
             size="heading5"
