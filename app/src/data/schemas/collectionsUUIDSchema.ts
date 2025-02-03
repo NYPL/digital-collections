@@ -2,7 +2,7 @@ const collectionsUUIDSchema = {
   title: "string",
   uuid: "string",
   // for the below fields: if not returned, assuming there isn't one
-  archivesCollectionID: "number", //to be used in a archives.nypl.org url
+  archivesCollectionID: "number", //MSS ID, to be used in a archives.nypl.org url
   bNumber: "number", //to be used in a nypl.org/research/research-catalog/bib/ url
   keyDate: "string",
   yearBegin: "datetime",
@@ -16,11 +16,13 @@ const collectionsUUIDSchema = {
   contentNote: "string",
 
   // related resources???
-  // COLLECTION STRUCTURE
-  // currently, it's at least the title on every subcollection?
-  // it's the number of results when you hit /subcollections
-  // **** slugs, short description, and long description only in DC database (like CMS), not in MMS
+  // collection history???
+  // description: slugs, short description, and long description only in DC database (like CMS), not in MMS
   // maybe in MMS abstract in the mods?
+
+  // COLLECTION STRUCTURE
+  // currently, it's at least the title on every subcollection
+  // it's the number of results when you hit /subcollections
 };
 
 export default collectionsUUIDSchema;
