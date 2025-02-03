@@ -5,12 +5,7 @@ import {
   DEFAULT_SEARCH_TERM,
 } from "../config/constants";
 import { filterToString } from "../context/SearchProvider";
-
-export type Filter = {
-  filter: string;
-  value: string;
-};
-
+import { Filter } from "../types/FilterType";
 export interface SearchManager {
   handleSearchSubmit(): string;
   handleKeywordChange(value: string): void;
@@ -30,6 +25,10 @@ abstract class BaseSearchManager implements SearchManager {
   protected currentSort: string;
   protected currentKeywords: string;
   protected currentFilters: Filter[];
+
+  abstract handlePageChange(pageNumber: number): string;
+  abstract handleSortChange(id: string): string;
+  abstract handleSearchSubmit(): string;
 
   constructor(config: {
     initialPage: number;
@@ -62,10 +61,6 @@ abstract class BaseSearchManager implements SearchManager {
   handleKeywordChange(value: string) {
     this.currentKeywords = value;
   }
-
-  abstract handlePageChange(pageNumber: number): string;
-  abstract handleSortChange(id: string): string;
-  abstract handleSearchSubmit(): string;
 
   handleAddFilter(newFilter: Filter) {
     const updatedFilters = [...this.currentFilters, newFilter];
@@ -104,7 +99,9 @@ abstract class BaseSearchManager implements SearchManager {
     });
   }
 
-  protected abstract createQueryString(params: Record<string, any>): string;
+  protected createQueryString(params: Record<string, any>) {
+    return getQueryStringFromObject(params);
+  }
 }
 
 export class GeneralSearchManager extends BaseSearchManager {
@@ -139,10 +136,6 @@ export class GeneralSearchManager extends BaseSearchManager {
       filters: filterToString(this.currentFilters),
     });
   }
-
-  protected createQueryString(params: Record<string, any>) {
-    return filterQueryStringFromObject(params);
-  }
 }
 
 export class CollectionSearchManager extends BaseSearchManager {
@@ -169,15 +162,11 @@ export class CollectionSearchManager extends BaseSearchManager {
 
   handleSortChange(sort: string) {
     this.currentSort = sort;
-    return `${this.createQueryString({
+    return this.createQueryString({
       collection_keywords: this.currentKeywords,
       sort: sort,
       page: this.currentPage,
-    })}`;
-  }
-
-  protected createQueryString(params: Record<string, any>) {
-    return filterQueryStringFromObject(params);
+    });
   }
 }
 
@@ -196,7 +185,7 @@ export class SearchManagerFactory {
   }
 }
 
-const filterQueryStringFromObject = (paramsObject: Record<string, any>) => {
+const getQueryStringFromObject = (paramsObject: Record<string, any>) => {
   const newParams: Record<string, string> = {};
   const defaultValues = [DEFAULT_SEARCH_TERM, DEFAULT_PAGE_NUM, DEFAULT_SORT];
 
