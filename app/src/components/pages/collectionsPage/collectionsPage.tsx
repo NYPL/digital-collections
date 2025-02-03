@@ -1,5 +1,5 @@
 "use client";
-import React, { useState, useRef, useEffect, Suspense, lazy } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import {
   Box,
   Heading,
@@ -29,7 +29,7 @@ export function CollectionsPage({ data, collectionSearchParams }) {
   const pathname = usePathname();
   const headingRef = useRef<HTMLHeadingElement>(null);
 
-  const [isLoading, setIsLoading] = useState(false);
+  const [isLoaded, setIsLoaded] = useState(false);
   const totalPages = totalNumPages(data.numResults, data.perPage);
   const collections = data.collection
     ? Array.isArray(data.collection)
@@ -55,7 +55,9 @@ export function CollectionsPage({ data, collectionSearchParams }) {
     collectionSearchManager.page !== DEFAULT_PAGE_NUM;
 
   useEffect(() => {
-    setIsLoading(false);
+    if (!isLoaded) {
+      setIsLoaded(true);
+    }
     if (isPopulatedSearch) {
       headingRef.current?.focus();
     }
@@ -136,6 +138,7 @@ export function CollectionsPage({ data, collectionSearchParams }) {
               ),
           }}
           onSubmit={() => {
+            setIsLoaded(false);
             updateURL(collectionSearchManager.handleSearchSubmit());
           }}
           labelText="Search collections by title"
@@ -181,7 +184,7 @@ export function CollectionsPage({ data, collectionSearchParams }) {
                 id: "date-desc",
                 label: "Newest to oldest",
                 onClick: () => {
-                  setIsLoading(true);
+                  setIsLoaded(false);
                   updateURL(
                     collectionSearchManager.handleSortChange("date-desc")
                   );
@@ -192,7 +195,7 @@ export function CollectionsPage({ data, collectionSearchParams }) {
                 id: "date-asc",
                 label: "Oldest to newest",
                 onClick: () => {
-                  setIsLoading(true);
+                  setIsLoaded(false);
                   updateURL(
                     collectionSearchManager.handleSortChange("date-asc")
                   );
@@ -203,7 +206,7 @@ export function CollectionsPage({ data, collectionSearchParams }) {
                 id: "title-asc",
                 label: "Title A to Z",
                 onClick: () => {
-                  setIsLoading(true);
+                  setIsLoaded(false);
                   updateURL(
                     collectionSearchManager.handleSortChange("title-asc")
                   );
@@ -214,7 +217,7 @@ export function CollectionsPage({ data, collectionSearchParams }) {
                 id: "title-desc",
                 label: "Title Z to A",
                 onClick: () => {
-                  setIsLoading(true);
+                  setIsLoaded(false);
                   updateURL(
                     collectionSearchManager.handleSortChange("title-desc")
                   );
@@ -225,23 +228,19 @@ export function CollectionsPage({ data, collectionSearchParams }) {
           />
         </Box>
       </Flex>
-      {isLoading ? (
-        Array(12).fill(<LaneLoading id="lane-loading" withTitle={false} />)
+      {isLoaded ? (
+        collections.length > 0 ? (
+          <CardsGrid records={collections} />
+        ) : (
+          <NoResultsFound
+            searchTerm={collectionSearchParams.collection_keywords}
+            page={collectionSearchParams.page}
+          />
+        )
       ) : (
-        <Suspense
-          fallback={Array(12).fill(
-            <LaneLoading id="lane-loading" withTitle={false} />
-          )}
-        >
-          {collections.length > 0 ? (
-            <CardsGrid records={collections} />
-          ) : (
-            <NoResultsFound
-              searchTerm={collectionSearchParams.collection_keywords}
-              page={collectionSearchParams.page}
-            />
-          )}
-        </Suspense>
+        [...Array(12)].map((_, index) => (
+          <LaneLoading id={index} key={index} withTitle={false} />
+        ))
       )}
       {totalPages > 1 && (
         <Pagination
@@ -250,7 +249,7 @@ export function CollectionsPage({ data, collectionSearchParams }) {
           initialPage={collectionSearchManager.page}
           pageCount={totalPages}
           onPageChange={(newPage) => {
-            setIsLoading(true);
+            setIsLoaded(false);
             updateURL(collectionSearchManager.handlePageChange(newPage));
           }}
           sx={{
