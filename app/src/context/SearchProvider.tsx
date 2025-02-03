@@ -5,11 +5,8 @@ import {
   DEFAULT_SORT,
   DEFAULT_SEARCH_TERM,
 } from "../config/constants";
-import {
-  Filter,
-  SearchManager,
-  SearchManagerFactory,
-} from "../utils/searchManager";
+import { SearchManager, SearchManagerFactory } from "../utils/searchManager";
+import { Filter } from "../types/FilterType";
 
 interface SearchContextType {
   searchManager: SearchManager;

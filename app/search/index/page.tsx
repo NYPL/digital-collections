@@ -3,8 +3,8 @@ import PageLayout from "../../src/components/pageLayout/pageLayout";
 import { createAdobeAnalyticsPageName } from "@/src/utils/utils";
 import { getSearchData } from "@/src/utils/apiHelpers";
 import { Metadata } from "next";
-import { Filter } from "@/src/utils/searchManager";
 import SearchPage from "@/src/components/pages/searchPage/searchPage";
+import { Filter } from "@/src/types/FilterType";
 
 export interface SearchParams {
   keywords: string;

@@ -12,7 +12,7 @@ import {
   DEFAULT_SORT,
 } from "../config/constants";
 import { fetchApi } from "./fetchApi";
-import { Filter } from "./searchManager";
+import { Filter } from "../types/FilterType";
 
 export const getHomePageData = async () => {
   const randomNumber = Math.floor(Math.random() * 2);
