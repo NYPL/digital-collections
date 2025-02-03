@@ -14,7 +14,7 @@ export const mockSearchResponse = {
       containsAVMaterial: false,
       contentType: "image",
       highlights: {
-        mainTitle_st: [
+        Title: [
           "Christopher Walken examples in the stage production example Kid Champion",
         ],
       },
@@ -31,7 +31,7 @@ export const mockSearchResponse = {
       containsMultipleCaptures: false,
       contentType: "image",
       highlights: {
-        mainTitle_st: ["Sarah example sitting in tree"],
+        Collection: ["Sarah example sitting in tree"],
       },
       firstIndexed_dt: "1907-02-01T00:00:00Z",
     },
@@ -45,7 +45,7 @@ export const mockSearchResponse = {
       containsAVMaterial: false,
       contentType: null,
       highlights: {
-        mainTitle_st: ["Farm in example photographs"],
+        Description: ["Farm in example photographs"],
       },
       firstIndexed_dt: "1907-02-01T00:00:00Z",
     },
@@ -61,7 +61,7 @@ export const mockSearchResponse = {
       containsMultipleCaptures: true,
       contentType: "image",
       highlights: {
-        mainTitle_st: ["Reading in example room"],
+        Title: ["Reading in example room"],
       },
       firstIndexed_dt: "1908-02-01T00:00:00Z",
     },

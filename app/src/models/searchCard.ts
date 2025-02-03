@@ -1,8 +1,9 @@
 import {
   SearchResultContentType,
+  SearchResultHighlightType,
   SearchResultRecordType,
 } from "../types/SearchCardType";
-import { imageURL, getDescriptionText, capitalize } from "../utils/utils";
+import { imageURL, formatHighlightText, capitalize } from "../utils/utils";
 
 export class SearchCardModel {
   title: string;
@@ -16,7 +17,7 @@ export class SearchCardModel {
   containsAVMaterial: boolean;
   containsMultipleCaptures?: boolean;
   contentType: SearchResultContentType;
-  highlights: string[];
+  highlights: SearchResultHighlightType;
   firstIndexed: string;
 
   constructor(data: any) {
@@ -36,7 +37,7 @@ export class SearchCardModel {
     this.contentType = data.contentType
       ? (capitalize(data.contentType) as SearchResultContentType)
       : null;
-    this.highlights = getDescriptionText(data.highlights);
+    this.highlights = formatHighlightText(data.highlights);
     this.firstIndexed = data.firstIndexed_dt;
   }
 }
