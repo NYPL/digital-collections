@@ -19,7 +19,7 @@ export interface SearchCardType {
   containsAVMaterial: boolean;
   containsMultipleCaptures?: boolean;
   contentType: SearchResultContentType;
-  highlights: string[];
+  highlights: SearchResultHighlightType;
   firstIndexed: string;
 }
 
