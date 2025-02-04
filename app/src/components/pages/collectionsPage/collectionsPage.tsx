@@ -55,8 +55,11 @@ export function CollectionsPage({ data, collectionSearchParams }) {
     collectionSearchManager.page !== DEFAULT_PAGE_NUM;
 
   useEffect(() => {
-    setIsLoaded(true);
-    headingRef.current?.focus();
+    console.log("running");
+    if (!isLoaded) {
+      setIsLoaded(true);
+      headingRef.current?.focus();
+    }
   }, [data]);
 
   return (
