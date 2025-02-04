@@ -55,12 +55,10 @@ export function CollectionsPage({ data, collectionSearchParams }) {
     collectionSearchManager.page !== DEFAULT_PAGE_NUM;
 
   useEffect(() => {
-    setTimeout(() => {
-      if (!isLoaded) {
-        setIsLoaded(true);
-        headingRef.current?.focus();
-      }
-    }, 300);
+    if (!isLoaded) {
+      setIsLoaded(true);
+      headingRef.current?.focus();
+    }
   }, [data]);
 
   return (
@@ -138,6 +136,7 @@ export function CollectionsPage({ data, collectionSearchParams }) {
               ),
           }}
           onSubmit={() => {
+            setIsLoaded(false);
             updateURL(collectionSearchManager.handleSearchSubmit());
           }}
           labelText="Search collections by title"
