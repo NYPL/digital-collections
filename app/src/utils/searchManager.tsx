@@ -141,9 +141,7 @@ export class GeneralSearchManager extends BaseSearchManager {
 export class CollectionSearchManager extends BaseSearchManager {
   handleSearchSubmit() {
     this.currentPage = DEFAULT_PAGE_NUM;
-    this.currentFilters = [];
     this.currentSort = DEFAULT_COLLECTION_SORT;
-
     return this.createQueryString({
       collection_keywords: this.currentKeywords,
       sort: this.currentSort,
