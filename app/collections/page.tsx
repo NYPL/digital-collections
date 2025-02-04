@@ -32,6 +32,7 @@ export default async function Collections({ searchParams }: CollectionsProps) {
   ) {
     redirect("/404");
   }
+  console.log("page rendering client component");
 
   return (
     <PageLayout

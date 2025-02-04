@@ -9,6 +9,8 @@ import {
   Pagination,
   Flex,
   Spacer,
+  Button,
+  TextInput,
 } from "@nypl/design-system-react-components";
 import { usePathname, useRouter } from "next/navigation";
 import { displayResults, totalNumPages } from "../../../utils/utils";
@@ -37,6 +39,7 @@ export function CollectionsPage({ data, collectionSearchParams }) {
       : [data.collection]
     : [];
 
+  // useRef for this
   const collectionSearchManager = SearchManagerFactory.createSearchManager({
     initialPage: Number(collectionSearchParams?.page) || DEFAULT_PAGE_NUM,
     initialSort: collectionSearchParams?.sort || DEFAULT_COLLECTION_SORT,
@@ -44,6 +47,8 @@ export function CollectionsPage({ data, collectionSearchParams }) {
       collectionSearchParams?.collection_keywords || DEFAULT_SEARCH_TERM,
     isCollectionSearch: true,
   });
+
+  console.log("new collectionSearchManager", collectionSearchManager);
 
   const updateURL = async (queryString: string) => {
     setIsLoaded(false);
@@ -87,7 +92,16 @@ export function CollectionsPage({ data, collectionSearchParams }) {
           text="Collections"
           subtitle="Explore the New York Public Library's diverse collections, including digitized photographs, manuscripts, maps, and more. Start exploring by using the search bar below or browse through the collections."
         />
-        <SearchBar
+        <TextInput
+          id={"collection_keywords"}
+          labelText={"Search"}
+          onChange={(e) =>
+            collectionSearchManager.handleKeywordChange(
+              (e.target as HTMLInputElement).value
+            )
+          }
+        />
+        {/* <SearchBar
           sx={{
             maxWidth: "462px",
             flexFlow: "row nowrap",
@@ -139,8 +153,16 @@ export function CollectionsPage({ data, collectionSearchParams }) {
           }}
           labelText="Search collections by title"
           aria-label="Search collections by title"
-        />
+        /> */}
       </Box>
+      <Button
+        id={"buttonsearch"}
+        onClick={() => {
+          updateURL(collectionSearchManager.handleSearchSubmit());
+        }}
+      >
+        Custom search submit
+      </Button>
       <HorizontalRule sx={{ marginTop: "xxl", marginBottom: "xxl" }} />
       <Flex sx={{ alignItems: "center" }}>
         <Heading
@@ -220,7 +242,7 @@ export function CollectionsPage({ data, collectionSearchParams }) {
           />
         </Box>
       </Flex>
-      {collections && isLoaded ? (
+      {isLoaded ? (
         collections.length > 0 ? (
           <CardsGrid records={collections} />
         ) : (
