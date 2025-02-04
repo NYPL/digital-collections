@@ -109,7 +109,7 @@ export const SearchCard = ({ result, keywords }: SearchCardProps) => {
           : `no-image-${result.imageID}`,
         isAtEnd: false,
         isLazy: true,
-        size: "large",
+        size: "default",
         src: result.imageURL,
       }}
       layout="row"
