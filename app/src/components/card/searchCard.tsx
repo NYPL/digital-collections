@@ -13,7 +13,6 @@ import {
 import SearchCardType, {
   SearchResultRecordType,
 } from "@/src/types/SearchCardType";
-import SearchCardImage from "./searchCardImage";
 
 export interface SearchCardProps {
   result: SearchCardType;
@@ -105,24 +104,14 @@ export const SearchCard = ({ result, keywords }: SearchCardProps) => {
       imageProps={{
         alt: "",
         aspectRatio: "sixteenByNine",
-        width: 255,
         id: result.imageID
           ? `image-${result.imageID}`
           : `no-image-${result.imageID}`,
         isAtEnd: false,
         isLazy: true,
-        size: "default",
+        size: "large",
         src: result.imageURL,
       }}
-      // imageProps={{
-      //   component: (
-      //     <SearchCardImage
-      //       key={result.imageID}
-      //       imageHeight={144}
-      //       record={result}
-      //     />
-      //   ),
-      // }}
       layout="row"
       mainActionLink={result.url}
     >
