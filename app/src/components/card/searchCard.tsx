@@ -13,6 +13,7 @@ import {
 import SearchCardType, {
   SearchResultRecordType,
 } from "@/src/types/SearchCardType";
+import SearchCardImage from "./searchCardImage";
 
 export interface SearchCardProps {
   result: SearchCardType;
@@ -98,13 +99,13 @@ const highlightedText = ({ highlight, keyword }) => {
 };
 
 export const SearchCard = ({ result, keywords }: SearchCardProps) => {
-  console.log(result.highlights);
   return (
     <Card
       id={result.uuid}
       imageProps={{
         alt: "",
         aspectRatio: "sixteenByNine",
+        width: 255,
         id: result.imageID
           ? `image-${result.imageID}`
           : `no-image-${result.imageID}`,
@@ -113,6 +114,15 @@ export const SearchCard = ({ result, keywords }: SearchCardProps) => {
         size: "default",
         src: result.imageURL,
       }}
+      // imageProps={{
+      //   component: (
+      //     <SearchCardImage
+      //       key={result.imageID}
+      //       imageHeight={144}
+      //       record={result}
+      //     />
+      //   ),
+      // }}
       layout="row"
       mainActionLink={result.url}
     >
