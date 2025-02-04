@@ -46,6 +46,7 @@ export function CollectionsPage({ data, collectionSearchParams }) {
   });
 
   const updateURL = async (queryString: string) => {
+    setIsLoaded(false);
     push(`${pathname}?${queryString}`);
   };
 
@@ -55,11 +56,9 @@ export function CollectionsPage({ data, collectionSearchParams }) {
     collectionSearchManager.page !== DEFAULT_PAGE_NUM;
 
   useEffect(() => {
-    if (!isLoaded) {
-      setIsLoaded(true);
-      headingRef.current?.focus();
-    }
-  }, [data]);
+    setIsLoaded(true);
+    headingRef.current?.focus();
+  }, [collections]);
 
   return (
     <>
@@ -136,7 +135,6 @@ export function CollectionsPage({ data, collectionSearchParams }) {
               ),
           }}
           onSubmit={() => {
-            setIsLoaded(false);
             updateURL(collectionSearchManager.handleSearchSubmit());
           }}
           labelText="Search collections by title"
@@ -182,7 +180,6 @@ export function CollectionsPage({ data, collectionSearchParams }) {
                 id: "date-desc",
                 label: "Newest to oldest",
                 onClick: () => {
-                  setIsLoaded(false);
                   updateURL(
                     collectionSearchManager.handleSortChange("date-desc")
                   );
@@ -193,7 +190,6 @@ export function CollectionsPage({ data, collectionSearchParams }) {
                 id: "date-asc",
                 label: "Oldest to newest",
                 onClick: () => {
-                  setIsLoaded(false);
                   updateURL(
                     collectionSearchManager.handleSortChange("date-asc")
                   );
@@ -204,7 +200,6 @@ export function CollectionsPage({ data, collectionSearchParams }) {
                 id: "title-asc",
                 label: "Title A to Z",
                 onClick: () => {
-                  setIsLoaded(false);
                   updateURL(
                     collectionSearchManager.handleSortChange("title-asc")
                   );
@@ -215,7 +210,6 @@ export function CollectionsPage({ data, collectionSearchParams }) {
                 id: "title-desc",
                 label: "Title Z to A",
                 onClick: () => {
-                  setIsLoaded(false);
                   updateURL(
                     collectionSearchManager.handleSortChange("title-desc")
                   );
@@ -226,7 +220,7 @@ export function CollectionsPage({ data, collectionSearchParams }) {
           />
         </Box>
       </Flex>
-      {isLoaded ? (
+      {collections && isLoaded ? (
         collections.length > 0 ? (
           <CardsGrid records={collections} />
         ) : (
@@ -247,7 +241,6 @@ export function CollectionsPage({ data, collectionSearchParams }) {
           initialPage={collectionSearchManager.page}
           pageCount={totalPages}
           onPageChange={(newPage) => {
-            setIsLoaded(false);
             updateURL(collectionSearchManager.handlePageChange(newPage));
           }}
           sx={{
