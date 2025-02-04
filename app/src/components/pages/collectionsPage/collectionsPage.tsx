@@ -31,13 +31,11 @@ export function CollectionsPage({ data, collectionSearchParams }) {
 
   const [isLoaded, setIsLoaded] = useState(false);
   const totalPages = totalNumPages(data.numResults, data.perPage);
-  const [collections, setCollections] = useState(
-    data.collection
-      ? Array.isArray(data.collection)
-        ? data.collection
-        : [data.collection]
-      : []
-  );
+  const collections = data.collection
+    ? Array.isArray(data.collection)
+      ? data.collection
+      : [data.collection]
+    : [];
 
   const collectionSearchManager = SearchManagerFactory.createSearchManager({
     initialPage: Number(collectionSearchParams?.page) || DEFAULT_PAGE_NUM,
@@ -57,22 +55,10 @@ export function CollectionsPage({ data, collectionSearchParams }) {
     collectionSearchManager.sort !== DEFAULT_COLLECTION_SORT ||
     collectionSearchManager.page !== DEFAULT_PAGE_NUM;
 
-  // useEffect(() => {
-  //   headingRef.current?.focus();
-  // }, [collections]);
-
   useEffect(() => {
-    setCollections(
-      data.collection
-        ? Array.isArray(data.collection)
-          ? data.collection
-          : [data.collection]
-        : []
-    );
     setIsLoaded(true);
-
     headingRef.current?.focus();
-  }, [data.collection]);
+  }, [collections]);
 
   return (
     <>
