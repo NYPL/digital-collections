@@ -77,6 +77,7 @@ export default async function RootLayout({
   return (
     <html lang="en">
       <head>
+        <script src="https://unpkg.com/react-scan/dist/auto.global.js"></script>
         <meta httpEquiv="X-UA-Compatible" content="IE=edge,chrome=1" />
       </head>
       <body>
