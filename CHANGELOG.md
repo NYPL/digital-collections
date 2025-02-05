@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+### Added
+
+- Added new search context and `searchManager` class, implemented on `/collections` page (DR-3365)
+
 ## [0.3.1] 2025-01-30
 
 ### Updated
