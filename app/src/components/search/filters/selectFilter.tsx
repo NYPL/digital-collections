@@ -44,7 +44,6 @@ const getIcon = (isExpanded: boolean, iconColor: IconColors) => {
 };
 
 const SelectFilter = ({ filter, isOpen, onToggle }: SelectFilterProps) => {
-  const isDarkMode = useColorMode().colorMode === "dark";
   const radioLabel = (option: FilterOption) => {
     return (
       <Flex justifyContent="space-between">
@@ -97,10 +96,7 @@ const SelectFilter = ({ filter, isOpen, onToggle }: SelectFilterProps) => {
               <Box as="span" flex="1" textAlign="start">
                 {filter.facet}
               </Box>
-              {getIcon(
-                isExpanded,
-                isDarkMode ? "dark.ui.typography.heading" : "ui.black"
-              )}
+              {getIcon(isExpanded, "ui.black")}
             </AccordionButton>
             {isExpanded && (
               <AccordionPanel>
