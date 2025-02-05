@@ -1,7 +1,7 @@
-// @ts-nocheck
+//@ts-no-check
 "use client";
-import React, { FormEvent, useState } from "react";
-import { Box, SearchBar } from "@nypl/design-system-react-components";
+import React, { useState } from "react";
+import { Box } from "@nypl/design-system-react-components";
 import { useRouter } from "next/navigation";
 import PublicDomainFilter from "../publicDomainFilter/publicDomainFilter";
 import { headerBreakpoints } from "../../utils/breakpoints";
@@ -30,34 +30,33 @@ const Search = () => {
   };
 
   return (
-    <>
-      <Box
-        id="search-wrapper"
-        sx={{
-          alignItems: "start",
-          width: "100%",
-          marginTop: "0px !important",
-          paddingTop: "xs",
-          [`@media screen and (min-width: ${headerBreakpoints.lgTablet}px)`]: {
-            paddingTop: "0px !important",
-          },
+    <Box
+      id="search-wrapper"
+      sx={{
+        alignItems: "start",
+        width: "100%",
+        marginTop: "0px !important",
+        paddingTop: "xs",
+        [`@media screen and (min-width: ${headerBreakpoints.lgTablet}px)`]: {
+          paddingTop: "0px !important",
+        },
+      }}
+    >
+      <DCSearchBar
+        id="searchbar"
+        labelText="Search Digital Collections"
+        textInputProps={{
+          id: "search-text",
+          labelText: "Search keyword(s)",
+          name: "textInputName",
+          onChange: handleTextChange,
+          value: keywords,
+          placeholder: "Search keyword(s)",
         }}
-      >
-        <DCSearchBar
-          id="searchbar"
-          labelText="Search Digital Collections"
-          textInputProps={{
-            labelText: "Search keyword(s)",
-            name: "textInputName",
-            onChange: handleTextChange,
-            value: keywords,
-            placeholder: "Search keyword(s)",
-          }}
-          onSubmit={(e) => handleSubmit(e)}
-        />
-        <PublicDomainFilter onCheckChange={handleCheckChange} />
-      </Box>
-    </>
+        onSubmit={(e) => handleSubmit(e)}
+      />
+      <PublicDomainFilter onCheckChange={handleCheckChange} />
+    </Box>
   );
 };
 
