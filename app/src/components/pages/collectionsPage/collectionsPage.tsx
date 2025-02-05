@@ -31,6 +31,7 @@ export function CollectionsPage({ data, collectionSearchParams }) {
 
   const [isLoaded, setIsLoaded] = useState(false);
   const totalPages = totalNumPages(data.numResults, data.perPage);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   const collections = data.collection
     ? Array.isArray(data.collection)
       ? data.collection
