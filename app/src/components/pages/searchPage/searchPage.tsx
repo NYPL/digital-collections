@@ -100,7 +100,14 @@ const SearchPage = ({ data }) => {
             )}
           />
         </Flex>
+        <Text>
+          {" "}
+          If there were keywords in the search, in this case &quot;example
+          in&quot;:{" "}
+        </Text>
         <SearchCardsGrid keywords={data.keyword} results={data.results} />
+        <Text marginTop="xxl"> If there was no keyword (empty search): </Text>
+        <SearchCardsGrid keywords={""} results={data.results} />
         <Flex marginTop="xxl" marginBottom="xxl" alignContent="center">
           <Link
             minWidth="100px"
