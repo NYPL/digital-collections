@@ -84,10 +84,10 @@ export function CollectionsPage({ data, collectionSearchParams }) {
         />
         <DCSearchBar
           id="search-collections"
-          labelText="Search collections"
+          labelText="Search collections by title"
           maxWrapperWidth="462px"
           textInputProps={{
-            id: "textinput",
+            id: "collections-search-text",
             isClearable: true,
             isClearableCallback: () =>
               collectionSearchManager.handleKeywordChange(DEFAULT_SEARCH_TERM),
