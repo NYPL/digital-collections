@@ -4,7 +4,6 @@ import {
   Box,
   Heading,
   HorizontalRule,
-  SearchBar,
   Menu,
   Pagination,
   Flex,
@@ -23,6 +22,7 @@ import {
 } from "@/src/config/constants";
 import { SearchManagerFactory } from "@/src/utils/searchManager";
 import { headerBreakpoints } from "@/src/utils/breakpoints";
+import DCSearchBar from "../../search/dcSearchBar";
 
 export function CollectionsPage({ data, collectionSearchParams }) {
   const { push } = useRouter();
@@ -82,41 +82,11 @@ export function CollectionsPage({ data, collectionSearchParams }) {
           text="Collections"
           subtitle="Explore the New York Public Library's diverse collections, including digitized photographs, manuscripts, maps, and more. Start exploring by using the search bar below or browse through the collections."
         />
-        <SearchBar
-          sx={{
-            maxWidth: "462px",
-            flexFlow: "row nowrap",
-            button: {
-              borderRadius: "0px 2px 2px 0px",
-              "> svg": {
-                width: "14px",
-                height: "14px",
-              },
-              paddingTop: "xs",
-              paddingBottom: "xs",
-              paddingLeft: "s !important",
-              paddingRight: "s !important",
-              "> span": {
-                display: "block !important",
-              },
-            },
-            [`@media screen and (max-width: ${headerBreakpoints.lgMobile}px)`]:
-              {
-                button: {
-                  padding: "xs !important",
-                  gap: 0,
-                  "> span": {
-                    display: "none !important",
-                  },
-                  "> svg": {
-                    width: "18px",
-                    height: "18px",
-                  },
-                },
-              },
-          }}
+        <DCSearchBar
           id={"search-collections"}
+          maxWrapperWidth="462px"
           textInputProps={{
+            id: "textinput",
             isClearable: true,
             isClearableCallback: () =>
               collectionSearchManager.handleKeywordChange(DEFAULT_SEARCH_TERM),
@@ -132,8 +102,6 @@ export function CollectionsPage({ data, collectionSearchParams }) {
           onSubmit={() => {
             updateURL(collectionSearchManager.handleSearchSubmit());
           }}
-          labelText="Search collections by title"
-          aria-label="Search collections by title"
         />
       </Box>
 
