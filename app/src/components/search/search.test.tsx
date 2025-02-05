@@ -20,11 +20,15 @@ describe("Search component", () => {
   });
 
   it("handles form submission correctly", () => {
-    const { getByLabelText, getByPlaceholderText } = render(<Search />);
+    const { getByPlaceholderText } = render(<Search />);
     fireEvent.change(getByPlaceholderText("Search keyword(s)"), {
       target: { value: "test word" },
     });
-    fireEvent.submit(getByLabelText("Search Digital Collections"));
+
+    const searchButton = screen.getByRole("button");
+
+    fireEvent.click(searchButton);
+
     expect(mockRouter.push).toHaveBeenCalledWith(
       `/search/index?keywords=test%20word`
     );
@@ -41,7 +45,9 @@ describe("Search component", () => {
 
     fireEvent.click(checkbox);
 
-    fireEvent.submit(screen.getByLabelText("Search Digital Collections"));
+    const searchButton = screen.getByRole("button");
+
+    fireEvent.click(searchButton);
 
     expect(mockRouter.push).toHaveBeenCalledWith(
       `/search/index?utf8=✓&filters%5Brights%5D=pd&keywords=test%20words`
