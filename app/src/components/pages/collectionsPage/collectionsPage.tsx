@@ -83,7 +83,8 @@ export function CollectionsPage({ data, collectionSearchParams }) {
           subtitle="Explore the New York Public Library's diverse collections, including digitized photographs, manuscripts, maps, and more. Start exploring by using the search bar below or browse through the collections."
         />
         <DCSearchBar
-          id={"search-collections"}
+          id="search-collections"
+          labelText="Search collections"
           maxWrapperWidth="462px"
           textInputProps={{
             id: "textinput",

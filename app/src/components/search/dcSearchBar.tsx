@@ -8,32 +8,54 @@ import {
 } from "@nypl/design-system-react-components";
 import { headerBreakpoints } from "@/src/utils/breakpoints";
 
-export interface TextInputProps {
+export type TextInputProps = {
+  /** The starting value of the input field. */
   defaultValue?: string;
+  /** ID that other components can cross reference for accessibility purposes */
   id: string;
+  /** Adds a button to clear existing text in the input field. */
   isClearable?: boolean;
+  /** The callback function that is called when the clear button is clicked. */
   isClearableCallback?: () => void;
+  /** Provides text for a `Label` component if `showLabel` is set to true;
+   * populates an `aria-label` attribute if `showLabel` is set to false. */
   labelText: string;
+  /** Used to reference the input element in forms. */
   name?: string;
+  /** The action to perform on the `input`/`textarea`'s onChange function  */
   onChange?: (
     event:
       | React.ChangeEvent<HTMLInputElement>
       | React.ChangeEvent<HTMLTextAreaElement>
   ) => void;
+  /** Regex to query the user input against. */
   pattern?: string;
+  /** Populates the placeholder for the input/textarea elements */
   placeholder?: string;
+  /** Populates the value of the input/textarea elements */
   value?: string;
-}
+};
 
 export interface SearchBarProps {
+  /** The onClick callback function for the `Button` component. */
   buttonOnClick?: (event: React.MouseEvent | React.KeyboardEvent) => void;
+  /** ID that other components can cross reference for accessibility purposes */
   id: string;
+  /** Sets children form components in the disabled state. */
   isDisabled?: boolean;
+  /** Sets children form components in the error state. */
   isInvalid?: boolean;
+  /** Sets children form components in the required state. */
   isRequired?: boolean;
+  /** Populates the `aria-label` attribute on the wrapper. */
+  labelText: string;
+  /** Handler function when the form is submitted. */
   onSubmit: (event: React.FormEvent) => void;
+  /** Custom input element to render instead of a `TextInput` element. */
   textInputElement?: JSX.Element;
-  textInputProps?: TextInputProps;
+  /** Required props to render a `TextInput` element. */
+  textInputProps?: TextInputProps | undefined;
+  /** Maximum width of wrapper. */
   maxWrapperWidth?: string;
 }
 
@@ -46,6 +68,7 @@ const SearchBarComponent = forwardRef<HTMLDivElement, SearchBarProps>(
       isRequired = false,
       onSubmit,
       textInputProps,
+      labelText,
       maxWrapperWidth,
     } = props;
 
@@ -145,7 +168,7 @@ const SearchBarComponent = forwardRef<HTMLDivElement, SearchBarProps>(
     return (
       <Box
         role="search"
-        aria-label="Search collections"
+        aria-label={labelText}
         sx={{
           display: "flex",
           marginBottom: {
