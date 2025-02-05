@@ -3,55 +3,15 @@ import {
   Button,
   Text,
   Flex,
-  Grid,
   Heading,
   Icon,
-  MultiSelect,
   Radio,
   RadioGroup,
   TextInput,
   Tooltip,
 } from "@nypl/design-system-react-components";
 
-const exampleFacetCategories = [
-  "Topic",
-  "Name",
-  "Place",
-  "Collection",
-  "Genre",
-  "Publishers",
-  "Division",
-  "Type",
-];
-
-const exampleMultiSelect = (name: string) => {
-  return (
-    <MultiSelect
-      id={`${name}-select`}
-      buttonText={name}
-      selectedItems={{}}
-      items={[
-        {
-          id: name,
-          name: name,
-        },
-        {
-          id: `${name}1`,
-          name: `${name}1`,
-        },
-        {
-          id: `${name}2`,
-          name: `${name}2`,
-        },
-        {
-          id: `${name}3`,
-          name: `${name}3`,
-        },
-      ]}
-      onChange={() => {}}
-    />
-  );
-};
+import SelectFilterGrid from "./selectGrid";
 
 const Filters = ({ headingText }) => {
   const [isExpanded, setIsExpanded] = useState(false);
@@ -59,18 +19,25 @@ const Filters = ({ headingText }) => {
   return (
     <>
       <Heading size="heading4">{headingText}</Heading>
-      <Grid
-        templateColumns="repeat(4, 1fr)"
-        marginBottom="m"
-        width="fill"
-        sx={{ gap: "m" }}
-      >
-        {isExpanded
-          ? exampleFacetCategories.map((filter) => exampleMultiSelect(filter))
-          : exampleFacetCategories
-              .slice(0, 4)
-              .map((filter) => exampleMultiSelect(filter))}
-      </Grid>
+      <SelectFilterGrid
+        filters={[
+          {
+            facet: "Topic",
+            options: [
+              { name: "New York", count: 37 },
+              { name: "New Jersey", count: 8 },
+              { name: "Long Island", count: 12 },
+            ],
+          },
+          { facet: "Genre", options: [{ name: "New York", count: 37 }] },
+          { facet: "Format", options: [{ name: "New York", count: 8 }] },
+          { facet: "Collection", options: [{ name: "New York", count: 37 }] },
+          { facet: "Publishers", options: [{ name: "New York", count: 37 }] },
+          { facet: "Division", options: [{ name: "New York", count: 37 }] },
+          { facet: "Type", options: [{ name: "New York", count: 37 }] },
+        ]}
+        isExpanded={isExpanded}
+      />
       {isExpanded && (
         <>
           <Heading size="heading6">Date range:</Heading>
