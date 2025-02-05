@@ -1,6 +1,5 @@
 import React from "react";
 import PageLayout from "../../src/components/pageLayout/pageLayout";
-import { mockItems } from "../../../__tests__/__mocks__/data/mockItems"; // TODO: render mockItems
 import { createAdobeAnalyticsPageName } from "@/src/utils/utils";
 import SearchPage from "@/src/components/pages/searchPage/searchPage";
 import { mockSearchResponse } from "__tests__/__mocks__/data/mockSearchResponse";
