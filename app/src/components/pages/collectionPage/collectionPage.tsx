@@ -14,7 +14,7 @@ import {
   Pagination,
 } from "@nypl/design-system-react-components";
 import React from "react";
-import Filters from "../../search/filters";
+import Filters from "../../search/filters/filters";
 import { headerBreakpoints } from "@/src/utils/breakpoints";
 import { CardsGrid } from "../../grids/cardsGrid";
 import { displayResults } from "@/src/utils/utils";
