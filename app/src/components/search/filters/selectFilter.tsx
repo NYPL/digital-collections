@@ -1,4 +1,3 @@
-import { useState } from "react";
 import {
   Accordion as ChakraAccordion,
   AccordionButton,
@@ -73,7 +72,9 @@ const SelectFilter = ({ filter, isOpen, onToggle }: SelectFilterProps) => {
         sx={{ fontSize: "14px", color: "ui.link" }}
         isUnderlined={false}
         href={"add-filter"}
-      >{`View all ${facet.toLowerCase()}s`}</Link>
+      >{`View all ${facet.toLowerCase()}${
+        facet === "Publishers" ? `` : `s`
+      }`}</Link>
     );
   };
 

@@ -11,7 +11,7 @@ import {
   Tooltip,
 } from "@nypl/design-system-react-components";
 
-import SelectFilterGrid from "./selectGrid";
+import SelectFilterGrid from "./selectFilterGrid";
 
 const Filters = ({ headingText }) => {
   const [isExpanded, setIsExpanded] = useState(false);
