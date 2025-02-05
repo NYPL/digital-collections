@@ -79,6 +79,7 @@ const highlightedText = ({ highlight, keyword }) => {
             {isKeyword ? (
               <Text
                 sx={{
+                  // TO DO: Replace with design token.
                   backgroundColor: "rgba(249, 224, 142, 0.70)",
                   margin: 0,
                   display: "inline",
