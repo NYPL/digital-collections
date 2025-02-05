@@ -69,9 +69,9 @@ const highlightedText = ({ highlight, keyword }) => {
       >
         {highlight.field}:{" "}
       </Text>
-      {words.map((word, index) => {
+      {words.map((word: string, index: number) => {
         const isKeyword = keywords.some(
-          (keyword) => keyword.toLowerCase() === word.toLowerCase()
+          (keyword: string) => keyword.toLowerCase() === word.toLowerCase()
         );
 
         return (
