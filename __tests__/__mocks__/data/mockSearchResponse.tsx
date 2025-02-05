@@ -56,7 +56,7 @@ export const mockSearchResponse = {
         "Reading room of the Schomburg Collection at the 135th Street Branch Library. Lawrence Reddick, curator, seated at right",
       imageID: "58613608",
       numberOfDigitizedItems: 1,
-      containsOnSiteMaterial: false,
+      containsOnSiteMaterial: true,
       containsAVMaterial: false,
       containsMultipleCaptures: true,
       contentType: "image",
