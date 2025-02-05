@@ -9,6 +9,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
+- Added search result model, mock data, card component, and card grid component (DR-3363)
 - Added skeleton for collection page (DR-3361)
 - Added skeleton for search page and filter component (DR-3364)
 
