@@ -54,6 +54,8 @@ export function CollectionsPage({ data, collectionSearchParams }) {
   useEffect(() => {
     setIsLoaded(true);
     headingRef.current?.focus();
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [collections]);
 
   return (
