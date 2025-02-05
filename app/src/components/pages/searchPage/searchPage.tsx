@@ -13,7 +13,7 @@ import {
 import React from "react";
 import { CARDS_PER_PAGE } from "@/src/config/constants";
 import { displayResults, totalNumPages } from "@/src/utils/utils";
-import Filters from "../../search/filters";
+import Filters from "../../search/filters/filters";
 import { useSearchContext } from "@/src/context/SearchProvider";
 import { usePathname, useRouter } from "next/navigation";
 
