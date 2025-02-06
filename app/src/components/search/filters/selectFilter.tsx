@@ -3,11 +3,9 @@ import {
   AccordionButton,
   AccordionItem,
   AccordionPanel,
-  useColorMode,
 } from "@chakra-ui/react";
 import {
   Icon,
-  IconColors,
   Link,
   Radio,
   Flex,
@@ -21,7 +19,7 @@ export type FilterOption = {
 };
 
 export type FilterCategory = {
-  facet: string;
+  name: string;
   options: FilterOption[];
 };
 
@@ -31,13 +29,13 @@ type SelectFilterProps = {
   onToggle: () => void;
 };
 
-const getIcon = (isExpanded: boolean, iconColor: IconColors) => {
+const getIcon = (isExpanded: boolean) => {
   const iconRotation = isExpanded ? "rotate180" : "rotate0";
   return (
     <Icon
       name="arrow"
       size="small"
-      color={iconColor}
+      color="ui.black"
       iconRotation={iconRotation}
     />
   );
@@ -53,7 +51,7 @@ const SelectFilter = ({ filter, isOpen, onToggle }: SelectFilterProps) => {
     );
   };
 
-  const facetFilterOptions = (options: FilterOption[]) => {
+  const radioFilterOptions = (options: FilterOption[]) => {
     return options.map((option, index) => (
       <Radio
         key={`${option.name}-${index}`}
@@ -88,31 +86,32 @@ const SelectFilter = ({ filter, isOpen, onToggle }: SelectFilterProps) => {
           <>
             <AccordionButton
               sx={{
-                fontWeight: "400",
+                fontWeight: "light",
+                fontSize: "desktop.body.body2",
                 bg: "ui.white",
                 _expanded: { bg: "ui.bg.active" },
               }}
             >
               <Box as="span" flex="1" textAlign="start">
-                {filter.facet}
+                {filter.name}
               </Box>
-              {getIcon(isExpanded, "ui.black")}
+              {getIcon(isExpanded)}
             </AccordionButton>
             {isExpanded && (
               <AccordionPanel>
                 <>
                   <RadioGroup
                     isFullWidth
-                    id={`${filter.facet}-options`}
-                    labelText={`${filter.facet} filter options`}
+                    id={`${filter.name}-options`}
+                    labelText={`${filter.name} filter options`}
                     showLabel={false}
-                    name={filter.facet}
+                    name={filter.name}
                     onChange={onChange}
                     sx={{ marginBottom: "s" }}
                   >
-                    {facetFilterOptions(filter.options)}
+                    {radioFilterOptions(filter.options)}
                   </RadioGroup>
-                  {modalLink(filter.facet)}
+                  {modalLink(filter.name)}
                 </>
               </AccordionPanel>
             )}

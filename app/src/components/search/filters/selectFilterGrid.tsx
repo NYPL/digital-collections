@@ -23,10 +23,10 @@ const SelectFilterGrid = ({ filters, isExpanded }: SelectFilterGridProps) => {
     >
       {(isExpanded ? filters : filters.slice(0, 4)).map((filter) => (
         <SelectFilter
-          key={filter.facet}
+          key={filter.name}
           filter={filter}
-          isOpen={openFilter === filter.facet}
-          onToggle={() => handleToggle(filter.facet)}
+          isOpen={openFilter === filter.name}
+          onToggle={() => handleToggle(filter.name)}
         />
       ))}
     </Grid>
