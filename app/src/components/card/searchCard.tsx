@@ -107,7 +107,7 @@ export const SearchCard = ({ result, keywords }: SearchCardProps) => {
         aspectRatio: "sixteenByNine",
         id: result.imageID
           ? `image-${result.imageID}`
-          : `no-image-${result.imageID}`,
+          : `no-image-${result.uuid}`,
         isAtEnd: false,
         isLazy: true,
         size: "default",

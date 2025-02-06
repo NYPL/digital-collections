@@ -19,7 +19,6 @@ import Filters from "../../search/filters";
 import { headerBreakpoints } from "@/src/utils/breakpoints";
 import { displayResults } from "@/src/utils/utils";
 import { CARDS_PER_PAGE, SEARCH_SORT_LABELS } from "@/src/config/constants";
-import { mockSearchResponse } from "__tests__/__mocks__/data/mockSearchResponse";
 import SearchCardsGrid from "../../grids/searchCardsGrid";
 
 const textLink = (href, text) => {
