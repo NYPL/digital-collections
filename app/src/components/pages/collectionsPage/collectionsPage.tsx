@@ -28,6 +28,7 @@ export function CollectionsPage({ data, collectionSearchParams }) {
   const { push } = useRouter();
   const pathname = usePathname();
   const headingRef = useRef<HTMLHeadingElement>(null);
+  const isFirstLoad = useRef<boolean>(false);
 
   const [isLoaded, setIsLoaded] = useState(false);
   const totalPages = totalNumPages(data.numResults, data.perPage);
@@ -53,7 +54,11 @@ export function CollectionsPage({ data, collectionSearchParams }) {
 
   useEffect(() => {
     setIsLoaded(true);
-    headingRef.current?.focus();
+    if (isFirstLoad.current) {
+      headingRef.current?.focus();
+    }
+    isFirstLoad.current = true;
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [collections]);
 
   return (
