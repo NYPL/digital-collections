@@ -21,7 +21,7 @@ import {
   DEFAULT_SEARCH_TERM,
   COLLECTION_SORT_LABELS,
 } from "@/src/config/constants";
-import { SearchManagerFactory } from "@/src/utils/searchManager";
+import { CollectionSearchManager } from "@/src/utils/searchManager";
 import { headerBreakpoints } from "@/src/utils/breakpoints";
 
 export function CollectionsPage({ data, collectionSearchParams }) {
@@ -38,12 +38,11 @@ export function CollectionsPage({ data, collectionSearchParams }) {
       : [data.collection]
     : [];
 
-  const collectionSearchManager = SearchManagerFactory.createSearchManager({
+  const collectionSearchManager = new CollectionSearchManager({
     initialPage: Number(collectionSearchParams?.page) || DEFAULT_PAGE_NUM,
     initialSort: collectionSearchParams?.sort || DEFAULT_COLLECTION_SORT,
     initialKeywords:
       collectionSearchParams?.collection_keywords || DEFAULT_SEARCH_TERM,
-    isCollectionSearch: true,
   });
 
   const updateURL = async (queryString: string) => {
