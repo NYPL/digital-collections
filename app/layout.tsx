@@ -94,6 +94,7 @@ export default async function RootLayout({
         <div id="nypl-footer"></div>
         <Script
           src="https://ds-header.nypl.org/footer.min.js?containerId=nypl-footer"
+          strategy="afterInteractive"
           async
         ></Script>
         <Script
