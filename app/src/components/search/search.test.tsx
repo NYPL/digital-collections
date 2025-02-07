@@ -14,17 +14,23 @@ const mockRouter = {
 
 describe("Search component", () => {
   it("renders Search component", () => {
-    const { getByLabelText, getByPlaceholderText } = render(<Search />);
-    expect(getByLabelText("Search Digital Collections")).toBeInTheDocument();
+    const { getAllByLabelText, getByPlaceholderText } = render(<Search />);
+    expect(
+      getAllByLabelText("Search Digital Collections")[0]
+    ).toBeInTheDocument();
     expect(getByPlaceholderText("Search keyword(s)")).toBeInTheDocument();
   });
 
   it("handles form submission correctly", () => {
-    const { getByLabelText, getByPlaceholderText } = render(<Search />);
+    const { getByPlaceholderText } = render(<Search />);
     fireEvent.change(getByPlaceholderText("Search keyword(s)"), {
       target: { value: "test word" },
     });
-    fireEvent.submit(getByLabelText("Search Digital Collections"));
+
+    const searchButton = screen.getByRole("button");
+
+    fireEvent.click(searchButton);
+
     expect(mockRouter.push).toHaveBeenCalledWith(
       `/search/index?keywords=test%20word`
     );
@@ -41,7 +47,9 @@ describe("Search component", () => {
 
     fireEvent.click(checkbox);
 
-    fireEvent.submit(screen.getByLabelText("Search Digital Collections"));
+    const searchButton = screen.getByRole("button");
+
+    fireEvent.click(searchButton);
 
     expect(mockRouter.push).toHaveBeenCalledWith(
       `/search/index?utf8=✓&filters%5Brights%5D=pd&keywords=test%20words`
