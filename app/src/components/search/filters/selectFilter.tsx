@@ -12,6 +12,7 @@ import {
   Box,
   RadioGroup,
 } from "@nypl/design-system-react-components";
+import { useEffect, useState } from "react";
 
 export type FilterOption = {
   name: string;
@@ -51,14 +52,14 @@ const SelectFilter = ({ filter, isOpen, onToggle }: SelectFilterProps) => {
     );
   };
 
-  const radioFilterOptions = (options: FilterOption[]) => {
-    return options.map((option, index) => (
+  const radioFilterOptions = (filter: FilterCategory) => {
+    return filter.options.map((option, index) => (
       <Radio
         key={`${option.name}-${index}`}
-        name={option.name}
+        name={filter.name}
         id={`${option.name}-${index}`}
         labelText={radioLabel(option)}
-        value={`${index}`}
+        value={option.name}
       />
     ));
   };
@@ -75,9 +76,29 @@ const SelectFilter = ({ filter, isOpen, onToggle }: SelectFilterProps) => {
     );
   };
 
-  const onChange = (selected: string) => {
-    console.log(`selected: ${selected}`);
+  const [controller, setController] = useState<AbortController | null>(null);
+  const [selected, setSelected] = useState<string | null>(null);
+
+  const onChange = (newSelection: string) => {
+    if (controller) {
+      controller.abort();
+    }
+    const newController = new AbortController();
+    setController(newController);
+
+    setTimeout(() => {
+      if (!newController.signal.aborted) {
+        setSelected(newSelection);
+        console.log(`selected: ${newSelection}`);
+      }
+    }, 400);
   };
+
+  // useEffect(() => {
+  //   return () => {
+  //     if (controller) controller.abort();
+  //   };
+  // }, [controller]);
 
   return (
     <ChakraAccordion allowToggle index={isOpen ? 0 : -1} onChange={onToggle}>
@@ -108,8 +129,9 @@ const SelectFilter = ({ filter, isOpen, onToggle }: SelectFilterProps) => {
                     name={filter.name}
                     onChange={onChange}
                     sx={{ marginBottom: "s" }}
+                    defaultValue={selected ?? undefined}
                   >
-                    {radioFilterOptions(filter.options)}
+                    {radioFilterOptions(filter)}
                   </RadioGroup>
                   {modalLink(filter.name)}
                 </>

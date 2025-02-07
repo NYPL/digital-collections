@@ -59,5 +59,5 @@ describe("SelectFilter", () => {
     expect(onToggleMock).toHaveBeenCalledTimes(1);
   });
 
-  it.todo("handles selection");
+  it.todo("handles selection for click/Enter key down");
 });
