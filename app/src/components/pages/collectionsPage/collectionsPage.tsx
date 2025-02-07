@@ -47,8 +47,18 @@ export function CollectionsPage({ data, collectionSearchParams }) {
   });
 
   const updateURL = async (queryString: string) => {
-    setIsLoaded(false);
-    push(`${pathname}?${queryString}`);
+    const currentQueryString = window.location.search;
+    const newUrl = `${pathname}?${queryString}`;
+    if (
+      currentQueryString === queryString ||
+      currentQueryString === `?${queryString}`
+    ) {
+      headingRef.current?.focus();
+      return;
+    } else {
+      setIsLoaded(false);
+      push(newUrl);
+    }
   };
 
   useEffect(() => {
