@@ -12,7 +12,7 @@ import {
   Box,
   RadioGroup,
 } from "@nypl/design-system-react-components";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
 export type FilterOption = {
   name: string;
