@@ -10,8 +10,8 @@ type SelectFilterGridProps = {
 const SelectFilterGrid = ({ filters, isExpanded }: SelectFilterGridProps) => {
   const [openFilter, setOpenFilter] = useState<string | null>(null);
 
-  const handleToggle = (facet: string) => {
-    setOpenFilter((prev) => (prev === facet ? null : facet));
+  const handleToggle = (filterName: string) => {
+    setOpenFilter((prev) => (prev === filterName ? null : filterName));
   };
 
   return (
