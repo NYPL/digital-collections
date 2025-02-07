@@ -15,10 +15,18 @@ import React from "react";
 import { CARDS_PER_PAGE, SEARCH_SORT_LABELS } from "@/src/config/constants";
 import { displayResults, totalNumPages } from "@/src/utils/utils";
 import Filters from "../../search/filters";
+import { useSearchContext } from "@/src/context/SearchProvider";
+import { usePathname, useRouter } from "next/navigation";
 import SearchCardsGrid from "../../grids/searchCardsGrid";
 
 const SearchPage = ({ data }) => {
+  const { searchManager } = useSearchContext();
   const totalPages = totalNumPages(data.numResults, CARDS_PER_PAGE);
+  const { push } = useRouter();
+  const pathname = usePathname();
+  const updateURL = async (queryString) => {
+    push(`${pathname}?${queryString}`);
+  };
   return (
     <Box id="mainContent">
       <Box
@@ -40,8 +48,12 @@ const SearchPage = ({ data }) => {
               marginBottom: "m",
             }}
           >
-            {`Displaying ${displayResults(data.numResults, CARDS_PER_PAGE, 1)}
-                    results for "${data.keyword}"`}
+            {`Displaying ${displayResults(
+              data.numResults,
+              CARDS_PER_PAGE,
+              searchManager.page
+            )}
+                    results for "${searchManager.keywords}"`}
           </Heading>
           <Filters headingText="Refine your search" />
         </Box>
@@ -84,7 +96,11 @@ const SearchPage = ({ data }) => {
             size="heading5"
             tabIndex={-1}
             margin="0"
-          >{`Displaying ${displayResults(data.numResults, CARDS_PER_PAGE, 1)}
+          >{`Displaying ${displayResults(
+            data.numResults,
+            CARDS_PER_PAGE,
+            searchManager.page
+          )}
                                         results`}</Heading>
           <Menu
             showLabel
@@ -123,9 +139,12 @@ const SearchPage = ({ data }) => {
           {totalPages > 1 && (
             <Pagination
               id="pagination-id"
-              initialPage={1}
-              currentPage={data.page}
+              initialPage={searchManager.page}
+              currentPage={searchManager.page}
               pageCount={totalPages}
+              onPageChange={(newPage) => {
+                updateURL(searchManager.handlePageChange(newPage));
+              }}
               sx={{
                 justifyContent: "flex-end",
                 gap: "s",

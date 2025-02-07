@@ -1,10 +1,11 @@
-// @ts-nocheck
+//@ts-no-check
 "use client";
-import React, { FormEvent, useState } from "react";
-import { Box, SearchBar } from "@nypl/design-system-react-components";
+import React, { useState } from "react";
+import { Box } from "@nypl/design-system-react-components";
 import { useRouter } from "next/navigation";
 import PublicDomainFilter from "../publicDomainFilter/publicDomainFilter";
 import { headerBreakpoints } from "../../utils/breakpoints";
+import DCSearchBar from "./dcSearchBar";
 
 const Search = () => {
   const router = useRouter();
@@ -29,72 +30,33 @@ const Search = () => {
   };
 
   return (
-    <>
-      <Box
-        id="search-wrapper"
-        sx={{
-          alignItems: "start",
-          width: "100%",
-          marginTop: "0px !important",
-          paddingTop: "xs",
-          [`@media screen and (min-width: ${headerBreakpoints.lgTablet}px)`]: {
-            paddingTop: "0px !important",
-          },
-          "#searchbar-form-searchbar": {
-            marginBottom: "0px !important",
-          },
-          "#searchbar-form-searchbar > button": {
-            maxWidth: "unset",
-          },
+    <Box
+      id="search-wrapper"
+      sx={{
+        alignItems: "start",
+        width: "100%",
+        marginTop: "0px !important",
+        paddingTop: "xs",
+        [`@media screen and (min-width: ${headerBreakpoints.lgTablet}px)`]: {
+          paddingTop: "0px !important",
+        },
+      }}
+    >
+      <DCSearchBar
+        id="searchbar"
+        labelText="Search Digital Collections"
+        textInputProps={{
+          id: "search-text",
+          labelText: "Search keyword(s)",
+          name: "keywords",
+          onChange: handleTextChange,
+          value: keywords,
+          placeholder: "Search keyword(s)",
         }}
-      >
-        <SearchBar
-          id="searchbar"
-          invalidText="Could not find the item"
-          labelText="Search Digital Collections"
-          onSubmit={(event) => handleSubmit(event)}
-          textInputProps={{
-            labelText: "Search keyword(s)",
-            name: "textInputName",
-            onChange: handleTextChange,
-            value: keywords,
-            placeholder: "Search keyword(s)",
-          }}
-          sx={{
-            flexFlow: "row nowrap",
-            button: {
-              borderRadius: "0px 2px 2px 0px",
-              "> svg": {
-                width: "14px",
-                height: "14px",
-              },
-              paddingTop: "xs",
-              paddingBottom: "xs",
-              paddingLeft: "s !important",
-              paddingRight: "s !important",
-              "> span": {
-                display: "block !important",
-              },
-            },
-            [`@media screen and (max-width: ${headerBreakpoints.lgMobile}px)`]:
-              {
-                button: {
-                  padding: "xs !important",
-                  gap: 0,
-                  "> span": {
-                    display: "none !important",
-                  },
-                  "> svg": {
-                    width: "18px",
-                    height: "18px",
-                  },
-                },
-              },
-          }}
-        />
-        <PublicDomainFilter onCheckChange={handleCheckChange} />
-      </Box>
-    </>
+        onSubmit={(e) => handleSubmit(e)}
+      />
+      <PublicDomainFilter onCheckChange={handleCheckChange} />
+    </Box>
   );
 };
 

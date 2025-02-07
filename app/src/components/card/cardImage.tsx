@@ -27,7 +27,7 @@ export const CardImage = ({ record, imageHeight }: CardImageProps) => {
         id={
           record.imageID
             ? `image-${record.imageID}`
-            : `no-image-${record.imageID}`
+            : `no-image-${record.imageID}-${record.uuid}`
         }
         sizes="(max-width: 480px) 100vw, (max-width: 1024px) 50vw, 25vw"
         style={{
