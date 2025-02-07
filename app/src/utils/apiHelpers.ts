@@ -8,8 +8,11 @@ import {
   DEFAULT_PAGE_NUM,
   DEFAULT_SEARCH_TERM,
   COLLECTION_SORT_OPTIONS,
+  DEFAULT_FILTERS,
+  DEFAULT_SORT,
 } from "../config/constants";
 import { fetchApi } from "./fetchApi";
+import { Filter } from "../types/FilterType";
 
 export const getHomePageData = async () => {
   const randomNumber = Math.floor(Math.random() * 2);
@@ -164,16 +167,16 @@ export const getDivisionData = async ({
 
 export const getCollectionsData = async ({
   keyword = DEFAULT_SEARCH_TERM,
-  sortID = DEFAULT_COLLECTION_SORT,
-  pageNum = DEFAULT_PAGE_NUM,
+  sort = DEFAULT_COLLECTION_SORT,
+  page = DEFAULT_PAGE_NUM,
   perPage = CARDS_PER_PAGE,
 }: {
   keyword?: string;
-  sortID?: string;
-  pageNum?: string;
+  sort?: string;
+  page?: number;
   perPage?: number;
 } = {}) => {
-  let apiUrl = `${process.env.API_URL}/api/v2/collections?page=${pageNum}&per_page=${perPage}&sort=${COLLECTION_SORT_OPTIONS[sortID]}&q=${keyword}`;
+  let apiUrl = `${process.env.API_URL}/api/v2/collections?page=${page}&per_page=${perPage}&sort=${COLLECTION_SORT_OPTIONS[sort]}&q=${keyword}`;
   const res = await fetchApi(apiUrl);
   return res;
 };
@@ -189,4 +192,35 @@ export const getLaneData = async ({
 }) => {
   const apiUrl = `${process.env.API_URL}/api/v2/collections?genre=${slug}&page=${pageNum}&per_page=${perPage}`;
   return await fetchApi(apiUrl);
+};
+
+/**
+ * Fetches search results based on the provided parameters, for /search/index and /collections/[uuid] pages.
+ *
+ * @param {Object} params - The parameters for the search query.
+ * @param {string} [params.keyword=DEFAULT_SEARCH_TERM] - The search keyword(s) to query for.
+ * @param {string} [params.sort=DEFAULT_SORT] - The sorting method to apply to the search results.
+ * @param {Filter[]} [params.filters=DEFAULT_FILTERS] - An array of filters to apply to the search results.
+ * @param {number} [params.page=DEFAULT_PAGE_NUM] - The page number.
+ * @param {number} [params.perPage=CARDS_PER_PAGE] - The number of items to retrieve per page.
+ *
+ * @returns {Promise<any>}
+ */
+
+export const getSearchData = async ({
+  keyword = DEFAULT_SEARCH_TERM,
+  sort = DEFAULT_SORT,
+  filters = DEFAULT_FILTERS,
+  page = DEFAULT_PAGE_NUM,
+  perPage = CARDS_PER_PAGE,
+}: {
+  keyword?: string;
+  sort?: string;
+  filters?: Filter[];
+  page?: number;
+  perPage?: number;
+} = {}) => {
+  let apiUrl = `${process.env.API_URL}/api/v2/items/search?q=${keyword}${filters}&sort=${sort}&page=${page}&per_page=${perPage}`;
+  const res = await fetchApi(apiUrl);
+  return res;
 };

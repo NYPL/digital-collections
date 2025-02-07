@@ -7,6 +7,21 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+## [0.3.1] 2025-01-30
+
+### Updated
+
+- Updated all page accessibility tests and updated to DS v3.5.3 (DR-3342)
+
+### Added
+
+- Added skeleton for collection page (DR-3361)
+- Added skeleton for search page and filter component (DR-3364)
+
+### Removed
+
+- Removed DCF middleware file so that only RP handles redirects (DR-3309)
+
 ## [0.3.0] 2025-01-23
 
 ## Updated
