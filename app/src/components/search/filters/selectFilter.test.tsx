@@ -1,4 +1,4 @@
-import { render, screen, fireEvent } from "@testing-library/react";
+import { render, screen, fireEvent, waitFor } from "@testing-library/react";
 import SelectFilter, { FilterCategory } from "./selectFilter";
 
 const mockFacetFilter: FilterCategory = {
@@ -6,6 +6,7 @@ const mockFacetFilter: FilterCategory = {
   options: [
     { name: "Publisher 1", count: 10 },
     { name: "Publisher 2", count: 20 },
+    { name: "Publisher 3", count: 30 },
   ],
 };
 
@@ -58,6 +59,45 @@ describe("SelectFilter", () => {
     fireEvent.click(screen.getByText("Publishers"));
     expect(onToggleMock).toHaveBeenCalledTimes(1);
   });
+  it("should select an option and update state", async () => {
+    render(
+      <SelectFilter
+        filter={mockFacetFilter}
+        isOpen={true}
+        onToggle={jest.fn()}
+      />
+    );
 
-  it.todo("handles selection for click/Enter key down");
+    const radio1 = screen.getAllByRole("radio")[0];
+
+    fireEvent.click(radio1);
+
+    await waitFor(() => {
+      expect(radio1).toBeChecked();
+    });
+  });
+
+  it("should abort previous selection when selecting a new option", async () => {
+    jest.useFakeTimers();
+    render(
+      <SelectFilter
+        filter={mockFacetFilter}
+        isOpen={true}
+        onToggle={jest.fn()}
+      />
+    );
+
+    const radio1 = screen.getAllByRole("radio")[0];
+    const radio3 = screen.getAllByRole("radio")[2];
+
+    fireEvent.click(radio1);
+    fireEvent.click(radio3);
+    jest.advanceTimersByTime(400);
+
+    await waitFor(() => {
+      expect(radio3).toBeChecked();
+      expect(radio1).not.toBeChecked();
+    });
+    jest.useRealTimers();
+  });
 });

@@ -94,12 +94,6 @@ const SelectFilter = ({ filter, isOpen, onToggle }: SelectFilterProps) => {
     }, 400);
   };
 
-  // useEffect(() => {
-  //   return () => {
-  //     if (controller) controller.abort();
-  //   };
-  // }, [controller]);
-
   return (
     <ChakraAccordion allowToggle index={isOpen ? 0 : -1} onChange={onToggle}>
       <AccordionItem sx={{ bg: "ui.white" }}>
