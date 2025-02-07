@@ -30,19 +30,49 @@ type SelectFilterProps = {
   onToggle: () => void;
 };
 
-const getIcon = (isExpanded: boolean) => {
-  const iconRotation = isExpanded ? "rotate180" : "rotate0";
-  return (
-    <Icon
-      name="arrow"
-      size="small"
-      color="ui.black"
-      iconRotation={iconRotation}
-    />
-  );
-};
-
 const SelectFilter = ({ filter, isOpen, onToggle }: SelectFilterProps) => {
+  const [controller, setController] = useState<AbortController | null>(null);
+  const [selected, setSelected] = useState<string | null>(null);
+
+  const getIcon = (isExpanded: boolean) => {
+    const iconRotation = isExpanded ? "rotate180" : "rotate0";
+    return (
+      <Icon
+        name="arrow"
+        size="small"
+        color="ui.black"
+        iconRotation={iconRotation}
+      />
+    );
+  };
+
+  const modalLink = (facet: string) => {
+    return (
+      <Link
+        sx={{ fontSize: "14px", color: "ui.link" }}
+        isUnderlined={false}
+        href={"add-filter"}
+      >{`View all ${facet.toLowerCase()}${
+        facet === "Publishers" ? `` : `s`
+      }`}</Link>
+    );
+  };
+
+  const onChange = (newSelection: string) => {
+    if (controller) {
+      controller.abort();
+    }
+    const newController = new AbortController();
+    setController(newController);
+
+    setTimeout(() => {
+      if (!newController.signal.aborted) {
+        setSelected(newSelection);
+        console.log(`selected: ${newSelection}`);
+      }
+    }, 400);
+  };
+
   const radioLabel = (option: FilterOption) => {
     return (
       <Flex justifyContent="space-between">
@@ -62,36 +92,6 @@ const SelectFilter = ({ filter, isOpen, onToggle }: SelectFilterProps) => {
         value={option.name}
       />
     ));
-  };
-
-  const modalLink = (facet: string) => {
-    return (
-      <Link
-        sx={{ fontSize: "14px", color: "ui.link" }}
-        isUnderlined={false}
-        href={"add-filter"}
-      >{`View all ${facet.toLowerCase()}${
-        facet === "Publishers" ? `` : `s`
-      }`}</Link>
-    );
-  };
-
-  const [controller, setController] = useState<AbortController | null>(null);
-  const [selected, setSelected] = useState<string | null>(null);
-
-  const onChange = (newSelection: string) => {
-    if (controller) {
-      controller.abort();
-    }
-    const newController = new AbortController();
-    setController(newController);
-
-    setTimeout(() => {
-      if (!newController.signal.aborted) {
-        setSelected(newSelection);
-        console.log(`selected: ${newSelection}`);
-      }
-    }, 400);
   };
 
   return (
