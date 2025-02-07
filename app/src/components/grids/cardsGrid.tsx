@@ -79,3 +79,5 @@ export const CardsGrid = forwardRef<HTMLDivElement, CardsGridProps>(
 );
 
 CardsGrid.displayName = "CardsGrid";
+
+export default CardsGrid;

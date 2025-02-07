@@ -95,8 +95,8 @@ export const titleToDCParam = (string: string = ""): string => {
   return string?.replace(/\s+/g, "+"); // replace spaces with +
 };
 
-export const totalNumPages = (numResults: string, perPage: string): number => {
-  return Math.ceil(parseInt(numResults) / parseInt(perPage));
+export const totalNumPages = (numResults: string, perPage: number): number => {
+  return Math.ceil(parseInt(numResults) / perPage);
 };
 
 export function isCollectionType(
@@ -121,30 +121,3 @@ export function displayResults(
   const end = Math.min(page * perPage, numFound);
   return `${start}-${end} of ${numFound}`;
 }
-
-export const createQueryStringFromObject = (object) => {
-  const params = new URLSearchParams();
-  Object.keys(object).forEach((name) => {
-    params.set(name.toString(), object[name]);
-  });
-  return params.toString();
-};
-
-export const createCollectionsQueryStringFromObject = (
-  paramsObject: CollectionSearchParams
-) => {
-  const newParams = {};
-  const defaultValues = [
-    DEFAULT_SEARCH_TERM,
-    DEFAULT_PAGE_NUM,
-    DEFAULT_COLLECTION_SORT,
-  ];
-
-  Object.keys(paramsObject).forEach((key) => {
-    if (!defaultValues.includes(paramsObject[key])) {
-      newParams[key] = paramsObject[key];
-    }
-  });
-
-  return createQueryStringFromObject(newParams);
-};
