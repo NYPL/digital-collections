@@ -15,8 +15,9 @@ import defaultFeaturedItem from "../data/defaultFeaturedItemData";
 import {
   mockFeaturedItemResponse,
   mockItemResponse,
-  mockCollectionsResponse,
 } from "__tests__/__mocks__/data/mockApiResponses";
+
+import { mockCollectionsResponse } from "__tests__/__mocks__/data/api/mockCollectionsResponse";
 
 jest.mock("./fetchApi");
 
@@ -379,8 +380,8 @@ describe("getCollectionsData", () => {
     );
     const collections = await getCollectionsData({
       keyword: "cat",
-      sortID: "date-asc",
-      pageNum: "2",
+      sort: "date-asc",
+      page: 2,
     });
 
     expect(fetchApi as jest.Mock).toHaveBeenCalledWith(

@@ -2,7 +2,7 @@ import { imageURL } from "../../../app/src/utils/utils";
 import { mockCollectionLanes } from "./mockCollectionLanes";
 
 export const mockHomePageMainContent = {
-  laneData: {
+  swimLaneData: {
     lanesWithNumItems: mockCollectionLanes.lanesWithNumItems,
     randomNumber: 1,
   },

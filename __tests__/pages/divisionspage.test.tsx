@@ -1,8 +1,8 @@
 import { render } from "@testing-library/react";
 import { axe } from "jest-axe";
 import React from "react";
-import { mockCollectionsResponse } from "__tests__/__mocks__/data/api/mockCollectionsResponse";
-import { CollectionsPage } from "@/src/components/pages/collectionsPage/collectionsPage";
+import { mockDivisionsResponse } from "__tests__/__mocks__/data/api/mockDivisionsResponse";
+import DivisionsPage from "@/src/components/pages/divisionsPage/divisionsPage";
 import { useRouter } from "next/navigation";
 
 jest.mock("next/navigation", () => ({
@@ -12,21 +12,16 @@ jest.mock("next/navigation", () => ({
 
 beforeEach(() => {
   (useRouter as jest.Mock).mockImplementation(() => ({
-    pathname: "/collections",
+    pathname: "/divisions",
   }));
 });
 
-describe("All collections page accessibility", () => {
-  const searchParams = {
-    collection_keywords: "flower",
-    sort: "title-asc",
-    page: "2",
-  };
+describe("All divisions page accessibility", () => {
   it("passes axe accessibility test", async () => {
     const { container } = render(
-      <CollectionsPage
-        data={mockCollectionsResponse}
-        collectionSearchParams={searchParams}
+      <DivisionsPage
+        summary={mockDivisionsResponse.summary}
+        divisions={mockDivisionsResponse.divisions}
       />
     );
     expect(await axe(container)).toHaveNoViolations();

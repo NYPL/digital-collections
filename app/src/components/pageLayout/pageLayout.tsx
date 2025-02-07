@@ -13,11 +13,15 @@ import { BreadcrumbsDataProps } from "@nypl/design-system-react-components/dist/
 import { ADOBE_EMBED_URL } from "../../config/constants";
 import { trackVirtualPageView } from "../../utils/utils";
 import { FeedbackProvider } from "@/src/context/FeedbackProvider";
+import { SearchParams } from "@/search/index/page";
+import CollectionSearchParams from "@/src/types/CollectionSearchParams";
+import { SearchProvider } from "@/src/context/SearchProvider";
 
 interface PageLayoutProps {
   activePage: string;
   breadcrumbs?: BreadcrumbsDataProps[];
   adobeAnalyticsPageName?: string;
+  searchParams?: SearchParams | CollectionSearchParams;
 }
 
 const PageLayout = ({
@@ -25,6 +29,7 @@ const PageLayout = ({
   activePage,
   breadcrumbs,
   adobeAnalyticsPageName,
+  searchParams,
 }: PropsWithChildren<PageLayoutProps>) => {
   // Track page view events to Adobe Analytics
   useEffect(() => {
@@ -47,26 +52,39 @@ const PageLayout = ({
       </Script>
       {/* <!-- / Adobe Analytics  --> */}
       <DSProvider>
-        <FeedbackProvider>
-          <SkipNavigation />
-          <Header />
-          {activePage === "home" ||
-          activePage === "about" ||
-          activePage === "notFound" ||
-          activePage === "serverError" ? (
-            children
-          ) : (
-            <>
-              <Breadcrumbs
-                breadcrumbsType="digitalCollections"
-                breadcrumbsData={breadcrumbs || []}
-                aria-label={activePage}
-              />
-              {/* TODO: Move to TemplateAppContainer once spacing is more flexible.  --> */}
-              {children as JSX.Element}
-            </>
-          )}
-        </FeedbackProvider>
+        <SearchProvider searchParams={searchParams}>
+          <FeedbackProvider>
+            <SkipNavigation />
+            <Header />
+            {activePage === "home" ||
+            activePage === "about" ||
+            activePage === "notFound" ||
+            activePage === "serverError" ||
+            activePage === "search" ||
+            activePage === "collection" ? (
+              children
+            ) : (
+              <>
+                <Breadcrumbs
+                  breadcrumbsType="digitalCollections"
+                  breadcrumbsData={breadcrumbs || []}
+                  aria-label={activePage}
+                />
+                {/* TODO: Move to TemplateAppContainer once spacing is more flexible.  --> */}
+                <Box
+                  id="mainContent"
+                  sx={{
+                    margin: "auto",
+                    maxWidth: "1280px",
+                    padding: "64px 16px",
+                  }}
+                >
+                  {children as JSX.Element}
+                </Box>
+              </>
+            )}
+          </FeedbackProvider>
+        </SearchProvider>
       </DSProvider>
     </>
   );

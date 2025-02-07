@@ -70,100 +70,91 @@ export default function DivisionPage({ data }: any) {
       adobeAnalyticsPageName={createAdobeAnalyticsPageName("divisions", slug)}
     >
       <Box
-        id="mainContent"
         sx={{
-          margin: "auto",
-          maxWidth: "1280px",
-          padding: "64px 16px",
+          maxWidth: "730px",
+          display: "flex",
+          flexDirection: "column",
+          "> hgroup": {
+            marginBottom: 0,
+          },
+          [`@media screen and (min-width: ${headerBreakpoints.smTablet})`]: {
+            maxWidth: "715px",
+          },
+          "> hgroup > p": {
+            fontWeight: "400 !important",
+          },
+          "> a > span": {
+            fontWeight: "500",
+          },
+          gap: "m",
         }}
       >
-        <Box
-          sx={{
-            maxWidth: "730px",
-            display: "flex",
-            flexDirection: "column",
-            "> hgroup": {
-              marginBottom: 0,
-            },
-            [`@media screen and (min-width: ${headerBreakpoints.smTablet})`]: {
-              maxWidth: "715px",
-            },
-            "> hgroup > p": {
-              fontWeight: "400 !important",
-            },
-            "> a > span": {
-              fontWeight: "500",
-            },
-            gap: "m",
-          }}
+        <Heading level="h1" text={data.name} subtitle={data.summary} />
+        <Link
+          type="standalone"
+          target="_blank"
+          href={data.nyplLink}
+          style={{ width: "fit-content" }}
         >
-          <Heading level="h1" text={data.name} subtitle={data.summary} />
-          <Link
-            type="standalone"
-            target="_blank"
-            href={data.nyplLink}
-            style={{ width: "fit-content" }}
-          >
-            <span> Contact info and more </span>
-          </Link>
-        </Box>
-        <HorizontalRule sx={{ marginTop: "xxl", marginBottom: "xxl" }} />
-        {isLoaded ? (
-          <DCLane
-            records={data.items}
-            seeMoreLink={`/divisions`}
-            laneName={data.name}
-          />
-        ) : (
-          <LaneLoading id="unloaded" withTitle={false} />
-        )}
-        <HorizontalRule sx={{ marginTop: "xxl", marginBottom: "xxl" }} />
-
-        <Heading
-          size="heading5"
-          sx={{ marginBottom: "l" }}
-          ref={headingRef}
-          tabIndex={-1}
-          id={slug}
-          width="max-content"
-        >
-          {`Displaying ${displayResults(data.numFound, data.perPage, data.page)}
-        results`}
-        </Heading>
-
-        <Heading level="h2" size="heading3" style={{ width: "fit-content" }}>
-          {`Collections in the ${data.name}`}
-        </Heading>
-
-        {isLoaded ? (
-          <CardsGrid records={data.collections} />
-        ) : (
-          Array(Math.ceil(data.collections.length / 4))
-            .fill(null)
-            .map((_, index) => (
-              <LaneLoading
-                id={`lane-loading-${index}`}
-                key={`lane-loading-${index}`}
-                withTitle={false}
-              />
-            ))
-        )}
-        {totalPages > 1 && (
-          <Pagination
-            id="pagination-id"
-            initialPage={currentPage}
-            currentPage={currentPage}
-            pageCount={totalPages}
-            onPageChange={updatePageURL}
-            sx={{
-              display: "flex",
-              justifyContent: "center",
-              gap: "s",
-              marginTop: "xxl",
-            }}
-          />
-        )}
+          <span> Contact info and more </span>
+        </Link>
       </Box>
+      <HorizontalRule sx={{ marginTop: "xxl", marginBottom: "xxl" }} />
+      {isLoaded ? (
+        <DCLane
+          records={data.items}
+          seeMoreLink={`/divisions`}
+          laneName={data.name}
+        />
+      ) : (
+        <LaneLoading id="unloaded" withTitle={false} />
+      )}
+      <HorizontalRule sx={{ marginTop: "xxl", marginBottom: "xxl" }} />
+
+      <Heading
+        size="heading5"
+        sx={{ marginBottom: "l" }}
+        ref={headingRef}
+        tabIndex={-1}
+        id={slug}
+        width="max-content"
+      >
+        {`Displaying ${displayResults(data.numFound, data.perPage, data.page)}
+        results`}
+      </Heading>
+
+      <Heading level="h2" size="heading3" style={{ width: "fit-content" }}>
+        {`Collections in the ${data.name}`}
+      </Heading>
+
+      {isLoaded ? (
+        <CardsGrid records={data.collections} />
+      ) : (
+        Array(Math.ceil(data.collections.length / 4))
+          .fill(null)
+          .map((_, index) => (
+            <LaneLoading
+              id={`lane-loading-${index}`}
+              key={`lane-loading-${index}`}
+              withTitle={false}
+            />
+          ))
+      )}
+      {totalPages > 1 && (
+        <Pagination
+          id="pagination-id"
+          initialPage={currentPage}
+          currentPage={currentPage}
+          pageCount={totalPages}
+          onPageChange={updatePageURL}
+          sx={{
+            display: "flex",
+            justifyContent: "center",
+            gap: "s",
+            marginTop: "xxl",
+          }}
+        />
+      )}
     </PageLayout>
   );
 }
