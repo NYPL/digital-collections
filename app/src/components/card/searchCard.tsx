@@ -39,7 +39,6 @@ const contentTypeTag = (result: SearchCardType) => {
 
   return (
     <TagSet
-      onClick={() => {}}
       tagSetData={[
         { id: `type-${result.uuid}`, label: displayLabel ? displayLabel : "" },
       ]}
@@ -61,10 +60,10 @@ const highlightedText = ({ highlight, keyword }) => {
       }}
     >
       <Text
+        as="span"
         sx={{
           fontWeight: "400",
           margin: 0,
-          display: "inline",
         }}
       >
         {highlight.field}:{" "}

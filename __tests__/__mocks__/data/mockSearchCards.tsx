@@ -1,4 +1,4 @@
-import SearchCardType from "@/src/types/SearchCardType";
+import type { SearchCardType } from "@/src/types/SearchCardType";
 
 export const mockSearchCards: SearchCardType[] = [
   {
