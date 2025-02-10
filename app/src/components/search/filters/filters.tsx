@@ -15,13 +15,14 @@ import SelectFilterGrid from "./selectFilterGrid";
 import RightsFilter from "./rightsFilter";
 import DateFilter from "./dateFilter";
 
-const Filters = ({ headingText }) => {
+const Filters = ({ headingText, headingRef }) => {
   const [isExpanded, setIsExpanded] = useState(false);
 
   return (
     <>
       <Heading size="heading4">{headingText}</Heading>
       <SelectFilterGrid
+        headingRef={headingRef}
         filters={[
           {
             name: "Topic",

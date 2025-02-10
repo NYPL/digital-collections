@@ -1,14 +1,19 @@
 import { useState, useRef } from "react";
 import { Grid } from "@chakra-ui/react";
 import SelectFilter, { FilterCategory } from "./selectFilter";
-import { useCloseDropDown } from "@nypl/design-system-react-components";
+import useCloseDropDown from "@/src/hooks/useCloseDropDown";
 
 type SelectFilterGridProps = {
   filters: FilterCategory[];
   isExpanded: boolean;
+  headingRef: React.RefObject<HTMLHeadingElement>;
 };
 
-const SelectFilterGrid = ({ filters, isExpanded }: SelectFilterGridProps) => {
+const SelectFilterGrid = ({
+  filters,
+  isExpanded,
+  headingRef,
+}: SelectFilterGridProps) => {
   const [openFilter, setOpenFilter] = useState<string | null>(null);
   const gridRef = useRef<HTMLDivElement | null>(null);
 
@@ -28,6 +33,7 @@ const SelectFilterGrid = ({ filters, isExpanded }: SelectFilterGridProps) => {
     >
       {(isExpanded ? filters : filters.slice(0, 4)).map((filter) => (
         <SelectFilter
+          headingRef={headingRef}
           key={filter.name}
           filter={filter}
           isOpen={openFilter === filter.name}
