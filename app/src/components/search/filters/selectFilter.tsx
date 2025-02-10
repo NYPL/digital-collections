@@ -28,11 +28,17 @@ type SelectFilterProps = {
   filter: FilterCategory;
   isOpen: boolean;
   onToggle: () => void;
+  headingRef: React.RefObject<HTMLHeadingElement>;
 };
 
-const SelectFilter = ({ filter, isOpen, onToggle }: SelectFilterProps) => {
-  const [controller, setController] = useState<AbortController | null>(null);
+const SelectFilter = ({
+  filter,
+  isOpen,
+  onToggle,
+  headingRef,
+}: SelectFilterProps) => {
   const [selected, setSelected] = useState<string | null>(null);
+  const [timeoutId, setTimeoutId] = useState<NodeJS.Timeout | null>(null);
 
   const getIcon = (isExpanded: boolean) => {
     const iconRotation = isExpanded ? "rotate180" : "rotate0";
@@ -58,8 +64,6 @@ const SelectFilter = ({ filter, isOpen, onToggle }: SelectFilterProps) => {
     );
   };
 
-  const [timeoutId, setTimeoutId] = useState<NodeJS.Timeout | null>(null);
-
   const onChange = (newSelection: string) => {
     if (timeoutId) {
       clearTimeout(timeoutId);
@@ -67,7 +71,8 @@ const SelectFilter = ({ filter, isOpen, onToggle }: SelectFilterProps) => {
     const newTimeoutId = setTimeout(() => {
       setSelected(newSelection);
       console.log(`selected: ${newSelection}`);
-    }, 400);
+      headingRef.current?.focus();
+    }, 500);
 
     setTimeoutId(newTimeoutId);
   };

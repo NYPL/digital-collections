@@ -10,7 +10,7 @@ import {
   Link,
   Icon,
 } from "@nypl/design-system-react-components";
-import React from "react";
+import React, { useRef } from "react";
 import { CARDS_PER_PAGE } from "@/src/config/constants";
 import { displayResults, totalNumPages } from "@/src/utils/utils";
 import Filters from "../../search/filters/filters";
@@ -25,6 +25,8 @@ const SearchPage = ({ data }) => {
   const updateURL = async (queryString) => {
     push(`${pathname}?${queryString}`);
   };
+  const headingRef = useRef<HTMLHeadingElement>(null);
+
   return (
     <Box id="mainContent">
       <Box
@@ -53,7 +55,7 @@ const SearchPage = ({ data }) => {
             )}
                     results for "${searchManager.keywords}"`}
           </Heading>
-          <Filters headingText="Refine your search" />
+          <Filters headingText="Refine your search" headingRef={headingRef} />
         </Box>
       </Box>
       <Box
@@ -82,6 +84,7 @@ const SearchPage = ({ data }) => {
         </Flex>
         <HorizontalRule />
         <Heading
+          ref={headingRef}
           tabIndex={-1}
           marginTop="xl"
           size="heading5"
