@@ -31,13 +31,16 @@ const useCloseDropDown = (
   // Listen for focus leaving the referenced element
   useEffect(() => {
     const handleFocusOut = (e: FocusEvent) => {
-      if (ref.current && !ref.current.contains(e.relatedTarget as Node)) {
+      const nextFocusedElement = e.relatedTarget as Node;
+      if (ref.current && !ref.current.contains(nextFocusedElement)) {
         actionCb(false);
       }
     };
 
-    ref.current?.addEventListener("focusout", handleFocusOut);
-    return () => ref.current?.removeEventListener("focusout", handleFocusOut);
+    const element = ref.current;
+    element?.addEventListener("focusout", handleFocusOut);
+
+    return () => element?.removeEventListener("focusout", handleFocusOut);
   }, [actionCb, ref]);
 };
 

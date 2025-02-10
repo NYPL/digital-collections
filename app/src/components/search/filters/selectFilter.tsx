@@ -72,7 +72,7 @@ const SelectFilter = ({
       setSelected(newSelection);
       console.log(`selected: ${newSelection}`);
       headingRef.current?.focus();
-    }, 500);
+    }, 600);
 
     setTimeoutId(newTimeoutId);
   };
