@@ -1,7 +1,7 @@
 import { useState, useRef, forwardRef } from "react";
 import { Grid } from "@chakra-ui/react";
 import SelectFilter, { FilterCategory } from "./selectFilter";
-import useCloseDropDown from "@/src/hooks/useCloseDropDown";
+import { useCloseDropDown } from "@nypl/design-system-react-components";
 
 type SelectFilterGridProps = {
   filters: FilterCategory[];
