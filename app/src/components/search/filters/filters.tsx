@@ -32,9 +32,30 @@ const Filters = ({ headingText, headingRef }) => {
               { name: "Long Island", count: 12 },
             ],
           },
-          { name: "Genre", options: [{ name: "New York", count: 37 }] },
-          { name: "Format", options: [{ name: "New York", count: 8 }] },
-          { name: "Collection", options: [{ name: "New York", count: 37 }] },
+          {
+            name: "Genre",
+            options: [
+              { name: "New York", count: 37 },
+              { name: "New Jersey", count: 8 },
+              { name: "Long Island", count: 12 },
+            ],
+          },
+          {
+            name: "Format",
+            options: [
+              { name: "New York", count: 37 },
+              { name: "New Jersey", count: 8 },
+              { name: "Long Island", count: 12 },
+            ],
+          },
+          {
+            name: "Collection",
+            options: [
+              { name: "New York", count: 37 },
+              { name: "New Jersey", count: 8 },
+              { name: "Long Island", count: 12 },
+            ],
+          },
           { name: "Publishers", options: [{ name: "New York", count: 37 }] },
           { name: "Division", options: [{ name: "New York", count: 37 }] },
           { name: "Type", options: [{ name: "New York", count: 37 }] },
