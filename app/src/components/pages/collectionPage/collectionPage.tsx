@@ -13,7 +13,7 @@ import {
   Icon,
   Pagination,
 } from "@nypl/design-system-react-components";
-import React from "react";
+import React, { useRef } from "react";
 import Filters from "../../search/filters/filters";
 import { headerBreakpoints } from "@/src/utils/breakpoints";
 import { CardsGrid } from "../../grids/cardsGrid";
@@ -38,6 +38,7 @@ const textLink = (href, text) => {
 };
 
 const CollectionPage = ({ slug, data }) => {
+  const headingRef = useRef<HTMLHeadingElement>(null);
   return (
     <Box id="mainContent">
       <Box
@@ -62,7 +63,10 @@ const CollectionPage = ({ slug, data }) => {
           >
             {slug}
           </Heading>
-          <Filters headingText="Search this collection" />
+          <Filters
+            headingText="Search this collection"
+            headingRef={headingRef}
+          />
         </Box>
       </Box>
       <Box
@@ -208,6 +212,7 @@ const CollectionPage = ({ slug, data }) => {
             </Flex>
             <Heading
               marginTop="xl"
+              ref={headingRef}
               size="heading5"
               tabIndex={-1}
             >{`Displaying ${displayResults(data.numResults, CARDS_PER_PAGE, 1)}
