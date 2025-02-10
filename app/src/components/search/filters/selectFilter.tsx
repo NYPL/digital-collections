@@ -6,13 +6,13 @@ import {
 } from "@chakra-ui/react";
 import {
   Icon,
-  Link,
   Radio,
   Flex,
   Box,
   RadioGroup,
 } from "@nypl/design-system-react-components";
-import { useState } from "react";
+import { forwardRef, MutableRefObject, useState } from "react";
+import SelectFilterModal from "./selectFilterModal";
 
 export type FilterOption = {
   name: string;
@@ -28,118 +28,109 @@ type SelectFilterProps = {
   filter: FilterCategory;
   isOpen: boolean;
   onToggle: () => void;
-  headingRef: React.RefObject<HTMLHeadingElement> | null;
+  handleCloseFilter: () => void;
 };
 
-const SelectFilter = ({
-  filter,
-  isOpen,
-  onToggle,
-  headingRef,
-}: SelectFilterProps) => {
-  const [selected, setSelected] = useState<string | null>(null);
-  const [timeoutId, setTimeoutId] = useState<NodeJS.Timeout | null>(null);
+const SelectFilter = forwardRef<HTMLHeadingElement, SelectFilterProps>(
+  ({ filter, isOpen, onToggle, handleCloseFilter }, headingRef) => {
+    const [selected, setSelected] = useState<string | null>(null);
+    const [timeoutId, setTimeoutId] = useState<NodeJS.Timeout | null>(null);
 
-  const getIcon = (isExpanded: boolean) => {
-    const iconRotation = isExpanded ? "rotate180" : "rotate0";
+    const getIcon = (isExpanded: boolean) => {
+      const iconRotation = isExpanded ? "rotate180" : "rotate0";
+      return (
+        <Icon
+          name="arrow"
+          size="small"
+          color="ui.black"
+          iconRotation={iconRotation}
+        />
+      );
+    };
+
+    const onChange = (newSelection: string) => {
+      if (timeoutId) {
+        clearTimeout(timeoutId);
+      }
+
+      const newTimeoutId = setTimeout(() => {
+        setSelected(newSelection);
+        handleCloseFilter();
+        console.log(`selected: ${newSelection}`);
+        (
+          headingRef as MutableRefObject<HTMLHeadingElement | null>
+        )?.current?.focus();
+      }, 600);
+
+      setTimeoutId(newTimeoutId);
+    };
+
+    const radioLabel = (option: FilterOption) => {
+      return (
+        <Flex justifyContent="space-between">
+          <span>{option.name}</span>
+          <span>{option.count}</span>
+        </Flex>
+      );
+    };
+
+    const radioFilterOptions = (filter: FilterCategory) => {
+      return filter.options.map((option, index) => (
+        <Radio
+          margin="0"
+          key={`${option.name}-${index}`}
+          name={filter.name}
+          id={`${option.name}-${index}`}
+          labelText={radioLabel(option)}
+          value={option.name}
+        />
+      ));
+    };
+
     return (
-      <Icon
-        name="arrow"
-        size="small"
-        color="ui.black"
-        iconRotation={iconRotation}
-      />
-    );
-  };
-
-  const modalLink = (facet: string) => {
-    return (
-      <Link
-        sx={{ fontSize: "14px", color: "ui.link" }}
-        isUnderlined={false}
-        href={"add-filter"}
-      >{`View all ${facet.toLowerCase()}${
-        facet === "Publishers" ? `` : `s`
-      }`}</Link>
-    );
-  };
-
-  const onChange = (newSelection: string) => {
-    if (timeoutId) {
-      clearTimeout(timeoutId);
-    }
-    const newTimeoutId = setTimeout(() => {
-      setSelected(newSelection);
-      console.log(`selected: ${newSelection}`);
-      headingRef?.current?.focus();
-    }, 600);
-
-    setTimeoutId(newTimeoutId);
-  };
-
-  const radioLabel = (option: FilterOption) => {
-    return (
-      <Flex justifyContent="space-between">
-        <span>{option.name}</span>
-        <span>{option.count}</span>
-      </Flex>
-    );
-  };
-
-  const radioFilterOptions = (filter: FilterCategory) => {
-    return filter.options.map((option, index) => (
-      <Radio
-        key={`${option.name}-${index}`}
-        name={filter.name}
-        id={`${option.name}-${index}`}
-        labelText={radioLabel(option)}
-        value={option.name}
-      />
-    ));
-  };
-
-  return (
-    <ChakraAccordion allowToggle index={isOpen ? 0 : -1} onChange={onToggle}>
-      <AccordionItem sx={{ bg: "ui.white" }}>
-        {({ isExpanded }) => (
-          <>
-            <AccordionButton
-              sx={{
-                fontWeight: "light",
-                fontSize: "desktop.body.body2",
-                bg: "ui.white",
-                _expanded: { bg: "ui.bg.active" },
-              }}
-            >
-              <Box as="span" flex="1" textAlign="start">
-                {filter.name}
-              </Box>
-              {getIcon(isExpanded)}
-            </AccordionButton>
-            {isExpanded && (
-              <AccordionPanel>
+      <ChakraAccordion allowToggle index={isOpen ? 0 : -1} onChange={onToggle}>
+        <AccordionItem sx={{ bg: "ui.white" }}>
+          {({ isExpanded }) => (
+            <>
+              <AccordionButton
+                sx={{
+                  fontWeight: "light",
+                  fontSize: "desktop.body.body2",
+                  bg: "ui.white",
+                  _expanded: { bg: "ui.bg.active" },
+                }}
+              >
+                <Box as="span" flex="1" textAlign="start">
+                  {filter.name}
+                </Box>
+                {getIcon(isExpanded)}
+              </AccordionButton>
+              {isExpanded && (
                 <>
-                  <RadioGroup
-                    isFullWidth
-                    id={`${filter.name}-options`}
-                    labelText={`${filter.name} filter options`}
-                    showLabel={false}
-                    name={filter.name}
-                    onChange={onChange}
-                    sx={{ marginBottom: "s" }}
-                    defaultValue={selected ?? undefined}
-                  >
-                    {radioFilterOptions(filter)}
-                  </RadioGroup>
-                  {modalLink(filter.name)}
+                  <AccordionPanel>
+                    <RadioGroup
+                      isFullWidth
+                      id={`${filter.name}-options`}
+                      labelText={`${filter.name} filter options`}
+                      showLabel={false}
+                      name={filter.name}
+                      onChange={onChange}
+                      defaultValue={selected ?? undefined}
+                    >
+                      {radioFilterOptions(filter)}
+                    </RadioGroup>
+                    <SelectFilterModal filter={filter} ref={headingRef} />
+                  </AccordionPanel>
                 </>
-              </AccordionPanel>
-            )}
-          </>
-        )}
-      </AccordionItem>
-    </ChakraAccordion>
-  );
-};
+              )}
+            </>
+          )}
+        </AccordionItem>
+      </ChakraAccordion>
+    );
+  }
+);
+
+SelectFilter.displayName = "SelectFilter";
 
 export default SelectFilter;

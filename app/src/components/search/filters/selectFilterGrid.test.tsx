@@ -1,6 +1,7 @@
 import { render, screen, fireEvent } from "@testing-library/react";
 import SelectFilterGrid from "./selectFilterGrid";
 import { FilterCategory } from "./selectFilter";
+import { useRef } from "react";
 
 const mockFilters: FilterCategory[] = [
   { name: "Collection", options: [{ name: "Collection 1", count: 10 }] },
@@ -16,7 +17,7 @@ describe("SelectFilterGrid", () => {
       <SelectFilterGrid
         filters={mockFilters}
         isExpanded={false}
-        headingRef={null}
+        headingRef={{ current: null }}
       />
     );
 
@@ -33,7 +34,7 @@ describe("SelectFilterGrid", () => {
       <SelectFilterGrid
         filters={mockFilters}
         isExpanded={true}
-        headingRef={null}
+        headingRef={{ current: null }}
       />
     );
 
@@ -47,7 +48,7 @@ describe("SelectFilterGrid", () => {
       <SelectFilterGrid
         filters={mockFilters}
         isExpanded={true}
-        headingRef={null}
+        headingRef={{ current: null }}
       />
     );
 
@@ -66,7 +67,7 @@ describe("SelectFilterGrid", () => {
       <SelectFilterGrid
         filters={mockFilters}
         isExpanded={true}
-        headingRef={null}
+        headingRef={{ current: null }}
       />
     );
 
