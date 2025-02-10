@@ -58,19 +58,18 @@ const SelectFilter = ({ filter, isOpen, onToggle }: SelectFilterProps) => {
     );
   };
 
-  const onChange = (newSelection: string) => {
-    if (controller) {
-      controller.abort();
-    }
-    const newController = new AbortController();
-    setController(newController);
+  const [timeoutId, setTimeoutId] = useState<NodeJS.Timeout | null>(null);
 
-    setTimeout(() => {
-      if (!newController.signal.aborted) {
-        setSelected(newSelection);
-        console.log(`selected: ${newSelection}`);
-      }
+  const onChange = (newSelection: string) => {
+    if (timeoutId) {
+      clearTimeout(timeoutId);
+    }
+    const newTimeoutId = setTimeout(() => {
+      setSelected(newSelection);
+      console.log(`selected: ${newSelection}`);
     }, 400);
+
+    setTimeoutId(newTimeoutId);
   };
 
   const radioLabel = (option: FilterOption) => {
