@@ -4,18 +4,18 @@ import {
   Text,
   Flex,
   Heading,
-  Icon,
-  Radio,
-  RadioGroup,
-  TextInput,
-  Tooltip,
 } from "@nypl/design-system-react-components";
 
 import SelectFilterGrid from "./selectFilterGrid";
 import RightsFilter from "./rightsFilter";
 import DateFilter from "./dateFilter";
 
-const Filters = ({ headingText, headingRef }) => {
+type FiltersProps = {
+  headingText: string;
+  headingRef: React.RefObject<HTMLHeadingElement> | null;
+};
+
+const Filters = ({ headingText, headingRef }: FiltersProps) => {
   const [isExpanded, setIsExpanded] = useState(false);
 
   return (
