@@ -12,6 +12,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Added custom searchbar to handle search submit
 - Added new search context and `searchManager` class, implemented on `/collections` page (DR-3365)
 
+### Updated
+
+- Updated 3rd party scripts with explicit loading strategies (DR-3376)
+
 ## [0.3.1] 2025-01-30
 
 ### Updated
