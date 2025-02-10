@@ -6,7 +6,7 @@ import useCloseDropDown from "@/src/hooks/useCloseDropDown";
 type SelectFilterGridProps = {
   filters: FilterCategory[];
   isExpanded: boolean;
-  headingRef: React.RefObject<HTMLHeadingElement>;
+  headingRef: React.RefObject<HTMLHeadingElement> | null;
 };
 
 const SelectFilterGrid = ({

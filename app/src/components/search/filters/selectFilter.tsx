@@ -28,7 +28,7 @@ type SelectFilterProps = {
   filter: FilterCategory;
   isOpen: boolean;
   onToggle: () => void;
-  headingRef: React.RefObject<HTMLHeadingElement>;
+  headingRef: React.RefObject<HTMLHeadingElement> | null;
 };
 
 const SelectFilter = ({
@@ -71,7 +71,7 @@ const SelectFilter = ({
     const newTimeoutId = setTimeout(() => {
       setSelected(newSelection);
       console.log(`selected: ${newSelection}`);
-      headingRef.current?.focus();
+      headingRef?.current?.focus();
     }, 600);
 
     setTimeoutId(newTimeoutId);
