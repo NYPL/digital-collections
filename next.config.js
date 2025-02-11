@@ -4,6 +4,15 @@
 const nrExternals = require("newrelic/load-externals");
 
 const nextConfig = {
+  async redirects() {
+    return [
+      {
+        source: "/old-page",
+        destination: "/new-page",
+        permanent: true,
+      },
+    ];
+  },
   experimental: {
     // Without this setting, the Next.js compilation step will routinely
     // try to import files such as `LICENSE` from the `newrelic` module.
