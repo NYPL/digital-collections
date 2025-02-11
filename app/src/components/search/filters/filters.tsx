@@ -22,18 +22,8 @@ const Filters = ({ headingText, headingRef }: FiltersProps) => {
   return (
     <>
       <Heading size="heading4">{headingText}</Heading>
-      <SelectFilter2
-        filter={{
-          name: "Topic",
-          options: [
-            { name: "New York", count: 37 },
-            { name: "New Jersey", count: 8 },
-            { name: "Long Island", count: 12 },
-          ],
-        }}
-      />
       <SelectFilterGrid
-        headingRef={headingRef}
+        ref={headingRef}
         filters={[
           {
             name: "Topic",
