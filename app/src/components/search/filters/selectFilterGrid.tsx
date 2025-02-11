@@ -1,7 +1,7 @@
 import { useState, useRef, forwardRef } from "react";
 import { Grid } from "@chakra-ui/react";
 import SelectFilter, { FilterCategory } from "./selectFilter";
-import { useCloseDropDown } from "@nypl/design-system-react-components";
+import useCloseDropDown from "@/src/hooks/useCloseDropDown";
 
 type SelectFilterGridProps = {
   filters: FilterCategory[];
@@ -15,12 +15,8 @@ const SelectFilterGrid = forwardRef<HTMLHeadingElement, SelectFilterGridProps>(
 
     useCloseDropDown(() => setOpenFilter(null), gridRef);
 
-    const handleOpenFilter = (filterName: string) => {
-      setOpenFilter((prev) => (prev === filterName ? prev : filterName));
-    };
-
-    const handleCloseFilter = () => {
-      setOpenFilter(null);
+    const handleToggle = (filterName: string) => {
+      setOpenFilter((prev) => (prev === filterName ? null : filterName));
     };
 
     return (
@@ -37,8 +33,7 @@ const SelectFilterGrid = forwardRef<HTMLHeadingElement, SelectFilterGridProps>(
             key={filter.name}
             filter={filter}
             isOpen={openFilter === filter.name}
-            onToggle={() => handleOpenFilter(filter.name)}
-            handleCloseFilter={handleCloseFilter}
+            onToggle={() => handleToggle(filter.name)}
           />
         ))}
       </Grid>
