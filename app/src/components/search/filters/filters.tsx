@@ -9,7 +9,7 @@ import {
 import SelectFilterGrid from "./selectFilterGrid";
 import RightsFilter from "./rightsFilter";
 import DateFilter from "./dateFilter";
-import SelectFilter2 from "./selectFilter2";
+import SelectFilter2 from "./selectFilter";
 
 type FiltersProps = {
   headingText: string;

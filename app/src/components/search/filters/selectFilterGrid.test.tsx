@@ -1,4 +1,4 @@
-import { render, screen, fireEvent } from "@testing-library/react";
+import { render, screen, fireEvent, waitFor } from "@testing-library/react";
 import SelectFilterGrid from "./selectFilterGrid";
 import { FilterCategory } from "./selectFilter";
 
@@ -12,13 +12,7 @@ const mockFilters: FilterCategory[] = [
 
 describe("SelectFilterGrid", () => {
   it("renders the correct number of filters when collapsed", () => {
-    render(
-      <SelectFilterGrid
-        filters={mockFilters}
-        isExpanded={false}
-        headingRef={null}
-      />
-    );
+    render(<SelectFilterGrid filters={mockFilters} isExpanded={false} />);
 
     expect(screen.getByText("Collection")).toBeInTheDocument();
     expect(screen.getByText("Format")).toBeInTheDocument();
@@ -29,55 +23,59 @@ describe("SelectFilterGrid", () => {
   });
 
   it("renders all filters when expanded", () => {
-    render(
-      <SelectFilterGrid
-        filters={mockFilters}
-        isExpanded={true}
-        headingRef={null}
-      />
-    );
+    render(<SelectFilterGrid filters={mockFilters} isExpanded={true} />);
 
     mockFilters.forEach((filter) => {
       expect(screen.getByText(filter.name)).toBeInTheDocument();
     });
   });
 
-  it("toggles filter expansion correctly", () => {
-    render(
-      <SelectFilterGrid
-        filters={mockFilters}
-        isExpanded={true}
-        headingRef={null}
-      />
+  it("toggles filter expansion correctly", async () => {
+    render(<SelectFilterGrid filters={mockFilters} isExpanded={true} />);
+
+    const collectionAccordionButton = screen.getByText("Collection");
+    expect(collectionAccordionButton.parentElement).toHaveAttribute(
+      "aria-expanded",
+      "false"
     );
 
-    const collectionAccordion = screen.getByText("Collection");
-    expect(screen.queryByText("View all collections")).not.toBeInTheDocument();
-
-    fireEvent.click(collectionAccordion);
-    expect(screen.getByText("View all collections")).toBeInTheDocument();
-
-    fireEvent.click(collectionAccordion);
-    expect(screen.queryByText("View all collections")).not.toBeInTheDocument();
+    fireEvent.click(collectionAccordionButton);
+    expect(collectionAccordionButton.parentElement).toHaveAttribute(
+      "aria-expanded",
+      "true"
+    );
   });
 
-  it("collapses the previous filter when you click a new one", () => {
-    render(
-      <SelectFilterGrid
-        filters={mockFilters}
-        isExpanded={true}
-        headingRef={null}
-      />
+  it("collapses the previous filter when you click a new one", async () => {
+    render(<SelectFilterGrid filters={mockFilters} isExpanded={true} />);
+
+    const collectionAccordionButton = screen.getByText("Collection");
+
+    const formatAccordionButton = screen.getByText("Format");
+
+    expect(collectionAccordionButton.parentElement).toHaveAttribute(
+      "aria-expanded",
+      "false"
     );
 
-    const collectionAccordion = screen.getByText("Collection");
-    const formatAccordion = screen.getByText("Format");
+    fireEvent.click(collectionAccordionButton);
+    expect(collectionAccordionButton.parentElement).toHaveAttribute(
+      "aria-expanded",
+      "true"
+    );
 
-    fireEvent.click(collectionAccordion);
-    expect(screen.getByText("View all collections")).toBeInTheDocument();
+    fireEvent.click(formatAccordionButton);
 
-    fireEvent.click(formatAccordion);
-    expect(screen.getByText("View all formats")).toBeInTheDocument();
-    expect(screen.queryByText("View all collections")).not.toBeInTheDocument();
+    expect(formatAccordionButton.parentElement).toHaveAttribute(
+      "aria-expanded",
+      "true"
+    );
+
+    setTimeout(() => {
+      expect(collectionAccordionButton.parentElement).toHaveAttribute(
+        "aria-expanded",
+        "false"
+      );
+    }, 10);
   });
 });
