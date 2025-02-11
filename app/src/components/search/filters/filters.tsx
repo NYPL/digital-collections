@@ -9,6 +9,7 @@ import {
 import SelectFilterGrid from "./selectFilterGrid";
 import RightsFilter from "./rightsFilter";
 import DateFilter from "./dateFilter";
+import SelectFilter2 from "./selectFilter2";
 
 type FiltersProps = {
   headingText: string;
@@ -21,6 +22,16 @@ const Filters = ({ headingText, headingRef }: FiltersProps) => {
   return (
     <>
       <Heading size="heading4">{headingText}</Heading>
+      <SelectFilter2
+        filter={{
+          name: "Topic",
+          options: [
+            { name: "New York", count: 37 },
+            { name: "New Jersey", count: 8 },
+            { name: "Long Island", count: 12 },
+          ],
+        }}
+      />
       <SelectFilterGrid
         headingRef={headingRef}
         filters={[
