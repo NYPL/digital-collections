@@ -14,6 +14,7 @@ import React, {
   useState,
 } from "react";
 import Accordion from "./filterAccordion";
+import SelectFilterModal from "./selectFilterModal";
 
 export type FilterOption = {
   name: string;
@@ -145,7 +146,7 @@ const SelectFilterComponent = forwardRef<
       >
         {radioFilterOptions(filter)}
       </RadioGroup>
-      {modalButton(filter)}
+      <SelectFilterModal filter={filter} ref={headingRef} />
     </>
   );
 

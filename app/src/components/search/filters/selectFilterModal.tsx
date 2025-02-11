@@ -40,9 +40,11 @@ const SelectFilterModal = forwardRef<
       >
         <ModalOverlay />
         <ModalContent>
-          <ModalHeader>Modal Title</ModalHeader>
+          <ModalHeader>{`${filter.name}${
+            filter.name === "Publishers" ? `` : `s`
+          }`}</ModalHeader>
           <ModalCloseButton />
-          <ModalBody>helloooo</ModalBody>
+          <ModalBody></ModalBody>
 
           <ModalFooter>
             <Button mr={3} onClick={onClose} id={"close"}>
