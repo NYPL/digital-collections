@@ -12,7 +12,13 @@ import {
   RadioGroup,
   Radio,
 } from "@nypl/design-system-react-components";
-import React, { forwardRef, useEffect, useRef, useState } from "react";
+import React, {
+  forwardRef,
+  MutableRefObject,
+  useEffect,
+  useRef,
+  useState,
+} from "react";
 import { FilterCategory, FilterOption } from "./selectFilter";
 
 export const multiSelectWidthsArray = ["fitContent", "full"] as const;
@@ -33,9 +39,9 @@ export interface SelectFilter2Props {
  * dynamic styling through Chakra UI.
  */
 const SelectFilter2Component = forwardRef<
-  HTMLDivElement,
+  HTMLHeadingElement,
   React.PropsWithChildren<SelectFilter2Props>
->((props, ref?) => {
+>((props, headingRef) => {
   const { filter, selectedItem = "", ...rest } = props;
 
   const [userClickedOutside, setUserClickedOutside] = useState<boolean>(false);
@@ -139,14 +145,14 @@ const SelectFilter2Component = forwardRef<
     const newTimeoutId = setTimeout(() => {
       //setSelected(newSelection);
       console.log(`selected: ${newSelection}`);
-      //headingRef?.current?.focus();
+      setUserClickedOutside(true);
+      (
+        headingRef as MutableRefObject<HTMLHeadingElement | null>
+      )?.current?.focus();
     }, 600);
 
     setTimeoutId(newTimeoutId);
   };
-
-  /** Components for accordionData */
-  const accordionLabel = <Box as="span">Accordion</Box>;
 
   const accordionPanel = (
     <Box>
@@ -178,7 +184,7 @@ const SelectFilter2Component = forwardRef<
           {
             accordionType: "default",
             buttonInteractionRef: accordionButtonRef,
-            label: accordionLabel,
+            label: filter.name,
             panel: accordionPanel,
           },
         ]}
