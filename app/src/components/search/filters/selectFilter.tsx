@@ -1,18 +1,19 @@
+import { chakra, ChakraComponent } from "@chakra-ui/react";
 import {
-  Accordion as ChakraAccordion,
-  AccordionButton,
-  AccordionItem,
-  AccordionPanel,
-} from "@chakra-ui/react";
-import {
-  Icon,
-  Link,
+  Box,
+  Button,
+  RadioGroup,
   Radio,
   Flex,
-  Box,
-  RadioGroup,
 } from "@nypl/design-system-react-components";
-import { useState } from "react";
+import React, {
+  forwardRef,
+  MutableRefObject,
+  useEffect,
+  useRef,
+  useState,
+} from "react";
+import Accordion from "./filterAccordion";
 
 export type FilterOption = {
   name: string;
@@ -24,58 +25,63 @@ export type FilterCategory = {
   options: FilterOption[];
 };
 
-type SelectFilterProps = {
+export interface SelectFilterProps {
   filter: FilterCategory;
-  isOpen: boolean;
-  onToggle: () => void;
-  headingRef: React.RefObject<HTMLHeadingElement> | null;
-};
+}
 
-const SelectFilter = ({
-  filter,
-  isOpen,
-  onToggle,
-  headingRef,
-}: SelectFilterProps) => {
-  const [selected, setSelected] = useState<string | null>(null);
+const SelectFilterComponent = forwardRef<
+  HTMLHeadingElement,
+  React.PropsWithChildren<SelectFilterProps>
+>((props, headingRef) => {
+  const { filter, ...rest } = props;
+  const [userClickedOutside, setUserClickedOutside] = useState<boolean>(false);
   const [timeoutId, setTimeoutId] = useState<NodeJS.Timeout | null>(null);
 
-  const getIcon = (isExpanded: boolean) => {
-    const iconRotation = isExpanded ? "rotate180" : "rotate0";
-    return (
-      <Icon
-        name="arrow"
-        size="small"
-        color="ui.black"
-        iconRotation={iconRotation}
-      />
-    );
-  };
+  // Create a ref to hold a reference to the accordion button, enabling us
+  // to programmatically focus it.
+  const accordionButtonRef: React.RefObject<HTMLDivElement> =
+    useRef<HTMLDivElement>(null);
+  const containerRef: React.RefObject<HTMLDivElement> =
+    useRef<HTMLDivElement>(null);
 
-  const modalLink = (facet: string) => {
-    return (
-      <Link
-        sx={{ fontSize: "14px", color: "ui.link" }}
-        isUnderlined={false}
-        href={"add-filter"}
-      >{`View all ${facet.toLowerCase()}${
-        facet === "Publishers" ? `` : `s`
-      }`}</Link>
-    );
-  };
-
-  const onChange = (newSelection: string) => {
-    if (timeoutId) {
-      clearTimeout(timeoutId);
+  // Tells the accordion to close if open when user clicks outside of the container
+  const handleClickOutside = (e) => {
+    if (e.type === "mousedown") {
+      const multiSelect = containerRef.current;
+      if (multiSelect && !multiSelect.contains(e.target)) {
+        setUserClickedOutside(true);
+      } else {
+        setUserClickedOutside(false);
+      }
     }
-    const newTimeoutId = setTimeout(() => {
-      setSelected(newSelection);
-      console.log(`selected: ${newSelection}`);
-      headingRef?.current?.focus();
-    }, 600);
-
-    setTimeoutId(newTimeoutId);
   };
+
+  // Tells the accordion to close if open when user tabs outside of the container
+  const handleTabOutside = (e) => {
+    if (e.key === "Tab") {
+      const selectComponent = containerRef.current;
+      setTimeout(() => {
+        if (
+          selectComponent &&
+          !selectComponent.contains(document.activeElement)
+        ) {
+          setUserClickedOutside(true);
+        } else {
+          setUserClickedOutside(false);
+        }
+      }, 0);
+    }
+  };
+
+  useEffect(() => {
+    document.addEventListener("mousedown", handleClickOutside);
+    document.addEventListener("keydown", handleTabOutside);
+
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+      document.removeEventListener("keydown", handleTabOutside);
+    };
+  }, []);
 
   const radioLabel = (option: FilterOption) => {
     return (
@@ -98,48 +104,82 @@ const SelectFilter = ({
     ));
   };
 
-  return (
-    <ChakraAccordion allowToggle index={isOpen ? 0 : -1} onChange={onToggle}>
-      <AccordionItem sx={{ bg: "ui.white" }}>
-        {({ isExpanded }) => (
-          <>
-            <AccordionButton
-              sx={{
-                fontWeight: "light",
-                fontSize: "desktop.body.body2",
-                bg: "ui.white",
-                _expanded: { bg: "ui.bg.active" },
-              }}
-            >
-              <Box as="span" flex="1" textAlign="start">
-                {filter.name}
-              </Box>
-              {getIcon(isExpanded)}
-            </AccordionButton>
-            {isExpanded && (
-              <AccordionPanel>
-                <>
-                  <RadioGroup
-                    isFullWidth
-                    id={`${filter.name}-options`}
-                    labelText={`${filter.name} filter options`}
-                    showLabel={false}
-                    name={filter.name}
-                    onChange={onChange}
-                    sx={{ marginBottom: "s" }}
-                    defaultValue={selected ?? undefined}
-                  >
-                    {radioFilterOptions(filter)}
-                  </RadioGroup>
-                  {modalLink(filter.name)}
-                </>
-              </AccordionPanel>
-            )}
-          </>
-        )}
-      </AccordionItem>
-    </ChakraAccordion>
+  const modalButton = (filter: FilterCategory) => {
+    return (
+      <Button
+        buttonType="link"
+        id="modal-button"
+        padding="0"
+      >{`View all ${filter.name.toLowerCase()}${
+        filter.name === "Publishers" ? `` : `s`
+      }`}</Button>
+    );
+  };
+
+  const onChange = (newSelection: string) => {
+    if (timeoutId) {
+      clearTimeout(timeoutId);
+    }
+    const newTimeoutId = setTimeout(() => {
+      console.log(`selected: ${newSelection}`);
+      setUserClickedOutside(true);
+      (
+        headingRef as MutableRefObject<HTMLHeadingElement | null>
+      )?.current?.focus();
+    }, 600);
+
+    setTimeoutId(newTimeoutId);
+  };
+
+  const accordionPanel = (
+    <>
+      <RadioGroup
+        isFullWidth
+        id={`${filter.name}-options`}
+        labelText={`${filter.name} filter options`}
+        showLabel={false}
+        name={filter.name}
+        onChange={onChange}
+        sx={{ marginBottom: "s" }}
+        defaultValue={undefined}
+      >
+        {radioFilterOptions(filter)}
+      </RadioGroup>
+      {modalButton(filter)}
+    </>
   );
-};
+
+  return (
+    <Box
+      {...rest}
+      ref={containerRef}
+      onClick={() => setUserClickedOutside(false)}
+    >
+      <Accordion
+        accordionData={[
+          {
+            accordionType: "default",
+            buttonInteractionRef: accordionButtonRef,
+            label: filter.name,
+            panel: accordionPanel,
+            ariaLabel: `Select ${filter.name}`,
+          },
+        ]}
+        id={`select-${filter.name}`}
+        userClickedOutside={userClickedOutside}
+      />
+    </Box>
+  );
+});
+
+SelectFilterComponent.displayName = "SelectFilterComponent";
+
+export const SelectFilter: ChakraComponent<
+  React.ForwardRefExoticComponent<
+    React.PropsWithChildren<SelectFilterProps> &
+      React.RefAttributes<HTMLDivElement>
+  >,
+  React.PropsWithChildren<SelectFilterProps>
+> = chakra(SelectFilterComponent, { shouldForwardProp: () => true });
 
 export default SelectFilter;

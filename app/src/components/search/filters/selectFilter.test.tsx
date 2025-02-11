@@ -12,24 +12,13 @@ const mockFacetFilter: FilterCategory = {
 
 describe("SelectFilter", () => {
   it("renders the filter category name", () => {
-    render(
-      <SelectFilter
-        filter={mockFacetFilter}
-        isOpen={false}
-        onToggle={jest.fn()}
-      />
-    );
+    render(<SelectFilter filter={mockFacetFilter} />);
     expect(screen.getByText("Publishers")).toBeInTheDocument();
   });
 
   it("renders a radio button for each filter option", () => {
-    render(
-      <SelectFilter
-        filter={mockFacetFilter}
-        isOpen={true}
-        onToggle={jest.fn()}
-      />
-    );
+    render(<SelectFilter filter={mockFacetFilter} />);
+    fireEvent.click(screen.getByText("Publishers"));
     mockFacetFilter.options.forEach((option) => {
       expect(screen.getByText(option.name)).toBeInTheDocument();
       expect(screen.getByText(option.count.toString())).toBeInTheDocument();
@@ -37,36 +26,14 @@ describe("SelectFilter", () => {
   });
 
   it("shows modal link for the filter", () => {
-    render(
-      <SelectFilter
-        filter={mockFacetFilter}
-        isOpen={true}
-        onToggle={jest.fn()}
-      />
-    );
+    render(<SelectFilter filter={mockFacetFilter} />);
+    fireEvent.click(screen.getByText("Publishers"));
     expect(screen.getByText("View all publishers")).toBeInTheDocument();
   });
 
-  it("calls the onToggle function when accordion button is clicked", () => {
-    const onToggleMock = jest.fn();
-    render(
-      <SelectFilter
-        filter={mockFacetFilter}
-        isOpen={false}
-        onToggle={onToggleMock}
-      />
-    );
+  it("should select an option and update accordingly", async () => {
+    render(<SelectFilter filter={mockFacetFilter} />);
     fireEvent.click(screen.getByText("Publishers"));
-    expect(onToggleMock).toHaveBeenCalledTimes(1);
-  });
-  it("should select an option and update state", async () => {
-    render(
-      <SelectFilter
-        filter={mockFacetFilter}
-        isOpen={true}
-        onToggle={jest.fn()}
-      />
-    );
 
     const radio1 = screen.getAllByRole("radio")[0];
 
@@ -79,13 +46,8 @@ describe("SelectFilter", () => {
 
   it("should abort previous selection when selecting a new option", async () => {
     jest.useFakeTimers();
-    render(
-      <SelectFilter
-        filter={mockFacetFilter}
-        isOpen={true}
-        onToggle={jest.fn()}
-      />
-    );
+    render(<SelectFilter filter={mockFacetFilter} />);
+    fireEvent.click(screen.getByText("Publishers"));
 
     const radio1 = screen.getAllByRole("radio")[0];
     const radio3 = screen.getAllByRole("radio")[2];
