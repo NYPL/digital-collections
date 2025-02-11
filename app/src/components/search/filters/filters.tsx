@@ -1,15 +1,9 @@
 import React, { useState } from "react";
-import {
-  Button,
-  Text,
-  Flex,
-  Heading,
-} from "@nypl/design-system-react-components";
+import { Button, Heading } from "@nypl/design-system-react-components";
 
 import SelectFilterGrid from "./selectFilterGrid";
 import RightsFilter from "./rightsFilter";
 import DateFilter from "./dateFilter";
-import SelectFilter2 from "./selectFilter";
 
 type FiltersProps = {
   headingText: string;
