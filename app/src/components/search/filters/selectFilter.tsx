@@ -13,7 +13,7 @@ import React, {
   useRef,
   useState,
 } from "react";
-import Accordion from "./filterAccordion";
+import FilterAccordion from "./filterAccordion";
 
 export type FilterOption = {
   name: string;
@@ -155,7 +155,7 @@ const SelectFilterComponent = forwardRef<
       ref={containerRef}
       onClick={() => setUserClickedOutside(false)}
     >
-      <Accordion
+      <FilterAccordion
         accordionData={[
           {
             accordionType: "default",
