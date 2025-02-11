@@ -6,13 +6,13 @@ import {
 } from "@chakra-ui/react";
 import {
   Icon,
+  Link,
   Radio,
   Flex,
   Box,
   RadioGroup,
 } from "@nypl/design-system-react-components";
 import { forwardRef, MutableRefObject, useState } from "react";
-import SelectFilterModal from "./selectFilterModal";
 
 export type FilterOption = {
   name: string;
@@ -28,11 +28,10 @@ type SelectFilterProps = {
   filter: FilterCategory;
   isOpen: boolean;
   onToggle: () => void;
-  handleCloseFilter: () => void;
 };
 
 const SelectFilter = forwardRef<HTMLHeadingElement, SelectFilterProps>(
-  ({ filter, isOpen, onToggle, handleCloseFilter }, headingRef) => {
+  ({ filter, isOpen, onToggle }, headingRef) => {
     const [selected, setSelected] = useState<string | null>(null);
     const [timeoutId, setTimeoutId] = useState<NodeJS.Timeout | null>(null);
 
@@ -48,14 +47,24 @@ const SelectFilter = forwardRef<HTMLHeadingElement, SelectFilterProps>(
       );
     };
 
+    const modalLink = (facet: string) => {
+      return (
+        <Link
+          sx={{ fontSize: "14px", color: "ui.link" }}
+          isUnderlined={false}
+          href={"add-filter"}
+        >{`View all ${facet.toLowerCase()}${
+          facet === "Publishers" ? `` : `s`
+        }`}</Link>
+      );
+    };
+
     const onChange = (newSelection: string) => {
       if (timeoutId) {
         clearTimeout(timeoutId);
       }
-
       const newTimeoutId = setTimeout(() => {
         setSelected(newSelection);
-        handleCloseFilter();
         console.log(`selected: ${newSelection}`);
         (
           headingRef as MutableRefObject<HTMLHeadingElement | null>
@@ -77,7 +86,6 @@ const SelectFilter = forwardRef<HTMLHeadingElement, SelectFilterProps>(
     const radioFilterOptions = (filter: FilterCategory) => {
       return filter.options.map((option, index) => (
         <Radio
-          margin="0"
           key={`${option.name}-${index}`}
           name={filter.name}
           id={`${option.name}-${index}`}
@@ -106,8 +114,8 @@ const SelectFilter = forwardRef<HTMLHeadingElement, SelectFilterProps>(
                 {getIcon(isExpanded)}
               </AccordionButton>
               {isExpanded && (
-                <>
-                  <AccordionPanel>
+                <AccordionPanel>
+                  <>
                     <RadioGroup
                       isFullWidth
                       id={`${filter.name}-options`}
@@ -115,13 +123,14 @@ const SelectFilter = forwardRef<HTMLHeadingElement, SelectFilterProps>(
                       showLabel={false}
                       name={filter.name}
                       onChange={onChange}
+                      sx={{ marginBottom: "s" }}
                       defaultValue={selected ?? undefined}
                     >
                       {radioFilterOptions(filter)}
                     </RadioGroup>
-                    <SelectFilterModal filter={filter} ref={headingRef} />
-                  </AccordionPanel>
-                </>
+                    {modalLink(filter.name)}
+                  </>
+                </AccordionPanel>
               )}
             </>
           )}
