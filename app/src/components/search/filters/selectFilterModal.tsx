@@ -6,7 +6,11 @@ import {
   ModalOverlay,
   useDisclosure,
 } from "@chakra-ui/react";
-import { radioFilterOptions, type FilterCategory } from "./selectFilter";
+import {
+  FilterOption,
+  radioFilterOptions,
+  type FilterCategory,
+} from "./selectFilter";
 import {
   Button,
   Box,
@@ -22,6 +26,8 @@ type SelectFilterModalProps = {
   filter: FilterCategory;
   onOpen: () => void;
   onClose: () => void;
+  selected: FilterOption | null;
+  setSelected: React.Dispatch<React.SetStateAction<FilterOption | null>>;
 };
 
 type FocusableElement = HTMLElement & { focus: () => void };
@@ -29,7 +35,7 @@ type FocusableElement = HTMLElement & { focus: () => void };
 const SelectFilterModal = forwardRef<
   HTMLHeadingElement,
   SelectFilterModalProps
->(({ filter, onOpen, onClose }, headingRef?) => {
+>(({ filter, onOpen, onClose, selected, setSelected }, headingRef?) => {
   const {
     isOpen,
     onOpen: chakraOnOpen,
@@ -93,7 +99,7 @@ const SelectFilterModal = forwardRef<
           >
             <Heading
               size="heading5"
-              paddingTop="s"
+              paddingTop="xs"
               paddingLeft="s"
               marginBottom="xs"
             >
@@ -136,8 +142,14 @@ const SelectFilterModal = forwardRef<
                 labelText={`${filter.name} filter options`}
                 showLabel={false}
                 name={filter.name}
-                defaultValue={undefined}
+                defaultValue={selected?.name ?? ""}
                 showHelperInvalidText={false}
+                onChange={(newValue) => {
+                  const newSelectedOption = filter.options.find(
+                    (option) => option.name === newValue
+                  );
+                  setSelected(newSelectedOption || null);
+                }}
               >
                 {radioFilterOptions(filter.name, currentOptions)}
               </RadioGroup>
@@ -159,7 +171,17 @@ const SelectFilterModal = forwardRef<
           </ModalBody>
 
           <ButtonGroup padding="m" marginX="auto">
-            <Button id="confirm-button" onClick={handleClose}>
+            <Button
+              id="confirm-button"
+              onClick={() => {
+                setSelected(
+                  filter.options.find(
+                    (option) => option.name === selected?.name
+                  ) || null
+                );
+                handleClose();
+              }}
+            >
               Confirm
             </Button>
             <Button
