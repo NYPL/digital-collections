@@ -54,7 +54,7 @@ export interface SearchBarProps {
   /** Custom input element to render instead of a `TextInput` element. */
   textInputElement?: JSX.Element;
   /** Required props to render a `TextInput` element. */
-  textInputProps?: TextInputProps | undefined;
+  textInputProps: TextInputProps | undefined;
   /** Maximum width of wrapper. */
   maxWrapperWidth?: string;
 }

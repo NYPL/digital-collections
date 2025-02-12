@@ -37,6 +37,7 @@ const SelectFilterComponent = forwardRef<
   const { filter, ...rest } = props;
   const [userClickedOutside, setUserClickedOutside] = useState<boolean>(false);
   const [timeoutId, setTimeoutId] = useState<NodeJS.Timeout | null>(null);
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   // Create a ref to hold a reference to the accordion button, enabling us
   // to programmatically focus it.
@@ -75,14 +76,16 @@ const SelectFilterComponent = forwardRef<
   };
 
   useEffect(() => {
-    document.addEventListener("mousedown", handleClickOutside);
-    document.addEventListener("keydown", handleTabOutside);
+    if (!isModalOpen) {
+      document.addEventListener("mousedown", handleClickOutside);
+      document.addEventListener("keydown", handleTabOutside);
+    }
 
     return () => {
       document.removeEventListener("mousedown", handleClickOutside);
       document.removeEventListener("keydown", handleTabOutside);
     };
-  }, []);
+  }, [isModalOpen]);
 
   const radioLabel = (option: FilterOption) => {
     return (
@@ -103,18 +106,6 @@ const SelectFilterComponent = forwardRef<
         value={option.name}
       />
     ));
-  };
-
-  const modalButton = (filter: FilterCategory) => {
-    return (
-      <Button
-        buttonType="link"
-        id="modal-button"
-        padding="0"
-      >{`View all ${filter.name.toLowerCase()}${
-        filter.name === "Publishers" ? `` : `s`
-      }`}</Button>
-    );
   };
 
   const onChange = (newSelection: string) => {
@@ -146,7 +137,17 @@ const SelectFilterComponent = forwardRef<
       >
         {radioFilterOptions(filter)}
       </RadioGroup>
-      <SelectFilterModal filter={filter} ref={headingRef} />
+      <SelectFilterModal
+        filter={filter}
+        ref={headingRef}
+        onOpen={() => {
+          setIsModalOpen(true);
+        }}
+        onClose={() => {
+          setIsModalOpen(false);
+          setUserClickedOutside(true);
+        }}
+      />
     </>
   );
 
