@@ -33,7 +33,7 @@ export const radioFilterOptions = (name: string, options: FilterOption[]) => {
   return options.map((option, index) => (
     <Radio
       key={`${option.name}-${index}`}
-      name={name}
+      name={option.name}
       id={`${option.name}-${index}`}
       labelText={
         <Flex justifyContent="space-between">
