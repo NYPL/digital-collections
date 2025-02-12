@@ -60,16 +60,14 @@ const SelectFilterComponent = forwardRef<
   const handleTabOutside = (e) => {
     if (e.key === "Tab") {
       const selectComponent = containerRef.current;
-      setTimeout(() => {
-        if (
-          selectComponent &&
-          !selectComponent.contains(document.activeElement)
-        ) {
-          setUserClickedOutside(true);
-        } else {
-          setUserClickedOutside(false);
-        }
-      }, 0);
+      if (
+        selectComponent &&
+        !selectComponent.contains(document.activeElement)
+      ) {
+        setUserClickedOutside(true);
+      } else {
+        setUserClickedOutside(false);
+      }
     }
   };
 
