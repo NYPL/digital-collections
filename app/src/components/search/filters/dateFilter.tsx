@@ -21,7 +21,7 @@ const DateFilter = () => {
         <Text sx={{ marginBottom: "0" }}> to </Text>
         <TextInput
           width="100px"
-          id="dateStart"
+          id="dateEnd"
           labelText="End year"
           showLabel={false}
           placeholder="End year"
