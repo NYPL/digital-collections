@@ -4,6 +4,7 @@ import { Button, Heading } from "@nypl/design-system-react-components";
 import SelectFilterGrid from "./selectFilterGrid";
 import RightsFilter from "./rightsFilter";
 import DateFilter from "./dateFilter";
+import { mockFacetFilter } from "__tests__/__mocks__/data/mockFacetFilter";
 
 type FiltersProps = {
   headingText: string;
@@ -21,27 +22,15 @@ const Filters = forwardRef<HTMLHeadingElement, FiltersProps>(
           filters={[
             {
               name: "Topic",
-              options: [
-                { name: "New York", count: 37 },
-                { name: "New Jersey", count: 8 },
-                { name: "Long Island", count: 12 },
-              ],
+              options: mockFacetFilter.options,
             },
             {
               name: "Genre",
-              options: [
-                { name: "New York", count: 37 },
-                { name: "New Jersey", count: 8 },
-                { name: "Long Island", count: 12 },
-              ],
+              options: mockFacetFilter.options,
             },
             {
               name: "Format",
-              options: [
-                { name: "New York", count: 37 },
-                { name: "New Jersey", count: 8 },
-                { name: "Long Island", count: 12 },
-              ],
+              options: mockFacetFilter.options,
             },
             {
               name: "Collection",

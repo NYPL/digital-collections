@@ -30,6 +30,23 @@ export interface SelectFilterProps {
   filter: FilterCategory;
 }
 
+export const radioFilterOptions = (name: string, options: FilterOption[]) => {
+  return options.map((option, index) => (
+    <Radio
+      key={`${option.name}-${index}`}
+      name={name}
+      id={`${option.name}-${index}`}
+      labelText={
+        <Flex justifyContent="space-between">
+          <span>{option.name}</span>
+          <span>{option.count}</span>
+        </Flex>
+      }
+      value={option.name}
+    />
+  ));
+};
+
 const SelectFilterComponent = forwardRef<
   HTMLHeadingElement,
   React.PropsWithChildren<SelectFilterProps>
@@ -87,27 +104,6 @@ const SelectFilterComponent = forwardRef<
     };
   }, [isModalOpen]);
 
-  const radioLabel = (option: FilterOption) => {
-    return (
-      <Flex justifyContent="space-between">
-        <span>{option.name}</span>
-        <span>{option.count}</span>
-      </Flex>
-    );
-  };
-
-  const radioFilterOptions = (filter: FilterCategory) => {
-    return filter.options.map((option, index) => (
-      <Radio
-        key={`${option.name}-${index}`}
-        name={filter.name}
-        id={`${option.name}-${index}`}
-        labelText={radioLabel(option)}
-        value={option.name}
-      />
-    ));
-  };
-
   const onChange = (newSelection: string) => {
     if (timeoutId) {
       clearTimeout(timeoutId);
@@ -135,7 +131,7 @@ const SelectFilterComponent = forwardRef<
         sx={{ marginBottom: "s" }}
         defaultValue={undefined}
       >
-        {radioFilterOptions(filter)}
+        {radioFilterOptions(filter.name, filter.options.slice(0, 10))}
       </RadioGroup>
       <SelectFilterModal
         filter={filter}
