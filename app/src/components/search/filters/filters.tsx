@@ -34,11 +34,7 @@ const Filters = forwardRef<HTMLHeadingElement, FiltersProps>(
             },
             {
               name: "Collection",
-              options: [
-                { name: "New York", count: 37 },
-                { name: "New Jersey", count: 8 },
-                { name: "Long Island", count: 12 },
-              ],
+              options: mockFacetFilter.options,
             },
             { name: "Publishers", options: [{ name: "New York", count: 37 }] },
             { name: "Division", options: [{ name: "New York", count: 37 }] },

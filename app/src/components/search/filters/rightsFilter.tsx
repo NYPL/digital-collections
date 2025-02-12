@@ -27,7 +27,7 @@ const RightsFilter = () => {
         <Radio
           id="onsite-radio"
           labelText={
-            <Tooltip content="Somethin about on-site materials...missing copy">
+            <Tooltip content="These items are not available digitally and must be accessed in person.">
               <span>
                 Contains on-site materials{" "}
                 <Icon
