@@ -35,172 +35,182 @@ type FocusableElement = HTMLElement & { focus: () => void };
 const SelectFilterModal = forwardRef<
   HTMLHeadingElement,
   SelectFilterModalProps
->(({ filter, onOpen, onClose, selected, setSelected }, headingRef?) => {
-  const {
-    isOpen,
-    onOpen: chakraOnOpen,
-    onClose: chakraOnClose,
-  } = useDisclosure();
+>(
+  (
+    {
+      filter,
+      onOpen: parentOnOpen,
+      onClose: parentOnClose,
+      selected,
+      setSelected,
+    },
+    headingRef?
+  ) => {
+    const {
+      isOpen,
+      onOpen: modalOnOpen,
+      onClose: modalOnClose,
+    } = useDisclosure();
 
-  const [searchText, setSearchText] = useState("");
-  const [currentPage, setCurrentPage] = useState(1);
-  const itemsPerPage = 10;
+    const [searchText, setSearchText] = useState("");
+    const [currentPage, setCurrentPage] = useState(1);
+    const itemsPerPage = 10;
 
-  useEffect(() => {
-    setCurrentPage(1);
-  }, [searchText]);
+    useEffect(() => {
+      setCurrentPage(1);
+    }, [searchText]);
 
-  const filteredOptions = filter.options.filter((option) =>
-    option.name.toLowerCase().includes(searchText.toLowerCase())
-  );
+    const filteredOptions = filter.options.filter((option) =>
+      option.name.toLowerCase().includes(searchText.toLowerCase())
+    );
 
-  const pageCount = Math.ceil(filteredOptions.length / itemsPerPage);
-  const currentOptions = filteredOptions.slice(
-    (currentPage - 1) * itemsPerPage,
-    currentPage * itemsPerPage
-  );
+    const pageCount = Math.ceil(filteredOptions.length / itemsPerPage);
 
-  const handleOpen = () => {
-    chakraOnOpen();
-    onOpen();
-  };
+    const currentOptions = filteredOptions.slice(
+      (currentPage - 1) * itemsPerPage,
+      currentPage * itemsPerPage
+    );
 
-  const handleClose = () => {
-    chakraOnClose();
-    onClose();
-  };
+    const handleOpen = () => {
+      modalOnOpen();
+      parentOnOpen();
+    };
 
-  return (
-    <>
-      <Button
-        className="modal"
-        buttonType="link"
-        id="modal-btn"
-        onClick={handleOpen}
-        sx={{
-          textDecoration: "none",
-          padding: 0,
-        }}
-      >{`View all ${filter.name.toLowerCase()}${
-        filter.name === "Publishers" ? "" : "s"
-      }`}</Button>
+    const handleClose = () => {
+      modalOnClose();
+      parentOnClose();
+    };
 
-      <Modal
-        finalFocusRef={headingRef as React.RefObject<FocusableElement>}
-        isOpen={isOpen}
-        onClose={handleClose}
-      >
-        <ModalOverlay />
-        <ModalContent sx={{ borderRadius: "4px" }}>
-          <Box
-            sx={{
-              width: "100%",
-              bg: "ui.bg.default",
-              borderRadius: "4px",
-              borderBottom: "1px solid var(--ui-border-default, #BDBDBD)",
-              marginBottom: "s",
-            }}
-          >
-            <Heading
-              size="heading5"
-              paddingTop="xs"
-              paddingLeft="s"
-              marginBottom="xs"
-            >
-              {`${filter.name}${filter.name === "Publishers" ? "" : "s"}`}
-            </Heading>
-          </Box>
-          <ModalBody>
-            <DCSearchBar
-              id={`search-${filter.name}-options`}
-              labelText={`Search ${filter.name}${
-                filter.name === "Publishers" ? "" : "s"
-              }`}
-              maxWrapperWidth="400px"
-              textInputProps={{
-                id: "filter-search-text",
-                isClearable: true,
-                labelText: `Search ${filter.name}${
-                  filter.name === "Publishers" ? "" : "s"
-                }`,
-                name: "filter_keywords",
-                placeholder: `Search ${filter.name.toLowerCase()}${
-                  filter.name === "Publishers" ? "" : "s"
-                }`,
-                onChange: (e) => setSearchText(e.target.value),
-              }}
-              onSubmit={() => {}}
-            />
+    return (
+      <>
+        <Button
+          buttonType="link"
+          id="modal-btn"
+          onClick={handleOpen}
+          sx={{
+            textDecoration: "none",
+            padding: 0,
+          }}
+        >{`View all ${filter.name.toLowerCase()}${
+          filter.name === "Publishers" ? "" : "s"
+        }`}</Button>
+        <Modal
+          finalFocusRef={headingRef as React.RefObject<FocusableElement>}
+          isOpen={isOpen}
+          onClose={handleClose}
+        >
+          <ModalOverlay />
+          <ModalContent sx={{ borderRadius: "4px" }}>
             <Box
               sx={{
-                marginTop: "s",
-                border: "1px solid var(--ui-border-hover, #616161)",
-                padding: "s",
+                bg: "ui.bg.default",
+                borderRadius: "4px 4px 0px 0px",
+                borderBottom: "1px solid",
+                borderColor: "ui.border.default",
+                marginBottom: "s",
               }}
             >
-              <RadioGroup
-                isFullWidth
-                // Helper invalid text, even when false, creates a 8px margin.
-                sx={{ marginBottom: "-8px" }}
-                id={`${filter.name}-options`}
-                labelText={`${filter.name} filter options`}
-                showLabel={false}
-                name={filter.name}
-                defaultValue={selected?.name ?? ""}
-                showHelperInvalidText={false}
-                onChange={(newValue) => {
-                  const newSelectedOption = filter.options.find(
-                    (option) => option.name === newValue
-                  );
-                  setSelected(newSelectedOption || null);
+              <Heading
+                size="heading5"
+                paddingTop="xs"
+                paddingLeft="s"
+                marginBottom="xs"
+              >
+                {`${filter.name}${filter.name === "Publishers" ? "" : "s"}`}
+              </Heading>
+            </Box>
+            <ModalBody>
+              <DCSearchBar
+                id={`search-${filter.name}-options`}
+                labelText={`Search ${filter.name}${
+                  filter.name === "Publishers" ? "" : "s"
+                }`}
+                maxWrapperWidth="400px"
+                textInputProps={{
+                  id: "filter-search-text",
+                  isClearable: true,
+                  labelText: `Search ${filter.name}${
+                    filter.name === "Publishers" ? "" : "s"
+                  }`,
+                  name: "filter_keywords",
+                  placeholder: `Search ${filter.name.toLowerCase()}${
+                    filter.name === "Publishers" ? "" : "s"
+                  }`,
+                  onChange: (e) => setSearchText(e.target.value),
+                }}
+                onSubmit={() => {}}
+              />
+              <Box
+                sx={{
+                  marginTop: "s",
+                  border: "1px solid",
+                  borderColor: "ui.border.hover",
+                  padding: "s",
                 }}
               >
-                {radioFilterOptions(filter.name, currentOptions)}
-              </RadioGroup>
-            </Box>
-            <Flex>
-              <Pagination
-                id="filter-pagination-id"
-                currentPage={currentPage}
-                initialPage={1}
-                pageCount={pageCount || 1}
-                onPageChange={(page) => setCurrentPage(page)}
-                sx={{
-                  paddingTop: "m",
-                  alignItems: "center",
-                  justifyContent: "center",
-                }}
-              />
-            </Flex>
-          </ModalBody>
+                <RadioGroup
+                  isFullWidth
+                  // Helper invalid text, even when false, creates a 8px margin.
+                  sx={{ marginBottom: "-8px" }}
+                  id={`${filter.name}-options`}
+                  labelText={`${filter.name} filter options`}
+                  showLabel={false}
+                  name={filter.name}
+                  defaultValue={selected?.name ?? ""}
+                  showHelperInvalidText={false}
+                  onChange={(newValue) => {
+                    const newSelectedOption = filter.options.find(
+                      (option) => option.name === newValue
+                    );
+                    setSelected(newSelectedOption || null);
+                  }}
+                >
+                  {radioFilterOptions(filter.name, currentOptions)}
+                </RadioGroup>
+              </Box>
+              <Flex>
+                <Pagination
+                  id="filter-pagination-id"
+                  currentPage={currentPage}
+                  initialPage={1}
+                  pageCount={pageCount || 1}
+                  onPageChange={(page) => setCurrentPage(page)}
+                  sx={{
+                    paddingTop: "m",
+                    justifyContent: "center",
+                  }}
+                />
+              </Flex>
+            </ModalBody>
 
-          <ButtonGroup padding="m" marginX="auto">
-            <Button
-              id="confirm-button"
-              onClick={() => {
-                setSelected(
-                  filter.options.find(
-                    (option) => option.name === selected?.name
-                  ) || null
-                );
-                handleClose();
-              }}
-            >
-              Confirm
-            </Button>
-            <Button
-              buttonType="secondary"
-              onClick={handleClose}
-              id="close-button"
-            >
-              Close
-            </Button>
-          </ButtonGroup>
-        </ModalContent>
-      </Modal>
-    </>
-  );
-});
+            <ButtonGroup padding="m" marginX="auto">
+              <Button
+                id="confirm-button"
+                onClick={() => {
+                  setSelected(
+                    filter.options.find(
+                      (option) => option.name === selected?.name
+                    ) || null
+                  );
+                  handleClose();
+                }}
+              >
+                Confirm
+              </Button>
+              <Button
+                buttonType="secondary"
+                onClick={handleClose}
+                id="close-button"
+              >
+                Close
+              </Button>
+            </ButtonGroup>
+          </ModalContent>
+        </Modal>
+      </>
+    );
+  }
+);
 
 SelectFilterModal.displayName = "SelectFilterModal";
 export default SelectFilterModal;
