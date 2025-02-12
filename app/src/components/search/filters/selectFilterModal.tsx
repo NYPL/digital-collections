@@ -77,6 +77,10 @@ const SelectFilterModal = forwardRef<
         buttonType="link"
         id="modal-btn"
         onClick={handleOpen}
+        sx={{
+          textDecoration: "none",
+          padding: 0,
+        }}
       >{`View all ${filter.name.toLowerCase()}${
         filter.name === "Publishers" ? "" : "s"
       }`}</Button>
