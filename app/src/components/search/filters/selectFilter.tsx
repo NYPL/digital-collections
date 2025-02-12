@@ -138,7 +138,6 @@ const SelectFilterComponent = forwardRef<
         showLabel={false}
         name={filter.name}
         onChange={onChange}
-        sx={{ marginBottom: "s" }}
         defaultValue={selected?.name ?? ""}
       >
         {radioFilterOptions(filter.name, sortedOptions.slice(0, 10))}
