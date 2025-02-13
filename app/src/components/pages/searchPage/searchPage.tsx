@@ -141,7 +141,27 @@ const SearchPage = ({ data }) => {
         <SearchCardsGrid keywords={data.keyword} results={data.results} />
         <Text marginTop="xxl"> If there was no keyword (empty search): </Text>
         <SearchCardsGrid keywords={""} results={data.results} />
-        <Flex marginTop="xxl" marginBottom="xxl" alignContent="center">
+        <Flex
+          paddingLeft="s"
+          paddingRight="s"
+          marginTop="xxl"
+          marginBottom="xxl"
+          sx={{
+            "> a": {
+              marginTop: "xl",
+              justifyContent: "end",
+              fontWeight: "600",
+            },
+            [`@media screen and (min-width: ${headerBreakpoints.lgMobile}px)`]:
+              {
+                "> a": {
+                  marginTop: "0",
+                },
+                flexDir: "row",
+              },
+            flexDir: "column-reverse",
+          }}
+        >
           <Link
             minWidth="100px"
             isUnderlined={false}
@@ -162,8 +182,11 @@ const SearchPage = ({ data }) => {
               updateURL(searchManager.handlePageChange(newPage));
             }}
             sx={{
-              justifyContent: "flex-end",
-              gap: "s",
+              justifyContent: "center",
+              [`@media screen and (min-width: ${headerBreakpoints.lgMobile}px)`]:
+                {
+                  justifyContent: "flex-end",
+                },
             }}
           />
         </Flex>
