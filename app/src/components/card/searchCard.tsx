@@ -52,13 +52,7 @@ const highlightedText = ({ highlight, keyword }) => {
   const words = highlight.text.split(" ");
   const keywords = keyword.split(" ");
   return (
-    <Box
-      sx={{
-        [`@media screen and (max-width: 600px)`]: {
-          display: "none",
-        },
-      }}
-    >
+    <Box>
       <Text
         as="span"
         sx={{

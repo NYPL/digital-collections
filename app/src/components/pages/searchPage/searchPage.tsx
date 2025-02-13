@@ -85,11 +85,11 @@ const SearchPage = ({ data }) => {
         <Flex
           justifyContent="space-between"
           sx={{
-            marginTop: { base: "m", md: "xl" },
-            marginBottom: { base: "m", md: "s" },
+            marginTop: "l",
+            marginBottom: { base: "l", md: "s" },
             flexDir: { base: "column", md: "row" },
             gap: "m",
-            alignItems: { base: "flex-start", md: "center" },
+            alignContent: { base: "flex-start", md: "center" },
           }}
         >
           <Heading
@@ -135,22 +135,20 @@ const SearchPage = ({ data }) => {
           >
             Back to top{"  "}
             <Icon name="arrow" iconRotation="rotate180" size="xsmall" />
-          </Link>
-          {totalPages > 1 && (
-            <Pagination
-              id="pagination-id"
-              initialPage={searchManager.page}
-              currentPage={searchManager.page}
-              pageCount={totalPages}
-              onPageChange={(newPage) => {
-                updateURL(searchManager.handlePageChange(newPage));
-              }}
-              sx={{
-                justifyContent: "flex-end",
-                gap: "s",
-              }}
-            />
-          )}
+          </Link>{" "}
+          <Pagination
+            id="pagination-id"
+            initialPage={searchManager.page}
+            currentPage={searchManager.page}
+            pageCount={10}
+            onPageChange={(newPage) => {
+              updateURL(searchManager.handlePageChange(newPage));
+            }}
+            sx={{
+              justifyContent: "flex-end",
+              gap: "s",
+            }}
+          />
         </Flex>
       </Box>
     </Box>
