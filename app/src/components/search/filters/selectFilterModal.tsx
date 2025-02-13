@@ -146,6 +146,7 @@ const SelectFilterModal = forwardRef<
                   border: "1px solid",
                   borderColor: "ui.border.hover",
                   padding: "s",
+                  height: "390px",
                 }}
               >
                 <RadioGroup
@@ -173,17 +174,39 @@ const SelectFilterModal = forwardRef<
                   id="filter-pagination-id"
                   currentPage={currentPage}
                   initialPage={1}
-                  pageCount={pageCount || 1}
-                  onPageChange={(page) => setCurrentPage(page)}
+                  pageCount={pageCount}
+                  onPageChange={(page) => {
+                    setCurrentPage(page);
+                  }}
                   sx={{
                     paddingTop: "m",
                     justifyContent: "center",
+                    svg: {
+                      _visited: {
+                        _disabled: { fill: "ui.disabled.primary !important" },
+                      },
+                    },
+
+                    a: {
+                      _disabled: {
+                        color: "ui.disabled.primary",
+                        pointerEvents: "none",
+                        svg: { fill: "ui.disabled.primary !important" },
+                      },
+                    },
                   }}
                 />
               </Flex>
             </ModalBody>
 
             <ButtonGroup padding="m" marginX="auto">
+              <Button
+                buttonType="secondary"
+                onClick={handleClose}
+                id="close-button"
+              >
+                Close
+              </Button>
               <Button
                 id="confirm-button"
                 onClick={() => {
@@ -196,13 +219,6 @@ const SelectFilterModal = forwardRef<
                 }}
               >
                 Confirm
-              </Button>
-              <Button
-                buttonType="secondary"
-                onClick={handleClose}
-                id="close-button"
-              >
-                Close
               </Button>
             </ButtonGroup>
           </ModalContent>
