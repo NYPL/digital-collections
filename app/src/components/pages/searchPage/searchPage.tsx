@@ -18,6 +18,7 @@ import Filters from "../../search/filters";
 import { useSearchContext } from "@/src/context/SearchProvider";
 import { usePathname, useRouter } from "next/navigation";
 import SearchCardsGrid from "../../grids/searchCardsGrid";
+import { headerBreakpoints } from "@/src/utils/breakpoints";
 
 const SearchPage = ({ data }) => {
   const { searchManager } = useSearchContext();
@@ -27,6 +28,7 @@ const SearchPage = ({ data }) => {
   const updateURL = async (queryString) => {
     push(`${pathname}?${queryString}`);
   };
+
   return (
     <Box id="mainContent">
       <Box
@@ -39,7 +41,12 @@ const SearchPage = ({ data }) => {
         <Box
           maxWidth="1280px"
           mx="auto"
-          sx={{ paddingLeft: { base: 0, xl: "s" } }}
+          sx={{
+            paddingLeft: 0,
+            [`@media screen and (min-width: ${headerBreakpoints.desktop}px)`]: {
+              paddingLeft: "s",
+            },
+          }}
         >
           <Heading
             size="heading2"
@@ -62,8 +69,12 @@ const SearchPage = ({ data }) => {
         maxWidth="1280px"
         mx="auto"
         sx={{
-          paddingLeft: { base: "m", xl: "s" },
-          paddingRight: { base: "m", xl: "s" },
+          paddingLeft: "m",
+          paddingRight: "m",
+          [`@media screen and (min-width: ${headerBreakpoints.desktop}px)`]: {
+            paddingLeft: "s",
+            paddingRight: "s",
+          },
         }}
       >
         <Flex alignContent="center" gap="xs">
@@ -83,13 +94,19 @@ const SearchPage = ({ data }) => {
         </Flex>
         <HorizontalRule />
         <Flex
-          justifyContent="space-between"
           sx={{
+            [`@media screen and (min-width: ${headerBreakpoints.lgMobile}px)`]:
+              {
+                flexDir: "row",
+                marginBottom: "s",
+                alignItems: "center",
+              },
+            justifyContent: "space-between",
+            flexDir: "column",
+            marginBottom: "l",
             marginTop: "l",
-            marginBottom: { base: "l", md: "s" },
-            flexDir: { base: "column", md: "row" },
             gap: "m",
-            alignContent: { base: "flex-start", md: "center" },
+            alignItems: "flex-start",
           }}
         >
           <Heading

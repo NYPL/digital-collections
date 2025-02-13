@@ -13,6 +13,7 @@ import {
 import SearchCardType, {
   SearchResultRecordType,
 } from "@/src/types/SearchCardType";
+import { headerBreakpoints } from "@/src/utils/breakpoints";
 
 export interface SearchCardProps {
   result: SearchCardType;
@@ -106,8 +107,8 @@ export const SearchCard = ({ result, keywords }: SearchCardProps) => {
         size: "default",
         src: result.imageURL,
       }}
-      layout="row"
       mainActionLink={result.url}
+      layout="row"
     >
       <CardHeading level="h3" size="heading5" marginBottom="xxs">
         {result.title}
