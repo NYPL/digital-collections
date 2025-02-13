@@ -150,7 +150,6 @@ const SearchPage = ({ data }) => {
             "> a": {
               marginTop: "xl",
               justifyContent: "end",
-              fontWeight: "600",
             },
             [`@media screen and (min-width: ${headerBreakpoints.lgMobile}px)`]:
               {
