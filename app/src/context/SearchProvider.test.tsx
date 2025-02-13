@@ -1,27 +1,16 @@
 import React from "react";
 import { render } from "@testing-library/react";
-import {
-  DEFAULT_PAGE_NUM,
-  DEFAULT_SORT,
-  DEFAULT_SEARCH_TERM,
-} from "../config/constants";
-import { SearchManagerFactory } from "../utils/searchManager";
+import { DEFAULT_PAGE_NUM, DEFAULT_SEARCH_TERM } from "../config/constants";
 import { useSearchContext, SearchProvider } from "./SearchProvider";
-
-jest.mock("../utils/searchManager", () => ({
-  SearchManagerFactory: {
-    createSearchManager: jest.fn().mockReturnValue({
-      page: DEFAULT_PAGE_NUM,
-      sort: DEFAULT_SORT,
-      filters: [],
-      keywords: DEFAULT_SEARCH_TERM,
-    }),
-  },
-}));
 
 const TestComponent = () => {
   const { searchManager } = useSearchContext();
-  return <div>{searchManager.page}</div>;
+  return (
+    <div>
+      <span>{searchManager.page}</span>
+      <span>{searchManager.keywords}</span>
+    </div>
+  );
 };
 
 describe("SearchProvider", () => {
@@ -32,13 +21,8 @@ describe("SearchProvider", () => {
       </SearchProvider>
     );
 
-    expect(SearchManagerFactory.createSearchManager).toHaveBeenCalledWith({
-      initialPage: DEFAULT_PAGE_NUM,
-      initialSort: DEFAULT_SORT,
-      initialFilters: [],
-      initialKeywords: DEFAULT_SEARCH_TERM,
-      isCollectionSearch: false,
-    });
+    expect(document.body.textContent).toContain(String(DEFAULT_PAGE_NUM));
+    expect(document.body.textContent).toContain(String(DEFAULT_SEARCH_TERM));
   });
 
   it("should initialize SearchManager with given search params", () => {
@@ -55,13 +39,8 @@ describe("SearchProvider", () => {
       </SearchProvider>
     );
 
-    expect(SearchManagerFactory.createSearchManager).toHaveBeenCalledWith({
-      initialPage: 2,
-      initialSort: "date-asc",
-      initialFilters: [{ filter: "topic", value: "art" }],
-      initialKeywords: "painting",
-      isCollectionSearch: false,
-    });
+    expect(document.body.textContent).toContain("2");
+    expect(document.body.textContent).toContain("painting");
   });
 
   it("should throw an error if used outside SearchProvider", () => {

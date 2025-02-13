@@ -20,7 +20,7 @@ import {
   DEFAULT_SEARCH_TERM,
   COLLECTION_SORT_LABELS,
 } from "@/src/config/constants";
-import { SearchManagerFactory } from "@/src/utils/searchManager";
+import { CollectionSearchManager } from "@/src/utils/searchManager";
 import { headerBreakpoints } from "@/src/utils/breakpoints";
 import DCSearchBar from "../../search/dcSearchBar";
 
@@ -28,6 +28,7 @@ export function CollectionsPage({ data, collectionSearchParams }) {
   const { push } = useRouter();
   const pathname = usePathname();
   const headingRef = useRef<HTMLHeadingElement>(null);
+  const isFirstLoad = useRef<boolean>(false);
 
   const [isLoaded, setIsLoaded] = useState(false);
   const totalPages = totalNumPages(data.numResults, data.perPage);
@@ -38,22 +39,35 @@ export function CollectionsPage({ data, collectionSearchParams }) {
       : [data.collection]
     : [];
 
-  const collectionSearchManager = SearchManagerFactory.createSearchManager({
+  const collectionSearchManager = new CollectionSearchManager({
     initialPage: Number(collectionSearchParams?.page) || DEFAULT_PAGE_NUM,
     initialSort: collectionSearchParams?.sort || DEFAULT_COLLECTION_SORT,
     initialKeywords:
       collectionSearchParams?.collection_keywords || DEFAULT_SEARCH_TERM,
-    isCollectionSearch: true,
   });
 
   const updateURL = async (queryString: string) => {
-    setIsLoaded(false);
-    push(`${pathname}?${queryString}`);
+    const currentQueryString = window.location.search;
+    const newUrl = `${pathname}?${queryString}`;
+    if (
+      currentQueryString === queryString ||
+      currentQueryString === `?${queryString}`
+    ) {
+      headingRef.current?.focus();
+      return;
+    } else {
+      setIsLoaded(false);
+      push(newUrl);
+    }
   };
 
   useEffect(() => {
     setIsLoaded(true);
-    headingRef.current?.focus();
+    if (isFirstLoad.current) {
+      headingRef.current?.focus();
+    }
+    isFirstLoad.current = true;
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [collections]);
 
   return (

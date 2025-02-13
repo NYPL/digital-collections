@@ -168,21 +168,6 @@ export class CollectionSearchManager extends BaseSearchManager {
   }
 }
 
-export class SearchManagerFactory {
-  static createSearchManager(config: {
-    initialPage: number;
-    initialSort: string;
-    initialFilters?: Filter[];
-    initialKeywords: string;
-    isCollectionSearch: boolean;
-  }): SearchManager {
-    const { isCollectionSearch, ...baseConfig } = config;
-    return isCollectionSearch
-      ? new CollectionSearchManager(baseConfig)
-      : new GeneralSearchManager(baseConfig);
-  }
-}
-
 const getQueryStringFromObject = (paramsObject: Record<string, any>) => {
   const newParams: Record<string, string> = {};
   const defaultValues = [DEFAULT_SEARCH_TERM, DEFAULT_PAGE_NUM, DEFAULT_SORT];
