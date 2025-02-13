@@ -207,9 +207,14 @@ const CollectionPage = ({ slug, data }) => {
               />
             </Flex>
             <Flex
-              marginTop="xl"
-              marginBottom="s"
               justifyContent="space-between"
+              sx={{
+                marginTop: { base: "m", md: "xl" },
+                marginBottom: { base: "m", md: "s" },
+                flexDir: { base: "column", md: "row" },
+                gap: "m",
+                alignItems: { base: "flex-start", md: "center" },
+              }}
             >
               <Heading
                 ref={headingRef}
