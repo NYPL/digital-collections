@@ -134,7 +134,7 @@ const CollectionPage = ({ slug, data }) => {
             flexDir: { base: "column", md: "row" },
           }}
         >
-          <CollectionStructure data={sampleStructure} />
+          <CollectionStructure data={sampleStructure} ref={headingRef} />
           <Box width="100%">
             <Flex
               flexDir="column"
