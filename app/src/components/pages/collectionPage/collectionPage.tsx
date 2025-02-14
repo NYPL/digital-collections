@@ -20,6 +20,7 @@ import { CardsGrid } from "../../grids/cardsGrid";
 import { displayResults } from "@/src/utils/utils";
 import { CARDS_PER_PAGE } from "@/src/config/constants";
 import CollectionStructure from "../../collectionStructure/collectionStructure";
+import { sampleStructure } from "__tests__/__mocks__/data/mockCollectionStructure";
 
 const textLink = (href, text) => {
   return (
@@ -133,7 +134,7 @@ const CollectionPage = ({ slug, data }) => {
             flexDir: { base: "column", md: "row" },
           }}
         >
-          <CollectionStructure data={undefined} />
+          <CollectionStructure data={sampleStructure} />
           <Box width="100%">
             <Flex
               flexDir="column"
