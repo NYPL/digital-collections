@@ -1,6 +1,7 @@
 import { render, screen, fireEvent, waitFor } from "@testing-library/react";
 import SelectFilterGrid from "./selectFilterGrid";
 import { FilterCategory } from "./selectFilter";
+import { useRef } from "react";
 
 const mockFilters: FilterCategory[] = [
   { name: "Collection", options: [{ name: "Collection 1", count: 10 }] },
