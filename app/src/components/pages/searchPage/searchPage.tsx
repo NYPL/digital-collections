@@ -1,12 +1,9 @@
 "use client";
 import {
   Box,
-  Text,
   Pagination,
   Heading,
   Flex,
-  HorizontalRule,
-  TagSet,
   Link,
   Icon,
 } from "@nypl/design-system-react-components";

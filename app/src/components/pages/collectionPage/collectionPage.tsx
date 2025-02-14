@@ -4,18 +4,14 @@ import {
   Text,
   Heading,
   Flex,
-  HorizontalRule,
-  TagSet,
   ButtonGroup,
   Button,
   Link,
-  SearchBar,
   Icon,
   Pagination,
 } from "@nypl/design-system-react-components";
 import React, { useRef } from "react";
 import Filters from "../../search/filters/filters";
-import { headerBreakpoints } from "@/src/utils/breakpoints";
 import { CardsGrid } from "../../grids/cardsGrid";
 import { displayResults } from "@/src/utils/utils";
 import { CARDS_PER_PAGE } from "@/src/config/constants";

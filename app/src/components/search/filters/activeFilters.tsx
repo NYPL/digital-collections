@@ -17,8 +17,8 @@ const ActiveFilters = () => {
           id="search-filter-tags"
           onClick={() => {}}
           tagSetData={[
-            { id: "audio", label: "Audio" },
-            { id: "video", label: "Video" },
+            { id: "format", label: "Audio" },
+            { id: "genre", label: "New York" },
           ]}
           type="filter"
         />
