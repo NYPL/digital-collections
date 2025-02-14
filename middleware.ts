@@ -12,7 +12,7 @@ export function middleware(req: NextRequest) {
 
     const newUrl = `${url.origin}${url.pathname}?${searchParams.toString()}`;
 
-    return NextResponse.redirect(newUrl, 308);
+    return NextResponse.redirect(newUrl, 301);
   }
 
   return NextResponse.next();
