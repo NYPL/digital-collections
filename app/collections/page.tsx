@@ -20,7 +20,7 @@ export const metadata: Metadata = {
 
 export default async function Collections({ searchParams }: CollectionsProps) {
   const data = await getCollectionsData({
-    keyword: searchParams.collection_keywords,
+    keyword: searchParams.q,
     sort: searchParams.sort,
     page: searchParams.page,
   });

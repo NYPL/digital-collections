@@ -1,5 +1,5 @@
 export interface CollectionSearchParams {
-  collection_keywords: string;
+  q: string;
   sort: string;
   page: number;
 }
