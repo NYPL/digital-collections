@@ -19,6 +19,7 @@ import { headerBreakpoints } from "@/src/utils/breakpoints";
 import { CardsGrid } from "../../grids/cardsGrid";
 import { displayResults } from "@/src/utils/utils";
 import { CARDS_PER_PAGE } from "@/src/config/constants";
+import CollectionStructure from "../../collectionStructure/collectionStructure";
 
 const textLink = (href, text) => {
   return (
@@ -132,17 +133,7 @@ const CollectionPage = ({ slug, data }) => {
             flexDir: { base: "column", md: "row" },
           }}
         >
-          <Box
-            sx={{
-              background: "ui.bg.default",
-              padding: "l",
-              height: "400px",
-              minWidth: "300px",
-              justifyItems: "center",
-            }}
-          >
-            <Heading size="heading6">Collection structure</Heading>
-          </Box>
+          <CollectionStructure data={undefined} />
           <Box width="100%">
             <Flex
               flexDir="column"
