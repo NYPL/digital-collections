@@ -25,7 +25,7 @@ describe("redirects collection_keywords to q on collections search", () => {
 
     expect(NextResponse.redirect).toHaveBeenCalledWith(
       "http://localhost/collections?q=test",
-      308
+      301
     );
     expect(response).toBe("redirect response");
   });
