@@ -24,7 +24,7 @@ const onSiteMaterialBadge = (recordType: SearchResultRecordType) => {
   return (
     <StatusBadge sx={{ margin: "0p" }} type="informative">
       {recordType === "Item"
-        ? "Available onsite only"
+        ? "Available on-site only"
         : "Contains on-site only materials"}
     </StatusBadge>
   );
