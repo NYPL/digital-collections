@@ -70,7 +70,6 @@ const getElementsFromData = (
         overflow="auto"
         sx={{
           bg: "ui.white",
-          paddingBottom: "xxs !important",
         }}
       >
         {content.panel}
