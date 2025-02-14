@@ -25,10 +25,16 @@ export const sampleStructure: CollectionChildProps[] = [
               { title: "Levin", itemCount: "4" },
               { title: "Kitty", itemCount: "5" },
               { title: "Stiva", itemCount: "8" },
-              { title: "Anna", itemCount: "4" },
+              {
+                title: "Anna Arkadyevna Karenina",
+                itemCount: "4",
+                children: [
+                  { title: "Seryozha", itemCount: "5" },
+                  { title: "Annie", itemCount: "2" },
+                ],
+              },
               { title: "Konstantin", itemCount: "5" },
               { title: "Dolly", itemCount: "5" },
-              { title: "Seryozha", itemCount: "5" },
               { title: "Ivan", itemCount: "5" },
               { title: "Lydia", itemCount: "5" },
               { title: "Betsy", itemCount: "5" },
@@ -50,7 +56,7 @@ export const sampleStructure: CollectionChildProps[] = [
   {
     title: "Science fiction",
     itemCount: "999",
-    children: Array.from({ length: 30 }, (_, i) => ({
+    children: Array.from({ length: 80 }, (_, i) => ({
       title: `Dune: Children ${i + 1}`,
       itemCount: `${i + 1}`,
     })),
