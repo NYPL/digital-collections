@@ -57,7 +57,6 @@ const CollectionStructure = ({ data }) => {
   return (
     <Box
       w="300px"
-      h="400px"
       mx="auto"
       mt="5"
       border="1px solid var(--ui-gray-medium, #BDBDBD)"
