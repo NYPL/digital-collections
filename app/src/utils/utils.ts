@@ -1,13 +1,10 @@
 import {
   ADOBE_ANALYTICS_SITE_SECTION,
   ADOBE_ANALYTICS_DC_PREFIX,
-  DEFAULT_SEARCH_TERM,
-  DEFAULT_PAGE_NUM,
-  DEFAULT_COLLECTION_SORT,
 } from "../config/constants";
 import CollectionDataType from "@/src/types/CollectionDataType";
 import ItemDataType from "@/src/types/ItemDataType";
-import CollectionSearchParams from "../types/CollectionSearchParams";
+
 /**
  * Represents a IIIF Image API URL, which will be used globally throughout the application.
  * IIIF Image API has several params, the ones we are the most concerned about are Region, Size, and Rotation.
@@ -121,3 +118,19 @@ export function displayResults(
   const end = Math.min(page * perPage, numFound);
   return `${start}-${end} of ${numFound}`;
 }
+
+export function formatHighlightText(highlights) {
+  const result = Object.entries(highlights)
+    .map(([field, values]) => {
+      return (values as string[]).map((text) => ({
+        field,
+        text,
+      }));
+    })
+    .flat();
+  return result;
+}
+
+export const capitalize = (text: string): string => {
+  return text.charAt(0).toUpperCase() + text.slice(1);
+};

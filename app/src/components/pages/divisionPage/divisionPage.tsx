@@ -23,6 +23,7 @@ import {
 } from "../../../utils/utils";
 import { Lane as DCLane } from "../../lane/lane";
 import LaneLoading from "../../lane/laneLoading";
+import { CARDS_PER_PAGE } from "@/src/config/constants";
 
 export default function DivisionPage({ data }: any) {
   const params = useParams();
@@ -39,7 +40,7 @@ export default function DivisionPage({ data }: any) {
 
   const { push } = useRouter();
 
-  const totalPages = totalNumPages(data.numFound, data.perPage);
+  const totalPages = totalNumPages(data.numFound, CARDS_PER_PAGE);
 
   const updatePageURL = async (pageNumber: number) => {
     const params = new URLSearchParams();
