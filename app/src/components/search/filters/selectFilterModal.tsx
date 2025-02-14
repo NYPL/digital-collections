@@ -146,7 +146,7 @@ const SelectFilterModal = forwardRef<
                   border: "1px solid",
                   borderColor: "ui.border.hover",
                   padding: "s",
-                  height: "390px",
+                  height: "394px",
                 }}
               >
                 <RadioGroup
