@@ -42,8 +42,7 @@ export function CollectionsPage({ data, collectionSearchParams }) {
   const collectionSearchManager = new CollectionSearchManager({
     initialPage: Number(collectionSearchParams?.page) || DEFAULT_PAGE_NUM,
     initialSort: collectionSearchParams?.sort || DEFAULT_COLLECTION_SORT,
-    initialKeywords:
-      collectionSearchParams?.collection_keywords || DEFAULT_SEARCH_TERM,
+    initialKeywords: collectionSearchParams?.q || DEFAULT_SEARCH_TERM,
   });
 
   const updateURL = async (queryString: string) => {
@@ -205,7 +204,7 @@ export function CollectionsPage({ data, collectionSearchParams }) {
           <CardsGrid records={collections} />
         ) : (
           <NoResultsFound
-            searchTerm={collectionSearchParams.collection_keywords}
+            searchTerm={collectionSearchParams.q}
             page={collectionSearchParams.page}
           />
         )
