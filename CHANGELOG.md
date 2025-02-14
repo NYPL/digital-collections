@@ -7,6 +7,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+### Updated
+
+- Updated collection search to use `q` param and added redirect for `collection_keywords` (DR-3337)
+
+## [0.3.2] 2025-02-13
+
 ### Added
 
 - Added custom searchbar to handle search submit
