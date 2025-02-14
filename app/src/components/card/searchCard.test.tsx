@@ -16,7 +16,7 @@ describe("Search card displaying collection result", () => {
 
   it("renders the badge when containsOnSiteMaterial is true", () => {
     render(<SearchCard result={collectionResultData} keywords={""} />);
-    const badgeElement = screen.getByText(/Contains on-site materials/i);
+    const badgeElement = screen.getByText(/Contains on-site only materials/i);
     expect(badgeElement).toBeInTheDocument();
   });
 
@@ -56,7 +56,7 @@ describe("Search card displaying item result", () => {
 
   it("renders the badge when containsOnSiteMaterial is true", () => {
     render(<SearchCard result={itemResultData} keywords={""} />);
-    const badgeElement = screen.getByText(/Available onsite only/i);
+    const badgeElement = screen.getByText(/Available on-site only/i);
     expect(badgeElement).toBeInTheDocument();
   });
 
