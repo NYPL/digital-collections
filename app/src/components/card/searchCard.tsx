@@ -110,10 +110,15 @@ export const SearchCard = ({ result, keywords }: SearchCardProps) => {
       mainActionLink={result.url}
       layout="row"
     >
-      <CardHeading level="h3" size="heading5" marginBottom="xxs">
+      <CardHeading
+        level="h3"
+        size="heading5"
+        maxWidth="720px"
+        marginBottom="xxs"
+      >
         {result.title}
       </CardHeading>
-      <CardContent>
+      <CardContent maxWidth="720px">
         <Flex flexDir="column" gap="xs">
           {result.containsOnSiteMaterial &&
             onSiteMaterialBadge(result.recordType)}
