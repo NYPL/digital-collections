@@ -61,4 +61,9 @@ export const sampleStructure: CollectionChildProps[] = [
       itemCount: `${i + 1}`,
     })),
   },
+  {
+    title: "German literature",
+    itemCount: "230",
+    children: [],
+  },
 ];
