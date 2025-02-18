@@ -1,3 +1,4 @@
+import { headerBreakpoints } from "@/src/utils/breakpoints";
 import {
   Heading,
   RadioGroup,
@@ -15,8 +16,16 @@ const RightsFilter = () => {
         id="show-only-filters"
         labelText="Show Only"
         showLabel={false}
-        layout="row"
         marginBottom="m"
+        sx={{
+          "> div > div": {
+            [`@media screen and (min-width: ${headerBreakpoints.lgMobile}px)`]:
+              {
+                flexDirection: "row",
+              },
+            flexDirection: "column",
+          },
+        }}
       >
         <Radio
           id="pd-checkbox"

@@ -21,6 +21,7 @@ import {
   ButtonGroup,
 } from "@nypl/design-system-react-components";
 import DCSearchBar from "../dcSearchBar";
+import { headerBreakpoints } from "@/src/utils/breakpoints";
 
 type SelectFilterModalProps = {
   filter: FilterCategory;
@@ -88,8 +89,13 @@ const SelectFilterModal = forwardRef<
           id="modal-btn"
           onClick={handleOpen}
           sx={{
+            display: "none",
             textDecoration: "none",
             padding: 0,
+            [`@media screen and (min-width: ${headerBreakpoints.lgMobile}px)`]:
+              {
+                display: "inline",
+              },
           }}
         >{`View all ${filter.name.toLowerCase()}${
           filter.name === "Publishers" ? "" : "s"
