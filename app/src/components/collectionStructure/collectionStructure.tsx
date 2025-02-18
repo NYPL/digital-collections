@@ -13,15 +13,43 @@ export type CollectionChildProps = {
   children?: CollectionChildProps[];
 };
 
+type OpenState = { [key: string]: boolean };
+
 const AccordionItem = ({
   title,
   itemCount,
   children = [],
-  level = 0,
+  level,
   headingRef,
-}: CollectionChildProps & { level?: number; headingRef }) => {
-  const [isOpen, setIsOpen] = useState(false);
+  openState,
+  setOpenState,
+}: CollectionChildProps & {
+  level: number;
+  headingRef;
+  openState: OpenState;
+  setOpenState: React.Dispatch<React.SetStateAction<OpenState>>;
+}) => {
+  const isOpen = openState[title] || false;
   const hasChildren = children.length > 0;
+
+  const toggleItem = () => {
+    setOpenState((prev) => {
+      const currentOpened = { ...prev };
+      if (isOpen) {
+        const removeChildren = (items: CollectionChildProps[]) => {
+          items.forEach((item) => {
+            delete currentOpened[item.title];
+            if (item.children) {
+              removeChildren(item.children);
+            }
+          });
+        };
+        removeChildren(children);
+      }
+      currentOpened[title] = !isOpen;
+      return currentOpened;
+    });
+  };
 
   return (
     <Box
@@ -42,15 +70,7 @@ const AccordionItem = ({
         paddingTop="m"
         paddingRight="s"
         paddingBottom="m"
-        onClick={() => {
-          setIsOpen(!isOpen);
-          // If the item is being opened, or it has no children
-          if (!isOpen || !hasChildren) {
-            setTimeout(() => {
-              headingRef?.current?.focus();
-            }, 100);
-          }
-        }}
+        onClick={toggleItem}
       >
         <Flex width="100%" alignItems="center">
           {hasChildren && (
@@ -85,6 +105,8 @@ const AccordionItem = ({
               title={child.title}
               level={level + 1}
               headingRef={headingRef}
+              openState={openState}
+              setOpenState={setOpenState}
             >
               {child.children}
             </AccordionItem>
@@ -99,12 +121,14 @@ const CollectionStructure = forwardRef<
   HTMLHeadingElement,
   { data: CollectionChildProps[] }
 >(({ data }, headingRef) => {
+  const [openState, setOpenState] = useState<OpenState>({});
+
   return (
     <Flex flexDir="column">
-      <Heading size="heading5"> Collection structure </Heading>
+      <Heading size="heading5">Collection structure</Heading>
       <Box
         w="300px"
-        maxH="700px"
+        maxH="750px"
         overflowY="scroll"
         borderTop="1px solid var(--ui-gray-medium, #BDBDBD)"
       >
@@ -114,6 +138,9 @@ const CollectionStructure = forwardRef<
             itemCount={item.itemCount}
             title={item.title}
             headingRef={headingRef}
+            openState={openState}
+            setOpenState={setOpenState}
+            level={0}
           >
             {item.children}
           </AccordionItem>
