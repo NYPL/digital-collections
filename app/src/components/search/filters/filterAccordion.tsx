@@ -7,19 +7,8 @@ import {
   chakra,
   ChakraComponent,
 } from "@chakra-ui/react";
-import { Icon } from "@nypl/design-system-react-components";
+import { Icon, AccordionDataProps } from "@nypl/design-system-react-components";
 import React, { forwardRef, useEffect, useState } from "react";
-
-export type AccordionTypes = "default" | "warning" | "error";
-
-export interface AccordionDataProps {
-  accordionType?: AccordionTypes;
-  ariaLabel: string;
-  /** Ref to the DOM element of the AccordionButton. */
-  buttonInteractionRef?: any;
-  label: string | JSX.Element;
-  panel: string | React.ReactNode;
-}
 
 export interface FilterAccordionProps {
   /** Array of data to display, and an optional accordionType */
