@@ -46,14 +46,11 @@ const SelectFilterComponent = forwardRef<
 
   // Tells the accordion to close if open when user clicks or tabs outside of the container
   const handleFocusOutside = (e) => {
-    if (e.type === "mousedown") {
-      const multiSelect = containerRef.current;
-      const clickOutside = multiSelect && !multiSelect.contains(e.target);
-      setUserClickedOutside(clickOutside!);
-    } else if (e.key === "Tab" || e.key === "Enter") {
-      const selectComponent = containerRef.current;
-      const tabOutside = selectComponent && !selectComponent.contains(e.target);
-      setUserClickedOutside(tabOutside!);
+    const selectComponent = containerRef.current;
+    if (e.type === "mousedown" || e.key === "Tab" || e.key === "Enter") {
+      const focusOutside =
+        selectComponent && !selectComponent.contains(e.target);
+      setUserClickedOutside(focusOutside!);
     }
   };
 
