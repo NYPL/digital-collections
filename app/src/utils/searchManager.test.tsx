@@ -132,17 +132,17 @@ describe("SearchManager", () => {
 
     it("should handle search submit", () => {
       const result = manager.handleSearchSubmit();
-      expect(result).toBe("collection_keywords=test");
+      expect(result).toBe("q=test");
     });
 
     it("should handle sort change", () => {
       const result = manager.handleSortChange("title-asc");
-      expect(result).toBe("collection_keywords=test&sort=title-asc");
+      expect(result).toBe("q=test&sort=title-asc");
     });
 
     it("should handle page change", () => {
       const result = manager.handlePageChange(2);
-      expect(result).toBe("collection_keywords=test&sort=title-asc&page=2");
+      expect(result).toBe("q=test&sort=title-asc&page=2");
     });
   });
 });
