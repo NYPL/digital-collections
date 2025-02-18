@@ -143,7 +143,7 @@ export class CollectionSearchManager extends BaseSearchManager {
     this.currentPage = DEFAULT_PAGE_NUM;
     this.currentSort = DEFAULT_COLLECTION_SORT;
     return this.createQueryString({
-      collection_keywords: this.currentKeywords,
+      q: this.currentKeywords,
       sort: this.currentSort,
       page: this.currentPage,
     });
@@ -152,7 +152,7 @@ export class CollectionSearchManager extends BaseSearchManager {
   handlePageChange(pageNumber: number) {
     this.currentPage = pageNumber;
     return this.createQueryString({
-      collection_keywords: this.currentKeywords,
+      q: this.currentKeywords,
       sort: this.currentSort,
       page: pageNumber,
     });
@@ -161,7 +161,7 @@ export class CollectionSearchManager extends BaseSearchManager {
   handleSortChange(sort: string) {
     this.currentSort = sort;
     return this.createQueryString({
-      collection_keywords: this.currentKeywords,
+      q: this.currentKeywords,
       sort: sort,
       page: this.currentPage,
     });
