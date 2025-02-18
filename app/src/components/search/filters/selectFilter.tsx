@@ -86,29 +86,32 @@ const SelectFilterComponent = forwardRef<
   }, [isModalOpen]);
 
   const onChange = (newSelection: string) => {
-    if (timeoutId) {
-      clearTimeout(timeoutId);
-    }
-    const newTimeoutId = setTimeout(() => {
-      console.log(`selected: ${newSelection}`);
-      setSelected(
-        filter.options.find((option) => option.name === newSelection) || null
-      );
-      setUserClickedOutside(true);
-      (
-        headingRef as MutableRefObject<HTMLHeadingElement | null>
-      ).current?.focus();
-    }, 600);
+    if (!isModalOpen) {
+      if (timeoutId) {
+        clearTimeout(timeoutId);
+      }
+      const newTimeoutId = setTimeout(() => {
+        console.log(`selected: ${newSelection}`);
+        setSelected(
+          filter.options.find((option) => option.name === newSelection) || null
+        );
+        setUserClickedOutside(true);
+        (
+          headingRef as MutableRefObject<HTMLHeadingElement | null>
+        ).current?.focus();
+      }, 600);
 
-    setTimeoutId(newTimeoutId);
+      setTimeoutId(newTimeoutId);
+    }
   };
 
-  const sortedOptions = selected
-    ? [
-        selected,
-        ...filter.options.filter((option) => option.name !== selected.name),
-      ]
-    : filter.options;
+  const sortedOptions =
+    selected && !isModalOpen
+      ? [
+          selected,
+          ...filter.options.filter((option) => option.name !== selected.name),
+        ]
+      : filter.options;
 
   const accordionPanel = (
     <>
@@ -123,19 +126,21 @@ const SelectFilterComponent = forwardRef<
       >
         {radioFilterOptions(filter.name, sortedOptions.slice(0, 10))}
       </RadioGroup>
-      <SelectFilterModal
-        filter={filter}
-        ref={headingRef}
-        onOpen={() => {
-          setIsModalOpen(true);
-        }}
-        onClose={() => {
-          setIsModalOpen(false);
-          setUserClickedOutside(true);
-        }}
-        selected={selected}
-        setSelected={setSelected}
-      />
+      {sortedOptions.length > 10 && (
+        <SelectFilterModal
+          filter={filter}
+          ref={headingRef}
+          onOpen={() => {
+            setIsModalOpen(true);
+          }}
+          onClose={() => {
+            setIsModalOpen(false);
+            setUserClickedOutside(true);
+          }}
+          selected={selected}
+          setSelected={setSelected}
+        />
+      )}
     </>
   );
 
