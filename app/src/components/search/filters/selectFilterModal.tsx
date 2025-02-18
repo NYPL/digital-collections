@@ -121,6 +121,7 @@ const SelectFilterModal = forwardRef<
             </Box>
             <ModalBody>
               <DCSearchBar
+                showButton={false}
                 id={`search-${filter.name}-options`}
                 labelText={`Search ${filter.name}${
                   filter.name === "Publishers" ? "" : "s"
@@ -129,9 +130,8 @@ const SelectFilterModal = forwardRef<
                 textInputProps={{
                   id: "filter-search-text",
                   isClearable: true,
-                  labelText: `Search ${filter.name}${
-                    filter.name === "Publishers" ? "" : "s"
-                  }`,
+                  labelText: `${filter.name} search`,
+                  isClearableCallback: () => setSearchText(""),
                   name: "filter_keywords",
                   placeholder: `Search ${filter.name.toLowerCase()}${
                     filter.name === "Publishers" ? "" : "s"
@@ -209,6 +209,7 @@ const SelectFilterModal = forwardRef<
               </Button>
               <Button
                 id="confirm-button"
+                isDisabled={!selected}
                 onClick={() => {
                   setSelected(
                     filter.options.find(
