@@ -1,4 +1,4 @@
-import { forwardRef, useState, useEffect } from "react";
+import { forwardRef, useState, useEffect, useRef } from "react";
 import {
   Modal,
   ModalBody,
@@ -21,6 +21,7 @@ import {
   ButtonGroup,
 } from "@nypl/design-system-react-components";
 import DCSearchBar from "../dcSearchBar";
+import { headerBreakpoints } from "@/src/utils/breakpoints";
 
 type SelectFilterModalProps = {
   filter: FilterCategory;
@@ -80,6 +81,7 @@ const SelectFilterModal = forwardRef<
       modalOnClose();
       parentOnClose();
     };
+    const buttonRef = useRef<HTMLButtonElement | null>(null);
 
     return (
       <>
@@ -87,15 +89,25 @@ const SelectFilterModal = forwardRef<
           buttonType="link"
           id="modal-btn"
           onClick={handleOpen}
+          ref={buttonRef}
           sx={{
+            display: "none",
             textDecoration: "none",
             padding: 0,
+            [`@media screen and (min-width: ${headerBreakpoints.lgMobile}px)`]:
+              {
+                display: "inline",
+              },
           }}
         >{`View all ${filter.name.toLowerCase()}${
           filter.name === "Publishers" ? "" : "s"
         }`}</Button>
         <Modal
-          finalFocusRef={headingRef as React.RefObject<FocusableElement>}
+          finalFocusRef={
+            selected
+              ? (headingRef as React.RefObject<FocusableElement>)
+              : undefined
+          }
           isOpen={isOpen}
           onClose={handleClose}
         >
@@ -121,6 +133,7 @@ const SelectFilterModal = forwardRef<
             </Box>
             <ModalBody>
               <DCSearchBar
+                showButton={false}
                 id={`search-${filter.name}-options`}
                 labelText={`Search ${filter.name}${
                   filter.name === "Publishers" ? "" : "s"
@@ -129,9 +142,8 @@ const SelectFilterModal = forwardRef<
                 textInputProps={{
                   id: "filter-search-text",
                   isClearable: true,
-                  labelText: `Search ${filter.name}${
-                    filter.name === "Publishers" ? "" : "s"
-                  }`,
+                  labelText: `${filter.name} search`,
+                  isClearableCallback: () => setSearchText(""),
                   name: "filter_keywords",
                   placeholder: `Search ${filter.name.toLowerCase()}${
                     filter.name === "Publishers" ? "" : "s"
@@ -146,7 +158,7 @@ const SelectFilterModal = forwardRef<
                   border: "1px solid",
                   borderColor: "ui.border.hover",
                   padding: "s",
-                  height: "390px",
+                  height: "394px",
                 }}
               >
                 <RadioGroup
@@ -166,7 +178,7 @@ const SelectFilterModal = forwardRef<
                     setSelected(newSelectedOption || null);
                   }}
                 >
-                  {radioFilterOptions(filter.name, currentOptions)}
+                  {radioFilterOptions(currentOptions)}
                 </RadioGroup>
               </Box>
               <Flex>
@@ -202,13 +214,17 @@ const SelectFilterModal = forwardRef<
             <ButtonGroup padding="m" marginX="auto">
               <Button
                 buttonType="secondary"
-                onClick={handleClose}
+                onClick={() => {
+                  setSelected(null);
+                  handleClose();
+                }}
                 id="close-button"
               >
                 Close
               </Button>
               <Button
                 id="confirm-button"
+                isDisabled={!selected}
                 onClick={() => {
                   setSelected(
                     filter.options.find(

@@ -7,6 +7,14 @@ const mockFacetFilter: FilterCategory = {
     { name: "Publisher 1", count: 10 },
     { name: "Publisher 2", count: 20 },
     { name: "Publisher 3", count: 30 },
+    { name: "Publisher 4", count: 40 },
+    { name: "Publisher 5", count: 50 },
+    { name: "Publisher 6", count: 60 },
+    { name: "Publisher 7", count: 70 },
+    { name: "Publisher 8", count: 80 },
+    { name: "Publisher 9", count: 90 },
+    { name: "Publisher 10", count: 100 },
+    { name: "Publisher 11", count: 110 },
   ],
 };
 
@@ -16,10 +24,10 @@ describe("SelectFilter", () => {
     expect(screen.getByText("Publishers")).toBeInTheDocument();
   });
 
-  it("renders a radio button for each filter option", () => {
+  it("renders a radio button for first 10 filter options", () => {
     render(<SelectFilter filter={mockFacetFilter} />);
     fireEvent.click(screen.getByText("Publishers"));
-    mockFacetFilter.options.forEach((option) => {
+    mockFacetFilter.options.slice(0, 10).forEach((option) => {
       expect(screen.getByText(option.name)).toBeInTheDocument();
       expect(screen.getByText(option.count.toString())).toBeInTheDocument();
     });

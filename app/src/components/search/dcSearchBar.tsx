@@ -57,6 +57,8 @@ export interface SearchBarProps {
   textInputProps: TextInputProps | undefined;
   /** Maximum width of wrapper. */
   maxWrapperWidth?: string;
+  /** Sets if submit button displays (for autocomplete search). */
+  showButton?: boolean;
 }
 
 const SearchBarComponent = forwardRef<HTMLDivElement, SearchBarProps>(
@@ -70,6 +72,7 @@ const SearchBarComponent = forwardRef<HTMLDivElement, SearchBarProps>(
       textInputProps,
       labelText,
       maxWrapperWidth,
+      showButton = true,
     } = props;
 
     const stateProps = {
@@ -88,7 +91,7 @@ const SearchBarComponent = forwardRef<HTMLDivElement, SearchBarProps>(
 
     const textInput = textInputProps && (
       <TextInput
-        labelText={labelText}
+        labelText={textInputProps?.labelText}
         className="textInput"
         defaultValue={textInputProps?.defaultValue}
         id={textInputProps?.id || `searchbar-textinput-${id}`}
@@ -169,6 +172,7 @@ const SearchBarComponent = forwardRef<HTMLDivElement, SearchBarProps>(
       <Box
         role="search"
         aria-label={labelText}
+        aria-autocomplete={showButton ? undefined : "list"}
         sx={{
           display: "flex",
           marginBottom: {
@@ -178,7 +182,7 @@ const SearchBarComponent = forwardRef<HTMLDivElement, SearchBarProps>(
           ".textInput": {
             flexGrow: 1,
             "div > input": {
-              borderRightRadius: 0,
+              borderRightRadius: showButton ? 0 : "2px",
             },
           },
           flexFlow: "row",
@@ -186,7 +190,7 @@ const SearchBarComponent = forwardRef<HTMLDivElement, SearchBarProps>(
         }}
       >
         {textInput}
-        {buttonElem}
+        {showButton && buttonElem}
       </Box>
     );
   }
