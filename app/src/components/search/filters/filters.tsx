@@ -88,9 +88,8 @@ const Filters = forwardRef<HTMLHeadingElement, FiltersProps>(
           }}
         >
           <Accordion
-            isDefaultOpen
             accordionData={[{ label: headingText, panel: filterContent }]}
-          ></Accordion>
+          />
         </Box>
       </>
     );

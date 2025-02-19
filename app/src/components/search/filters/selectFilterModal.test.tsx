@@ -76,6 +76,9 @@ describe("SelectFilterModal", () => {
 
     fireEvent.click(screen.getByText("View all genres"));
     const searchInput = screen.getByPlaceholderText("Search genres");
+    expect(
+      screen.queryByRole("radio", { name: "Fiction 10" })
+    ).toBeInTheDocument();
 
     fireEvent.change(searchInput, {
       target: { value: "Mystery" },
