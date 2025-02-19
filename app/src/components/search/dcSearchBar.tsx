@@ -121,7 +121,7 @@ const SearchBarComponent = forwardRef<HTMLDivElement, SearchBarProps>(
         isDisabled={isDisabled}
         onClick={onSubmit}
         type="submit"
-        aria-label="Search"
+        aria-labelledby="searchbar-text"
         sx={{
           minWidth: "44px",
           borderLeftRadius: "none",
@@ -164,7 +164,7 @@ const SearchBarComponent = forwardRef<HTMLDivElement, SearchBarProps>(
           name="search"
           size="small"
         />
-        <span>Search</span>
+        <span id="searchbar-text">Search</span>
       </Button>
     );
 

@@ -3,12 +3,8 @@ import {
   DEFAULT_SEARCH_TERM,
   DEFAULT_SORT,
 } from "../config/constants";
-import {
-  GeneralSearchManager,
-  CollectionSearchManager,
-  SearchManagerFactory,
-  Filter,
-} from "./searchManager";
+import { Filter } from "../types/FilterType";
+import { GeneralSearchManager, CollectionSearchManager } from "./searchManager";
 
 describe("SearchManager", () => {
   describe("GeneralSearchManager individual params", () => {
@@ -136,43 +132,17 @@ describe("SearchManager", () => {
 
     it("should handle search submit", () => {
       const result = manager.handleSearchSubmit();
-      expect(result).toBe("collection_keywords=test");
+      expect(result).toBe("q=test");
     });
 
     it("should handle sort change", () => {
       const result = manager.handleSortChange("title-asc");
-      expect(result).toBe("collection_keywords=test&sort=title-asc");
+      expect(result).toBe("q=test&sort=title-asc");
     });
 
     it("should handle page change", () => {
       const result = manager.handlePageChange(2);
-      expect(result).toBe("collection_keywords=test&sort=title-asc&page=2");
-    });
-  });
-
-  describe("SearchManagerFactory", () => {
-    it("should create a GeneralSearchManager when isCollectionSearch is false", () => {
-      const manager = SearchManagerFactory.createSearchManager({
-        initialPage: 1,
-        initialSort: DEFAULT_SORT,
-        initialFilters: [],
-        initialKeywords: DEFAULT_SEARCH_TERM,
-        isCollectionSearch: false,
-      });
-
-      expect(manager).toBeInstanceOf(GeneralSearchManager);
-    });
-
-    it("should create a CollectionSearchManager when isCollectionSearch is true", () => {
-      const manager = SearchManagerFactory.createSearchManager({
-        initialPage: 1,
-        initialSort: DEFAULT_COLLECTION_SORT,
-        initialFilters: [],
-        initialKeywords: DEFAULT_SEARCH_TERM,
-        isCollectionSearch: true,
-      });
-
-      expect(manager).toBeInstanceOf(CollectionSearchManager);
+      expect(result).toBe("q=test&sort=title-asc&page=2");
     });
   });
 });

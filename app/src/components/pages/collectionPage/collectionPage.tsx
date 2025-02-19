@@ -9,14 +9,15 @@ import {
   Link,
   Icon,
   Pagination,
+  Menu,
 } from "@nypl/design-system-react-components";
 import React, { useRef } from "react";
 import Filters from "../../search/filters/filters";
-import { CardsGrid } from "../../grids/cardsGrid";
-import { displayResults } from "@/src/utils/utils";
-import { CARDS_PER_PAGE } from "@/src/config/constants";
 import ActiveFilters from "../../search/filters/activeFilters";
 import DCSearchBar from "../../search/dcSearchBar";
+import { displayResults } from "@/src/utils/utils";
+import { CARDS_PER_PAGE, SEARCH_SORT_LABELS } from "@/src/config/constants";
+import SearchCardsGrid from "../../grids/searchCardsGrid";
 
 const CollectionPage = ({ slug, data }) => {
   const headingRef = useRef<HTMLHeadingElement>(null);
@@ -145,14 +146,38 @@ const CollectionPage = ({ slug, data }) => {
                 onSubmit={() => {}}
               />
             </Flex>
-            <Heading
+            <Flex
               marginTop="xl"
-              ref={headingRef}
-              size="heading5"
-              tabIndex={-1}
-            >{`Displaying ${displayResults(data.numResults, CARDS_PER_PAGE, 1)}
+              marginBottom="s"
+              alignItems="center"
+              justifyContent="space-between"
+            >
+              <Heading
+                size="heading5"
+                ref={headingRef}
+                tabIndex={-1}
+                margin="0"
+              >{`Displaying ${displayResults(
+                data.numResults,
+                CARDS_PER_PAGE,
+                1
+              )}
                                 results`}</Heading>
-            <CardsGrid records={data} />
+              <Menu
+                showLabel
+                selectedItem={"relevance"}
+                labelText={`Sort by: ${SEARCH_SORT_LABELS["relevance"]}`}
+                listItemsData={Object.entries(SEARCH_SORT_LABELS).map(
+                  ([id, label]) => ({
+                    id,
+                    label,
+                    onClick: () => {},
+                    type: "action",
+                  })
+                )}
+              />
+            </Flex>
+            <SearchCardsGrid keywords={data.keyword} results={data.results} />
             <Flex marginTop="xxl" marginBottom="xxl" alignContent="center">
               <Link
                 minWidth="100px"
