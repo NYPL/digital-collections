@@ -48,7 +48,7 @@ const Search = () => {
         textInputProps={{
           id: "search-text",
           labelText: "Search keyword(s)",
-          name: "textInputName",
+          name: "keywords",
           onChange: handleTextChange,
           value: keywords,
           placeholder: "Search keyword(s)",
