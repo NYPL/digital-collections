@@ -5,7 +5,12 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [0.3.2] 2025-02-13
+## Unreleased
+
+### Added
+
+- Added custom select component, `selectFilter` for facet filters (DR-3394)
+- Added search result model, mock data, card component, and card grid component (DR-3363)
 
 ### Updated
 
@@ -15,7 +20,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
-- Added search result model, mock data, card component, and card grid component (DR-3363)
 - Added custom searchbar to handle search submit
 - Added new search context and `searchManager` class, implemented on `/collections` page (DR-3365)
 

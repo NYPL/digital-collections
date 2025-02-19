@@ -14,8 +14,8 @@ import {
   Pagination,
   Menu,
 } from "@nypl/design-system-react-components";
-import React from "react";
-import Filters from "../../search/filters";
+import React, { useRef } from "react";
+import Filters from "../../search/filters/filters";
 import { headerBreakpoints } from "@/src/utils/breakpoints";
 import { displayResults } from "@/src/utils/utils";
 import { CARDS_PER_PAGE, SEARCH_SORT_LABELS } from "@/src/config/constants";
@@ -39,6 +39,7 @@ const textLink = (href, text) => {
 };
 
 const CollectionPage = ({ slug, data }) => {
+  const headingRef = useRef<HTMLHeadingElement>(null);
   return (
     <Box id="mainContent">
       <Box
@@ -63,7 +64,7 @@ const CollectionPage = ({ slug, data }) => {
           >
             {slug}
           </Heading>
-          <Filters headingText="Search this collection" />
+          <Filters headingText="Search this collection" ref={headingRef} />
         </Box>
       </Box>
       <Box
@@ -214,6 +215,7 @@ const CollectionPage = ({ slug, data }) => {
             >
               <Heading
                 size="heading5"
+                ref={headingRef}
                 tabIndex={-1}
                 margin="0"
               >{`Displaying ${displayResults(
