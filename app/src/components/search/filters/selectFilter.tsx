@@ -1,7 +1,6 @@
 import { chakra, ChakraComponent } from "@chakra-ui/react";
 import {
   Box,
-  Button,
   RadioGroup,
   Radio,
   Flex,
@@ -13,6 +12,7 @@ import React, {
   useRef,
   useState,
 } from "react";
+import SelectFilterModal from "./selectFilterModal";
 import FilterAccordion from "./filterAccordion";
 
 export type FilterOption = {
@@ -29,6 +29,23 @@ export interface SelectFilterProps {
   filter: FilterCategory;
 }
 
+export const radioFilterOptions = (options: FilterOption[]) => {
+  return options.map((option, index) => (
+    <Radio
+      key={`${option.name}-${index}`}
+      name={option.name}
+      id={`${option.name}-${index}`}
+      labelText={
+        <Flex justifyContent="space-between">
+          <span>{option.name}</span>
+          <span>{option.count}</span>
+        </Flex>
+      }
+      value={option.name}
+    />
+  ));
+};
+
 const SelectFilterComponent = forwardRef<
   HTMLHeadingElement,
   React.PropsWithChildren<SelectFilterProps>
@@ -36,6 +53,8 @@ const SelectFilterComponent = forwardRef<
   const { filter, ...rest } = props;
   const [userClickedOutside, setUserClickedOutside] = useState<boolean>(false);
   const [timeoutId, setTimeoutId] = useState<NodeJS.Timeout | null>(null);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [selected, setSelected] = useState<FilterOption | null>(null);
 
   // Create a ref to hold a reference to the accordion button, enabling us
   // to programmatically focus it.
@@ -55,62 +74,44 @@ const SelectFilterComponent = forwardRef<
   };
 
   useEffect(() => {
-    document.addEventListener("mousedown", handleFocusOutside);
-    document.addEventListener("keydown", handleFocusOutside);
+    if (!isModalOpen) {
+      document.addEventListener("mousedown", handleFocusOutside);
+      document.addEventListener("keydown", handleFocusOutside);
+    }
 
     return () => {
       document.removeEventListener("mousedown", handleFocusOutside);
       document.removeEventListener("keydown", handleFocusOutside);
     };
-  }, []);
-
-  const radioLabel = (option: FilterOption) => {
-    return (
-      <Flex justifyContent="space-between">
-        <span>{option.name}</span>
-        <span>{option.count}</span>
-      </Flex>
-    );
-  };
-
-  const radioFilterOptions = (filter: FilterCategory) => {
-    return filter.options.map((option, index) => (
-      <Radio
-        key={`${option.name}-${index}`}
-        name={filter.name}
-        id={`${option.name}-${index}`}
-        labelText={radioLabel(option)}
-        value={option.name}
-      />
-    ));
-  };
-
-  const modalButton = (filter: FilterCategory) => {
-    return (
-      <Button
-        buttonType="link"
-        id="modal-button"
-        padding="0"
-      >{`View all ${filter.name.toLowerCase()}${
-        filter.name === "Publishers" ? `` : `s`
-      }`}</Button>
-    );
-  };
+  }, [isModalOpen]);
 
   const onChange = (newSelection: string) => {
-    if (timeoutId) {
-      clearTimeout(timeoutId);
-    }
-    const newTimeoutId = setTimeout(() => {
-      console.log(`selected: ${newSelection}`);
-      setUserClickedOutside(true);
-      (
-        headingRef as MutableRefObject<HTMLHeadingElement | null>
-      )?.current?.focus();
-    }, 600);
+    if (!isModalOpen) {
+      if (timeoutId) {
+        clearTimeout(timeoutId);
+      }
+      const newTimeoutId = setTimeout(() => {
+        console.log(`selected: ${newSelection}`);
+        setSelected(
+          filter.options.find((option) => option.name === newSelection) || null
+        );
+        setUserClickedOutside(true);
+        (
+          headingRef as MutableRefObject<HTMLHeadingElement | null>
+        ).current?.focus();
+      }, 600);
 
-    setTimeoutId(newTimeoutId);
+      setTimeoutId(newTimeoutId);
+    }
   };
+
+  const sortedOptions =
+    selected && !isModalOpen
+      ? [
+          selected,
+          ...filter.options.filter((option) => option.name !== selected.name),
+        ]
+      : filter.options;
 
   const accordionPanel = (
     <>
@@ -121,12 +122,27 @@ const SelectFilterComponent = forwardRef<
         showLabel={false}
         name={filter.name}
         onChange={onChange}
-        sx={{ marginBottom: "s" }}
-        defaultValue={undefined}
+        defaultValue={selected?.name ?? ""}
       >
-        {radioFilterOptions(filter)}
+        {radioFilterOptions(sortedOptions.slice(0, 10))}
       </RadioGroup>
-      {modalButton(filter)}
+      {sortedOptions.length > 10 && (
+        <SelectFilterModal
+          filter={filter}
+          ref={headingRef}
+          onOpen={() => {
+            setIsModalOpen(true);
+          }}
+          onClose={() => {
+            setIsModalOpen(false);
+            if (selected) {
+              setUserClickedOutside(true);
+            }
+          }}
+          selected={selected}
+          setSelected={setSelected}
+        />
+      )}
     </>
   );
 

@@ -57,7 +57,9 @@ const getElementsFromData = (
         id={`${id}-panel-${index}`}
         key={index}
         overflow="auto"
-        sx={{ bg: "ui.white" }}
+        sx={{
+          bg: "ui.white",
+        }}
       >
         {content.panel}
       </AccordionPanel>

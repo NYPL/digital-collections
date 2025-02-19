@@ -1,6 +1,7 @@
 import { forwardRef } from "react";
 import { Grid } from "@chakra-ui/react";
 import SelectFilter, { FilterCategory } from "./selectFilter";
+import { headerBreakpoints } from "@/src/utils/breakpoints";
 
 type SelectFilterGridProps = {
   filters: FilterCategory[];
@@ -11,7 +12,15 @@ const SelectFilterGrid = forwardRef<HTMLHeadingElement, SelectFilterGridProps>(
   ({ filters, isExpanded }, headingRef) => {
     return (
       <Grid
-        templateColumns="repeat(4, 1fr)"
+        sx={{
+          gridTemplateColumns: "repeat(1, 1fr)",
+          [`@media screen and (min-width: ${headerBreakpoints.lgMobile}px)`]: {
+            gridTemplateColumns: "repeat(2, 1fr)",
+          },
+          [`@media screen and (min-width: ${headerBreakpoints.lgTablet}px)`]: {
+            gridTemplateColumns: "repeat(4, 1fr)",
+          },
+        }}
         gap="m"
         marginBottom="m"
         width="full"

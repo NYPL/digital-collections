@@ -1,9 +1,15 @@
 import React, { forwardRef, useState } from "react";
-import { Button, Heading } from "@nypl/design-system-react-components";
-
+import {
+  Button,
+  Heading,
+  Accordion,
+  Box,
+} from "@nypl/design-system-react-components";
+import { mockFacetFilter } from "__tests__/__mocks__/data/mockFacetFilter";
 import SelectFilterGrid from "./selectFilterGrid";
 import RightsFilter from "./rightsFilter";
 import DateFilter from "./dateFilter";
+import { headerBreakpoints } from "@/src/utils/breakpoints";
 
 type FiltersProps = {
   headingText: string;
@@ -13,45 +19,31 @@ const Filters = forwardRef<HTMLHeadingElement, FiltersProps>(
   ({ headingText }, headingRef) => {
     const [isExpanded, setIsExpanded] = useState(false);
 
-    return (
+    const filterContent = (
       <>
-        <Heading size="heading4">{headingText}</Heading>
         <SelectFilterGrid
           ref={headingRef}
           filters={[
             {
               name: "Topic",
-              options: [
-                { name: "New York", count: 37 },
-                { name: "New Jersey", count: 8 },
-                { name: "Long Island", count: 12 },
-              ],
+              options: mockFacetFilter.options,
             },
             {
               name: "Genre",
-              options: [
-                { name: "New York", count: 37 },
-                { name: "New Jersey", count: 8 },
-                { name: "Long Island", count: 12 },
-              ],
+              options: mockFacetFilter.options,
             },
             {
               name: "Format",
-              options: [
-                { name: "New York", count: 37 },
-                { name: "New Jersey", count: 8 },
-                { name: "Long Island", count: 12 },
-              ],
+              options: mockFacetFilter.options,
             },
             {
               name: "Collection",
-              options: [
-                { name: "New York", count: 37 },
-                { name: "New Jersey", count: 8 },
-                { name: "Long Island", count: 12 },
-              ],
+              options: mockFacetFilter.options,
             },
-            { name: "Publishers", options: [{ name: "New York", count: 37 }] },
+            {
+              name: "Publishers",
+              options: [{ name: "New York", count: 37 }],
+            },
             { name: "Division", options: [{ name: "New York", count: 37 }] },
             { name: "Type", options: [{ name: "New York", count: 37 }] },
           ]}
@@ -70,6 +62,35 @@ const Filters = forwardRef<HTMLHeadingElement, FiltersProps>(
         >
           {isExpanded ? "Less filter options" : "See all filter options"}
         </Button>
+      </>
+    );
+
+    return (
+      <>
+        <Box
+          sx={{
+            display: "block",
+            [`@media (max-width: ${headerBreakpoints.lgMobile}px)`]: {
+              display: "none",
+            },
+          }}
+        >
+          <Heading size="heading4">{headingText}</Heading>
+          {filterContent}
+        </Box>
+
+        <Box
+          sx={{
+            display: "block",
+            [`@media (min-width: ${headerBreakpoints.lgMobile}px)`]: {
+              display: "none",
+            },
+          }}
+        >
+          <Accordion
+            accordionData={[{ label: headingText, panel: filterContent }]}
+          />
+        </Box>
       </>
     );
   }
