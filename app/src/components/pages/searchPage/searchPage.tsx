@@ -11,10 +11,10 @@ import {
   Icon,
   Menu,
 } from "@nypl/design-system-react-components";
-import React from "react";
+import React, { useRef } from "react";
 import { CARDS_PER_PAGE, SEARCH_SORT_LABELS } from "@/src/config/constants";
 import { displayResults, totalNumPages } from "@/src/utils/utils";
-import Filters from "../../search/filters";
+import Filters from "../../search/filters/filters";
 import { useSearchContext } from "@/src/context/SearchProvider";
 import { usePathname, useRouter } from "next/navigation";
 import SearchCardsGrid from "../../grids/searchCardsGrid";
@@ -28,6 +28,7 @@ const SearchPage = ({ data }) => {
   const updateURL = async (queryString) => {
     push(`${pathname}?${queryString}`);
   };
+  const headingRef = useRef<HTMLHeadingElement>(null);
 
   return (
     <Box id="mainContent">
@@ -62,7 +63,7 @@ const SearchPage = ({ data }) => {
             )}
                     results for "${searchManager.keywords}"`}
           </Heading>
-          <Filters headingText="Refine your search" />
+          <Filters headingText="Refine your search" ref={headingRef} />
         </Box>
       </Box>
       <Box
@@ -112,6 +113,7 @@ const SearchPage = ({ data }) => {
           <Heading
             size="heading5"
             tabIndex={-1}
+            ref={headingRef}
             margin="0"
           >{`Displaying ${displayResults(
             data.numResults,
