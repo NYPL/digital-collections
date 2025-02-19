@@ -112,7 +112,7 @@ export const SearchCard = ({ result, keywords }: SearchCardProps) => {
       // Card width 225 and content width 720
       maxWidth="945px"
     >
-      <CardHeading level="h3" size="heading5" marginBottom="xxs">
+      <CardHeading level="h3" size="heading5" marginBottom="xxs" noOfLines={3}>
         {result.title}
       </CardHeading>
       <CardContent>
