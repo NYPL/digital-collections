@@ -33,22 +33,12 @@ const AccordionItem = ({
   const hasChildren = children.length > 0;
 
   const toggleItem = () => {
-    setOpenState((prev) => {
-      const currentOpened = { ...prev };
-      if (isOpen) {
-        const removeChildren = (items: CollectionChildProps[]) => {
-          items.forEach((item) => {
-            delete currentOpened[item.title];
-            if (item.children) {
-              removeChildren(item.children);
-            }
-          });
-        };
-        removeChildren(children);
-      }
-      currentOpened[title] = !isOpen;
-      return currentOpened;
-    });
+    // if closed:
+    // open, fetch self
+    // close siblings
+    // if open:
+    // close self
+    // close children
   };
 
   return (
@@ -122,6 +112,35 @@ const CollectionStructure = forwardRef<
   { data: CollectionChildProps[] }
 >(({ data }, headingRef) => {
   const [openState, setOpenState] = useState<OpenState>({});
+
+  //setOpenState((prev) => {
+  //   const newState = { ...prev };
+
+  //   if (isOpen) {
+  //     // Close this item and all its children
+  //     const removeChildren = (items: CollectionChildProps[]) => {
+  //       items.forEach((item) => {
+  //         delete newState[item.title];
+  //         if (item.children) {
+  //           removeChildren(item.children);
+  //         }
+  //       });
+  //     };
+  //     removeChildren(children);
+  //     newState[title] = false;
+  //   } else {
+  //     // Close only siblings at the same level
+  //     Object.keys(newState).forEach((key) => {
+  //       if (newState[key] && key !== title) {
+  //         newState[key] = false;
+  //       }
+  //     });
+
+  //     newState[title] = true;
+  //   }
+
+  //   return newState;
+  // });
 
   return (
     <Flex flexDir="column">
