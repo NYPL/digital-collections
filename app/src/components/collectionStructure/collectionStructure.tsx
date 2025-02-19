@@ -1,4 +1,4 @@
-import { Box, Button, Collapse } from "@chakra-ui/react";
+import { Accordion, Box, Button, Collapse } from "@chakra-ui/react";
 import {
   Icon,
   Flex,
@@ -126,7 +126,7 @@ const CollectionStructure = forwardRef<
   return (
     <Flex flexDir="column">
       <Heading size="heading5">Collection structure</Heading>
-      <Box
+      <Accordion
         w="300px"
         maxH="750px"
         overflowY="scroll"
@@ -145,7 +145,7 @@ const CollectionStructure = forwardRef<
             {item.children}
           </AccordionItem>
         ))}
-      </Box>
+      </Accordion>
     </Flex>
   );
 });
