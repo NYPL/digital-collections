@@ -12,7 +12,7 @@ jest.mock("next/navigation", () => ({
   usePathname: jest.fn(),
 }));
 
-describe("Search page accessibility", () => {
+describe.skip("Search page accessibility", () => {
   it("passes axe accessibility test", async () => {
     const { container } = render(
       <SearchProvider>

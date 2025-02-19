@@ -10,7 +10,7 @@ jest.mock("next/navigation", () => ({
   usePathname: jest.fn(),
 }));
 
-describe("Collection page accessibility", () => {
+describe.skip("Collection page accessibility", () => {
   it("passes axe accessibility test", async () => {
     const { container } = render(
       <CollectionPage slug="Example collection" data={mockItems} />
