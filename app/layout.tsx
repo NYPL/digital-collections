@@ -77,7 +77,6 @@ export default async function RootLayout({
   return (
     <html lang="en">
       <head>
-        <script src="https://unpkg.com/react-scan/dist/auto.global.js"></script>
         <meta httpEquiv="X-UA-Compatible" content="IE=edge,chrome=1" />
       </head>
       <body>
@@ -85,6 +84,7 @@ export default async function RootLayout({
         {/* <!-- This site is converting visitors into subscribers and customers with OptinMonster - https://optinmonster.com --> */}
         <Script
           id="optinmonster"
+          strategy="afterInteractive"
           dangerouslySetInnerHTML={{
             __html:
               "(function(d,u,ac){var s=d.createElement('script');s.type='text/javascript';s.src='https://a.omappapi.com/app/js/api.min.js';s.async=true;s.dataset.user=u;s.dataset.account=ac;d.getElementsByTagName('head')[0].appendChild(s);})(document,12468,1044);",
@@ -95,6 +95,7 @@ export default async function RootLayout({
         <div id="nypl-footer"></div>
         <Script
           src="https://ds-header.nypl.org/footer.min.js?containerId=nypl-footer"
+          strategy="lazyOnload"
           async
         ></Script>
         <Script
