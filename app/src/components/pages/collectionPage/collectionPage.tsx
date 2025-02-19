@@ -125,10 +125,7 @@ const CollectionPage = ({ slug, data }) => {
                 marginBottom: "l",
               }}
             >
-              <Heading
-                sx={{ marginBottom: "xs", fontSize: "16px !important" }}
-                size="heading6"
-              >
+              <Heading sx={{ marginBottom: "xs" }} size="heading8">
                 Search this collection:
               </Heading>
               <DCSearchBar

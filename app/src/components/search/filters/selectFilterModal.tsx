@@ -1,4 +1,4 @@
-import { forwardRef, useState, useEffect } from "react";
+import { forwardRef, useState, useEffect, useRef } from "react";
 import {
   Modal,
   ModalBody,
@@ -81,6 +81,7 @@ const SelectFilterModal = forwardRef<
       modalOnClose();
       parentOnClose();
     };
+    const buttonRef = useRef<HTMLButtonElement | null>(null);
 
     return (
       <>
@@ -88,6 +89,7 @@ const SelectFilterModal = forwardRef<
           buttonType="link"
           id="modal-btn"
           onClick={handleOpen}
+          ref={buttonRef}
           sx={{
             display: "none",
             textDecoration: "none",
@@ -101,7 +103,11 @@ const SelectFilterModal = forwardRef<
           filter.name === "Publishers" ? "" : "s"
         }`}</Button>
         <Modal
-          finalFocusRef={headingRef as React.RefObject<FocusableElement>}
+          finalFocusRef={
+            selected
+              ? (headingRef as React.RefObject<FocusableElement>)
+              : undefined
+          }
           isOpen={isOpen}
           onClose={handleClose}
         >
@@ -172,7 +178,7 @@ const SelectFilterModal = forwardRef<
                     setSelected(newSelectedOption || null);
                   }}
                 >
-                  {radioFilterOptions(filter.name, currentOptions)}
+                  {radioFilterOptions(currentOptions)}
                 </RadioGroup>
               </Box>
               <Flex>
@@ -208,7 +214,10 @@ const SelectFilterModal = forwardRef<
             <ButtonGroup padding="m" marginX="auto">
               <Button
                 buttonType="secondary"
-                onClick={handleClose}
+                onClick={() => {
+                  setSelected(null);
+                  handleClose();
+                }}
                 id="close-button"
               >
                 Close

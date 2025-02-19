@@ -29,7 +29,7 @@ export interface SelectFilterProps {
   filter: FilterCategory;
 }
 
-export const radioFilterOptions = (name: string, options: FilterOption[]) => {
+export const radioFilterOptions = (options: FilterOption[]) => {
   return options.map((option, index) => (
     <Radio
       key={`${option.name}-${index}`}
@@ -124,7 +124,7 @@ const SelectFilterComponent = forwardRef<
         onChange={onChange}
         defaultValue={selected?.name ?? ""}
       >
-        {radioFilterOptions(filter.name, sortedOptions.slice(0, 10))}
+        {radioFilterOptions(sortedOptions.slice(0, 10))}
       </RadioGroup>
       {sortedOptions.length > 10 && (
         <SelectFilterModal
@@ -135,7 +135,9 @@ const SelectFilterComponent = forwardRef<
           }}
           onClose={() => {
             setIsModalOpen(false);
-            setUserClickedOutside(true);
+            if (selected) {
+              setUserClickedOutside(true);
+            }
           }}
           selected={selected}
           setSelected={setSelected}
