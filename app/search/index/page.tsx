@@ -4,6 +4,7 @@ import { createAdobeAnalyticsPageName } from "@/src/utils/utils";
 import { getSearchData } from "@/src/utils/apiHelpers";
 import { Metadata } from "next";
 import SearchPage from "@/src/components/pages/searchPage/searchPage";
+import { mockSearchResponse } from "__tests__/__mocks__/data/mockSearchResponse";
 import { Filter } from "@/src/types/FilterType";
 
 export interface SearchParams {
@@ -44,7 +45,7 @@ export default async function Search({ searchParams }: SearchProps) {
       adobeAnalyticsPageName={createAdobeAnalyticsPageName(pageName, "")}
       searchParams={searchParams} //!
     >
-      <SearchPage data={data} />
+      <SearchPage data={mockSearchResponse} />
     </PageLayout>
   );
 }
