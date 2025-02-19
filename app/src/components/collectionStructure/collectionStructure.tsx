@@ -1,9 +1,10 @@
-import { Accordion, Box, Button, Collapse } from "@chakra-ui/react";
+import { Collapse, Button } from "@chakra-ui/react";
 import {
   Icon,
   Flex,
   Text,
   Heading,
+  Box,
 } from "@nypl/design-system-react-components";
 import React, { forwardRef, useState } from "react";
 
@@ -13,32 +14,52 @@ export type CollectionChildProps = {
   children?: CollectionChildProps[];
 };
 
-type OpenState = { [key: string]: boolean };
+type OpenStateItem = {
+  title: string;
+  level: number;
+  isOpen: boolean;
+};
 
 const AccordionItem = ({
   title,
   itemCount,
   children = [],
-  level,
+  level = 0,
   headingRef,
   openState,
   setOpenState,
 }: CollectionChildProps & {
-  level: number;
+  level?: number;
   headingRef;
-  openState: OpenState;
-  setOpenState: React.Dispatch<React.SetStateAction<OpenState>>;
+  openState: OpenStateItem[];
+  setOpenState: React.Dispatch<React.SetStateAction<OpenStateItem[]>>;
 }) => {
-  const isOpen = openState[title] || false;
+  const isOpen = openState.some((item) => item.title === title && item.isOpen);
   const hasChildren = children.length > 0;
 
-  const toggleItem = () => {
-    // if closed:
-    // open, fetch self
-    // close siblings
-    // if open:
-    // close self
-    // close children
+  const toggleItem = (title: string, level: number) => {
+    setOpenState((prev) => {
+      let newState = [...prev];
+      const isCurrentlyOpen = newState.some(
+        (item) => item.title === title && item.isOpen
+      );
+
+      // close siblings
+      newState = newState.filter((item) => item.level !== level);
+
+      // close children
+      newState = newState.filter((item) => item.level <= level);
+
+      // if it was closed, open it
+      if (!isCurrentlyOpen) {
+        newState.push({ title, level, isOpen: true });
+        setTimeout(() => {
+          headingRef.current?.focus();
+        }, 200);
+      }
+
+      return newState;
+    });
   };
 
   return (
@@ -47,9 +68,12 @@ const AccordionItem = ({
         level === 0 ? "1px solid var(--ui-gray-medium, #BDBDBD)" : ""
       }
       borderLeft={level === 0 ? "1px solid var(--ui-gray-medium, #BDBDBD)" : ""}
+      style={{ overflow: "visible" }}
     >
       <Button
+        id={`${title}-btn`}
         w="100%"
+        color="black"
         borderRadius="0"
         textAlign="left"
         fontWeight="semibold"
@@ -60,7 +84,7 @@ const AccordionItem = ({
         paddingTop="m"
         paddingRight="s"
         paddingBottom="m"
-        onClick={toggleItem}
+        onClick={() => toggleItem(title, level)}
       >
         <Flex width="100%" alignItems="center">
           {hasChildren && (
@@ -76,8 +100,8 @@ const AccordionItem = ({
             whiteSpace="nowrap"
             overflow="hidden"
             textOverflow="ellipsis"
-            fontWeight="500"
             paddingLeft="s"
+            fontWeight="500"
           >
             {title}
           </Text>
@@ -111,44 +135,15 @@ const CollectionStructure = forwardRef<
   HTMLHeadingElement,
   { data: CollectionChildProps[] }
 >(({ data }, headingRef) => {
-  const [openState, setOpenState] = useState<OpenState>({});
-
-  //setOpenState((prev) => {
-  //   const newState = { ...prev };
-
-  //   if (isOpen) {
-  //     // Close this item and all its children
-  //     const removeChildren = (items: CollectionChildProps[]) => {
-  //       items.forEach((item) => {
-  //         delete newState[item.title];
-  //         if (item.children) {
-  //           removeChildren(item.children);
-  //         }
-  //       });
-  //     };
-  //     removeChildren(children);
-  //     newState[title] = false;
-  //   } else {
-  //     // Close only siblings at the same level
-  //     Object.keys(newState).forEach((key) => {
-  //       if (newState[key] && key !== title) {
-  //         newState[key] = false;
-  //       }
-  //     });
-
-  //     newState[title] = true;
-  //   }
-
-  //   return newState;
-  // });
+  const [openState, setOpenState] = useState<OpenStateItem[]>([]);
 
   return (
     <Flex flexDir="column">
       <Heading size="heading5">Collection structure</Heading>
-      <Accordion
+      <Box
         w="300px"
         maxH="750px"
-        overflowY="scroll"
+        overflowY="auto"
         borderTop="1px solid var(--ui-gray-medium, #BDBDBD)"
       >
         {data.map((item, index) => (
@@ -156,15 +151,15 @@ const CollectionStructure = forwardRef<
             key={index}
             itemCount={item.itemCount}
             title={item.title}
+            level={0}
             headingRef={headingRef}
             openState={openState}
             setOpenState={setOpenState}
-            level={0}
           >
             {item.children}
           </AccordionItem>
         ))}
-      </Accordion>
+      </Box>
     </Flex>
   );
 });
