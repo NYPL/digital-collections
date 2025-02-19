@@ -53,6 +53,9 @@ const AccordionItem = ({
       // if it was closed, open it
       if (!isCurrentlyOpen) {
         newState.push({ title, level, isOpen: true });
+        if (!hasChildren) {
+          /// ??????
+        }
         setTimeout(() => {
           headingRef.current?.focus();
         }, 200);
@@ -111,7 +114,7 @@ const AccordionItem = ({
         </Flex>
       </Button>
       {hasChildren && (
-        <Collapse in={isOpen} style={{ overflow: "visible !important" }}>
+        <Collapse in={isOpen}>
           {children.map((child, index) => (
             <AccordionItem
               key={index}
