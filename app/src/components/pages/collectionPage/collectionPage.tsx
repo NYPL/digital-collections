@@ -209,6 +209,7 @@ const CollectionPage = ({ slug, data }) => {
                 size="heading5"
                 tabIndex={-1}
                 margin="0"
+                ref={headingRef}
               >{`Displaying ${displayResults(
                 data.numResults,
                 CARDS_PER_PAGE,
