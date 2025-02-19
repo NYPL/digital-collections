@@ -4,41 +4,22 @@ import {
   Text,
   Heading,
   Flex,
-  HorizontalRule,
-  TagSet,
   ButtonGroup,
   Button,
   Link,
-  SearchBar,
   Icon,
   Pagination,
   Menu,
 } from "@nypl/design-system-react-components";
 import React, { useRef } from "react";
 import Filters from "../../search/filters/filters";
-import { headerBreakpoints } from "@/src/utils/breakpoints";
+import ActiveFilters from "../../search/filters/activeFilters";
+import DCSearchBar from "../../search/dcSearchBar";
 import { displayResults } from "@/src/utils/utils";
 import CollectionStructure from "../../collectionStructure/collectionStructure";
 import { sampleStructure } from "__tests__/__mocks__/data/mockCollectionStructure";
 import { CARDS_PER_PAGE, SEARCH_SORT_LABELS } from "@/src/config/constants";
 import SearchCardsGrid from "../../grids/searchCardsGrid";
-
-const textLink = (href, text) => {
-  return (
-    <a
-      style={{
-        color: "unset",
-        textDecorationLine: "underline",
-        lineHeight: "150%",
-        textUnderlinePosition: "from-font",
-        textDecorationThickness: "1px",
-      }}
-      href={href}
-    >
-      {text}
-    </a>
-  );
-};
 
 const CollectionPage = ({ slug, data }) => {
   const headingRef = useRef<HTMLHeadingElement>(null);
@@ -66,7 +47,7 @@ const CollectionPage = ({ slug, data }) => {
           >
             {slug}
           </Heading>
-          <Filters headingText="Search this collection" ref={headingRef} />
+          <Filters headingText="Refine your results" ref={headingRef} />
         </Box>
       </Box>
       <Box
@@ -77,22 +58,7 @@ const CollectionPage = ({ slug, data }) => {
           paddingRight: { base: "m", xl: "s" },
         }}
       >
-        <Flex alignContent="center" alignItems="center" gap="xs">
-          <Text size="subtitle2" sx={{ margin: 0, fontWeight: 400 }}>
-            Filters applied:
-          </Text>
-          <TagSet
-            isDismissible
-            id="search-filter-tags"
-            onClick={() => {}}
-            tagSetData={[
-              { id: "audio", label: "Audio" },
-              { id: "video", label: "Video" },
-            ]}
-            type="filter"
-          />
-        </Flex>
-        <HorizontalRule />
+        <ActiveFilters />
         <Flex marginTop="m" marginBottom="m" flexDir="column">
           <Heading size="heading6" marginBottom="xs">
             Collection data
@@ -112,17 +78,22 @@ const CollectionPage = ({ slug, data }) => {
             Dates / Origin
           </Text>
           <Text marginBottom="m">
-            Date created: {textLink("/search/index?year_begin=1800", "1800")}{" "}
+            Date created:{" "}
+            <Link hasVisitedState={false} href="/search/index?year_begin=1800">
+              1800
+            </Link>{" "}
             (approximate)
           </Text>
           <Text size="overline1" marginBottom="xs">
             Library Locations
           </Text>
           <Text marginBottom="m">
-            {textLink(
-              "/divisions/billy-rose-theatre-division",
-              "Example division"
-            )}
+            <Link
+              hasVisitedState={false}
+              href="/divisions/billy-rose-theatre-division"
+            >
+              Example division
+            </Link>
           </Text>
           <Link hasVisitedState={false} isUnderlined={false}>
             See more collection data
@@ -147,56 +118,24 @@ const CollectionPage = ({ slug, data }) => {
                 marginBottom: "l",
               }}
             >
-              <SearchBar
-                headingText={
-                  <Heading
-                    sx={{ marginBottom: "xs", fontSize: "16px !important" }}
-                    size="heading6"
-                  >
-                    Search this collection:
-                  </Heading>
-                }
-                id="searchbar"
-                invalidText="Could not find the item"
+              <Heading sx={{ marginBottom: "xs" }} size="heading8">
+                Search this collection:
+              </Heading>
+              <DCSearchBar
+                id="search-collection"
                 labelText="Search this collection by item title"
-                onSubmit={() => {}}
+                maxWrapperWidth="100%"
                 textInputProps={{
+                  id: "collection-search-text",
+                  isClearable: true,
+                  isClearableCallback: () => {},
                   labelText: "Search this collection by item title",
-                  name: "textInputName",
+                  name: "q",
                   placeholder: "Search this collection by item title",
+                  defaultValue: "",
+                  onChange: (e) => {},
                 }}
-                sx={{
-                  width: "fill",
-                  flexFlow: "row nowrap",
-                  button: {
-                    borderRadius: "0px 2px 2px 0px",
-                    "> svg": {
-                      width: "14px",
-                      height: "14px",
-                    },
-                    paddingTop: "xs",
-                    paddingBottom: "xs",
-                    paddingLeft: "s !important",
-                    paddingRight: "s !important",
-                    "> span": {
-                      display: "block !important",
-                    },
-                  },
-                  [`@media screen and (max-width: ${headerBreakpoints.lgMobile}px)`]:
-                    {
-                      button: {
-                        padding: "xs !important",
-                        gap: 0,
-                        "> span": {
-                          display: "none !important",
-                        },
-                        "> svg": {
-                          width: "18px",
-                          height: "18px",
-                        },
-                      },
-                    },
-                }}
+                onSubmit={() => {}}
               />
             </Flex>
             <Flex
@@ -207,9 +146,9 @@ const CollectionPage = ({ slug, data }) => {
             >
               <Heading
                 size="heading5"
+                ref={headingRef}
                 tabIndex={-1}
                 margin="0"
-                ref={headingRef}
               >{`Displaying ${displayResults(
                 data.numResults,
                 CARDS_PER_PAGE,

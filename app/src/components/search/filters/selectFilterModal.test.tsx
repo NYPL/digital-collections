@@ -76,6 +76,9 @@ describe("SelectFilterModal", () => {
 
     fireEvent.click(screen.getByText("View all genres"));
     const searchInput = screen.getByPlaceholderText("Search genres");
+    expect(
+      screen.queryByRole("radio", { name: "Fiction 10" })
+    ).toBeInTheDocument();
 
     fireEvent.change(searchInput, {
       target: { value: "Mystery" },
@@ -111,6 +114,52 @@ describe("SelectFilterModal", () => {
         name: "Fiction",
         count: 10,
       });
+    });
+  });
+
+  it("clears search and displays all possible results", async () => {
+    render(
+      <SelectFilterModal
+        filter={mockFilter}
+        onOpen={mockOnOpen}
+        onClose={mockOnClose}
+        selected={null}
+        setSelected={mockSetSelected}
+      />
+    );
+
+    fireEvent.click(screen.getByText("View all genres"));
+    const searchInput = screen.getByPlaceholderText("Search genres");
+    fireEvent.change(searchInput, {
+      target: { value: "Mystery" },
+    });
+
+    await waitFor(() => {
+      expect(
+        screen.queryByRole("radio", { name: "Mystery 30" })
+      ).toBeInTheDocument();
+      expect(
+        screen.queryByRole("radio", { name: "Fiction 10" })
+      ).not.toBeInTheDocument();
+    });
+
+    const clearButton = screen.getByRole("button", {
+      name: "Clear Genre search",
+    });
+
+    fireEvent.click(clearButton);
+    expect(screen.getByRole("textbox")).toHaveValue("");
+    expect(clearButton).not.toBeInTheDocument();
+    await waitFor(() => {
+      expect(
+        screen.queryByRole("radio", { name: "Mystery 30" })
+      ).toBeInTheDocument();
+      expect(
+        screen.queryByRole("radio", { name: "Fiction 10" })
+      ).toBeInTheDocument();
+      expect(
+        screen.queryByRole("radio", { name: "Non-Fiction 20" })
+      ).toBeInTheDocument();
     });
   });
 

@@ -29,7 +29,7 @@ export interface SelectFilterProps {
   filter: FilterCategory;
 }
 
-export const radioFilterOptions = (name: string, options: FilterOption[]) => {
+export const radioFilterOptions = (options: FilterOption[]) => {
   return options.map((option, index) => (
     <Radio
       key={`${option.name}-${index}`}
@@ -63,69 +63,55 @@ const SelectFilterComponent = forwardRef<
   const containerRef: React.RefObject<HTMLDivElement> =
     useRef<HTMLDivElement>(null);
 
-  // Tells the accordion to close if open when user clicks outside of the container
-  const handleClickOutside = (e) => {
-    if (e.type === "mousedown") {
-      const multiSelect = containerRef.current;
-      if (multiSelect && !multiSelect.contains(e.target)) {
-        setUserClickedOutside(true);
-      } else {
-        setUserClickedOutside(false);
-      }
-    }
-  };
-
-  // Tells the accordion to close if open when user tabs outside of the container
-  const handleTabOutside = (e) => {
-    if (e.key === "Tab") {
-      const selectComponent = containerRef.current;
-      if (
-        selectComponent &&
-        !selectComponent.contains(document.activeElement)
-      ) {
-        setUserClickedOutside(true);
-      } else {
-        setUserClickedOutside(false);
-      }
+  // Tells the accordion to close if open when user clicks or tabs outside of the container
+  const handleFocusOutside = (e) => {
+    const selectComponent = containerRef.current;
+    if (e.type === "mousedown" || e.key === "Tab" || e.key === "Enter") {
+      const focusOutside =
+        selectComponent && !selectComponent.contains(e.target);
+      setUserClickedOutside(focusOutside!);
     }
   };
 
   useEffect(() => {
     if (!isModalOpen) {
-      document.addEventListener("mousedown", handleClickOutside);
-      document.addEventListener("keydown", handleTabOutside);
+      document.addEventListener("mousedown", handleFocusOutside);
+      document.addEventListener("keydown", handleFocusOutside);
     }
 
     return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
-      document.removeEventListener("keydown", handleTabOutside);
+      document.removeEventListener("mousedown", handleFocusOutside);
+      document.removeEventListener("keydown", handleFocusOutside);
     };
   }, [isModalOpen]);
 
   const onChange = (newSelection: string) => {
-    if (timeoutId) {
-      clearTimeout(timeoutId);
-    }
-    const newTimeoutId = setTimeout(() => {
-      console.log(`selected: ${newSelection}`);
-      setSelected(
-        filter.options.find((option) => option.name === newSelection) || null
-      );
-      setUserClickedOutside(true);
-      (
-        headingRef as MutableRefObject<HTMLHeadingElement | null>
-      ).current?.focus();
-    }, 600);
+    if (!isModalOpen) {
+      if (timeoutId) {
+        clearTimeout(timeoutId);
+      }
+      const newTimeoutId = setTimeout(() => {
+        console.log(`selected: ${newSelection}`);
+        setSelected(
+          filter.options.find((option) => option.name === newSelection) || null
+        );
+        setUserClickedOutside(true);
+        (
+          headingRef as MutableRefObject<HTMLHeadingElement | null>
+        ).current?.focus();
+      }, 600);
 
-    setTimeoutId(newTimeoutId);
+      setTimeoutId(newTimeoutId);
+    }
   };
 
-  const sortedOptions = selected
-    ? [
-        selected,
-        ...filter.options.filter((option) => option.name !== selected.name),
-      ]
-    : filter.options;
+  const sortedOptions =
+    selected && !isModalOpen
+      ? [
+          selected,
+          ...filter.options.filter((option) => option.name !== selected.name),
+        ]
+      : filter.options;
 
   const accordionPanel = (
     <>
@@ -138,30 +124,30 @@ const SelectFilterComponent = forwardRef<
         onChange={onChange}
         defaultValue={selected?.name ?? ""}
       >
-        {radioFilterOptions(filter.name, sortedOptions.slice(0, 10))}
+        {radioFilterOptions(sortedOptions.slice(0, 10))}
       </RadioGroup>
-      <SelectFilterModal
-        filter={filter}
-        ref={headingRef}
-        onOpen={() => {
-          setIsModalOpen(true);
-        }}
-        onClose={() => {
-          setIsModalOpen(false);
-          setUserClickedOutside(true);
-        }}
-        selected={selected}
-        setSelected={setSelected}
-      />
+      {sortedOptions.length > 10 && (
+        <SelectFilterModal
+          filter={filter}
+          ref={headingRef}
+          onOpen={() => {
+            setIsModalOpen(true);
+          }}
+          onClose={() => {
+            setIsModalOpen(false);
+            if (selected) {
+              setUserClickedOutside(true);
+            }
+          }}
+          selected={selected}
+          setSelected={setSelected}
+        />
+      )}
     </>
   );
 
   return (
-    <Box
-      {...rest}
-      ref={containerRef}
-      onClick={() => setUserClickedOutside(false)}
-    >
+    <Box {...rest} ref={containerRef}>
       <FilterAccordion
         accordionData={[
           {
