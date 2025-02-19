@@ -14,8 +14,10 @@ const mockRouter = {
 
 describe("Search component", () => {
   it("renders Search component", () => {
-    const { getByLabelText, getByPlaceholderText } = render(<Search />);
-    expect(getByLabelText("Search Digital Collections")).toBeInTheDocument();
+    const { getAllByLabelText, getByPlaceholderText } = render(<Search />);
+    expect(
+      getAllByLabelText("Search Digital Collections")[0]
+    ).toBeInTheDocument();
     expect(getByPlaceholderText("Search keyword(s)")).toBeInTheDocument();
   });
 
