@@ -61,7 +61,9 @@ export const mockSearchResponse = {
       containsMultipleCaptures: true,
       contentType: "image",
       highlights: {
-        Title: ["Reading in example room"],
+        Title: [
+          "Reading in example room. They are reading lots of books in the example room that they are in. Unfortunately this is a really long description as well so it needs to be truncated to two lines.",
+        ],
       },
       firstIndexed_dt: "1908-02-01T00:00:00Z",
     },
