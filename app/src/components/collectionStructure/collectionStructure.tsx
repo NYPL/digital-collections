@@ -98,7 +98,6 @@ const AccordionItem = ({
       return newState;
     });
 
-    console.log(title, isCurrentlyOpen);
     if (isCurrentlyOpen && hasChildren && fetchedChildren.length !== 0) {
       try {
         // Fetch children of the clicked item only when opening
