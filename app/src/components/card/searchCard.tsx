@@ -119,7 +119,20 @@ export const SearchCard = ({
       // Card width 225 and content width 720
       maxWidth="945px"
     >
-      <CardHeading level="h3" size="heading5" marginBottom="xxs" noOfLines={3}>
+      <CardHeading
+        level="h3"
+        size="heading5"
+        marginBottom="xxs"
+        noOfLines={3}
+        sx={{
+          ":focus-within": {
+            outline: "2px solid var(--nypl-colors-ui-link-primary)",
+            "> a": {
+              outline: "none",
+            },
+          },
+        }}
+      >
         {result.title}
       </CardHeading>
       <CardContent>
