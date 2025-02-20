@@ -1,23 +1,48 @@
-import { Collapse, Button } from "@chakra-ui/react";
+import { useState, forwardRef } from "react";
+import { Box, Button, Collapse } from "@chakra-ui/react";
 import {
-  Icon,
   Flex,
+  Icon,
   Text,
   Heading,
-  Box,
 } from "@nypl/design-system-react-components";
-import React, { forwardRef, useState } from "react";
 
-export type CollectionChildProps = {
+export interface CollectionChildProps {
   title: string;
   itemCount: string;
   children?: CollectionChildProps[];
-};
+}
 
-type OpenStateItem = {
+interface OpenStateItem {
   title: string;
   level: number;
   isOpen: boolean;
+}
+
+const fetchChildren = async (
+  title: string
+): Promise<CollectionChildProps[]> => {
+  return new Promise((resolve) => {
+    setTimeout(() => {
+      resolve([
+        { title: `${title} - Child 1`, itemCount: "5", children: [] },
+        { title: `${title} - Child 2`, itemCount: "3", children: [] },
+      ]);
+    }, 1000);
+  });
+};
+
+const prefetchNextLevel = async (children: CollectionChildProps[]) => {
+  console.log(
+    "now pre-fetching children of",
+    children[0].title,
+    children[1].title
+  );
+  for (const child of children) {
+    if (!child.children || child.children.length === 0) {
+      child.children = await fetchChildren(child.title);
+    }
+  }
 };
 
 const AccordionItem = ({
@@ -28,61 +53,73 @@ const AccordionItem = ({
   headingRef,
   openState,
   setOpenState,
+  fetchChildren,
 }: CollectionChildProps & {
   level?: number;
-  headingRef;
+  headingRef: any;
   openState: OpenStateItem[];
   setOpenState: React.Dispatch<React.SetStateAction<OpenStateItem[]>>;
+  fetchChildren: (title: string) => Promise<CollectionChildProps[]>;
 }) => {
   const isOpen = openState.some((item) => item.title === title && item.isOpen);
-  const hasChildren = children.length > 0;
 
-  const toggleItem = (title: string, level: number) => {
+  const [fetchedChildren, setFetchedChildren] =
+    useState<CollectionChildProps[]>(children);
+  const hasChildren = fetchedChildren.length > 0;
+
+  const toggleItem = async (title: string, level: number) => {
+    let isCurrentlyOpen = false;
     setOpenState((prev) => {
-      let newState = [...prev];
-      const isCurrentlyOpen = newState.some(
+      // Close all siblings at the same level
+      let newState = prev.filter((item) => item.level !== level);
+
+      isCurrentlyOpen = prev.some(
         (item) => item.title === title && item.isOpen
       );
-
-      // close siblings
-      newState = newState.filter((item) => item.level !== level);
-
-      // close children
-      newState = newState.filter((item) => item.level <= level);
-
-      // if it was closed, open it
       if (!isCurrentlyOpen) {
+        // Close all children when the parent is closed
+        newState = newState.filter((item) => item.level < level);
+
+        // Open the clicked item
         newState.push({ title, level, isOpen: true });
-        if (!hasChildren) {
-          /// ??????
-        }
         setTimeout(() => {
           headingRef.current?.focus();
         }, 200);
       }
-
       return newState;
     });
+
+    if (hasChildren && fetchedChildren.length !== 0) {
+      try {
+        // Fetch children of the clicked item only when opening
+        const nextChildren = await fetchChildren(title);
+        setFetchedChildren(nextChildren);
+
+        // Prefetch the next level of children in advance
+        await prefetchNextLevel(nextChildren);
+      } catch (error) {
+        console.error("Failed to fetch children:", error);
+      }
+    }
   };
 
   return (
-    <Box
-      borderRight={
-        level === 0 ? "1px solid var(--ui-gray-medium, #BDBDBD)" : ""
-      }
-      borderLeft={level === 0 ? "1px solid var(--ui-gray-medium, #BDBDBD)" : ""}
-      style={{ overflow: "visible" }}
-    >
+    <Box>
       <Button
+        _focus={{
+          outline: "none !important",
+          boxShadow: "inset 0 0 0 2px var(--nypl-colors-ui-focus) !important",
+        }}
         id={`${title}-btn`}
         w="100%"
         color="black"
         borderRadius="0"
         textAlign="left"
         fontWeight="semibold"
-        bg={isOpen && hasChildren ? "ui.gray.light-cool" : "ui.white"}
+        border="1px solid var(--ui-gray-medium, #BDBDBD)"
+        borderTop="unset"
+        bg={isOpen ? "ui.gray.light-cool" : "ui.white"}
         _hover={{ bg: "ui.hover.default" }}
-        borderBottom="1px solid var(--ui-gray-medium, #BDBDBD)"
         paddingLeft={level > 0 ? level * 8 : "s"}
         paddingTop="m"
         paddingRight="s"
@@ -113,20 +150,18 @@ const AccordionItem = ({
           </Box>
         </Flex>
       </Button>
-      {hasChildren && (
+      {(hasChildren || fetchedChildren.length > 0) && (
         <Collapse in={isOpen}>
-          {children.map((child, index) => (
+          {fetchedChildren.map((child, index) => (
             <AccordionItem
               key={index}
-              itemCount={child.itemCount}
-              title={child.title}
+              {...child}
               level={level + 1}
               headingRef={headingRef}
               openState={openState}
               setOpenState={setOpenState}
-            >
-              {child.children}
-            </AccordionItem>
+              fetchChildren={fetchChildren}
+            />
           ))}
         </Collapse>
       )}
@@ -139,10 +174,9 @@ const CollectionStructure = forwardRef<
   { data: CollectionChildProps[] }
 >(({ data }, headingRef) => {
   const [openState, setOpenState] = useState<OpenStateItem[]>([]);
-
   return (
     <Flex flexDir="column">
-      <Heading size="heading5">Collection structure</Heading>
+      <Heading size="heading6">Collection structure</Heading>
       <Box
         w="300px"
         maxH="750px"
@@ -152,15 +186,13 @@ const CollectionStructure = forwardRef<
         {data.map((item, index) => (
           <AccordionItem
             key={index}
-            itemCount={item.itemCount}
-            title={item.title}
+            {...item}
             level={0}
             headingRef={headingRef}
             openState={openState}
             setOpenState={setOpenState}
-          >
-            {item.children}
-          </AccordionItem>
+            fetchChildren={fetchChildren}
+          />
         ))}
       </Box>
     </Flex>
