@@ -6,6 +6,7 @@ import {
   Text,
   Heading,
 } from "@nypl/design-system-react-components";
+import { sampleStructure } from "__tests__/__mocks__/data/mockCollectionStructure";
 
 export interface CollectionChildProps {
   title: string;
@@ -24,22 +25,29 @@ const fetchChildren = async (
 ): Promise<CollectionChildProps[]> => {
   return new Promise((resolve) => {
     setTimeout(() => {
-      resolve([
-        { title: `${title} - Child 1`, itemCount: "5", children: [] },
-        { title: `${title} - Child 2`, itemCount: "3", children: [] },
-      ]);
+      // simulating fetching real data but actually just filtering the mock
+      const findChildren = (data: CollectionChildProps[], title: string) => {
+        for (const item of data) {
+          if (item.title === title) {
+            return item.children || [];
+          } else if (item.children) {
+            const result = findChildren(item.children, title);
+            if (result.length > 0) return result;
+          }
+        }
+        return [];
+      };
+
+      resolve(findChildren(sampleStructure, title));
     }, 1000);
   });
 };
 
 const prefetchNextLevel = async (children: CollectionChildProps[]) => {
-  console.log(
-    "now pre-fetching children of",
-    children[0].title,
-    children[1].title
-  );
   for (const child of children) {
-    if (!child.children || child.children.length === 0) {
+    if (child.children && child.children.length > 0) {
+      console.log("now pre-fetching children of", child.title);
+      // only fetch and add children if they aren't already there
       child.children = await fetchChildren(child.title);
     }
   }
@@ -82,6 +90,7 @@ const AccordionItem = ({
 
         // Open the clicked item
         newState.push({ title, level, isOpen: true });
+        isCurrentlyOpen = true;
         setTimeout(() => {
           headingRef.current?.focus();
         }, 200);
@@ -89,7 +98,8 @@ const AccordionItem = ({
       return newState;
     });
 
-    if (hasChildren && fetchedChildren.length !== 0) {
+    console.log(title, isCurrentlyOpen);
+    if (isCurrentlyOpen && hasChildren && fetchedChildren.length !== 0) {
       try {
         // Fetch children of the clicked item only when opening
         const nextChildren = await fetchChildren(title);
