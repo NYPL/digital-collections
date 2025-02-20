@@ -154,7 +154,7 @@ const AccordionItem = ({
           >
             {title}
           </Text>
-          <Box as="span" marginLeft="16px">
+          <Box as="span" marginLeft="s">
             {itemCount}
           </Box>
         </Flex>
