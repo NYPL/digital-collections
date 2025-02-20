@@ -55,7 +55,7 @@ const highlightedText = ({ highlight, keyword }) => {
   const words = highlight.text.split(" ");
   const keywords = keyword.split(" ");
   return (
-    <Box>
+    <Box noOfLines={2}>
       <Text
         as="span"
         sx={{
