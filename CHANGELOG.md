@@ -17,11 +17,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Updated collection search to use `q` param and added redirect for `collection_keywords` (DR-3337)
 
-### Added
-
-- Added custom select component, `selectFilter`, and corresponding modal for facet filters (DR-3394, DR-3396)
-- Added search result model, mock data, card component, and card grid component (DR-3363)
-
 ## [0.3.2] 2025-02-13
 
 ### Added
