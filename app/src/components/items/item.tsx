@@ -7,8 +7,8 @@ import VideoViewer from "./clover/video/viewer";
 import BookViewer from "./clover/book/viewer";
 import { ItemModel } from "../../models/item";
 import React from "react";
-// import {UniversalViewer} from "./uv/universalViewerLazy";
-// import "universalviewer/dist/esm/index.css";
+import { UniversalViewer } from "./uv/universalViewerLazy";
+import "universalviewer/dist/esm/index.css";
 
 interface ItemProps {
   item: ItemModel;
@@ -23,17 +23,17 @@ const Item = ({ item }: ItemProps) => {
         viewer = (
           <>
             <h2> Image: {item.title} </h2>
-            {/* <UniversalViewer
-      manifestId={"https://wellcomelibrary.org/iiif/b18035723/manifest"}
-      canvasIndex={0}
-      // onChangeCanvas={(canvasIndex) => {
-      //   console.log("canvas index changed", canvasIndex);
-      // }}
-      // onChangeManifest={(manifest) => {
-      //   console.log("manfest changed", manifest);
-      // }}
-      config={{}}
-    /> */}
+            <UniversalViewer
+              manifestId={"https://wellcomelibrary.org/iiif/b18035723/manifest"}
+              canvasIndex={0}
+              // onChangeCanvas={(canvasIndex) => {
+              //   console.log("canvas index changed", canvasIndex);
+              // }}
+              // onChangeManifest={(manifest) => {
+              //   console.log("manfest changed", manifest);
+              // }}
+              config={{}}
+            />
             <CloverImageViewer uuid={item.uuid} />
             {/* <ImageViewer imageID={item.capture.imageID.$} /> */}
           </>
@@ -42,17 +42,17 @@ const Item = ({ item }: ItemProps) => {
         viewer = (
           <>
             <h2> Image: {item.title} </h2>
-            {/* <UniversalViewer
-      manifestId={"https://wellcomelibrary.org/iiif/b18035723/manifest"}
-      canvasIndex={0}
-      // onChangeCanvas={(canvasIndex) => {
-      //   console.log("canvas index changed", canvasIndex);
-      // }}
-      // onChangeManifest={(manifest) => {
-      //   console.log("manfest changed", manifest);
-      // }}
-      config={{}}
-    /> */}
+            <UniversalViewer
+              manifestId={"https://wellcomelibrary.org/iiif/b18035723/manifest"}
+              canvasIndex={0}
+              // onChangeCanvas={(canvasIndex) => {
+              //   console.log("canvas index changed", canvasIndex);
+              // }}
+              // onChangeManifest={(manifest) => {
+              //   console.log("manfest changed", manifest);
+              // }}
+              config={{}}
+            />
             <CloverImageViewer uuid={item.uuid} />
           </>
         );
