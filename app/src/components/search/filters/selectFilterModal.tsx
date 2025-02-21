@@ -26,9 +26,11 @@ import { headerBreakpoints } from "@/src/utils/breakpoints";
 type SelectFilterModalProps = {
   filter: FilterCategory;
   onOpen: () => void;
-  onClose: () => void;
+  onClose: (closeDropdown) => void;
   selected: FilterOption | null;
   setSelected: React.Dispatch<React.SetStateAction<FilterOption | null>>;
+  modalSelected: FilterOption | null;
+  setModalSelected: React.Dispatch<React.SetStateAction<FilterOption | null>>;
 };
 
 type FocusableElement = HTMLElement & { focus: () => void };
@@ -44,6 +46,8 @@ const SelectFilterModal = forwardRef<
       onClose: parentOnClose,
       selected,
       setSelected,
+      modalSelected,
+      setModalSelected,
     },
     headingRef?
   ) => {
@@ -56,6 +60,7 @@ const SelectFilterModal = forwardRef<
     const [searchText, setSearchText] = useState("");
     const [currentPage, setCurrentPage] = useState(1);
     const itemsPerPage = 10;
+    const buttonRef = useRef<HTMLButtonElement | null>(null);
 
     useEffect(() => {
       setCurrentPage(1);
@@ -77,11 +82,10 @@ const SelectFilterModal = forwardRef<
       parentOnOpen();
     };
 
-    const handleClose = () => {
+    const handleClose = ({ closeFilter }: { closeFilter: boolean }) => {
       modalOnClose();
-      parentOnClose();
+      parentOnClose(closeFilter);
     };
-    const buttonRef = useRef<HTMLButtonElement | null>(null);
 
     return (
       <>
@@ -103,16 +107,21 @@ const SelectFilterModal = forwardRef<
           filter.name === "Publishers" ? "" : "s"
         }`}</Button>
         <Modal
+          /** Return to dropdown if the final selection 
+           has not been updated to what was selected in the modal. */
           finalFocusRef={
-            selected
+            selected === modalSelected
               ? (headingRef as React.RefObject<FocusableElement>)
-              : undefined
+              : buttonRef
           }
           isOpen={isOpen}
-          onClose={handleClose}
+          onClose={() => {
+            setSelected(selected);
+            handleClose({ closeFilter: false });
+          }}
         >
           <ModalOverlay />
-          <ModalContent sx={{ borderRadius: "4px" }}>
+          <ModalContent sx={{ borderRadius: "xxs" }}>
             <Box
               sx={{
                 bg: "ui.bg.default",
@@ -175,7 +184,7 @@ const SelectFilterModal = forwardRef<
                     const newSelectedOption = filter.options.find(
                       (option) => option.name === newValue
                     );
-                    setSelected(newSelectedOption || null);
+                    setModalSelected(newSelectedOption || null);
                   }}
                 >
                   {radioFilterOptions(currentOptions)}
@@ -215,8 +224,9 @@ const SelectFilterModal = forwardRef<
               <Button
                 buttonType="secondary"
                 onClick={() => {
-                  setSelected(null);
-                  handleClose();
+                  // Return to previous selection and keep the dropdown open.
+                  setSelected(selected);
+                  handleClose({ closeFilter: false });
                 }}
                 id="close-button"
               >
@@ -224,14 +234,11 @@ const SelectFilterModal = forwardRef<
               </Button>
               <Button
                 id="confirm-button"
-                isDisabled={!selected}
+                isDisabled={!modalSelected}
                 onClick={() => {
-                  setSelected(
-                    filter.options.find(
-                      (option) => option.name === selected?.name
-                    ) || null
-                  );
-                  handleClose();
+                  // Confirm selection and close dropdown.
+                  setSelected(modalSelected);
+                  handleClose({ closeFilter: true });
                 }}
               >
                 Confirm
