@@ -10,8 +10,8 @@ export class ItemModel {
   imageID: string;
   href: string;
 
-  constructor(data: any) {
-    this.uuid = data.capture.uuid;
+  constructor(data: any, uuid: string) {
+    this.uuid = uuid; //data.capture.uuid.$;
     this.mods = data.mods;
     this.capture = data.capture;
     this.typeOfResource = data.mods.typeOfResource.$;

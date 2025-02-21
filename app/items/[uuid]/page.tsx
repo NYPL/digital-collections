@@ -15,7 +15,7 @@ type ItemProps = {
 
 const getItemModel = async (uuid: string) => {
   const data = await getItemData(uuid);
-  const item = new ItemModel(data);
+  const item = new ItemModel(data, uuid);
   return item;
 };
 

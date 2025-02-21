@@ -1,17 +1,21 @@
+// "use client"
+
 import ImageViewer from "./clover/image/image";
 import CloverImageViewer from "./clover/image/viewer";
 import AudioViewer from "./clover/audio/viewer";
 import VideoViewer from "./clover/video/viewer";
 import BookViewer from "./clover/book/viewer";
-import PDFViewer from "./clover/pdf/viewer";
 import { ItemModel } from "../../models/item";
 import React from "react";
+// import {UniversalViewer} from "./uv/universalViewerLazy";
+// import "universalviewer/dist/esm/index.css";
 
 interface ItemProps {
   item: ItemModel;
 }
 
 const Item = ({ item }: ItemProps) => {
+  console.log("uuid is: ", item.uuid);
   let viewer;
   switch (item.typeOfResource) {
     case "still image":
@@ -19,14 +23,37 @@ const Item = ({ item }: ItemProps) => {
         viewer = (
           <>
             <h2> Image: {item.title} </h2>
-            <ImageViewer imageID={item.capture.imageID.$} />
+            {/* <UniversalViewer
+      manifestId={"https://wellcomelibrary.org/iiif/b18035723/manifest"}
+      canvasIndex={0}
+      // onChangeCanvas={(canvasIndex) => {
+      //   console.log("canvas index changed", canvasIndex);
+      // }}
+      // onChangeManifest={(manifest) => {
+      //   console.log("manfest changed", manifest);
+      // }}
+      config={{}}
+    /> */}
+            <CloverImageViewer uuid={item.uuid} />
+            {/* <ImageViewer imageID={item.capture.imageID.$} /> */}
           </>
         );
       } else {
         viewer = (
           <>
             <h2> Image: {item.title} </h2>
-            <CloverImageViewer />
+            {/* <UniversalViewer
+      manifestId={"https://wellcomelibrary.org/iiif/b18035723/manifest"}
+      canvasIndex={0}
+      // onChangeCanvas={(canvasIndex) => {
+      //   console.log("canvas index changed", canvasIndex);
+      // }}
+      // onChangeManifest={(manifest) => {
+      //   console.log("manfest changed", manifest);
+      // }}
+      config={{}}
+    /> */}
+            <CloverImageViewer uuid={item.uuid} />
           </>
         );
       }
