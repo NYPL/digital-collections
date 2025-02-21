@@ -5,7 +5,7 @@ export const MobileSearchBanner = () => {
   return (
     <Banner
       sx={{
-        marginBottom: "m",
+        marginBottom: "xs",
         display: "flex",
         [`@media (min-width: ${headerBreakpoints.lgMobile}px)`]: {
           display: "none",
