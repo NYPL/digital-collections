@@ -18,11 +18,13 @@ import DCSearchBar from "../../search/dcSearchBar";
 import { displayResults } from "@/src/utils/utils";
 import { CARDS_PER_PAGE, SEARCH_SORT_LABELS } from "@/src/config/constants";
 import SearchCardsGrid from "../../grids/searchCardsGrid";
+import { MobileSearchBanner } from "../../mobileSearchBanner/mobileSearchBanner";
 
 const CollectionPage = ({ slug, data }) => {
   const headingRef = useRef<HTMLHeadingElement>(null);
   return (
     <Box id="mainContent">
+      <MobileSearchBanner />
       <Box
         sx={{
           background: "ui.bg.default",

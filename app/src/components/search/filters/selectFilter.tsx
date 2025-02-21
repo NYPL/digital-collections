@@ -134,13 +134,12 @@ const SelectFilterComponent = forwardRef<
           filter={filter}
           ref={headingRef}
           onOpen={() => {
+            console.log(modalSelected);
             setIsModalOpen(true);
           }}
-          onClose={({ closeFilter }: { closeFilter: boolean }) => {
+          onClose={(closeFilter: boolean) => {
             setIsModalOpen(false);
-            if (closeFilter) {
-              setUserClickedOutside(true);
-            }
+            setUserClickedOutside(closeFilter);
           }}
           selected={selected}
           setSelected={setSelected}

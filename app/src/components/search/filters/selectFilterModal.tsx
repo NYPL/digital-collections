@@ -82,7 +82,7 @@ const SelectFilterModal = forwardRef<
       parentOnOpen();
     };
 
-    const handleClose = ({ closeFilter }: { closeFilter: boolean }) => {
+    const handleClose = (closeFilter: boolean) => {
       modalOnClose();
       parentOnClose(closeFilter);
     };
@@ -117,7 +117,7 @@ const SelectFilterModal = forwardRef<
           isOpen={isOpen}
           onClose={() => {
             setSelected(selected);
-            handleClose({ closeFilter: false });
+            handleClose(false);
           }}
         >
           <ModalOverlay />
@@ -181,10 +181,11 @@ const SelectFilterModal = forwardRef<
                   defaultValue={selected?.name ?? ""}
                   showHelperInvalidText={false}
                   onChange={(newValue) => {
-                    const newSelectedOption = filter.options.find(
-                      (option) => option.name === newValue
-                    );
-                    setModalSelected(newSelectedOption || null);
+                    const newSelectedOption =
+                      filter.options.find(
+                        (option) => option.name === newValue
+                      ) || null;
+                    setModalSelected(newSelectedOption);
                   }}
                 >
                   {radioFilterOptions(currentOptions)}
@@ -226,7 +227,7 @@ const SelectFilterModal = forwardRef<
                 onClick={() => {
                   // Return to previous selection and keep the dropdown open.
                   setSelected(selected);
-                  handleClose({ closeFilter: false });
+                  handleClose(false);
                 }}
                 id="close-button"
               >
@@ -237,8 +238,9 @@ const SelectFilterModal = forwardRef<
                 isDisabled={!modalSelected}
                 onClick={() => {
                   // Confirm selection and close dropdown.
+                  setModalSelected(modalSelected);
                   setSelected(modalSelected);
-                  handleClose({ closeFilter: true });
+                  handleClose(true);
                 }}
               >
                 Confirm
