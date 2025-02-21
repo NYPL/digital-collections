@@ -55,6 +55,9 @@ const SelectFilterComponent = forwardRef<
   const [timeoutId, setTimeoutId] = useState<NodeJS.Timeout | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selected, setSelected] = useState<FilterOption | null>(null);
+  const [modalSelected, setModalSelected] = useState<FilterOption | null>(
+    selected
+  );
 
   // Create a ref to hold a reference to the accordion button, enabling us
   // to programmatically focus it.
@@ -133,14 +136,16 @@ const SelectFilterComponent = forwardRef<
           onOpen={() => {
             setIsModalOpen(true);
           }}
-          onClose={() => {
+          onClose={({ closeFilter }: { closeFilter: boolean }) => {
             setIsModalOpen(false);
-            if (selected) {
+            if (closeFilter) {
               setUserClickedOutside(true);
             }
           }}
           selected={selected}
           setSelected={setSelected}
+          modalSelected={modalSelected}
+          setModalSelected={setModalSelected}
         />
       )}
     </>
