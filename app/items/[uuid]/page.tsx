@@ -2,7 +2,7 @@ import React from "react";
 import { Metadata } from "next";
 import PageLayout from "../../src/components/pageLayout/pageLayout";
 import Item from "../../src/components/items/item";
-import { getItemData } from "../../src/utils/apiHelpers";
+import { RepoApi } from "../../src/utils/apiClients";
 import { createAdobeAnalyticsPageName } from "../../src/utils/utils";
 import { ItemModel } from "../../src/models/item";
 
@@ -14,7 +14,7 @@ type ItemProps = {
 };
 
 const getItemModel = async (uuid: string) => {
-  const data = await getItemData(uuid);
+  const data = await RepoApi.getItemData(uuid);
   const item = new ItemModel(data);
   return item;
 };

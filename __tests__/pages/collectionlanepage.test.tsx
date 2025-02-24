@@ -1,7 +1,7 @@
 import { render } from "@testing-library/react";
 import { axe } from "jest-axe";
 import React from "react";
-import { mockDivisionResponse } from "__tests__/__mocks__/data/api/mockDivisionResponse";
+import { mockDivisionResponse } from "__tests__/__mocks__/data/repoApi/mockDivisionResponse";
 import {
   useRouter,
   useSearchParams,
