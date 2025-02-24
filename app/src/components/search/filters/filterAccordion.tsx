@@ -60,6 +60,9 @@ const getElementsFromData = (
         sx={{
           bg: "ui.white",
         }}
+        position="absolute"
+        zIndex="10"
+        width="100%"
       >
         {content.panel}
       </AccordionPanel>
@@ -74,7 +77,7 @@ const getElementsFromData = (
     }
 
     return (
-      <AccordionItem id={`${id}-item-${index}`} key={index}>
+      <AccordionItem id={`${id}-item-${index}`} key={index} position="relative">
         {/* Get the current state to render the correct icon. */}
         {({ isExpanded }) => {
           return (
