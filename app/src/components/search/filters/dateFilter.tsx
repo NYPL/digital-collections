@@ -5,8 +5,9 @@ import {
   TextInput,
   Text,
 } from "@nypl/design-system-react-components";
+import { forwardRef } from "react";
 
-const DateFilter = () => {
+const DateFilter = forwardRef<HTMLHeadingElement>((props, ref) => {
   return (
     <>
       <Heading size="heading6">Date range:</Heading>
@@ -33,12 +34,17 @@ const DateFilter = () => {
               whiteSpace: "nowrap",
             },
           }}
+          onClick={() => {
+            (ref as React.RefObject<HTMLHeadingElement>)?.current?.focus();
+          }}
         >
           Apply dates
         </Button>
       </Flex>
     </>
   );
-};
+});
+
+DateFilter.displayName = "DateFilter";
 
 export default DateFilter;

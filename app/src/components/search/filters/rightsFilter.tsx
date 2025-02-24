@@ -1,4 +1,3 @@
-import { headerBreakpoints } from "@/src/utils/breakpoints";
 import {
   Heading,
   RadioGroup,
@@ -6,8 +5,26 @@ import {
   Tooltip,
   Icon,
 } from "@nypl/design-system-react-components";
+import { forwardRef } from "react";
 
-const RightsFilter = () => {
+const RadioOption = ({ id, text, tooltip }) => (
+  <Radio
+    id={id}
+    labelText={
+      <span style={{ whiteSpace: "nowrap" }}>
+        {text}{" "}
+        <Tooltip content={tooltip}>
+          <span>
+            <Icon size="medium" name="errorOutline" iconRotation="rotate180" />
+          </span>
+        </Tooltip>
+      </span>
+    }
+    value={id}
+  />
+);
+
+const RightsFilter = forwardRef<HTMLHeadingElement>((props, ref) => {
   return (
     <>
       <Heading size="heading6">Show only:</Heading>
@@ -17,6 +34,9 @@ const RightsFilter = () => {
         labelText="Show Only"
         showLabel={false}
         marginBottom="m"
+        onChange={() => {
+          (ref as React.RefObject<HTMLHeadingElement>)?.current?.focus();
+        }}
         sx={{
           "> div > div": {
             [`@media screen and (min-width: 600px)`]: {
@@ -26,63 +46,25 @@ const RightsFilter = () => {
           },
         }}
       >
-        <Radio
-          id="pd-checkbox"
-          labelText={
-            <span>
-              Public domain{" "}
-              <Tooltip content="View materials that are free to download, reuse, and share">
-                <span>
-                  <Icon
-                    size="medium"
-                    name="errorOutline"
-                    iconRotation="rotate180"
-                  />
-                </span>
-              </Tooltip>
-            </span>
-          }
-          value="pd-radio"
+        <RadioOption
+          id="pd-radio"
+          text="Public domain"
+          tooltip="View materials that are free to download, reuse, and share"
         />
-        <Radio
+        <RadioOption
           id="online-radio"
-          labelText={
-            <span>
-              Available online{" "}
-              <Tooltip content="View digital materials from anywhere, any time">
-                <span>
-                  <Icon
-                    size="medium"
-                    name="errorOutline"
-                    iconRotation="rotate180"
-                  />
-                </span>
-              </Tooltip>
-            </span>
-          }
-          value="online-radio"
+          text="Available online"
+          tooltip="View digital materials from anywhere, any time"
         />
-        <Radio
+        <RadioOption
           id="onsite-radio"
-          labelText={
-            <span>
-              Contains on-site materials{" "}
-              <Tooltip content="View materials accessible only at an NYPL location">
-                <span>
-                  <Icon
-                    size="medium"
-                    name="errorOutline"
-                    iconRotation="rotate180"
-                  />
-                </span>
-              </Tooltip>
-            </span>
-          }
-          value="onsite-radio"
+          text="Contains on-site materials"
+          tooltip="View materials accessible only at an NYPL location"
         />
       </RadioGroup>
     </>
   );
-};
+});
 
+RightsFilter.displayName = "RightsFilter";
 export default RightsFilter;
