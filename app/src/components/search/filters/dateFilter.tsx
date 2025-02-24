@@ -26,7 +26,16 @@ const DateFilter = () => {
           showLabel={false}
           placeholder="End year"
         />
-        <Button id="date-filter-btn">Apply dates</Button>
+        <Button
+          id="date-filter-btn"
+          sx={{
+            [`@media screen and (min-width: 400px)`]: {
+              whiteSpace: "nowrap",
+            },
+          }}
+        >
+          Apply dates
+        </Button>
       </Flex>
     </>
   );
