@@ -112,7 +112,7 @@ const SelectFilterModal = forwardRef<
           /** Return to dropdown if the final selection 
            has not been updated to what was selected in the modal. */
           finalFocusRef={
-            selected === modalSelected
+            selected === modalSelected && selected !== null
               ? (headingRef as React.RefObject<FocusableElement>)
               : buttonRef
           }
