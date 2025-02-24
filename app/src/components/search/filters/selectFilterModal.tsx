@@ -98,6 +98,8 @@ const SelectFilterModal = forwardRef<
             display: "none",
             textDecoration: "none",
             padding: 0,
+            marginTop: "-xxs",
+            marginBottom: "-xs",
             [`@media screen and (min-width: ${headerBreakpoints.lgMobile}px)`]:
               {
                 display: "inline",
