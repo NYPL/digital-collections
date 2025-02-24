@@ -24,7 +24,7 @@ const Item = ({ item }: ItemProps) => {
           <>
             <h2> Image: {item.title} </h2>
             <UniversalViewer
-              manifestId={"https://wellcomelibrary.org/iiif/b18035723/manifest"}
+              manifestId={`https://1e23-74-71-128-30.ngrok-free.app/items/${item.uuid}`} //a9c43f00-c600-012f-59c3-58d385a7bc34//{"https://wellcomelibrary.org/iiif/b18035723/manifest"}
               canvasIndex={0}
               // onChangeCanvas={(canvasIndex) => {
               //   console.log("canvas index changed", canvasIndex);
@@ -43,7 +43,7 @@ const Item = ({ item }: ItemProps) => {
           <>
             <h2> Image: {item.title} </h2>
             <UniversalViewer
-              manifestId={"https://wellcomelibrary.org/iiif/b18035723/manifest"}
+              manifestId={`https://1e23-74-71-128-30.ngrok-free.app/items/${item.uuid}`} //{"https://wellcomelibrary.org/iiif/b18035723/manifest"}
               canvasIndex={0}
               // onChangeCanvas={(canvasIndex) => {
               //   console.log("canvas index changed", canvasIndex);
