@@ -52,8 +52,8 @@ const Filters = forwardRef<HTMLHeadingElement, FiltersProps>(
         />
         {isExpanded && (
           <>
-            <DateFilter />
-            <RightsFilter />
+            <DateFilter ref={headingRef} />
+            <RightsFilter ref={headingRef} />
           </>
         )}
         <Button
