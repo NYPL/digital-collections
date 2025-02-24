@@ -13,7 +13,6 @@ import {
 } from "../config/constants";
 import { fetchApi } from "./fetchApi";
 import { Filter } from "../types/FilterType";
-import logger from "logger";
 
 export class RepoApi {
   static async getHomePageData() {
@@ -212,7 +211,6 @@ export class CollectionsApi {
     let apiUrl = `${process.env.COLLECTIONS_API_URL}/collections?page=${page}&perPage=${perPage}&sort=${sort}&q=${keyword}`;
     const response = await fetch(apiUrl);
     if (!response.ok) {
-      logger.error(`Error: ${response.status}`);
       throw new Error(`Error: ${response.status}`);
     }
     const data = await response.json();
@@ -248,7 +246,6 @@ export class CollectionsApi {
     let apiUrl = `${process.env.COLLECTIONS_API_URL}/search/index?q=${keyword}${filters}&sort=${sort}&page=${page}&perPage=${perPage}`;
     const response = await fetch(apiUrl);
     if (!response.ok) {
-      logger.error(`Error: ${response.status}`);
       throw new Error(`Error: ${response.status}`);
     }
     const data = await response.json();
