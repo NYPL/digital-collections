@@ -29,7 +29,7 @@ export default async function Search({ searchParams }: SearchProps) {
   const pageName = searchParams.keywords ? "search-results" : "all-items";
 
   const data = await CollectionsApi.getSearchData({
-    keyword: searchParams.keywords || "type_s:Item",
+    keyword: searchParams.keywords,
     sort: searchParams.sort,
     filters: searchParams.filters,
     page: searchParams.page,
