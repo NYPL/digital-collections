@@ -1,12 +1,13 @@
 import HomePage from "./src/components/pages/homePage/homePage";
-import { getHomePageData, getFeaturedItemData } from "@/src/utils/apiHelpers";
+import { RepoApi } from "@/src/utils/apiClients";
 import { FeaturedItemDataType } from "../app/src/types/FeaturedItemDataType";
 import { revalidatePath } from "next/cache";
 
 export default async function Home() {
   revalidatePath("/");
-  const swimLaneData = await getHomePageData();
-  const featuredItemData: FeaturedItemDataType = await getFeaturedItemData();
+  const swimLaneData = await RepoApi.getHomePageData();
+  const featuredItemData: FeaturedItemDataType =
+    await RepoApi.getFeaturedItemData();
   return (
     <HomePage
       data={{ swimLaneData: swimLaneData, featuredItemData: featuredItemData }}

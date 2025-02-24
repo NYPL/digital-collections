@@ -3,7 +3,7 @@ import { Metadata } from "next";
 import PageLayout from "../../src/components/pageLayout/pageLayout";
 import { createAdobeAnalyticsPageName } from "@/src/utils/utils";
 import CollectionPage from "@/src/components/pages/collectionPage/collectionPage";
-import { mockSearchResponse } from "__tests__/__mocks__/data/mockSearchResponse";
+import { mockSearchResponse } from "__tests__/__mocks__/data/collectionsApi/mockSearchResponse";
 
 type CollectionProps = {
   params: { slug: string };
