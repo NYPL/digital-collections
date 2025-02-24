@@ -239,7 +239,7 @@ export class CollectionsApi {
     page?: number;
     perPage?: number;
   } = {}): Promise<any> {
-    let apiUrl = `${process.env.COLLECTIONS_API_URL}/search?q=${keyword}${filters}&sort=${sort}&page=${page}&perPage=${perPage}`;
+    let apiUrl = `${process.env.COLLECTIONS_API_URL}/search/index?q=${keyword}${filters}&sort=${sort}&page=${page}&perPage=${perPage}`;
     const res = await fetchApi(apiUrl);
     return res;
   }
