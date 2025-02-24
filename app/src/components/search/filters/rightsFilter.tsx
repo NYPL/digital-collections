@@ -30,48 +30,54 @@ const RightsFilter = () => {
         <Radio
           id="pd-checkbox"
           labelText={
-            <Tooltip content="View materials that are free to download, reuse, and share">
-              <span>
-                Public domain{" "}
-                <Icon
-                  size="medium"
-                  name="errorOutline"
-                  iconRotation="rotate180"
-                />
-              </span>
-            </Tooltip>
+            <span>
+              Public domain{" "}
+              <Tooltip content="View materials that are free to download, reuse, and share">
+                <span>
+                  <Icon
+                    size="medium"
+                    name="errorOutline"
+                    iconRotation="rotate180"
+                  />
+                </span>
+              </Tooltip>
+            </span>
           }
           value="pd-radio"
         />
         <Radio
           id="online-radio"
           labelText={
-            <Tooltip content="View digital materials from anywhere, any time">
-              <span>
-                Available online{" "}
-                <Icon
-                  size="medium"
-                  name="errorOutline"
-                  iconRotation="rotate180"
-                />
-              </span>
-            </Tooltip>
+            <span>
+              Available online{" "}
+              <Tooltip content="View digital materials from anywhere, any time">
+                <span>
+                  <Icon
+                    size="medium"
+                    name="errorOutline"
+                    iconRotation="rotate180"
+                  />
+                </span>
+              </Tooltip>
+            </span>
           }
           value="online-radio"
         />
         <Radio
           id="onsite-radio"
           labelText={
-            <Tooltip content="View materials accessible only at an NYPL location">
-              <span>
-                Contains on-site materials{" "}
-                <Icon
-                  size="medium"
-                  name="errorOutline"
-                  iconRotation="rotate180"
-                />
-              </span>
-            </Tooltip>
+            <span>
+              Contains on-site materials{" "}
+              <Tooltip content="View materials accessible only at an NYPL location">
+                <span>
+                  <Icon
+                    size="medium"
+                    name="errorOutline"
+                    iconRotation="rotate180"
+                  />
+                </span>
+              </Tooltip>
+            </span>
           }
           value="onsite-radio"
         />
