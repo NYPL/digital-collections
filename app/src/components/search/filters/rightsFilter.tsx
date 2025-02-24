@@ -19,10 +19,9 @@ const RightsFilter = () => {
         marginBottom="m"
         sx={{
           "> div > div": {
-            [`@media screen and (min-width: ${headerBreakpoints.lgMobile}px)`]:
-              {
-                flexDirection: "row",
-              },
+            [`@media screen and (min-width: 600px)`]: {
+              flexDirection: "row",
+            },
             flexDirection: "column",
           },
         }}
