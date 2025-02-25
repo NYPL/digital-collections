@@ -1,3 +1,4 @@
+import { headerBreakpoints } from "@/src/utils/breakpoints";
 import {
   Accordion as ChakraAccordion,
   AccordionButton,
@@ -57,7 +58,14 @@ const getElementsFromData = (
         id={`${id}-panel-${index}`}
         key={index}
         overflow="auto"
-        sx={{ bg: "ui.white" }}
+        sx={{
+          bg: "ui.white",
+          [`@media screen and (min-width: ${headerBreakpoints.lgMobile}px)`]: {
+            position: "absolute",
+            zIndex: "1",
+            width: "100%",
+          },
+        }}
       >
         {content.panel}
       </AccordionPanel>
@@ -72,7 +80,7 @@ const getElementsFromData = (
     }
 
     return (
-      <AccordionItem id={`${id}-item-${index}`} key={index}>
+      <AccordionItem id={`${id}-item-${index}`} key={index} position="relative">
         {/* Get the current state to render the correct icon. */}
         {({ isExpanded }) => {
           return (
