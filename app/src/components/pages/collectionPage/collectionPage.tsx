@@ -105,7 +105,7 @@ const CollectionPage = ({ slug, data }) => {
             flexDir: { base: "column", md: "row" },
           }}
         >
-          <CollectionStructure data={sampleStructure} ref={headingRef} />
+          <CollectionStructure data={sampleStructure} />
           <Box width="100%">
             <Flex
               flexDir="column"
@@ -149,6 +149,7 @@ const CollectionPage = ({ slug, data }) => {
                 ref={headingRef}
                 tabIndex={-1}
                 margin="0"
+                aria-live="polite"
               >{`Displaying ${displayResults(
                 data.numResults,
                 CARDS_PER_PAGE,
