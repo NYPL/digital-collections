@@ -11,6 +11,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Added custom select component, `selectFilter`, and corresponding modal for facet filters (DR-3394, DR-3396)
 - Added search result model, mock data, card component, and card grid component (DR-3363)
+- Added collection structure component (DR-3415)
 
 ### Updated
 

@@ -16,6 +16,8 @@ import Filters from "../../search/filters/filters";
 import ActiveFilters from "../../search/filters/activeFilters";
 import DCSearchBar from "../../search/dcSearchBar";
 import { displayResults } from "@/src/utils/utils";
+import CollectionStructure from "../../collectionStructure/collectionStructure";
+import { sampleStructure } from "__tests__/__mocks__/data/mockCollectionStructure";
 import { CARDS_PER_PAGE, SEARCH_SORT_LABELS } from "@/src/config/constants";
 import SearchCardsGrid from "../../grids/searchCardsGrid";
 import { MobileSearchBanner } from "../../mobileSearchBanner/mobileSearchBanner";
@@ -105,17 +107,7 @@ const CollectionPage = ({ slug, data }) => {
             flexDir: { base: "column", md: "row" },
           }}
         >
-          <Box
-            sx={{
-              background: "ui.bg.default",
-              padding: "l",
-              height: "400px",
-              minWidth: "300px",
-              justifyItems: "center",
-            }}
-          >
-            <Heading size="heading6">Collection structure</Heading>
-          </Box>
+          <CollectionStructure data={sampleStructure} />
           <Box width="100%">
             <Flex
               flexDir="column"
@@ -159,6 +151,7 @@ const CollectionPage = ({ slug, data }) => {
                 ref={headingRef}
                 tabIndex={-1}
                 margin="0"
+                aria-live="polite"
               >{`Displaying ${displayResults(
                 data.numResults,
                 CARDS_PER_PAGE,
