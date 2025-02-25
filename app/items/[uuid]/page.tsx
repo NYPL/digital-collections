@@ -5,12 +5,14 @@ import Item from "../../src/components/items/item";
 import { getItemData } from "../../src/utils/apiHelpers";
 import { createAdobeAnalyticsPageName } from "../../src/utils/utils";
 import { ItemModel } from "../../src/models/item";
+import { ItemPage } from "@/src/components/pages/itemPage/itemPage";
 
 type ItemProps = {
   params: {
     uuid: string;
     item: ItemModel;
   };
+  searchParams: { type: string };
 };
 
 const getItemModel = async (uuid: string) => {
@@ -32,7 +34,7 @@ export async function generateMetadata({
   };
 }
 
-export default async function ItemPage({ params }: ItemProps) {
+export default async function ItemViewer({ params, searchParams }: ItemProps) {
   const item = await getItemModel(params.uuid);
   return (
     <PageLayout
@@ -47,7 +49,7 @@ export default async function ItemPage({ params }: ItemProps) {
       ]}
       adobeAnalyticsPageName={createAdobeAnalyticsPageName("items", item.title)}
     >
-      <Item item={item} />
+      <ItemPage item={item} type={searchParams.type} />
     </PageLayout>
   );
 }
