@@ -90,7 +90,10 @@ const Filters = forwardRef<HTMLHeadingElement, FiltersProps>(
         >
           <Accordion
             accordionData={[{ label: headingText, panel: filterContent }]}
-            sx={{ button: { _expanded: { bg: "ui.bg.active" } } }}
+            sx={{
+              button: { _expanded: { bg: "ui.bg.active" } },
+              bg: "ui.white",
+            }}
           />
         </Box>
       </>
