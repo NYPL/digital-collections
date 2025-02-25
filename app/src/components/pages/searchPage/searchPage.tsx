@@ -28,7 +28,7 @@ const SearchPage = ({ data }) => {
   const updateURL = async (queryString) => {
     push(`${pathname}?${queryString}`);
   };
-  const headingRef = useRef<HTMLHeadingElement | null>(null);
+  const headingRef = useRef<HTMLHeadingElement>(null);
 
   return (
     <Box id="mainContent">

@@ -53,7 +53,7 @@ export const mockSearchResponse = {
       uuid: "12563fb0-63a2-013b-bd44-0242ac110003",
       recordType: "item",
       title:
-        "Reading room of the Schomburg Collection at the 135th Street Branch Library. Lawrence Reddick, curator, seated at right",
+        "Reading room of the Schomburg Collection at the 135th Street Branch Library. Lawrence Reddick, curator, seated at right. Lawrence Reddick, curator, seated at right. This is a very long title that needs to be truncated on desktop",
       imageID: "58613608",
       numberOfDigitizedItems: 1,
       containsOnSiteMaterial: true,
@@ -61,7 +61,9 @@ export const mockSearchResponse = {
       containsMultipleCaptures: true,
       contentType: "image",
       highlights: {
-        Title: ["Reading in example room"],
+        Title: [
+          "Reading in example room. They are reading lots of books in the example room that they are in. Unfortunately this is a really long description as well so it needs to be truncated to two lines.",
+        ],
       },
       firstIndexed_dt: "1908-02-01T00:00:00Z",
     },
