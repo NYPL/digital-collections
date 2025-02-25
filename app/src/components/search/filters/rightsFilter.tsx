@@ -4,6 +4,7 @@ import {
   Radio,
   Tooltip,
   Icon,
+  Flex,
 } from "@nypl/design-system-react-components";
 import { forwardRef } from "react";
 
@@ -11,14 +12,19 @@ const RadioOption = ({ id, text, tooltip }) => (
   <Radio
     id={id}
     labelText={
-      <span style={{ whiteSpace: "nowrap" }}>
+      <Flex gap="xxs" justifyItems="center">
         {text}{" "}
         <Tooltip content={tooltip}>
           <span>
-            <Icon size="medium" name="errorOutline" iconRotation="rotate180" />
+            <Icon
+              size="medium"
+              name="errorOutline"
+              iconRotation="rotate180"
+              marginTop="xxxs"
+            />
           </span>
         </Tooltip>
-      </span>
+      </Flex>
     }
     value={id}
   />
@@ -33,7 +39,7 @@ const RightsFilter = forwardRef<HTMLHeadingElement>((props, ref) => {
         id="show-only-filters"
         labelText="Show Only"
         showLabel={false}
-        marginBottom="m"
+        marginBottom="s"
         onChange={() => {
           (ref as React.RefObject<HTMLHeadingElement>)?.current?.focus();
         }}
