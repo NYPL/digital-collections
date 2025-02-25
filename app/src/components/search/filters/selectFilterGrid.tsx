@@ -21,8 +21,8 @@ const SelectFilterGrid = forwardRef<HTMLHeadingElement, SelectFilterGridProps>(
             gridTemplateColumns: "repeat(4, 1fr)",
           },
         }}
-        gap="m"
-        marginBottom="m"
+        gap="s"
+        marginBottom="s"
         width="full"
       >
         {(isExpanded ? filters : filters.slice(0, 4)).map((filter) => (
