@@ -135,7 +135,7 @@ const AccordionItem = ({
           paddingRight="s"
           paddingBottom="m"
           onClick={() => toggleItem(title, level)}
-          aria-expanded={isOpen}
+          aria-expanded={isOpen && hasChildren}
           aria-current={isCurrent ? "true" : undefined}
         >
           <Flex width="100%" alignItems="center">
@@ -192,13 +192,14 @@ const CollectionStructure = forwardRef<
   return (
     <Flex flexDir="column">
       <Heading size="heading6">Collection structure</Heading>
-      <ul>
-        <Box
-          w="300px"
-          maxH="750px"
-          overflowY="auto"
-          borderTop="1px solid var(--ui-gray-medium, #BDBDBD)"
-        >
+
+      <Box
+        w="300px"
+        maxH="750px"
+        overflowY="auto"
+        borderTop="1px solid var(--ui-gray-medium, #BDBDBD)"
+      >
+        <ul>
           {data.map((item, index) => (
             <AccordionItem
               key={index}
@@ -210,8 +211,8 @@ const CollectionStructure = forwardRef<
               fetchChildren={fetchChildren}
             />
           ))}
-        </Box>
-      </ul>
+        </ul>
+      </Box>
     </Flex>
   );
 });
