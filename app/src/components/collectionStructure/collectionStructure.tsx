@@ -91,9 +91,6 @@ const AccordionItem = ({
         // Open the clicked item
         newState.push({ title, level, isOpen: true });
         isCurrentlyOpen = true;
-        setTimeout(() => {
-          headingRef.current?.focus();
-        }, 200);
       }
       return newState;
     });
@@ -113,68 +110,71 @@ const AccordionItem = ({
   };
 
   return (
-    <Box>
-      <Button
-        _focus={{
-          outline: "none !important",
-          boxShadow: "inset 0 0 0 2px var(--nypl-colors-ui-focus) !important",
-        }}
-        id={`${title}-btn`}
-        w="100%"
-        color="black"
-        borderRadius="0"
-        textAlign="left"
-        fontWeight="semibold"
-        border="1px solid var(--ui-gray-medium, #BDBDBD)"
-        borderTop="unset"
-        bg={isOpen ? "ui.gray.light-cool" : "ui.white"}
-        _hover={{ bg: "ui.hover.default" }}
-        paddingLeft={level > 0 ? level * 8 : "s"}
-        paddingTop="m"
-        paddingRight="s"
-        paddingBottom="m"
-        onClick={() => toggleItem(title, level)}
-      >
-        <Flex width="100%" alignItems="center">
-          {hasChildren && (
-            <Icon
-              size="small"
-              name={isOpen ? "minus" : "plus"}
-              visibility={hasChildren ? "visible" : "hidden"}
-            />
-          )}
-          <Text
-            flex="1"
-            marginBottom="0"
-            whiteSpace="nowrap"
-            overflow="hidden"
-            textOverflow="ellipsis"
-            paddingLeft="s"
-            fontWeight="500"
-          >
-            {title}
-          </Text>
-          <Box as="span" marginLeft="s">
-            {itemCount}
-          </Box>
-        </Flex>
-      </Button>
-      {(hasChildren || fetchedChildren.length > 0) && (
-        <Collapse in={isOpen}>
-          {fetchedChildren.map((child, index) => (
-            <AccordionItem
-              key={index}
-              {...child}
-              level={level + 1}
-              headingRef={headingRef}
-              openState={openState}
-              setOpenState={setOpenState}
-              fetchChildren={fetchChildren}
-            />
-          ))}
-        </Collapse>
-      )}
-    </Box>
+    <li>
+      <Box>
+        <Button
+          _focus={{
+            outline: "none !important",
+            boxShadow: "inset 0 0 0 2px var(--nypl-colors-ui-focus) !important",
+          }}
+          id={`${title}-btn`}
+          w="100%"
+          color="black"
+          borderRadius="0"
+          textAlign="left"
+          fontWeight="semibold"
+          border="1px solid var(--ui-gray-medium, #BDBDBD)"
+          borderTop="unset"
+          bg={isOpen ? "ui.gray.light-cool" : "ui.white"}
+          _hover={{ bg: "ui.hover.default" }}
+          paddingLeft={level > 0 ? level * 8 : "s"}
+          paddingTop="m"
+          paddingRight="s"
+          paddingBottom="m"
+          onClick={() => toggleItem(title, level)}
+          aria-expanded={isOpen}
+        >
+          <Flex width="100%" alignItems="center">
+            {hasChildren && (
+              <Icon
+                size="small"
+                name={isOpen ? "minus" : "plus"}
+                visibility={hasChildren ? "visible" : "hidden"}
+              />
+            )}
+            <Text
+              flex="1"
+              marginBottom="0"
+              whiteSpace="nowrap"
+              overflow="hidden"
+              textOverflow="ellipsis"
+              paddingLeft="s"
+              fontWeight="500"
+            >
+              {title}
+            </Text>
+            <Box as="span" marginLeft="s">
+              {itemCount}
+            </Box>
+          </Flex>
+        </Button>
+        {(hasChildren || fetchedChildren.length > 0) && (
+          <Collapse in={isOpen}>
+            {fetchedChildren.map((child, index) => (
+              <AccordionItem
+                key={index}
+                {...child}
+                level={level + 1}
+                headingRef={headingRef}
+                openState={openState}
+                setOpenState={setOpenState}
+                fetchChildren={fetchChildren}
+              />
+            ))}
+          </Collapse>
+        )}
+      </Box>
+    </li>
   );
 };
 
@@ -186,7 +186,9 @@ const CollectionStructure = forwardRef<
   return (
     <Flex flexDir="column">
       <Heading size="heading6">Collection structure</Heading>
+
       <Box
+        as="ul"
         w="300px"
         maxH="750px"
         overflowY="auto"
