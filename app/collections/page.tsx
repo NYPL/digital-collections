@@ -42,7 +42,7 @@ export default async function Collections({ searchParams }: CollectionsProps) {
       ]}
       adobeAnalyticsPageName={createAdobeAnalyticsPageName("all-collections")}
     >
-      <CollectionsPage collectionSearchParams={searchParams} data={data} />
+      <CollectionsPage collectionsSearchParams={searchParams} data={data} />
     </PageLayout>
   );
 }
