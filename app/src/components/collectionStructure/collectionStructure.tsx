@@ -70,6 +70,9 @@ const AccordionItem = ({
   fetchChildren: (title: string) => Promise<CollectionChildProps[]>;
 }) => {
   const isOpen = openState.some((item) => item.title === title && item.isOpen);
+  const deepestOpenItem =
+    openState.length > 0 ? openState[openState.length - 1].title : null;
+  const isCurrent = title === deepestOpenItem;
 
   const [fetchedChildren, setFetchedChildren] =
     useState<CollectionChildProps[]>(children);
@@ -133,6 +136,7 @@ const AccordionItem = ({
           paddingBottom="m"
           onClick={() => toggleItem(title, level)}
           aria-expanded={isOpen}
+          aria-current={isCurrent ? "true" : undefined}
         >
           <Flex width="100%" alignItems="center">
             {hasChildren && (
@@ -159,19 +163,21 @@ const AccordionItem = ({
           </Flex>
         </Button>
         {(hasChildren || fetchedChildren.length > 0) && (
-          <Collapse in={isOpen}>
-            {fetchedChildren.map((child, index) => (
-              <AccordionItem
-                key={index}
-                {...child}
-                level={level + 1}
-                headingRef={headingRef}
-                openState={openState}
-                setOpenState={setOpenState}
-                fetchChildren={fetchChildren}
-              />
-            ))}
-          </Collapse>
+          <ul style={{ margin: "0" }}>
+            <Collapse in={isOpen}>
+              {fetchedChildren.map((child, index) => (
+                <AccordionItem
+                  key={index}
+                  {...child}
+                  level={level + 1}
+                  headingRef={headingRef}
+                  openState={openState}
+                  setOpenState={setOpenState}
+                  fetchChildren={fetchChildren}
+                />
+              ))}
+            </Collapse>
+          </ul>
         )}
       </Box>
     </li>
@@ -186,26 +192,26 @@ const CollectionStructure = forwardRef<
   return (
     <Flex flexDir="column">
       <Heading size="heading6">Collection structure</Heading>
-
-      <Box
-        as="ul"
-        w="300px"
-        maxH="750px"
-        overflowY="auto"
-        borderTop="1px solid var(--ui-gray-medium, #BDBDBD)"
-      >
-        {data.map((item, index) => (
-          <AccordionItem
-            key={index}
-            {...item}
-            level={0}
-            headingRef={headingRef}
-            openState={openState}
-            setOpenState={setOpenState}
-            fetchChildren={fetchChildren}
-          />
-        ))}
-      </Box>
+      <ul>
+        <Box
+          w="300px"
+          maxH="750px"
+          overflowY="auto"
+          borderTop="1px solid var(--ui-gray-medium, #BDBDBD)"
+        >
+          {data.map((item, index) => (
+            <AccordionItem
+              key={index}
+              {...item}
+              level={0}
+              headingRef={headingRef}
+              openState={openState}
+              setOpenState={setOpenState}
+              fetchChildren={fetchChildren}
+            />
+          ))}
+        </Box>
+      </ul>
     </Flex>
   );
 });
