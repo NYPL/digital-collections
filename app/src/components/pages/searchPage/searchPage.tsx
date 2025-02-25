@@ -19,6 +19,7 @@ import { useSearchContext } from "@/src/context/SearchProvider";
 import { usePathname, useRouter } from "next/navigation";
 import SearchCardsGrid from "../../grids/searchCardsGrid";
 import { headerBreakpoints } from "@/src/utils/breakpoints";
+import SortMenu from "../../sortMenu/sortMenu";
 
 const SearchPage = ({ data }) => {
   const { searchManager } = useSearchContext();
@@ -121,18 +122,11 @@ const SearchPage = ({ data }) => {
             searchManager.page
           )}
                                         results`}</Heading>
-          <Menu
-            showLabel
-            selectedItem={"relevance"}
-            labelText={`Sort by: ${SEARCH_SORT_LABELS["relevance"]}`}
-            listItemsData={Object.entries(SEARCH_SORT_LABELS).map(
-              ([id, label]) => ({
-                id,
-                label,
-                onClick: () => {},
-                type: "action",
-              })
-            )}
+
+          <SortMenu
+            options={SEARCH_SORT_LABELS}
+            searchManager={searchManager}
+            updateURL={updateURL}
           />
         </Flex>
         <SearchCardsGrid keywords={data.keyword} results={data.results} />
@@ -171,7 +165,7 @@ const SearchPage = ({ data }) => {
             id="pagination-id"
             initialPage={searchManager.page}
             currentPage={searchManager.page}
-            pageCount={10}
+            pageCount={totalPages}
             onPageChange={(newPage) => {
               updateURL(searchManager.handlePageChange(newPage));
             }}

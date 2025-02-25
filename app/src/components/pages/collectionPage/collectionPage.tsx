@@ -12,14 +12,23 @@ import {
   SearchBar,
   Icon,
   Pagination,
-  Menu,
 } from "@nypl/design-system-react-components";
 import React, { useRef } from "react";
 import Filters from "../../search/filters/filters";
 import { headerBreakpoints } from "@/src/utils/breakpoints";
-import { displayResults } from "@/src/utils/utils";
-import { CARDS_PER_PAGE, SEARCH_SORT_LABELS } from "@/src/config/constants";
+import { displayResults, totalNumPages } from "@/src/utils/utils";
+import {
+  CARDS_PER_PAGE,
+  DEFAULT_PAGE_NUM,
+  DEFAULT_SEARCH_SORT,
+  DEFAULT_SEARCH_TERM,
+  SEARCH_SORT_LABELS,
+} from "@/src/config/constants";
 import SearchCardsGrid from "../../grids/searchCardsGrid";
+import { GeneralSearchManager } from "@/src/utils/searchManager";
+import { stringToFilter } from "@/src/context/SearchProvider";
+import { usePathname, useRouter } from "next/navigation";
+import SortMenu from "../../sortMenu/sortMenu";
 
 const textLink = (href, text) => {
   return (
@@ -38,8 +47,23 @@ const textLink = (href, text) => {
   );
 };
 
-const CollectionPage = ({ slug, data }) => {
+const CollectionPage = ({ slug, data, searchParams }) => {
   const headingRef = useRef<HTMLHeadingElement>(null);
+  const searchManager = new GeneralSearchManager({
+    initialPage: Number(searchParams?.page) || DEFAULT_PAGE_NUM,
+    initialSort: searchParams?.sort || DEFAULT_SEARCH_SORT,
+    initialFilters: stringToFilter(searchParams?.filters),
+    initialKeywords: searchParams?.keywords || DEFAULT_SEARCH_TERM,
+  });
+  const totalPages = totalNumPages(data.numResults, CARDS_PER_PAGE);
+  const { push } = useRouter();
+  const pathname = usePathname();
+
+  const updateURL = async (queryString) => {
+    push(`${pathname}?${queryString}`);
+    headingRef.current?.focus();
+  };
+
   return (
     <Box id="mainContent">
       <Box
@@ -224,18 +248,10 @@ const CollectionPage = ({ slug, data }) => {
                 1
               )}
                                 results`}</Heading>
-              <Menu
-                showLabel
-                selectedItem={"relevance"}
-                labelText={`Sort by: ${SEARCH_SORT_LABELS["relevance"]}`}
-                listItemsData={Object.entries(SEARCH_SORT_LABELS).map(
-                  ([id, label]) => ({
-                    id,
-                    label,
-                    onClick: () => {},
-                    type: "action",
-                  })
-                )}
+              <SortMenu
+                options={SEARCH_SORT_LABELS}
+                searchManager={searchManager}
+                updateURL={updateURL}
               />
             </Flex>
             <SearchCardsGrid keywords={data.keyword} results={data.results} />
