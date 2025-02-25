@@ -1,5 +1,5 @@
 import {
-  DEFAULT_SORT,
+  DEFAULT_SEARCH_SORT,
   DEFAULT_COLLECTION_SORT,
   DEFAULT_PAGE_NUM,
   DEFAULT_SEARCH_TERM,
@@ -108,7 +108,7 @@ export class GeneralSearchManager extends BaseSearchManager {
   handleSearchSubmit() {
     this.currentPage = DEFAULT_PAGE_NUM;
     this.currentFilters = [];
-    this.currentSort = DEFAULT_SORT;
+    this.currentSort = DEFAULT_SEARCH_SORT;
 
     return this.createQueryString({
       keywords: this.currentKeywords,
@@ -170,7 +170,11 @@ export class CollectionSearchManager extends BaseSearchManager {
 
 const getQueryStringFromObject = (paramsObject: Record<string, any>) => {
   const newParams: Record<string, string> = {};
-  const defaultValues = [DEFAULT_SEARCH_TERM, DEFAULT_PAGE_NUM, DEFAULT_SORT];
+  const defaultValues = [
+    DEFAULT_SEARCH_TERM,
+    DEFAULT_PAGE_NUM,
+    DEFAULT_SEARCH_SORT,
+  ];
 
   Object.keys(paramsObject).forEach((key) => {
     const value = paramsObject[key];
