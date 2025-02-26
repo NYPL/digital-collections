@@ -12,6 +12,8 @@ export interface CollectionChildProps {
   title: string;
   itemCount: string;
   children?: CollectionChildProps[];
+  hasChildren: boolean;
+  uuid: string;
 }
 
 interface OpenStateItem {
@@ -56,6 +58,8 @@ const prefetchNextLevel = async (children: CollectionChildProps[]) => {
 const AccordionItem = ({
   title,
   itemCount,
+  uuid,
+  hasChildren,
   children = [],
   level = 0,
   headingRef,
@@ -76,40 +80,44 @@ const AccordionItem = ({
 
   const [fetchedChildren, setFetchedChildren] =
     useState<CollectionChildProps[]>(children);
-  const hasChildren = fetchedChildren.length > 0;
 
   const toggleItem = async (title: string, level: number) => {
-    let isCurrentlyOpen = false;
+    const updateStateAndFetch = async (newState: any) => {
+      setOpenState(newState);
+      const isCurrentlyOpen = newState.some(
+        (item) => item.title === title && item.isOpen
+      );
+
+      if (isCurrentlyOpen && hasChildren) {
+        try {
+          // Fetch children of the clicked item only when opening
+          const nextChildren = await fetchChildren(title);
+          setFetchedChildren(nextChildren);
+          // Prefetch the next level of children in advance
+          await prefetchNextLevel(nextChildren);
+        } catch (error) {
+          console.error("Failed to fetch children:", error);
+        }
+      }
+    };
+
     setOpenState((prev) => {
       // Close all siblings at the same level
       let newState = prev.filter((item) => item.level !== level);
 
-      isCurrentlyOpen = prev.some(
+      const isCurrentlyOpen = prev.some(
         (item) => item.title === title && item.isOpen
       );
-      if (!isCurrentlyOpen) {
-        // Close all children when the parent is closed
-        newState = newState.filter((item) => item.level < level);
 
-        // Open the clicked item
+      // Close all children when the parent is closed
+      if (!isCurrentlyOpen) {
+        newState = newState.filter((item) => item.level < level);
         newState.push({ title, level, isOpen: true });
-        isCurrentlyOpen = true;
       }
+
+      updateStateAndFetch(newState);
       return newState;
     });
-
-    if (isCurrentlyOpen && hasChildren && fetchedChildren.length !== 0) {
-      try {
-        // Fetch children of the clicked item only when opening
-        const nextChildren = await fetchChildren(title);
-        setFetchedChildren(nextChildren);
-
-        // Prefetch the next level of children in advance
-        await prefetchNextLevel(nextChildren);
-      } catch (error) {
-        console.error("Failed to fetch children:", error);
-      }
-    }
   };
 
   return (
@@ -120,7 +128,7 @@ const AccordionItem = ({
             outline: "none !important",
             boxShadow: "inset 0 0 0 2px var(--nypl-colors-ui-focus) !important",
           }}
-          id={`${title}-btn`}
+          id={`${uuid}-btn`}
           w="100%"
           color="black"
           borderRadius="0"
