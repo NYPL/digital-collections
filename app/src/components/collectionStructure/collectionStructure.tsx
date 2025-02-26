@@ -135,7 +135,7 @@ const AccordionItem = ({
           paddingRight="s"
           paddingBottom="m"
           onClick={() => toggleItem(title, level)}
-          aria-expanded={isOpen && hasChildren}
+          {...(hasChildren ? { "aria-expanded": isOpen } : {})}
           aria-current={isCurrent ? "true" : undefined}
         >
           <Flex width="100%" alignItems="center">
@@ -163,8 +163,8 @@ const AccordionItem = ({
           </Flex>
         </Button>
         {(hasChildren || fetchedChildren.length > 0) && (
-          <ul style={{ margin: "0" }}>
-            <Collapse in={isOpen}>
+          <Collapse in={isOpen}>
+            <ul style={{ margin: "0" }}>
               {fetchedChildren.map((child, index) => (
                 <AccordionItem
                   key={index}
@@ -176,8 +176,8 @@ const AccordionItem = ({
                   fetchChildren={fetchChildren}
                 />
               ))}
-            </Collapse>
-          </ul>
+            </ul>
+          </Collapse>
         )}
       </Box>
     </li>
