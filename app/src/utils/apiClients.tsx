@@ -87,8 +87,8 @@ export class RepoApi {
 
   static async getItemData(uuid: string) {
     const apiUrl = `${process.env.API_URL}/api/v2/items/mods_captures/${uuid}`;
-    const res = await fetchApi(apiUrl);
-    return res;
+    const res = await fetchApi({ apiUrl: apiUrl });
+    return res?.nyplAPI?.response;
   }
 
   /**
@@ -97,10 +97,12 @@ export class RepoApi {
 
   static async getNumDigitizedItems() {
     const apiUrl = `${process.env.API_URL}/api/v2/items/total`;
-    const res = await fetchApi(apiUrl);
+    const res = await fetchApi({ apiUrl: apiUrl });
 
     const fallbackCount = defaultFeaturedItems.numberOfDigitizedItems;
-    const totalItems = res?.count?.$ ? addCommas(res.count.$) : fallbackCount;
+    const totalItems = res?.nyplAPI?.response.count?.$
+      ? addCommas(res?.nyplAPI?.response.count?.$)
+      : fallbackCount;
     return totalItems;
   }
 
@@ -109,9 +111,12 @@ export class RepoApi {
    */
   static async getItemsCountFromUUIDs(uuids: string[]) {
     const apiUrl = `${process.env.API_URL}/api/v2/items/counts`;
-    const response = await fetchApi(apiUrl, {
-      method: "POST",
-      body: { uuids },
+    const response = await fetchApi({
+      apiUrl: apiUrl,
+      options: {
+        method: "POST",
+        body: { uuids },
+      },
     });
 
     const { counts } = response?.nyplAPI?.response;
@@ -139,12 +144,15 @@ export class RepoApi {
    */
   static async getRandomFeaturedItem() {
     const apiUrl = `${process.env.API_URL}/api/v2/items/featured`;
-    const res = await fetchApi(apiUrl, {
-      params: {
-        random: "true",
+    const res = await fetchApi({
+      apiUrl: apiUrl,
+      options: {
+        params: {
+          random: "true",
+        },
       },
     });
-    return res;
+    return res?.nyplAPI?.response;
   }
 
   static async getDivisionData({
@@ -162,8 +170,9 @@ export class RepoApi {
       apiUrl += `/${slug}?page=${pageNum}&per_page=${perPage}`;
     }
 
-    const res = await fetchApi(apiUrl);
-    return res;
+    const res = await fetchApi({ apiUrl: apiUrl });
+
+    return res?.nyplAPI?.response;
   }
 
   static async getCollectionsData({
@@ -178,8 +187,8 @@ export class RepoApi {
     perPage?: number;
   } = {}) {
     let apiUrl = `${process.env.API_URL}/api/v2/collections?page=${page}&per_page=${perPage}&sort=${COLLECTION_SORT_OPTIONS[sort]}&q=${keyword}`;
-    const res = await fetchApi(apiUrl);
-    return res;
+    const res = await fetchApi({ apiUrl: apiUrl });
+    return res?.nyplAPI?.response;
   }
 
   static async getLaneData({
@@ -192,7 +201,8 @@ export class RepoApi {
     perPage?: number;
   }) {
     const apiUrl = `${process.env.API_URL}/api/v2/collections?genre=${slug}&page=${pageNum}&per_page=${perPage}`;
-    return await fetchApi(apiUrl);
+    const res = await fetchApi({ apiUrl: apiUrl });
+    return res?.nyplAPI?.response;
   }
 }
 
@@ -209,12 +219,11 @@ export class CollectionsApi {
     perPage?: number;
   } = {}) {
     let apiUrl = `${process.env.COLLECTIONS_API_URL}/collections?page=${page}&perPage=${perPage}&sort=${sort}&q=${keyword}`;
-    const response = await fetch(apiUrl);
-    if (!response.ok) {
-      throw new Error(`Error: ${response.status}`);
-    }
-    const data = await response.json();
-    return data;
+    const response = await fetchApi({
+      apiUrl: apiUrl,
+      options: { isRepoApi: false },
+    });
+    return response;
   }
 
   /**
@@ -244,11 +253,10 @@ export class CollectionsApi {
     perPage?: number;
   } = {}): Promise<any> {
     let apiUrl = `${process.env.COLLECTIONS_API_URL}/search/index?q=${keyword}${filters}&sort=${sort}&page=${page}&perPage=${perPage}`;
-    const response = await fetch(apiUrl);
-    if (!response.ok) {
-      throw new Error(`Error: ${response.status}`);
-    }
-    const data = await response.json();
-    return data;
+    const response = await fetchApi({
+      apiUrl: apiUrl,
+      options: { isRepoApi: false },
+    });
+    return response;
   }
 }
