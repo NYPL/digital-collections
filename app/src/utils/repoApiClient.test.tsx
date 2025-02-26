@@ -48,15 +48,15 @@ describe("Repo API methods", () => {
     it("creates response containing featuredItem and numDigitizedItems", async () => {
       const result = await RepoApi.getFeaturedItemData();
       expect(fetchApi as jest.Mock).toHaveBeenCalledTimes(2);
-      expect(fetchApi as jest.Mock).toHaveBeenNthCalledWith(
-        1,
-        `${process.env.API_URL}/api/v2/items/featured`,
-        { params: { random: "true" } }
-      );
-      expect(fetchApi as jest.Mock).toHaveBeenNthCalledWith(
-        2,
-        `${process.env.API_URL}/api/v2/items/total`
-      );
+      expect(fetchApi as jest.Mock).toHaveBeenNthCalledWith(1, {
+        apiUrl: `${process.env.API_URL}/api/v2/items/featured`,
+        options: {
+          params: { random: "true" },
+        },
+      });
+      expect(fetchApi as jest.Mock).toHaveBeenNthCalledWith(2, {
+        apiUrl: `${process.env.API_URL}/api/v2/items/total`,
+      });
       // Fallback data.
       expect(result.numberOfDigitizedItems).toEqual("1,059,731");
       expect(result.featuredItem.imageID).toEqual(
@@ -73,36 +73,40 @@ describe("Repo API methods", () => {
         perPage: 3,
       });
 
-      expect(fetchApi as jest.Mock).toHaveBeenCalledWith(
-        `${process.env.API_URL}/api/v2/divisions/testSlug?page=1&per_page=3`
-      );
+      expect(fetchApi as jest.Mock).toHaveBeenCalledWith({
+        apiUrl: `${process.env.API_URL}/api/v2/divisions/testSlug?page=1&per_page=3`,
+      });
     });
 
     it("forms the correct request from no params", async () => {
       await RepoApi.getDivisionData();
 
-      expect(fetchApi as jest.Mock).toHaveBeenCalledWith(
-        `${process.env.API_URL}/api/v2/divisions`
-      );
+      expect(fetchApi as jest.Mock).toHaveBeenCalledWith({
+        apiUrl: `${process.env.API_URL}/api/v2/divisions`,
+      });
     });
 
     it("returns successful response", async () => {
       (fetchApi as jest.Mock).mockResolvedValueOnce(
         Promise.resolve({
-          headers: { status: "success", code: "200", message: "ok" },
-          summary: "divisions test",
-          divisions: [
-            {
-              name: "Billy Rose Theatre Division",
-              slug: "billy-rose-theatre-division",
-              collections: [],
+          nyplAPI: {
+            response: {
+              headers: { status: "success", code: "200", message: "ok" },
+              summary: "divisions test",
+              divisions: [
+                {
+                  name: "Billy Rose Theatre Division",
+                  slug: "billy-rose-theatre-division",
+                  collections: [],
+                },
+                {
+                  name: "Carl H. Pforzheimer Collection of Shelley and His Circle",
+                  slug: "carl-h-pforzheimer-collection-of-shelley-and-his-circle",
+                  collections: [],
+                },
+              ],
             },
-            {
-              name: "Carl H. Pforzheimer Collection of Shelley and His Circle",
-              slug: "carl-h-pforzheimer-collection-of-shelley-and-his-circle",
-              collections: [],
-            },
-          ],
+          },
         })
       );
       const result = await RepoApi.getDivisionData();
@@ -125,50 +129,54 @@ describe("Repo API methods", () => {
     it("returns successful response", async () => {
       (fetchApi as jest.Mock).mockResolvedValueOnce(
         Promise.resolve({
-          headers: {
-            status: "200",
-            code: "200",
-            message: "Collections retrieved successfully",
+          nyplAPI: {
+            response: {
+              headers: {
+                status: "200",
+                code: "200",
+                message: "Collections retrieved successfully",
+              },
+              genre: "recently digitized collections",
+              numResults: "4689",
+              page: "1",
+              perPage: "48",
+              collection: [
+                {
+                  title: "Edward Harrigan papers",
+                  uuid: "e4d9e770-8b49-013d-5581-0242ac110002",
+                  url: "https://digitalcollections.nypl.org/collections/e4d9e770-8b49-013d-5581-0242ac110002",
+                  apiUri:
+                    "https://api.repo.nypl.org/api/v2/collections/e4d9e770-8b49-013d-5581-0242ac110002",
+                  imageID: "3932292",
+                  containsOnSiteMaterials: "false",
+                  numItems: "1",
+                  numberOfDigitizedItems: "1",
+                },
+                {
+                  title: "Die Bauwelt ",
+                  uuid: "1f182f10-78ed-013d-5352-0242ac110004",
+                  url: "https://digitalcollections.nypl.org/collections/1f182f10-78ed-013d-5352-0242ac110004",
+                  apiUri:
+                    "https://api.repo.nypl.org/api/v2/collections/1f182f10-78ed-013d-5352-0242ac110004",
+                  imageID: "58928925",
+                  containsOnSiteMaterials: "false",
+                  numItems: "2",
+                  numberOfDigitizedItems: "2",
+                },
+                {
+                  title: "Velhagen & Klasings Monatshefte",
+                  uuid: "2f151240-6247-013d-50f1-0242ac110004",
+                  url: "https://digitalcollections.nypl.org/collections/2f151240-6247-013d-50f1-0242ac110004",
+                  apiUri:
+                    "https://api.repo.nypl.org/api/v2/collections/2f151240-6247-013d-50f1-0242ac110004",
+                  imageID: "58928893",
+                  containsOnSiteMaterials: "false",
+                  numItems: "1",
+                  numberOfDigitizedItems: "1",
+                },
+              ],
+            },
           },
-          genre: "recently digitized collections",
-          numResults: "4689",
-          page: "1",
-          perPage: "48",
-          collection: [
-            {
-              title: "Edward Harrigan papers",
-              uuid: "e4d9e770-8b49-013d-5581-0242ac110002",
-              url: "https://digitalcollections.nypl.org/collections/e4d9e770-8b49-013d-5581-0242ac110002",
-              apiUri:
-                "https://api.repo.nypl.org/api/v2/collections/e4d9e770-8b49-013d-5581-0242ac110002",
-              imageID: "3932292",
-              containsOnSiteMaterials: "false",
-              numItems: "1",
-              numberOfDigitizedItems: "1",
-            },
-            {
-              title: "Die Bauwelt ",
-              uuid: "1f182f10-78ed-013d-5352-0242ac110004",
-              url: "https://digitalcollections.nypl.org/collections/1f182f10-78ed-013d-5352-0242ac110004",
-              apiUri:
-                "https://api.repo.nypl.org/api/v2/collections/1f182f10-78ed-013d-5352-0242ac110004",
-              imageID: "58928925",
-              containsOnSiteMaterials: "false",
-              numItems: "2",
-              numberOfDigitizedItems: "2",
-            },
-            {
-              title: "Velhagen & Klasings Monatshefte",
-              uuid: "2f151240-6247-013d-50f1-0242ac110004",
-              url: "https://digitalcollections.nypl.org/collections/2f151240-6247-013d-50f1-0242ac110004",
-              apiUri:
-                "https://api.repo.nypl.org/api/v2/collections/2f151240-6247-013d-50f1-0242ac110004",
-              imageID: "58928893",
-              containsOnSiteMaterials: "false",
-              numItems: "1",
-              numberOfDigitizedItems: "1",
-            },
-          ],
         })
       );
       const result = await RepoApi.getLaneData({
@@ -191,10 +199,14 @@ describe("Repo API methods", () => {
     it("forms the correct request from params with slug", async () => {
       (fetchApi as jest.Mock).mockResolvedValueOnce(
         Promise.resolve({
-          headers: {
-            status: "200",
-            code: "200",
-            message: "Collections retrieved successfully",
+          nyplAPI: {
+            response: {
+              headers: {
+                status: "200",
+                code: "200",
+                message: "Collections retrieved successfully",
+              },
+            },
           },
         })
       );
@@ -205,25 +217,29 @@ describe("Repo API methods", () => {
         perPage: 3,
       });
 
-      expect(fetchApi as jest.Mock).toHaveBeenCalledWith(
-        `${process.env.API_URL}/api/v2/collections?genre=testSlug&page=1&per_page=3`
-      );
+      expect(fetchApi as jest.Mock).toHaveBeenCalledWith({
+        apiUrl: `${process.env.API_URL}/api/v2/collections?genre=testSlug&page=1&per_page=3`,
+      });
     });
 
     it("forms the correct request from no page params", async () => {
       (fetchApi as jest.Mock).mockResolvedValueOnce(
         Promise.resolve({
-          headers: {
-            status: "200",
-            code: "200",
-            message: "Collections retrieved successfully",
+          nyplAPI: {
+            response: {
+              headers: {
+                status: "200",
+                code: "200",
+                message: "Collections retrieved successfully",
+              },
+            },
           },
         })
       );
       await RepoApi.getLaneData({ slug: "testSlug" });
-      expect(fetchApi as jest.Mock).toHaveBeenCalledWith(
-        `${process.env.API_URL}/api/v2/collections?genre=testSlug&page=1&per_page=48`
-      );
+      expect(fetchApi as jest.Mock).toHaveBeenCalledWith({
+        apiUrl: `${process.env.API_URL}/api/v2/collections?genre=testSlug&page=1&per_page=48`,
+      });
     });
   });
 
@@ -231,15 +247,19 @@ describe("Repo API methods", () => {
     it("returns the correct numDigitizedItems", async () => {
       (fetchApi as jest.Mock).mockResolvedValueOnce(
         Promise.resolve({
-          count: {
-            $: 78,
+          nyplAPI: {
+            response: {
+              count: {
+                $: 78,
+              },
+            },
           },
         })
       );
       const result = await RepoApi.getNumDigitizedItems();
-      expect(fetchApi as jest.Mock).toHaveBeenCalledWith(
-        `${process.env.API_URL}/api/v2/items/total`
-      );
+      expect(fetchApi as jest.Mock).toHaveBeenCalledWith({
+        apiUrl: `${process.env.API_URL}/api/v2/items/total`,
+      });
       expect(result).toEqual("78");
     });
 
@@ -307,13 +327,17 @@ describe("Repo API methods", () => {
   describe("getRandomFeaturedItem", () => {
     it("returns expected item", async () => {
       (fetchApi as jest.Mock).mockResolvedValueOnce(
-        Promise.resolve(mockFeaturedItemResponse)
+        Promise.resolve({
+          nyplAPI: {
+            response: mockFeaturedItemResponse,
+          },
+        })
       );
       const item = await RepoApi.getRandomFeaturedItem();
-      expect(fetchApi as jest.Mock).toHaveBeenCalledWith(
-        `${process.env.API_URL}/api/v2/items/featured`,
-        { params: { random: "true" } }
-      );
+      expect(fetchApi as jest.Mock).toHaveBeenCalledWith({
+        apiUrl: `${process.env.API_URL}/api/v2/items/featured`,
+        options: { params: { random: "true" } },
+      });
       expect(item).toEqual(mockFeaturedItemResponse);
       expect(item).toHaveProperty("capture");
       expect(item.numResults).toEqual("1");
@@ -323,13 +347,17 @@ describe("Repo API methods", () => {
   describe("getFeaturedImage", () => {
     it("returns expected image", async () => {
       (fetchApi as jest.Mock).mockResolvedValueOnce(
-        Promise.resolve(defaultFeaturedItem.featuredItem)
+        Promise.resolve({
+          nyplAPI: {
+            response: defaultFeaturedItem.featuredItem,
+          },
+        })
       );
       const imageData = await RepoApi.getFeaturedImage();
-      expect(fetchApi as jest.Mock).toHaveBeenCalledWith(
-        `${process.env.API_URL}/api/v2/items/featured`,
-        { params: { random: "true" } }
-      );
+      expect(fetchApi as jest.Mock).toHaveBeenCalledWith({
+        apiUrl: `${process.env.API_URL}/api/v2/items/featured`,
+        options: { params: { random: "true" } },
+      });
 
       expect(imageData.imageID).toEqual("482815");
       expect(imageData).toHaveProperty("uuid");
@@ -351,12 +379,16 @@ describe("Repo API methods", () => {
   describe("getItemData", () => {
     it("returns expected item", async () => {
       (fetchApi as jest.Mock).mockResolvedValueOnce(
-        Promise.resolve(mockItemResponse)
+        Promise.resolve({
+          nyplAPI: {
+            response: mockItemResponse,
+          },
+        })
       );
       const item = await RepoApi.getItemData("uuid1");
-      expect(fetchApi as jest.Mock).toHaveBeenCalledWith(
-        `${process.env.API_URL}/api/v2/items/mods_captures/uuid1`
-      );
+      expect(fetchApi as jest.Mock).toHaveBeenCalledWith({
+        apiUrl: `${process.env.API_URL}/api/v2/items/mods_captures/uuid1`,
+      });
       expect(item).toEqual(mockItemResponse);
       expect(item).toHaveProperty("capture");
       expect(item).toHaveProperty("mods");
@@ -366,7 +398,11 @@ describe("Repo API methods", () => {
   describe("getCollectionsData", () => {
     it("returns expected results", async () => {
       (fetchApi as jest.Mock).mockResolvedValueOnce(
-        Promise.resolve(mockCollectionsResponse)
+        Promise.resolve({
+          nyplAPI: {
+            response: mockCollectionsResponse,
+          },
+        })
       );
       const collections = await RepoApi.getCollectionsData({
         keyword: "cat",
@@ -374,9 +410,9 @@ describe("Repo API methods", () => {
         page: 2,
       });
 
-      expect(fetchApi as jest.Mock).toHaveBeenCalledWith(
-        `${process.env.API_URL}/api/v2/collections?page=2&per_page=48&sort=date ASC&q=cat`
-      );
+      expect(fetchApi as jest.Mock).toHaveBeenCalledWith({
+        apiUrl: `${process.env.API_URL}/api/v2/collections?page=2&per_page=48&sort=date ASC&q=cat`,
+      });
 
       expect(collections).toEqual(mockCollectionsResponse);
       expect(collections).toHaveProperty("collection");
@@ -387,13 +423,17 @@ describe("Repo API methods", () => {
 
     it("returns default search when given no params", async () => {
       (fetchApi as jest.Mock).mockResolvedValueOnce(
-        Promise.resolve(mockCollectionsResponse)
+        Promise.resolve({
+          nyplAPI: {
+            response: mockCollectionsResponse,
+          },
+        })
       );
       const collections = await RepoApi.getCollectionsData();
 
-      expect(fetchApi as jest.Mock).toHaveBeenCalledWith(
-        `${process.env.API_URL}/api/v2/collections?page=1&per_page=48&sort=date DESC&q=`
-      );
+      expect(fetchApi as jest.Mock).toHaveBeenCalledWith({
+        apiUrl: `${process.env.API_URL}/api/v2/collections?page=1&per_page=48&sort=date DESC&q=`,
+      });
 
       expect(collections).toEqual(mockCollectionsResponse);
       expect(collections).toHaveProperty("collection");

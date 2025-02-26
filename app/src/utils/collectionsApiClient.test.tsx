@@ -1,22 +1,16 @@
 import { CollectionsApi } from "./apiClients";
 import { mockCollectionsResponse } from "__tests__/__mocks__/data/collectionsApi/mockCollectionsResponse";
+import { fetchApi } from "./fetchApi";
+jest.mock("./fetchApi");
 
 beforeEach(() => {
   jest.clearAllMocks();
 });
 
 describe("Collections API methods", () => {
-  beforeAll(() => {
-    global.fetch = jest.fn() as jest.Mock;
-  });
-
   describe("getCollectionsData", () => {
     it("returns expected results", async () => {
-      (fetch as jest.Mock).mockResolvedValueOnce({
-        ok: true,
-        status: 200,
-        json: jest.fn().mockResolvedValue(mockCollectionsResponse),
-      });
+      (fetchApi as jest.Mock).mockResolvedValueOnce(mockCollectionsResponse);
 
       const collections = await CollectionsApi.getCollectionsData({
         keyword: "cat",
@@ -24,9 +18,10 @@ describe("Collections API methods", () => {
         page: 2,
       });
 
-      expect(fetch).toHaveBeenCalledWith(
-        `${process.env.COLLECTIONS_API_URL}/collections?page=2&perPage=48&sort=date-asc&q=cat`
-      );
+      expect(fetchApi).toHaveBeenCalledWith({
+        apiUrl: `${process.env.COLLECTIONS_API_URL}/collections?page=2&perPage=48&sort=date-asc&q=cat`,
+        options: { isRepoApi: false },
+      });
 
       expect(collections).toEqual(mockCollectionsResponse);
       expect(collections).toHaveProperty("collections");
@@ -36,17 +31,14 @@ describe("Collections API methods", () => {
     });
 
     it("returns default search when given no params", async () => {
-      (fetch as jest.Mock).mockResolvedValueOnce({
-        ok: true,
-        status: 200,
-        json: jest.fn().mockResolvedValue(mockCollectionsResponse),
-      });
+      (fetchApi as jest.Mock).mockResolvedValueOnce(mockCollectionsResponse);
 
       const collections = await CollectionsApi.getCollectionsData();
 
-      expect(fetch).toHaveBeenCalledWith(
-        `${process.env.COLLECTIONS_API_URL}/collections?page=1&perPage=48&sort=date-desc&q=`
-      );
+      expect(fetchApi).toHaveBeenCalledWith({
+        apiUrl: `${process.env.COLLECTIONS_API_URL}/collections?page=1&perPage=48&sort=date-desc&q=`,
+        options: { isRepoApi: false },
+      });
 
       expect(collections).toEqual(mockCollectionsResponse);
       expect(collections).toHaveProperty("collections");
