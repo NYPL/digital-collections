@@ -26,11 +26,9 @@ describe("CollectionStructure", () => {
     fireEvent.click(firstItemButton);
 
     const firstItemChildren = sampleStructure[0].children;
-    if (firstItemChildren) {
-      firstItemChildren.forEach((child) => {
-        expect(screen.getByText(child.title)).toBeInTheDocument();
-      });
-    }
+    firstItemChildren?.forEach((child) => {
+      expect(screen.getByText(child.title)).toBeInTheDocument();
+    });
   });
 
   it("should fetch and display children", async () => {
