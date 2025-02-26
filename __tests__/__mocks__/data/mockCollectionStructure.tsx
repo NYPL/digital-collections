@@ -2,8 +2,8 @@ import { CollectionChildProps } from "@/src/components/collectionStructure/colle
 
 export const sampleStructure: CollectionChildProps[] = [
   {
-    title: "American literature",
-    itemCount: "234",
+    title: "American literature, 17th century",
+    itemCount: "23478",
     children: [
       { title: "Pennsylvanian books", itemCount: "8" },
       { title: "Californian poems", itemCount: "16" },
