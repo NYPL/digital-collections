@@ -81,7 +81,6 @@ const AccordionItem = ({
 
   const toggleItem = async (title: string, level: number) => {
     const updateStateAndFetch = async (newState: any) => {
-      setOpenState(newState);
       const isCurrentlyOpen = newState.some(
         (item) => item.title === title && item.isOpen
       );
