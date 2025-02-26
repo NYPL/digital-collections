@@ -65,13 +65,11 @@ const AccordionItem = ({
   headingRef,
   openState,
   setOpenState,
-  fetchChildren,
 }: CollectionChildProps & {
   level?: number;
   headingRef: any;
   openState: OpenStateItem[];
   setOpenState: React.Dispatch<React.SetStateAction<OpenStateItem[]>>;
-  fetchChildren: (title: string) => Promise<CollectionChildProps[]>;
 }) => {
   const isOpen = openState.some((item) => item.title === title && item.isOpen);
   const deepestOpenItem =
@@ -181,7 +179,6 @@ const AccordionItem = ({
                   headingRef={headingRef}
                   openState={openState}
                   setOpenState={setOpenState}
-                  fetchChildren={fetchChildren}
                 />
               ))}
             </ul>
@@ -216,7 +213,6 @@ const CollectionStructure = forwardRef<
               headingRef={headingRef}
               openState={openState}
               setOpenState={setOpenState}
-              fetchChildren={fetchChildren}
             />
           ))}
         </ul>
