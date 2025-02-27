@@ -139,7 +139,15 @@ const AccordionItem = ({
           paddingTop="m"
           paddingRight="s"
           paddingBottom="m"
-          onClick={() => toggleItem(title, level)}
+          onClick={() => {
+            toggleItem(title, level);
+            const button = document.getElementById(`${uuid}-btn`);
+            if (button) {
+              setTimeout(() => {
+                button.scrollIntoView({ behavior: "smooth", block: "center" });
+              }, 200);
+            }
+          }}
           {...(hasChildren ? { "aria-expanded": isOpen } : {})}
           aria-current={isCurrent ? "true" : undefined}
         >
