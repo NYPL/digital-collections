@@ -11,7 +11,7 @@ export class ItemModel {
   href: string;
 
   constructor(data: any, uuid: string) {
-    this.uuid = uuid; //data.capture.uuid.$;
+    this.uuid = uuid; //data.uuid; //data.capture.uuid.$;
     this.mods = data.mods;
     this.capture = data.capture;
     this.typeOfResource = data.mods.typeOfResource.$;

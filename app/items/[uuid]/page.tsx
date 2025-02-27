@@ -15,16 +15,24 @@ type ItemProps = {
   searchParams: { type: string };
 };
 
+let item;
+
 const getItemModel = async (uuid: string) => {
   const data = await getItemData(uuid);
-  const item = new ItemModel(data, uuid);
-  return item;
+  return new ItemModel(data, uuid);
+  // return item;
+};
+
+const getItem = async (uuid: string) => {
+  const data = await getItemData(uuid);
+  // const item = new ItemModel(data, uuid);
+  return data;
 };
 
 export async function generateMetadata({
   params,
 }: ItemProps): Promise<Metadata> {
-  const item = await getItemModel(params.uuid);
+  item = await getItem(params.uuid);
   params.item = item;
   return {
     title: `${item.title} - NYPL Digital Collections`, //should be item title
@@ -35,7 +43,8 @@ export async function generateMetadata({
 }
 
 export default async function ItemViewer({ params, searchParams }: ItemProps) {
-  const item = await getItemModel(params.uuid);
+  const data = await getItem(params.uuid);
+  const item = new ItemModel(data);
   return (
     <PageLayout
       activePage="item"
@@ -49,7 +58,7 @@ export default async function ItemViewer({ params, searchParams }: ItemProps) {
       ]}
       adobeAnalyticsPageName={createAdobeAnalyticsPageName("items", item.title)}
     >
-      <ItemPage item={item} type={searchParams.type} />
+      <ItemPage data={data} type={searchParams.type} uuid={params.uuid} />
     </PageLayout>
   );
 }
