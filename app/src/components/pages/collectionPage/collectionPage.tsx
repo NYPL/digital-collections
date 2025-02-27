@@ -47,7 +47,7 @@ const CollectionPage = ({ slug, data }) => {
           >
             {slug}
           </Heading>
-          <Filters headingText="Refine your results" ref={headingRef} />
+          <Filters headingText="Refine your results" />
         </Box>
       </Box>
       <Box

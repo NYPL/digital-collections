@@ -64,7 +64,7 @@ const SearchPage = ({ data }) => {
             )}
                     results for "${searchManager.keywords}"`}
           </Heading>
-          <Filters headingText="Refine your search" ref={headingRef} />
+          <Filters headingText="Refine your search" />
         </Box>
       </Box>
       <Box
