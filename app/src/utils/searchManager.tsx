@@ -64,13 +64,25 @@ abstract class BaseSearchManager implements SearchManager {
   }
 
   handleAddFilter(newFilter: Filter) {
-    const updatedFilters = [...this.currentFilters, newFilter];
+    const updatedFilters = this.currentFilters.map((filter) =>
+      filter.filter === newFilter.filter ? newFilter : filter
+    );
+
+    const filterExists = this.currentFilters.some(
+      (filter) => filter.filter === newFilter.filter
+    );
+
+    if (!filterExists) {
+      updatedFilters.push(newFilter);
+    }
+
     this.currentFilters = updatedFilters;
+
     return this.getQueryString({
       keywords: this.currentKeywords,
       sort: this.currentSort,
       page: this.currentPage,
-      filters: filterToString(updatedFilters),
+      filters: filterToString(this.currentFilters),
     });
   }
 
