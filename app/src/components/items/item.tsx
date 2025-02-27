@@ -35,8 +35,11 @@ const Item = ({ item, type }: ItemProps) => {
           <>
             <h2> Image: {item.title} </h2>
             <UniversalViewer
+              // "https://wellcomelibrary.org/iiif/b18035723/manifest"
               // manifestId={"https://api.dc.library.northwestern.edu/api/v2/collections/c373ecd2-2c45-45f2-9f9e-52dc244870bd?as=iiif"} //{`https://be73-100-37-199-113.ngrok-free.app//items/a9c43f00-c600-012f-59c3-58d385a7bc34`}//
-              manifestId={"https://wellcomelibrary.org/iiif/b18035723/manifest"} //{`https://be73-100-37-199-113.ngrok-free.app//items/${item.uuid}`} //a9c43f00-c600-012f-59c3-58d385a7bc34//{"https://wellcomelibrary.org/iiif/b18035723/manifest"}
+              manifestId={
+                "http://localhost:8000/items/8e8dc6a0-c6eb-012f-7a58-58d385a7bc34"
+              } //{`https://be73-100-37-199-113.ngrok-free.app//items/${item.uuid}`} //a9c43f00-c600-012f-59c3-58d385a7bc34//{"https://wellcomelibrary.org/iiif/b18035723/manifest"}
               canvasIndex={0}
               config={{}}
             />
