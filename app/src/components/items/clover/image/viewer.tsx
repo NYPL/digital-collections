@@ -73,6 +73,7 @@ const customTheme = {
 const CloverImageViewer = ({ uuid }: ImageViewerProps) => {
   const iiifContent =
     "https://api.dc.library.northwestern.edu/api/v2/collections/c373ecd2-2c45-45f2-9f9e-52dc244870bd?as=iiif";
+  // "https://wellcomelibrary.org/iiif/b18035723/manifest"
   ///"https://wellcomelibrary.org/iiif/b18035723"
   // `https://1e23-74-71-128-30.ngrok-free.app/items/${uuid}`
   // `http://localhost:8000/items/${uuid}`

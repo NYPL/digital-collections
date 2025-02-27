@@ -35,6 +35,7 @@ const Item = ({ item, type }: ItemProps) => {
           <>
             <h2> Image: {item.title} </h2>
             <UniversalViewer
+              // manifestId={"https://api.dc.library.northwestern.edu/api/v2/collections/c373ecd2-2c45-45f2-9f9e-52dc244870bd?as=iiif"} //{`https://be73-100-37-199-113.ngrok-free.app//items/a9c43f00-c600-012f-59c3-58d385a7bc34`}//
               manifestId={"https://wellcomelibrary.org/iiif/b18035723/manifest"} //{`https://be73-100-37-199-113.ngrok-free.app//items/${item.uuid}`} //a9c43f00-c600-012f-59c3-58d385a7bc34//{"https://wellcomelibrary.org/iiif/b18035723/manifest"}
               canvasIndex={0}
               config={{}}
@@ -67,7 +68,32 @@ const Item = ({ item, type }: ItemProps) => {
               "https://iiif.io/api/cookbook/recipe/0003-mvm-video/manifest.json"
             } //{`https://be73-100-37-199-113.ngrok-free.app/items/${item.uuid}`} //{"https://wellcomelibrary.org/iiif/b18035723/manifest"}
             canvasIndex={0}
-            config={{}}
+            config={{
+              avCenterPanel: {
+                options: {
+                  /** Determines if the poster image is expanded */
+                  posterImageExpanded: true,
+                  /** Determines if media errors are hidden */
+                  hideMediaError: true,
+                  /** Determines if parent is included in title */
+                  includeParentInTitleEnabled: true,
+                  /** Field for subtitle metadata */
+                  subtitleMetadataField: true,
+                  /** Determines if auto play is enabled */
+                  autoPlay: true,
+                  /** Determines if fast forward is enabled */
+                  enableFastForward: true,
+                  /** Determines if fast rewind is enabled */
+                  enableFastRewind: true,
+                  /** Ratio of the poster image */
+                  posterImageRatio: true,
+                  /** Determines if limit is set to range */
+                  limitToRange: true,
+                  /** Determines if ranges auto advance */
+                  autoAdvanceRanges: true,
+                },
+              },
+            }}
           />
           <VideoViewer />
         </>
