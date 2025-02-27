@@ -11,7 +11,9 @@ import { forwardRef } from "react";
 const DateFilter = forwardRef<HTMLHeadingElement>((props, ref) => {
   return (
     <>
-      <Heading size="heading6">Date range:</Heading>
+      <Heading size="heading6" level="h3">
+        Date range:
+      </Heading>
       <Flex
         gap="s"
         marginBottom="m"
@@ -32,10 +34,8 @@ const DateFilter = forwardRef<HTMLHeadingElement>((props, ref) => {
             }}
             id="dateStart"
             labelText="Start year"
-            placeholder="Start year"
-            showLabel={false}
           />
-          <Text sx={{ marginBottom: "0" }}> to </Text>
+          <Text sx={{ marginBottom: "0", marginTop: "m" }}> to </Text>
           <TextInput
             sx={{
               [`@media (min-width: ${headerBreakpoints.lgMobile}px)`]: {
@@ -44,8 +44,6 @@ const DateFilter = forwardRef<HTMLHeadingElement>((props, ref) => {
             }}
             id="dateEnd"
             labelText="End year"
-            showLabel={false}
-            placeholder="End year"
           />
         </Flex>
         <Button
@@ -53,6 +51,9 @@ const DateFilter = forwardRef<HTMLHeadingElement>((props, ref) => {
           sx={{
             whiteSpace: "nowrap",
             minWidth: "108px",
+            [`@media (min-width: ${headerBreakpoints.lgMobile}px)`]: {
+              marginTop: "m",
+            },
           }}
           onClick={() => {
             (ref as React.RefObject<HTMLHeadingElement>)?.current?.focus();

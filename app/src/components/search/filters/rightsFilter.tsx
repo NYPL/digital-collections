@@ -33,7 +33,9 @@ const RadioOption = ({ id, text, tooltip }) => (
 const RightsFilter = forwardRef<HTMLHeadingElement>((props, ref) => {
   return (
     <>
-      <Heading size="heading6">Show only:</Heading>
+      <Heading size="heading6" level="h3">
+        Show only:
+      </Heading>
       <RadioGroup
         name="show-only-filters"
         id="show-only-filters"
