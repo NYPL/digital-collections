@@ -35,7 +35,7 @@ describe("SortMenu", () => {
     expect(screen.getByText("Sort by: Relevance")).toBeInTheDocument();
   });
 
-  it("displays menu options", () => {
+  it("displays menu options on open", async () => {
     render(
       <SortMenu
         updateURL={updateURL}
@@ -43,8 +43,12 @@ describe("SortMenu", () => {
         options={options}
       />
     );
-    expect(screen.getByText("Relevance")).toBeInTheDocument();
-    expect(screen.getByText("Date")).toBeInTheDocument();
+    expect(screen.getByText("Date")).not.toBeVisible();
+    fireEvent.click(screen.getByText("Sort by: Relevance"));
+    await waitFor(() => {
+      expect(screen.getByText("Relevance")).toBeVisible();
+      expect(screen.getByText("Date")).toBeVisible();
+    });
   });
 
   it("calls updateURL with the correct query string when an option is selected", async () => {
