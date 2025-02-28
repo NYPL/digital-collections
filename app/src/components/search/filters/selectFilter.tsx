@@ -90,17 +90,17 @@ const SelectFilterComponent = forwardRef<
 
   const onChange = (newSelection: string) => {
     if (!isModalOpen) {
-      if (timeoutId) {
-        clearTimeout(timeoutId);
-      }
-      const newTimeoutId = setTimeout(() => {
-        console.log(`selected: ${newSelection}`);
-        setSelected(
-          filter.options.find((option) => option.name === newSelection) || null
-        );
-      }, 600);
+      // if (timeoutId) {
+      //   clearTimeout(timeoutId);
+      // }
+      // const newTimeoutId = setTimeout(() => {
+      console.log(`selected: ${newSelection}`);
+      setSelected(
+        filter.options.find((option) => option.name === newSelection) || null
+      );
+      // }, 600);
 
-      setTimeoutId(newTimeoutId);
+      //setTimeoutId(newTimeoutId);
     }
   };
 
