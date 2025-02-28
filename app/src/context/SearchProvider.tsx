@@ -2,7 +2,7 @@
 import React, { createContext, useContext } from "react";
 import {
   DEFAULT_PAGE_NUM,
-  DEFAULT_SORT,
+  DEFAULT_SEARCH_SORT,
   DEFAULT_SEARCH_TERM,
 } from "../config/constants";
 import { GeneralSearchManager, SearchManager } from "../utils/searchManager";
@@ -44,7 +44,7 @@ export const SearchProvider = ({
 }) => {
   const searchManager = new GeneralSearchManager({
     initialPage: Number(searchParams?.page) || DEFAULT_PAGE_NUM,
-    initialSort: searchParams?.sort || DEFAULT_SORT,
+    initialSort: searchParams?.sort || DEFAULT_SEARCH_SORT,
     initialFilters: stringToFilter(searchParams?.filters),
     initialKeywords: searchParams?.keywords || DEFAULT_SEARCH_TERM,
   });
