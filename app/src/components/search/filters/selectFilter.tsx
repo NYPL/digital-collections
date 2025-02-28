@@ -129,7 +129,7 @@ const SelectFilterComponent = forwardRef<
       <Button
         id="apply"
         width="100%"
-        marginBottom="s"
+        marginBottom={sortedOptions.length > 10 ? "s" : "0"}
         marginTop="s"
         isDisabled={!selected}
         onClick={() => {
