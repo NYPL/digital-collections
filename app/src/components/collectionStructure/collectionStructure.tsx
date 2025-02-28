@@ -5,8 +5,11 @@ import {
   Icon,
   Text,
   Heading,
+  Tooltip,
 } from "@nypl/design-system-react-components";
 import { sampleStructure } from "__tests__/__mocks__/data/mockCollectionStructure";
+import { useScrollIntoViewIfNeeded } from "@/src/hooks/useScrollIntoViewIfNeeded";
+import { headerBreakpoints } from "@/src/utils/breakpoints";
 
 export interface CollectionChildProps {
   title: string;
@@ -21,6 +24,26 @@ interface OpenStateItem {
   level: number;
   isOpen: boolean;
 }
+
+const ButtonText = ({ title, hasChildren, level }) => {
+  let text = (
+    <Text
+      flex="1"
+      marginBottom="0"
+      whiteSpace="nowrap"
+      overflow="hidden"
+      textOverflow="ellipsis"
+      paddingLeft={hasChildren ? "s" : "28px"}
+      fontWeight="500"
+    >
+      {title}
+    </Text>
+  );
+  let truncationLength = 30 - level * 7;
+  if (title.length > truncationLength) {
+    return <Tooltip content={text}>{text}</Tooltip>;
+  } else return text;
+};
 
 const fetchChildren = async (
   title: string
@@ -71,6 +94,7 @@ const AccordionItem = ({
   openState: OpenStateItem[];
   setOpenState: React.Dispatch<React.SetStateAction<OpenStateItem[]>>;
 }) => {
+  const { ref, scrollIntoViewIfNeeded } = useScrollIntoViewIfNeeded();
   const isOpen = openState.some((item) => item.title === title && item.isOpen);
   const deepestOpenItem =
     openState.length > 0 ? openState[openState.length - 1].title : null;
@@ -125,6 +149,7 @@ const AccordionItem = ({
             outline: "none !important",
             boxShadow: "inset 0 0 0 2px var(--nypl-colors-ui-focus) !important",
           }}
+          ref={ref}
           id={`${uuid}-btn`}
           w="100%"
           color="black"
@@ -141,12 +166,7 @@ const AccordionItem = ({
           paddingBottom="m"
           onClick={() => {
             toggleItem(title, level);
-            const button = document.getElementById(`${uuid}-btn`);
-            if (button) {
-              setTimeout(() => {
-                button.scrollIntoView({ behavior: "smooth", block: "center" });
-              }, 200);
-            }
+            scrollIntoViewIfNeeded();
           }}
           {...(hasChildren ? { "aria-expanded": isOpen } : {})}
           aria-current={isCurrent ? "true" : undefined}
@@ -159,18 +179,8 @@ const AccordionItem = ({
                 visibility={hasChildren ? "visible" : "hidden"}
               />
             )}
-            <Text
-              flex="1"
-              marginBottom="0"
-              whiteSpace="nowrap"
-              overflow="hidden"
-              textOverflow="ellipsis"
-              paddingLeft="s"
-              fontWeight="500"
-            >
-              {title}
-            </Text>
-            <Box as="span" marginLeft="s">
+            <ButtonText title={title} hasChildren={hasChildren} level={level} />
+            <Box as="span" marginLeft="s" fontWeight="400">
               {itemCount}
             </Box>
           </Flex>
@@ -202,7 +212,14 @@ const CollectionStructure = forwardRef<
 >(({ data }, headingRef) => {
   const [openState, setOpenState] = useState<OpenStateItem[]>([]);
   return (
-    <Flex flexDir="column">
+    <Flex
+      flexDir="column"
+      sx={{
+        [`@media screen and (max-width: ${headerBreakpoints.smTablet}px)`]: {
+          display: "none",
+        },
+      }}
+    >
       <Heading size="heading6">Collection structure</Heading>
 
       <Box
