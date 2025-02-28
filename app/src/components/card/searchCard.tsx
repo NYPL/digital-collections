@@ -9,15 +9,17 @@ import {
   Flex,
   Text,
   Box,
+  Tooltip,
 } from "@nypl/design-system-react-components";
 import SearchCardType, {
   SearchResultRecordType,
 } from "@/src/types/SearchCardType";
-import { headerBreakpoints } from "@/src/utils/breakpoints";
+import { TRUNCATED_SEARCH_CARD_LENGTH } from "@/src/config/constants";
 
 export interface SearchCardProps {
   result: SearchCardType;
   keywords: string;
+  isLargerThanLargeTablet: boolean;
 }
 
 const onSiteMaterialBadge = (recordType: SearchResultRecordType) => {
@@ -53,7 +55,7 @@ const highlightedText = ({ highlight, keyword }) => {
   const words = highlight.text.split(" ");
   const keywords = keyword.split(" ");
   return (
-    <Box>
+    <Box noOfLines={2}>
       <Text
         as="span"
         sx={{
@@ -92,8 +94,13 @@ const highlightedText = ({ highlight, keyword }) => {
   );
 };
 
-export const SearchCard = ({ result, keywords }: SearchCardProps) => {
-  return (
+export const SearchCard = ({
+  result,
+  keywords,
+  isLargerThanLargeTablet,
+}: SearchCardProps) => {
+  const truncatedTitle = result.title.length > TRUNCATED_SEARCH_CARD_LENGTH;
+  const card = (
     <Card
       id={result.uuid}
       imageProps={{
@@ -112,7 +119,20 @@ export const SearchCard = ({ result, keywords }: SearchCardProps) => {
       // Card width 225 and content width 720
       maxWidth="945px"
     >
-      <CardHeading level="h3" size="heading5" marginBottom="xxs" noOfLines={3}>
+      <CardHeading
+        level="h3"
+        size="heading5"
+        marginBottom="xxs"
+        noOfLines={3}
+        sx={{
+          ":focus-within": {
+            outline: "2px solid var(--nypl-colors-ui-link-primary)",
+            "> a": {
+              outline: "none",
+            },
+          },
+        }}
+      >
         {result.title}
       </CardHeading>
       <CardContent>
@@ -129,6 +149,15 @@ export const SearchCard = ({ result, keywords }: SearchCardProps) => {
       </CardContent>
     </Card>
   );
+
+  const cardWithTooltip =
+    isLargerThanLargeTablet && truncatedTitle ? (
+      <Tooltip content={result.title}>{card}</Tooltip>
+    ) : (
+      card
+    );
+
+  return cardWithTooltip;
 };
 
 export default SearchCard;

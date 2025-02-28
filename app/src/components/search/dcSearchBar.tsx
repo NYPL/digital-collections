@@ -110,6 +110,9 @@ const SearchBarComponent = forwardRef<HTMLDivElement, SearchBarProps>(
           }
         }}
         {...stateProps}
+        sx={{
+          paddingRight: showButton ? "unset" : "l",
+        }}
       />
     );
 
@@ -189,7 +192,23 @@ const SearchBarComponent = forwardRef<HTMLDivElement, SearchBarProps>(
           maxWidth: maxWrapperWidth,
         }}
       >
-        {textInput}
+        {showButton ? (
+          textInput
+        ) : (
+          <Box position="relative" width="100%">
+            {textInput}
+            <Icon
+              name="search"
+              size="medium"
+              position="absolute"
+              right="0px"
+              top="50%"
+              transform="translateY(-50%)"
+              color="ui.gray.dark"
+              pointerEvents="none"
+            />
+          </Box>
+        )}
         {showButton && buttonElem}
       </Box>
     );

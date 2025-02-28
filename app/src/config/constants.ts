@@ -10,7 +10,8 @@ export const ADOBE_ANALYTICS_DC_PREFIX = "dc|";
 export const ADOBE_EMBED_URL =
   appConfig.adobeEmbedUrl[appConfig.environment as ENV_KEY];
 
-export const TRUNCATED_LENGTH = 80;
+export const TRUNCATED_CARD_LENGTH = 80;
+export const TRUNCATED_SEARCH_CARD_LENGTH = 140;
 
 export const CARDS_PER_PAGE = 48;
 

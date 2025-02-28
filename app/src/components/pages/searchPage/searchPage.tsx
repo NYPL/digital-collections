@@ -7,6 +7,7 @@ import {
   Link,
   Icon,
   Menu,
+  Banner,
 } from "@nypl/design-system-react-components";
 import React, { useRef } from "react";
 import { CARDS_PER_PAGE, SEARCH_SORT_LABELS } from "@/src/config/constants";
@@ -17,6 +18,7 @@ import { usePathname, useRouter } from "next/navigation";
 import ActiveFilters from "../../search/filters/activeFilters";
 import SearchCardsGrid from "../../grids/searchCardsGrid";
 import { headerBreakpoints } from "@/src/utils/breakpoints";
+import { MobileSearchBanner } from "../../mobileSearchBanner/mobileSearchBanner";
 
 const SearchPage = ({ data }) => {
   const { searchManager } = useSearchContext();
@@ -26,10 +28,11 @@ const SearchPage = ({ data }) => {
   const updateURL = async (queryString) => {
     push(`${pathname}?${queryString}`);
   };
-  const headingRef = useRef<HTMLHeadingElement | null>(null);
+  const headingRef = useRef<HTMLHeadingElement>(null);
 
   return (
     <Box id="mainContent">
+      <MobileSearchBanner />
       <Box
         sx={{
           background: "ui.bg.default",
@@ -61,7 +64,7 @@ const SearchPage = ({ data }) => {
             )}
                     results for "${searchManager.keywords}"`}
           </Heading>
-          <Filters headingText="Refine your search" ref={headingRef} />
+          <Filters headingText="Refine your search" />
         </Box>
       </Box>
       <Box
