@@ -14,7 +14,6 @@ import {
 import React, { useRef } from "react";
 import Filters from "../../search/filters/filters";
 import ActiveFilters from "../../search/filters/activeFilters";
-import DCSearchBar from "../../search/dcSearchBar";
 import { displayResults } from "@/src/utils/utils";
 import CollectionStructure from "../../collectionStructure/collectionStructure";
 import { sampleStructure } from "__tests__/__mocks__/data/mockCollectionStructure";

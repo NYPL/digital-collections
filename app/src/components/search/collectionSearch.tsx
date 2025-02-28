@@ -39,6 +39,7 @@ export const CollectionSearch = () => {
         <Button
           id={isExpanded ? "close-search" : "open-search"}
           buttonType="text"
+          aria-label={isExpanded ? "Close search" : "Open search"}
           sx={{
             display: "flex",
             [`@media (min-width:  ${headerBreakpoints.lgMobile}px)`]: {
