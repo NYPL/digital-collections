@@ -4,6 +4,7 @@ import {
   RadioGroup,
   Radio,
   Flex,
+  Button,
 } from "@nypl/design-system-react-components";
 import React, {
   forwardRef,
@@ -97,7 +98,6 @@ const SelectFilterComponent = forwardRef<
         setSelected(
           filter.options.find((option) => option.name === newSelection) || null
         );
-        setUserClickedOutside(true);
       }, 600);
 
       setTimeoutId(newTimeoutId);
@@ -105,12 +105,13 @@ const SelectFilterComponent = forwardRef<
   };
 
   const sortedOptions =
-    selected && !isModalOpen
-      ? [
-          selected,
-          ...filter.options.filter((option) => option.name !== selected.name),
-        ]
-      : filter.options;
+    // selected && !isModalOpen
+    //   ? [
+    //       selected,
+    //       ...filter.options.filter((option) => option.name !== selected.name),
+    //     ]
+    //   :
+    filter.options;
 
   const accordionPanel = (
     <>
@@ -125,6 +126,18 @@ const SelectFilterComponent = forwardRef<
       >
         {radioFilterOptions(sortedOptions.slice(0, 10))}
       </RadioGroup>
+      <Button
+        id="apply"
+        width="100%"
+        marginBottom="s"
+        marginTop="s"
+        isDisabled={!selected}
+        onClick={() => {
+          setUserClickedOutside(true);
+        }}
+      >
+        Apply
+      </Button>
       {sortedOptions.length > 10 && (
         <SelectFilterModal
           filter={filter}
