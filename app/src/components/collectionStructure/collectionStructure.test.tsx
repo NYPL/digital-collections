@@ -8,6 +8,14 @@ import {
 import CollectionStructure from "./collectionStructure";
 import { sampleStructure } from "__tests__/__mocks__/data/mockCollectionStructure";
 import React from "react";
+import { useScrollIntoViewIfNeeded } from "../../hooks/useScrollIntoViewIfNeeded";
+
+jest.mock("../../hooks/useScrollIntoViewIfNeeded", () => ({
+  useScrollIntoViewIfNeeded: jest.fn(() => ({
+    ref: { current: null },
+    scrollIntoViewIfNeeded: jest.fn(),
+  })),
+}));
 
 describe("CollectionStructure", () => {
   const mockHeadingRef = React.createRef<HTMLHeadingElement>();
