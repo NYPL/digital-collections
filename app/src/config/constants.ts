@@ -32,3 +32,22 @@ export const COLLECTION_SORT_LABELS = {
   "title-desc": "Title Z to A",
   "title-asc": "Title A to Z",
 };
+
+export const METADATA_FIELDS = [
+  "Title",
+  "Names",
+  "Collection",
+  "Date/Origin",
+  "Table of Contents",
+  "Library Locations",
+  "Subjects",
+  "Genres",
+  "Notes",
+  "Physical Description",
+  "Abstract",
+  "Types",
+  "Languages",
+  "Identifiers",
+  "Access",
+  "Rights",
+];
