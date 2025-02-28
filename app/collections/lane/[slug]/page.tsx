@@ -2,7 +2,7 @@ import React, { Suspense } from "react";
 import { Metadata } from "next";
 import CollectionLanePage from "@/src/components/pages/collectionLanePage/collectionLanePage";
 import { slugToString } from "@/src/utils/utils";
-import { getLaneData } from "@/src/utils/apiHelpers";
+import { RepoApi } from "@/src/utils/apiClients";
 import { redirect } from "next/navigation";
 
 type LaneProps = {
@@ -23,7 +23,7 @@ export async function generateMetadata({
 }
 
 export default async function Lane({ params, searchParams }: LaneProps) {
-  const data = await getLaneData({
+  const data = await RepoApi.getLaneData({
     slug: params.slug.replace(/-/g, " "),
     pageNum: searchParams.page,
   });

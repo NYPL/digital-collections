@@ -1,9 +1,9 @@
 import { NextResponse, NextRequest } from "next/server";
-import { getHomePageData } from "@/src/utils/apiHelpers";
+import { RepoApi } from "@/src/utils/apiClients";
 export const fetchCache = "force-no-store";
 
 export const GET = async (request: NextRequest, response: NextResponse) => {
-  const data = await getHomePageData();
+  const data = await RepoApi.getHomePageData();
 
   const newResponse = NextResponse.json(data, { status: 200 });
 
