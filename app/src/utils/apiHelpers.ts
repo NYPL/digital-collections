@@ -90,6 +90,14 @@ export const getItemData = async (uuid: string) => {
 };
 
 /**
+ * gets Item rights given a capture uuid
+ */
+export const getItemRightsData = async (uuid: string) => {
+  const apiUrl = `${process.env.API_URL}/api/v2/items/rights/${uuid}`;
+  const res = await fetchApi(apiUrl);
+  return res;
+};
+/**
  * Returns the number of digitized items in repo api.
  */
 
