@@ -89,14 +89,14 @@ const SelectFilterModal = ({
   return (
     <>
       <Button
-        buttonType="link"
+        buttonType="secondary"
+        width="100%"
         id="modal-btn"
         onClick={handleOpen}
         ref={buttonRef}
         sx={{
           display: "none",
           textDecoration: "none",
-          padding: 0,
           height: "m",
           marginTop: "-xxs",
           marginBottom: "-xs",
