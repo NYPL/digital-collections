@@ -1,8 +1,9 @@
 import { forwardRef, useState, useEffect, useRef } from "react";
 import {
   Modal,
-  ModalBody,
   ModalContent,
+  ModalBody,
+  ModalHeader,
   ModalOverlay,
   useDisclosure,
 } from "@chakra-ui/react";
@@ -26,102 +27,111 @@ import { headerBreakpoints } from "@/src/utils/breakpoints";
 type SelectFilterModalProps = {
   filter: FilterCategory;
   onOpen: () => void;
-  onClose: () => void;
+  onClose: (closeDropdown) => void;
   selected: FilterOption | null;
   setSelected: React.Dispatch<React.SetStateAction<FilterOption | null>>;
+  modalSelected: FilterOption | null;
+  setModalSelected: React.Dispatch<React.SetStateAction<FilterOption | null>>;
 };
 
 type FocusableElement = HTMLElement & { focus: () => void };
 
-const SelectFilterModal = forwardRef<
-  HTMLHeadingElement,
-  SelectFilterModalProps
->(
-  (
-    {
-      filter,
-      onOpen: parentOnOpen,
-      onClose: parentOnClose,
-      selected,
-      setSelected,
-    },
-    headingRef?
-  ) => {
-    const {
-      isOpen,
-      onOpen: modalOnOpen,
-      onClose: modalOnClose,
-    } = useDisclosure();
+const SelectFilterModal = ({
+  filter,
+  onOpen: parentOnOpen,
+  onClose: parentOnClose,
+  selected,
+  setSelected,
+  modalSelected,
+  setModalSelected,
+}: SelectFilterModalProps) => {
+  const {
+    isOpen,
+    onOpen: modalOnOpen,
+    onClose: modalOnClose,
+  } = useDisclosure();
+  const [searchText, setSearchText] = useState("");
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 10;
+  const buttonRef = useRef<HTMLButtonElement | null>(null);
+  const liveRegionRef = useRef<HTMLDivElement | null>(null);
 
-    const [searchText, setSearchText] = useState("");
-    const [currentPage, setCurrentPage] = useState(1);
-    const itemsPerPage = 10;
+  useEffect(() => {
+    setCurrentPage(1);
+  }, [searchText]);
 
-    useEffect(() => {
-      setCurrentPage(1);
-    }, [searchText]);
+  const filteredOptions = filter.options.filter((option) =>
+    option.name.toLowerCase().includes(searchText.toLowerCase())
+  );
 
-    const filteredOptions = filter.options.filter((option) =>
-      option.name.toLowerCase().includes(searchText.toLowerCase())
-    );
+  const pageCount = Math.ceil(filteredOptions.length / itemsPerPage);
+  const currentOptions = filteredOptions.slice(
+    (currentPage - 1) * itemsPerPage,
+    currentPage * itemsPerPage
+  );
 
-    const pageCount = Math.ceil(filteredOptions.length / itemsPerPage);
+  useEffect(() => {
+    if (liveRegionRef.current) {
+      liveRegionRef.current.textContent = `${filteredOptions.length} options available`;
+    }
+  }, [filteredOptions.length]);
 
-    const currentOptions = filteredOptions.slice(
-      (currentPage - 1) * itemsPerPage,
-      currentPage * itemsPerPage
-    );
+  const handleOpen = () => {
+    modalOnOpen();
+    parentOnOpen();
+  };
 
-    const handleOpen = () => {
-      modalOnOpen();
-      parentOnOpen();
-    };
+  const handleClose = (closeFilter: boolean) => {
+    modalOnClose();
+    parentOnClose(closeFilter);
+  };
 
-    const handleClose = () => {
-      modalOnClose();
-      parentOnClose();
-    };
-    const buttonRef = useRef<HTMLButtonElement | null>(null);
+  return (
+    <>
+      <Button
+        buttonType="secondary"
+        width="100%"
+        id="modal-btn"
+        onClick={handleOpen}
+        ref={buttonRef}
+        sx={{
+          display: "none",
+          textDecoration: "none",
+          height: "m",
+          marginTop: "-xxs",
+          marginBottom: "-xs",
+          [`@media screen and (min-width: ${headerBreakpoints.lgMobile}px)`]: {
+            display: "inline",
+          },
+        }}
+      >{`View all ${filter.name.toLowerCase()}${
+        filter.name === "Publishers" ? "" : "s"
+      }`}</Button>
 
-    return (
-      <>
-        <Button
-          buttonType="link"
-          id="modal-btn"
-          onClick={handleOpen}
-          ref={buttonRef}
-          sx={{
-            display: "none",
-            textDecoration: "none",
-            padding: 0,
-            [`@media screen and (min-width: ${headerBreakpoints.lgMobile}px)`]:
-              {
-                display: "inline",
-              },
-          }}
-        >{`View all ${filter.name.toLowerCase()}${
-          filter.name === "Publishers" ? "" : "s"
-        }`}</Button>
-        <Modal
-          finalFocusRef={
-            selected
-              ? (headingRef as React.RefObject<FocusableElement>)
-              : undefined
-          }
-          isOpen={isOpen}
-          onClose={handleClose}
-        >
-          <ModalOverlay />
-          <ModalContent sx={{ borderRadius: "4px" }}>
-            <Box
-              sx={{
-                bg: "ui.bg.default",
-                borderRadius: "4px 4px 0px 0px",
-                borderBottom: "1px solid",
-                borderColor: "ui.border.default",
-                marginBottom: "s",
-              }}
-            >
+      <Modal
+        finalFocusRef={
+          selected === modalSelected && selected !== null
+            ? buttonRef
+            : undefined
+        }
+        isOpen={isOpen}
+        onClose={() => {
+          setSelected(selected);
+          handleClose(false);
+        }}
+      >
+        <ModalOverlay />
+        <ModalContent sx={{ borderRadius: "4px" }}>
+          <Box
+            sx={{
+              bg: "ui.bg.default",
+              borderRadius: "4px 4px 0px 0px",
+              borderBottom: "1px solid",
+              borderColor: "ui.border.default",
+              marginBottom: "s",
+            }}
+          >
+            <ModalHeader padding="0">
               <Heading
                 size="heading5"
                 paddingTop="xs"
@@ -130,93 +140,107 @@ const SelectFilterModal = forwardRef<
               >
                 {`${filter.name}${filter.name === "Publishers" ? "" : "s"}`}
               </Heading>
-            </Box>
-            <ModalBody>
-              <DCSearchBar
-                showButton={false}
-                id={`search-${filter.name}-options`}
-                labelText={`Search ${filter.name}${
+            </ModalHeader>
+          </Box>
+          <Box paddingLeft="m" paddingRight="m">
+            <DCSearchBar
+              showButton={false}
+              id={`search-${filter.name}-options`}
+              labelText={`Search ${filter.name}${
+                filter.name === "Publishers" ? "" : "s"
+              }`}
+              maxWrapperWidth="400px"
+              textInputProps={{
+                id: "filter-search-text",
+                isClearable: true,
+                labelText: `${filter.name} search`,
+                isClearableCallback: () => setSearchText(""),
+                name: "filter_keywords",
+                placeholder: `Search ${filter.name.toLowerCase()}${
                   filter.name === "Publishers" ? "" : "s"
-                }`}
-                maxWrapperWidth="400px"
-                textInputProps={{
-                  id: "filter-search-text",
-                  isClearable: true,
-                  labelText: `${filter.name} search`,
-                  isClearableCallback: () => setSearchText(""),
-                  name: "filter_keywords",
-                  placeholder: `Search ${filter.name.toLowerCase()}${
-                    filter.name === "Publishers" ? "" : "s"
-                  }`,
-                  onChange: (e) => setSearchText(e.target.value),
-                }}
-                onSubmit={() => {}}
-              />
-              <Box
-                sx={{
-                  marginTop: "s",
-                  border: "1px solid",
-                  borderColor: "ui.border.hover",
-                  padding: "s",
-                  height: "394px",
+                }`,
+                onChange: (e) => setSearchText(e.target.value),
+              }}
+              onSubmit={() => {}}
+            />
+            <div
+              id="search-live-region"
+              ref={liveRegionRef}
+              aria-live="polite"
+              style={{
+                position: "absolute",
+                width: "1px",
+                height: "1px",
+                margin: "-1px",
+                padding: 0,
+                overflow: "hidden",
+                clip: "rect(0,0,0,0)",
+                border: 0,
+              }}
+            />
+            <Box
+              sx={{
+                marginTop: "s",
+                border: "1px solid",
+                borderColor: "ui.border.hover",
+                padding: "s",
+                height: "394px",
+              }}
+            >
+              <RadioGroup
+                isFullWidth
+                sx={{ marginBottom: "-8px" }}
+                id={`${filter.name}-options`}
+                labelText={`${filter.name} filter options`}
+                showLabel={false}
+                name={filter.name}
+                defaultValue={selected?.name ?? ""}
+                showHelperInvalidText={false}
+                onChange={(newValue) => {
+                  const newSelectedOption =
+                    filter.options.find((option) => option.name === newValue) ||
+                    null;
+                  setModalSelected(newSelectedOption);
                 }}
               >
-                <RadioGroup
-                  isFullWidth
-                  // Helper invalid text, even when false, creates a 8px margin.
-                  sx={{ marginBottom: "-8px" }}
-                  id={`${filter.name}-options`}
-                  labelText={`${filter.name} filter options`}
-                  showLabel={false}
-                  name={filter.name}
-                  defaultValue={selected?.name ?? ""}
-                  showHelperInvalidText={false}
-                  onChange={(newValue) => {
-                    const newSelectedOption = filter.options.find(
-                      (option) => option.name === newValue
-                    );
-                    setSelected(newSelectedOption || null);
-                  }}
-                >
-                  {radioFilterOptions(currentOptions)}
-                </RadioGroup>
-              </Box>
-              <Flex>
-                <Pagination
-                  id="filter-pagination-id"
-                  currentPage={currentPage}
-                  initialPage={1}
-                  pageCount={pageCount}
-                  onPageChange={(page) => {
-                    setCurrentPage(page);
-                  }}
-                  sx={{
-                    paddingTop: "m",
-                    justifyContent: "center",
-                    svg: {
-                      _visited: {
-                        _disabled: { fill: "ui.disabled.primary !important" },
-                      },
+                {radioFilterOptions(currentOptions)}
+              </RadioGroup>
+            </Box>
+            <Flex>
+              <Pagination
+                id="filter-pagination-id"
+                currentPage={currentPage}
+                initialPage={1}
+                pageCount={pageCount}
+                onPageChange={(page) => {
+                  setCurrentPage(page);
+                }}
+                sx={{
+                  paddingTop: "m",
+                  justifyContent: "center",
+                  svg: {
+                    _visited: {
+                      _disabled: { fill: "ui.disabled.primary !important" },
                     },
+                  },
 
-                    a: {
-                      _disabled: {
-                        color: "ui.disabled.primary",
-                        pointerEvents: "none",
-                        svg: { fill: "ui.disabled.primary !important" },
-                      },
+                  a: {
+                    _disabled: {
+                      color: "ui.disabled.primary",
+                      pointerEvents: "none",
+                      svg: { fill: "ui.disabled.primary !important" },
                     },
-                  }}
-                />
-              </Flex>
-            </ModalBody>
+                  },
+                }}
+              />
+            </Flex>
 
             <ButtonGroup padding="m" marginX="auto">
               <Button
                 buttonType="secondary"
                 onClick={() => {
-                  setSelected(null);
-                  handleClose();
+                  setSelected(selected);
+                  handleClose(false);
                 }}
                 id="close-button"
               >
@@ -224,25 +248,21 @@ const SelectFilterModal = forwardRef<
               </Button>
               <Button
                 id="confirm-button"
-                isDisabled={!selected}
+                isDisabled={!modalSelected}
                 onClick={() => {
-                  setSelected(
-                    filter.options.find(
-                      (option) => option.name === selected?.name
-                    ) || null
-                  );
-                  handleClose();
+                  setModalSelected(modalSelected);
+                  setSelected(modalSelected);
+                  handleClose(true);
                 }}
               >
                 Confirm
               </Button>
             </ButtonGroup>
-          </ModalContent>
-        </Modal>
-      </>
-    );
-  }
-);
-
+          </Box>
+        </ModalContent>
+      </Modal>
+    </>
+  );
+};
 SelectFilterModal.displayName = "SelectFilterModal";
 export default SelectFilterModal;

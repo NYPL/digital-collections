@@ -22,6 +22,7 @@ describe("SelectFilterModal", () => {
   const mockOnOpen = jest.fn();
   const mockOnClose = jest.fn();
   const mockSetSelected = jest.fn();
+  const mockSetModalSelected = jest.fn();
 
   const mockFilter: FilterCategory = {
     name: "Genre",
@@ -39,7 +40,9 @@ describe("SelectFilterModal", () => {
         onOpen={mockOnOpen}
         onClose={mockOnClose}
         selected={null}
+        modalSelected={null}
         setSelected={mockSetSelected}
+        setModalSelected={mockSetModalSelected}
       />
     );
 
@@ -53,7 +56,9 @@ describe("SelectFilterModal", () => {
         onOpen={mockOnOpen}
         onClose={mockOnClose}
         selected={null}
+        modalSelected={null}
         setSelected={mockSetSelected}
+        setModalSelected={mockSetModalSelected}
       />
     );
 
@@ -70,7 +75,9 @@ describe("SelectFilterModal", () => {
         onOpen={mockOnOpen}
         onClose={mockOnClose}
         selected={null}
+        modalSelected={null}
         setSelected={mockSetSelected}
+        setModalSelected={mockSetModalSelected}
       />
     );
 
@@ -101,7 +108,9 @@ describe("SelectFilterModal", () => {
         onOpen={mockOnOpen}
         onClose={mockOnClose}
         selected={null}
+        modalSelected={null}
         setSelected={mockSetSelected}
+        setModalSelected={mockSetModalSelected}
       />
     );
 
@@ -110,7 +119,7 @@ describe("SelectFilterModal", () => {
     await waitFor(() => {
       const option = screen.getByRole("radio", { name: "Fiction 10" });
       fireEvent.click(option);
-      expect(mockSetSelected).toHaveBeenCalledWith({
+      expect(mockSetModalSelected).toHaveBeenCalledWith({
         name: "Fiction",
         count: 10,
       });
@@ -124,7 +133,9 @@ describe("SelectFilterModal", () => {
         onOpen={mockOnOpen}
         onClose={mockOnClose}
         selected={null}
+        modalSelected={null}
         setSelected={mockSetSelected}
+        setModalSelected={mockSetModalSelected}
       />
     );
 
@@ -163,14 +174,16 @@ describe("SelectFilterModal", () => {
     });
   });
 
-  it("closes modal when clicking close button", async () => {
+  it("closes modal and removes modal selection when clicking close button", async () => {
     render(
       <SelectFilterModal
         filter={mockFilter}
         onOpen={mockOnOpen}
         onClose={mockOnClose}
         selected={null}
+        modalSelected={null}
         setSelected={mockSetSelected}
+        setModalSelected={mockSetModalSelected}
       />
     );
     fireEvent.click(screen.getByText("View all genres"));
@@ -178,6 +191,39 @@ describe("SelectFilterModal", () => {
     await waitFor(() => {
       const closeButton = screen.getByRole("button", { name: "Close" });
       fireEvent.click(closeButton);
+      expect(mockSetSelected).toHaveBeenCalledWith(null);
+      expect(mockOnClose).toHaveBeenCalled();
+    });
+  });
+
+  it("closes modal and confirms modal selection when clicking confirm button", async () => {
+    render(
+      <SelectFilterModal
+        filter={mockFilter}
+        onOpen={mockOnOpen}
+        onClose={mockOnClose}
+        selected={{
+          name: "Fiction",
+          count: 10,
+        }}
+        modalSelected={{
+          name: "Fiction",
+          count: 10,
+        }}
+        setSelected={mockSetSelected}
+        setModalSelected={mockSetModalSelected}
+      />
+    );
+    fireEvent.click(screen.getByText("View all genres"));
+
+    await waitFor(() => {
+      const confirmButton = screen.getByRole("button", { name: "Confirm" });
+      expect(confirmButton).not.toHaveAttribute("disabled");
+      fireEvent.click(confirmButton);
+      expect(mockSetSelected).toHaveBeenCalledWith({
+        name: "Fiction",
+        count: 10,
+      });
       expect(mockOnClose).toHaveBeenCalled();
     });
   });

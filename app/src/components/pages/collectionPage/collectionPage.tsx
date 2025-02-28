@@ -22,11 +22,13 @@ import { CARDS_PER_PAGE, SEARCH_SORT_LABELS } from "@/src/config/constants";
 import SearchCardsGrid from "../../grids/searchCardsGrid";
 import { headerBreakpoints } from "@/src/utils/breakpoints";
 import { CollectionSearch } from "../../search/collectionSearch";
+import { MobileSearchBanner } from "../../mobileSearchBanner/mobileSearchBanner";
 
 const CollectionPage = ({ slug, data }) => {
   const headingRef = useRef<HTMLHeadingElement>(null);
   return (
     <Box id="mainContent">
+      <MobileSearchBanner />
       <Box
         sx={{
           background: "ui.bg.default",
@@ -49,7 +51,7 @@ const CollectionPage = ({ slug, data }) => {
           >
             {slug}
           </Heading>
-          <Filters headingText="Refine your results" ref={headingRef} />
+          <Filters headingText="Refine your results" />
         </Box>
       </Box>
       <Box
