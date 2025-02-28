@@ -87,7 +87,7 @@ export class RepoApi {
 
   static async getItemData(uuid: string) {
     const apiUrl = `${process.env.API_URL}/api/v2/items/mods_captures/${uuid}`;
-    const res = await fetchApi({ apiUrl: apiUrl });
+    const res = await fetchApi({ apiUrl });
     return res?.nyplAPI?.response;
   }
 
@@ -97,7 +97,7 @@ export class RepoApi {
 
   static async getNumDigitizedItems() {
     const apiUrl = `${process.env.API_URL}/api/v2/items/total`;
-    const res = await fetchApi({ apiUrl: apiUrl });
+    const res = await fetchApi({ apiUrl });
 
     const fallbackCount = defaultFeaturedItems.numberOfDigitizedItems;
     const totalItems = res?.nyplAPI?.response.count?.$
@@ -170,7 +170,7 @@ export class RepoApi {
       apiUrl += `/${slug}?page=${pageNum}&per_page=${perPage}`;
     }
 
-    const res = await fetchApi({ apiUrl: apiUrl });
+    const res = await fetchApi({ apiUrl });
 
     return res?.nyplAPI?.response;
   }
@@ -187,7 +187,7 @@ export class RepoApi {
     perPage?: number;
   } = {}) {
     let apiUrl = `${process.env.API_URL}/api/v2/collections?page=${page}&per_page=${perPage}&sort=${COLLECTION_SORT_OPTIONS[sort]}&q=${keyword}`;
-    const res = await fetchApi({ apiUrl: apiUrl });
+    const res = await fetchApi({ apiUrl });
     return res?.nyplAPI?.response;
   }
 
@@ -201,7 +201,7 @@ export class RepoApi {
     perPage?: number;
   }) {
     const apiUrl = `${process.env.API_URL}/api/v2/collections?genre=${slug}&page=${pageNum}&per_page=${perPage}`;
-    const res = await fetchApi({ apiUrl: apiUrl });
+    const res = await fetchApi({ apiUrl });
     return res?.nyplAPI?.response;
   }
 }
