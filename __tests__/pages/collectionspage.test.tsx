@@ -26,7 +26,7 @@ describe("All collections page accessibility", () => {
     const { container } = render(
       <CollectionsPage
         data={mockCollectionsResponse}
-        collectionSearchParams={searchParams}
+        collectionsSearchParams={searchParams}
       />
     );
     expect(await axe(container)).toHaveNoViolations();

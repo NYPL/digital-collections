@@ -1,5 +1,5 @@
 import {
-  DEFAULT_SORT,
+  DEFAULT_SEARCH_SORT,
   DEFAULT_COLLECTION_SORT,
   DEFAULT_PAGE_NUM,
   DEFAULT_SEARCH_TERM,
@@ -29,6 +29,7 @@ abstract class BaseSearchManager implements SearchManager {
   abstract handlePageChange(pageNumber: number): string;
   abstract handleSortChange(id: string): string;
   abstract handleSearchSubmit(): string;
+  abstract getQueryString(paramsObject: Record<string, any>): string;
 
   constructor(config: {
     initialPage: number;
@@ -65,7 +66,7 @@ abstract class BaseSearchManager implements SearchManager {
   handleAddFilter(newFilter: Filter) {
     const updatedFilters = [...this.currentFilters, newFilter];
     this.currentFilters = updatedFilters;
-    return this.createQueryString({
+    return this.getQueryString({
       keywords: this.currentKeywords,
       sort: this.currentSort,
       page: this.currentPage,
@@ -81,7 +82,7 @@ abstract class BaseSearchManager implements SearchManager {
           filter.value === filterToRemove.value
         )
     );
-    return this.createQueryString({
+    return this.getQueryString({
       keywords: this.currentKeywords,
       sort: this.currentSort,
       page: this.currentPage,
@@ -91,16 +92,12 @@ abstract class BaseSearchManager implements SearchManager {
 
   clearAllFilters() {
     this.currentFilters = [];
-    return this.createQueryString({
+    return this.getQueryString({
       keywords: this.currentKeywords,
       sort: this.currentSort,
       page: DEFAULT_PAGE_NUM,
       filters: filterToString([]),
     });
-  }
-
-  protected createQueryString(params: Record<string, any>) {
-    return getQueryStringFromObject(params);
   }
 }
 
@@ -108,9 +105,9 @@ export class GeneralSearchManager extends BaseSearchManager {
   handleSearchSubmit() {
     this.currentPage = DEFAULT_PAGE_NUM;
     this.currentFilters = [];
-    this.currentSort = DEFAULT_SORT;
+    this.currentSort = DEFAULT_SEARCH_SORT;
 
-    return this.createQueryString({
+    return this.getQueryString({
       keywords: this.currentKeywords,
       sort: this.currentSort,
       page: this.currentPage,
@@ -119,7 +116,7 @@ export class GeneralSearchManager extends BaseSearchManager {
 
   handlePageChange(pageNumber: number) {
     this.currentPage = pageNumber;
-    return this.createQueryString({
+    return this.getQueryString({
       keywords: this.currentKeywords,
       sort: this.currentSort,
       page: pageNumber,
@@ -129,20 +126,37 @@ export class GeneralSearchManager extends BaseSearchManager {
 
   handleSortChange(sort: string) {
     this.currentSort = sort;
-    return this.createQueryString({
+    return this.getQueryString({
       keywords: this.currentKeywords,
       sort: sort,
       page: this.currentPage,
       filters: filterToString(this.currentFilters),
     });
   }
+
+  getQueryString = (paramsObject: Record<string, any>) => {
+    const newParams: Record<string, string> = {};
+    const defaultValues = [
+      DEFAULT_SEARCH_TERM,
+      DEFAULT_PAGE_NUM,
+      DEFAULT_SEARCH_SORT,
+    ];
+
+    Object.keys(paramsObject).forEach((key) => {
+      const value = paramsObject[key];
+      if (!defaultValues.includes(value)) {
+        newParams[key] = value;
+      }
+    });
+    return createQueryStringFromObject(newParams);
+  };
 }
 
 export class CollectionSearchManager extends BaseSearchManager {
   handleSearchSubmit() {
     this.currentPage = DEFAULT_PAGE_NUM;
     this.currentSort = DEFAULT_COLLECTION_SORT;
-    return this.createQueryString({
+    return this.getQueryString({
       q: this.currentKeywords,
       sort: this.currentSort,
       page: this.currentPage,
@@ -151,7 +165,7 @@ export class CollectionSearchManager extends BaseSearchManager {
 
   handlePageChange(pageNumber: number) {
     this.currentPage = pageNumber;
-    return this.createQueryString({
+    return this.getQueryString({
       q: this.currentKeywords,
       sort: this.currentSort,
       page: pageNumber,
@@ -160,26 +174,30 @@ export class CollectionSearchManager extends BaseSearchManager {
 
   handleSortChange(sort: string) {
     this.currentSort = sort;
-    return this.createQueryString({
+    return this.getQueryString({
       q: this.currentKeywords,
       sort: sort,
       page: this.currentPage,
     });
   }
+
+  getQueryString = (paramsObject: Record<string, any>) => {
+    const newParams: Record<string, string> = {};
+    const defaultValues = [
+      DEFAULT_SEARCH_TERM,
+      DEFAULT_PAGE_NUM,
+      DEFAULT_COLLECTION_SORT,
+    ];
+
+    Object.keys(paramsObject).forEach((key) => {
+      const value = paramsObject[key];
+      if (!defaultValues.includes(value)) {
+        newParams[key] = value;
+      }
+    });
+    return createQueryStringFromObject(newParams);
+  };
 }
-
-const getQueryStringFromObject = (paramsObject: Record<string, any>) => {
-  const newParams: Record<string, string> = {};
-  const defaultValues = [DEFAULT_SEARCH_TERM, DEFAULT_PAGE_NUM, DEFAULT_SORT];
-
-  Object.keys(paramsObject).forEach((key) => {
-    const value = paramsObject[key];
-    if (!defaultValues.includes(value)) {
-      newParams[key] = value;
-    }
-  });
-  return createQueryStringFromObject(newParams);
-};
 
 const createQueryStringFromObject = (object: Record<string, string>) => {
   const params = new URLSearchParams();
