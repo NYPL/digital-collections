@@ -44,7 +44,7 @@ export async function generateMetadata({
 
 export default async function ItemViewer({ params, searchParams }: ItemProps) {
   const data = await getItem(params.uuid);
-  const item = new ItemModel(data);
+  const item = new ItemModel(data, params.uuid);
   return (
     <PageLayout
       activePage="item"
