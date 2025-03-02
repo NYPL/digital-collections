@@ -6,18 +6,6 @@ import {
 } from "../config/constants";
 import { Filter } from "../types/FilterType";
 
-export const stringToFilter = (filtersString: string | null): Filter[] => {
-  if (!filtersString) return [];
-  return Array.from(filtersString.matchAll(/\[([^\]=]+)=([^\]]+)\]/g)).map(
-    ([, filter, value]) => ({ filter, value })
-  );
-};
-
-export const filterToString = (filters: Filter[]): string => {
-  if (!filters || filters.length === 0) return "";
-  return filters.map(({ filter, value }) => `[${filter}=${value}]`).join("");
-};
-
 export interface SearchManager {
   handleSearchSubmit(): string;
   handleKeywordChange(value: string): void;
@@ -229,4 +217,16 @@ const createQueryStringFromObject = (object: Record<string, string>) => {
     params.set(key, object[key]);
   });
   return params.toString();
+};
+
+export const stringToFilter = (filtersString: string | null): Filter[] => {
+  if (!filtersString) return [];
+  return Array.from(filtersString.matchAll(/\[([^\]=]+)=([^\]]+)\]/g)).map(
+    ([, filter, value]) => ({ filter, value })
+  );
+};
+
+export const filterToString = (filters: Filter[]): string => {
+  if (!filters || filters.length === 0) return "";
+  return filters.map(({ filter, value }) => `[${filter}=${value}]`).join("");
 };

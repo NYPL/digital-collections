@@ -1,15 +1,11 @@
 "use client";
 import {
   Box,
-  Text,
   Pagination,
   Heading,
   Flex,
-  HorizontalRule,
-  TagSet,
   Link,
   Icon,
-  Menu,
 } from "@nypl/design-system-react-components";
 import React, { useRef } from "react";
 import { CARDS_PER_PAGE, SEARCH_SORT_LABELS } from "@/src/config/constants";
