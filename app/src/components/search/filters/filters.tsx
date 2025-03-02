@@ -11,6 +11,7 @@ import SelectFilterGrid from "./selectFilterGrid";
 import RightsFilter from "./rightsFilter";
 import DateFilter from "./dateFilter";
 import { headerBreakpoints } from "@/src/utils/breakpoints";
+import { ToggleTip } from "../../toggleTip/toggleTip";
 
 type FiltersProps = {
   headingText: string;
@@ -67,6 +68,7 @@ const Filters = ({ headingText }: FiltersProps) => {
           <RightsFilter />
         </>
       )}
+      <ToggleTip text={"View public domain materials"} />
       <Button
         id="see-more-filters"
         buttonType="secondary"
