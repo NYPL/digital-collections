@@ -45,7 +45,8 @@ export const CollectionSearch = () => {
             [`@media (min-width:  ${headerBreakpoints.lgMobile}px)`]: {
               display: "none",
             },
-            padding: 0,
+            padding: "0 !important",
+            minWidth: "unset",
             _hover: { background: "unset", color: "unset" },
           }}
           onClick={() => setIsExpanded((prev) => !prev)}

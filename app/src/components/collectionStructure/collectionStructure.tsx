@@ -41,7 +41,11 @@ const ButtonText = ({ title, hasChildren, level }) => {
   );
   let truncationLength = 30 - level * 7;
   if (title.length > truncationLength) {
-    return <Tooltip content={text}>{text}</Tooltip>;
+    return (
+      <Tooltip zIndex="1000" content={text}>
+        {text}
+      </Tooltip>
+    );
   } else return text;
 };
 
@@ -167,6 +171,9 @@ const AccordionItem = ({
           onClick={() => {
             toggleItem(title, level);
             scrollIntoViewIfNeeded();
+          }}
+          sx={{
+            zIndex: "0 !important",
           }}
           {...(hasChildren ? { "aria-expanded": isOpen } : {})}
           aria-current={isCurrent ? "true" : undefined}
