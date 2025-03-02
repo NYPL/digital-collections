@@ -15,6 +15,7 @@ import { fetchApi } from "./fetchApi";
 import { Filter } from "../types/FilterType";
 
 export class RepoApi {
+  // Replaced by Collections API.
   static async getHomePageData() {
     const randomNumber = Math.floor(Math.random() * 2);
     const lanes: LaneDataType[] = data.lanes as unknown as LaneDataType[];
@@ -107,7 +108,7 @@ export class RepoApi {
   }
 
   /**
-   * Returns a map of UUID to item count.
+   * Returns a map of UUID to item count. Replaced by Collections API.
    */
   static async getItemsCountFromUUIDs(uuids: string[]) {
     const apiUrl = `${process.env.API_URL}/api/v2/items/counts`;
@@ -175,6 +176,7 @@ export class RepoApi {
     return res?.nyplAPI?.response;
   }
 
+  // Replaced by Collections API.
   static async getCollectionsData({
     keyword = DEFAULT_SEARCH_TERM,
     sort = DEFAULT_COLLECTION_SORT,
@@ -258,5 +260,50 @@ export class CollectionsApi {
       options: { isRepoApi: false },
     });
     return response;
+  }
+
+  /**
+   * Returns mapping of given collection UUIDs to their item counts.
+   * @param {string[]} uuids - Array of collection UUIDs
+   *
+   * @returns {Promise<any>}
+   **/
+  static async getItemsCountFromUUIDs(uuids: string[]) {
+    const apiUrl = `${process.env.COLLECTIONS_API_URL}/collections/item_counts`;
+    const response = await fetchApi({
+      apiUrl: apiUrl,
+      options: {
+        method: "POST",
+        body: { uuids },
+      },
+    });
+    const counts = response?.data;
+    return counts || {};
+  }
+
+  static async getHomePageData() {
+    const randomNumber = Math.floor(Math.random() * 2);
+    const lanes: LaneDataType[] = data.lanes as unknown as LaneDataType[];
+
+    // Get all the UUIDs from the collections
+    const allCollectionUUIDs: string[] = lanes.reduce((acc, lane) => {
+      return acc.concat(lane.collections.map((collection) => collection.uuid));
+    }, [] as string[]);
+    const uuidtoItemCountMap =
+      await this.getItemsCountFromUUIDs(allCollectionUUIDs);
+
+    // Update the collections for each lane with the number of items
+    const updatedLanes = lanes.map((lane) => {
+      const updatedCollections = lane.collections.map((collection) => {
+        return {
+          ...collection,
+          numberOfDigitizedItems: uuidtoItemCountMap[collection.uuid] || "0",
+        };
+      });
+      return { ...lane, collections: updatedCollections };
+    });
+
+    const newResponse = { randomNumber, lanesWithNumItems: updatedLanes };
+    return newResponse;
   }
 }

@@ -47,4 +47,60 @@ describe("Collections API methods", () => {
       expect(collections).toHaveProperty("numResults");
     });
   });
+
+  describe("getHomePageData", () => {
+    it("creates response containing random number and all 7 lanes", async () => {
+      (fetchApi as jest.Mock).mockResolvedValueOnce(
+        Promise.resolve({
+          data: {
+            test: "10",
+          },
+        })
+      );
+      const result = await CollectionsApi.getHomePageData();
+      expect(fetchApi as jest.Mock).toHaveBeenCalled();
+      expect([0, 1]).toContain(result.randomNumber);
+      expect(result.lanesWithNumItems.length).toEqual(7);
+      // Fallback data (all 0s).
+      expect(
+        result.lanesWithNumItems[0].collections[3].numberOfDigitizedItems
+      ).toEqual("0");
+    });
+  });
+
+  describe("getItemsCountFromUUIDs", () => {
+    it("should return the correct numItems for each UUID", async () => {
+      (fetchApi as jest.Mock).mockResolvedValueOnce(
+        Promise.resolve({
+          data: {
+            uuid1: 10,
+            uuid2: 45,
+          },
+        })
+      );
+      const uuids = ["uuid1", "uuid2"];
+      const results = await CollectionsApi.getItemsCountFromUUIDs(uuids);
+      expect(results).toEqual({
+        uuid1: 10,
+        uuid2: 45,
+      });
+    });
+
+    it("should handle missing count fields gracefully", async () => {
+      const uuids = ["uuid1", "uuid2", "uuid3", "uuid4"];
+      (fetchApi as jest.Mock).mockResolvedValueOnce(
+        Promise.resolve({
+          data: {
+            uuid1: 10,
+            uuid3: 60,
+          },
+        })
+      );
+      const results = await CollectionsApi.getItemsCountFromUUIDs(uuids);
+      expect(results).toEqual({
+        uuid1: 10,
+        uuid3: 60,
+      });
+    });
+  });
 });
