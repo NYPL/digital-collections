@@ -1,5 +1,10 @@
 import { useRef } from "react";
 
+/**
+ * Calculates whether the referenced element is within the viewport, given the sticky header, and
+ * scrolls the element to the center of the screen if it isn't.
+ */
+
 export const useScrollIntoViewIfNeeded = () => {
   const elementRef = useRef<HTMLButtonElement | null>(null);
 
