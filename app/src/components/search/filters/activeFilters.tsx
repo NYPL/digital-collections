@@ -17,38 +17,41 @@ const ActiveFilters = () => {
   };
 
   const handleOnClick = (tag) => {
+    console.log(tag);
     if (tag.id === "clear-filters") {
       updateURL(searchManager.clearAllFilters());
     } else {
       const filterToRemove = searchManager.filters.find(
-        (filter) => filter.value === tag.id
+        (filter) => filter.filter === tag.id
       );
       if (filterToRemove) {
         updateURL(searchManager.handleRemoveFilter(filterToRemove));
       }
     }
   };
-  console.log(searchManager.filters);
 
   return (
-    <>
-      <Flex alignContent="center" alignItems="center" gap="xs">
-        <Text size="subtitle2" sx={{ margin: 0, fontWeight: 400 }}>
-          Filters applied:
-        </Text>
-        <TagSet
-          isDismissible
-          id="search-filter-tags"
-          onClick={handleOnClick}
-          tagSetData={searchManager.filters.map((filter: Filter) => ({
-            id: filter.filter,
-            label: filter.value,
-          }))}
-          type="filter"
-        />
-      </Flex>
-      <HorizontalRule />
-    </>
+    searchManager.filters.length > 0 && (
+      <>
+        <Flex alignContent="center" alignItems="center" gap="xs" flexDir="row">
+          <Text size="subtitle2" sx={{ margin: 0, fontWeight: 400 }}>
+            Filters applied:
+          </Text>
+          <TagSet
+            isDismissible
+            id="search-filter-tags"
+            onClick={handleOnClick}
+            tagSetData={searchManager.filters.map((filter: Filter) => ({
+              id: filter.filter,
+              label: filter.value,
+            }))}
+            type="filter"
+            sx={{ flexWrap: "unset" }}
+          />
+        </Flex>
+        <HorizontalRule />
+      </>
+    )
   );
 };
 

@@ -4,8 +4,20 @@ import {
   DEFAULT_PAGE_NUM,
   DEFAULT_SEARCH_TERM,
 } from "../config/constants";
-import { filterToString } from "../context/SearchProvider";
 import { Filter } from "../types/FilterType";
+
+export const stringToFilter = (filtersString: string | null): Filter[] => {
+  if (!filtersString) return [];
+  return Array.from(filtersString.matchAll(/\[([^\]=]+)=([^\]]+)\]/g)).map(
+    ([, filter, value]) => ({ filter, value })
+  );
+};
+
+export const filterToString = (filters: Filter[]): string => {
+  if (!filters || filters.length === 0) return "";
+  return filters.map(({ filter, value }) => `[${filter}=${value}]`).join("");
+};
+
 export interface SearchManager {
   handleSearchSubmit(): string;
   handleKeywordChange(value: string): void;
@@ -75,7 +87,6 @@ abstract class BaseSearchManager implements SearchManager {
     if (!filterExists) {
       updatedFilters.push(newFilter);
     }
-
     this.currentFilters = updatedFilters;
 
     return this.getQueryString({
