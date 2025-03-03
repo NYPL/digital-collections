@@ -22,43 +22,43 @@ export const ToggleTip = ({ text }: { text: string }) => {
       display="inline-flex"
       alignItems="center"
     >
+      hello
       <Button
         aria-label="More info"
         lineHeight="1"
         background="unset"
-        borderRadius="full"
-        padding="0"
+        padding="0 !important"
+        marginLeft="xs"
+        height="unset"
+        minWidth="unset"
         _hover={{ background: "unset" }}
-        _focus={{ outline: "2px solid blue" }}
-        onClick={updateLiveRegion}
-        onMouseEnter={() => setIsVisible(true)}
-        onMouseLeave={() => setIsVisible(false)}
+        onClick={() => {
+          setIsVisible((prev) => !prev);
+          updateLiveRegion();
+        }}
+        onMouseEnter={() => setIsVisible((prev) => !prev)}
+        onMouseLeave={() => setIsVisible((prev) => !prev)}
         onFocus={() => {
-          setIsVisible(true);
+          setIsVisible((prev) => !prev);
           updateLiveRegion();
         }}
         onBlur={() => setIsVisible(false)}
       >
-        {" "}
-        <Icon
-          padding="0"
-          margin="0"
-          size="medium"
-          name="errorOutline"
-          iconRotation="rotate180"
-        />
+        <Icon size="medium" name="errorOutline" iconRotation="rotate180" />
       </Button>
       {isVisible && (
+        // Tooltip
         <Box
           sx={{
             position: "absolute",
             bottom: "100%",
             left: "50%",
-            transform: "translateX(-50%) translateY(-2px)",
+            //transform: "translateY(-2px)",
             background: "ui.gray.xx-dark",
             borderRadius: "md",
             zIndex: "10",
             padding: "xs",
+            minWidth: "180px",
             maxWidth: "240px",
           }}
           _after={{
@@ -83,12 +83,14 @@ export const ToggleTip = ({ text }: { text: string }) => {
           </Text>
         </Box>
       )}
+      {/* live region hidden */}
       <Box
         as="span"
         ref={liveRegionRef}
         role="status"
         aria-live="polite"
         visibility="hidden"
+        display="none"
       />
     </Box>
   );
