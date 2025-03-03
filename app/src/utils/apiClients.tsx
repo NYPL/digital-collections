@@ -176,6 +176,7 @@ export class RepoApi {
     return res?.nyplAPI?.response;
   }
 
+  // Replaced by Collections API.
   static async getCollectionsData({
     keyword = DEFAULT_SEARCH_TERM,
     sort = DEFAULT_COLLECTION_SORT,
@@ -219,7 +220,7 @@ export class CollectionsApi {
     page?: number;
     perPage?: number;
   } = {}) {
-    let apiUrl = `${process.env.COLLECTIONS_API_URL}/collections?page=${page}&perPage=${perPage}&sort=${sort}&q=${keyword}`;
+    let apiUrl = `${process.env.COLLECTIONS_API_URL}/collections?page=${page}&perPage=${perPage}&sort=${sort}&keyword=${keyword}`;
     const response = await fetchApi({
       apiUrl: apiUrl,
       options: { isRepoApi: false },
