@@ -19,7 +19,7 @@ describe("Collections API methods", () => {
       });
 
       expect(fetchApi).toHaveBeenCalledWith({
-        apiUrl: `${process.env.COLLECTIONS_API_URL}/collections?page=2&perPage=48&sort=date-asc&q=cat`,
+        apiUrl: `${process.env.COLLECTIONS_API_URL}/collections?page=2&perPage=48&sort=date-asc&keyword=cat`,
         options: { isRepoApi: false },
       });
 
@@ -36,7 +36,7 @@ describe("Collections API methods", () => {
       const collections = await CollectionsApi.getCollectionsData();
 
       expect(fetchApi).toHaveBeenCalledWith({
-        apiUrl: `${process.env.COLLECTIONS_API_URL}/collections?page=1&perPage=48&sort=date-desc&q=`,
+        apiUrl: `${process.env.COLLECTIONS_API_URL}/collections?page=1&perPage=48&sort=date-desc&keyword=`,
         options: { isRepoApi: false },
       });
 
