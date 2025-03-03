@@ -2,11 +2,11 @@ import React from "react";
 import { Metadata } from "next";
 import PageLayout from "../../src/components/pageLayout/pageLayout";
 import Item from "../../src/components/items/item";
-import { getItemData } from "../../src/utils/apiHelpers";
+import { RepoApi } from "../../src/utils/apiClients";
 import { createAdobeAnalyticsPageName } from "../../src/utils/utils";
 import { ItemModel } from "../../src/models/item";
 import { ItemPage } from "@/src/components/pages/itemPage/itemPage";
-
+import { getItemData } from "@/src/utils/apiHelpers";
 type ItemProps = {
   params: {
     uuid: string;

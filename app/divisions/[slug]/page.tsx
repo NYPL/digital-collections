@@ -2,7 +2,7 @@ import { Metadata } from "next";
 import React from "react";
 import DivisionPage from "../../src/components/pages/divisionPage/divisionPage";
 import { slugToString } from "../../src/utils/utils";
-import { getDivisionData } from "../../src/utils/apiHelpers";
+import { RepoApi } from "../../src/utils/apiClients";
 import { Suspense } from "react";
 import { redirect } from "next/navigation";
 
@@ -27,7 +27,7 @@ export default async function Division({
   params,
   searchParams,
 }: DivisionProps) {
-  const data = await getDivisionData({
+  const data = await RepoApi.getDivisionData({
     slug: params.slug,
     pageNum: searchParams.page,
   });
