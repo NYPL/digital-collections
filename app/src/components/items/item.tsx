@@ -10,10 +10,23 @@ interface ItemProps {
   type: string;
 }
 
+// const contentTypes = {
+//   "still image": "image",
+//   "moving image": "video",
+//   "sound recording": "audio",
+// };
+
 const contentTypes = {
+  text: "image",
+  cartographic: "image",
+  "notated music": "image",
   "still image": "image",
   "moving image": "video",
   "sound recording": "audio",
+  "sound recording-nonmusical": "audio",
+  "sound recording-musical": "audio",
+  "three dimensional object": "image",
+  "software, multimedia": "image",
 };
 
 const Item = ({ item, type }: ItemProps) => {
