@@ -1,7 +1,7 @@
 import React from "react";
 import { Metadata } from "next";
 import { CollectionsPage } from "../src/components/pages/collectionsPage/collectionsPage";
-import { CollectionsApi } from "@/src/utils/apiClients";
+import { RepoApi } from "@/src/utils/apiClients";
 import { redirect } from "next/navigation";
 import CollectionSearchParams from "@/src/types/CollectionSearchParams";
 import PageLayout from "@/src/components/pageLayout/pageLayout";
@@ -19,7 +19,7 @@ export const metadata: Metadata = {
 };
 
 export default async function Collections({ searchParams }: CollectionsProps) {
-  const data = await CollectionsApi.getCollectionsData({
+  const data = await RepoApi.getCollectionsData({
     keyword: searchParams.q,
     sort: searchParams.sort,
     page: searchParams.page,
