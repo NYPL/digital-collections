@@ -16,7 +16,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Updated
 
 - Updated collection search to use `q` param and added redirect for `collection_keywords` (DR-3337)
-- Updated homepage collections item counts to use Collections API (DR-3453)
+- Updated homepage collections item counts and `/collections` page to use Collections API (DR-3453)
 
 ## [0.3.2] 2025-02-13
 
