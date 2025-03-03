@@ -176,7 +176,6 @@ export class RepoApi {
     return res?.nyplAPI?.response;
   }
 
-  // Replaced by Collections API.
   static async getCollectionsData({
     keyword = DEFAULT_SEARCH_TERM,
     sort = DEFAULT_COLLECTION_SORT,
