@@ -86,6 +86,14 @@ describe("SearchManager", () => {
       );
     });
 
+    it("should handle removing a filter", () => {
+      const filter1: Filter = { filter: "genre", value: "music" };
+      const result1 = manager.handleRemoveFilter(filter1);
+      expect(result1).toBe(
+        "keywords=test&sort=date-asc&page=2&filters=%5Btopic%3Dart%5D"
+      );
+    });
+
     it("should handle clearing all filters", () => {
       const result = manager.clearAllFilters();
       expect(result).toBe("keywords=test&sort=date-asc");
