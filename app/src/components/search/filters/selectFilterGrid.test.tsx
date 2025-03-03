@@ -1,6 +1,7 @@
 import { render, screen, fireEvent, waitFor } from "@testing-library/react";
 import SelectFilterGrid from "./selectFilterGrid";
 import { FilterCategory } from "./selectFilter";
+import { SearchProvider } from "@/src/context/SearchProvider";
 
 const mockFilters: FilterCategory[] = [
   { name: "Collection", options: [{ name: "Collection 1", count: 10 }] },
@@ -10,9 +11,23 @@ const mockFilters: FilterCategory[] = [
   { name: "Genre", options: [{ name: "Genre 1", count: 30 }] },
 ];
 
+jest.mock("next/navigation", () => ({
+  useRouter: jest.fn(() => ({
+    push: jest.fn(),
+  })),
+  usePathname: jest.fn(),
+}));
+
 describe("SelectFilterGrid", () => {
+  const component = (expanded: boolean) => {
+    return (
+      <SearchProvider>
+        <SelectFilterGrid filters={mockFilters} isExpanded={expanded} />
+      </SearchProvider>
+    );
+  };
   it("renders the correct number of filters when collapsed", () => {
-    render(<SelectFilterGrid filters={mockFilters} isExpanded={false} />);
+    render(component(false));
 
     expect(screen.getByText("Collection")).toBeInTheDocument();
     expect(screen.getByText("Format")).toBeInTheDocument();
@@ -23,7 +38,7 @@ describe("SelectFilterGrid", () => {
   });
 
   it("renders all filters when expanded", () => {
-    render(<SelectFilterGrid filters={mockFilters} isExpanded={true} />);
+    render(component(true));
 
     mockFilters.forEach((filter) => {
       expect(screen.getByText(filter.name)).toBeInTheDocument();
@@ -31,7 +46,7 @@ describe("SelectFilterGrid", () => {
   });
 
   it("toggles filter expansion correctly", async () => {
-    render(<SelectFilterGrid filters={mockFilters} isExpanded={true} />);
+    render(component(true));
 
     const collectionAccordionButton = screen.getByText("Collection");
     expect(collectionAccordionButton.parentElement).toHaveAttribute(
@@ -47,7 +62,7 @@ describe("SelectFilterGrid", () => {
   });
 
   it("collapses the previous filter when you click a new one", async () => {
-    render(<SelectFilterGrid filters={mockFilters} isExpanded={true} />);
+    render(component(true));
 
     const collectionAccordionButton = screen.getByText("Collection");
 

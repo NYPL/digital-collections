@@ -17,7 +17,6 @@ const ActiveFilters = () => {
   };
 
   const handleOnClick = (tag) => {
-    console.log(tag);
     if (tag.id === "clear-filters") {
       updateURL(searchManager.clearAllFilters());
     } else {
