@@ -1,4 +1,5 @@
 import logger from "logger";
+
 /**
  * Makes a GET or POST request to the Repo API and returns the response.
  * Times out at 10 seconds to prevent 504 crash.
@@ -7,25 +8,31 @@ import logger from "logger";
  *   - method: "GET" or "POST" (default is "GET").
  *   - params: URL parameters for GET requests.
  *   - body: Body data for POST requests.
+ *   - isRepoApi: Boolean flag to determine if Repo API authorization should be included.
  * @returns {Promise<any>} - The API response.
  */
-export const fetchApi = async (
-  apiUrl: string,
+export const fetchApi = async ({
+  apiUrl,
+  options = {},
+}: {
+  apiUrl: string;
   options?: {
     method?: "GET" | "POST";
     params?: { [key: string]: any };
     body?: any;
-  }
-) => {
+    isRepoApi?: boolean;
+  };
+}) => {
   const apiKey = process.env.AUTH_TOKEN;
-  const method = options?.method || "GET";
+  const { method = "GET", params, body, isRepoApi = true } = options;
+
   const headers = {
     Authorization: `Token token=${apiKey}`,
     ...(method === "POST" && { "Content-Type": "application/json" }),
   };
 
-  if (method === "GET" && options?.params) {
-    const queryString = "?" + new URLSearchParams(options?.params).toString();
+  if (method === "GET" && params) {
+    const queryString = "?" + new URLSearchParams(params).toString();
     apiUrl += queryString;
   }
 
@@ -46,18 +53,19 @@ export const fetchApi = async (
   try {
     const response = (await fetchWithTimeout(apiUrl, {
       method,
-      headers,
-      body: method === "POST" ? JSON.stringify(options?.body) : undefined,
+      ...(isRepoApi ? { headers } : {}),
+      body: method === "POST" ? JSON.stringify(body) : undefined,
     })) as Response;
-    if (!response.ok && response.status !== 200) {
+
+    if (!response.ok) {
       throw new Error(
         `fetchApi: ${response.status} ${
           response.statusText ? response.statusText : "No message"
         }`
       );
     }
-    const data = await response.json();
-    return method === "GET" ? data?.nyplAPI?.response : data;
+
+    return await response.json();
   } catch (error) {
     logger.error(error);
     throw new Error(error.message);
