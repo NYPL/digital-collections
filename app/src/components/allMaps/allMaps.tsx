@@ -21,7 +21,9 @@ const AllMapsViewer = ({ data, item, uuid }) => {
       center: [-73.931016, 40.79532],
       zoom: 10.7,
       maxPitch: 0,
-      preserveDrawingBuffer: true,
+      canvasContextAttributes: {
+        preserveDrawingBuffer: true,
+      },
     });
 
     const annotationUrl = `https://annotations.allmaps.org/?url=${data.iiif_url}`;
