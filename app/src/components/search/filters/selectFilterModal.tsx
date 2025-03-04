@@ -29,6 +29,7 @@ type SelectFilterModalProps = {
   onOpen: () => void;
   onClose: (closeDropdown) => void;
   selected: FilterOption | null;
+  current: FilterOption | null;
   setSelected: React.Dispatch<React.SetStateAction<FilterOption | null>>;
   modalCurrent: FilterOption | null;
   setModalCurrent: React.Dispatch<React.SetStateAction<FilterOption | null>>;
@@ -44,6 +45,7 @@ const SelectFilterModal = forwardRef<HTMLButtonElement, SelectFilterModalProps>(
       onClose: parentOnClose,
       selected,
       setSelected,
+      current,
       modalCurrent,
       setModalCurrent,
     } = props;
@@ -83,9 +85,17 @@ const SelectFilterModal = forwardRef<HTMLButtonElement, SelectFilterModalProps>(
       parentOnOpen();
     };
 
-    const handleClose = (closeFilter: boolean) => {
+    const handleClose = (closeDropdown: boolean) => {
+      console.log(
+        "selected is",
+        selected,
+        "modalCurrent is",
+        modalCurrent,
+        "focus condition:",
+        selected !== null && modalCurrent === selected
+      );
       modalOnClose();
-      parentOnClose(closeFilter);
+      parentOnClose(closeDropdown);
     };
 
     return (
@@ -111,7 +121,7 @@ const SelectFilterModal = forwardRef<HTMLButtonElement, SelectFilterModalProps>(
 
         <Modal
           finalFocusRef={
-            selected === modalCurrent && selected !== null
+            selected !== null && modalCurrent !== selected
               ? (accordionButtonRef as RefObject<FocusableElement>)
               : viewMoreButtonRef
           }
@@ -195,7 +205,9 @@ const SelectFilterModal = forwardRef<HTMLButtonElement, SelectFilterModalProps>(
                   labelText={`${filter.name} filter options`}
                   showLabel={false}
                   name={filter.name}
-                  defaultValue={selected?.name || ""}
+                  defaultValue={
+                    current === selected ? selected?.name : current?.name || ""
+                  }
                   showHelperInvalidText={false}
                   onChange={(newValue) => {
                     const newSelectedOption =

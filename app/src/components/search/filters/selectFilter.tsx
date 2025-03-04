@@ -147,6 +147,7 @@ const SelectFilterComponent = forwardRef<
             setUserClickedOutside(closeFilter);
           }}
           selected={selected}
+          current={current}
           setSelected={setSelected}
           modalCurrent={modalCurrent}
           setModalCurrent={setModalCurrent}
