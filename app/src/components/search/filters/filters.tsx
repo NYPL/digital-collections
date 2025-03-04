@@ -68,7 +68,6 @@ const Filters = ({ headingText }: FiltersProps) => {
           <RightsFilter />
         </>
       )}
-      <ToggleTip text={"View public domain materials"} />
       <Button
         id="see-more-filters"
         buttonType="secondary"
