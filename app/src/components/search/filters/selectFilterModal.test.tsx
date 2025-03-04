@@ -40,6 +40,7 @@ describe("SelectFilterModal", () => {
         onOpen={mockOnOpen}
         onClose={mockOnClose}
         selected={null}
+        current={null}
         modalCurrent={null}
         setSelected={mockSetSelected}
         setModalCurrent={mockSetModalCurrent}
@@ -56,6 +57,7 @@ describe("SelectFilterModal", () => {
         onOpen={mockOnOpen}
         onClose={mockOnClose}
         selected={null}
+        current={null}
         modalCurrent={null}
         setSelected={mockSetSelected}
         setModalCurrent={mockSetModalCurrent}
@@ -75,6 +77,7 @@ describe("SelectFilterModal", () => {
         onOpen={mockOnOpen}
         onClose={mockOnClose}
         selected={null}
+        current={null}
         modalCurrent={null}
         setSelected={mockSetSelected}
         setModalCurrent={mockSetModalCurrent}
@@ -108,6 +111,7 @@ describe("SelectFilterModal", () => {
         onOpen={mockOnOpen}
         onClose={mockOnClose}
         selected={null}
+        current={null}
         modalCurrent={null}
         setSelected={mockSetSelected}
         setModalCurrent={mockSetModalCurrent}
@@ -133,6 +137,7 @@ describe("SelectFilterModal", () => {
         onOpen={mockOnOpen}
         onClose={mockOnClose}
         selected={null}
+        current={null}
         modalCurrent={null}
         setSelected={mockSetSelected}
         setModalCurrent={mockSetModalCurrent}
@@ -174,28 +179,6 @@ describe("SelectFilterModal", () => {
     });
   });
 
-  it("closes modal and removes modal selection when clicking close button", async () => {
-    render(
-      <SelectFilterModal
-        filter={mockFilter}
-        onOpen={mockOnOpen}
-        onClose={mockOnClose}
-        selected={null}
-        modalCurrent={null}
-        setSelected={mockSetSelected}
-        setModalCurrent={mockSetModalCurrent}
-      />
-    );
-    fireEvent.click(screen.getByText("View all genres"));
-
-    await waitFor(() => {
-      const closeButton = screen.getByRole("button", { name: "Close" });
-      fireEvent.click(closeButton);
-      expect(mockSetSelected).toHaveBeenCalledWith(null);
-      expect(mockOnClose).toHaveBeenCalled();
-    });
-  });
-
   it("closes modal and confirms modal selection when clicking confirm button", async () => {
     render(
       <SelectFilterModal
@@ -203,6 +186,10 @@ describe("SelectFilterModal", () => {
         onOpen={mockOnOpen}
         onClose={mockOnClose}
         selected={{
+          name: "Fiction",
+          count: 10,
+        }}
+        current={{
           name: "Fiction",
           count: 10,
         }}
@@ -226,5 +213,38 @@ describe("SelectFilterModal", () => {
       });
       expect(mockOnClose).toHaveBeenCalled();
     });
+  });
+
+  it("closes modal and removes modal selection when clicking close button", () => {
+    render(
+      <SelectFilterModal
+        filter={mockFilter}
+        onOpen={mockOnOpen}
+        onClose={mockOnClose}
+        selected={{
+          name: "Fiction",
+          count: 10,
+        }}
+        current={{
+          name: "Fiction",
+          count: 10,
+        }}
+        modalCurrent={{
+          name: "Fiction",
+          count: 10,
+        }}
+        setSelected={mockSetSelected}
+        setModalCurrent={mockSetModalCurrent}
+      />
+    );
+    fireEvent.click(screen.getByText("View all genres"));
+
+    setTimeout(() => {
+      const closeButton = screen.getByRole("button", { name: "Close" });
+      expect(closeButton).not.toHaveAttribute("disabled");
+      fireEvent.click(closeButton);
+      expect(mockSetSelected).toHaveBeenCalledWith(null);
+      expect(mockOnClose).toHaveBeenCalled();
+    }, 100);
   });
 });
