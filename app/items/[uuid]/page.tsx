@@ -17,11 +17,11 @@ type ItemProps = {
 
 let item;
 
-const getItemModel = async (uuid: string) => {
-  const data = await RepoApi.getItemData(uuid);
-  return new ItemModel(data, uuid);
-  // return item;
-};
+// const getItemModel = async (uuid: string) => {
+//   const data = await RepoApi.getItemData(uuid);
+//   return new ItemModel(data, uuid);
+//   // return item;
+// };
 
 const getItem = async (uuid: string) => {
   const data = await RepoApi.getItemData(uuid);
