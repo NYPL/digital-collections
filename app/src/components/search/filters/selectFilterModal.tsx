@@ -86,14 +86,6 @@ const SelectFilterModal = forwardRef<HTMLButtonElement, SelectFilterModalProps>(
     };
 
     const handleClose = (closeDropdown: boolean) => {
-      console.log(
-        "selected is",
-        selected,
-        "modalCurrent is",
-        modalCurrent,
-        "focus condition:",
-        selected !== null && modalCurrent !== selected
-      );
       modalOnClose();
       parentOnClose(closeDropdown);
     };
@@ -121,7 +113,7 @@ const SelectFilterModal = forwardRef<HTMLButtonElement, SelectFilterModalProps>(
 
         <Modal
           finalFocusRef={
-            selected !== null && modalCurrent !== selected
+            modalCurrent === selected
               ? (accordionButtonRef as RefObject<FocusableElement>)
               : viewMoreButtonRef
           }
