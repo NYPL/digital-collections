@@ -92,7 +92,7 @@ const SelectFilterModal = forwardRef<HTMLButtonElement, SelectFilterModalProps>(
         "modalCurrent is",
         modalCurrent,
         "focus condition:",
-        selected !== null && modalCurrent === selected
+        selected !== null && modalCurrent !== selected
       );
       modalOnClose();
       parentOnClose(closeDropdown);
@@ -205,9 +205,7 @@ const SelectFilterModal = forwardRef<HTMLButtonElement, SelectFilterModalProps>(
                   labelText={`${filter.name} filter options`}
                   showLabel={false}
                   name={filter.name}
-                  defaultValue={
-                    current === selected ? selected?.name : current?.name || ""
-                  }
+                  defaultValue={current?.name}
                   showHelperInvalidText={false}
                   onChange={(newValue) => {
                     const newSelectedOption =
@@ -253,7 +251,6 @@ const SelectFilterModal = forwardRef<HTMLButtonElement, SelectFilterModalProps>(
                 <Button
                   buttonType="secondary"
                   onClick={() => {
-                    setModalCurrent(modalCurrent);
                     handleClose(false);
                   }}
                   id="close-button"

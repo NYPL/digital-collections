@@ -129,6 +129,7 @@ const SelectFilterComponent = forwardRef<
         onClick={() => {
           setSelected(current);
           setUserClickedOutside(true);
+          setCurrent(selected);
           accordionButtonRef.current?.focus();
         }}
       >
