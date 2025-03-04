@@ -9,13 +9,22 @@ export const ToggleTip = ({
   text: string;
   toggleTipContent: string;
 }) => {
-  const [isVisible, setIsVisible] = useState(false);
+  const [isClickVisible, setIsClickVisible] = useState(false);
+  const [isHoverFocusVisible, setIsHoverFocusVisible] = useState(false);
   const liveRegionRef = useRef<HTMLSpanElement | null>(null);
 
-  const updateLiveRegion = () => {
+  const addLiveRegion = () => {
     if (liveRegionRef.current) {
       setTimeout(() => {
         liveRegionRef.current!.textContent = toggleTipContent;
+      }, 100);
+    }
+  };
+
+  const removeLiveRegion = () => {
+    if (liveRegionRef.current) {
+      setTimeout(() => {
+        liveRegionRef.current!.textContent = "";
       }, 100);
     }
   };
@@ -38,20 +47,44 @@ export const ToggleTip = ({
             outline: "2px solid var(--nypl-colors-ui-link-primary)",
           }}
           onClick={() => {
-            setIsVisible(true);
-            updateLiveRegion();
+            setIsClickVisible((prev) => !prev);
+            setIsHoverFocusVisible(false);
+            if (!isClickVisible) {
+              addLiveRegion();
+            } else {
+              removeLiveRegion();
+            }
           }}
-          onMouseEnter={() => setIsVisible(true)}
-          onMouseLeave={() => setIsVisible(false)}
+          onMouseEnter={() => {
+            if (!isClickVisible) {
+              setIsHoverFocusVisible(true);
+              addLiveRegion();
+            }
+          }}
+          onMouseLeave={() => {
+            if (!isClickVisible) {
+              setIsHoverFocusVisible(false);
+              removeLiveRegion();
+            }
+          }}
           onFocus={() => {
-            setIsVisible(true);
-            updateLiveRegion();
+            if (!isClickVisible) {
+              setIsHoverFocusVisible(true);
+              addLiveRegion();
+            }
           }}
-          onBlur={() => setIsVisible(false)}
+          onBlur={() => {
+            if (!isClickVisible) {
+              setIsHoverFocusVisible(false);
+              removeLiveRegion();
+            }
+          }}
         >
           <Icon size="medium" name="errorOutline" iconRotation="rotate180" />
         </Button>
-        {isVisible && (
+
+        {/* visible if clicked OR hovered/focused */}
+        {(isClickVisible || isHoverFocusVisible) && (
           <Box
             sx={{
               position: "absolute",
@@ -88,14 +121,21 @@ export const ToggleTip = ({
           </Box>
         )}
       </Box>
-      {/* Live region hidden */}
+
+      {/* hidden, populated if clicked/hovered/focused */}
       <Box
         as="span"
         ref={liveRegionRef}
         role="status"
         aria-live="polite"
-        visibility="hidden"
-        //set offscreen
+        sx={{
+          clip: "rect(1px, 1px, 1px, 1px)",
+          height: "auto",
+          overflow: "hidden",
+          position: "absolute",
+          width: "1px",
+          wordWrap: "normal",
+        }}
       />
     </Box>
   );
