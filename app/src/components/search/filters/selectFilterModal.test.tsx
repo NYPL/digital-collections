@@ -22,7 +22,7 @@ describe("SelectFilterModal", () => {
   const mockOnOpen = jest.fn();
   const mockOnClose = jest.fn();
   const mockSetSelected = jest.fn();
-  const mockSetModalSelected = jest.fn();
+  const mockSetModalCurrent = jest.fn();
 
   const mockFilter: FilterCategory = {
     name: "Genre",
@@ -40,9 +40,9 @@ describe("SelectFilterModal", () => {
         onOpen={mockOnOpen}
         onClose={mockOnClose}
         selected={null}
-        modalSelected={null}
+        modalCurrent={null}
         setSelected={mockSetSelected}
-        setModalSelected={mockSetModalSelected}
+        setModalCurrent={mockSetModalCurrent}
       />
     );
 
@@ -56,9 +56,9 @@ describe("SelectFilterModal", () => {
         onOpen={mockOnOpen}
         onClose={mockOnClose}
         selected={null}
-        modalSelected={null}
+        modalCurrent={null}
         setSelected={mockSetSelected}
-        setModalSelected={mockSetModalSelected}
+        setModalCurrent={mockSetModalCurrent}
       />
     );
 
@@ -75,9 +75,9 @@ describe("SelectFilterModal", () => {
         onOpen={mockOnOpen}
         onClose={mockOnClose}
         selected={null}
-        modalSelected={null}
+        modalCurrent={null}
         setSelected={mockSetSelected}
-        setModalSelected={mockSetModalSelected}
+        setModalCurrent={mockSetModalCurrent}
       />
     );
 
@@ -108,9 +108,9 @@ describe("SelectFilterModal", () => {
         onOpen={mockOnOpen}
         onClose={mockOnClose}
         selected={null}
-        modalSelected={null}
+        modalCurrent={null}
         setSelected={mockSetSelected}
-        setModalSelected={mockSetModalSelected}
+        setModalCurrent={mockSetModalCurrent}
       />
     );
 
@@ -119,7 +119,7 @@ describe("SelectFilterModal", () => {
     await waitFor(() => {
       const option = screen.getByRole("radio", { name: "Fiction 10" });
       fireEvent.click(option);
-      expect(mockSetModalSelected).toHaveBeenCalledWith({
+      expect(mockSetModalCurrent).toHaveBeenCalledWith({
         name: "Fiction",
         count: 10,
       });
@@ -133,9 +133,9 @@ describe("SelectFilterModal", () => {
         onOpen={mockOnOpen}
         onClose={mockOnClose}
         selected={null}
-        modalSelected={null}
+        modalCurrent={null}
         setSelected={mockSetSelected}
-        setModalSelected={mockSetModalSelected}
+        setModalCurrent={mockSetModalCurrent}
       />
     );
 
@@ -181,9 +181,9 @@ describe("SelectFilterModal", () => {
         onOpen={mockOnOpen}
         onClose={mockOnClose}
         selected={null}
-        modalSelected={null}
+        modalCurrent={null}
         setSelected={mockSetSelected}
-        setModalSelected={mockSetModalSelected}
+        setModalCurrent={mockSetModalCurrent}
       />
     );
     fireEvent.click(screen.getByText("View all genres"));
@@ -206,12 +206,12 @@ describe("SelectFilterModal", () => {
           name: "Fiction",
           count: 10,
         }}
-        modalSelected={{
+        modalCurrent={{
           name: "Fiction",
           count: 10,
         }}
         setSelected={mockSetSelected}
-        setModalSelected={mockSetModalSelected}
+        setModalCurrent={mockSetModalCurrent}
       />
     );
     fireEvent.click(screen.getByText("View all genres"));
