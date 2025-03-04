@@ -6,13 +6,7 @@ import {
   Flex,
   Button,
 } from "@nypl/design-system-react-components";
-import React, {
-  forwardRef,
-  MutableRefObject,
-  useEffect,
-  useRef,
-  useState,
-} from "react";
+import React, { forwardRef, useEffect, useRef, useState } from "react";
 import SelectFilterModal from "./selectFilterModal";
 import FilterAccordion from "./filterAccordion";
 
@@ -125,11 +119,10 @@ const SelectFilterComponent = forwardRef<
         width="100%"
         marginBottom={sortedOptions.length > 10 ? "xs" : "0"}
         marginTop="s"
-        isDisabled={!current}
+        isDisabled={!current && !selected}
         onClick={() => {
           setSelected(current);
           setUserClickedOutside(true);
-          setCurrent(selected);
           accordionButtonRef.current?.focus();
         }}
       >
