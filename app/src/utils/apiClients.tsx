@@ -259,4 +259,13 @@ export class CollectionsApi {
     });
     return response;
   }
+
+  static async getManifestForItemUUID(uuid: string) {
+    let apiUrl = `${process.env.COLLECTIONS_API_URL}/items/${uuid}}`;
+    const response = await fetchApi({
+      apiUrl: apiUrl,
+      options: { isRepoApi: false },
+    });
+    return response;
+  }
 }

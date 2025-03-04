@@ -27,8 +27,9 @@ const textLink = (href, text) => {
   );
 };
 
-const MetadataOverview = ({ item }) => {
-  console.log("Item is: ", item);
+const MetadataOverview = ({ manifest, item }) => {
+  console.log("manifest is: ", manifest);
+  // console.log("Item is: ", item);
   return (
     <>
       <Box

@@ -29,13 +29,13 @@ const contentTypes = {
   "software, multimedia": "image",
 };
 
-const Item = ({ item, type }: ItemProps) => {
+const Item = ({ manifest, item, type }: ItemProps) => {
   console.log("uuid is: ", item.uuid);
   const itemType = type ? type : contentTypes[item.typeOfResource]; // for proof of concept only
   return (
     <>
-      <ItemViewer item={item} type={itemType} />
-      <MetadataOverview item={item} />
+      <ItemViewer manifest={manifest} item={item} type={itemType} />
+      <MetadataOverview manifest={manifest} item={item} />
     </>
   );
 };
