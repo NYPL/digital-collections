@@ -8,6 +8,7 @@ import { UniversalViewer } from "../uv/universalViewerLazy";
 import "universalviewer/dist/esm/index.css";
 
 interface ItemProps {
+  manifest: any;
   item: ItemModel;
   type: string;
 }

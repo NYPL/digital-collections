@@ -6,6 +6,7 @@ import ItemViewer from "./viewer/viewer";
 import MetadataOverview from "./metadata/overview";
 
 interface ItemProps {
+  manifest: any;
   item: ItemModel;
   type: string;
 }
