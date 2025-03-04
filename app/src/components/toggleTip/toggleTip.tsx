@@ -14,10 +14,15 @@ export const ToggleTip = ({
 
   const updateLiveRegion = () => {
     if (liveRegionRef.current) {
-      liveRegionRef.current.textContent = "";
-      setTimeout(() => {
-        liveRegionRef.current!.textContent = toggleTipContent;
-      }, 100);
+      if ((liveRegionRef.current.textContent = ""))
+        setTimeout(() => {
+          liveRegionRef.current!.textContent = toggleTipContent;
+        }, 100);
+      else {
+        setTimeout(() => {
+          liveRegionRef.current!.textContent = "";
+        }, 100);
+      }
     }
   };
 
