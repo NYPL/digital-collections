@@ -18,7 +18,7 @@ const contentTypes = {
   "sound recording": "audio",
 };
 
-const ItemViewer = ({ item, type }: ItemProps) => {
+const ItemViewer = ({ manifest, item, type }: ItemProps) => {
   let viewer;
   switch (type) {
     case "image":

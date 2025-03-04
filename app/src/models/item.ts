@@ -1,16 +1,67 @@
+import { Maniiifest } from "maniiifest";
+
 export class ItemModel {
   uuid: string;
   mods: any;
   capture: any;
   typeOfResource: string;
   title: string;
-  isPDF?: boolean;
-  isBook?: boolean;
+  // isPDF?: boolean;
+  // isBook?: boolean;
   isSingleCapture: boolean;
   imageID: string;
   href: string;
+  metadata?: {
+    // Metadata fields
+    /* Title */
+    title: string;
+    // .mods.titleInfo.title
+    /* Names */
+    names?: string;
+    // .mods.name
+    /* Collection */
+    collection?: string;
+    // .mods.relatedItem?
+    /* Date/Origin */
+    origin: string;
+    // .mods.originInfo
+    /* Table of Contents */
+    tableOfContents?: string;
+    /* Library Locations */
+    locations: string;
+    // .mods.location
+    /* Subjects */
+    subjects?: string;
+    // .mods.subject
+    /* Genres */
+    genres: string;
+    // .mods.genre
+    /* Notes */
+    notes?: string;
+    /* Physical Description */
+    physicalDescription?: string;
+    // .mods.physicalDescription
+    /* Abstract */
+    abstract?: string;
+    /* Languages */
+    languages: string;
+    // Link
+    link?: string;
+    /* Identifiers */
+    identifiers: string;
+    // .mods.identifier
+    /* Access */
+    access: string;
+    /* Rights */
+    rights: string;
+    // .cappture.rightsStatement
+  };
 
-  constructor(data: any, uuid: string) {
+  constructor(data: any, uuid: string, manifest: any) {
+    const parser = new Maniiifest(manifest);
+    const label = parser?.getManifestLabelByLanguage("en");
+    console.log(label?.["en"]);
+
     this.uuid = uuid; //data.uuid; //data.capture.uuid.$;
     this.mods = data.mods;
     this.capture = data.capture;
@@ -23,35 +74,9 @@ export class ItemModel {
     this.isSingleCapture = data.numResults.$ == 1;
     this.imageID = data.imageID;
     this.href = data.href;
+    // this.metadata = {
+    //   title: label?.['en'][0];
+    //   names: ;
+    // }
   }
 }
-
-// // Metadata fields
-// /* Title */
-// .mods.titleInfo.title
-// /* Names */
-// .mods.name
-// /* Collection */
-// .mods.relatedItem?
-// /* Date/Origin */
-// .mods.originInfo
-// /* Table of Contents */
-// /* Library Locations */
-//   .mods.location
-// /* Subjects */
-// .mods.subject
-// /* Genres */
-// .mods.genre
-// /* Notes */
-// /* Physical Description */
-// .mods.physicalDescription
-// /* Abstract */
-
-// /* Languages */
-// // Link
-
-// /* Identifiers */
-// .mods.identifier
-// /* Access */
-// /* Rights */
-// .cappture.rightsStatement
