@@ -22,6 +22,10 @@ export async function generateMetadata({
 }
 
 export default async function Exhibitions({ params }: ItemProps) {
+  const manifestURL =
+    params.slug === "exhibit"
+      ? "https://www.exhibit.so/exhibits/ZdQduGmrysoAk17TFaMN?screen=a05BUDjrCGnlFyA90laU"
+      : "https://storiiies.cogapp.com/viewer/68205/A-new-correct-map-of-the-trading-part-of-the-West-Indies";
   return (
     <PageLayout
       activePage="item"
@@ -39,9 +43,9 @@ export default async function Exhibitions({ params }: ItemProps) {
       )}
     >
       <ExhibitionViewer
-        manifestURL={
-          "https://storiiies.cogapp.com/viewer/68205/A-new-correct-map-of-the-trading-part-of-the-West-Indies"
-        }
+        manifestURL={manifestURL}
+        slug={params.slug}
+        // "https://storiiies.cogapp.com/viewer/68205/A-new-correct-map-of-the-trading-part-of-the-West-Indies"
       />
     </PageLayout>
   );

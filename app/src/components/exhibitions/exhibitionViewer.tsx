@@ -3,19 +3,29 @@ import React from "react";
 
 interface ExhibitionViewerProps {
   manifestURL: any;
+  slug: string;
 }
 
-const ExhibitionViewer = ({ manifestURL }: ExhibitionViewerProps) => {
+const ExhibitionViewer = ({ manifestURL, slug }: ExhibitionViewerProps) => {
   return (
     <>
-      {/* <iframe src="demo_iframe.htm" height="200" width="300" title="Iframe Example"></iframe>
-       */}
-      <iframe
-        src={manifestURL}
-        height="800"
-        width="1200"
-        title="Iframe Example"
-      ></iframe>
+      {slug === "exhibit" ? (
+        <iframe
+          src="https://www.exhibit.so/exhibits/ZdQduGmrysoAk17TFaMN?embedded=true"
+          width="1200"
+          height="800"
+          allowfullscreen
+          allow="autoplay"
+          frameborder="0"
+        ></iframe>
+      ) : (
+        <iframe
+          src={manifestURL}
+          height="800"
+          width="1200"
+          title="Iframe Example"
+        ></iframe>
+      )}
     </>
   );
 };
