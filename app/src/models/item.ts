@@ -1,5 +1,8 @@
 import { Maniiifest } from "maniiifest";
+// https://github.com/jptmoore/maniiifest
 
+// https://www.npmjs.com/package/@iiif/manifold
+// https://github.com/iiif-commons/manifold
 export class ItemModel {
   uuid: string;
   mods: any;
