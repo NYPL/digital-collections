@@ -52,10 +52,10 @@ const SelectFilterComponent = forwardRef<
 >((props, filterRef) => {
   const { filter, ...rest } = props;
   const [userClickedOutside, setUserClickedOutside] = useState<boolean>(false);
-  const [timeoutId, setTimeoutId] = useState<NodeJS.Timeout | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selected, setSelected] = useState<FilterOption | null>(null);
-  const [modalSelected, setModalSelected] = useState<FilterOption | null>(
+  const [current, setCurrent] = useState<FilterOption | null>(selected);
+  const [modalCurrent, setModalCurrent] = useState<FilterOption | null>(
     selected
   );
 
@@ -65,6 +65,8 @@ const SelectFilterComponent = forwardRef<
     useRef<HTMLButtonElement>(null);
   const containerRef: React.RefObject<HTMLDivElement> =
     useRef<HTMLDivElement>(null);
+
+  const mergedRef = useMergeRefs(filterRef, accordionButtonRef);
 
   // Tells the accordion to close if open when user clicks or tabs outside of the container
   const handleFocusOutside = (e) => {
@@ -90,28 +92,20 @@ const SelectFilterComponent = forwardRef<
 
   const onChange = (newSelection: string) => {
     if (!isModalOpen) {
-      // if (timeoutId) {
-      //   clearTimeout(timeoutId);
-      // }
-      // const newTimeoutId = setTimeout(() => {
-      console.log(`selected: ${newSelection}`);
-      setSelected(
+      console.log(`currently selected: ${newSelection}`);
+      setCurrent(
         filter.options.find((option) => option.name === newSelection) || null
       );
-      // }, 600);
-
-      //setTimeoutId(newTimeoutId);
     }
   };
 
   const sortedOptions =
-    // selected && !isModalOpen
-    //   ? [
-    //       selected,
-    //       ...filter.options.filter((option) => option.name !== selected.name),
-    //     ]
-    //   :
-    filter.options;
+    selected && !isModalOpen
+      ? [
+          selected,
+          ...filter.options.filter((option) => option.name !== selected.name),
+        ]
+      : filter.options;
 
   const accordionPanel = (
     <>
@@ -129,11 +123,13 @@ const SelectFilterComponent = forwardRef<
       <Button
         id="apply"
         width="100%"
-        marginBottom={sortedOptions.length > 10 ? "s" : "0"}
+        marginBottom={sortedOptions.length > 10 ? "xs" : "0"}
         marginTop="s"
-        isDisabled={!selected}
+        isDisabled={!current}
         onClick={() => {
+          setSelected(current);
           setUserClickedOutside(true);
+          accordionButtonRef.current?.focus();
         }}
       >
         Apply
@@ -141,8 +137,9 @@ const SelectFilterComponent = forwardRef<
       {sortedOptions.length > 10 && (
         <SelectFilterModal
           filter={filter}
+          ref={accordionButtonRef}
           onOpen={() => {
-            console.log(modalSelected);
+            setModalCurrent(current);
             setIsModalOpen(true);
           }}
           onClose={(closeFilter: boolean) => {
@@ -151,14 +148,13 @@ const SelectFilterComponent = forwardRef<
           }}
           selected={selected}
           setSelected={setSelected}
-          modalSelected={modalSelected}
-          setModalSelected={setModalSelected}
+          modalCurrent={modalCurrent}
+          setModalCurrent={setModalCurrent}
         />
       )}
     </>
   );
 
-  const mergedRef = useMergeRefs(filterRef, accordionButtonRef);
   return (
     <Box {...rest} ref={containerRef}>
       <FilterAccordion
