@@ -9,13 +9,17 @@ import {
   TagSet,
   Link,
   Icon,
+  Menu,
 } from "@nypl/design-system-react-components";
-import React from "react";
-import { CARDS_PER_PAGE } from "@/src/config/constants";
+import React, { useRef } from "react";
+import { CARDS_PER_PAGE, SEARCH_SORT_LABELS } from "@/src/config/constants";
 import { displayResults, totalNumPages } from "@/src/utils/utils";
-import Filters from "../../search/filters";
+import Filters from "../../search/filters/filters";
 import { useSearchContext } from "@/src/context/SearchProvider";
 import { usePathname, useRouter } from "next/navigation";
+import SearchCardsGrid from "../../grids/searchCardsGrid";
+import { headerBreakpoints } from "@/src/utils/breakpoints";
+import SortMenu from "../../sortMenu/sortMenu";
 
 const SearchPage = ({ data }) => {
   const { searchManager } = useSearchContext();
@@ -25,6 +29,8 @@ const SearchPage = ({ data }) => {
   const updateURL = async (queryString) => {
     push(`${pathname}?${queryString}`);
   };
+  const headingRef = useRef<HTMLHeadingElement>(null);
+
   return (
     <Box id="mainContent">
       <Box
@@ -37,7 +43,12 @@ const SearchPage = ({ data }) => {
         <Box
           maxWidth="1280px"
           mx="auto"
-          sx={{ paddingLeft: { base: 0, xl: "s" } }}
+          sx={{
+            paddingLeft: 0,
+            [`@media screen and (min-width: ${headerBreakpoints.desktop}px)`]: {
+              paddingLeft: "s",
+            },
+          }}
         >
           <Heading
             size="heading2"
@@ -53,18 +64,21 @@ const SearchPage = ({ data }) => {
             )}
                     results for "${searchManager.keywords}"`}
           </Heading>
-          <Filters headingText="Refine your search" />
+          <Filters headingText="Refine your search" ref={headingRef} />
         </Box>
       </Box>
       <Box
         maxWidth="1280px"
         mx="auto"
         sx={{
-          paddingLeft: { base: "m", xl: "s" },
-          paddingRight: { base: "m", xl: "s" },
+          paddingLeft: "m",
+          paddingRight: "m",
+          [`@media screen and (min-width: ${headerBreakpoints.desktop}px)`]: {
+            paddingLeft: "s",
+            paddingRight: "s",
+          },
         }}
       >
-        <HorizontalRule />
         <Flex alignContent="center" gap="xs">
           <Text size="subtitle2" sx={{ margin: 0, fontWeight: 400 }}>
             Filters applied:
@@ -81,18 +95,61 @@ const SearchPage = ({ data }) => {
           />
         </Flex>
         <HorizontalRule />
-        <Heading
-          tabIndex={-1}
-          marginTop="xl"
-          size="heading5"
-        >{`Displaying ${displayResults(
-          data.numResults,
-          CARDS_PER_PAGE,
-          searchManager.page
-        )}
-                    results`}</Heading>
+        <Flex
+          sx={{
+            [`@media screen and (min-width: ${headerBreakpoints.lgMobile}px)`]:
+              {
+                flexDir: "row",
+                marginBottom: "s",
+                alignItems: "center",
+              },
+            justifyContent: "space-between",
+            flexDir: "column",
+            marginBottom: "l",
+            marginTop: "l",
+            gap: "m",
+            alignItems: "flex-start",
+          }}
+        >
+          <Heading
+            size="heading5"
+            tabIndex={-1}
+            ref={headingRef}
+            margin="0"
+          >{`Displaying ${displayResults(
+            data.numResults,
+            CARDS_PER_PAGE,
+            searchManager.page
+          )}
+                                        results`}</Heading>
 
-        <Flex marginTop="xxl" marginBottom="xxl" alignContent="center">
+          <SortMenu
+            options={SEARCH_SORT_LABELS}
+            searchManager={searchManager}
+            updateURL={updateURL}
+          />
+        </Flex>
+        <SearchCardsGrid keywords={data.keyword} results={data.results} />
+        <Flex
+          paddingLeft="s"
+          paddingRight="s"
+          marginTop="xxl"
+          marginBottom="xxl"
+          sx={{
+            "> a": {
+              marginTop: "xl",
+              justifyContent: "end",
+            },
+            [`@media screen and (min-width: ${headerBreakpoints.lgMobile}px)`]:
+              {
+                "> a": {
+                  marginTop: "0",
+                },
+                flexDir: "row",
+              },
+            flexDir: "column-reverse",
+          }}
+        >
           <Link
             minWidth="100px"
             isUnderlined={false}
@@ -103,22 +160,23 @@ const SearchPage = ({ data }) => {
           >
             Back to top{"  "}
             <Icon name="arrow" iconRotation="rotate180" size="xsmall" />
-          </Link>
-          {totalPages > 1 && (
-            <Pagination
-              id="pagination-id"
-              initialPage={searchManager.page}
-              currentPage={searchManager.page}
-              pageCount={totalPages}
-              onPageChange={(newPage) => {
-                updateURL(searchManager.handlePageChange(newPage));
-              }}
-              sx={{
-                justifyContent: "flex-end",
-                gap: "s",
-              }}
-            />
-          )}
+          </Link>{" "}
+          <Pagination
+            id="pagination-id"
+            initialPage={searchManager.page}
+            currentPage={searchManager.page}
+            pageCount={totalPages}
+            onPageChange={(newPage) => {
+              updateURL(searchManager.handlePageChange(newPage));
+            }}
+            sx={{
+              justifyContent: "center",
+              [`@media screen and (min-width: ${headerBreakpoints.lgMobile}px)`]:
+                {
+                  justifyContent: "flex-end",
+                },
+            }}
+          />
         </Flex>
       </Box>
     </Box>

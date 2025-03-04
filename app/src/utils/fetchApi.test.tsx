@@ -18,7 +18,7 @@ describe("fetchApi", () => {
       })
     ) as jest.Mock;
 
-    const response = await fetchApi(mockApiUrl);
+    const response = await fetchApi({ apiUrl: mockApiUrl });
     expect(fetch).toHaveBeenCalledWith(mockApiUrl, {
       method: "GET",
       headers: {
@@ -26,7 +26,7 @@ describe("fetchApi", () => {
       },
       body: undefined,
     });
-    expect(response).toEqual("mockResponse");
+    expect(response).toEqual(mockResponse);
   });
 
   it("makes a POST request with a body and returns response", async () => {
@@ -40,9 +40,12 @@ describe("fetchApi", () => {
       })
     ) as jest.Mock;
 
-    const response = await fetchApi(mockApiUrl, {
-      method: "POST",
-      body: mockBody,
+    const response = await fetchApi({
+      apiUrl: mockApiUrl,
+      options: {
+        method: "POST",
+        body: mockBody,
+      },
     });
 
     expect(fetch).toHaveBeenCalledWith(mockApiUrl, {
@@ -67,8 +70,11 @@ describe("fetchApi", () => {
       })
     ) as jest.Mock;
 
-    const response = await fetchApi(mockApiUrl, {
-      params: mockParams,
+    const response = await fetchApi({
+      apiUrl: mockApiUrl,
+      options: {
+        params: mockParams,
+      },
     });
 
     expect(fetch).toHaveBeenCalledWith(
@@ -81,7 +87,7 @@ describe("fetchApi", () => {
         body: undefined,
       }
     );
-    expect(response).toEqual("mockGetResponseWithParams");
+    expect(response).toEqual(mockResponse);
   });
 
   it("throws an error for non-200 status", async () => {
@@ -92,7 +98,7 @@ describe("fetchApi", () => {
       })
     ) as jest.Mock;
 
-    await expect(fetchApi(mockApiUrl)).rejects.toEqual(
+    await expect(fetchApi({ apiUrl: mockApiUrl })).rejects.toEqual(
       new Error("fetchApi: 500 Internal Server Error")
     );
   });
@@ -104,7 +110,7 @@ describe("fetchApi", () => {
       .fn()
       .mockImplementation(() => new Promise(() => {}));
 
-    const apiCall = fetchApi(mockApiUrl);
+    const apiCall = fetchApi({ apiUrl: mockApiUrl });
 
     jest.advanceTimersByTime(10000);
 

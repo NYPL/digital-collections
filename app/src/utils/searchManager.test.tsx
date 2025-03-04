@@ -1,7 +1,7 @@
 import {
   DEFAULT_COLLECTION_SORT,
   DEFAULT_SEARCH_TERM,
-  DEFAULT_SORT,
+  DEFAULT_SEARCH_SORT,
 } from "../config/constants";
 import { Filter } from "../types/FilterType";
 import { GeneralSearchManager, CollectionSearchManager } from "./searchManager";
@@ -13,13 +13,13 @@ describe("SearchManager", () => {
     beforeEach(() => {
       manager = new GeneralSearchManager({
         initialPage: 1,
-        initialSort: DEFAULT_SORT,
+        initialSort: DEFAULT_SEARCH_SORT,
         initialFilters: [],
         initialKeywords: DEFAULT_SEARCH_TERM,
       });
     });
 
-    it("should handle search submit wth no keywords", () => {
+    it("should handle search submit with no keywords", () => {
       const result = manager.handleSearchSubmit();
       expect(result).toBe("");
     });
@@ -52,7 +52,7 @@ describe("SearchManager", () => {
 
     manager = new GeneralSearchManager({
       initialPage: 1,
-      initialSort: DEFAULT_SORT,
+      initialSort: DEFAULT_SEARCH_SORT,
       initialFilters: [],
       initialKeywords: "test",
     });

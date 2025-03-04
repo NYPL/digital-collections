@@ -3,7 +3,9 @@ import { Metadata } from "next";
 import PageLayout from "@/src/components/pageLayout/pageLayout";
 import AllMapsViewer from "@/src/components/allMaps/allMaps";
 import allMapsData from "../../src/data/maps/allmaps";
-import { getItemData } from "../../src/utils/apiHelpers";
+// import { getItemData } from "../../src/utils/apiHelpers";
+import { RepoApi, CollectionsApi } from "../../src/utils/apiClients";
+
 import { ItemModel } from "../../src/models/item";
 
 type MapProps = {
@@ -16,13 +18,13 @@ type MapProps = {
 let item;
 
 const getItemModel = async (uuid: string) => {
-  const data = await getItemData(uuid);
+  const data = await RepoApi.getItemData(uuid);
   return new ItemModel(data, uuid);
   // return item;
 };
 
 const getItem = async (uuid: string) => {
-  const data = await getItemData(uuid);
+  const data = await RepoApi.getItemData(uuid);
   // const item = new ItemModel(data, uuid);
   return data;
 };
