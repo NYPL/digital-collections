@@ -14,15 +14,9 @@ export const ToggleTip = ({
 
   const updateLiveRegion = () => {
     if (liveRegionRef.current) {
-      if ((liveRegionRef.current.textContent = ""))
-        setTimeout(() => {
-          liveRegionRef.current!.textContent = toggleTipContent;
-        }, 100);
-      else {
-        setTimeout(() => {
-          liveRegionRef.current!.textContent = "";
-        }, 100);
-      }
+      setTimeout(() => {
+        liveRegionRef.current!.textContent = toggleTipContent;
+      }, 100);
     }
   };
 
@@ -100,7 +94,8 @@ export const ToggleTip = ({
         ref={liveRegionRef}
         role="status"
         aria-live="polite"
-        display="none"
+        visibility="hidden"
+        //set offscreen
       />
     </Box>
   );
