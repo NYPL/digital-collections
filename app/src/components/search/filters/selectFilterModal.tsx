@@ -58,6 +58,7 @@ const SelectFilterModal = forwardRef<HTMLButtonElement, SelectFilterModalProps>(
     } = useDisclosure();
     const [searchText, setSearchText] = useState("");
     const [currentPage, setCurrentPage] = useState(1);
+    const [focusOutside, setFocusOutside] = useState(false);
     const itemsPerPage = 10;
     const viewMoreButtonRef = useRef<HTMLButtonElement | null>(null);
     const liveRegionRef = useRef<HTMLDivElement | null>(null);
@@ -93,6 +94,7 @@ const SelectFilterModal = forwardRef<HTMLButtonElement, SelectFilterModalProps>(
     };
 
     const handleClose = (closeDropdown: boolean) => {
+      setFocusOutside(closeDropdown);
       modalOnClose();
       parentOnClose(closeDropdown);
     };
@@ -120,7 +122,7 @@ const SelectFilterModal = forwardRef<HTMLButtonElement, SelectFilterModalProps>(
 
         <Modal
           finalFocusRef={
-            modalCurrent === selected
+            focusOutside
               ? (accordionButtonRef as RefObject<FocusableElement>)
               : viewMoreButtonRef
           }
@@ -209,7 +211,7 @@ const SelectFilterModal = forwardRef<HTMLButtonElement, SelectFilterModalProps>(
                   labelText={`${filter.name} filter options`}
                   showLabel={false}
                   name={filter.name}
-                  defaultValue={selected?.name ?? ""}
+                  defaultValue={modalCurrent?.name ?? ""}
                   showHelperInvalidText={false}
                   onChange={(newSelection: string) => {
                     selected =
@@ -266,7 +268,6 @@ const SelectFilterModal = forwardRef<HTMLButtonElement, SelectFilterModalProps>(
                   id="confirm-button"
                   isDisabled={!modalCurrent}
                   onClick={() => {
-                    setModalCurrent(current);
                     handleClose(true);
                     updateURL(
                       searchManager.handleAddFilter({
