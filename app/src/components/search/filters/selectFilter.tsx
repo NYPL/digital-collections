@@ -50,20 +50,20 @@ const SelectFilterComponent = forwardRef<
   const { filter, searchManager, ...rest } = props;
   const [userClickedOutside, setUserClickedOutside] = useState<boolean>(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [isApplyDisabled, setIsApplyDisabled] = useState(true);
+  const [isAccordionOpen, setIsAccordionOpen] = useState(false);
 
   const existingFilter = searchManager.filters.find(
     (f) => f.filter === filter.name
   );
-  // Derive `current` directly from `existingFilter` and filter options
-  let current = existingFilter
+  let selected = existingFilter
     ? filter.options.find((option) => option.name === existingFilter.value) ||
       null
     : null;
 
-  useEffect(() => {
-    setIsApplyDisabled(current === null);
-  }, [current]);
+  const [current, setCurrent] = useState<FilterOption | null>(selected);
+  const [modalCurrent, setModalCurrent] = useState<FilterOption | null>(
+    selected
+  );
 
   const { push } = useRouter();
   const pathname = usePathname();
@@ -81,7 +81,7 @@ const SelectFilterComponent = forwardRef<
   const mergedRef = useMergeRefs(filterRef, accordionButtonRef);
 
   // Tells the accordion to close if open when user clicks or tabs outside of the container
-  const handleFocusOutside = (e) => {
+  const handleFocus = (e) => {
     const selectComponent = containerRef?.current;
     if (e.type === "mousedown" || e.key === "Tab" || e.key === "Enter") {
       const focusOutside =
@@ -92,20 +92,20 @@ const SelectFilterComponent = forwardRef<
 
   useEffect(() => {
     if (!isModalOpen) {
-      document.addEventListener("mousedown", handleFocusOutside);
-      document.addEventListener("keydown", handleFocusOutside);
+      document.addEventListener("mousedown", handleFocus);
+      document.addEventListener("keydown", handleFocus);
     }
 
     return () => {
-      document.removeEventListener("mousedown", handleFocusOutside);
-      document.removeEventListener("keydown", handleFocusOutside);
+      document.removeEventListener("mousedown", handleFocus);
+      document.removeEventListener("keydown", handleFocus);
     };
   }, [isModalOpen]);
 
   const onChange = (newSelection: string) => {
-    // Update `current` directly when selection changes
-    current =
+    selected =
       filter.options.find((option) => option.name === newSelection) || null;
+    setCurrent(selected);
   };
 
   const sortedOptions = filter.options;
@@ -119,7 +119,7 @@ const SelectFilterComponent = forwardRef<
         showLabel={false}
         name={filter.name}
         onChange={onChange}
-        defaultValue={current?.name ?? ""}
+        defaultValue={selected?.name ?? ""}
       >
         {radioFilterOptions(sortedOptions.slice(0, 10))}
       </RadioGroup>
@@ -128,7 +128,7 @@ const SelectFilterComponent = forwardRef<
         width="100%"
         marginBottom={sortedOptions.length > 10 ? "xs" : "0"}
         marginTop="s"
-        isDisabled={isApplyDisabled}
+        isDisabled={!current}
         onClick={() => {
           accordionButtonRef.current?.focus();
           updateURL(
@@ -142,8 +142,40 @@ const SelectFilterComponent = forwardRef<
       >
         Apply
       </Button>
+      {sortedOptions.length > 10 && (
+        <SelectFilterModal
+          filter={filter}
+          ref={accordionButtonRef}
+          onOpen={() => {
+            setModalCurrent(current);
+            setIsModalOpen(true);
+          }}
+          onClose={(closeFilter: boolean) => {
+            setIsModalOpen(false);
+            setUserClickedOutside(closeFilter);
+          }}
+          selected={selected}
+          current={current}
+          modalCurrent={modalCurrent}
+          setModalCurrent={setModalCurrent}
+          searchManager={searchManager}
+        />
+      )}
     </>
   );
+
+  const handleAccordionChange = (expandedIdxs: number[]) => {
+    setIsAccordionOpen(expandedIdxs.length > 0);
+    if (!expandedIdxs.length) {
+      setCurrent(
+        existingFilter
+          ? filter.options.find(
+              (option) => option.name === existingFilter.value
+            ) || null
+          : null
+      );
+    }
+  };
 
   return (
     <Box {...rest} ref={containerRef}>
@@ -159,6 +191,7 @@ const SelectFilterComponent = forwardRef<
         ]}
         id={`select-${filter.name}`}
         userClickedOutside={userClickedOutside}
+        onChange={handleAccordionChange}
       />
     </Box>
   );

@@ -24,7 +24,6 @@ import {
 import DCSearchBar from "../dcSearchBar";
 import { headerBreakpoints } from "@/src/utils/breakpoints";
 import { usePathname, useRouter } from "next/navigation";
-import { useSearchContext } from "@/src/context/SearchProvider";
 import { SearchManager } from "@/src/utils/searchManager";
 
 type SelectFilterModalProps = {
@@ -33,7 +32,6 @@ type SelectFilterModalProps = {
   onClose: (closeDropdown) => void;
   selected: FilterOption | null;
   current: FilterOption | null;
-  setSelected: React.Dispatch<React.SetStateAction<FilterOption | null>>;
   modalCurrent: FilterOption | null;
   setModalCurrent: React.Dispatch<React.SetStateAction<FilterOption | null>>;
   searchManager: SearchManager;
@@ -43,12 +41,11 @@ type FocusableElement = HTMLElement & { focus: () => void };
 
 const SelectFilterModal = forwardRef<HTMLButtonElement, SelectFilterModalProps>(
   (props, accordionButtonRef) => {
-    const {
+    let {
       filter,
       onOpen: parentOnOpen,
       onClose: parentOnClose,
       selected,
-      setSelected,
       current,
       modalCurrent,
       setModalCurrent,
@@ -129,7 +126,12 @@ const SelectFilterModal = forwardRef<HTMLButtonElement, SelectFilterModalProps>(
           }
           isOpen={isOpen}
           onClose={() => {
-            setSelected(selected);
+            updateURL(
+              searchManager.handleAddFilter({
+                filter: filter.name,
+                value: modalCurrent?.name!,
+              })
+            );
             handleClose(false);
           }}
         >
@@ -207,14 +209,14 @@ const SelectFilterModal = forwardRef<HTMLButtonElement, SelectFilterModalProps>(
                   labelText={`${filter.name} filter options`}
                   showLabel={false}
                   name={filter.name}
-                  defaultValue={current?.name}
+                  defaultValue={selected?.name ?? ""}
                   showHelperInvalidText={false}
-                  onChange={(newValue) => {
-                    const newSelectedOption =
+                  onChange={(newSelection: string) => {
+                    selected =
                       filter.options.find(
-                        (option) => option.name === newValue
+                        (option) => option.name === newSelection
                       ) || null;
-                    setModalCurrent(newSelectedOption);
+                    setModalCurrent(selected);
                   }}
                 >
                   {radioFilterOptions(currentOptions)}
@@ -254,6 +256,7 @@ const SelectFilterModal = forwardRef<HTMLButtonElement, SelectFilterModalProps>(
                   buttonType="secondary"
                   onClick={() => {
                     handleClose(false);
+                    setModalCurrent(current);
                   }}
                   id="close-button"
                 >
@@ -263,16 +266,15 @@ const SelectFilterModal = forwardRef<HTMLButtonElement, SelectFilterModalProps>(
                   id="confirm-button"
                   isDisabled={!modalCurrent}
                   onClick={() => {
-                    setModalCurrent(modalCurrent);
-                    setSelected(modalCurrent);
+                    setModalCurrent(current);
                     handleClose(true);
-
                     updateURL(
                       searchManager.handleAddFilter({
                         filter: filter.name,
                         value: modalCurrent?.name!,
                       })
                     );
+                    setModalCurrent(current);
                   }}
                 >
                   Confirm
