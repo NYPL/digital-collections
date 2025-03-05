@@ -14,10 +14,13 @@ import {
 import React, { useRef } from "react";
 import Filters from "../../search/filters/filters";
 import ActiveFilters from "../../search/filters/activeFilters";
-import DCSearchBar from "../../search/dcSearchBar";
 import { displayResults } from "@/src/utils/utils";
+import CollectionStructure from "../../collectionStructure/collectionStructure";
+import { sampleStructure } from "__tests__/__mocks__/data/mockCollectionStructure";
 import { CARDS_PER_PAGE, SEARCH_SORT_LABELS } from "@/src/config/constants";
 import SearchCardsGrid from "../../grids/searchCardsGrid";
+import { headerBreakpoints } from "@/src/utils/breakpoints";
+import { CollectionSearch } from "../../search/collectionSearch";
 import { MobileSearchBanner } from "../../mobileSearchBanner/mobileSearchBanner";
 
 const CollectionPage = ({ slug, data }) => {
@@ -105,60 +108,31 @@ const CollectionPage = ({ slug, data }) => {
             flexDir: { base: "column", md: "row" },
           }}
         >
-          <Box
-            sx={{
-              background: "ui.bg.default",
-              padding: "l",
-              height: "400px",
-              minWidth: "300px",
-              justifyItems: "center",
-            }}
-          >
-            <Heading size="heading6">Collection structure</Heading>
-          </Box>
+          <CollectionStructure data={sampleStructure} />
           <Box width="100%">
+            <CollectionSearch />
             <Flex
-              flexDir="column"
               sx={{
-                background: "ui.bg.default",
-                paddingTop: "s",
-                paddingBottom: "s",
-                paddingLeft: "m",
-                paddingRight: "m",
+                [`@media screen and (min-width: ${headerBreakpoints.lgMobile}px)`]:
+                  {
+                    flexDir: "row",
+                    marginBottom: "s",
+                    alignItems: "center",
+                  },
+                justifyContent: "space-between",
+                flexDir: "column",
                 marginBottom: "l",
+                marginTop: "l",
+                gap: "m",
+                alignItems: "flex-start",
               }}
-            >
-              <Heading sx={{ marginBottom: "xs" }} size="heading8">
-                Search this collection:
-              </Heading>
-              <DCSearchBar
-                id="search-collection"
-                labelText="Search this collection by item title"
-                maxWrapperWidth="100%"
-                textInputProps={{
-                  id: "collection-search-text",
-                  isClearable: true,
-                  isClearableCallback: () => {},
-                  labelText: "Search this collection by item title",
-                  name: "q",
-                  placeholder: "Search this collection by item title",
-                  defaultValue: "",
-                  onChange: (e) => {},
-                }}
-                onSubmit={() => {}}
-              />
-            </Flex>
-            <Flex
-              marginTop="xl"
-              marginBottom="s"
-              alignItems="center"
-              justifyContent="space-between"
             >
               <Heading
                 size="heading5"
                 ref={headingRef}
                 tabIndex={-1}
                 margin="0"
+                aria-live="polite"
               >{`Displaying ${displayResults(
                 data.numResults,
                 CARDS_PER_PAGE,
