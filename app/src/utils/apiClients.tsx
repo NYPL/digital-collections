@@ -15,33 +15,6 @@ import { fetchApi } from "./fetchApi";
 import { Filter } from "../types/FilterType";
 
 export class RepoApi {
-  // Replaced by Collections API.
-  static async getHomePageData() {
-    const randomNumber = Math.floor(Math.random() * 2);
-    const lanes: LaneDataType[] = data.lanes as unknown as LaneDataType[];
-
-    // Get all the UUIDs from the collections
-    const allCollectionUUIDs: string[] = lanes.reduce((acc, lane) => {
-      return acc.concat(lane.collections.map((collection) => collection.uuid));
-    }, [] as string[]);
-    const uuidtoItemCountMap =
-      await this.getItemsCountFromUUIDs(allCollectionUUIDs);
-
-    // Update the collections for each lane with the number of items
-    const updatedLanes = lanes.map((lane) => {
-      const updatedCollections = lane.collections.map((collection) => {
-        return {
-          ...collection,
-          numberOfDigitizedItems: uuidtoItemCountMap[collection.uuid] || "0",
-        };
-      });
-      return { ...lane, collections: updatedCollections };
-    });
-
-    const newResponse = { randomNumber, lanesWithNumItems: updatedLanes };
-    return newResponse;
-  }
-
   static async getFeaturedItemData() {
     const featuredImageData = await this.getFeaturedImage();
     const numDigitizedItems = await this.getNumDigitizedItems();
@@ -173,23 +146,6 @@ export class RepoApi {
 
     const res = await fetchApi({ apiUrl });
 
-    return res?.nyplAPI?.response;
-  }
-
-  // Replaced by Collections API.
-  static async getCollectionsData({
-    keyword = DEFAULT_SEARCH_TERM,
-    sort = DEFAULT_COLLECTION_SORT,
-    page = DEFAULT_PAGE_NUM,
-    perPage = CARDS_PER_PAGE,
-  }: {
-    keyword?: string;
-    sort?: string;
-    page?: number;
-    perPage?: number;
-  } = {}) {
-    let apiUrl = `${process.env.API_URL}/api/v2/collections?page=${page}&per_page=${perPage}&sort=${COLLECTION_SORT_OPTIONS[sort]}&q=${keyword}`;
-    const res = await fetchApi({ apiUrl });
     return res?.nyplAPI?.response;
   }
 
