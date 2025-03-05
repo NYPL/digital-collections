@@ -171,8 +171,7 @@ const SelectFilterComponent = forwardRef<
     </>
   );
 
-  const handleAccordionChange = (expandedIdxs: number[]) => {
-    setIsAccordionOpen(expandedIdxs.length > 0);
+  const handleAccordionChange = () => {
     setCurrent(
       existingFilter
         ? filter.options.find(
