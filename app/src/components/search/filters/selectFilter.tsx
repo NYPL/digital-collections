@@ -11,23 +11,14 @@ import SelectFilterModal from "./selectFilterModal";
 import FilterAccordion from "./filterAccordion";
 import { usePathname, useRouter } from "next/navigation";
 import { SearchManager } from "@/src/utils/searchManager";
-
-export type FilterOption = {
-  name: string;
-  count: number;
-};
-
-export type FilterCategory = {
-  name: string;
-  options: FilterOption[];
-};
+import { FacetFilter, FacetFilterOption } from "@/src/types/FacetFilterType";
 
 export interface SelectFilterProps {
-  filter: FilterCategory;
+  filter: FacetFilter;
   searchManager: SearchManager;
 }
 
-export const radioFilterOptions = (options: FilterOption[]) => {
+export const radioFilterOptions = (options: FacetFilterOption[]) => {
   return options.map((option, index) => (
     <Radio
       key={`${option.name}-${index}`}
@@ -45,13 +36,12 @@ export const radioFilterOptions = (options: FilterOption[]) => {
 
 const SelectFilterComponent = forwardRef<
   HTMLButtonElement,
-  { filter: FilterCategory; searchManager: SearchManager }
+  { filter: FacetFilter; searchManager: SearchManager }
 >((props, filterRef) => {
   const { filter, searchManager, ...rest } = props;
   const [userClickedOutside, setUserClickedOutside] = useState<boolean>(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [isAccordionOpen, setIsAccordionOpen] = useState(false);
-
+  // Sets selected to filter's current URL value on mount.
   const existingFilter = searchManager.filters.find(
     (f) => f.filter === filter.name
   );
@@ -60,8 +50,9 @@ const SelectFilterComponent = forwardRef<
       null
     : null;
 
-  const [current, setCurrent] = useState<FilterOption | null>(selected);
-  const [modalCurrent, setModalCurrent] = useState<FilterOption | null>(
+  // Manages current selection in state while user interacts with dropdown/modal.
+  const [current, setCurrent] = useState<FacetFilterOption | null>(selected);
+  const [modalCurrent, setModalCurrent] = useState<FacetFilterOption | null>(
     selected
   );
 
@@ -71,8 +62,7 @@ const SelectFilterComponent = forwardRef<
     push(`${pathname}?${queryString}`);
   };
 
-  // Create a ref to hold a reference to the accordion button, enabling us
-  // to programmatically focus it.
+  // Refs for programmatic focus.
   const accordionButtonRef: React.RefObject<HTMLButtonElement> =
     useRef<HTMLButtonElement>(null);
   const containerRef: React.RefObject<HTMLDivElement> =
@@ -80,7 +70,7 @@ const SelectFilterComponent = forwardRef<
 
   const mergedRef = useMergeRefs(filterRef, accordionButtonRef);
 
-  // Tells the accordion to close if open when user clicks or tabs outside of the container
+  // Tells the dropdown to close if user focus leaves.
   const handleFocus = (e) => {
     const selectComponent = containerRef?.current;
     if (e.type === "mousedown" || e.key === "Tab" || e.key === "Enter") {
@@ -95,20 +85,13 @@ const SelectFilterComponent = forwardRef<
       document.addEventListener("mousedown", handleFocus);
       document.addEventListener("keydown", handleFocus);
     }
-
     return () => {
       document.removeEventListener("mousedown", handleFocus);
       document.removeEventListener("keydown", handleFocus);
     };
   }, [isModalOpen]);
 
-  const onChange = (newSelection: string) => {
-    selected =
-      filter.options.find((option) => option.name === newSelection) || null;
-    setCurrent(selected);
-    setModalCurrent(selected);
-  };
-
+  // Displays selected first.
   const sortedOptions =
     selected && !isModalOpen
       ? [
@@ -116,6 +99,13 @@ const SelectFilterComponent = forwardRef<
           ...filter.options.filter((option) => option.name !== selected?.name),
         ]
       : filter.options;
+
+  const onChange = (newSelection: string) => {
+    selected =
+      filter.options.find((option) => option.name === newSelection) || null;
+    setCurrent(selected);
+    setModalCurrent(selected);
+  };
 
   const accordionPanel = (
     <>
@@ -138,6 +128,7 @@ const SelectFilterComponent = forwardRef<
         isDisabled={!current}
         onClick={() => {
           accordionButtonRef.current?.focus();
+          // Push the current filter selection to URL.
           updateURL(
             searchManager.handleAddFilter({
               filter: filter.name,
@@ -157,9 +148,9 @@ const SelectFilterComponent = forwardRef<
             setModalCurrent(current);
             setIsModalOpen(true);
           }}
-          onClose={(closeFilter: boolean) => {
+          onClose={(closeDropdown: boolean) => {
             setIsModalOpen(false);
-            setUserClickedOutside(closeFilter);
+            setUserClickedOutside(closeDropdown);
           }}
           selected={selected}
           current={current}
@@ -171,6 +162,7 @@ const SelectFilterComponent = forwardRef<
     </>
   );
 
+  // Reset dropdown's current value to filter selection when dropdown closes/opens.
   const handleAccordionChange = () => {
     setCurrent(
       existingFilter

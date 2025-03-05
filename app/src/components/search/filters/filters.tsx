@@ -1,4 +1,4 @@
-import React, { forwardRef, useState, useRef, useEffect } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import {
   Button,
   Heading,
@@ -6,7 +6,6 @@ import {
   Box,
   TextInputRefType,
 } from "@nypl/design-system-react-components";
-import { mockFacetFilter } from "__tests__/__mocks__/data/mockFacetFilter";
 import SelectFilterGrid from "./selectFilterGrid";
 import RightsFilter from "./rightsFilter";
 import DateFilter from "./dateFilter";
@@ -36,30 +35,6 @@ const Filters = ({ headingText, searchManager }: FiltersProps) => {
   const filterContent = (
     <>
       <SelectFilterGrid
-        filters={[
-          {
-            name: "Topic",
-            options: mockFacetFilter.options,
-          },
-          {
-            name: "Genre",
-            options: mockFacetFilter.options,
-          },
-          {
-            name: "Format",
-            options: mockFacetFilter.options,
-          },
-          {
-            name: "Collection",
-            options: mockFacetFilter.options,
-          },
-          {
-            name: "Publishers",
-            options: [{ name: "New York", count: 37 }],
-          },
-          { name: "Division", options: [{ name: "New York", count: 37 }] },
-          { name: "Type", options: [{ name: "New York", count: 37 }] },
-        ]}
         isExpanded={isExpanded}
         filterRefs={filterRefs}
         searchManager={searchManager}

@@ -10,6 +10,7 @@ import {
   SearchManager,
   stringToFilter,
 } from "../utils/searchManager";
+import { mockFacetFilters } from "__tests__/__mocks__/data/mockFacetFilters";
 
 interface SearchContextType {
   searchManager: SearchManager;
@@ -29,6 +30,7 @@ export const SearchProvider = ({
     initialSort: searchParams?.sort || DEFAULT_SEARCH_SORT,
     initialFilters: stringToFilter(searchParams?.filters),
     initialKeywords: searchParams?.keywords || DEFAULT_SEARCH_TERM,
+    initialFacets: mockFacetFilters,
   });
 
   return (

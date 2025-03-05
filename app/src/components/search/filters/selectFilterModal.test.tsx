@@ -1,12 +1,12 @@
 import { render, screen, fireEvent, waitFor } from "@testing-library/react";
 import SelectFilterModal from "./selectFilterModal";
-import type { FilterCategory } from "./selectFilter";
 import { useState } from "react";
 import {
   DEFAULT_SEARCH_SORT,
   DEFAULT_SEARCH_TERM,
 } from "@/src/config/constants";
 import { GeneralSearchManager } from "@/src/utils/searchManager";
+import { FacetFilter } from "@/src/types/FacetFilterType";
 
 jest.mock("@chakra-ui/react", () => {
   const actual = jest.requireActual("@chakra-ui/react");
@@ -36,7 +36,7 @@ describe("SelectFilterModal", () => {
   const mockSetSelected = jest.fn();
   const mockSetModalCurrent = jest.fn();
 
-  const mockFilter: FilterCategory = {
+  const mockFilter: FacetFilter = {
     name: "Genre",
     options: [
       { name: "Fiction", count: 10 },

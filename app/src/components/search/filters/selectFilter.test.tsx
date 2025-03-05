@@ -1,14 +1,15 @@
-import { render, screen, fireEvent, waitFor } from "@testing-library/react";
-import SelectFilter, { FilterCategory } from "./selectFilter";
+import { render, screen, fireEvent } from "@testing-library/react";
+import SelectFilter from "./selectFilter";
 import { GeneralSearchManager } from "@/src/utils/searchManager";
 import {
   DEFAULT_SEARCH_SORT,
   DEFAULT_SEARCH_TERM,
 } from "@/src/config/constants";
 import { useRouter } from "next/navigation";
+import { FacetFilter } from "@/src/types/FacetFilterType";
 
-const mockFacetFilter: FilterCategory = {
-  name: "Publishers",
+const mockFacetFilter: FacetFilter = {
+  name: "Publisher",
   options: [
     { name: "Publisher 1", count: 10 },
     { name: "Publisher 2", count: 20 },
@@ -48,7 +49,7 @@ let component = (
 describe("SelectFilterComponent", () => {
   it("renders the component", () => {
     render(component);
-    const accordionButton = screen.getByRole("button", { name: /Publishers/i });
+    const accordionButton = screen.getByRole("button", { name: /Publisher/i });
     fireEvent.click(accordionButton);
     expect(screen.getByText("Publisher 1")).toBeInTheDocument();
     expect(screen.getByText("Publisher 2")).toBeInTheDocument();
@@ -56,7 +57,7 @@ describe("SelectFilterComponent", () => {
 
   it("opens and closes the accordion", () => {
     render(component);
-    const accordionButton = screen.getByRole("button", { name: /Publishers/i });
+    const accordionButton = screen.getByRole("button", { name: /Publisher/i });
 
     expect(screen.queryByText("Apply")).not.toBeInTheDocument();
 
@@ -72,7 +73,7 @@ describe("SelectFilterComponent", () => {
   it("updates the selection and enables the apply button when a radio option is selected", () => {
     render(component);
 
-    fireEvent.click(screen.getByRole("button", { name: /Publishers/i }));
+    fireEvent.click(screen.getByRole("button", { name: /Publisher/i }));
     expect(screen.getByText("Apply")).toBeDisabled();
 
     const firstRadio = screen.getByRole("radio", { name: "Publisher 1 10" });
@@ -84,7 +85,7 @@ describe("SelectFilterComponent", () => {
 
   it("updates the URL when selection is applied", () => {
     render(component);
-    const accordionButton = screen.getByRole("button", { name: /Publishers/i });
+    const accordionButton = screen.getByRole("button", { name: /Publisher/i });
     fireEvent.click(accordionButton);
 
     const secondRadio = screen.getByRole("radio", { name: "Publisher 2 20" });
@@ -94,14 +95,14 @@ describe("SelectFilterComponent", () => {
     fireEvent.click(applyButton);
 
     expect(mockPush).toHaveBeenCalledWith(
-      expect.stringContaining("filters=%5BPublishers%3DPublisher+2%5")
+      expect.stringContaining("filters=%5BPublisher%3DPublisher+2%5")
     );
   });
 
   it("opens modal with view more button", () => {
     render(component);
 
-    const accordionButton = screen.getByRole("button", { name: /Publishers/i });
+    const accordionButton = screen.getByRole("button", { name: /Publisher/i });
     fireEvent.click(accordionButton);
 
     const viewMoreButton = screen.getByText("View all publishers");

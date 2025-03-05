@@ -7,11 +7,7 @@ import {
   ModalOverlay,
   useDisclosure,
 } from "@chakra-ui/react";
-import {
-  FilterOption,
-  radioFilterOptions,
-  type FilterCategory,
-} from "./selectFilter";
+import { radioFilterOptions } from "./selectFilter";
 import {
   Button,
   Box,
@@ -25,15 +21,18 @@ import DCSearchBar from "../dcSearchBar";
 import { headerBreakpoints } from "@/src/utils/breakpoints";
 import { usePathname, useRouter } from "next/navigation";
 import { SearchManager } from "@/src/utils/searchManager";
+import { FacetFilter, FacetFilterOption } from "@/src/types/FacetFilterType";
 
 type SelectFilterModalProps = {
-  filter: FilterCategory;
+  filter: FacetFilter;
   onOpen: () => void;
   onClose: (closeDropdown) => void;
-  selected: FilterOption | null;
-  current: FilterOption | null;
-  modalCurrent: FilterOption | null;
-  setModalCurrent: React.Dispatch<React.SetStateAction<FilterOption | null>>;
+  selected: FacetFilterOption | null;
+  current: FacetFilterOption | null;
+  modalCurrent: FacetFilterOption | null;
+  setModalCurrent: React.Dispatch<
+    React.SetStateAction<FacetFilterOption | null>
+  >;
   searchManager: SearchManager;
 };
 
