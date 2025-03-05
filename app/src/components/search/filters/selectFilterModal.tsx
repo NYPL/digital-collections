@@ -2,7 +2,6 @@ import { forwardRef, useState, useEffect, useRef, RefObject } from "react";
 import {
   Modal,
   ModalContent,
-  ModalBody,
   ModalHeader,
   ModalOverlay,
   useDisclosure,
@@ -57,25 +56,29 @@ const SelectFilterModal = forwardRef<HTMLButtonElement, SelectFilterModalProps>(
     } = useDisclosure();
     const [searchText, setSearchText] = useState("");
     const [currentPage, setCurrentPage] = useState(1);
-    const [focusOutside, setFocusOutside] = useState(false);
     const itemsPerPage = 10;
+
+    // Whether modal closing should focus on open or closed dropdown.
+    const [focusOutside, setFocusOutside] = useState(false);
+
+    // Ref for programmatic focus.
     const viewMoreButtonRef = useRef<HTMLButtonElement | null>(null);
+
+    // Ref for accessible announcements of search results.
     const liveRegionRef = useRef<HTMLDivElement | null>(null);
+
     const { push } = useRouter();
     const pathname = usePathname();
     const updateURL = async (queryString) => {
       push(`${pathname}?${queryString}`);
     };
 
-    useEffect(() => {
-      setCurrentPage(1);
-    }, [searchText]);
-
     const filteredOptions = filter.options.filter((option) =>
       option.name.toLowerCase().includes(searchText.toLowerCase())
     );
 
     const pageCount = Math.ceil(filteredOptions.length / itemsPerPage);
+
     const currentOptions = filteredOptions.slice(
       (currentPage - 1) * itemsPerPage,
       currentPage * itemsPerPage
@@ -86,6 +89,10 @@ const SelectFilterModal = forwardRef<HTMLButtonElement, SelectFilterModalProps>(
         liveRegionRef.current.textContent = `${filteredOptions.length} options available`;
       }
     }, [filteredOptions.length]);
+
+    useEffect(() => {
+      setCurrentPage(1);
+    }, [searchText]);
 
     const handleOpen = () => {
       modalOnOpen();
