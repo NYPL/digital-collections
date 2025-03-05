@@ -24,6 +24,7 @@ export interface FilterAccordionProps {
   /** For internal use only. This value toggles the accordion closed if the user clicks
    * outside the component. */
   userClickedOutside?: boolean;
+  onChange: (expandedIdxs: number[]) => void;
 }
 
 /**
@@ -127,6 +128,7 @@ const FilterAccordionComponent = forwardRef<
     accordionData,
     ariaLabel,
     id,
+    onChange: parentOnChange,
     isDefaultOpen = false,
     userClickedOutside,
     ...rest
@@ -183,7 +185,10 @@ const FilterAccordionComponent = forwardRef<
     <ChakraAccordion
       allowMultiple
       index={expandedPanels}
-      onChange={(expandedIdxs: number[]) => setExpandedPanels(expandedIdxs)}
+      onChange={(expandedIdxs: number[]) => {
+        setExpandedPanels(expandedIdxs);
+        parentOnChange(expandedIdxs);
+      }}
       onKeyDown={handleKeyDown}
       id={id}
       ref={ref}
