@@ -1,17 +1,20 @@
 import { Grid } from "@chakra-ui/react";
 import SelectFilter, { FilterCategory } from "./selectFilter";
 import { headerBreakpoints } from "@/src/utils/breakpoints";
+import { SearchManager } from "@/src/utils/searchManager";
 
 type SelectFilterGridProps = {
   filters: FilterCategory[];
   isExpanded: boolean;
   filterRefs: React.MutableRefObject<(HTMLButtonElement | null)[]>;
+  searchManager: SearchManager;
 };
 
 const SelectFilterGrid = ({
   filters,
   isExpanded,
   filterRefs,
+  searchManager,
 }: SelectFilterGridProps) => {
   const visibleFilters = isExpanded ? filters : filters.slice(0, 4);
 
@@ -37,6 +40,7 @@ const SelectFilterGrid = ({
           ref={(el) => {
             filterRefs.current[index] = el;
           }}
+          searchManager={searchManager}
         />
       ))}
     </Grid>

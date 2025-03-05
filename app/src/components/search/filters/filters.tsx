@@ -11,12 +11,14 @@ import SelectFilterGrid from "./selectFilterGrid";
 import RightsFilter from "./rightsFilter";
 import DateFilter from "./dateFilter";
 import { headerBreakpoints } from "@/src/utils/breakpoints";
+import { SearchManager } from "@/src/utils/searchManager";
 
 type FiltersProps = {
   headingText: string;
+  searchManager: SearchManager;
 };
 
-const Filters = ({ headingText }: FiltersProps) => {
+const Filters = ({ headingText, searchManager }: FiltersProps) => {
   const [isExpanded, setIsExpanded] = useState(false);
   const filterRefs = useRef<(HTMLButtonElement | null)[]>([]);
   const dateFilterRef = useRef<TextInputRefType | null>(null);
@@ -60,6 +62,7 @@ const Filters = ({ headingText }: FiltersProps) => {
         ]}
         isExpanded={isExpanded}
         filterRefs={filterRefs}
+        searchManager={searchManager}
       />
       {isExpanded && (
         <>

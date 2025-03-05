@@ -2,6 +2,7 @@ import { render, screen, fireEvent } from "@testing-library/react";
 import SelectFilterGrid from "./selectFilterGrid";
 import { FilterCategory } from "./selectFilter";
 import { MutableRefObject } from "react";
+import { SearchProvider } from "@/src/context/SearchProvider";
 
 const mockFilters: FilterCategory[] = [
   { name: "Collection", options: [{ name: "Collection 1", count: 10 }] },
@@ -14,16 +15,27 @@ const mockFilters: FilterCategory[] = [
 const mockFilterRefs: MutableRefObject<(HTMLButtonElement | null)[]> = {
   current: Array(mockFilters.length).fill(null),
 };
+jest.mock("next/navigation", () => ({
+  useRouter: jest.fn(() => ({
+    push: jest.fn(),
+  })),
+  usePathname: jest.fn(),
+}));
 
 describe("SelectFilterGrid", () => {
-  it("renders the correct number of filters when collapsed", () => {
-    render(
-      <SelectFilterGrid
-        filters={mockFilters}
-        isExpanded={false}
-        filterRefs={mockFilterRefs}
-      />
+  const component = (expanded: boolean) => {
+    return (
+      <SearchProvider>
+        <SelectFilterGrid
+          filters={mockFilters}
+          isExpanded={false}
+          filterRefs={mockFilterRefs}
+        />
+      </SearchProvider>
     );
+  };
+  it("renders the correct number of filters when collapsed", () => {
+    render(component(false));
 
     expect(screen.getByText("Collection")).toBeInTheDocument();
     expect(screen.getByText("Format")).toBeInTheDocument();
@@ -34,13 +46,7 @@ describe("SelectFilterGrid", () => {
   });
 
   it("renders all filters when expanded", () => {
-    render(
-      <SelectFilterGrid
-        filters={mockFilters}
-        isExpanded={true}
-        filterRefs={mockFilterRefs}
-      />
-    );
+    render(component(true));
 
     mockFilters.forEach((filter) => {
       expect(screen.getByText(filter.name)).toBeInTheDocument();
@@ -48,13 +54,7 @@ describe("SelectFilterGrid", () => {
   });
 
   it("toggles filter expansion correctly", async () => {
-    render(
-      <SelectFilterGrid
-        filters={mockFilters}
-        isExpanded={true}
-        filterRefs={mockFilterRefs}
-      />
-    );
+    render(component(true));
 
     const collectionAccordionButton = screen.getByText("Collection");
     expect(collectionAccordionButton.parentElement).toHaveAttribute(
@@ -70,13 +70,7 @@ describe("SelectFilterGrid", () => {
   });
 
   it("collapses the previous filter when you click a new one", async () => {
-    render(
-      <SelectFilterGrid
-        filters={mockFilters}
-        isExpanded={true}
-        filterRefs={mockFilterRefs}
-      />
-    );
+    render(component(true));
 
     const collectionAccordionButton = screen.getByText("Collection");
 
