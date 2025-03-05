@@ -6,10 +6,14 @@ import {
   TagSet,
   Text,
 } from "@nypl/design-system-react-components";
-import { usePathname, useRouter } from "next/navigation";
+import { useRouter, usePathname } from "next/navigation";
+import type { SearchManager } from "@/src/utils/searchManager";
 
-const ActiveFilters = () => {
-  const { searchManager } = useSearchContext();
+type ActiveFilterProps = {
+  searchManager: SearchManager;
+};
+
+const ActiveFilters = ({ searchManager }: ActiveFilterProps) => {
   const { push } = useRouter();
   const pathname = usePathname();
   const updateURL = async (queryString) => {

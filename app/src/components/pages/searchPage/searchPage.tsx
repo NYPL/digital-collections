@@ -15,6 +15,7 @@ import { useSearchContext } from "@/src/context/SearchProvider";
 import { usePathname, useRouter } from "next/navigation";
 import SearchCardsGrid from "../../grids/searchCardsGrid";
 import { headerBreakpoints } from "@/src/utils/breakpoints";
+import { MobileSearchBanner } from "../../mobileSearchBanner/mobileSearchBanner";
 import SortMenu from "../../sortMenu/sortMenu";
 import ActiveFilters from "../../search/filters/activeFilters";
 
@@ -31,6 +32,7 @@ const SearchPage = ({ data }) => {
 
   return (
     <Box id="mainContent">
+      <MobileSearchBanner />
       <Box
         sx={{
           background: "ui.bg.default",
@@ -62,7 +64,10 @@ const SearchPage = ({ data }) => {
             )}
                     results for "${searchManager.keywords}"`}
           </Heading>
-          <Filters headingText="Refine your search" ref={headingRef} />
+          <Filters
+            searchManager={searchManager}
+            headingText="Refine your search"
+          />
         </Box>
       </Box>
       <Box
@@ -77,7 +82,7 @@ const SearchPage = ({ data }) => {
           },
         }}
       >
-        <ActiveFilters />
+        <ActiveFilters searchManager={searchManager} />
         <Flex
           sx={{
             [`@media screen and (min-width: ${headerBreakpoints.lgMobile}px)`]:
@@ -96,8 +101,8 @@ const SearchPage = ({ data }) => {
         >
           <Heading
             size="heading5"
-            tabIndex={-1}
             ref={headingRef}
+            tabIndex={-1}
             margin="0"
           >{`Displaying ${displayResults(
             data.numResults,
