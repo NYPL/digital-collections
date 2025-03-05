@@ -33,6 +33,7 @@ import {
 import { usePathname, useRouter } from "next/navigation";
 import SortMenu from "../../sortMenu/sortMenu";
 import ActiveFilters from "../../search/filters/activeFilters";
+import { mockFacetFilters } from "__tests__/__mocks__/data/mockFacetFilters";
 
 const CollectionPage = ({ slug, data, searchParams }) => {
   const headingRef = useRef<HTMLHeadingElement>(null);
@@ -41,6 +42,7 @@ const CollectionPage = ({ slug, data, searchParams }) => {
     initialSort: searchParams?.sort || DEFAULT_SEARCH_SORT,
     initialFilters: stringToFilter(searchParams?.filters),
     initialKeywords: searchParams?.keywords || DEFAULT_SEARCH_TERM,
+    initialFacets: mockFacetFilters,
   });
   const totalPages = totalNumPages(data.numResults, CARDS_PER_PAGE);
   const { push } = useRouter();
