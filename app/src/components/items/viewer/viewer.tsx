@@ -19,14 +19,14 @@ const contentTypes = {
   "sound recording": "audio",
 };
 
-const ItemViewer = ({ manifest, item, type }: ItemProps) => {
+const ItemMediaViewer = ({ manifest, item, type }: ItemProps) => {
+  console.log("Item metadata: ", item.metadata);
   let viewer;
   switch (type) {
     case "image":
       if (item.isSingleCapture) {
         viewer = (
           <>
-            <h2> Image: {item.title} </h2>
             <UniversalViewer
               // "http://localhost:8000/items/8e8dc6a0-c6eb-012f-7a58-58d385a7bc34"
               // "https://wellcomelibrary.org/iiif/b18035723/manifest"
@@ -39,7 +39,6 @@ const ItemViewer = ({ manifest, item, type }: ItemProps) => {
       } else {
         viewer = (
           <>
-            <h2> Image: {item.title} </h2>
             <UniversalViewer
               manifestId={`http://localhost:8000/items/${item.uuid}`} //{"https://wellcomelibrary.org/iiif/b18035723/manifest"} //{`https://be73-100-37-199-113.ngrok-free.app/items/${item.uuid}`} //{"https://wellcomelibrary.org/iiif/b18035723/manifest"}
               canvasIndex={0}
@@ -52,7 +51,6 @@ const ItemViewer = ({ manifest, item, type }: ItemProps) => {
     case "video":
       viewer = (
         <>
-          <h2> Video: {item.title} </h2>
           <VideoViewer />
         </>
       );
@@ -60,7 +58,6 @@ const ItemViewer = ({ manifest, item, type }: ItemProps) => {
     case "audio":
       viewer = (
         <>
-          <h2> Audio: {item.title} </h2>
           <AudioViewer />
         </>
       );
@@ -70,4 +67,4 @@ const ItemViewer = ({ manifest, item, type }: ItemProps) => {
   }
 };
 
-export default ItemViewer;
+export default ItemMediaViewer;

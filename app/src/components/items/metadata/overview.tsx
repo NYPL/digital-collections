@@ -10,26 +10,30 @@ import {
   HorizontalRule,
 } from "@nypl/design-system-react-components";
 
-const textLink = (href, text) => {
-  return (
-    <a
-      style={{
-        color: "unset",
-        textDecorationLine: "underline",
-        lineHeight: "150%",
-        textUnderlinePosition: "from-font",
-        textDecorationThickness: "1px",
-      }}
-      href={href}
-    >
-      {text}
-    </a>
-  );
+const metadataFieldToDisplay = {
+  title: "Title",
+  collection: "Collection",
+  names: "Names",
+  origin: "Date / Origin",
+  tableOfContents: "Table Of Contents",
+  locations: "Library Location",
+  subjects: "Subjects",
+  genres: "Genres",
+  notes: "Notes",
+  physicalDescription: "Physical Description",
+  abstract: "Abstract",
+  languages: "Languages",
+  link: "Link",
+  identifiers: "Identifiers",
+  access: "Access",
+  rights: "Rights",
+  typeOfResource: "Type Of Resource",
 };
 
 const MetadataOverview = ({ manifest, item }) => {
-  console.log("manifest is: ", manifest);
-  // console.log("Item is: ", item);
+  // console.log("manifest is: ", manifest);
+  console.log("Item metadata is: ", item.metadata);
+  console.log("typeof item.metadata is: ", typeof item.metadata);
   return (
     <>
       <Box
@@ -44,105 +48,102 @@ const MetadataOverview = ({ manifest, item }) => {
           <Heading size="heading6" marginBottom="xs">
             Item metadata
           </Heading>
-          {/* Title */}
+
+          {/* {
+            item.metadata?.keys?.map((field, value)=>{
+              if (value !== '' ) { 
+                return (
+                <>
+                    <Text size="overline1" marginBottom="xs">
+                      {metadataFieldToDisplay[field]}
+                    </Text>
+                    <Text marginBottom="m">
+                      {value}
+                    </Text>
+                </>
+              ) }
+            })
+          } */}
+
           <Text size="overline1" marginBottom="xs">
-            title
+            Title
           </Text>
-          <Text marginBottom="m">{item.title}</Text>
-          {/* Names */}
+          <Text marginBottom="m">{item.metadata.title}</Text>
+
           <Text size="overline1" marginBottom="xs">
             Names
           </Text>
-          <Text marginBottom="m">{}</Text>
-          {/* Collection */}
+          <Text marginBottom="m">{item.metadata.names}</Text>
+
           <Text size="overline1" marginBottom="xs">
             Collection
           </Text>
-          <Text marginBottom="m">{}</Text>
-          {/* Date/Origin */}
+          <Text marginBottom="m">{item.metadata.collection}</Text>
+
           <Text size="overline1" marginBottom="xs">
             Dates / Origin
           </Text>
-          <Text marginBottom="m">
-            Date created: {textLink("/search/index?year_begin=1800", "1800")}{" "}
-            (approximate)
-          </Text>
-          {/* Table of Contents */}
+          <Text marginBottom="m">{item.metadata.origin}</Text>
+
           <Text size="overline1" marginBottom="xs">
             Table of Contents
           </Text>
-          <Text marginBottom="m">{}</Text>
-          {/* Library Locations */}
+          <Text marginBottom="m">{item.metadata.tableOfContents}</Text>
+
           <Text size="overline1" marginBottom="xs">
             Library Locations
           </Text>
-          <Text marginBottom="m">
-            {textLink(
-              "/divisions/billy-rose-theatre-division",
-              "Example division"
-            )}
-          </Text>
-          {/* Subjects */}
+          <Text marginBottom="m">{item.metadata.locations}</Text>
+
           <Text size="overline1" marginBottom="xs">
             Subjects
           </Text>
-          <Text marginBottom="m">{}</Text>
-          {/* Genres */}
+          <Text marginBottom="m">{item.metadata.subjects}</Text>
+
           <Text size="overline1" marginBottom="xs">
             Genres
           </Text>
-          <Text marginBottom="m">{}</Text>
-          {/* Notes */}
+          <Text marginBottom="m">{item.metadata.genres}</Text>
+
           <Text size="overline1" marginBottom="xs">
             Notes
           </Text>
-          <Text marginBottom="m">{}</Text>
-          {/* Physical Description */}
+          <Text marginBottom="m">{item.metadata.notes}</Text>
+
           <Text size="overline1" marginBottom="xs">
             Physical Description
           </Text>
-          <Text marginBottom="m">{}</Text>
-          {/* Abstract */}
+          <Text marginBottom="m">{item.metadata.physicalDescription}</Text>
+
           <Text size="overline1" marginBottom="xs">
             Abstract
           </Text>
-          <Text marginBottom="m">{}</Text>
-          {/* Types */}
+          <Text marginBottom="m">{item.metadata.abstract}</Text>
+
           <Text size="overline1" marginBottom="xs">
             Types
           </Text>
-          <Text marginBottom="m">{}</Text>
-          {/* Languages */}
+          <Text marginBottom="m">{item.metadata.typeOfResource}</Text>
+
           <Text size="overline1" marginBottom="xs">
             Languages
           </Text>
-          <Text marginBottom="m">{}</Text>
-          {/* Identifiers */}
+          <Text marginBottom="m">{item.metadata.languages}</Text>
+
           <Text size="overline1" marginBottom="xs">
             Identifiers
           </Text>
-          <Text marginBottom="m">{}</Text>
-          {/* Access */}
+          <Text marginBottom="m">{item.metadata.identifiers}</Text>
+
           <Text size="overline1" marginBottom="xs">
             Access
           </Text>
-          <Text marginBottom="m">{}</Text>
-          {/* Rights */}
+          <Text marginBottom="m">{item.metadata.access}</Text>
+
           <Text size="overline1" marginBottom="xs">
             Rights
           </Text>
-          <Text marginBottom="m">{}</Text>
-          <Text marginBottom="xs">
-            This item is also available in Archives & Manuscripts
-          </Text>
-          <ButtonGroup marginBottom="m">
-            <Button buttonType="secondary" id="finding-aid-btn">
-              View Finding Aid
-            </Button>
-            <Button buttonType="secondary" id="catalog-btn">
-              View Catalog
-            </Button>
-          </ButtonGroup>
+          <Text marginBottom="m">{item.metadata.rights}</Text>
         </Flex>
       </Box>
     </>
