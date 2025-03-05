@@ -9,6 +9,8 @@ import {
 import React, { forwardRef, useEffect, useRef, useState } from "react";
 import SelectFilterModal from "./selectFilterModal";
 import FilterAccordion from "./filterAccordion";
+import { usePathname, useRouter } from "next/navigation";
+import { SearchManager } from "@/src/utils/searchManager";
 
 export type FilterOption = {
   name: string;
@@ -22,6 +24,7 @@ export type FilterCategory = {
 
 export interface SelectFilterProps {
   filter: FilterCategory;
+  searchManager: SearchManager;
 }
 
 export const radioFilterOptions = (options: FilterOption[]) => {
@@ -42,16 +45,45 @@ export const radioFilterOptions = (options: FilterOption[]) => {
 
 const SelectFilterComponent = forwardRef<
   HTMLButtonElement,
-  { filter: FilterCategory }
+  { filter: FilterCategory; searchManager: SearchManager }
 >((props, filterRef) => {
-  const { filter, ...rest } = props;
+  const { filter, searchManager, ...rest } = props;
   const [userClickedOutside, setUserClickedOutside] = useState<boolean>(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [selected, setSelected] = useState<FilterOption | null>(null);
+  const [selected, setSelected] = useState<FilterOption | null>(() => {
+    const existingFilter = searchManager.filters.find(
+      (f) => f.filter === filter.name
+    );
+
+    return existingFilter
+      ? filter.options.find((option) => option.name === existingFilter.value) ||
+          null
+      : null;
+  });
+
   const [current, setCurrent] = useState<FilterOption | null>(selected);
   const [modalCurrent, setModalCurrent] = useState<FilterOption | null>(
     selected
   );
+  const { push } = useRouter();
+  const pathname = usePathname();
+  const updateURL = async (queryString) => {
+    push(`${pathname}?${queryString}`);
+  };
+
+  useEffect(() => {
+    const existingFilter = searchManager.filters.find(
+      (f) => f.filter === filter.name
+    );
+
+    setSelected(
+      existingFilter
+        ? filter.options.find(
+            (option) => option.name === existingFilter.value
+          ) || null
+        : null
+    );
+  }, [searchManager.filters, filter]);
 
   // Create a ref to hold a reference to the accordion button, enabling us
   // to programmatically focus it.
@@ -86,7 +118,6 @@ const SelectFilterComponent = forwardRef<
 
   const onChange = (newSelection: string) => {
     if (!isModalOpen) {
-      console.log(`currently selected: ${newSelection}`);
       setCurrent(
         filter.options.find((option) => option.name === newSelection) || null
       );
@@ -124,6 +155,12 @@ const SelectFilterComponent = forwardRef<
           setSelected(current);
           setUserClickedOutside(true);
           accordionButtonRef.current?.focus();
+          updateURL(
+            searchManager.handleAddFilter({
+              filter: filter.name,
+              value: current?.name!,
+            })
+          );
         }}
       >
         Apply
@@ -145,6 +182,7 @@ const SelectFilterComponent = forwardRef<
           setSelected={setSelected}
           modalCurrent={modalCurrent}
           setModalCurrent={setModalCurrent}
+          searchManager={searchManager}
         />
       )}
     </>

@@ -1,7 +1,7 @@
 import { render } from "@testing-library/react";
 import { axe } from "jest-axe";
 import React from "react";
-import { mockDivisionsResponse } from "__tests__/__mocks__/data/api/mockDivisionsResponse";
+import { mockDivisionsResponse } from "__tests__/__mocks__/data/repoApi/mockDivisionsResponse";
 import DivisionsPage from "@/src/components/pages/divisionsPage/divisionsPage";
 import { useRouter } from "next/navigation";
 

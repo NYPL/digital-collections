@@ -9,22 +9,48 @@ import {
   Link,
   Icon,
   Pagination,
-  Menu,
 } from "@nypl/design-system-react-components";
 import React, { useRef } from "react";
 import Filters from "../../search/filters/filters";
-import ActiveFilters from "../../search/filters/activeFilters";
-import { displayResults } from "@/src/utils/utils";
 import CollectionStructure from "../../collectionStructure/collectionStructure";
 import { sampleStructure } from "__tests__/__mocks__/data/mockCollectionStructure";
-import { CARDS_PER_PAGE, SEARCH_SORT_LABELS } from "@/src/config/constants";
-import SearchCardsGrid from "../../grids/searchCardsGrid";
 import { headerBreakpoints } from "@/src/utils/breakpoints";
 import { CollectionSearch } from "../../search/collectionSearch";
 import { MobileSearchBanner } from "../../mobileSearchBanner/mobileSearchBanner";
+import { displayResults, totalNumPages } from "@/src/utils/utils";
+import {
+  CARDS_PER_PAGE,
+  DEFAULT_PAGE_NUM,
+  DEFAULT_SEARCH_SORT,
+  DEFAULT_SEARCH_TERM,
+  SEARCH_SORT_LABELS,
+} from "@/src/config/constants";
+import SearchCardsGrid from "../../grids/searchCardsGrid";
+import {
+  GeneralSearchManager,
+  stringToFilter,
+} from "@/src/utils/searchManager";
+import { usePathname, useRouter } from "next/navigation";
+import SortMenu from "../../sortMenu/sortMenu";
+import ActiveFilters from "../../search/filters/activeFilters";
 
-const CollectionPage = ({ slug, data }) => {
+const CollectionPage = ({ slug, data, searchParams }) => {
   const headingRef = useRef<HTMLHeadingElement>(null);
+  const collectionSearchManager = new GeneralSearchManager({
+    initialPage: Number(searchParams?.page) || DEFAULT_PAGE_NUM,
+    initialSort: searchParams?.sort || DEFAULT_SEARCH_SORT,
+    initialFilters: stringToFilter(searchParams?.filters),
+    initialKeywords: searchParams?.keywords || DEFAULT_SEARCH_TERM,
+  });
+  const totalPages = totalNumPages(data.numResults, CARDS_PER_PAGE);
+  const { push } = useRouter();
+  const pathname = usePathname();
+
+  const updateURL = async (queryString) => {
+    push(`${pathname}?${queryString}`);
+    headingRef.current?.focus();
+  };
+
   return (
     <Box id="mainContent">
       <MobileSearchBanner />
@@ -50,7 +76,10 @@ const CollectionPage = ({ slug, data }) => {
           >
             {slug}
           </Heading>
-          <Filters headingText="Refine your results" />
+          <Filters
+            headingText="Refine your results"
+            searchManager={collectionSearchManager}
+          />
         </Box>
       </Box>
       <Box
@@ -61,7 +90,7 @@ const CollectionPage = ({ slug, data }) => {
           paddingRight: { base: "m", xl: "s" },
         }}
       >
-        <ActiveFilters />
+        <ActiveFilters searchManager={collectionSearchManager} />
         <Flex marginTop="m" marginBottom="m" flexDir="column">
           <Heading size="heading6" marginBottom="xs">
             Collection data
@@ -139,18 +168,10 @@ const CollectionPage = ({ slug, data }) => {
                 1
               )}
                                 results`}</Heading>
-              <Menu
-                showLabel
-                selectedItem={"relevance"}
-                labelText={`Sort by: ${SEARCH_SORT_LABELS["relevance"]}`}
-                listItemsData={Object.entries(SEARCH_SORT_LABELS).map(
-                  ([id, label]) => ({
-                    id,
-                    label,
-                    onClick: () => {},
-                    type: "action",
-                  })
-                )}
+              <SortMenu
+                options={SEARCH_SORT_LABELS}
+                searchManager={collectionSearchManager}
+                updateURL={updateURL}
               />
             </Flex>
             <SearchCardsGrid keywords={data.keyword} results={data.results} />

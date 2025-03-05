@@ -23,6 +23,9 @@ import {
 } from "@nypl/design-system-react-components";
 import DCSearchBar from "../dcSearchBar";
 import { headerBreakpoints } from "@/src/utils/breakpoints";
+import { usePathname, useRouter } from "next/navigation";
+import { useSearchContext } from "@/src/context/SearchProvider";
+import { SearchManager } from "@/src/utils/searchManager";
 
 type SelectFilterModalProps = {
   filter: FilterCategory;
@@ -33,6 +36,7 @@ type SelectFilterModalProps = {
   setSelected: React.Dispatch<React.SetStateAction<FilterOption | null>>;
   modalCurrent: FilterOption | null;
   setModalCurrent: React.Dispatch<React.SetStateAction<FilterOption | null>>;
+  searchManager: SearchManager;
 };
 
 type FocusableElement = HTMLElement & { focus: () => void };
@@ -48,6 +52,7 @@ const SelectFilterModal = forwardRef<HTMLButtonElement, SelectFilterModalProps>(
       current,
       modalCurrent,
       setModalCurrent,
+      searchManager,
     } = props;
     const {
       isOpen,
@@ -59,6 +64,11 @@ const SelectFilterModal = forwardRef<HTMLButtonElement, SelectFilterModalProps>(
     const itemsPerPage = 10;
     const viewMoreButtonRef = useRef<HTMLButtonElement | null>(null);
     const liveRegionRef = useRef<HTMLDivElement | null>(null);
+    const { push } = useRouter();
+    const pathname = usePathname();
+    const updateURL = async (queryString) => {
+      push(`${pathname}?${queryString}`);
+    };
 
     useEffect(() => {
       setCurrentPage(1);
@@ -256,6 +266,13 @@ const SelectFilterModal = forwardRef<HTMLButtonElement, SelectFilterModalProps>(
                     setModalCurrent(modalCurrent);
                     setSelected(modalCurrent);
                     handleClose(true);
+
+                    updateURL(
+                      searchManager.handleAddFilter({
+                        filter: filter.name,
+                        value: modalCurrent?.name!,
+                      })
+                    );
                   }}
                 >
                   Confirm
