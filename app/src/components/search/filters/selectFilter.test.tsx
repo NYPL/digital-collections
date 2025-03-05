@@ -1,7 +1,11 @@
 import { render, screen, fireEvent, waitFor } from "@testing-library/react";
 import SelectFilter, { FilterCategory } from "./selectFilter";
+import { GeneralSearchManager } from "@/src/utils/searchManager";
+import {
+  DEFAULT_SEARCH_SORT,
+  DEFAULT_SEARCH_TERM,
+} from "@/src/config/constants";
 import { useRouter } from "next/navigation";
-import { SearchProvider } from "@/src/context/SearchProvider";
 
 const mockFacetFilter: FilterCategory = {
   name: "Publishers",
@@ -27,61 +31,82 @@ jest.mock("next/navigation", () => ({
   usePathname: jest.fn(),
 }));
 
-describe("SelectFilter", () => {
-  let component = (
-    <SearchProvider>
-      <SelectFilter filter={mockFacetFilter} />
-    </SearchProvider>
-  );
-  it("renders the filter category name", () => {
+let mockManager = new GeneralSearchManager({
+  initialPage: 1,
+  initialSort: DEFAULT_SEARCH_SORT,
+  initialFilters: [],
+  initialKeywords: DEFAULT_SEARCH_TERM,
+});
+
+let mockPush = jest.fn();
+(useRouter as jest.Mock).mockReturnValue({ push: mockPush });
+
+let component = (
+  <SelectFilter filter={mockFacetFilter} searchManager={mockManager} />
+);
+
+describe("SelectFilterComponent", () => {
+  it("renders the component", () => {
     render(component);
-    expect(screen.getByText("Publishers")).toBeInTheDocument();
+    const accordionButton = screen.getByRole("button", { name: /Publishers/i });
+    fireEvent.click(accordionButton);
+    expect(screen.getByText("Publisher 1")).toBeInTheDocument();
+    expect(screen.getByText("Publisher 2")).toBeInTheDocument();
   });
 
-  it("renders a radio button for first 10 filter options", () => {
-    render(<SelectFilter filter={mockFacetFilter} />);
-    fireEvent.click(screen.getByText("Publishers"));
-    mockFacetFilter.options.slice(0, 10).forEach((option) => {
-      expect(screen.getByText(option.name)).toBeInTheDocument();
-      expect(screen.getByText(option.count.toString())).toBeInTheDocument();
-    });
+  it("opens and closes the accordion", () => {
+    render(component);
+    const accordionButton = screen.getByRole("button", { name: /Publishers/i });
+
+    expect(screen.queryByText("Apply")).not.toBeInTheDocument();
+
+    fireEvent.click(accordionButton);
+
+    expect(screen.getByText("Apply")).toBeInTheDocument();
+
+    fireEvent.click(accordionButton);
+
+    expect(screen.queryByText("Apply")).not.toBeInTheDocument();
   });
 
-  it("shows modal link for the filter", () => {
+  it("updates the selection and enables the apply button when a radio option is selected", () => {
     render(component);
-    fireEvent.click(screen.getByText("Publishers"));
-    expect(screen.getByText("View all publishers")).toBeInTheDocument();
+
+    fireEvent.click(screen.getByRole("button", { name: /Publishers/i }));
+    expect(screen.getByText("Apply")).toBeDisabled();
+
+    const firstRadio = screen.getByRole("radio", { name: "Publisher 1 10" });
+    fireEvent.click(firstRadio);
+
+    expect(firstRadio).toBeChecked();
+    expect(screen.getByText("Apply")).not.toBeDisabled();
   });
 
-  it("should select an option and update accordingly", async () => {
+  it("updates the URL when selection is applied", () => {
     render(component);
-    fireEvent.click(screen.getByText("Publishers"));
+    const accordionButton = screen.getByRole("button", { name: /Publishers/i });
+    fireEvent.click(accordionButton);
 
-    const radio1 = screen.getAllByRole("radio")[0];
+    const secondRadio = screen.getByRole("radio", { name: "Publisher 2 20" });
+    fireEvent.click(secondRadio);
 
-    fireEvent.click(radio1);
+    const applyButton = screen.getByRole("button", { name: "Apply" });
+    fireEvent.click(applyButton);
 
-    await waitFor(() => {
-      expect(radio1).toBeChecked();
-    });
+    expect(mockPush).toHaveBeenCalledWith(
+      expect.stringContaining("filters=%5BPublishers%3DPublisher+2%5")
+    );
   });
 
-  it("should abort previous selection when selecting a new option", async () => {
-    jest.useFakeTimers();
+  it("opens modal with view more button", () => {
     render(component);
-    fireEvent.click(screen.getByText("Publishers"));
 
-    const radio1 = screen.getAllByRole("radio")[0];
-    const radio3 = screen.getAllByRole("radio")[2];
+    const accordionButton = screen.getByRole("button", { name: /Publishers/i });
+    fireEvent.click(accordionButton);
 
-    fireEvent.click(radio1);
-    fireEvent.click(radio3);
-    jest.advanceTimersByTime(400);
+    const viewMoreButton = screen.getByText("View all publishers");
+    fireEvent.click(viewMoreButton);
 
-    await waitFor(() => {
-      expect(radio3).toBeChecked();
-      expect(radio1).not.toBeChecked();
-    });
-    jest.useRealTimers();
+    expect(screen.getByRole("dialog")).toBeInTheDocument();
   });
 });

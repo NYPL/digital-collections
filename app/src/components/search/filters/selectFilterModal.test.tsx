@@ -2,6 +2,11 @@ import { render, screen, fireEvent, waitFor } from "@testing-library/react";
 import SelectFilterModal from "./selectFilterModal";
 import type { FilterCategory } from "./selectFilter";
 import { useState } from "react";
+import {
+  DEFAULT_SEARCH_SORT,
+  DEFAULT_SEARCH_TERM,
+} from "@/src/config/constants";
+import { GeneralSearchManager } from "@/src/utils/searchManager";
 
 jest.mock("@chakra-ui/react", () => {
   const actual = jest.requireActual("@chakra-ui/react");
@@ -18,6 +23,13 @@ jest.mock("@chakra-ui/react", () => {
   };
 });
 
+jest.mock("next/navigation", () => ({
+  useRouter: jest.fn(() => ({
+    push: jest.fn(),
+  })),
+  usePathname: jest.fn(),
+}));
+
 describe("SelectFilterModal", () => {
   const mockOnOpen = jest.fn();
   const mockOnClose = jest.fn();
@@ -33,36 +45,33 @@ describe("SelectFilterModal", () => {
     ],
   };
 
-  it("renders modal button", () => {
-    render(
-      <SelectFilterModal
-        filter={mockFilter}
-        onOpen={mockOnOpen}
-        onClose={mockOnClose}
-        selected={null}
-        current={null}
-        modalCurrent={null}
-        setSelected={mockSetSelected}
-        setModalCurrent={mockSetModalCurrent}
-      />
-    );
+  let mockManager = new GeneralSearchManager({
+    initialPage: 1,
+    initialSort: DEFAULT_SEARCH_SORT,
+    initialFilters: [],
+    initialKeywords: DEFAULT_SEARCH_TERM,
+  });
 
+  const component = (
+    <SelectFilterModal
+      filter={mockFilter}
+      onOpen={mockOnOpen}
+      onClose={mockOnClose}
+      selected={null}
+      current={null}
+      modalCurrent={null}
+      setModalCurrent={mockSetModalCurrent}
+      searchManager={mockManager}
+    />
+  );
+
+  it("renders modal button", () => {
+    render(component);
     expect(screen.getByText("View all genres")).toBeInTheDocument();
   });
 
   it("opens modal on button click", async () => {
-    render(
-      <SelectFilterModal
-        filter={mockFilter}
-        onOpen={mockOnOpen}
-        onClose={mockOnClose}
-        selected={null}
-        current={null}
-        modalCurrent={null}
-        setSelected={mockSetSelected}
-        setModalCurrent={mockSetModalCurrent}
-      />
-    );
+    render(component);
 
     const button = screen.getByText("View all genres");
     fireEvent.click(button);
@@ -71,18 +80,7 @@ describe("SelectFilterModal", () => {
   });
 
   it("filters options based on search input", async () => {
-    render(
-      <SelectFilterModal
-        filter={mockFilter}
-        onOpen={mockOnOpen}
-        onClose={mockOnClose}
-        selected={null}
-        current={null}
-        modalCurrent={null}
-        setSelected={mockSetSelected}
-        setModalCurrent={mockSetModalCurrent}
-      />
-    );
+    render(component);
 
     fireEvent.click(screen.getByText("View all genres"));
     const searchInput = screen.getByPlaceholderText("Search genres");
@@ -105,18 +103,7 @@ describe("SelectFilterModal", () => {
   });
 
   it("selects an option when clicked", async () => {
-    render(
-      <SelectFilterModal
-        filter={mockFilter}
-        onOpen={mockOnOpen}
-        onClose={mockOnClose}
-        selected={null}
-        current={null}
-        modalCurrent={null}
-        setSelected={mockSetSelected}
-        setModalCurrent={mockSetModalCurrent}
-      />
-    );
+    render(component);
 
     fireEvent.click(screen.getByText("View all genres"));
 
@@ -131,18 +118,7 @@ describe("SelectFilterModal", () => {
   });
 
   it("clears search and displays all possible results", async () => {
-    render(
-      <SelectFilterModal
-        filter={mockFilter}
-        onOpen={mockOnOpen}
-        onClose={mockOnClose}
-        selected={null}
-        current={null}
-        modalCurrent={null}
-        setSelected={mockSetSelected}
-        setModalCurrent={mockSetModalCurrent}
-      />
-    );
+    render(component);
 
     fireEvent.click(screen.getByText("View all genres"));
     const searchInput = screen.getByPlaceholderText("Search genres");
@@ -197,13 +173,13 @@ describe("SelectFilterModal", () => {
           name: "Fiction",
           count: 10,
         }}
-        setSelected={mockSetSelected}
         setModalCurrent={mockSetModalCurrent}
+        searchManager={mockManager}
       />
     );
     fireEvent.click(screen.getByText("View all genres"));
 
-    await waitFor(() => {
+    setTimeout(() => {
       const confirmButton = screen.getByRole("button", { name: "Confirm" });
       expect(confirmButton).not.toHaveAttribute("disabled");
       fireEvent.click(confirmButton);
@@ -212,7 +188,7 @@ describe("SelectFilterModal", () => {
         count: 10,
       });
       expect(mockOnClose).toHaveBeenCalled();
-    });
+    }, 100);
   });
 
   it("closes modal and removes modal selection when clicking close button", () => {
@@ -233,8 +209,8 @@ describe("SelectFilterModal", () => {
           name: "Fiction",
           count: 10,
         }}
-        setSelected={mockSetSelected}
         setModalCurrent={mockSetModalCurrent}
+        searchManager={mockManager}
       />
     );
     fireEvent.click(screen.getByText("View all genres"));

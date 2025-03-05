@@ -24,7 +24,8 @@ export interface FilterAccordionProps {
   /** For internal use only. This value toggles the accordion closed if the user clicks
    * outside the component. */
   userClickedOutside?: boolean;
-  onChange: (expandedIdxs: number[]) => void;
+  /** For updating the state of the current filter selection when accordion is opened or closed. */
+  onChange: () => void;
 }
 
 /**
@@ -187,7 +188,7 @@ const FilterAccordionComponent = forwardRef<
       index={expandedPanels}
       onChange={(expandedIdxs: number[]) => {
         setExpandedPanels(expandedIdxs);
-        parentOnChange(expandedIdxs);
+        parentOnChange();
       }}
       onKeyDown={handleKeyDown}
       id={id}
