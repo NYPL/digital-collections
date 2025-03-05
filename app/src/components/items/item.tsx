@@ -2,7 +2,7 @@
 
 import { ItemModel } from "../../models/item";
 import React from "react";
-import ItemViewer from "./viewer/viewer";
+import ItemMediaViewer from "./viewer/viewer";
 import MetadataOverview from "./metadata/overview";
 
 interface ItemProps {
@@ -10,12 +10,6 @@ interface ItemProps {
   item: ItemModel;
   type: string;
 }
-
-// const contentTypes = {
-//   "still image": "image",
-//   "moving image": "video",
-//   "sound recording": "audio",
-// };
 
 const contentTypes = {
   text: "image",
@@ -35,7 +29,7 @@ const Item = ({ manifest, item, type }: ItemProps) => {
   const itemType = type ? type : contentTypes[item.typeOfResource]; // for proof of concept only
   return (
     <>
-      <ItemViewer manifest={manifest} item={item} type={itemType} />
+      <ItemMediaViewer manifest={manifest} item={item} type={itemType} />
       <MetadataOverview manifest={manifest} item={item} />
     </>
   );
