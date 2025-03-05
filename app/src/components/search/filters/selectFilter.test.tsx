@@ -1,5 +1,7 @@
 import { render, screen, fireEvent, waitFor } from "@testing-library/react";
 import SelectFilter, { FilterCategory } from "./selectFilter";
+import { useRouter } from "next/navigation";
+import { SearchProvider } from "@/src/context/SearchProvider";
 
 const mockFacetFilter: FilterCategory = {
   name: "Publishers",
@@ -10,14 +12,26 @@ const mockFacetFilter: FilterCategory = {
   ],
 };
 
+jest.mock("next/navigation", () => ({
+  useRouter: jest.fn(() => ({
+    push: jest.fn(),
+  })),
+  usePathname: jest.fn(),
+}));
+
 describe("SelectFilter", () => {
+  let component = (
+    <SearchProvider>
+      <SelectFilter filter={mockFacetFilter} />
+    </SearchProvider>
+  );
   it("renders the filter category name", () => {
-    render(<SelectFilter filter={mockFacetFilter} />);
+    render(component);
     expect(screen.getByText("Publishers")).toBeInTheDocument();
   });
 
   it("renders a radio button for each filter option", () => {
-    render(<SelectFilter filter={mockFacetFilter} />);
+    render(component);
     fireEvent.click(screen.getByText("Publishers"));
     mockFacetFilter.options.forEach((option) => {
       expect(screen.getByText(option.name)).toBeInTheDocument();
@@ -26,13 +40,13 @@ describe("SelectFilter", () => {
   });
 
   it("shows modal link for the filter", () => {
-    render(<SelectFilter filter={mockFacetFilter} />);
+    render(component);
     fireEvent.click(screen.getByText("Publishers"));
     expect(screen.getByText("View all publishers")).toBeInTheDocument();
   });
 
   it("should select an option and update accordingly", async () => {
-    render(<SelectFilter filter={mockFacetFilter} />);
+    render(component);
     fireEvent.click(screen.getByText("Publishers"));
 
     const radio1 = screen.getAllByRole("radio")[0];
@@ -46,7 +60,7 @@ describe("SelectFilter", () => {
 
   it("should abort previous selection when selecting a new option", async () => {
     jest.useFakeTimers();
-    render(<SelectFilter filter={mockFacetFilter} />);
+    render(component);
     fireEvent.click(screen.getByText("Publishers"));
 
     const radio1 = screen.getAllByRole("radio")[0];
