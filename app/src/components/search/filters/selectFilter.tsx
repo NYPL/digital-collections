@@ -50,40 +50,26 @@ const SelectFilterComponent = forwardRef<
   const { filter, searchManager, ...rest } = props;
   const [userClickedOutside, setUserClickedOutside] = useState<boolean>(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [selected, setSelected] = useState<FilterOption | null>(() => {
-    const existingFilter = searchManager.filters.find(
-      (f) => f.filter === filter.name
-    );
+  const [isApplyDisabled, setIsApplyDisabled] = useState(true);
 
-    return existingFilter
-      ? filter.options.find((option) => option.name === existingFilter.value) ||
-          null
-      : null;
-  });
-
-  const [current, setCurrent] = useState<FilterOption | null>(selected);
-  const [modalCurrent, setModalCurrent] = useState<FilterOption | null>(
-    selected
+  const existingFilter = searchManager.filters.find(
+    (f) => f.filter === filter.name
   );
+  // Derive `current` directly from `existingFilter` and filter options
+  let current = existingFilter
+    ? filter.options.find((option) => option.name === existingFilter.value) ||
+      null
+    : null;
+
+  useEffect(() => {
+    setIsApplyDisabled(current === null);
+  }, [current]);
+
   const { push } = useRouter();
   const pathname = usePathname();
   const updateURL = async (queryString) => {
     push(`${pathname}?${queryString}`);
   };
-
-  useEffect(() => {
-    const existingFilter = searchManager.filters.find(
-      (f) => f.filter === filter.name
-    );
-
-    setSelected(
-      existingFilter
-        ? filter.options.find(
-            (option) => option.name === existingFilter.value
-          ) || null
-        : null
-    );
-  }, [searchManager.filters, filter]);
 
   // Create a ref to hold a reference to the accordion button, enabling us
   // to programmatically focus it.
@@ -117,20 +103,12 @@ const SelectFilterComponent = forwardRef<
   }, [isModalOpen]);
 
   const onChange = (newSelection: string) => {
-    if (!isModalOpen) {
-      setCurrent(
-        filter.options.find((option) => option.name === newSelection) || null
-      );
-    }
+    // Update `current` directly when selection changes
+    current =
+      filter.options.find((option) => option.name === newSelection) || null;
   };
 
-  const sortedOptions =
-    selected && !isModalOpen
-      ? [
-          selected,
-          ...filter.options.filter((option) => option.name !== selected.name),
-        ]
-      : filter.options;
+  const sortedOptions = filter.options;
 
   const accordionPanel = (
     <>
@@ -141,7 +119,7 @@ const SelectFilterComponent = forwardRef<
         showLabel={false}
         name={filter.name}
         onChange={onChange}
-        defaultValue={selected?.name ?? ""}
+        defaultValue={current?.name ?? ""}
       >
         {radioFilterOptions(sortedOptions.slice(0, 10))}
       </RadioGroup>
@@ -150,10 +128,8 @@ const SelectFilterComponent = forwardRef<
         width="100%"
         marginBottom={sortedOptions.length > 10 ? "xs" : "0"}
         marginTop="s"
-        isDisabled={!current && !selected}
+        isDisabled={isApplyDisabled}
         onClick={() => {
-          setSelected(current);
-          setUserClickedOutside(true);
           accordionButtonRef.current?.focus();
           updateURL(
             searchManager.handleAddFilter({
@@ -161,30 +137,11 @@ const SelectFilterComponent = forwardRef<
               value: current?.name!,
             })
           );
+          setUserClickedOutside(true);
         }}
       >
         Apply
       </Button>
-      {sortedOptions.length > 10 && (
-        <SelectFilterModal
-          filter={filter}
-          ref={accordionButtonRef}
-          onOpen={() => {
-            setModalCurrent(current);
-            setIsModalOpen(true);
-          }}
-          onClose={(closeFilter: boolean) => {
-            setIsModalOpen(false);
-            setUserClickedOutside(closeFilter);
-          }}
-          selected={selected}
-          current={current}
-          setSelected={setSelected}
-          modalCurrent={modalCurrent}
-          setModalCurrent={setModalCurrent}
-          searchManager={searchManager}
-        />
-      )}
     </>
   );
 

@@ -3,6 +3,11 @@ import SelectFilterGrid from "./selectFilterGrid";
 import { FilterCategory } from "./selectFilter";
 import { MutableRefObject } from "react";
 import { SearchProvider } from "@/src/context/SearchProvider";
+import { GeneralSearchManager } from "@/src/utils/searchManager";
+import {
+  DEFAULT_SEARCH_SORT,
+  DEFAULT_SEARCH_TERM,
+} from "@/src/config/constants";
 
 const mockFilters: FilterCategory[] = [
   { name: "Collection", options: [{ name: "Collection 1", count: 10 }] },
@@ -21,6 +26,12 @@ jest.mock("next/navigation", () => ({
   })),
   usePathname: jest.fn(),
 }));
+const manager = new GeneralSearchManager({
+  initialPage: 1,
+  initialSort: DEFAULT_SEARCH_SORT,
+  initialFilters: [],
+  initialKeywords: DEFAULT_SEARCH_TERM,
+});
 
 describe("SelectFilterGrid", () => {
   const component = (expanded: boolean) => {
@@ -28,8 +39,9 @@ describe("SelectFilterGrid", () => {
       <SearchProvider>
         <SelectFilterGrid
           filters={mockFilters}
-          isExpanded={false}
+          isExpanded={expanded}
           filterRefs={mockFilterRefs}
+          searchManager={manager}
         />
       </SearchProvider>
     );
