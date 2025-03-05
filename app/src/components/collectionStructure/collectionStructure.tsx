@@ -46,7 +46,8 @@ const ButtonText = ({ title, hasChildren, level }) => {
         {text}
       </Tooltip>
     );
-  } else return text;
+  }
+  return text;
 };
 
 const fetchChildren = async (
