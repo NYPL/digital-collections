@@ -11,6 +11,7 @@ import SelectFilterGrid from "./selectFilterGrid";
 import RightsFilter from "./rightsFilter";
 import DateFilter from "./dateFilter";
 import { headerBreakpoints } from "@/src/utils/breakpoints";
+import { ToggleTip } from "../../toggleTip/toggleTip";
 
 type FiltersProps = {
   headingText: string;

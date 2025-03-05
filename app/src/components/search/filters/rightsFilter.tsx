@@ -7,25 +7,12 @@ import {
   Flex,
 } from "@nypl/design-system-react-components";
 import { forwardRef } from "react";
+import { ToggleTip } from "../../toggleTip/toggleTip";
 
 const RadioOption = ({ id, text, tooltip }) => (
   <Radio
     id={id}
-    labelText={
-      <Flex gap="xxs" justifyItems="center">
-        {text}{" "}
-        <Tooltip content={tooltip}>
-          <span>
-            <Icon
-              size="medium"
-              name="errorOutline"
-              iconRotation="rotate180"
-              marginTop="xxxs"
-            />
-          </span>
-        </Tooltip>
-      </Flex>
-    }
+    labelText={<ToggleTip text={text} toggleTipContent={tooltip} />}
     value={id}
   />
 );
