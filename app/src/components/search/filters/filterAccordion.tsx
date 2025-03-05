@@ -170,7 +170,7 @@ const FilterAccordionComponent = forwardRef<
       if (updatedAccordionData[focusedPanelIndex].buttonInteractionRef) {
         updatedAccordionData[
           focusedPanelIndex
-        ].buttonInteractionRef.current.focus();
+        ].buttonInteractionRef.current?.focus();
       }
     }
   };

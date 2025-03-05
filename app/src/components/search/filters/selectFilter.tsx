@@ -106,9 +106,16 @@ const SelectFilterComponent = forwardRef<
     selected =
       filter.options.find((option) => option.name === newSelection) || null;
     setCurrent(selected);
+    setModalCurrent(selected);
   };
 
-  const sortedOptions = filter.options;
+  const sortedOptions =
+    selected && !isModalOpen
+      ? [
+          selected,
+          ...filter.options.filter((option) => option.name !== selected?.name),
+        ]
+      : filter.options;
 
   const accordionPanel = (
     <>
@@ -166,15 +173,13 @@ const SelectFilterComponent = forwardRef<
 
   const handleAccordionChange = (expandedIdxs: number[]) => {
     setIsAccordionOpen(expandedIdxs.length > 0);
-    if (!expandedIdxs.length) {
-      setCurrent(
-        existingFilter
-          ? filter.options.find(
-              (option) => option.name === existingFilter.value
-            ) || null
-          : null
-      );
-    }
+    setCurrent(
+      existingFilter
+        ? filter.options.find(
+            (option) => option.name === existingFilter.value
+          ) || null
+        : null
+    );
   };
 
   return (
