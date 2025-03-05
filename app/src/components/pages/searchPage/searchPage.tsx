@@ -1,15 +1,11 @@
 "use client";
 import {
   Box,
-  Text,
   Pagination,
   Heading,
   Flex,
-  HorizontalRule,
-  TagSet,
   Link,
   Icon,
-  Menu,
 } from "@nypl/design-system-react-components";
 import React, { useRef } from "react";
 import { CARDS_PER_PAGE, SEARCH_SORT_LABELS } from "@/src/config/constants";
@@ -20,6 +16,7 @@ import { usePathname, useRouter } from "next/navigation";
 import SearchCardsGrid from "../../grids/searchCardsGrid";
 import { headerBreakpoints } from "@/src/utils/breakpoints";
 import SortMenu from "../../sortMenu/sortMenu";
+import ActiveFilters from "../../search/filters/activeFilters";
 
 const SearchPage = ({ data }) => {
   const { searchManager } = useSearchContext();
@@ -29,6 +26,7 @@ const SearchPage = ({ data }) => {
   const updateURL = async (queryString) => {
     push(`${pathname}?${queryString}`);
   };
+
   const headingRef = useRef<HTMLHeadingElement>(null);
 
   return (
@@ -79,22 +77,7 @@ const SearchPage = ({ data }) => {
           },
         }}
       >
-        <Flex alignContent="center" gap="xs">
-          <Text size="subtitle2" sx={{ margin: 0, fontWeight: 400 }}>
-            Filters applied:
-          </Text>
-          <TagSet
-            isDismissible
-            id="search-filter-tags"
-            onClick={() => {}}
-            tagSetData={[
-              { id: "audio", label: "Audio" },
-              { id: "video", label: "Video" },
-            ]}
-            type="filter"
-          />
-        </Flex>
-        <HorizontalRule />
+        <ActiveFilters />
         <Flex
           sx={{
             [`@media screen and (min-width: ${headerBreakpoints.lgMobile}px)`]:

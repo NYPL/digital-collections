@@ -14,6 +14,8 @@ import React, {
   useState,
 } from "react";
 import FilterAccordion from "./filterAccordion";
+import { usePathname, useRouter } from "next/navigation";
+import { useSearchContext } from "@/src/context/SearchProvider";
 
 export type FilterOption = {
   name: string;
@@ -36,6 +38,12 @@ const SelectFilterComponent = forwardRef<
   const { filter, ...rest } = props;
   const [userClickedOutside, setUserClickedOutside] = useState<boolean>(false);
   const [timeoutId, setTimeoutId] = useState<NodeJS.Timeout | null>(null);
+  const { push } = useRouter();
+  const pathname = usePathname();
+  const updateURL = async (queryString) => {
+    push(`${pathname}?${queryString}`);
+  };
+  const { searchManager } = useSearchContext();
 
   // Create a ref to hold a reference to the accordion button, enabling us
   // to programmatically focus it.
@@ -104,9 +112,16 @@ const SelectFilterComponent = forwardRef<
     const newTimeoutId = setTimeout(() => {
       console.log(`selected: ${newSelection}`);
       setUserClickedOutside(true);
-      (
-        headingRef as MutableRefObject<HTMLHeadingElement | null>
-      )?.current?.focus();
+      updateURL(
+        searchManager.handleAddFilter({
+          filter: filter.name,
+          value: newSelection,
+        })
+      );
+      //setUserClickedOutside(true);
+      // (
+      //   headingRef as MutableRefObject<HTMLHeadingElement | null>
+      // )?.current?.focus();
     }, 600);
 
     setTimeoutId(newTimeoutId);

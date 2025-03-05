@@ -4,8 +4,6 @@ import {
   Text,
   Heading,
   Flex,
-  HorizontalRule,
-  TagSet,
   ButtonGroup,
   Button,
   Link,
@@ -25,10 +23,13 @@ import {
   SEARCH_SORT_LABELS,
 } from "@/src/config/constants";
 import SearchCardsGrid from "../../grids/searchCardsGrid";
-import { GeneralSearchManager } from "@/src/utils/searchManager";
-import { stringToFilter } from "@/src/context/SearchProvider";
+import {
+  GeneralSearchManager,
+  stringToFilter,
+} from "@/src/utils/searchManager";
 import { usePathname, useRouter } from "next/navigation";
 import SortMenu from "../../sortMenu/sortMenu";
+import ActiveFilters from "../../search/filters/activeFilters";
 
 const textLink = (href, text) => {
   return (
@@ -99,22 +100,7 @@ const CollectionPage = ({ slug, data, searchParams }) => {
           paddingRight: { base: "m", xl: "s" },
         }}
       >
-        <Flex alignContent="center" alignItems="center" gap="xs">
-          <Text size="subtitle2" sx={{ margin: 0, fontWeight: 400 }}>
-            Filters applied:
-          </Text>
-          <TagSet
-            isDismissible
-            id="search-filter-tags"
-            onClick={() => {}}
-            tagSetData={[
-              { id: "audio", label: "Audio" },
-              { id: "video", label: "Video" },
-            ]}
-            type="filter"
-          />
-        </Flex>
-        <HorizontalRule />
+        <ActiveFilters />
         <Flex marginTop="m" marginBottom="m" flexDir="column">
           <Heading size="heading6" marginBottom="xs">
             Collection data
