@@ -21,11 +21,12 @@ const Filters = ({ headingText, searchManager }: FiltersProps) => {
   const [isExpanded, setIsExpanded] = useState(false);
   const filterRefs = useRef<(HTMLButtonElement | null)[]>([]);
   const dateFilterRef = useRef<TextInputRefType | null>(null);
+  const secondRowFilter = 4;
 
   useEffect(() => {
     if (isExpanded) {
-      if (filterRefs.current[4]) {
-        filterRefs.current[4]?.focus();
+      if (filterRefs.current[secondRowFilter]) {
+        filterRefs.current[secondRowFilter]?.focus();
       } else {
         dateFilterRef.current?.focus();
       }
