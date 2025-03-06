@@ -1,4 +1,4 @@
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import { Text, Box, Icon } from "@nypl/design-system-react-components";
 import { Button } from "@chakra-ui/react";
 
@@ -9,9 +9,9 @@ export const ToggleTip = ({
   text: string;
   toggleTipContent: string;
 }) => {
-  const [isClickVisible, setIsClickVisible] = useState(false);
-  const [isHoverFocusVisible, setIsHoverFocusVisible] = useState(false);
+  const [isVisible, setIsVisible] = useState(false);
   const liveRegionRef = useRef<HTMLSpanElement | null>(null);
+  const buttonRef = useRef<HTMLButtonElement | null>(null);
 
   const addLiveRegion = () => {
     if (liveRegionRef.current) {
@@ -29,11 +29,47 @@ export const ToggleTip = ({
     }
   };
 
+  const handleClick = (event: MouseEvent | KeyboardEvent) => {
+    if (
+      buttonRef.current &&
+      !buttonRef.current.contains(event.target as Node) &&
+      isVisible
+    ) {
+      setIsVisible(false);
+      removeLiveRegion();
+    }
+  };
+
+  const handleBlur = (event: React.FocusEvent) => {
+    if (!buttonRef.current?.contains(event.relatedTarget as Node)) {
+      setIsVisible(false);
+      removeLiveRegion();
+    }
+  };
+
+  useEffect(() => {
+    const handleEscPress = (event: KeyboardEvent) => {
+      if (event.key === "Escape" && isVisible) {
+        setIsVisible(false);
+        removeLiveRegion();
+      }
+    };
+
+    document.addEventListener("mousedown", handleClick);
+    document.addEventListener("keydown", handleEscPress);
+
+    return () => {
+      document.removeEventListener("mousedown", handleClick);
+      document.removeEventListener("keydown", handleEscPress);
+    };
+  }, [isVisible]);
+
   return (
     <Box as="span" display="inline-flex" alignItems="center">
       {text}
       <Box position="relative" display="inline-block">
         <Button
+          ref={buttonRef}
           aria-label="More info"
           lineHeight="1"
           background="unset"
@@ -44,47 +80,30 @@ export const ToggleTip = ({
           minWidth="unset"
           _hover={{
             background: "unset",
-            outline: "2px solid var(--nypl-colors-ui-link-primary)",
+            outline: "unset",
           }}
+          _focus={{ outline: "2px solid var(--nypl-colors-ui-link-primary)" }}
           onClick={() => {
-            setIsClickVisible((prev) => !prev);
-            setIsHoverFocusVisible(false);
-            if (!isClickVisible) {
+            setIsVisible((prev) => !prev);
+            if (!isVisible) {
               addLiveRegion();
             } else {
               removeLiveRegion();
             }
           }}
-          onMouseEnter={() => {
-            if (!isClickVisible) {
-              setIsHoverFocusVisible(true);
-              addLiveRegion();
-            }
-          }}
-          onMouseLeave={() => {
-            if (!isClickVisible) {
-              setIsHoverFocusVisible(false);
-              removeLiveRegion();
-            }
-          }}
           onFocus={() => {
-            if (!isClickVisible) {
-              setIsHoverFocusVisible(true);
+            if (!isVisible) {
+              setIsVisible(true);
               addLiveRegion();
             }
           }}
-          onBlur={() => {
-            if (!isClickVisible) {
-              setIsHoverFocusVisible(false);
-              removeLiveRegion();
-            }
-          }}
+          onBlur={handleBlur}
         >
           <Icon size="medium" name="errorOutline" iconRotation="rotate180" />
         </Button>
 
-        {/* visible if clicked OR hovered/focused */}
-        {(isClickVisible || isHoverFocusVisible) && (
+        {/* visible if clicked OR focused */}
+        {isVisible && (
           <Box
             sx={{
               position: "absolute",
@@ -122,7 +141,7 @@ export const ToggleTip = ({
         )}
       </Box>
 
-      {/* hidden, populated if clicked/hovered/focused */}
+      {/* hidden, populated if clicked/focused */}
       <Box
         as="span"
         ref={liveRegionRef}
