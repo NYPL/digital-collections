@@ -52,6 +52,7 @@ export default async function ItemViewer({ params, searchParams }: ItemProps) {
   const data = await getItem(params.uuid);
   const manifest = await getItemManifest(params.uuid);
   const item = new ItemModel(data, params.uuid, manifest);
+
   return (
     <PageLayout
       activePage="item"

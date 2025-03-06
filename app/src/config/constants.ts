@@ -63,3 +63,16 @@ export const METADATA_FIELDS = [
   "Access",
   "Rights",
 ];
+
+export const CONTENT_TYPES = {
+  text: "image",
+  cartographic: "image",
+  "notated music": "image",
+  "still image": "image",
+  "moving image": "video",
+  "sound recording": "audio",
+  "sound recording-nonmusical": "audio",
+  "sound recording-musical": "audio",
+  "three dimensional object": "image",
+  "software, multimedia": "image",
+};

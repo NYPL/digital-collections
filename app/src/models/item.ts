@@ -1,8 +1,10 @@
 import { Maniiifest } from "maniiifest";
 // https://github.com/jptmoore/maniiifest
-
+// other resources:
 // https://www.npmjs.com/package/@iiif/manifold
 // https://github.com/iiif-commons/manifold
+import { CONTENT_TYPES } from "../config/constants";
+
 export class ItemModel {
   uuid: string;
   mods: any;
@@ -14,6 +16,7 @@ export class ItemModel {
   isSingleCapture: boolean;
   imageID: string;
   href: string;
+  contentType: string;
   metadata?: {
     // Metadata fields
     /* Title */
@@ -87,7 +90,7 @@ export class ItemModel {
     this.isSingleCapture = data.numResults.$ == 1;
     this.imageID = data.imageID;
     this.href = data.href;
-
+    this.contentType = CONTENT_TYPES[this.typeOfResource];
     /*
     field labels from manifest metadata section are: 
     Title
