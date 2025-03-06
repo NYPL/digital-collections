@@ -2,7 +2,7 @@ import React from "react";
 import { Metadata } from "next";
 import PageLayout from "../../src/components/pageLayout/pageLayout";
 import Item from "../../src/components/items/item";
-import { getItemData } from "../../src/utils/apiHelpers";
+import { RepoApi, CollectionsApi } from "../../src/utils/apiClients";
 import { createAdobeAnalyticsPageName } from "../../src/utils/utils";
 import { ItemModel } from "../../src/models/item";
 import { ItemPage } from "@/src/components/pages/itemPage/itemPage";
@@ -17,14 +17,20 @@ type ItemProps = {
 
 let item;
 
-const getItemModel = async (uuid: string) => {
-  const data = await getItemData(uuid);
-  return new ItemModel(data, uuid);
-  // return item;
-};
+// const getItemModel = async (uuid: string) => {
+//   const data = await RepoApi.getItemData(uuid);
+//   return new ItemModel(data, uuid);
+//   // return item;
+// };
 
 const getItem = async (uuid: string) => {
-  const data = await getItemData(uuid);
+  const data = await RepoApi.getItemData(uuid);
+  // const item = new ItemModel(data, uuid);
+  return data;
+};
+
+const getItemManifest = async (uuid: string) => {
+  const data = await CollectionsApi.getManifestForItemUUID(uuid);
   // const item = new ItemModel(data, uuid);
   return data;
 };
@@ -42,9 +48,13 @@ export async function generateMetadata({
   };
 }
 
-export default async function ItemViewer({ params, searchParams }: ItemProps) {
+export default async function git({ params, searchParams }: ItemProps) {
   const data = await getItem(params.uuid);
-  const item = new ItemModel(data, params.uuid);
+  const manifest = {};
+  //await getItemManifest(params.uuid);
+  //getItemManifest('https://wellcomelibrary.org/iiif/b18035723/manifest')
+  // await getItemManifest(params.uuid);
+  const item = new ItemModel(data, params.uuid, manifest);
   return (
     <PageLayout
       activePage="item"
@@ -58,7 +68,12 @@ export default async function ItemViewer({ params, searchParams }: ItemProps) {
       ]}
       adobeAnalyticsPageName={createAdobeAnalyticsPageName("items", item.title)}
     >
-      <ItemPage data={data} type={searchParams.type} uuid={params.uuid} />
+      <ItemPage
+        // manifest={manifest}
+        data={data}
+        type={searchParams.type}
+        uuid={params.uuid}
+      />
     </PageLayout>
   );
 }
