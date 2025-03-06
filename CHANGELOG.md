@@ -5,6 +5,24 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## Unreleased
+
+## [0.3.3] 2025-03-06
+
+### Added
+
+- Added custom select component, `selectFilter`, and corresponding modal for facet filters (DR-3394, DR-3396)
+- Added active filters panel, `activeFilters` (DR-3367)
+- Added sort component, `sortMenu` (DR-3366)
+- Added search result model, mock data, card component, and card grid component (DR-3363)
+- Added collection structure component (DR-3415)
+- Added API wrappers for Collections and Repo API (DR-3414)
+
+### Updated
+
+- Updated collection search to use `q` param and added redirect for `collection_keywords` (DR-3337)
+- Updated homepage collections item counts and `/collections` page to use Collections API (DR-3453)
+
 ## [0.3.2] 2025-02-13
 
 ### Added

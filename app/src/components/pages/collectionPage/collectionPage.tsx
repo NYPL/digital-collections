@@ -4,42 +4,58 @@ import {
   Text,
   Heading,
   Flex,
-  HorizontalRule,
-  TagSet,
   ButtonGroup,
   Button,
   Link,
-  SearchBar,
   Icon,
   Pagination,
 } from "@nypl/design-system-react-components";
-import React from "react";
-import Filters from "../../search/filters";
+import React, { useRef } from "react";
+import Filters from "../../search/filters/filters";
+import CollectionStructure from "../../collectionStructure/collectionStructure";
+import { sampleStructure } from "__tests__/__mocks__/data/mockCollectionStructure";
 import { headerBreakpoints } from "@/src/utils/breakpoints";
-import { CardsGrid } from "../../grids/cardsGrid";
-import { displayResults } from "@/src/utils/utils";
-import { CARDS_PER_PAGE } from "@/src/config/constants";
+import { CollectionSearch } from "../../search/collectionSearch";
+import { MobileSearchBanner } from "../../mobileSearchBanner/mobileSearchBanner";
+import { displayResults, totalNumPages } from "@/src/utils/utils";
+import {
+  CARDS_PER_PAGE,
+  DEFAULT_PAGE_NUM,
+  DEFAULT_SEARCH_SORT,
+  DEFAULT_SEARCH_TERM,
+  SEARCH_SORT_LABELS,
+} from "@/src/config/constants";
+import SearchCardsGrid from "../../grids/searchCardsGrid";
+import {
+  GeneralSearchManager,
+  stringToFilter,
+} from "@/src/utils/searchManager";
+import { usePathname, useRouter } from "next/navigation";
+import SortMenu from "../../sortMenu/sortMenu";
+import ActiveFilters from "../../search/filters/activeFilters";
+import { mockFacetFilters } from "__tests__/__mocks__/data/mockFacetFilters";
 
-const textLink = (href, text) => {
-  return (
-    <a
-      style={{
-        color: "unset",
-        textDecorationLine: "underline",
-        lineHeight: "150%",
-        textUnderlinePosition: "from-font",
-        textDecorationThickness: "1px",
-      }}
-      href={href}
-    >
-      {text}
-    </a>
-  );
-};
+const CollectionPage = ({ slug, data, searchParams }) => {
+  const headingRef = useRef<HTMLHeadingElement>(null);
+  const collectionSearchManager = new GeneralSearchManager({
+    initialPage: Number(searchParams?.page) || DEFAULT_PAGE_NUM,
+    initialSort: searchParams?.sort || DEFAULT_SEARCH_SORT,
+    initialFilters: stringToFilter(searchParams?.filters),
+    initialKeywords: searchParams?.keywords || DEFAULT_SEARCH_TERM,
+    initialFacets: mockFacetFilters,
+  });
+  const totalPages = totalNumPages(data.numResults, CARDS_PER_PAGE);
+  const { push } = useRouter();
+  const pathname = usePathname();
 
-const CollectionPage = ({ slug, data }) => {
+  const updateURL = async (queryString) => {
+    push(`${pathname}?${queryString}`);
+    headingRef.current?.focus();
+  };
+
   return (
     <Box id="mainContent">
+      <MobileSearchBanner />
       <Box
         sx={{
           background: "ui.bg.default",
@@ -62,7 +78,10 @@ const CollectionPage = ({ slug, data }) => {
           >
             {slug}
           </Heading>
-          <Filters headingText="Search this collection" />
+          <Filters
+            headingText="Refine your results"
+            searchManager={collectionSearchManager}
+          />
         </Box>
       </Box>
       <Box
@@ -73,23 +92,7 @@ const CollectionPage = ({ slug, data }) => {
           paddingRight: { base: "m", xl: "s" },
         }}
       >
-        <HorizontalRule />
-        <Flex alignContent="center" alignItems="center" gap="xs">
-          <Text size="subtitle2" sx={{ margin: 0, fontWeight: 400 }}>
-            Filters applied:
-          </Text>
-          <TagSet
-            isDismissible
-            id="search-filter-tags"
-            onClick={() => {}}
-            tagSetData={[
-              { id: "audio", label: "Audio" },
-              { id: "video", label: "Video" },
-            ]}
-            type="filter"
-          />
-        </Flex>
-        <HorizontalRule />
+        <ActiveFilters searchManager={collectionSearchManager} />
         <Flex marginTop="m" marginBottom="m" flexDir="column">
           <Heading size="heading6" marginBottom="xs">
             Collection data
@@ -109,17 +112,22 @@ const CollectionPage = ({ slug, data }) => {
             Dates / Origin
           </Text>
           <Text marginBottom="m">
-            Date created: {textLink("/search/index?year_begin=1800", "1800")}{" "}
+            Date created:{" "}
+            <Link hasVisitedState={false} href="/search/index?year_begin=1800">
+              1800
+            </Link>{" "}
             (approximate)
           </Text>
           <Text size="overline1" marginBottom="xs">
             Library Locations
           </Text>
           <Text marginBottom="m">
-            {textLink(
-              "/divisions/billy-rose-theatre-division",
-              "Example division"
-            )}
+            <Link
+              hasVisitedState={false}
+              href="/divisions/billy-rose-theatre-division"
+            >
+              Example division
+            </Link>
           </Text>
           <Link hasVisitedState={false} isUnderlined={false}>
             See more collection data
@@ -131,88 +139,44 @@ const CollectionPage = ({ slug, data }) => {
             flexDir: { base: "column", md: "row" },
           }}
         >
-          <Box
-            sx={{
-              background: "ui.bg.default",
-              padding: "l",
-              height: "400px",
-              minWidth: "300px",
-              justifyItems: "center",
-            }}
-          >
-            <Heading size="heading6">Collection structure</Heading>
-          </Box>
+          <CollectionStructure data={sampleStructure} />
           <Box width="100%">
+            <CollectionSearch />
             <Flex
-              flexDir="column"
               sx={{
-                background: "ui.bg.default",
-                paddingTop: "s",
-                paddingBottom: "s",
-                paddingLeft: "m",
-                paddingRight: "m",
+                [`@media screen and (min-width: ${headerBreakpoints.lgMobile}px)`]:
+                  {
+                    flexDir: "row",
+                    marginBottom: "s",
+                    alignItems: "center",
+                  },
+                justifyContent: "space-between",
+                flexDir: "column",
                 marginBottom: "l",
+                marginTop: "l",
+                gap: "m",
+                alignItems: "flex-start",
               }}
             >
-              <SearchBar
-                headingText={
-                  <Heading
-                    sx={{ marginBottom: "xs", fontSize: "16px !important" }}
-                    size="heading6"
-                  >
-                    Search this collection:
-                  </Heading>
-                }
-                id="searchbar"
-                invalidText="Could not find the item"
-                labelText="Search this collection by item title"
-                onSubmit={() => {}}
-                textInputProps={{
-                  labelText: "Search this collection by item title",
-                  name: "textInputName",
-                  placeholder: "Search this collection by item title",
-                }}
-                sx={{
-                  width: "fill",
-                  flexFlow: "row nowrap",
-                  button: {
-                    borderRadius: "0px 2px 2px 0px",
-                    "> svg": {
-                      width: "14px",
-                      height: "14px",
-                    },
-                    paddingTop: "xs",
-                    paddingBottom: "xs",
-                    paddingLeft: "s !important",
-                    paddingRight: "s !important",
-                    "> span": {
-                      display: "block !important",
-                    },
-                  },
-                  [`@media screen and (max-width: ${headerBreakpoints.lgMobile}px)`]:
-                    {
-                      button: {
-                        padding: "xs !important",
-                        gap: 0,
-                        "> span": {
-                          display: "none !important",
-                        },
-                        "> svg": {
-                          width: "18px",
-                          height: "18px",
-                        },
-                      },
-                    },
-                }}
+              <Heading
+                size="heading5"
+                ref={headingRef}
+                tabIndex={-1}
+                margin="0"
+                aria-live="polite"
+              >{`Displaying ${displayResults(
+                data.numResults,
+                CARDS_PER_PAGE,
+                1
+              )}
+                                results`}</Heading>
+              <SortMenu
+                options={SEARCH_SORT_LABELS}
+                searchManager={collectionSearchManager}
+                updateURL={updateURL}
               />
             </Flex>
-            <Heading
-              marginTop="xl"
-              size="heading5"
-              tabIndex={-1}
-            >{`Displaying ${displayResults(data.numResults, CARDS_PER_PAGE, 1)}
-                                results`}</Heading>
-            <CardsGrid records={data} />
+            <SearchCardsGrid keywords={data.keyword} results={data.results} />
             <Flex marginTop="xxl" marginBottom="xxl" alignContent="center">
               <Link
                 minWidth="100px"

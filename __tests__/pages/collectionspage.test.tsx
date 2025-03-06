@@ -1,7 +1,7 @@
 import { render } from "@testing-library/react";
 import { axe } from "jest-axe";
 import React from "react";
-import { mockCollectionsResponse } from "__tests__/__mocks__/data/api/mockCollectionsResponse";
+import { mockCollectionsResponse } from "__tests__/__mocks__/data/repoApi/mockCollectionsResponse";
 import { CollectionsPage } from "@/src/components/pages/collectionsPage/collectionsPage";
 import { useRouter } from "next/navigation";
 
@@ -26,7 +26,7 @@ describe("All collections page accessibility", () => {
     const { container } = render(
       <CollectionsPage
         data={mockCollectionsResponse}
-        collectionSearchParams={searchParams}
+        collectionsSearchParams={searchParams}
       />
     );
     expect(await axe(container)).toHaveNoViolations();
