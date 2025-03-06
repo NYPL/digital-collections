@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+## [0.3.3] 2025-03-06
+
 ### Added
 
 - Added custom select component, `selectFilter`, and corresponding modal for facet filters (DR-3394, DR-3396)
