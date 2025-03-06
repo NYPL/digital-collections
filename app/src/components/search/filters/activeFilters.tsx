@@ -1,4 +1,3 @@
-import { useSearchContext } from "@/src/context/SearchProvider";
 import { Filter } from "@/src/types/FilterType";
 import {
   Flex,
