@@ -6,6 +6,8 @@ import {
   DEFAULT_SEARCH_TERM,
 } from "../config/constants";
 import { Filter } from "../types/FilterType";
+import { FacetFilter } from "../types/FacetFilterType";
+import { mockFacetFilters } from "__tests__/__mocks__/data/mockFacetFilters";
 
 export interface SearchManager {
   handleSearchSubmit(): string;
@@ -19,6 +21,7 @@ export interface SearchManager {
   get sort(): string;
   get page(): number;
   get filters(): Filter[];
+  get facets(): FacetFilter[];
 }
 
 abstract class BaseSearchManager implements SearchManager {
@@ -26,6 +29,7 @@ abstract class BaseSearchManager implements SearchManager {
   protected currentSort: string;
   protected currentKeywords: string;
   protected currentFilters: Set<string>;
+  protected currentFacets: FacetFilter[];
 
   abstract handlePageChange(pageNumber: number): string;
   abstract handleSortChange(id: string): string;
@@ -37,6 +41,7 @@ abstract class BaseSearchManager implements SearchManager {
     initialSort: string;
     initialFilters?: Filter[];
     initialKeywords: string;
+    initialFacets?: FacetFilter[];
   }) {
     this.currentPage = config.initialPage;
     this.currentSort = config.initialSort;
@@ -44,6 +49,7 @@ abstract class BaseSearchManager implements SearchManager {
       (config.initialFilters || []).map((filter) => JSON.stringify(filter))
     );
     this.currentKeywords = config.initialKeywords;
+    this.currentFacets = config.initialFacets || [];
   }
 
   get keywords() {
@@ -64,12 +70,27 @@ abstract class BaseSearchManager implements SearchManager {
     );
   }
 
+  get facets(): FacetFilter[] {
+    // TODO: Formatting
+    return this.currentFacets;
+  }
+
   handleKeywordChange(value: string) {
     this.currentKeywords = value;
   }
 
   handleAddFilter(newFilter: Filter) {
-    this.currentFilters.add(JSON.stringify(newFilter));
+    const existingFilters = new Map(
+      this.filters.map(({ filter, value }) => [filter, value])
+    );
+
+    existingFilters.set(newFilter.filter, newFilter.value);
+
+    this.currentFilters = new Set(
+      Array.from(existingFilters.entries()).map(([filter, value]) =>
+        JSON.stringify({ filter, value })
+      )
+    );
 
     return this.getQueryString({
       keywords: this.currentKeywords,
