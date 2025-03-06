@@ -1,3 +1,4 @@
+import { headerBreakpoints } from "@/src/utils/breakpoints";
 import {
   Accordion as ChakraAccordion,
   AccordionButton,
@@ -23,6 +24,8 @@ export interface FilterAccordionProps {
   /** For internal use only. This value toggles the accordion closed if the user clicks
    * outside the component. */
   userClickedOutside?: boolean;
+  /** For updating the state of the current filter selection when accordion is opened or closed. */
+  onChange: () => void;
 }
 
 /**
@@ -57,7 +60,14 @@ const getElementsFromData = (
         id={`${id}-panel-${index}`}
         key={index}
         overflow="auto"
-        sx={{ bg: "ui.white" }}
+        sx={{
+          bg: "ui.white",
+          [`@media screen and (min-width: ${headerBreakpoints.lgMobile}px)`]: {
+            position: "absolute",
+            zIndex: "1",
+            width: "100%",
+          },
+        }}
       >
         {content.panel}
       </AccordionPanel>
@@ -72,7 +82,7 @@ const getElementsFromData = (
     }
 
     return (
-      <AccordionItem id={`${id}-item-${index}`} key={index}>
+      <AccordionItem id={`${id}-item-${index}`} key={index} position="relative">
         {/* Get the current state to render the correct icon. */}
         {({ isExpanded }) => {
           return (
@@ -119,6 +129,7 @@ const FilterAccordionComponent = forwardRef<
     accordionData,
     ariaLabel,
     id,
+    onChange: parentOnChange,
     isDefaultOpen = false,
     userClickedOutside,
     ...rest
@@ -160,7 +171,7 @@ const FilterAccordionComponent = forwardRef<
       if (updatedAccordionData[focusedPanelIndex].buttonInteractionRef) {
         updatedAccordionData[
           focusedPanelIndex
-        ].buttonInteractionRef.current.focus();
+        ].buttonInteractionRef.current?.focus();
       }
     }
   };
@@ -175,7 +186,10 @@ const FilterAccordionComponent = forwardRef<
     <ChakraAccordion
       allowMultiple
       index={expandedPanels}
-      onChange={(expandedIdxs: number[]) => setExpandedPanels(expandedIdxs)}
+      onChange={(expandedIdxs: number[]) => {
+        setExpandedPanels(expandedIdxs);
+        parentOnChange();
+      }}
       onKeyDown={handleKeyDown}
       id={id}
       ref={ref}

@@ -1,7 +1,10 @@
-import { render, screen, fireEvent, waitFor } from "@testing-library/react";
+import { render, screen, fireEvent } from "@testing-library/react";
 import ActiveFilters from "./activeFilters";
-import { SearchProvider } from "@/src/context/SearchProvider";
-import { useRouter } from "next/navigation";
+import {
+  DEFAULT_SEARCH_SORT,
+  DEFAULT_SEARCH_TERM,
+} from "@/src/config/constants";
+import { GeneralSearchManager } from "@/src/utils/searchManager";
 
 jest.mock("next/navigation", () => ({
   useRouter: jest.fn(() => ({
@@ -11,22 +14,22 @@ jest.mock("next/navigation", () => ({
 }));
 
 describe("ActiveFilters", () => {
-  const searchParams = {
-    page: 2,
-    sort: "date-asc",
-    filters: "[topic=art][format=book]",
-    keywords: "painting",
-  };
+  let mockManager;
+  let component;
 
   beforeEach(() => {
     jest.clearAllMocks();
+    mockManager = new GeneralSearchManager({
+      initialPage: 1,
+      initialSort: DEFAULT_SEARCH_SORT,
+      initialFilters: [
+        { filter: "topic", value: "art" },
+        { filter: "format", value: "book" },
+      ],
+      initialKeywords: DEFAULT_SEARCH_TERM,
+    });
+    component = <ActiveFilters searchManager={mockManager} />;
   });
-
-  const component = (
-    <SearchProvider searchParams={searchParams}>
-      <ActiveFilters />
-    </SearchProvider>
-  );
 
   it("renders the applied filters", () => {
     render(component);
@@ -50,15 +53,17 @@ describe("ActiveFilters", () => {
     fireEvent.click(screen.getByText("Clear filters"));
     setTimeout(() => {
       expect(screen.queryByText("Filters applied:")).not.toBeInTheDocument();
-    }, 100);
+    }, 200);
   });
 
   it("does not render if there are no active filters", () => {
-    render(
-      <SearchProvider searchParams={{ ...searchParams, filters: "" }}>
-        <ActiveFilters />
-      </SearchProvider>
-    );
+    const mockEmptyManager = new GeneralSearchManager({
+      initialPage: 1,
+      initialSort: DEFAULT_SEARCH_SORT,
+      initialFilters: [],
+      initialKeywords: DEFAULT_SEARCH_TERM,
+    });
+    render(<ActiveFilters searchManager={mockEmptyManager} />);
     expect(screen.queryByText("Filters applied:")).not.toBeInTheDocument();
   });
 });
