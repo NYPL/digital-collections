@@ -5,8 +5,8 @@ import {
   TagSet,
   Text,
 } from "@nypl/design-system-react-components";
-import { useRouter, usePathname } from "next/navigation";
 import type { SearchManager } from "@/src/utils/searchManager";
+import { usePathname, useRouter } from "next/navigation";
 
 type ActiveFilterProps = {
   searchManager: SearchManager;

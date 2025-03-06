@@ -12,6 +12,7 @@ import FilterAccordion from "./filterAccordion";
 import { usePathname, useRouter } from "next/navigation";
 import { SearchManager } from "@/src/utils/searchManager";
 import { FacetFilter, FacetFilterOption } from "@/src/types/FacetFilterType";
+import { Filter } from "@/src/types/FilterType";
 
 export interface SelectFilterProps {
   filter: FacetFilter;
@@ -130,10 +131,12 @@ const SelectFilterComponent = forwardRef<
           accordionButtonRef.current?.focus();
           // Push the current filter selection to URL.
           updateURL(
-            searchManager.handleAddFilter({
-              filter: filter.name,
-              value: current?.name!,
-            })
+            searchManager.handleAddFilter([
+              {
+                filter: filter.name,
+                value: current?.name!,
+              },
+            ])
           );
           setUserClickedOutside(true);
         }}

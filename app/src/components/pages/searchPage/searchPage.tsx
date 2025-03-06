@@ -66,6 +66,7 @@ const SearchPage = ({ data }) => {
           </Heading>
           <Filters
             searchManager={searchManager}
+            updateURL={updateURL}
             headingText="Refine your search"
           />
         </Box>
