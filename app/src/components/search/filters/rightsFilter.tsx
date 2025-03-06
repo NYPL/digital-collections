@@ -7,11 +7,11 @@ import {
   Icon,
   Flex,
 } from "@nypl/design-system-react-components";
-import { forwardRef } from "react";
+import { useRouter, usePathname } from "next/navigation";
+import { forwardRef, useState } from "react";
 
 type RightsFilterProps = {
   searchManager: SearchManager;
-  updateURL: (string) => void;
 };
 
 const RadioOption = ({ id, text, tooltip }) => (
@@ -32,12 +32,31 @@ const RadioOption = ({ id, text, tooltip }) => (
         </Tooltip>
       </Flex>
     }
-    value={id}
+    value={text}
   />
 );
 
 const RightsFilter = forwardRef<HTMLHeadingElement, RightsFilterProps>(
   (props, ref) => {
+    const { searchManager } = props;
+    let selected = searchManager.filters.find((f) => f.filter === "rights")
+      ? searchManager.filters.find((f) => f.filter === "rights")?.value || null
+      : null;
+    const [selectedFilter, setSelectedFilter] = useState<string | null>(
+      selected
+    );
+    const { push } = useRouter();
+    const pathname = usePathname();
+
+    const updateURL = async (queryString) => {
+      push(`${pathname}?${queryString}`);
+    };
+
+    const handleRadioChange = (value: string) => {
+      setSelectedFilter(value);
+      updateURL(searchManager.handleAddFilter([{ filter: "rights", value }]));
+    };
+
     return (
       <>
         <Heading size="heading6" level="h3">
@@ -49,9 +68,8 @@ const RightsFilter = forwardRef<HTMLHeadingElement, RightsFilterProps>(
           labelText="Show Only"
           showLabel={false}
           marginBottom="s"
-          onChange={() => {
-            (ref as React.RefObject<HTMLHeadingElement>)?.current?.focus();
-          }}
+          defaultValue={selectedFilter || ""}
+          onChange={(e) => handleRadioChange(e)}
           sx={{
             "> div > div": {
               [`@media screen and (min-width: 600px)`]: {

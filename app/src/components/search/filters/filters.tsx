@@ -53,7 +53,6 @@ const Filters = ({ headingText, searchManager, updateURL }: FiltersProps) => {
           />
           <RightsFilter
             searchManager={searchManager}
-            updateURL={updateURL}
             // Remounts when filters are cleared from active filter panel.
             key={searchManager.filters.length + 1}
           />
