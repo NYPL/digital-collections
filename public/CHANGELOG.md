@@ -7,6 +7,26 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+### Added
+
+- Added custom select component, `selectFilter` for facet filters (DR-3394)
+- Added search result model, mock data, card component, and card grid component (DR-3363)
+
+### Updated
+
+- Updated collection search to use `q` param and added redirect for `collection_keywords` (DR-3337)
+
+## [0.3.2] 2025-02-13
+
+### Added
+
+- Added custom searchbar to handle search submit
+- Added new search context and `searchManager` class, implemented on `/collections` page (DR-3365)
+
+### Updated
+
+- Updated 3rd party scripts with explicit loading strategies (DR-3376)
+
 ## [0.3.1] 2025-01-30
 
 ### Updated

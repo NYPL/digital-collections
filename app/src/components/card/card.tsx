@@ -9,7 +9,7 @@ import {
   StatusBadge,
 } from "@nypl/design-system-react-components";
 import { headerBreakpoints } from "../../utils/breakpoints";
-import { TRUNCATED_LENGTH } from "@/src/config/constants";
+import { TRUNCATED_CARD_LENGTH } from "@/src/config/constants";
 import ItemCardDataType from "@/src/types/ItemCardDataType";
 import { CollectionCardDataType } from "../../types/CollectionCardDataType";
 import { Offset } from "@/src/hooks/useTooltipOffset";
@@ -35,7 +35,7 @@ export const Card = forwardRef<HTMLDivElement, DCCardProps>(
     { tooltipOffset, id, isLargerThanLargeTablet, imageHeight, slug, record },
     ref
   ) => {
-    const truncatedTitle = record.title.length > TRUNCATED_LENGTH;
+    const truncatedTitle = record.title.length > TRUNCATED_CARD_LENGTH;
     const isCollection = isCollectionCardDataType(record);
     const identifier = slug
       ? `${slug}-${id}`
