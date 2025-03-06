@@ -1,20 +1,19 @@
-import qs from "qs";
 import {
   DEFAULT_SEARCH_SORT,
   DEFAULT_COLLECTION_SORT,
   DEFAULT_PAGE_NUM,
   DEFAULT_SEARCH_TERM,
+  DEFAULT_FILTERS,
 } from "../config/constants";
 import { Filter } from "../types/FilterType";
 import { FacetFilter } from "../types/FacetFilterType";
-import { mockFacetFilters } from "__tests__/__mocks__/data/mockFacetFilters";
 
 export interface SearchManager {
   handleSearchSubmit(): string;
   handleKeywordChange(value: string): void;
   handlePageChange(pageNumber: number): string;
   handleSortChange(id: string): string;
-  handleAddFilter(newFilter: Filter): string;
+  handleAddFilter(newFilters: Filter[]): string;
   handleRemoveFilter(filterToRemove: Filter): string;
   clearAllFilters(): string;
   get keywords(): string;
@@ -79,19 +78,19 @@ abstract class BaseSearchManager implements SearchManager {
     this.currentKeywords = value;
   }
 
-  handleAddFilter(newFilter: Filter) {
+  handleAddFilter(newFilters: Filter | Filter[]) {
     const existingFilters = new Map(
       this.filters.map(({ filter, value }) => [filter, value])
     );
-
-    existingFilters.set(newFilter.filter, newFilter.value);
-
+    const filtersToAdd = Array.isArray(newFilters) ? newFilters : [newFilters];
+    filtersToAdd.forEach(({ filter, value }) => {
+      existingFilters.set(filter, value);
+    });
     this.currentFilters = new Set(
       Array.from(existingFilters.entries()).map(([filter, value]) =>
         JSON.stringify({ filter, value })
       )
     );
-
     return this.getQueryString({
       keywords: this.currentKeywords,
       sort: this.currentSort,
@@ -117,7 +116,7 @@ abstract class BaseSearchManager implements SearchManager {
       keywords: this.currentKeywords,
       sort: this.currentSort,
       page: DEFAULT_PAGE_NUM,
-      filters: filterToString([]),
+      filters: filterToString(DEFAULT_FILTERS),
     });
   }
 }
@@ -161,6 +160,7 @@ export class GeneralSearchManager extends BaseSearchManager {
       DEFAULT_SEARCH_TERM,
       DEFAULT_PAGE_NUM,
       DEFAULT_SEARCH_SORT,
+      DEFAULT_FILTERS,
     ];
 
     Object.keys(paramsObject).forEach((key) => {

@@ -135,10 +135,12 @@ const SelectFilterModal = forwardRef<HTMLButtonElement, SelectFilterModalProps>(
           isOpen={isOpen}
           onClose={() => {
             updateURL(
-              searchManager.handleAddFilter({
-                filter: filter.name,
-                value: modalCurrent?.name!,
-              })
+              searchManager.handleAddFilter([
+                {
+                  filter: filter.name,
+                  value: modalCurrent?.name!,
+                },
+              ])
             );
             handleClose(false);
           }}
@@ -276,10 +278,12 @@ const SelectFilterModal = forwardRef<HTMLButtonElement, SelectFilterModalProps>(
                   onClick={() => {
                     handleClose(true);
                     updateURL(
-                      searchManager.handleAddFilter({
-                        filter: filter.name,
-                        value: modalCurrent?.name!,
-                      })
+                      searchManager.handleAddFilter([
+                        {
+                          filter: filter.name,
+                          value: modalCurrent?.name!,
+                        },
+                      ])
                     );
                     setModalCurrent(current);
                   }}

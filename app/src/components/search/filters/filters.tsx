@@ -11,18 +11,20 @@ import RightsFilter from "./rightsFilter";
 import DateFilter from "./dateFilter";
 import { headerBreakpoints } from "@/src/utils/breakpoints";
 import { SearchManager } from "@/src/utils/searchManager";
+import { Filter } from "@/src/types/FilterType";
 
 type FiltersProps = {
   headingText: string;
   searchManager: SearchManager;
+  updateURL: (string) => void;
 };
 
-const Filters = ({ headingText, searchManager }: FiltersProps) => {
+const Filters = ({ headingText, searchManager, updateURL }: FiltersProps) => {
   const [isExpanded, setIsExpanded] = useState(false);
+
   const filterRefs = useRef<(HTMLButtonElement | null)[]>([]);
   const dateFilterRef = useRef<TextInputRefType | null>(null);
   const secondRowFilter = 4;
-
   useEffect(() => {
     if (isExpanded) {
       if (filterRefs.current[secondRowFilter]) {
@@ -42,8 +44,19 @@ const Filters = ({ headingText, searchManager }: FiltersProps) => {
       />
       {isExpanded && (
         <>
-          <DateFilter ref={dateFilterRef} />
-          <RightsFilter />
+          <DateFilter
+            ref={dateFilterRef}
+            searchManager={searchManager}
+            updateURL={updateURL}
+            // Remounts when filters are cleared from active filter panel.
+            key={searchManager.filters.length}
+          />
+          <RightsFilter
+            searchManager={searchManager}
+            updateURL={updateURL}
+            // Remounts when filters are cleared from active filter panel.
+            key={searchManager.filters.length + 1}
+          />
         </>
       )}
       <Button
