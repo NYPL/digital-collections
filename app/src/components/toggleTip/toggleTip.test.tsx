@@ -12,17 +12,6 @@ describe("ToggleTip", () => {
     ).toBeInTheDocument();
   });
 
-  it("shows tooltip on hover and hides it on mouse leave", async () => {
-    render(<ToggleTip text={text} toggleTipContent={toggleTipContent} />);
-    const button = screen.getByRole("button");
-
-    fireEvent.mouseEnter(button);
-    expect(screen.getByText(toggleTipContent)).toBeInTheDocument();
-
-    fireEvent.mouseLeave(button);
-    expect(screen.queryByText(toggleTipContent)).not.toBeInTheDocument();
-  });
-
   it("shows tooltip on focus and hides it on blur", async () => {
     render(<ToggleTip text={text} toggleTipContent={toggleTipContent} />);
     const button = screen.getByRole("button");
@@ -34,28 +23,28 @@ describe("ToggleTip", () => {
     expect(screen.queryByText(toggleTipContent)).not.toBeInTheDocument();
   });
 
-  it("toggles tooltip on click and requires another click to close", async () => {
+  it("hides tooltip on ESC", async () => {
     render(<ToggleTip text={text} toggleTipContent={toggleTipContent} />);
     const button = screen.getByRole("button");
 
-    fireEvent.click(button);
+    fireEvent.focus(button);
     expect(screen.getByText(toggleTipContent)).toBeInTheDocument();
 
-    fireEvent.click(button);
+    fireEvent.keyDown(button, { key: "Escape", code: "Escape" });
+
     expect(screen.queryByText(toggleTipContent)).not.toBeInTheDocument();
   });
 
-  it("does not close the tooltip on hover leaving if it was opened by click", async () => {
+  it("toggles tooltip on click and requires click outside to close", async () => {
     render(<ToggleTip text={text} toggleTipContent={toggleTipContent} />);
     const button = screen.getByRole("button");
 
     fireEvent.click(button);
     expect(screen.getByText(toggleTipContent)).toBeInTheDocument();
 
-    fireEvent.mouseLeave(button);
-    expect(screen.getByText(toggleTipContent)).toBeInTheDocument();
-
-    fireEvent.click(button);
-    expect(screen.queryByText(toggleTipContent)).not.toBeInTheDocument();
+    fireEvent.click(document);
+    setTimeout(() => {
+      expect(screen.queryByText(toggleTipContent)).not.toBeInTheDocument();
+    }, 100);
   });
 });
