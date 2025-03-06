@@ -1,5 +1,5 @@
 export const mockSearchResponse = {
-  keyword: "example in",
+  keyword: "example",
   numResults: 4,
   page: 1,
   perPage: 48,
