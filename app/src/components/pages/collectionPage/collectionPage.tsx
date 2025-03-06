@@ -81,6 +81,7 @@ const CollectionPage = ({ slug, data, searchParams }) => {
           <Filters
             headingText="Refine your results"
             searchManager={collectionSearchManager}
+            updateURL={updateURL}
           />
         </Box>
       </Box>

@@ -17,7 +17,7 @@ type DateFilterProps = {
 
 const DateFilter = forwardRef<HTMLHeadingElement, DateFilterProps>(
   (props, ref) => {
-    const { searchManager, updateURL, ...rest } = props;
+    const { searchManager, updateURL } = props;
 
     let startValue = searchManager.filters.find((f) => f.filter === "dateStart")
       ? searchManager.filters.find((f) => f.filter === "dateStart")?.value ||
