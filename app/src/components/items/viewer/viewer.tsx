@@ -8,7 +8,6 @@ import { UniversalViewer } from "../uv/universalViewerLazy";
 import "universalviewer/dist/esm/index.css";
 
 interface ItemProps {
-  manifest: any;
   item: ItemModel;
   type: string;
 }
@@ -19,7 +18,7 @@ const contentTypes = {
   "sound recording": "audio",
 };
 
-const ItemMediaViewer = ({ manifest, item, type }: ItemProps) => {
+const ItemMediaViewer = ({ item, type }: ItemProps) => {
   console.log("Item metadata: ", item.metadata);
   let viewer;
   switch (type) {
