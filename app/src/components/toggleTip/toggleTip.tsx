@@ -17,7 +17,7 @@ export const ToggleTip = ({
     if (liveRegionRef.current) {
       setTimeout(() => {
         liveRegionRef.current!.textContent = toggleTipContent;
-      }, 100);
+      }, 200);
     }
   };
 
@@ -25,7 +25,7 @@ export const ToggleTip = ({
     if (liveRegionRef.current) {
       setTimeout(() => {
         liveRegionRef.current!.textContent = "";
-      }, 100);
+      }, 200);
     }
   };
 
