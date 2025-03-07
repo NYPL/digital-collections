@@ -1,7 +1,7 @@
 export const mockCollectionResponse = {
   title: "Posada Collection",
   uuid: "60932400-20f2-0138-8583-05c43d448773",
-  //archivesCollectionID: "20251", // MSS ID, to be used in a archives.nypl.org url
+  archivesCollectionID: "20251", // MSS ID, to be used in a archives.nypl.org url
   bNumber: "b13830124", // to be used in a nypl.org/research/research-catalog/bib/ url
   keyDate: "1890",
   yearBegin: "1890",
