@@ -1,6 +1,6 @@
 import { useState, useRef, useEffect } from "react";
 import { Text, Box, Icon } from "@nypl/design-system-react-components";
-import { Button } from "@chakra-ui/react";
+import { Button, Flex } from "@chakra-ui/react";
 
 export const ToggleTip = ({
   text,
@@ -12,6 +12,7 @@ export const ToggleTip = ({
   const [isVisible, setIsVisible] = useState(false);
   const liveRegionRef = useRef<HTMLSpanElement | null>(null);
   const buttonRef = useRef<HTMLButtonElement | null>(null);
+  const tooltipRef = useRef<HTMLDivElement | null>(null);
 
   const addLiveRegion = () => {
     if (liveRegionRef.current) {
@@ -29,19 +30,13 @@ export const ToggleTip = ({
     }
   };
 
-  const handleClick = (event: MouseEvent | KeyboardEvent) => {
+  const handleClickOutside = (event: MouseEvent | KeyboardEvent) => {
     if (
       buttonRef.current &&
       !buttonRef.current.contains(event.target as Node) &&
-      isVisible
+      tooltipRef.current &&
+      !tooltipRef.current.contains(event.target as Node)
     ) {
-      setIsVisible(false);
-      removeLiveRegion();
-    }
-  };
-
-  const handleBlur = (event: React.FocusEvent) => {
-    if (!buttonRef.current?.contains(event.relatedTarget as Node)) {
       setIsVisible(false);
       removeLiveRegion();
     }
@@ -55,11 +50,11 @@ export const ToggleTip = ({
       }
     };
 
-    document.addEventListener("mousedown", handleClick);
+    document.addEventListener("mousedown", handleClickOutside);
     document.addEventListener("keydown", handleEscPress);
 
     return () => {
-      document.removeEventListener("mousedown", handleClick);
+      document.removeEventListener("mousedown", handleClickOutside);
       document.removeEventListener("keydown", handleEscPress);
     };
   }, [isVisible]);
@@ -91,14 +86,20 @@ export const ToggleTip = ({
               removeLiveRegion();
             }
           }}
-          onBlur={handleBlur}
+          onMouseEnter={() => {
+            if (!isVisible) {
+              setIsVisible(true);
+              addLiveRegion();
+            }
+          }}
         >
           <Icon size="medium" name="errorOutline" iconRotation="rotate180" />
         </Button>
 
-        {/* visible if clicked OR focused */}
+        {/* Tooltip */}
         {isVisible && (
           <Box
+            ref={tooltipRef}
             sx={{
               position: "absolute",
               bottom: "100%",
@@ -123,19 +124,43 @@ export const ToggleTip = ({
                 "var(--nypl-colors-ui-gray-xx-dark) transparent transparent transparent",
             }}
           >
-            <Text
-              marginBottom="0"
-              fontSize="desktop.caption"
-              fontWeight="medium"
-              color="ui.typography.inverse.body"
-            >
-              {toggleTipContent}
-            </Text>
+            <Flex justifyContent="space-between" alignItems="flex-start">
+              <Text
+                marginBottom="0"
+                fontSize="desktop.caption"
+                fontWeight="medium"
+                color="ui.typography.inverse.body"
+              >
+                {toggleTipContent}
+              </Text>
+              <Button
+                aria-label="Close tooltip"
+                onClick={() => {
+                  setIsVisible(false);
+                  removeLiveRegion();
+                }}
+                sx={{
+                  background: "transparent",
+                  border: "none",
+                  color: "ui.typography.inverse.body",
+                  padding: "xxs",
+                  minWidth: "unset",
+                  height: "unset",
+                  _hover: { color: "ui.link.primary" },
+                }}
+              >
+                <Icon
+                  name="close"
+                  size="small"
+                  color="ui.typography.inverse.body"
+                />
+              </Button>
+            </Flex>
           </Box>
         )}
       </Box>
 
-      {/* hidden, populated if clicked/focused */}
+      {/* Live Region for Accessibility */}
       <Box
         as="span"
         ref={liveRegionRef}
