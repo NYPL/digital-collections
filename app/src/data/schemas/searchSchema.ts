@@ -11,27 +11,21 @@ const searchSchema = {
   rightsFilter: "publicDomain | availableOnline | onSiteMaterial",
   dateStart: "integer ie: 1800",
   dateEnd: "integer ie: 1900",
+  // All filters always returned, empty if there are no available options
   availableFilters: {
     topic: [
       {
-        name: "Musicals",
-        count: 312,
-      },
-      {
-        name: "Theatrical productions",
-        count: 164,
+        name: "string",
+        count: "integer",
       },
     ],
-    name: [
-      {
-        name: "Swope, Martha",
-        count: 362,
-      },
-      {
-        name: "Friedman-Abeles (Firm)",
-        count: 77,
-      },
-    ],
+    name: [],
+    collection: [],
+    genre: [],
+    place: [],
+    publisher: [],
+    division: [],
+    type: [],
   },
   // Results
   results: [

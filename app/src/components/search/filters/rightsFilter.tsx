@@ -32,22 +32,21 @@ const RadioOption = ({ id, text, tooltip }) => (
         </Tooltip>
       </Flex>
     }
-    value={text}
+    value={id}
   />
 );
 
 const RightsFilter = forwardRef<HTMLHeadingElement, RightsFilterProps>(
-  (props, ref) => {
-    const { searchManager } = props;
+  ({ searchManager }, ref) => {
     let selected = searchManager.filters.find((f) => f.filter === "rights")
       ? searchManager.filters.find((f) => f.filter === "rights")?.value || null
       : null;
     const [selectedFilter, setSelectedFilter] = useState<string | null>(
       selected
     );
+
     const { push } = useRouter();
     const pathname = usePathname();
-
     const updateURL = async (queryString) => {
       push(`${pathname}?${queryString}`);
     };
@@ -80,17 +79,17 @@ const RightsFilter = forwardRef<HTMLHeadingElement, RightsFilterProps>(
           }}
         >
           <RadioOption
-            id="pd-radio"
+            id="publicDomain"
             text="Public domain"
             tooltip="View materials that are free to download, reuse, and share"
           />
           <RadioOption
-            id="online-radio"
+            id="availableOnline"
             text="Available online"
             tooltip="View digital materials from anywhere, any time"
           />
           <RadioOption
-            id="onsite-radio"
+            id="onsiteMaterial"
             text="Contains on-site materials"
             tooltip="View materials accessible only at an NYPL location"
           />

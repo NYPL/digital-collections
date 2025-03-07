@@ -6,9 +6,9 @@ import {
   DEFAULT_SEARCH_TERM,
 } from "@/src/config/constants";
 import { useRouter } from "next/navigation";
-import { FacetFilter } from "@/src/types/AvailableFilterType";
+import { AvailableFilter } from "@/src/types/AvailableFilterType";
 
-const mockFacetFilter: FacetFilter = {
+const mockAvailableFilter: AvailableFilter = {
   name: "Publisher",
   options: [
     { name: "Publisher 1", count: 10 },
@@ -43,7 +43,7 @@ let mockPush = jest.fn();
 (useRouter as jest.Mock).mockReturnValue({ push: mockPush });
 
 let component = (
-  <SelectFilter filter={mockFacetFilter} searchManager={mockManager} />
+  <SelectFilter filter={mockAvailableFilter} searchManager={mockManager} />
 );
 
 describe("SelectFilterComponent", () => {

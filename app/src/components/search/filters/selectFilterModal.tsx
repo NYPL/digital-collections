@@ -21,19 +21,19 @@ import { headerBreakpoints } from "@/src/utils/breakpoints";
 import { usePathname, useRouter } from "next/navigation";
 import { SearchManager } from "@/src/utils/searchManager";
 import {
-  FacetFilter,
-  FacetFilterOption,
+  AvailableFilter,
+  AvailableFilterOption,
 } from "@/src/types/AvailableFilterType";
 
 type SelectFilterModalProps = {
-  filter: FacetFilter;
+  filter: AvailableFilter;
   onOpen: () => void;
   onClose: (closeDropdown) => void;
-  selected: FacetFilterOption | null;
-  current: FacetFilterOption | null;
-  modalCurrent: FacetFilterOption | null;
+  selected: AvailableFilterOption | null;
+  current: AvailableFilterOption | null;
+  modalCurrent: AvailableFilterOption | null;
   setModalCurrent: React.Dispatch<
-    React.SetStateAction<FacetFilterOption | null>
+    React.SetStateAction<AvailableFilterOption | null>
   >;
   searchManager: SearchManager;
 };

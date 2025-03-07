@@ -12,17 +12,17 @@ import FilterAccordion from "./filterAccordion";
 import { usePathname, useRouter } from "next/navigation";
 import { SearchManager } from "@/src/utils/searchManager";
 import {
-  FacetFilter,
-  FacetFilterOption,
+  AvailableFilter,
+  AvailableFilterOption,
 } from "@/src/types/AvailableFilterType";
 import { Filter } from "@/src/types/FilterType";
 
 export interface SelectFilterProps {
-  filter: FacetFilter;
+  filter: AvailableFilter;
   searchManager: SearchManager;
 }
 
-export const radioFilterOptions = (options: FacetFilterOption[]) => {
+export const radioFilterOptions = (options: AvailableFilterOption[]) => {
   return options.map((option, index) => (
     <Radio
       key={`${option.name}-${index}`}
@@ -40,7 +40,7 @@ export const radioFilterOptions = (options: FacetFilterOption[]) => {
 
 const SelectFilterComponent = forwardRef<
   HTMLButtonElement,
-  { filter: FacetFilter; searchManager: SearchManager }
+  { filter: AvailableFilter; searchManager: SearchManager }
 >((props, filterRef) => {
   const { filter, searchManager, ...rest } = props;
   const [userClickedOutside, setUserClickedOutside] = useState<boolean>(false);
@@ -55,10 +55,11 @@ const SelectFilterComponent = forwardRef<
     : null;
 
   // Manages current selection in state while user interacts with dropdown/modal.
-  const [current, setCurrent] = useState<FacetFilterOption | null>(selected);
-  const [modalCurrent, setModalCurrent] = useState<FacetFilterOption | null>(
+  const [current, setCurrent] = useState<AvailableFilterOption | null>(
     selected
   );
+  const [modalCurrent, setModalCurrent] =
+    useState<AvailableFilterOption | null>(selected);
 
   const { push } = useRouter();
   const pathname = usePathname();
