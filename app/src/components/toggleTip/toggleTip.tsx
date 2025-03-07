@@ -91,12 +91,6 @@ export const ToggleTip = ({
               removeLiveRegion();
             }
           }}
-          onFocus={() => {
-            if (!isVisible) {
-              setIsVisible(true);
-              addLiveRegion();
-            }
-          }}
           onBlur={handleBlur}
         >
           <Icon size="medium" name="errorOutline" iconRotation="rotate180" />
