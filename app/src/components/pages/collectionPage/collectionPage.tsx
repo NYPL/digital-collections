@@ -44,8 +44,9 @@ const CollectionPage = ({ slug, data, searchParams }) => {
     initialSort: searchParams?.sort || DEFAULT_SEARCH_SORT,
     initialFilters: stringToFilter(searchParams?.filters),
     initialKeywords: searchParams?.keywords || DEFAULT_SEARCH_TERM,
-    initialAvailableFilters:
-      transformToAvailableFilters(data?.availableFilters) || DEFAULT_FILTERS,
+    initialAvailableFilters: data?.availableFilters
+      ? transformToAvailableFilters(data?.availableFilters)
+      : DEFAULT_FILTERS,
   });
 
   const totalPages = totalNumPages(data.numResults, CARDS_PER_PAGE);
@@ -199,7 +200,7 @@ const CollectionPage = ({ slug, data, searchParams }) => {
                 id="pagination-id"
                 initialPage={1}
                 currentPage={1}
-                pageCount={totalPages}
+                pageCount={10} //totalPages
                 sx={{
                   justifyContent: "flex-end",
                   gap: "s",
