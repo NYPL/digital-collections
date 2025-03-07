@@ -49,16 +49,14 @@ const CollectionMetadata = ({ data }: { data: CollectionMetadataProps }) => {
   const [isExpanded, setIsExpanded] = useState(false);
 
   return (
-    <Flex marginTop="m" marginBottom="m" flexDir="column">
+    <Flex marginTop="l" marginBottom="m" flexDir="column">
       <Heading size="heading6" marginBottom="s">
         Collection data
       </Heading>
-      {archivesCollectionID && (
-        <Text marginBottom="xs">
-          This collection is also available in Archives & Manuscripts, and the
-          NYPL Research Catalog.
-        </Text>
-      )}
+      {archivesCollectionID ||
+        (bNumber && (
+          <Text marginBottom="xs">This collection is also available:</Text>
+        ))}
       <ButtonGroup marginBottom="m">
         {archivesCollectionID && (
           <Button buttonType="secondary" id="finding-aid-btn">
