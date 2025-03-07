@@ -44,17 +44,17 @@ const RightsFilter = forwardRef<HTMLHeadingElement>((props, ref) => {
         <RadioOption
           id="pd-radio"
           text="Public domain"
-          tooltip="View materials that are free to download, reuse, and share"
+          tooltip="View materials that are free to download, reuse, and share."
         />
         <RadioOption
           id="online-radio"
           text="Available online"
-          tooltip="View digital materials from anywhere, any time"
+          tooltip="View digital materials from anywhere, any time."
         />
         <RadioOption
           id="onsite-radio"
           text="Contains on-site materials"
-          tooltip="View materials accessible only at an NYPL location"
+          tooltip="View materials accessible only at an NYPL location."
         />
       </RadioGroup>
     </>
