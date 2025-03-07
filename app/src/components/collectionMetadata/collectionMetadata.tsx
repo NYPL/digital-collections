@@ -53,10 +53,9 @@ const CollectionMetadata = ({ data }: { data: CollectionMetadataProps }) => {
       <Heading size="heading6" marginBottom="s">
         Collection data
       </Heading>
-      {archivesCollectionID ||
-        (bNumber && (
-          <Text marginBottom="xs">This collection is also available:</Text>
-        ))}
+      {(archivesCollectionID || bNumber) && (
+        <Text marginBottom="xs">This collection is also available:</Text>
+      )}
       <ButtonGroup marginBottom="m">
         {archivesCollectionID && (
           <Button buttonType="secondary" id="finding-aid-btn">
