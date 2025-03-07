@@ -6,7 +6,7 @@ import {
   DEFAULT_SEARCH_TERM,
 } from "@/src/config/constants";
 import { useRouter } from "next/navigation";
-import { FacetFilter } from "@/src/types/FacetFilterType";
+import { FacetFilter } from "@/src/types/AvailableFilterType";
 
 const mockFacetFilter: FacetFilter = {
   name: "Publisher",

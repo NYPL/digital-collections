@@ -14,9 +14,9 @@ const SelectFilterGrid = ({
   filterRefs,
   searchManager,
 }: SelectFilterGridProps) => {
-  const visibleFacetFilters = isExpanded
-    ? searchManager.facets
-    : searchManager.facets.slice(0, 4);
+  const visibleFilters = isExpanded
+    ? searchManager.availableFilters
+    : searchManager.availableFilters.slice(0, 4);
 
   return (
     <Grid
@@ -33,7 +33,7 @@ const SelectFilterGrid = ({
       marginBottom="s"
       width="full"
     >
-      {visibleFacetFilters.map((filter, index) => (
+      {visibleFilters.map((filter, index) => (
         <SelectFilter
           key={filter.name}
           filter={filter}

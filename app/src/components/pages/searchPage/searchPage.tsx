@@ -7,7 +7,7 @@ import {
   Link,
   Icon,
 } from "@nypl/design-system-react-components";
-import React, { useRef } from "react";
+import React, { useEffect, useRef } from "react";
 import { CARDS_PER_PAGE, SEARCH_SORT_LABELS } from "@/src/config/constants";
 import { displayResults, totalNumPages } from "@/src/utils/utils";
 import Filters from "../../search/filters/filters";
@@ -29,6 +29,10 @@ const SearchPage = ({ data }) => {
   };
 
   const headingRef = useRef<HTMLHeadingElement>(null);
+  // useEffect(() => {
+  //   headingRef.current?.focus();
+  //   // eslint-disable-next-line react-hooks/exhaustive-deps
+  // }, [data]);
 
   return (
     <Box id="mainContent">

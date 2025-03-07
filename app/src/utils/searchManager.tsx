@@ -6,7 +6,10 @@ import {
   DEFAULT_FILTERS,
 } from "../config/constants";
 import { Filter } from "../types/FilterType";
-import { FacetFilter } from "../types/FacetFilterType";
+import {
+  AvailableFilter,
+  AvailableFilterOption,
+} from "../types/AvailableFilterType";
 
 export interface SearchManager {
   handleSearchSubmit(): string;
@@ -20,7 +23,7 @@ export interface SearchManager {
   get sort(): string;
   get page(): number;
   get filters(): Filter[];
-  get facets(): FacetFilter[];
+  get availableFilters(): AvailableFilter[];
 }
 
 abstract class BaseSearchManager implements SearchManager {
@@ -28,7 +31,7 @@ abstract class BaseSearchManager implements SearchManager {
   protected currentSort: string;
   protected currentKeywords: string;
   protected currentFilters: Set<string>;
-  protected currentFacets: FacetFilter[];
+  protected currentAvailableFilters: AvailableFilter[];
 
   abstract handlePageChange(pageNumber: number): string;
   abstract handleSortChange(id: string): string;
@@ -40,7 +43,7 @@ abstract class BaseSearchManager implements SearchManager {
     initialSort: string;
     initialFilters?: Filter[];
     initialKeywords: string;
-    initialFacets?: FacetFilter[];
+    initialAvailableFilters?: AvailableFilter[];
   }) {
     this.currentPage = config.initialPage;
     this.currentSort = config.initialSort;
@@ -48,7 +51,7 @@ abstract class BaseSearchManager implements SearchManager {
       (config.initialFilters || []).map((filter) => JSON.stringify(filter))
     );
     this.currentKeywords = config.initialKeywords;
-    this.currentFacets = config.initialFacets || [];
+    this.currentAvailableFilters = config.initialAvailableFilters || [];
   }
 
   get keywords() {
@@ -69,9 +72,9 @@ abstract class BaseSearchManager implements SearchManager {
     );
   }
 
-  get facets(): FacetFilter[] {
+  get availableFilters(): AvailableFilter[] {
     // TODO: Formatting
-    return this.currentFacets;
+    return this.currentAvailableFilters;
   }
 
   handleKeywordChange(value: string) {
@@ -239,4 +242,13 @@ export const stringToFilter = (filtersString: string | null): Filter[] => {
 export const filterToString = (filters: Filter[]): string => {
   if (!filters || filters.length === 0) return "";
   return filters.map(({ filter, value }) => `[${filter}=${value}]`).join("");
+};
+
+export const transformToAvailableFilters = (
+  availableFilters: Record<string, AvailableFilterOption[]>
+): AvailableFilter[] => {
+  return Object.entries(availableFilters).map(([key, options]) => ({
+    name: key.charAt(0).toUpperCase() + key.slice(1),
+    options,
+  }));
 };

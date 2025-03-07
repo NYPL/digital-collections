@@ -20,6 +20,7 @@ import { MobileSearchBanner } from "../../mobileSearchBanner/mobileSearchBanner"
 import { displayResults, totalNumPages } from "@/src/utils/utils";
 import {
   CARDS_PER_PAGE,
+  DEFAULT_FILTERS,
   DEFAULT_PAGE_NUM,
   DEFAULT_SEARCH_SORT,
   DEFAULT_SEARCH_TERM,
@@ -29,21 +30,24 @@ import SearchCardsGrid from "../../grids/searchCardsGrid";
 import {
   GeneralSearchManager,
   stringToFilter,
+  transformToAvailableFilters,
 } from "@/src/utils/searchManager";
 import { usePathname, useRouter } from "next/navigation";
 import SortMenu from "../../sortMenu/sortMenu";
 import ActiveFilters from "../../search/filters/activeFilters";
-import { mockFacetFilters } from "__tests__/__mocks__/data/mockFacetFilters";
 
 const CollectionPage = ({ slug, data, searchParams }) => {
   const headingRef = useRef<HTMLHeadingElement>(null);
+
   const collectionSearchManager = new GeneralSearchManager({
     initialPage: Number(searchParams?.page) || DEFAULT_PAGE_NUM,
     initialSort: searchParams?.sort || DEFAULT_SEARCH_SORT,
     initialFilters: stringToFilter(searchParams?.filters),
     initialKeywords: searchParams?.keywords || DEFAULT_SEARCH_TERM,
-    initialFacets: mockFacetFilters,
+    initialAvailableFilters:
+      transformToAvailableFilters(data?.availableFilters) || DEFAULT_FILTERS,
   });
+
   const totalPages = totalNumPages(data.numResults, CARDS_PER_PAGE);
   const { push } = useRouter();
   const pathname = usePathname();
@@ -195,7 +199,7 @@ const CollectionPage = ({ slug, data, searchParams }) => {
                 id="pagination-id"
                 initialPage={1}
                 currentPage={1}
-                pageCount={10}
+                pageCount={totalPages}
                 sx={{
                   justifyContent: "flex-end",
                   gap: "s",

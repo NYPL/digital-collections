@@ -11,7 +11,10 @@ import SelectFilterModal from "./selectFilterModal";
 import FilterAccordion from "./filterAccordion";
 import { usePathname, useRouter } from "next/navigation";
 import { SearchManager } from "@/src/utils/searchManager";
-import { FacetFilter, FacetFilterOption } from "@/src/types/FacetFilterType";
+import {
+  FacetFilter,
+  FacetFilterOption,
+} from "@/src/types/AvailableFilterType";
 import { Filter } from "@/src/types/FilterType";
 
 export interface SelectFilterProps {

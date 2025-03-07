@@ -1,6 +1,9 @@
-import { FacetFilter, FacetFilterOption } from "@/src/types/FacetFilterType";
+import {
+  AvailableFilter,
+  AvailableFilterOption,
+} from "@/src/types/AvailableFilterType";
 
-export const mockFacetFilters = [
+export const mockAvailableFilters = [
   {
     name: "Topic",
     options: [
@@ -25,7 +28,7 @@ export const mockFacetFilters = [
       { name: "Missouri", count: 21 },
       { name: "Wisconsin", count: 15 },
       { name: "New Orleans", count: 25 },
-    ] as FacetFilterOption[],
+    ] as AvailableFilterOption[],
   },
   {
     name: "Genre",
@@ -51,7 +54,7 @@ export const mockFacetFilters = [
       { name: "Missouri", count: 21 },
       { name: "Wisconsin", count: 15 },
       { name: "New Orleans", count: 25 },
-    ] as FacetFilterOption[],
+    ] as AvailableFilterOption[],
   },
   {
     name: "Publisher",
@@ -77,7 +80,7 @@ export const mockFacetFilters = [
       { name: "Missouri", count: 21 },
       { name: "Wisconsin", count: 15 },
       { name: "New Orleans", count: 25 },
-    ] as FacetFilterOption[],
+    ] as AvailableFilterOption[],
   },
   {
     name: "Collection",
@@ -103,7 +106,7 @@ export const mockFacetFilters = [
       { name: "Missouri", count: 21 },
       { name: "Wisconsin", count: 15 },
       { name: "New Orleans", count: 25 },
-    ] as FacetFilterOption[],
+    ] as AvailableFilterOption[],
   },
   {
     name: "Name",
@@ -129,6 +132,6 @@ export const mockFacetFilters = [
       { name: "Missouri", count: 21 },
       { name: "Wisconsin", count: 15 },
       { name: "New Orleans", count: 25 },
-    ] as FacetFilterOption[],
+    ] as AvailableFilterOption[],
   },
-] as FacetFilter[];
+] as AvailableFilter[];
