@@ -96,7 +96,7 @@ export const ToggleTip = ({
           <Icon size="medium" name="errorOutline" iconRotation="rotate180" />
         </Button>
 
-        {/* Tooltip */}
+        {/* tooltip */}
         {isVisible && (
           <Box
             ref={tooltipRef}
@@ -160,7 +160,7 @@ export const ToggleTip = ({
         )}
       </Box>
 
-      {/* Live Region for Accessibility */}
+      {/* live region */}
       <Box
         as="span"
         ref={liveRegionRef}
