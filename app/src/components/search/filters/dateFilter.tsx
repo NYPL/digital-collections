@@ -8,16 +8,20 @@ import {
   TextInput,
   Text,
 } from "@nypl/design-system-react-components";
+import { useRouter, usePathname } from "next/navigation";
 import { forwardRef, useRef, useState } from "react";
 
 type DateFilterProps = {
   searchManager: SearchManager;
-  updateURL: (string) => void;
 };
 
 const DateFilter = forwardRef<HTMLHeadingElement, DateFilterProps>(
-  (props, ref) => {
-    const { searchManager, updateURL } = props;
+  ({ searchManager }, ref) => {
+    const { push } = useRouter();
+    const pathname = usePathname();
+    const updateURL = async (queryString) => {
+      push(`${pathname}?${queryString}`);
+    };
 
     let startValue = searchManager.filters.find((f) => f.filter === "dateStart")
       ? searchManager.filters.find((f) => f.filter === "dateStart")?.value ||
@@ -72,7 +76,6 @@ const DateFilter = forwardRef<HTMLHeadingElement, DateFilterProps>(
               labelText="End year"
               value={dateEnd || ""}
               onChange={(e) => {
-                console.log(e.target.value);
                 setDateEnd(e.target.value);
               }}
             />

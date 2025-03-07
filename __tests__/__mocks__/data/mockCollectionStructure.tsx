@@ -1,6 +1,6 @@
 import { CollectionChildProps } from "@/src/components/collectionStructure/collectionStructure";
 
-export const sampleStructure: CollectionChildProps[] = [
+export const mockCollectionChildrenResponse: CollectionChildProps[] = [
   {
     title: "American literature, 17th century",
     itemCount: "23478",

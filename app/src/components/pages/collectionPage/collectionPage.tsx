@@ -1,11 +1,8 @@
 "use client";
 import {
   Box,
-  Text,
   Heading,
   Flex,
-  ButtonGroup,
-  Button,
   Link,
   Icon,
   Pagination,
@@ -13,7 +10,6 @@ import {
 import React, { useRef } from "react";
 import Filters from "../../search/filters/filters";
 import CollectionStructure from "../../collectionStructure/collectionStructure";
-import { sampleStructure } from "__tests__/__mocks__/data/mockCollectionStructure";
 import { headerBreakpoints } from "@/src/utils/breakpoints";
 import { CollectionSearch } from "../../search/collectionSearch";
 import { MobileSearchBanner } from "../../mobileSearchBanner/mobileSearchBanner";
@@ -35,8 +31,15 @@ import {
 import { usePathname, useRouter } from "next/navigation";
 import SortMenu from "../../sortMenu/sortMenu";
 import ActiveFilters from "../../search/filters/activeFilters";
+import CollectionMetadata from "../../collectionMetadata/collectionMetadata";
 
-const CollectionPage = ({ slug, data, searchParams }) => {
+const CollectionPage = ({
+  slug,
+  searchResults,
+  searchParams,
+  collectionData,
+  collectionChildren,
+}) => {
   const headingRef = useRef<HTMLHeadingElement>(null);
 
   const collectionSearchManager = new GeneralSearchManager({
@@ -44,12 +47,12 @@ const CollectionPage = ({ slug, data, searchParams }) => {
     initialSort: searchParams?.sort || DEFAULT_SEARCH_SORT,
     initialFilters: stringToFilter(searchParams?.filters),
     initialKeywords: searchParams?.keywords || DEFAULT_SEARCH_TERM,
-    initialAvailableFilters: data?.availableFilters
-      ? transformToAvailableFilters(data?.availableFilters)
+    initialAvailableFilters: searchResults?.availableFilters
+      ? transformToAvailableFilters(searchResults?.availableFilters)
       : DEFAULT_FILTERS,
   });
 
-  const totalPages = totalNumPages(data.numResults, CARDS_PER_PAGE);
+  const totalPages = totalNumPages(searchResults.numResults, CARDS_PER_PAGE);
   const { push } = useRouter();
   const pathname = usePathname();
 
@@ -86,7 +89,6 @@ const CollectionPage = ({ slug, data, searchParams }) => {
           <Filters
             headingText="Refine your results"
             searchManager={collectionSearchManager}
-            updateURL={updateURL}
           />
         </Box>
       </Box>
@@ -99,53 +101,14 @@ const CollectionPage = ({ slug, data, searchParams }) => {
         }}
       >
         <ActiveFilters searchManager={collectionSearchManager} />
-        <Flex marginTop="m" marginBottom="m" flexDir="column">
-          <Heading size="heading6" marginBottom="xs">
-            Collection data
-          </Heading>
-          <Text marginBottom="xs">
-            This collection is also available in Archives & Manuscripts
-          </Text>
-          <ButtonGroup marginBottom="m">
-            <Button buttonType="secondary" id="finding-aid-btn">
-              View Finding Aid
-            </Button>
-            <Button buttonType="secondary" id="catalog-btn">
-              View Catalog
-            </Button>
-          </ButtonGroup>
-          <Text size="overline1" marginBottom="xs">
-            Dates / Origin
-          </Text>
-          <Text marginBottom="m">
-            Date created:{" "}
-            <Link hasVisitedState={false} href="/search/index?year_begin=1800">
-              1800
-            </Link>{" "}
-            (approximate)
-          </Text>
-          <Text size="overline1" marginBottom="xs">
-            Library Locations
-          </Text>
-          <Text marginBottom="m">
-            <Link
-              hasVisitedState={false}
-              href="/divisions/billy-rose-theatre-division"
-            >
-              Example division
-            </Link>
-          </Text>
-          <Link hasVisitedState={false} isUnderlined={false}>
-            See more collection data
-          </Link>
-        </Flex>
+        <CollectionMetadata data={collectionData} />
         <Flex
           gap="xxl"
           sx={{
             flexDir: { base: "column", md: "row" },
           }}
         >
-          <CollectionStructure data={sampleStructure} />
+          <CollectionStructure data={collectionChildren} />
           <Box width="100%">
             <CollectionSearch />
             <Flex
@@ -171,18 +134,20 @@ const CollectionPage = ({ slug, data, searchParams }) => {
                 margin="0"
                 aria-live="polite"
               >{`Displaying ${displayResults(
-                data.numResults,
+                searchResults.numResults,
                 CARDS_PER_PAGE,
                 1
-              )}
-                                results`}</Heading>
+              )} results`}</Heading>
               <SortMenu
                 options={SEARCH_SORT_LABELS}
                 searchManager={collectionSearchManager}
                 updateURL={updateURL}
               />
             </Flex>
-            <SearchCardsGrid keywords={data.keyword} results={data.results} />
+            <SearchCardsGrid
+              keywords={searchResults.keyword}
+              results={searchResults.results}
+            />
             <Flex marginTop="xxl" marginBottom="xxl" alignContent="center">
               <Link
                 minWidth="100px"
@@ -195,7 +160,6 @@ const CollectionPage = ({ slug, data, searchParams }) => {
                 Back to top{"  "}
                 <Icon name="arrow" iconRotation="rotate180" size="xsmall" />
               </Link>
-
               <Pagination
                 id="pagination-id"
                 initialPage={1}

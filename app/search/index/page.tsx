@@ -31,18 +31,21 @@ export type SearchProps = {
 export default async function Search({ searchParams }: SearchProps) {
   const pageName = searchParams.keywords ? "search-results" : "all-items";
 
-  const data = mockSearchResponse;
-  // await CollectionsApi.getSearchData({
-  //   keyword: searchParams.keywords,
-  //   sort: searchParams.sort,
-  //   filters: searchParams.filters,
-  //   page: searchParams.page,
-  // });
+  const searchResults =
+    // await CollectionsApi.getSearchData({
+    //   keyword: searchParams.keywords,
+    //   sort: searchParams.sort,
+    //   filters: searchParams.filters,
+    //   page: searchParams.page,
+    // });
+    mockSearchResponse;
 
   // Add available filters into searchParams
   const updatedSearchParams = {
     ...searchParams,
-    availableFilters: transformToAvailableFilters(data.availableFilters),
+    availableFilters: transformToAvailableFilters(
+      searchResults.availableFilters
+    ),
   };
 
   return (
@@ -55,7 +58,7 @@ export default async function Search({ searchParams }: SearchProps) {
       adobeAnalyticsPageName={createAdobeAnalyticsPageName(pageName, "")}
       searchParams={updatedSearchParams}
     >
-      <SearchPage data={data} />
+      <SearchPage searchResults={searchResults} />
     </PageLayout>
   );
 }

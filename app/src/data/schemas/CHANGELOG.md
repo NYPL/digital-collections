@@ -2,7 +2,13 @@
 
 All notable changes to the schemas for the Collections API requirements to support the frontend will be documented in this file.
 
-## Prerelease 2025-2-13
+## Unreleased
+
+### Updated
+
+- Updated `search` endpoint to rename and reformat `facets` to `availableFilters`
+
+## [0.3.3] 2025-03-06
 
 ### Added
 
@@ -10,9 +16,9 @@ All notable changes to the schemas for the Collections API requirements to suppo
 
 ### Updated
 
-- Updated `collections/:uuid` endpoint, now complete
+- Updated `collections/:uuid` endpoint to include various metadata fields
 
-## [0.1.0] 2025-1-24
+## [??] 2025-1-24
 
 ### Added
 
