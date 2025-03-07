@@ -3,6 +3,28 @@ export const mockSearchResponse = {
   numResults: 4,
   page: 1,
   perPage: 48,
+  filters: {
+    topic: [
+      {
+        name: "Musicals",
+        count: 312,
+      },
+      {
+        name: "Theatrical productions",
+        count: 164,
+      },
+    ],
+    name: [
+      {
+        name: "Swope, Martha",
+        count: 362,
+      },
+      {
+        name: "Friedman-Abeles (Firm)",
+        count: 77,
+      },
+    ],
+  },
   results: [
     {
       uuid: "60932400-20f2-0138-8583-05c43d448773",
