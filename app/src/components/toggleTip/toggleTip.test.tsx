@@ -12,11 +12,11 @@ describe("ToggleTip", () => {
     ).toBeInTheDocument();
   });
 
-  it("shows tooltip on focus and hides it on blur", async () => {
+  it("shows tooltip on click and hides it on loss of focus", async () => {
     render(<ToggleTip text={text} toggleTipContent={toggleTipContent} />);
     const button = screen.getByRole("button");
 
-    fireEvent.focus(button);
+    fireEvent.click(button);
     expect(screen.getByText(toggleTipContent)).toBeInTheDocument();
 
     fireEvent.blur(button);
@@ -27,7 +27,7 @@ describe("ToggleTip", () => {
     render(<ToggleTip text={text} toggleTipContent={toggleTipContent} />);
     const button = screen.getByRole("button");
 
-    fireEvent.focus(button);
+    fireEvent.click(button);
     expect(screen.getByText(toggleTipContent)).toBeInTheDocument();
 
     fireEvent.keyDown(button, { key: "Escape", code: "Escape" });
