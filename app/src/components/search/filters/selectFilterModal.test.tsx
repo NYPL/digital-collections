@@ -6,7 +6,7 @@ import {
   DEFAULT_SEARCH_TERM,
 } from "@/src/config/constants";
 import { GeneralSearchManager } from "@/src/utils/searchManager";
-import { FacetFilter } from "@/src/types/FacetFilterType";
+import { FacetFilter } from "@/src/types/AvailableFilterType";
 
 jest.mock("@chakra-ui/react", () => {
   const actual = jest.requireActual("@chakra-ui/react");
