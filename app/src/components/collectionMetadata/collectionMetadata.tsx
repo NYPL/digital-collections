@@ -50,12 +50,15 @@ const CollectionMetadata = ({ data }: { data: CollectionMetadataProps }) => {
 
   return (
     <Flex marginTop="m" marginBottom="m" flexDir="column">
-      <Heading size="heading6" marginBottom="xs">
-        Collection Data
+      <Heading size="heading6" marginBottom="s">
+        Collection data
       </Heading>
-      <Text marginBottom="xs">
-        This collection is also available in Archives & Manuscripts.
-      </Text>
+      {archivesCollectionID && (
+        <Text marginBottom="xs">
+          This collection is also available in Archives & Manuscripts, and the
+          NYPL Research Catalog.
+        </Text>
+      )}
       <ButtonGroup marginBottom="m">
         {archivesCollectionID && (
           <Button buttonType="secondary" id="finding-aid-btn">
