@@ -36,6 +36,7 @@
   },
   "dependencies": {
     "@allmaps/maplibre": "^1.0.0-beta.30",
+    "@cogapp/storiiies-viewer": "^2.1.0",
     "@samvera/clover-iiif": "^2.9.0",
     "@types/mapbox-gl": "^3.4.1",
     "@types/node": "20.5.9",

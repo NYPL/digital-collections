@@ -1,5 +1,6 @@
 "use client";
-import React from "react";
+import React, { useEffect } from "react";
+// import StoriiiesViewer from '@cogapp/storiiies-viewer'
 
 interface ExhibitionViewerProps {
   manifestURL: any;
@@ -7,17 +8,30 @@ interface ExhibitionViewerProps {
 }
 
 const ExhibitionViewer = ({ manifestURL, slug }: ExhibitionViewerProps) => {
+  useEffect(() => {
+    // const myViewer = new StoriiiesViewer({
+    //   container: "#storiiies-viewer", // or document.querySelector("#storiiies-viewer")
+    //   manifestUrl: "https://www.exhibit.so/exhibits/ZdQduGmrysoAk17TFaMN?embedded=true",
+    // });
+  }, []);
+
   return (
     <>
       {slug === "exhibit" ? (
-        <iframe
-          src="https://www.exhibit.so/exhibits/ZdQduGmrysoAk17TFaMN?embedded=true"
-          width="1200"
-          height="800"
-          allowfullscreen
-          allow="autoplay"
-          frameborder="0"
-        ></iframe>
+        <>
+          {/* <StoriiiesViewer >
+        </StoriiiesViewer> */}
+
+          <iframe
+            src="https://www.exhibit.so/exhibits/ZdQduGmrysoAk17TFaMN?embedded=true"
+            width="1200"
+            height="800"
+            allowfullscreen
+            allow="autoplay"
+            frameborder="0"
+          ></iframe>
+          <div id="storiiies-viewer"></div>
+        </>
       ) : (
         <iframe
           src={manifestURL}
