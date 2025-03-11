@@ -6,8 +6,6 @@ import {
   Flex,
   Link,
   Icon,
-  Menu,
-  Banner,
 } from "@nypl/design-system-react-components";
 import React, { useRef } from "react";
 import { CARDS_PER_PAGE, SEARCH_SORT_LABELS } from "@/src/config/constants";
@@ -15,10 +13,11 @@ import { displayResults, totalNumPages } from "@/src/utils/utils";
 import Filters from "../../search/filters/filters";
 import { useSearchContext } from "@/src/context/SearchProvider";
 import { usePathname, useRouter } from "next/navigation";
-import ActiveFilters from "../../search/filters/activeFilters";
 import SearchCardsGrid from "../../grids/searchCardsGrid";
 import { headerBreakpoints } from "@/src/utils/breakpoints";
 import { MobileSearchBanner } from "../../mobileSearchBanner/mobileSearchBanner";
+import SortMenu from "../../sortMenu/sortMenu";
+import ActiveFilters from "../../search/filters/activeFilters";
 
 const SearchPage = ({ data }) => {
   const { searchManager } = useSearchContext();
@@ -28,6 +27,7 @@ const SearchPage = ({ data }) => {
   const updateURL = async (queryString) => {
     push(`${pathname}?${queryString}`);
   };
+
   const headingRef = useRef<HTMLHeadingElement>(null);
 
   return (
@@ -64,7 +64,10 @@ const SearchPage = ({ data }) => {
             )}
                     results for "${searchManager.keywords}"`}
           </Heading>
-          <Filters headingText="Refine your search" />
+          <Filters
+            searchManager={searchManager}
+            headingText="Refine your search"
+          />
         </Box>
       </Box>
       <Box
@@ -79,7 +82,7 @@ const SearchPage = ({ data }) => {
           },
         }}
       >
-        <ActiveFilters />
+        <ActiveFilters searchManager={searchManager} />
         <Flex
           sx={{
             [`@media screen and (min-width: ${headerBreakpoints.lgMobile}px)`]:
@@ -107,18 +110,11 @@ const SearchPage = ({ data }) => {
             searchManager.page
           )}
                                         results`}</Heading>
-          <Menu
-            showLabel
-            selectedItem={"relevance"}
-            labelText={`Sort by: ${SEARCH_SORT_LABELS["relevance"]}`}
-            listItemsData={Object.entries(SEARCH_SORT_LABELS).map(
-              ([id, label]) => ({
-                id,
-                label,
-                onClick: () => {},
-                type: "action",
-              })
-            )}
+
+          <SortMenu
+            options={SEARCH_SORT_LABELS}
+            searchManager={searchManager}
+            updateURL={updateURL}
           />
         </Flex>
         <SearchCardsGrid keywords={data.keyword} results={data.results} />
@@ -157,7 +153,7 @@ const SearchPage = ({ data }) => {
             id="pagination-id"
             initialPage={searchManager.page}
             currentPage={searchManager.page}
-            pageCount={10}
+            pageCount={totalPages}
             onPageChange={(newPage) => {
               updateURL(searchManager.handlePageChange(newPage));
             }}

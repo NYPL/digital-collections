@@ -9,19 +9,50 @@ import {
   Link,
   Icon,
   Pagination,
-  Menu,
 } from "@nypl/design-system-react-components";
 import React, { useRef } from "react";
 import Filters from "../../search/filters/filters";
-import ActiveFilters from "../../search/filters/activeFilters";
-import DCSearchBar from "../../search/dcSearchBar";
-import { displayResults } from "@/src/utils/utils";
-import { CARDS_PER_PAGE, SEARCH_SORT_LABELS } from "@/src/config/constants";
-import SearchCardsGrid from "../../grids/searchCardsGrid";
+import CollectionStructure from "../../collectionStructure/collectionStructure";
+import { sampleStructure } from "__tests__/__mocks__/data/mockCollectionStructure";
+import { headerBreakpoints } from "@/src/utils/breakpoints";
+import { CollectionSearch } from "../../search/collectionSearch";
 import { MobileSearchBanner } from "../../mobileSearchBanner/mobileSearchBanner";
+import { displayResults, totalNumPages } from "@/src/utils/utils";
+import {
+  CARDS_PER_PAGE,
+  DEFAULT_PAGE_NUM,
+  DEFAULT_SEARCH_SORT,
+  DEFAULT_SEARCH_TERM,
+  SEARCH_SORT_LABELS,
+} from "@/src/config/constants";
+import SearchCardsGrid from "../../grids/searchCardsGrid";
+import {
+  GeneralSearchManager,
+  stringToFilter,
+} from "@/src/utils/searchManager";
+import { usePathname, useRouter } from "next/navigation";
+import SortMenu from "../../sortMenu/sortMenu";
+import ActiveFilters from "../../search/filters/activeFilters";
+import { mockFacetFilters } from "__tests__/__mocks__/data/mockFacetFilters";
 
-const CollectionPage = ({ slug, data }) => {
+const CollectionPage = ({ slug, data, searchParams }) => {
   const headingRef = useRef<HTMLHeadingElement>(null);
+  const collectionSearchManager = new GeneralSearchManager({
+    initialPage: Number(searchParams?.page) || DEFAULT_PAGE_NUM,
+    initialSort: searchParams?.sort || DEFAULT_SEARCH_SORT,
+    initialFilters: stringToFilter(searchParams?.filters),
+    initialKeywords: searchParams?.keywords || DEFAULT_SEARCH_TERM,
+    initialFacets: mockFacetFilters,
+  });
+  const totalPages = totalNumPages(data.numResults, CARDS_PER_PAGE);
+  const { push } = useRouter();
+  const pathname = usePathname();
+
+  const updateURL = async (queryString) => {
+    push(`${pathname}?${queryString}`);
+    headingRef.current?.focus();
+  };
+
   return (
     <Box id="mainContent">
       <MobileSearchBanner />
@@ -47,7 +78,10 @@ const CollectionPage = ({ slug, data }) => {
           >
             {slug}
           </Heading>
-          <Filters headingText="Refine your results" />
+          <Filters
+            headingText="Refine your results"
+            searchManager={collectionSearchManager}
+          />
         </Box>
       </Box>
       <Box
@@ -58,7 +92,7 @@ const CollectionPage = ({ slug, data }) => {
           paddingRight: { base: "m", xl: "s" },
         }}
       >
-        <ActiveFilters />
+        <ActiveFilters searchManager={collectionSearchManager} />
         <Flex marginTop="m" marginBottom="m" flexDir="column">
           <Heading size="heading6" marginBottom="xs">
             Collection data
@@ -105,78 +139,41 @@ const CollectionPage = ({ slug, data }) => {
             flexDir: { base: "column", md: "row" },
           }}
         >
-          <Box
-            sx={{
-              background: "ui.bg.default",
-              padding: "l",
-              height: "400px",
-              minWidth: "300px",
-              justifyItems: "center",
-            }}
-          >
-            <Heading size="heading6">Collection structure</Heading>
-          </Box>
+          <CollectionStructure data={sampleStructure} />
           <Box width="100%">
+            <CollectionSearch />
             <Flex
-              flexDir="column"
               sx={{
-                background: "ui.bg.default",
-                paddingTop: "s",
-                paddingBottom: "s",
-                paddingLeft: "m",
-                paddingRight: "m",
+                [`@media screen and (min-width: ${headerBreakpoints.lgMobile}px)`]:
+                  {
+                    flexDir: "row",
+                    marginBottom: "s",
+                    alignItems: "center",
+                  },
+                justifyContent: "space-between",
+                flexDir: "column",
                 marginBottom: "l",
+                marginTop: "l",
+                gap: "m",
+                alignItems: "flex-start",
               }}
-            >
-              <Heading sx={{ marginBottom: "xs" }} size="heading8">
-                Search this collection:
-              </Heading>
-              <DCSearchBar
-                id="search-collection"
-                labelText="Search this collection by item title"
-                maxWrapperWidth="100%"
-                textInputProps={{
-                  id: "collection-search-text",
-                  isClearable: true,
-                  isClearableCallback: () => {},
-                  labelText: "Search this collection by item title",
-                  name: "q",
-                  placeholder: "Search this collection by item title",
-                  defaultValue: "",
-                  onChange: (e) => {},
-                }}
-                onSubmit={() => {}}
-              />
-            </Flex>
-            <Flex
-              marginTop="xl"
-              marginBottom="s"
-              alignItems="center"
-              justifyContent="space-between"
             >
               <Heading
                 size="heading5"
                 ref={headingRef}
                 tabIndex={-1}
                 margin="0"
+                aria-live="polite"
               >{`Displaying ${displayResults(
                 data.numResults,
                 CARDS_PER_PAGE,
                 1
               )}
                                 results`}</Heading>
-              <Menu
-                showLabel
-                selectedItem={"relevance"}
-                labelText={`Sort by: ${SEARCH_SORT_LABELS["relevance"]}`}
-                listItemsData={Object.entries(SEARCH_SORT_LABELS).map(
-                  ([id, label]) => ({
-                    id,
-                    label,
-                    onClick: () => {},
-                    type: "action",
-                  })
-                )}
+              <SortMenu
+                options={SEARCH_SORT_LABELS}
+                searchManager={collectionSearchManager}
+                updateURL={updateURL}
               />
             </Flex>
             <SearchCardsGrid keywords={data.keyword} results={data.results} />
