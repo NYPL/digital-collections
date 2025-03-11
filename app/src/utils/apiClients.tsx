@@ -16,7 +16,7 @@ import { Filter } from "../types/FilterType";
 
 export class RepoApi {
   static async getHomePageData() {
-    const randomNumber = Math.floor(Math.random() * 2);
+    const randomNumber = Math.floor(Math.random() * 3);
     const lanes: LaneDataType[] = data.lanes as unknown as LaneDataType[];
 
     // Get all the UUIDs from the collections

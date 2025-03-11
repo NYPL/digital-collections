@@ -21,7 +21,6 @@ const ExhibitionViewer = ({ manifestURL, slug }: ExhibitionViewerProps) => {
         <>
           {/* <StoriiiesViewer >
         </StoriiiesViewer> */}
-
           <iframe
             src="https://www.exhibit.so/exhibits/ZdQduGmrysoAk17TFaMN?embedded=true"
             width="1200"
@@ -30,15 +29,19 @@ const ExhibitionViewer = ({ manifestURL, slug }: ExhibitionViewerProps) => {
             allow="autoplay"
             frameborder="0"
           ></iframe>
+          <div
+            id="storiiies-viewer"
+            style={{ width: "1200px", height: "800px" }}
+          ></div>
         </>
       ) : (
         <>
-          {/* <iframe
-          src={manifestURL}
-          height="800"
-          width="1200"
-          title="Iframe Example"
-        ></iframe> */}
+          <iframe
+            src={manifestURL}
+            height="800"
+            width="1200"
+            title="Iframe Example"
+          ></iframe>
           <div
             id="storiiies-viewer"
             style={{ width: "1200px", height: "800px" }}
