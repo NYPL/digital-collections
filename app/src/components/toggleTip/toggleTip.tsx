@@ -6,7 +6,7 @@ export const ToggleTip = ({
   text,
   toggleTipContent,
 }: {
-  text: string;
+  text?: string;
   toggleTipContent: string;
 }) => {
   const [isVisible, setIsVisible] = useState(false);
@@ -61,7 +61,7 @@ export const ToggleTip = ({
 
   return (
     <Box as="span" display="inline-flex" alignItems="center">
-      {text}
+      {text ? text : null}
       <Box position="relative" display="inline-block">
         <Button
           ref={buttonRef}
