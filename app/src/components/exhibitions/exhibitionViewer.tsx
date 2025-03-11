@@ -1,6 +1,6 @@
 "use client";
 import React, { useEffect } from "react";
-// import StoriiiesViewer from '@cogapp/storiiies-viewer'
+import StoriiiesViewer from "@cogapp/storiiies-viewer";
 
 interface ExhibitionViewerProps {
   manifestURL: any;
@@ -9,10 +9,10 @@ interface ExhibitionViewerProps {
 
 const ExhibitionViewer = ({ manifestURL, slug }: ExhibitionViewerProps) => {
   useEffect(() => {
-    // const myViewer = new StoriiiesViewer({
-    //   container: "#storiiies-viewer", // or document.querySelector("#storiiies-viewer")
-    //   manifestUrl: "https://www.exhibit.so/exhibits/ZdQduGmrysoAk17TFaMN?embedded=true",
-    // });
+    const myViewer = new StoriiiesViewer({
+      container: "#storiiies-viewer", // or document.querySelector("#storiiies-viewer")
+      manifestUrl: manifestURL,
+    });
   }, []);
 
   return (
@@ -30,15 +30,20 @@ const ExhibitionViewer = ({ manifestURL, slug }: ExhibitionViewerProps) => {
             allow="autoplay"
             frameborder="0"
           ></iframe>
-          <div id="storiiies-viewer"></div>
         </>
       ) : (
-        <iframe
+        <>
+          {/* <iframe
           src={manifestURL}
           height="800"
           width="1200"
           title="Iframe Example"
-        ></iframe>
+        ></iframe> */}
+          <div
+            id="storiiies-viewer"
+            style={{ width: "1200px", height: "800px" }}
+          ></div>
+        </>
       )}
     </>
   );
