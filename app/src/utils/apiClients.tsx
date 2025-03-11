@@ -179,7 +179,7 @@ export class CollectionsApi {
     let apiUrl = `${process.env.COLLECTIONS_API_URL}/collections?page=${page}&perPage=${perPage}&sort=${sort}&keyword=${keyword}`;
     const response = await fetchApi({
       apiUrl: apiUrl,
-      options: { isRepoApi: false, cache: false },
+      options: { isRepoApi: false },
     });
     return response;
   }
