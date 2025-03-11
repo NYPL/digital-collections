@@ -6,6 +6,10 @@ import { redirect } from "next/navigation";
 import CollectionSearchParams from "@/src/types/CollectionSearchParams";
 import PageLayout from "@/src/components/pageLayout/pageLayout";
 import { createAdobeAnalyticsPageName } from "@/src/utils/utils";
+import { revalidatePath } from "next/cache";
+
+revalidatePath("/collections", "page");
+
 export type CollectionsProps = {
   params: { slug: string };
   searchParams: CollectionSearchParams;
