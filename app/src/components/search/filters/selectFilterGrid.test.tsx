@@ -1,60 +1,60 @@
 import { render, screen, fireEvent } from "@testing-library/react";
 import SelectFilterGrid from "./selectFilterGrid";
-import { FilterCategory } from "./selectFilter";
 import { MutableRefObject } from "react";
-
-const mockFilters: FilterCategory[] = [
-  { name: "Collection", options: [{ name: "Collection 1", count: 10 }] },
-  { name: "Format", options: [{ name: "Format 1", count: 5 }] },
-  { name: "Publishers", options: [{ name: "Publisher 1", count: 20 }] },
-  { name: "Type", options: [{ name: "Type 1", count: 15 }] },
-  { name: "Genre", options: [{ name: "Genre 1", count: 30 }] },
-];
+import { GeneralSearchManager } from "@/src/utils/searchManager";
+import {
+  DEFAULT_SEARCH_SORT,
+  DEFAULT_SEARCH_TERM,
+} from "@/src/config/constants";
+import { mockFacetFilters } from "__tests__/__mocks__/data/mockFacetFilters";
 
 const mockFilterRefs: MutableRefObject<(HTMLButtonElement | null)[]> = {
-  current: Array(mockFilters.length).fill(null),
+  current: Array(mockFacetFilters.length).fill(null),
 };
+jest.mock("next/navigation", () => ({
+  useRouter: jest.fn(() => ({
+    push: jest.fn(),
+  })),
+  usePathname: jest.fn(),
+}));
+
+const manager = new GeneralSearchManager({
+  initialPage: 1,
+  initialSort: DEFAULT_SEARCH_SORT,
+  initialFilters: [],
+  initialKeywords: DEFAULT_SEARCH_TERM,
+  initialFacets: mockFacetFilters,
+});
 
 describe("SelectFilterGrid", () => {
-  it("renders the correct number of filters when collapsed", () => {
-    render(
+  const component = (expanded: boolean) => {
+    return (
       <SelectFilterGrid
-        filters={mockFilters}
-        isExpanded={false}
+        isExpanded={expanded}
         filterRefs={mockFilterRefs}
+        searchManager={manager}
       />
     );
+  };
+  it("renders the correct number of filters when collapsed", () => {
+    render(component(false));
 
     expect(screen.getByText("Collection")).toBeInTheDocument();
-    expect(screen.getByText("Format")).toBeInTheDocument();
-    expect(screen.getByText("Publishers")).toBeInTheDocument();
-    expect(screen.getByText("Type")).toBeInTheDocument();
+    expect(screen.getByText("Topic")).toBeInTheDocument();
 
-    expect(screen.queryByText("Genre")).not.toBeInTheDocument();
+    expect(screen.queryByText("Name")).not.toBeInTheDocument();
   });
 
   it("renders all filters when expanded", () => {
-    render(
-      <SelectFilterGrid
-        filters={mockFilters}
-        isExpanded={true}
-        filterRefs={mockFilterRefs}
-      />
-    );
+    render(component(true));
 
-    mockFilters.forEach((filter) => {
+    mockFacetFilters.forEach((filter) => {
       expect(screen.getByText(filter.name)).toBeInTheDocument();
     });
   });
 
   it("toggles filter expansion correctly", async () => {
-    render(
-      <SelectFilterGrid
-        filters={mockFilters}
-        isExpanded={true}
-        filterRefs={mockFilterRefs}
-      />
-    );
+    render(component(true));
 
     const collectionAccordionButton = screen.getByText("Collection");
     expect(collectionAccordionButton.parentElement).toHaveAttribute(
@@ -70,17 +70,11 @@ describe("SelectFilterGrid", () => {
   });
 
   it("collapses the previous filter when you click a new one", async () => {
-    render(
-      <SelectFilterGrid
-        filters={mockFilters}
-        isExpanded={true}
-        filterRefs={mockFilterRefs}
-      />
-    );
+    render(component(true));
 
     const collectionAccordionButton = screen.getByText("Collection");
 
-    const formatAccordionButton = screen.getByText("Format");
+    const genreAccordionButton = screen.getByText("Genre");
 
     expect(collectionAccordionButton.parentElement).toHaveAttribute(
       "aria-expanded",
@@ -93,9 +87,9 @@ describe("SelectFilterGrid", () => {
       "true"
     );
 
-    fireEvent.click(formatAccordionButton);
+    fireEvent.click(genreAccordionButton);
 
-    expect(formatAccordionButton.parentElement).toHaveAttribute(
+    expect(genreAccordionButton.parentElement).toHaveAttribute(
       "aria-expanded",
       "true"
     );

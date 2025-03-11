@@ -1,4 +1,4 @@
-import React, { forwardRef, useState, useRef, useEffect } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import {
   Button,
   Heading,
@@ -6,26 +6,27 @@ import {
   Box,
   TextInputRefType,
 } from "@nypl/design-system-react-components";
-import { mockFacetFilter } from "__tests__/__mocks__/data/mockFacetFilter";
 import SelectFilterGrid from "./selectFilterGrid";
 import RightsFilter from "./rightsFilter";
 import DateFilter from "./dateFilter";
 import { headerBreakpoints } from "@/src/utils/breakpoints";
-import { ToggleTip } from "../../toggleTip/toggleTip";
+import { SearchManager } from "@/src/utils/searchManager";
 
 type FiltersProps = {
   headingText: string;
+  searchManager: SearchManager;
 };
 
-const Filters = ({ headingText }: FiltersProps) => {
+const Filters = ({ headingText, searchManager }: FiltersProps) => {
   const [isExpanded, setIsExpanded] = useState(false);
   const filterRefs = useRef<(HTMLButtonElement | null)[]>([]);
   const dateFilterRef = useRef<TextInputRefType | null>(null);
+  const secondRowFilter = 4;
 
   useEffect(() => {
     if (isExpanded) {
-      if (filterRefs.current[4]) {
-        filterRefs.current[4]?.focus();
+      if (filterRefs.current[secondRowFilter]) {
+        filterRefs.current[secondRowFilter]?.focus();
       } else {
         dateFilterRef.current?.focus();
       }
@@ -35,32 +36,9 @@ const Filters = ({ headingText }: FiltersProps) => {
   const filterContent = (
     <>
       <SelectFilterGrid
-        filters={[
-          {
-            name: "Topic",
-            options: mockFacetFilter.options,
-          },
-          {
-            name: "Genre",
-            options: mockFacetFilter.options,
-          },
-          {
-            name: "Format",
-            options: mockFacetFilter.options,
-          },
-          {
-            name: "Collection",
-            options: mockFacetFilter.options,
-          },
-          {
-            name: "Publishers",
-            options: [{ name: "New York", count: 37 }],
-          },
-          { name: "Division", options: [{ name: "New York", count: 37 }] },
-          { name: "Type", options: [{ name: "New York", count: 37 }] },
-        ]}
         isExpanded={isExpanded}
         filterRefs={filterRefs}
+        searchManager={searchManager}
       />
       {isExpanded && (
         <>

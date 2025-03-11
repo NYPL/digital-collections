@@ -20,7 +20,9 @@ export default function NoResultsFound({ searchTerm, page }) {
       justifyContent="left"
       textAlign="left"
     >
-      <Heading level="h5">{headingText}</Heading>
+      <Heading level="h2" size="heading5">
+        {headingText}
+      </Heading>
       <Text>Try the following to improve your search:</Text>
       <List className={styles.list} type="ul">
         <li>Use an exact phrase.</li>

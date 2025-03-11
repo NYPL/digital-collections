@@ -1,10 +1,10 @@
 import React from "react";
 import PageLayout from "../../src/components/pageLayout/pageLayout";
 import { createAdobeAnalyticsPageName } from "@/src/utils/utils";
-import { getSearchData } from "@/src/utils/apiHelpers";
+import { CollectionsApi } from "@/src/utils/apiClients";
 import { Metadata } from "next";
 import SearchPage from "@/src/components/pages/searchPage/searchPage";
-import { mockSearchResponse } from "__tests__/__mocks__/data/mockSearchResponse";
+import { mockSearchResponse } from "__tests__/__mocks__/data/collectionsApi/mockSearchResponse";
 import { Filter } from "@/src/types/FilterType";
 
 export interface SearchParams {
@@ -28,8 +28,8 @@ export type SearchProps = {
 export default async function Search({ searchParams }: SearchProps) {
   const pageName = searchParams.keywords ? "search-results" : "all-items";
 
-  const data = await getSearchData({
-    keyword: searchParams.keywords || "type_s:Item",
+  const data = await CollectionsApi.getSearchData({
+    keyword: searchParams.keywords,
     sort: searchParams.sort,
     filters: searchParams.filters,
     page: searchParams.page,
