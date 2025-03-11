@@ -21,6 +21,7 @@ export const fetchApi = async ({
     params?: { [key: string]: any };
     body?: any;
     isRepoApi?: boolean;
+    cache?: boolean;
   };
 }) => {
   const apiKey = process.env.AUTH_TOKEN;
@@ -55,6 +56,7 @@ export const fetchApi = async ({
       method,
       ...(isRepoApi ? { headers } : {}),
       body: method === "POST" ? JSON.stringify(body) : undefined,
+      ...(options?.cache ? { cache: "force-cache" } : { cache: "no-store" }), // 'force-cache' is the default and can be omitted
     })) as Response;
 
     if (!response.ok) {
