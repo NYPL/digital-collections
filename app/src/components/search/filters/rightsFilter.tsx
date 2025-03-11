@@ -5,16 +5,16 @@ import {
   Tooltip,
   Icon,
   Flex,
+  Box,
 } from "@nypl/design-system-react-components";
 import { forwardRef } from "react";
 import { ToggleTip } from "../../toggleTip/toggleTip";
 
 const RadioOption = ({ id, text, tooltip }) => (
-  <Radio
-    id={id}
-    labelText={<ToggleTip text={text} toggleTipContent={tooltip} />}
-    value={id}
-  />
+  <Box display="flex" alignItems="center">
+    <Radio id={id} value={id} labelText={text} />
+    <ToggleTip toggleTipContent={tooltip} />
+  </Box>
 );
 
 const RightsFilter = forwardRef<HTMLHeadingElement>((props, ref) => {
