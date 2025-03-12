@@ -8,7 +8,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## Unreleased
 
 ### Added
-
+- Added Google Tag Manager (DR-3434)
 - Added custom select component, `selectFilter`, and corresponding modal for facet filters (DR-3394, DR-3396)
 - Added active filters panel, `activeFilters` (DR-3367)
 - Added sort component, `sortMenu` (DR-3366)

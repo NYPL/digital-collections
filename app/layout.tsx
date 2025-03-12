@@ -80,12 +80,19 @@ export default async function RootLayout({
         <script>
           window.dataLayer = window.dataLayer || [];
           {/* <!-- Google Tag Manager --> */}
-          {/* <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
-          new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
-          j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
-          'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
-          })(window,document,'script','dataLayer','GTM-RKWC');
-          </script> */}
+          <Script
+            id="ga4-gtm"
+            strategy="afterInteractive"
+            dangerouslySetInnerHTML={{
+              __html: `
+                (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+              new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+              j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+              'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+              })(window,document,'script','dataLayer','GTM-RKWC');
+              `,
+            }}
+          />
           {/* <!-- End Google Tag Manager --> */}
         </script>
         <meta httpEquiv="X-UA-Compatible" content="IE=edge,chrome=1" />
