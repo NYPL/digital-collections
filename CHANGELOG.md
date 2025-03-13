@@ -7,6 +7,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+## [0.3.4] 2025-03-13
+
+### Updated
+- Updated /collections page to use revalidatePath to clear cache
+
+## [0.3.3] 2025-03-06
+
 ### Added
 
 - Added custom select component, `selectFilter`, and corresponding modal for facet filters (DR-3394, DR-3396)
@@ -14,9 +21,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Added sort component, `sortMenu` (DR-3366)
 - Added search result model, mock data, card component, and card grid component (DR-3363)
 - Added collection structure component (DR-3415)
+- Added API wrappers for Collections and Repo API (DR-3414)
 
 ### Updated
-- Updated /collections page to use revalidatePath to clear cache
 - Updated collection search to use `q` param and added redirect for `collection_keywords` (DR-3337)
 - Updated homepage collections item counts and `/collections` page to use Collections API (DR-3453)
 
