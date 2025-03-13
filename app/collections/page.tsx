@@ -6,6 +6,8 @@ import { redirect } from "next/navigation";
 import CollectionSearchParams from "@/src/types/CollectionSearchParams";
 import PageLayout from "@/src/components/pageLayout/pageLayout";
 import { createAdobeAnalyticsPageName } from "@/src/utils/utils";
+import { revalidatePath } from "next/cache";
+
 export type CollectionsProps = {
   params: { slug: string };
   searchParams: CollectionSearchParams;
@@ -19,6 +21,8 @@ export const metadata: Metadata = {
 };
 
 export default async function Collections({ searchParams }: CollectionsProps) {
+  revalidatePath("/collections", "page");
+
   const data = await CollectionsApi.getCollectionsData({
     keyword: searchParams.q,
     sort: searchParams.sort,
