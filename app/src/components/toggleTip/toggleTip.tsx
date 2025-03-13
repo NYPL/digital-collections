@@ -1,12 +1,12 @@
-import { useState, useRef, useEffect } from "react";
+import { Button } from "@chakra-ui/react";
 import { Text, Box, Icon } from "@nypl/design-system-react-components";
-import { Button, Flex } from "@chakra-ui/react";
+import { useState, useRef, useEffect } from "react";
 
 export const ToggleTip = ({
-  text,
+  labelText,
   toggleTipContent,
 }: {
-  text?: string;
+  labelText?: string;
   toggleTipContent: string;
 }) => {
   const [isVisible, setIsVisible] = useState(false);
@@ -44,7 +44,7 @@ export const ToggleTip = ({
 
   useEffect(() => {
     const handleEscPress = (event: KeyboardEvent) => {
-      if (event.key === "Escape" && isVisible) {
+      if ((event.key === "Escape" || event.key === "Tab") && isVisible) {
         setIsVisible(false);
         removeLiveRegion();
       }
@@ -60,12 +60,25 @@ export const ToggleTip = ({
   }, [isVisible]);
 
   return (
-    <Box as="span" display="inline-flex" alignItems="center">
-      {text ? text : null}
-      <Box position="relative" display="inline-block">
+    <Box
+      as="span"
+      display="inline-flex"
+      alignItems="center"
+      data-testid="toggleTip-wrapper"
+    >
+      <Box
+        position="relative"
+        display="inline-block"
+        onMouseLeave={() => {
+          if (isVisible) {
+            setIsVisible(false);
+            removeLiveRegion();
+          }
+        }}
+      >
         <Button
           ref={buttonRef}
-          aria-label="More info"
+          aria-label={`More info about ${labelText}`}
           lineHeight="1"
           background="unset"
           padding="0 !important"
@@ -124,38 +137,14 @@ export const ToggleTip = ({
                 "var(--nypl-colors-ui-gray-xx-dark) transparent transparent transparent",
             }}
           >
-            <Flex justifyContent="space-between" alignItems="flex-start">
-              <Text
-                marginBottom="0"
-                fontSize="desktop.caption"
-                fontWeight="medium"
-                color="ui.typography.inverse.body"
-              >
-                {toggleTipContent}
-              </Text>
-              <Button
-                aria-label="Close tooltip"
-                onClick={() => {
-                  setIsVisible(false);
-                  removeLiveRegion();
-                }}
-                sx={{
-                  background: "transparent",
-                  border: "none",
-                  color: "ui.typography.inverse.body",
-                  padding: "xxs",
-                  minWidth: "unset",
-                  height: "unset",
-                  _hover: { color: "ui.link.primary" },
-                }}
-              >
-                <Icon
-                  name="close"
-                  size="small"
-                  color="ui.typography.inverse.body"
-                />
-              </Button>
-            </Flex>
+            <Text
+              marginBottom="0"
+              fontSize="desktop.caption"
+              fontWeight="medium"
+              color="ui.typography.inverse.body"
+            >
+              {toggleTipContent}
+            </Text>
           </Box>
         )}
       </Box>
