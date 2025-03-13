@@ -77,10 +77,9 @@ export default async function RootLayout({
   return (
     <html lang="en">
       <head>
-        <script>
-          window.dataLayer = window.dataLayer || [];
-          {/* <!-- Google Tag Manager --> */}
-        </script>
+        <script>window.dataLayer = window.dataLayer || [];</script>
+
+        {/* <!-- Google Tag Manager --> */}
         <Script
           id="ga4-gtm"
           strategy="afterInteractive"
