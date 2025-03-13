@@ -2,18 +2,25 @@ import { render, screen, fireEvent } from "@testing-library/react";
 import { ToggleTip } from "./toggleTip";
 
 describe("ToggleTip", () => {
-  const text = "More info";
+  const text = "public domain";
   const toggleTipContent = "This is the tooltip content.";
 
   it("renders button with an icon", () => {
-    render(<ToggleTip text={text} toggleTipContent={toggleTipContent} />);
+    render(<ToggleTip labelText={text} toggleTipContent={toggleTipContent} />);
     expect(
-      screen.getByRole("button", { name: /more info/i })
+      screen.getByRole("button", { name: /public domain/i })
     ).toBeInTheDocument();
   });
 
+  it("adds the appropriate aria-label", () => {
+    render(<ToggleTip labelText={text} toggleTipContent={toggleTipContent} />);
+    const button = screen.getByRole("button", { name: /public domain/i });
+
+    expect(button).toHaveAttribute("aria-label", `More info about ${text}`);
+  });
+
   it("shows tooltip on click and hides it on loss of focus", async () => {
-    render(<ToggleTip text={text} toggleTipContent={toggleTipContent} />);
+    render(<ToggleTip labelText={text} toggleTipContent={toggleTipContent} />);
     const button = screen.getByRole("button");
 
     fireEvent.click(button);
@@ -25,7 +32,7 @@ describe("ToggleTip", () => {
   });
 
   it("hides tooltip on ESC", async () => {
-    render(<ToggleTip text={text} toggleTipContent={toggleTipContent} />);
+    render(<ToggleTip labelText={text} toggleTipContent={toggleTipContent} />);
     const button = screen.getByRole("button");
 
     fireEvent.click(button);
@@ -36,8 +43,8 @@ describe("ToggleTip", () => {
     expect(screen.queryByText(toggleTipContent)).not.toBeInTheDocument();
   });
 
-  it("toggles tooltip on click and requires click outside to close", async () => {
-    render(<ToggleTip text={text} toggleTipContent={toggleTipContent} />);
+  it("toggles tooltip on click and clicking outside closes it", async () => {
+    render(<ToggleTip labelText={text} toggleTipContent={toggleTipContent} />);
     const button = screen.getByRole("button");
 
     fireEvent.click(button);

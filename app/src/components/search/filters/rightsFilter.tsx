@@ -13,7 +13,7 @@ import { ToggleTip } from "../../toggleTip/toggleTip";
 const RadioOption = ({ id, text, tooltip }) => (
   <Box display="flex" alignItems="center">
     <Radio id={id} value={id} labelText={text} />
-    <ToggleTip toggleTipContent={tooltip} />
+    <ToggleTip toggleTipContent={tooltip} labelText={text} />
   </Box>
 );
 
