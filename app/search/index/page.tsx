@@ -11,7 +11,6 @@ import { transformToAvailableFilters } from "@/src/utils/searchManager";
 import { revalidatePath } from "next/cache";
 
 export interface SearchParams {
-  keywords: string;
   q: string;
   sort: string;
   filters: Filter[];

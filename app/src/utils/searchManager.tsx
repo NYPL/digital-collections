@@ -95,7 +95,7 @@ abstract class BaseSearchManager implements SearchManager {
       )
     );
     return this.getQueryString({
-      keywords: this.currentKeywords,
+      q: this.currentKeywords,
       sort: this.currentSort,
       page: this.currentPage,
       filters: filterToString(this.filters),
@@ -104,9 +104,8 @@ abstract class BaseSearchManager implements SearchManager {
 
   handleRemoveFilter(filterToRemove: Filter) {
     this.currentFilters.delete(JSON.stringify(filterToRemove));
-
     return this.getQueryString({
-      keywords: this.currentKeywords,
+      q: this.currentKeywords,
       sort: this.currentSort,
       page: this.currentPage,
       filters: filterToString(this.filters),
@@ -116,7 +115,7 @@ abstract class BaseSearchManager implements SearchManager {
   clearAllFilters() {
     this.currentFilters.clear();
     return this.getQueryString({
-      keywords: this.currentKeywords,
+      q: this.currentKeywords,
       sort: this.currentSort,
       page: DEFAULT_PAGE_NUM,
       filters: filterToString(DEFAULT_FILTERS),
@@ -129,9 +128,8 @@ export class GeneralSearchManager extends BaseSearchManager {
     this.currentPage = DEFAULT_PAGE_NUM;
     this.currentFilters.clear();
     this.currentSort = DEFAULT_SEARCH_SORT;
-
     return this.getQueryString({
-      keywords: this.currentKeywords,
+      q: this.currentKeywords,
       sort: this.currentSort,
       page: this.currentPage,
     });
@@ -140,7 +138,7 @@ export class GeneralSearchManager extends BaseSearchManager {
   handlePageChange(pageNumber: number) {
     this.currentPage = pageNumber;
     return this.getQueryString({
-      keywords: this.currentKeywords,
+      q: this.currentKeywords,
       sort: this.currentSort,
       page: pageNumber,
       filters: filterToString(this.filters),
@@ -150,7 +148,7 @@ export class GeneralSearchManager extends BaseSearchManager {
   handleSortChange(sort: string) {
     this.currentSort = sort;
     return this.getQueryString({
-      keywords: this.currentKeywords,
+      q: this.currentKeywords,
       sort: sort,
       page: this.currentPage,
       filters: filterToString(this.filters),
@@ -225,7 +223,6 @@ export class CollectionSearchManager extends BaseSearchManager {
 
 const createQueryStringFromObject = (object: Record<string, string>) => {
   const params = new URLSearchParams();
-
   Object.keys(object).forEach((key) => {
     params.set(key, object[key]);
   });
