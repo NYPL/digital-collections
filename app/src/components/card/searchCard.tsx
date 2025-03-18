@@ -54,8 +54,6 @@ const contentTypeTag = (result: SearchCardType) => {
 const highlightedText = ({ highlight, keyword }) => {
   const words = highlight.text.split(" ");
   const keywords = keyword.split(" ");
-  console.log("words are: ", words);
-  console.log("keywords are: ", keywords);
   return (
     <Box noOfLines={2}>
       <Text
@@ -102,7 +100,6 @@ export const SearchCard = ({
   isLargerThanLargeTablet,
 }: SearchCardProps) => {
   const truncatedTitle = result.title.length > TRUNCATED_SEARCH_CARD_LENGTH;
-  console.log("result is: ", result);
   const card = (
     <Card
       id={result.uuid}
