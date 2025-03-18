@@ -12,6 +12,7 @@ const Search = () => {
   const [keywords, setKeywords] = useState("");
   const [publicDomainOnly, setPublicDomainOnly] = useState(false);
 
+  // TO DO: update this to use DCFL search url
   const handleSubmit = (event) => {
     event.preventDefault();
     const searchUrl =
