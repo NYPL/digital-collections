@@ -120,6 +120,7 @@ export function displayResults(
 }
 
 export function formatHighlightText(highlights) {
+  console.log("highlights: ", highlights);
   const result = Object.entries(highlights)
     .map(([field, values]) => {
       return (values as string[]).map((text) => ({
@@ -133,4 +134,15 @@ export function formatHighlightText(highlights) {
 
 export const capitalize = (text: string): string => {
   return text.charAt(0).toUpperCase() + text.slice(1);
+};
+
+export const getRecordTypeFromURINYPLLink = (link: any): string => {
+  // console.log("link is: ", link)
+  const type = link?.split("#").pop();
+  // console.log("type is: ", type)
+  if (type === "Container") {
+    return "Sub-collection";
+  } else {
+    return type;
+  }
 };
