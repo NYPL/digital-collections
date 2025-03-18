@@ -34,11 +34,11 @@ export default async function Search({ searchParams }: SearchProps) {
   // console.log("searchParams are: ", searchParams)
   // console.log("keyword is: ", searchParams.q)
   revalidatePath("/search/index", "page");
-  const pageName = searchParams.keywords ? "search-results" : "all-items";
+  const pageName = searchParams.q ? "search-results" : "all-items";
 
   const searchResults = await CollectionsApi.getSearchData({
-    // keyword: searchParams.keywords,
     keyword: searchParams.q,
+    // q: searchParams.q,
     sort: searchParams.sort,
     filters: searchParams.filters,
     page: searchParams.page,
