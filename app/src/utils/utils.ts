@@ -141,7 +141,7 @@ export const getRecordTypeFromURINYPLLink = (link: any): string => {
   const type = link?.split("#").pop();
   // console.log("type is: ", type)
   if (type === "Container") {
-    return "Sub-collection";
+    return "Subcollection";
   } else {
     return type;
   }
