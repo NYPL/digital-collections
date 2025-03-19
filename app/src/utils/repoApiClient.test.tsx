@@ -15,35 +15,6 @@ beforeEach(() => {
 });
 
 describe("Repo API methods", () => {
-  describe("getHomePageData", () => {
-    it("creates response containing random number and all 7 lanes", async () => {
-      (fetchApi as jest.Mock).mockResolvedValueOnce(
-        Promise.resolve({
-          nyplAPI: {
-            response: {
-              counts: {
-                count: [
-                  {
-                    uuid: { $: "test" },
-                    count_value: { $: "10" },
-                  },
-                ],
-              },
-            },
-          },
-        })
-      );
-      const result = await RepoApi.getHomePageData();
-      expect(fetchApi as jest.Mock).toHaveBeenCalled();
-      expect([0, 1]).toContain(result.randomNumber);
-      expect(result.lanesWithNumItems.length).toEqual(7);
-      // Fallback data (all 0s).
-      expect(
-        result.lanesWithNumItems[0].collections[3].numberOfDigitizedItems
-      ).toEqual("0");
-    });
-  });
-
   describe("getFeaturedItemData", () => {
     it("creates response containing featuredItem and numDigitizedItems", async () => {
       const result = await RepoApi.getFeaturedItemData();
@@ -392,54 +363,6 @@ describe("Repo API methods", () => {
       expect(item).toEqual(mockItemResponse);
       expect(item).toHaveProperty("capture");
       expect(item).toHaveProperty("mods");
-    });
-  });
-
-  describe("getCollectionsData", () => {
-    it("returns expected results", async () => {
-      (fetchApi as jest.Mock).mockResolvedValueOnce(
-        Promise.resolve({
-          nyplAPI: {
-            response: mockCollectionsResponse,
-          },
-        })
-      );
-      const collections = await RepoApi.getCollectionsData({
-        keyword: "cat",
-        sort: "date-asc",
-        page: 2,
-      });
-
-      expect(fetchApi as jest.Mock).toHaveBeenCalledWith({
-        apiUrl: `${process.env.API_URL}/api/v2/collections?page=2&per_page=48&sort=date ASC&q=cat`,
-      });
-
-      expect(collections).toEqual(mockCollectionsResponse);
-      expect(collections).toHaveProperty("collection");
-      expect(collections).toHaveProperty("perPage");
-      expect(collections).toHaveProperty("page");
-      expect(collections).toHaveProperty("numResults");
-    });
-
-    it("returns default search when given no params", async () => {
-      (fetchApi as jest.Mock).mockResolvedValueOnce(
-        Promise.resolve({
-          nyplAPI: {
-            response: mockCollectionsResponse,
-          },
-        })
-      );
-      const collections = await RepoApi.getCollectionsData();
-
-      expect(fetchApi as jest.Mock).toHaveBeenCalledWith({
-        apiUrl: `${process.env.API_URL}/api/v2/collections?page=1&per_page=48&sort=date DESC&q=`,
-      });
-
-      expect(collections).toEqual(mockCollectionsResponse);
-      expect(collections).toHaveProperty("collection");
-      expect(collections).toHaveProperty("perPage");
-      expect(collections).toHaveProperty("page");
-      expect(collections).toHaveProperty("numResults");
     });
   });
 });

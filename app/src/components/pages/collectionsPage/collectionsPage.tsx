@@ -4,7 +4,6 @@ import {
   Box,
   Heading,
   HorizontalRule,
-  Menu,
   Pagination,
   Flex,
   Spacer,
@@ -34,10 +33,10 @@ export function CollectionsPage({ data, collectionsSearchParams }) {
   const [isLoaded, setIsLoaded] = useState(false);
   const totalPages = totalNumPages(data.numResults, data.perPage);
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  const collections = data.collection
-    ? Array.isArray(data.collection)
-      ? data.collection
-      : [data.collection]
+  const collections = data.collections
+    ? Array.isArray(data.collections)
+      ? data.collections
+      : [data.collections]
     : [];
 
   const collectionsSearchManager = new CollectionSearchManager({
