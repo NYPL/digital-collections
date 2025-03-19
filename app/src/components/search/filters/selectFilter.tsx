@@ -22,14 +22,25 @@ export interface SelectFilterProps {
   searchManager: SearchManager;
 }
 
-export const radioFilterOptions = (options: AvailableFilterOption[]) => {
+const radioFilterOptionDisplayName = (name: string, filterName: string) => {
+  if (filterName === "Collection") {
+    return name.split("||")[0];
+  } else {
+    return name;
+  }
+};
+
+export const radioFilterOptions = (
+  options: AvailableFilterOption[],
+  filterName: string
+) => {
   return options.map((option, index) => (
     <Radio
       key={`${option.name}-${index}`}
       id={`${option.name}-${index}`}
       labelText={
         <Flex justifyContent="space-between">
-          <span>{option.name}</span>
+          <span>{radioFilterOptionDisplayName(option.name, filterName)}</span>
           <span>{option.count}</span>
         </Flex>
       }
@@ -123,7 +134,7 @@ const SelectFilterComponent = forwardRef<
         onChange={onChange}
         defaultValue={selected?.name ?? ""}
       >
-        {radioFilterOptions(sortedOptions.slice(0, 10))}
+        {radioFilterOptions(sortedOptions.slice(0, 10), filter.name)}
       </RadioGroup>
       <Button
         id="apply"

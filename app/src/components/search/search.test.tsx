@@ -31,9 +31,7 @@ describe("Search component", () => {
 
     fireEvent.click(searchButton);
 
-    expect(mockRouter.push).toHaveBeenCalledWith(
-      `/search/index?keywords=test%20word`
-    );
+    expect(mockRouter.push).toHaveBeenCalledWith(`/search/index?q=test%20word`);
   });
 
   it("applies filter correctly", () => {
@@ -52,7 +50,7 @@ describe("Search component", () => {
     fireEvent.click(searchButton);
 
     expect(mockRouter.push).toHaveBeenCalledWith(
-      `/search/index?utf8=✓&filters%5Brights%5D=pd&keywords=test%20words`
+      `/search/index?utf8=✓&filters%5Brights%5D=pd&q=test%20words`
     );
   });
 });
