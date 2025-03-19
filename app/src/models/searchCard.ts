@@ -26,6 +26,8 @@ export class SearchCardModel {
   firstIndexed: string;
 
   constructor(data: any) {
+    // console.log("data.highlights is: ", data.highlights)
+
     this.title = data.title;
     this.uuid = data.uuid;
     this.url =
@@ -45,9 +47,10 @@ export class SearchCardModel {
     this.contentType = data.contentType
       ? (capitalize(data.contentType) as SearchResultContentType)
       : null;
-    this.highlights = data.highlights.field
-      ? formatHighlightText(data.highlights)
-      : [{ field: "", text: "" }];
+    this.highlights =
+      Object.keys(data.highlights).length > 0
+        ? formatHighlightText(data.highlights)
+        : [{ field: "", text: "" }];
     this.firstIndexed = data.firstIndexed_dt;
   }
 }
