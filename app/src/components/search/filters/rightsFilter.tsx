@@ -3,37 +3,20 @@ import {
   Heading,
   RadioGroup,
   Radio,
-  Tooltip,
-  Icon,
-  Flex,
+  Box,
 } from "@nypl/design-system-react-components";
 import { useRouter, usePathname } from "next/navigation";
 import { forwardRef, useState } from "react";
-
+import { ToggleTip } from "../../toggleTip/toggleTip";
 type RightsFilterProps = {
   searchManager: SearchManager;
 };
 
 const RadioOption = ({ id, text, tooltip }) => (
-  <Radio
-    id={id}
-    labelText={
-      <Flex gap="xxs" justifyItems="center">
-        {text}{" "}
-        <Tooltip content={tooltip}>
-          <span>
-            <Icon
-              size="medium"
-              name="errorOutline"
-              iconRotation="rotate180"
-              marginTop="xxxs"
-            />
-          </span>
-        </Tooltip>
-      </Flex>
-    }
-    value={id}
-  />
+  <Box display="flex" alignItems="center">
+    <Radio id={id} value={id} labelText={text} />
+    <ToggleTip toggleTipContent={tooltip} labelText={text} />
+  </Box>
 );
 
 const RightsFilter = forwardRef<HTMLHeadingElement, RightsFilterProps>(
@@ -79,19 +62,19 @@ const RightsFilter = forwardRef<HTMLHeadingElement, RightsFilterProps>(
           }}
         >
           <RadioOption
-            id="publicDomain"
+            id="pd-radio"
             text="Public domain"
-            tooltip="View materials that are free to download, reuse, and share"
+            tooltip="View materials that are free to download, reuse, and share."
           />
           <RadioOption
-            id="availableOnline"
+            id="online-radio"
             text="Available online"
-            tooltip="View digital materials from anywhere, any time"
+            tooltip="View digital materials from anywhere, any time."
           />
           <RadioOption
-            id="onsiteMaterial"
+            id="onsite-radio"
             text="Contains on-site materials"
-            tooltip="View materials accessible only at an NYPL location"
+            tooltip="View materials accessible only at an NYPL location."
           />
         </RadioGroup>
       </>
