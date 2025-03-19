@@ -33,6 +33,12 @@ const onSiteMaterialBadge = (recordType: SearchResultRecordType) => {
   );
 };
 
+const searchCardLink = (record: SearchCardType) => {
+  return record.recordType === "Item"
+    ? `/items/${record.uuid}`
+    : `/collections/${record.uuid}`;
+};
+
 // TO DO: update recordType
 const contentTypeTag = (result: SearchCardType) => {
   const displayLabel =
@@ -93,7 +99,6 @@ const highlightedText = ({ highlight, keyword }) => {
                   backgroundColor: "rgba(249, 224, 142, 0.70)",
                   margin: 0,
                   display: "inline",
-                  // dangerouslySetInnerHTML={{ __html: `${word}`}}
                 }}
               >
                 {word}
@@ -101,7 +106,6 @@ const highlightedText = ({ highlight, keyword }) => {
             ) : (
               word
             )}
-            {/* {parse(word)} */}
             {index < words.length - 1 ? " " : ""}
           </span>
         );
@@ -131,7 +135,7 @@ export const SearchCard = ({
         size: "default",
         src: result.imageURL,
       }}
-      mainActionLink={result.url}
+      mainActionLink={searchCardLink(result)}
       layout="row"
       // Card width 225 and content width 720
       maxWidth="945px"
