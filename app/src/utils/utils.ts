@@ -125,11 +125,20 @@ export function formatHighlightText(highlights) {
     .map(([field, values]) => {
       return (values as string[]).map((text) => ({
         field,
-        text,
+        text: removeEMTagsFromHighlightText(text),
       }));
     })
     .flat();
   return result;
+}
+
+// TO DO: if the api returns the <em> tags... can we just use those instead?
+function removeEMTagsFromHighlightText(text) {
+  console.log(
+    "cleaned up text is: ",
+    text.replaceAll("(?i)<em[^>]*>", " ").replaceAll("\\s+", " ").trim()
+  );
+  return text.replace(/<em>(.*?)<\/em>/gi, "$1");
 }
 
 export const capitalize = (text: string): string => {
@@ -137,9 +146,7 @@ export const capitalize = (text: string): string => {
 };
 
 export const getRecordTypeFromURINYPLLink = (link: any): string => {
-  // console.log("link is: ", link)
   const type = link?.split("#").pop();
-  // console.log("type is: ", type)
   if (type === "Container") {
     return "Subcollection";
   } else {
