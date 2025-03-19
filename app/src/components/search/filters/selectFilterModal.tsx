@@ -20,17 +20,20 @@ import DCSearchBar from "../dcSearchBar";
 import { headerBreakpoints } from "@/src/utils/breakpoints";
 import { usePathname, useRouter } from "next/navigation";
 import { SearchManager } from "@/src/utils/searchManager";
-import { FacetFilter, FacetFilterOption } from "@/src/types/FacetFilterType";
+import {
+  AvailableFilter,
+  AvailableFilterOption,
+} from "@/src/types/AvailableFilterType";
 
 type SelectFilterModalProps = {
-  filter: FacetFilter;
+  filter: AvailableFilter;
   onOpen: () => void;
   onClose: (closeDropdown) => void;
-  selected: FacetFilterOption | null;
-  current: FacetFilterOption | null;
-  modalCurrent: FacetFilterOption | null;
+  selected: AvailableFilterOption | null;
+  current: AvailableFilterOption | null;
+  modalCurrent: AvailableFilterOption | null;
   setModalCurrent: React.Dispatch<
-    React.SetStateAction<FacetFilterOption | null>
+    React.SetStateAction<AvailableFilterOption | null>
   >;
   searchManager: SearchManager;
 };
@@ -135,10 +138,12 @@ const SelectFilterModal = forwardRef<HTMLButtonElement, SelectFilterModalProps>(
           isOpen={isOpen}
           onClose={() => {
             updateURL(
-              searchManager.handleAddFilter({
-                filter: filter.name,
-                value: modalCurrent?.name!,
-              })
+              searchManager.handleAddFilter([
+                {
+                  filter: filter.name,
+                  value: modalCurrent?.name!,
+                },
+              ])
             );
             handleClose(false);
           }}
@@ -227,7 +232,7 @@ const SelectFilterModal = forwardRef<HTMLButtonElement, SelectFilterModalProps>(
                     setModalCurrent(selected);
                   }}
                 >
-                  {radioFilterOptions(currentOptions)}
+                  {radioFilterOptions(currentOptions, filter.name)}
                 </RadioGroup>
               </Box>
               <Flex>
@@ -276,10 +281,12 @@ const SelectFilterModal = forwardRef<HTMLButtonElement, SelectFilterModalProps>(
                   onClick={() => {
                     handleClose(true);
                     updateURL(
-                      searchManager.handleAddFilter({
-                        filter: filter.name,
-                        value: modalCurrent?.name!,
-                      })
+                      searchManager.handleAddFilter([
+                        {
+                          filter: filter.name,
+                          value: modalCurrent?.name!,
+                        },
+                      ])
                     );
                     setModalCurrent(current);
                   }}

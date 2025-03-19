@@ -15,6 +15,7 @@ import SearchCardType, {
   SearchResultRecordType,
 } from "@/src/types/SearchCardType";
 import { TRUNCATED_SEARCH_CARD_LENGTH } from "@/src/config/constants";
+import parse from "html-react-parser";
 
 export interface SearchCardProps {
   result: SearchCardType;
@@ -32,13 +33,24 @@ const onSiteMaterialBadge = (recordType: SearchResultRecordType) => {
   );
 };
 
+const searchCardLink = (record: SearchCardType) => {
+  return record.recordType === "Item"
+    ? `/items/${record.uuid}`
+    : `/collections/${record.uuid}`;
+};
+
+// TO DO: update recordType
 const contentTypeTag = (result: SearchCardType) => {
   const displayLabel =
     result.recordType === "Item"
       ? result.contentType === "Image" && result.containsMultipleCaptures
         ? "Multiple images"
         : result.contentType
-      : result.recordType;
+        ? result.contentType
+        : "nullContentType"
+      : result.recordType
+      ? result.recordType
+      : "nullRecordType";
 
   return (
     <TagSet
@@ -56,19 +68,27 @@ const highlightedText = ({ highlight, keyword }) => {
   const keywords = keyword.split(" ");
   return (
     <Box noOfLines={2}>
-      <Text
-        as="span"
-        sx={{
-          fontWeight: "400",
-          margin: 0,
-        }}
-      >
-        {highlight.field}:{" "}
-      </Text>
+      {words.length > 0 && words[0] !== "" ? (
+        <Text
+          as="span"
+          sx={{
+            fontWeight: "400",
+            margin: 0,
+          }}
+          // dangerouslySetInnerHTML={{ __html: ` ${highlight.field}` }}
+        >
+          {highlight.field}:{" "}
+        </Text>
+      ) : (
+        <></>
+      )}
+
       {words.map((word: string, index: number) => {
         const isKeyword = keywords.some(
           (keyword: string) => keyword.toLowerCase() === word.toLowerCase()
         );
+
+        console.log("isKeyword? : ", isKeyword);
 
         return (
           <span key={index}>
@@ -99,6 +119,7 @@ export const SearchCard = ({
   keywords,
   isLargerThanLargeTablet,
 }: SearchCardProps) => {
+  // console.log("result.highlights[0] is: ", result.highlights[0])
   const truncatedTitle = result.title.length > TRUNCATED_SEARCH_CARD_LENGTH;
   const card = (
     <Card
@@ -114,7 +135,7 @@ export const SearchCard = ({
         size: "default",
         src: result.imageURL,
       }}
-      mainActionLink={result.url}
+      mainActionLink={searchCardLink(result)}
       layout="row"
       // Card width 225 and content width 720
       maxWidth="945px"

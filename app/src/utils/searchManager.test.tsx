@@ -64,30 +64,30 @@ describe("SearchManager", () => {
 
     it("should handle search submit wth no keywords", () => {
       const result = manager.handleSearchSubmit();
-      expect(result).toBe("keywords=test");
+      expect(result).toBe("q=test");
     });
 
     it("should handle sort change", () => {
       const result = manager.handleSortChange("date-asc");
-      expect(result).toBe("keywords=test&sort=date-asc");
+      expect(result).toBe("q=test&sort=date-asc");
     });
 
     it("should handle page change", () => {
       const result = manager.handlePageChange(2);
-      expect(result).toBe("keywords=test&sort=date-asc&page=2");
+      expect(result).toBe("q=test&sort=date-asc&page=2");
     });
 
     it("should handle adding filters", () => {
       const filter1: Filter = { filter: "topic", value: "art" };
       const result1 = manager.handleAddFilter(filter1);
       expect(result1).toBe(
-        "keywords=test&sort=date-asc&page=2&filters=%5Btopic%3Dart%5D"
+        "q=test&sort=date-asc&page=2&filters=%5Btopic%3Dart%5D"
       );
 
       const filter2: Filter = { filter: "genre", value: "music" };
       const result2 = manager.handleAddFilter(filter2);
       expect(result2).toBe(
-        "keywords=test&sort=date-asc&page=2&filters=%5Btopic%3Dart%5D%5Bgenre%3Dmusic%5D"
+        "q=test&sort=date-asc&page=2&filters=%5Btopic%3Dart%5D%5Bgenre%3Dmusic%5D"
       );
     });
 
@@ -95,13 +95,13 @@ describe("SearchManager", () => {
       const filter1: Filter = { filter: "genre", value: "music" };
       const result1 = manager.handleRemoveFilter(filter1);
       expect(result1).toBe(
-        "keywords=test&sort=date-asc&page=2&filters=%5Btopic%3Dart%5D"
+        "q=test&sort=date-asc&page=2&filters=%5Btopic%3Dart%5D"
       );
     });
 
     it("should handle clearing all filters", () => {
       const result = manager.clearAllFilters();
-      expect(result).toBe("keywords=test&sort=date-asc");
+      expect(result).toBe("q=test&sort=date-asc");
     });
   });
 
