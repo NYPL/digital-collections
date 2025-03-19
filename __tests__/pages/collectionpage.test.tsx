@@ -1,4 +1,5 @@
 import CollectionPage from "@/src/components/pages/collectionPage/collectionPage";
+import { SearchProvider } from "@/src/context/SearchProvider";
 import { render } from "@testing-library/react";
 import { mockItems } from "__tests__/__mocks__/data/mockItems";
 
@@ -25,11 +26,13 @@ describe("Collection page accessibility", () => {
   };
   it("passes axe accessibility test", async () => {
     const { container } = render(
-      <CollectionPage
-        searchParams={searchParams}
-        slug="Example collection"
-        data={mockItems}
-      />
+      <SearchProvider>
+        <CollectionPage
+          searchParams={searchParams}
+          slug="Example collection"
+          data={mockItems}
+        />
+      </SearchProvider>
     );
     expect(await axe(container)).toHaveNoViolations();
   }, 60000);

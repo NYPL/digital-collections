@@ -5,33 +5,16 @@ import {
   DEFAULT_SEARCH_SORT,
   DEFAULT_SEARCH_TERM,
 } from "../config/constants";
-import { GeneralSearchManager, SearchManager } from "../utils/searchManager";
-import { Filter } from "../types/FilterType";
+import {
+  GeneralSearchManager,
+  SearchManager,
+  stringToFilter,
+} from "../utils/searchManager";
+import { mockFacetFilters } from "__tests__/__mocks__/data/mockFacetFilters";
 
 interface SearchContextType {
   searchManager: SearchManager;
 }
-
-export const stringToFilter = (filtersString: string | null): Filter[] => {
-  if (!filtersString) return [];
-
-  return filtersString
-    .split(",")
-    .map((filterPair) => {
-      const match = filterPair.match(/^\[(\w+)=(.+)\]$/);
-      if (match) {
-        const [, filter, value] = match;
-        return { filter, value };
-      }
-      return null;
-    })
-    .filter((filter): filter is Filter => filter !== null);
-};
-
-export const filterToString = (filters: Filter[]): string => {
-  if (!filters || filters.length === 0) return "";
-  return filters.map(({ filter, value }) => `[${filter}=${value}]`).join("");
-};
 
 const SearchContext = createContext<SearchContextType | undefined>(undefined);
 
@@ -47,6 +30,7 @@ export const SearchProvider = ({
     initialSort: searchParams?.sort || DEFAULT_SEARCH_SORT,
     initialFilters: stringToFilter(searchParams?.filters),
     initialKeywords: searchParams?.keywords || DEFAULT_SEARCH_TERM,
+    initialFacets: mockFacetFilters,
   });
 
   return (
