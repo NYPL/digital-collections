@@ -32,13 +32,18 @@ const onSiteMaterialBadge = (recordType: SearchResultRecordType) => {
   );
 };
 
+// TO DO: update recordType
 const contentTypeTag = (result: SearchCardType) => {
   const displayLabel =
     result.recordType === "Item"
       ? result.contentType === "Image" && result.containsMultipleCaptures
         ? "Multiple images"
         : result.contentType
-      : result.recordType;
+        ? result.contentType
+        : "nullContentType"
+      : result.recordType
+      ? result.recordType
+      : "nullRecordType";
 
   return (
     <TagSet
@@ -56,15 +61,19 @@ const highlightedText = ({ highlight, keyword }) => {
   const keywords = keyword.split(" ");
   return (
     <Box noOfLines={2}>
-      <Text
-        as="span"
-        sx={{
-          fontWeight: "400",
-          margin: 0,
-        }}
-      >
-        {highlight.field}:{" "}
-      </Text>
+      {words.length > 0 && words[0] !== "" ? (
+        <Text
+          as="span"
+          sx={{
+            fontWeight: "400",
+            margin: 0,
+          }}
+        >
+          {highlight.field}:{" "}
+        </Text>
+      ) : (
+        <></>
+      )}
       {words.map((word: string, index: number) => {
         const isKeyword = keywords.some(
           (keyword: string) => keyword.toLowerCase() === word.toLowerCase()
@@ -99,6 +108,7 @@ export const SearchCard = ({
   keywords,
   isLargerThanLargeTablet,
 }: SearchCardProps) => {
+  // console.log("result.highlights[0] is: ", result.highlights[0])
   const truncatedTitle = result.title.length > TRUNCATED_SEARCH_CARD_LENGTH;
   const card = (
     <Card
