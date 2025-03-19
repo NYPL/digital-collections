@@ -19,10 +19,10 @@ type FiltersProps = {
 
 const Filters = ({ headingText, searchManager }: FiltersProps) => {
   const [isExpanded, setIsExpanded] = useState(false);
+
   const filterRefs = useRef<(HTMLButtonElement | null)[]>([]);
   const dateFilterRef = useRef<TextInputRefType | null>(null);
   const secondRowFilter = 4;
-
   useEffect(() => {
     if (isExpanded) {
       if (filterRefs.current[secondRowFilter]) {
@@ -42,8 +42,17 @@ const Filters = ({ headingText, searchManager }: FiltersProps) => {
       />
       {isExpanded && (
         <>
-          <DateFilter ref={dateFilterRef} />
-          <RightsFilter />
+          <DateFilter
+            ref={dateFilterRef}
+            searchManager={searchManager}
+            // Remounts when filters are cleared from active filter panel.
+            key={searchManager.filters.length}
+          />
+          <RightsFilter
+            searchManager={searchManager}
+            // Remounts when filters are cleared from active filter panel.
+            key={searchManager.filters.length + 1}
+          />
         </>
       )}
       <Button

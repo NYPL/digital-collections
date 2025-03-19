@@ -11,110 +11,22 @@ const searchSchema = {
   rightsFilter: "publicDomain | availableOnline | onSiteMaterial",
   dateStart: "integer ie: 1800",
   dateEnd: "integer ie: 1900",
-  // Facets are an array of objects passed in the request body
-  facets: [
-    {
-      topic: {
-        facet_counts: {
-          facet_queries: {
-            string: "integer",
-          },
-          facet_fields: {
-            topic_mtxt_s: ["string", "integer", "string", "integer"],
-          },
-        },
+  // All filters always returned, empty if there are no available options
+  availableFilters: {
+    topic: [
+      {
+        name: "string",
+        count: "integer",
       },
-    },
-    {
-      name: {
-        facet_counts: {
-          facet_queries: {
-            string: "integer",
-          },
-          facet_fields: {
-            namePart_mtxt_s: ["string", "integer", "string", "integer"],
-          },
-        },
-      },
-    },
-    {
-      collection: {
-        facet_counts: {
-          facet_queries: {
-            uuid: "integer",
-          },
-          facet_fields: {
-            rootCollection_rootCollectionUUID_s: [
-              "string||uuid",
-              "integer",
-              "string||uuid",
-              "integer",
-            ],
-          },
-        },
-      },
-    },
-    {
-      place: {
-        facet_counts: {
-          facet_queries: {
-            string: "integer",
-          },
-          facet_fields: {
-            placeTerm_mtxt_s: ["string", "integer", "string", "integer"],
-          },
-        },
-      },
-    },
-    {
-      genre: {
-        facet_counts: {
-          facet_queries: {
-            string: "integer",
-          },
-          facet_fields: {
-            genre_mtxt_s: ["string", "integer", "string", "integer"],
-          },
-        },
-      },
-    },
-    {
-      publisher: {
-        facet_counts: {
-          facet_queries: {
-            string: "integer",
-          },
-          facet_fields: {
-            publisher_mtxt_s: ["string", "integer", "string", "integer"],
-          },
-        },
-      },
-    },
-    {
-      division: {
-        facet_counts: {
-          facet_queries: {
-            string: "integer",
-          },
-          facet_fields: {
-            divisionFullname_mtxt_s: ["string", "integer", "string", "integer"],
-          },
-        },
-      },
-    },
-    {
-      type: {
-        facet_counts: {
-          facet_queries: {
-            string: "integer",
-          },
-          facet_fields: {
-            typeOfResource_mtxt_s: ["string", "integer", "string", "integer"],
-          },
-        },
-      },
-    },
-  ],
+    ],
+    name: [],
+    collection: [],
+    genre: [],
+    place: [],
+    publisher: [],
+    division: [],
+    type: [],
+  },
   // Results
   results: [
     {

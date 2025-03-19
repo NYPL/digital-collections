@@ -184,6 +184,24 @@ export class CollectionsApi {
     return response;
   }
 
+  static async getCollectionData(uuid: string) {
+    let apiUrl = `${process.env.COLLECTIONS_API_URL}/collections/${uuid}`;
+    const response = await fetchApi({
+      apiUrl: apiUrl,
+      options: { isRepoApi: false },
+    });
+    return response;
+  }
+
+  static async getCollectionChildren(uuid: string) {
+    let apiUrl = `${process.env.COLLECTIONS_API_URL}/collections/${uuid}/children`;
+    const response = await fetchApi({
+      apiUrl: apiUrl,
+      options: { isRepoApi: false },
+    });
+    return response;
+  }
+
   /**
    * Fetches search results based on the provided parameters, for /search/index and /collections/[uuid] pages.
    *
@@ -210,7 +228,11 @@ export class CollectionsApi {
     page?: number;
     perPage?: number;
   } = {}): Promise<any> {
-    let apiUrl = `${process.env.COLLECTIONS_API_URL}/search/index?q=${keyword}${filters}&sort=${sort}&page=${page}&perPage=${perPage}`;
+    // let apiUrl = '';
+    // keyword? apiUrl = `${process.env.COLLECTIONS_API_URL}/search/""${filters}&sort=${sort}&page=${page}&perPage=${perPage}` : apiUrl = `${process.env.COLLECTIONS_API_URL}/search/${keyword}/${filters}&sort=${sort}&page=${page}&perPage=${perPage}`;
+    let apiUrl = `${process.env.COLLECTIONS_API_URL}/search/?q=${keyword}${filters}&sort=${sort}&page=${page}&perPage=${perPage}`;
+    console.log("api URL is: ", apiUrl);
+
     const response = await fetchApi({
       apiUrl: apiUrl,
       options: { isRepoApi: false },
