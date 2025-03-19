@@ -15,8 +15,10 @@ const Search = () => {
   // TO DO: update this to use DCFL search url
   const handleSubmit = (event) => {
     event.preventDefault();
-    const searchUrl = `/search/index?` + `q=${encodeURIComponent(keywords)}`;
-    +(publicDomainOnly ? `&filters=%5Brights%3DpublicDomain%5D` : ``);
+    const searchUrl =
+      `/search/index?` +
+      `q=${encodeURIComponent(keywords)}` +
+      (publicDomainOnly ? `&filters=%5Brights%3DpublicDomain%5D` : ``);
     router.push(searchUrl);
   };
 

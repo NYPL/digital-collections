@@ -50,7 +50,7 @@ describe("Search component", () => {
     fireEvent.click(searchButton);
 
     expect(mockRouter.push).toHaveBeenCalledWith(
-      `/search/index?utf8=✓&filters%5Brights%5D=pd&q=test%20words`
+      `/search/index?q=test%20words&filters=%5Brights%3DpublicDomain%5D`
     );
   });
 });
