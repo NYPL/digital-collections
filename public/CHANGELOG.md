@@ -9,10 +9,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
-<<<<<<< HEAD
-- Added sort component, `sortMenu` (DR-3366)
-- Added custom select component, `selectFilter` for facet filters (DR-3394)
-=======
 - Added custom toggle tip component for rights filter (DR-3460)
 
 ## [0.3.4] 2025-03-13
@@ -28,7 +24,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Added custom select component, `selectFilter`, and corresponding modal for facet filters (DR-3394, DR-3396)
 - Added active filters panel, `activeFilters` (DR-3367)
 - Added sort component, `sortMenu` (DR-3366)
->>>>>>> main
 - Added search result model, mock data, card component, and card grid component (DR-3363)
 - Added collection structure component (DR-3415)
 - Added API wrappers for Collections and Repo API (DR-3414)
