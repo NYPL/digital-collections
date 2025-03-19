@@ -15,6 +15,7 @@ import SearchCardType, {
   SearchResultRecordType,
 } from "@/src/types/SearchCardType";
 import { TRUNCATED_SEARCH_CARD_LENGTH } from "@/src/config/constants";
+import parse from "html-react-parser";
 
 export interface SearchCardProps {
   result: SearchCardType;
@@ -68,16 +69,20 @@ const highlightedText = ({ highlight, keyword }) => {
             fontWeight: "400",
             margin: 0,
           }}
+          // dangerouslySetInnerHTML={{ __html: ` ${highlight.field}` }}
         >
           {highlight.field}:{" "}
         </Text>
       ) : (
         <></>
       )}
+
       {words.map((word: string, index: number) => {
         const isKeyword = keywords.some(
           (keyword: string) => keyword.toLowerCase() === word.toLowerCase()
         );
+
+        console.log("isKeyword? : ", isKeyword);
 
         return (
           <span key={index}>
@@ -88,6 +93,7 @@ const highlightedText = ({ highlight, keyword }) => {
                   backgroundColor: "rgba(249, 224, 142, 0.70)",
                   margin: 0,
                   display: "inline",
+                  // dangerouslySetInnerHTML={{ __html: `${word}`}}
                 }}
               >
                 {word}
@@ -95,6 +101,7 @@ const highlightedText = ({ highlight, keyword }) => {
             ) : (
               word
             )}
+            {/* {parse(word)} */}
             {index < words.length - 1 ? " " : ""}
           </span>
         );
