@@ -1,5 +1,9 @@
 import CollectionPage from "@/src/components/pages/collectionPage/collectionPage";
+import { SearchProvider } from "@/src/context/SearchProvider";
 import { render } from "@testing-library/react";
+import { mockCollectionResponse } from "__tests__/__mocks__/data/collectionsApi/mockCollectionResponse";
+import { mockSearchResponse } from "__tests__/__mocks__/data/collectionsApi/mockSearchResponse";
+import { mockCollectionChildrenResponse } from "__tests__/__mocks__/data/mockCollectionStructure";
 import { mockItems } from "__tests__/__mocks__/data/mockItems";
 
 import { axe } from "jest-axe";
@@ -25,11 +29,15 @@ describe("Collection page accessibility", () => {
   };
   it("passes axe accessibility test", async () => {
     const { container } = render(
-      <CollectionPage
-        searchParams={searchParams}
-        slug="Example collection"
-        data={mockItems}
-      />
+      <SearchProvider>
+        <CollectionPage
+          searchParams={searchParams}
+          slug="Example collection"
+          searchResults={mockSearchResponse}
+          collectionData={mockCollectionResponse}
+          collectionChildren={mockCollectionChildrenResponse}
+        />
+      </SearchProvider>
     );
     expect(await axe(container)).toHaveNoViolations();
   }, 60000);

@@ -22,6 +22,12 @@ const isInAllMaps = (item) => {
   );
 };
 
+const contentTypes = {
+  "still image": "image",
+  "moving image": "video",
+  "sound recording": "audio",
+};
+
 const ItemMediaViewer = ({ item, type }: ItemProps) => {
   console.log("Item metadata: ", item.metadata);
   console.log("item is: ", item);

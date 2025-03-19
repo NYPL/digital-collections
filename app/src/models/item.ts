@@ -4,6 +4,11 @@ import allMapsData from "../data/maps/allmaps";
 
 // https://www.npmjs.com/package/@iiif/manifold
 // https://github.com/iiif-commons/manifold
+// other resources:
+// https://www.npmjs.com/package/@iiif/manifold
+// https://github.com/iiif-commons/manifold
+import { CONTENT_TYPES } from "../config/constants";
+
 export class ItemModel {
   uuid: string;
   mods: any;
@@ -16,11 +21,57 @@ export class ItemModel {
   imageID: string;
   href: string;
   isInAllMaps: any;
-
+  contentType: string;
+  metadata?: {
+    // Metadata fields
+    /* Title */
+    title?: string;
+    // .mods.titleInfo.title
+    /* Names */
+    names?: string;
+    // .mods.name
+    /* Collection */
+    collection?: string;
+    // .mods.relatedItem?
+    /* Date/Origin */
+    origin?: string;
+    // .mods.originInfo
+    /* Table of Contents */
+    tableOfContents?: string;
+    /* Library Locations */
+    locations?: string;
+    // .mods.location
+    /* Subjects */
+    subjects?: string;
+    // .mods.subject
+    /* Genres */
+    genres?: string;
+    // .mods.genre
+    /* Notes */
+    notes?: string;
+    /* Physical Description */
+    physicalDescription?: string;
+    // .mods.physicalDescription
+    /* Abstract */
+    abstract?: string;
+    /* Languages */
+    languages?: string;
+    // Link
+    link?: string;
+    /* Identifiers */
+    identifiers?: string;
+    // .mods.identifier
+    /* Access */
+    access?: string;
+    /* Rights */
+    rights?: string;
+    // .cappture.rightsStatement
+    typeOfResource?: string;
+  };
   // metadata?: {
   //   // Metadata fields
   //   /* Title */
-  //   title?: string;
+  //   title: string;
   //   // .mods.titleInfo.title
   //   /* Names */
   //   names?: string;
@@ -29,18 +80,18 @@ export class ItemModel {
   //   collection?: string;
   //   // .mods.relatedItem?
   //   /* Date/Origin */
-  //   origin?: string;
+  //   origin: string;
   //   // .mods.originInfo
   //   /* Table of Contents */
   //   tableOfContents?: string;
   //   /* Library Locations */
-  //   locations?: string;
+  //   locations: string;
   //   // .mods.location
   //   /* Subjects */
   //   subjects?: string;
   //   // .mods.subject
   //   /* Genres */
-  //   genres?: string;
+  //   genres: string;
   //   // .mods.genre
   //   /* Notes */
   //   notes?: string;
@@ -50,21 +101,21 @@ export class ItemModel {
   //   /* Abstract */
   //   abstract?: string;
   //   /* Languages */
-  //   languages?: string;
+  //   languages: string;
   //   // Link
   //   link?: string;
   //   /* Identifiers */
-  //   identifiers?: string;
+  //   identifiers: string;
   //   // .mods.identifier
   //   /* Access */
-  //   access?: string;
+  //   access: string;
   //   /* Rights */
-  //   rights?: string;
+  //   rights: string;
   //   // .cappture.rightsStatement
-  //   typeOfResource?: string;
+  //   typeOfResource: string;
   // };
 
-  constructor(data: any, uuid: string) {
+  constructor(data: any, uuid: string, manifest: any) {
     // const parser = new Maniiifest(manifest);
     // const label = parser?.getManifestLabelByLanguage("en");
     // console.log(label?.["en"]);
@@ -95,6 +146,20 @@ export class ItemModel {
 
     // }
 
+    // constructor(data: any, uuid: string, manifest: any) {
+    const parser = new Maniiifest(manifest);
+    const label = parser?.getManifestLabelByLanguage("en");
+    const metadata = parser.iterateManifestMetadata();
+    const manifestMetadataHash = {};
+
+    for (const field of metadata) {
+      // console.log("with just parser.iterateManifest")
+      const label = field.label["en"][0];
+      const value = field.value["en"];
+      manifestMetadataHash[label] = value;
+    }
+    console.log("manifestMetadataHash is: ", manifestMetadataHash);
+
     this.uuid = uuid; //data.uuid; //data.capture.uuid.$;
     this.mods = data.mods;
     this.capture = data.capture;
@@ -108,6 +173,7 @@ export class ItemModel {
     this.imageID = data.imageID;
     this.href = data.href;
     this.isInAllMaps = isInAllMaps();
+    this.contentType = CONTENT_TYPES[this.typeOfResource];
     /*
     field labels from manifest metadata section are: 
     Title
@@ -173,9 +239,62 @@ export class ItemModel {
     //     ? manifestMetadataHash["Rights"].toString()
     //     : this.typeOfResource,
     // };
+
+    this.metadata = {
+      title: manifestMetadataHash["Title"]
+        ? manifestMetadataHash["Title"].toString()
+        : "",
+      collection: manifestMetadataHash["Collection"]
+        ? manifestMetadataHash["Collection"].toString()
+        : "",
+      names: manifestMetadataHash["names"]
+        ? manifestMetadataHash["names"].toString()
+        : "",
+      origin: manifestMetadataHash["Date Indexed"]
+        ? manifestMetadataHash["Date Indexed"].toString()
+        : "",
+      tableOfContents: manifestMetadataHash["Table Of Contents"]
+        ? manifestMetadataHash["Table Of Contents"].toString()
+        : "",
+      locations: manifestMetadataHash["Library Location"]
+        ? manifestMetadataHash["Library Location"].toString()
+        : "",
+      subjects: manifestMetadataHash["Subjects"]
+        ? manifestMetadataHash["Subjects"].toString()
+        : "",
+      genres: manifestMetadataHash["Genres"]
+        ? manifestMetadataHash["Genres"].toString()
+        : "",
+      notes: manifestMetadataHash["Notes"]
+        ? manifestMetadataHash["Notes"]?.toString().toString()
+        : "",
+      physicalDescription: manifestMetadataHash["Physical Description"]
+        ? manifestMetadataHash["Physical Description"].toString()
+        : "",
+      typeOfResource: manifestMetadataHash["Resource Type"]
+        ? manifestMetadataHash["Resource Type"].toString()
+        : "",
+      abstract: manifestMetadataHash["Abstract"]
+        ? manifestMetadataHash["Abstract"].toString()
+        : "",
+      languages: manifestMetadataHash["Languages"]
+        ? manifestMetadataHash["Lanugages"].toString()
+        : "",
+      link: manifestMetadataHash["Link"]
+        ? manifestMetadataHash["Link"].toString()
+        : "",
+      identifiers: manifestMetadataHash["Identifiers"]
+        ? manifestMetadataHash["Identifiers"].toString()
+        : "",
+      access: manifestMetadataHash["Access"]
+        ? manifestMetadataHash["Access"].toString()
+        : "",
+      rights: manifestMetadataHash["Rights"]
+        ? manifestMetadataHash["Rights"].toString()
+        : "",
+    };
   }
 }
-
 /*
 "Title": "mainTitle",
 "Names": "name_mtxt",

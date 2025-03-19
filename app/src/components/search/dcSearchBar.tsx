@@ -54,9 +54,11 @@ export interface SearchBarProps {
   /** Custom input element to render instead of a `TextInput` element. */
   textInputElement?: JSX.Element;
   /** Required props to render a `TextInput` element. */
-  textInputProps?: TextInputProps | undefined;
+  textInputProps: TextInputProps | undefined;
   /** Maximum width of wrapper. */
   maxWrapperWidth?: string;
+  /** Sets if submit button displays (for autocomplete search). */
+  showButton?: boolean;
 }
 
 const SearchBarComponent = forwardRef<HTMLDivElement, SearchBarProps>(
@@ -70,6 +72,7 @@ const SearchBarComponent = forwardRef<HTMLDivElement, SearchBarProps>(
       textInputProps,
       labelText,
       maxWrapperWidth,
+      showButton = true,
     } = props;
 
     const stateProps = {
@@ -88,7 +91,7 @@ const SearchBarComponent = forwardRef<HTMLDivElement, SearchBarProps>(
 
     const textInput = textInputProps && (
       <TextInput
-        labelText={labelText}
+        labelText={textInputProps?.labelText}
         className="textInput"
         defaultValue={textInputProps?.defaultValue}
         id={textInputProps?.id || `searchbar-textinput-${id}`}
@@ -107,6 +110,9 @@ const SearchBarComponent = forwardRef<HTMLDivElement, SearchBarProps>(
           }
         }}
         {...stateProps}
+        sx={{
+          paddingRight: showButton ? "unset" : "l",
+        }}
       />
     );
 
@@ -169,6 +175,7 @@ const SearchBarComponent = forwardRef<HTMLDivElement, SearchBarProps>(
       <Box
         role="search"
         aria-label={labelText}
+        aria-autocomplete={showButton ? undefined : "list"}
         sx={{
           display: "flex",
           marginBottom: {
@@ -178,15 +185,31 @@ const SearchBarComponent = forwardRef<HTMLDivElement, SearchBarProps>(
           ".textInput": {
             flexGrow: 1,
             "div > input": {
-              borderRightRadius: 0,
+              borderRightRadius: showButton ? 0 : "2px",
             },
           },
           flexFlow: "row",
           maxWidth: maxWrapperWidth,
         }}
       >
-        {textInput}
-        {buttonElem}
+        {showButton ? (
+          textInput
+        ) : (
+          <Box position="relative" width="100%">
+            {textInput}
+            <Icon
+              name="search"
+              size="medium"
+              position="absolute"
+              right="0px"
+              top="50%"
+              transform="translateY(-50%)"
+              color="ui.gray.dark"
+              pointerEvents="none"
+            />
+          </Box>
+        )}
+        {showButton && buttonElem}
       </Box>
     );
   }

@@ -70,6 +70,7 @@ export default async function git({ params, searchParams }: ItemProps) {
     >
       <ItemPage
         // manifest={manifest}
+        manifest={manifest}
         data={data}
         type={searchParams.type}
         uuid={params.uuid}

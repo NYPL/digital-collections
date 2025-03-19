@@ -3,28 +3,35 @@ import {
   DEFAULT_COLLECTION_SORT,
   DEFAULT_PAGE_NUM,
   DEFAULT_SEARCH_TERM,
+  DEFAULT_FILTERS,
 } from "../config/constants";
-import { filterToString } from "../context/SearchProvider";
 import { Filter } from "../types/FilterType";
+import {
+  AvailableFilter,
+  AvailableFilterOption,
+} from "../types/AvailableFilterType";
+
 export interface SearchManager {
   handleSearchSubmit(): string;
   handleKeywordChange(value: string): void;
   handlePageChange(pageNumber: number): string;
   handleSortChange(id: string): string;
-  handleAddFilter(newFilter: Filter): string;
+  handleAddFilter(newFilters: Filter[]): string;
   handleRemoveFilter(filterToRemove: Filter): string;
   clearAllFilters(): string;
   get keywords(): string;
   get sort(): string;
   get page(): number;
   get filters(): Filter[];
+  get availableFilters(): AvailableFilter[];
 }
 
 abstract class BaseSearchManager implements SearchManager {
   protected currentPage: number;
   protected currentSort: string;
   protected currentKeywords: string;
-  protected currentFilters: Filter[];
+  protected currentFilters: Set<string>;
+  protected currentAvailableFilters: AvailableFilter[];
 
   abstract handlePageChange(pageNumber: number): string;
   abstract handleSortChange(id: string): string;
@@ -36,11 +43,15 @@ abstract class BaseSearchManager implements SearchManager {
     initialSort: string;
     initialFilters?: Filter[];
     initialKeywords: string;
+    initialAvailableFilters?: AvailableFilter[];
   }) {
     this.currentPage = config.initialPage;
     this.currentSort = config.initialSort;
-    this.currentFilters = config.initialFilters || [];
+    this.currentFilters = new Set(
+      (config.initialFilters || []).map((filter) => JSON.stringify(filter))
+    );
     this.currentKeywords = config.initialKeywords;
+    this.currentAvailableFilters = config.initialAvailableFilters || [];
   }
 
   get keywords() {
@@ -55,48 +66,59 @@ abstract class BaseSearchManager implements SearchManager {
     return this.currentPage;
   }
 
-  get filters() {
-    return this.currentFilters;
+  get filters(): Filter[] {
+    return Array.from(this.currentFilters).map((filterStr) =>
+      JSON.parse(filterStr)
+    );
+  }
+
+  get availableFilters(): AvailableFilter[] {
+    // TODO: Formatting
+    return this.currentAvailableFilters;
   }
 
   handleKeywordChange(value: string) {
     this.currentKeywords = value;
   }
 
-  handleAddFilter(newFilter: Filter) {
-    const updatedFilters = [...this.currentFilters, newFilter];
-    this.currentFilters = updatedFilters;
+  handleAddFilter(newFilters: Filter | Filter[]) {
+    const existingFilters = new Map(
+      this.filters.map(({ filter, value }) => [filter, value])
+    );
+    const filtersToAdd = Array.isArray(newFilters) ? newFilters : [newFilters];
+    filtersToAdd.forEach(({ filter, value }) => {
+      existingFilters.set(filter, value);
+    });
+    this.currentFilters = new Set(
+      Array.from(existingFilters.entries()).map(([filter, value]) =>
+        JSON.stringify({ filter, value })
+      )
+    );
     return this.getQueryString({
-      keywords: this.currentKeywords,
+      q: this.currentKeywords,
       sort: this.currentSort,
       page: this.currentPage,
-      filters: filterToString(updatedFilters),
+      filters: filterToString(this.filters),
     });
   }
 
   handleRemoveFilter(filterToRemove: Filter) {
-    const updatedFilters = this.currentFilters.filter(
-      (filter) =>
-        !(
-          filter.filter === filterToRemove.filter &&
-          filter.value === filterToRemove.value
-        )
-    );
+    this.currentFilters.delete(JSON.stringify(filterToRemove));
     return this.getQueryString({
-      keywords: this.currentKeywords,
+      q: this.currentKeywords,
       sort: this.currentSort,
       page: this.currentPage,
-      filters: filterToString(updatedFilters),
+      filters: filterToString(this.filters),
     });
   }
 
   clearAllFilters() {
-    this.currentFilters = [];
+    this.currentFilters.clear();
     return this.getQueryString({
-      keywords: this.currentKeywords,
+      q: this.currentKeywords,
       sort: this.currentSort,
       page: DEFAULT_PAGE_NUM,
-      filters: filterToString([]),
+      filters: filterToString(DEFAULT_FILTERS),
     });
   }
 }
@@ -104,11 +126,10 @@ abstract class BaseSearchManager implements SearchManager {
 export class GeneralSearchManager extends BaseSearchManager {
   handleSearchSubmit() {
     this.currentPage = DEFAULT_PAGE_NUM;
-    this.currentFilters = [];
+    this.currentFilters.clear();
     this.currentSort = DEFAULT_SEARCH_SORT;
-
     return this.getQueryString({
-      keywords: this.currentKeywords,
+      q: this.currentKeywords,
       sort: this.currentSort,
       page: this.currentPage,
     });
@@ -117,20 +138,20 @@ export class GeneralSearchManager extends BaseSearchManager {
   handlePageChange(pageNumber: number) {
     this.currentPage = pageNumber;
     return this.getQueryString({
-      keywords: this.currentKeywords,
+      q: this.currentKeywords,
       sort: this.currentSort,
       page: pageNumber,
-      filters: filterToString(this.currentFilters),
+      filters: filterToString(this.filters),
     });
   }
 
   handleSortChange(sort: string) {
     this.currentSort = sort;
     return this.getQueryString({
-      keywords: this.currentKeywords,
+      q: this.currentKeywords,
       sort: sort,
       page: this.currentPage,
-      filters: filterToString(this.currentFilters),
+      filters: filterToString(this.filters),
     });
   }
 
@@ -140,6 +161,7 @@ export class GeneralSearchManager extends BaseSearchManager {
       DEFAULT_SEARCH_TERM,
       DEFAULT_PAGE_NUM,
       DEFAULT_SEARCH_SORT,
+      DEFAULT_FILTERS,
     ];
 
     Object.keys(paramsObject).forEach((key) => {
@@ -201,9 +223,29 @@ export class CollectionSearchManager extends BaseSearchManager {
 
 const createQueryStringFromObject = (object: Record<string, string>) => {
   const params = new URLSearchParams();
-
   Object.keys(object).forEach((key) => {
     params.set(key, object[key]);
   });
   return params.toString();
+};
+
+export const stringToFilter = (filtersString: string | null): Filter[] => {
+  if (!filtersString) return [];
+  return Array.from(filtersString.matchAll(/\[([^\]=]+)=([^\]]+)\]/g)).map(
+    ([, filter, value]) => ({ filter, value })
+  );
+};
+
+export const filterToString = (filters: Filter[]): string => {
+  if (!filters || filters.length === 0) return "";
+  return filters.map(({ filter, value }) => `[${filter}=${value}]`).join("");
+};
+
+export const transformToAvailableFilters = (
+  availableFilters: Record<string, AvailableFilterOption[]>
+): AvailableFilter[] => {
+  return Object.entries(availableFilters).map(([key, options]) => ({
+    name: key.charAt(0).toUpperCase() + key.slice(1),
+    options,
+  }));
 };

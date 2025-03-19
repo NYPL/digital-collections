@@ -1,6 +1,6 @@
 {
   "name": "digital-collections",
-  "version": "0.3.2",
+  "version": "0.3.4",
   "private": true,
   "scripts": {
     "dev": "next dev",
@@ -47,6 +47,7 @@
     "googleapis": "129.0.0",
     "mapbox-gl": "^3.10.0",
     "maplibre-gl": "^5.2.0",
+    "html-react-parser": "^5.2.2",
     "newrelic": "12.5.1",
     "next": "14.2.18",
     "react": "18.2.0",

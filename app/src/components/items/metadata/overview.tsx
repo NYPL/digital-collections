@@ -49,101 +49,20 @@ const MetadataOverview = ({ item }) => {
             Item metadata
           </Heading>
 
-          {/* {
-            item.metadata?.keys?.map((field, value)=>{
-              if (value !== '' ) { 
-                return (
+          {Object.keys(item.metadata)?.map((field) => {
+            // return (<Text> goodbye </Text>)
+            const value = item.metadata[field];
+            if (value !== "") {
+              return (
                 <>
-                    <Text size="overline1" marginBottom="xs">
-                      {metadataFieldToDisplay[field]}
-                    </Text>
-                    <Text marginBottom="m">
-                      {value}
-                    </Text>
+                  <Text size="overline1" marginBottom="xs">
+                    {metadataFieldToDisplay[field]}
+                  </Text>
+                  <Text marginBottom="m">{value}</Text>
                 </>
-              ) }
-            })
-          } */}
-
-          <Text size="overline1" marginBottom="xs">
-            Title
-          </Text>
-          <Text marginBottom="m">{item.metadata.title}</Text>
-
-          <Text size="overline1" marginBottom="xs">
-            Names
-          </Text>
-          <Text marginBottom="m">{item.metadata.names}</Text>
-
-          <Text size="overline1" marginBottom="xs">
-            Collection
-          </Text>
-          <Text marginBottom="m">{item.metadata.collection}</Text>
-
-          <Text size="overline1" marginBottom="xs">
-            Dates / Origin
-          </Text>
-          <Text marginBottom="m">{item.metadata.origin}</Text>
-
-          <Text size="overline1" marginBottom="xs">
-            Table of Contents
-          </Text>
-          <Text marginBottom="m">{item.metadata.tableOfContents}</Text>
-
-          <Text size="overline1" marginBottom="xs">
-            Library Locations
-          </Text>
-          <Text marginBottom="m">{item.metadata.locations}</Text>
-
-          <Text size="overline1" marginBottom="xs">
-            Subjects
-          </Text>
-          <Text marginBottom="m">{item.metadata.subjects}</Text>
-
-          <Text size="overline1" marginBottom="xs">
-            Genres
-          </Text>
-          <Text marginBottom="m">{item.metadata.genres}</Text>
-
-          <Text size="overline1" marginBottom="xs">
-            Notes
-          </Text>
-          <Text marginBottom="m">{item.metadata.notes}</Text>
-
-          <Text size="overline1" marginBottom="xs">
-            Physical Description
-          </Text>
-          <Text marginBottom="m">{item.metadata.physicalDescription}</Text>
-
-          <Text size="overline1" marginBottom="xs">
-            Abstract
-          </Text>
-          <Text marginBottom="m">{item.metadata.abstract}</Text>
-
-          <Text size="overline1" marginBottom="xs">
-            Types
-          </Text>
-          <Text marginBottom="m">{item.metadata.typeOfResource}</Text>
-
-          <Text size="overline1" marginBottom="xs">
-            Languages
-          </Text>
-          <Text marginBottom="m">{item.metadata.languages}</Text>
-
-          <Text size="overline1" marginBottom="xs">
-            Identifiers
-          </Text>
-          <Text marginBottom="m">{item.metadata.identifiers}</Text>
-
-          <Text size="overline1" marginBottom="xs">
-            Access
-          </Text>
-          <Text marginBottom="m">{item.metadata.access}</Text>
-
-          <Text size="overline1" marginBottom="xs">
-            Rights
-          </Text>
-          <Text marginBottom="m">{item.metadata.rights}</Text>
+              );
+            }
+          })}
         </Flex>
       </Box>
     </>

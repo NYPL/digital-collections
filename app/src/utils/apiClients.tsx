@@ -107,7 +107,7 @@ export class RepoApi {
   }
 
   /**
-   * Returns a map of UUID to item count.
+   * Returns a map of UUID to item count. Replaced by Collections API.
    */
   static async getItemsCountFromUUIDs(uuids: string[]) {
     const apiUrl = `${process.env.API_URL}/api/v2/items/counts`;
@@ -218,7 +218,25 @@ export class CollectionsApi {
     page?: number;
     perPage?: number;
   } = {}) {
-    let apiUrl = `${process.env.COLLECTIONS_API_URL}/collections?page=${page}&perPage=${perPage}&sort=${sort}&q=${keyword}`;
+    let apiUrl = `${process.env.COLLECTIONS_API_URL}/collections?page=${page}&perPage=${perPage}&sort=${sort}&keyword=${keyword}`;
+    const response = await fetchApi({
+      apiUrl: apiUrl,
+      options: { isRepoApi: false },
+    });
+    return response;
+  }
+
+  static async getCollectionData(uuid: string) {
+    let apiUrl = `${process.env.COLLECTIONS_API_URL}/collections/${uuid}`;
+    const response = await fetchApi({
+      apiUrl: apiUrl,
+      options: { isRepoApi: false },
+    });
+    return response;
+  }
+
+  static async getCollectionChildren(uuid: string) {
+    let apiUrl = `${process.env.COLLECTIONS_API_URL}/collections/${uuid}/children`;
     const response = await fetchApi({
       apiUrl: apiUrl,
       options: { isRepoApi: false },
@@ -252,7 +270,11 @@ export class CollectionsApi {
     page?: number;
     perPage?: number;
   } = {}): Promise<any> {
-    let apiUrl = `${process.env.COLLECTIONS_API_URL}/search/index?q=${keyword}${filters}&sort=${sort}&page=${page}&perPage=${perPage}`;
+    // let apiUrl = '';
+    // keyword? apiUrl = `${process.env.COLLECTIONS_API_URL}/search/""${filters}&sort=${sort}&page=${page}&perPage=${perPage}` : apiUrl = `${process.env.COLLECTIONS_API_URL}/search/${keyword}/${filters}&sort=${sort}&page=${page}&perPage=${perPage}`;
+    let apiUrl = `${process.env.COLLECTIONS_API_URL}/search/?q=${keyword}${filters}&sort=${sort}&page=${page}&perPage=${perPage}`;
+    console.log("api URL is: ", apiUrl);
+
     const response = await fetchApi({
       apiUrl: apiUrl,
       options: { isRepoApi: false },
@@ -267,5 +289,50 @@ export class CollectionsApi {
       options: { isRepoApi: false },
     });
     return response;
+  }
+
+  /**
+   * Returns mapping of given collection UUIDs to their item counts.
+   * @param {string[]} uuids - Array of collection UUIDs
+   *
+   * @returns {Promise<any>}
+   **/
+  static async getItemsCountFromUUIDs(uuids: string[]) {
+    const apiUrl = `${process.env.COLLECTIONS_API_URL}/collections/item_counts`;
+    const response = await fetchApi({
+      apiUrl: apiUrl,
+      options: {
+        method: "POST",
+        body: { uuids },
+      },
+    });
+    const counts = response?.data;
+    return counts || {};
+  }
+
+  static async getHomePageData() {
+    const randomNumber = Math.floor(Math.random() * 2);
+    const lanes: LaneDataType[] = data.lanes as unknown as LaneDataType[];
+
+    // Get all the UUIDs from the collections
+    const allCollectionUUIDs: string[] = lanes.reduce((acc, lane) => {
+      return acc.concat(lane.collections.map((collection) => collection.uuid));
+    }, [] as string[]);
+    const uuidtoItemCountMap =
+      await this.getItemsCountFromUUIDs(allCollectionUUIDs);
+
+    // Update the collections for each lane with the number of items
+    const updatedLanes = lanes.map((lane) => {
+      const updatedCollections = lane.collections.map((collection) => {
+        return {
+          ...collection,
+          numberOfDigitizedItems: uuidtoItemCountMap[collection.uuid] || "0",
+        };
+      });
+      return { ...lane, collections: updatedCollections };
+    });
+
+    const newResponse = { randomNumber, lanesWithNumItems: updatedLanes };
+    return newResponse;
   }
 }

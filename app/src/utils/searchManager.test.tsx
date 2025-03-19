@@ -4,7 +4,12 @@ import {
   DEFAULT_SEARCH_SORT,
 } from "../config/constants";
 import { Filter } from "../types/FilterType";
-import { GeneralSearchManager, CollectionSearchManager } from "./searchManager";
+import {
+  GeneralSearchManager,
+  CollectionSearchManager,
+  filterToString,
+  stringToFilter,
+} from "./searchManager";
 
 describe("SearchManager", () => {
   describe("GeneralSearchManager individual params", () => {
@@ -59,36 +64,44 @@ describe("SearchManager", () => {
 
     it("should handle search submit wth no keywords", () => {
       const result = manager.handleSearchSubmit();
-      expect(result).toBe("keywords=test");
+      expect(result).toBe("q=test");
     });
 
     it("should handle sort change", () => {
       const result = manager.handleSortChange("date-asc");
-      expect(result).toBe("keywords=test&sort=date-asc");
+      expect(result).toBe("q=test&sort=date-asc");
     });
 
     it("should handle page change", () => {
       const result = manager.handlePageChange(2);
-      expect(result).toBe("keywords=test&sort=date-asc&page=2");
+      expect(result).toBe("q=test&sort=date-asc&page=2");
     });
 
     it("should handle adding filters", () => {
       const filter1: Filter = { filter: "topic", value: "art" };
       const result1 = manager.handleAddFilter(filter1);
       expect(result1).toBe(
-        "keywords=test&sort=date-asc&page=2&filters=%5Btopic%3Dart%5D"
+        "q=test&sort=date-asc&page=2&filters=%5Btopic%3Dart%5D"
       );
 
       const filter2: Filter = { filter: "genre", value: "music" };
       const result2 = manager.handleAddFilter(filter2);
       expect(result2).toBe(
-        "keywords=test&sort=date-asc&page=2&filters=%5Btopic%3Dart%5D%5Bgenre%3Dmusic%5D"
+        "q=test&sort=date-asc&page=2&filters=%5Btopic%3Dart%5D%5Bgenre%3Dmusic%5D"
+      );
+    });
+
+    it("should handle removing a filter", () => {
+      const filter1: Filter = { filter: "genre", value: "music" };
+      const result1 = manager.handleRemoveFilter(filter1);
+      expect(result1).toBe(
+        "q=test&sort=date-asc&page=2&filters=%5Btopic%3Dart%5D"
       );
     });
 
     it("should handle clearing all filters", () => {
       const result = manager.clearAllFilters();
-      expect(result).toBe("keywords=test&sort=date-asc");
+      expect(result).toBe("q=test&sort=date-asc");
     });
   });
 
@@ -143,6 +156,62 @@ describe("SearchManager", () => {
     it("should handle page change", () => {
       const result = manager.handlePageChange(2);
       expect(result).toBe("q=test&sort=title-asc&page=2");
+    });
+  });
+
+  describe("stringToFilter", () => {
+    it("should return an empty array for null input", () => {
+      expect(stringToFilter(null)).toEqual([]);
+    });
+
+    it("should return an empty array for an empty string", () => {
+      expect(stringToFilter("")).toEqual([]);
+    });
+
+    it("should handle a single filter correctly", () => {
+      expect(stringToFilter("[rights=pd]")).toEqual([
+        { filter: "rights", value: "pd" },
+      ]);
+    });
+
+    it("should handle multiple filters correctly", () => {
+      expect(stringToFilter("[rights=pd][topic=music]")).toEqual([
+        { filter: "rights", value: "pd" },
+        { filter: "topic", value: "music" },
+      ]);
+    });
+
+    it("should handle filters with spaces", () => {
+      expect(stringToFilter("[format=Long Is land]")).toEqual([
+        { filter: "format", value: "Long Is land" },
+      ]);
+    });
+  });
+
+  describe("filterToString", () => {
+    it("should return an empty string for an empty array", () => {
+      expect(filterToString([])).toBe("");
+    });
+
+    it("should convert a single filter to a string", () => {
+      expect(filterToString([{ filter: "rights", value: "pd" }])).toBe(
+        "[rights=pd]"
+      );
+    });
+
+    it("should convert multiple filters to a string", () => {
+      expect(
+        filterToString([
+          { filter: "rights", value: "pd" },
+          { filter: "topic", value: "music" },
+        ])
+      ).toBe("[rights=pd][topic=music]");
+    });
+
+    it("should handle filters with spaces", () => {
+      expect(
+        filterToString([{ filter: "format", value: "Long Is land" }])
+      ).toBe("[format=Long Is land]");
     });
   });
 });

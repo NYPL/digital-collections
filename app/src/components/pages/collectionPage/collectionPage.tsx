@@ -1,61 +1,58 @@
 "use client";
 import {
   Box,
-  Text,
   Heading,
   Flex,
-  HorizontalRule,
-  TagSet,
-  ButtonGroup,
-  Button,
   Link,
-  SearchBar,
   Icon,
   Pagination,
 } from "@nypl/design-system-react-components";
 import React, { useRef } from "react";
 import Filters from "../../search/filters/filters";
+import CollectionStructure from "../../collectionStructure/collectionStructure";
 import { headerBreakpoints } from "@/src/utils/breakpoints";
+import { CollectionSearch } from "../../search/collectionSearch";
+import { MobileSearchBanner } from "../../mobileSearchBanner/mobileSearchBanner";
 import { displayResults, totalNumPages } from "@/src/utils/utils";
 import {
   CARDS_PER_PAGE,
+  DEFAULT_FILTERS,
   DEFAULT_PAGE_NUM,
   DEFAULT_SEARCH_SORT,
   DEFAULT_SEARCH_TERM,
   SEARCH_SORT_LABELS,
 } from "@/src/config/constants";
 import SearchCardsGrid from "../../grids/searchCardsGrid";
-import { GeneralSearchManager } from "@/src/utils/searchManager";
-import { stringToFilter } from "@/src/context/SearchProvider";
+import {
+  GeneralSearchManager,
+  stringToFilter,
+  transformToAvailableFilters,
+} from "@/src/utils/searchManager";
 import { usePathname, useRouter } from "next/navigation";
 import SortMenu from "../../sortMenu/sortMenu";
+import ActiveFilters from "../../search/filters/activeFilters";
+import CollectionMetadata from "../../collectionMetadata/collectionMetadata";
 
-const textLink = (href, text) => {
-  return (
-    <a
-      style={{
-        color: "unset",
-        textDecorationLine: "underline",
-        lineHeight: "150%",
-        textUnderlinePosition: "from-font",
-        textDecorationThickness: "1px",
-      }}
-      href={href}
-    >
-      {text}
-    </a>
-  );
-};
-
-const CollectionPage = ({ slug, data, searchParams }) => {
+const CollectionPage = ({
+  slug,
+  searchResults,
+  searchParams,
+  collectionData,
+  collectionChildren,
+}) => {
   const headingRef = useRef<HTMLHeadingElement>(null);
-  const searchManager = new GeneralSearchManager({
+
+  const collectionSearchManager = new GeneralSearchManager({
     initialPage: Number(searchParams?.page) || DEFAULT_PAGE_NUM,
     initialSort: searchParams?.sort || DEFAULT_SEARCH_SORT,
     initialFilters: stringToFilter(searchParams?.filters),
-    initialKeywords: searchParams?.keywords || DEFAULT_SEARCH_TERM,
+    initialKeywords: searchParams?.q || DEFAULT_SEARCH_TERM,
+    initialAvailableFilters: searchResults?.availableFilters
+      ? transformToAvailableFilters(searchResults?.availableFilters)
+      : DEFAULT_FILTERS,
   });
-  const totalPages = totalNumPages(data.numResults, CARDS_PER_PAGE);
+
+  const totalPages = totalNumPages(searchResults.numResults, CARDS_PER_PAGE);
   const { push } = useRouter();
   const pathname = usePathname();
 
@@ -66,6 +63,7 @@ const CollectionPage = ({ slug, data, searchParams }) => {
 
   return (
     <Box id="mainContent">
+      <MobileSearchBanner />
       <Box
         sx={{
           background: "ui.bg.default",
@@ -88,7 +86,10 @@ const CollectionPage = ({ slug, data, searchParams }) => {
           >
             {slug}
           </Heading>
-          <Filters headingText="Search this collection" ref={headingRef} />
+          <Filters
+            headingText="Refine your results"
+            searchManager={collectionSearchManager}
+          />
         </Box>
       </Box>
       <Box
@@ -99,162 +100,54 @@ const CollectionPage = ({ slug, data, searchParams }) => {
           paddingRight: { base: "m", xl: "s" },
         }}
       >
-        <Flex alignContent="center" alignItems="center" gap="xs">
-          <Text size="subtitle2" sx={{ margin: 0, fontWeight: 400 }}>
-            Filters applied:
-          </Text>
-          <TagSet
-            isDismissible
-            id="search-filter-tags"
-            onClick={() => {}}
-            tagSetData={[
-              { id: "audio", label: "Audio" },
-              { id: "video", label: "Video" },
-            ]}
-            type="filter"
-          />
-        </Flex>
-        <HorizontalRule />
-        <Flex marginTop="m" marginBottom="m" flexDir="column">
-          <Heading size="heading6" marginBottom="xs">
-            Collection data
-          </Heading>
-          <Text marginBottom="xs">
-            This collection is also available in Archives & Manuscripts
-          </Text>
-          <ButtonGroup marginBottom="m">
-            <Button buttonType="secondary" id="finding-aid-btn">
-              View Finding Aid
-            </Button>
-            <Button buttonType="secondary" id="catalog-btn">
-              View Catalog
-            </Button>
-          </ButtonGroup>
-          <Text size="overline1" marginBottom="xs">
-            Dates / Origin
-          </Text>
-          <Text marginBottom="m">
-            Date created: {textLink("/search/index?year_begin=1800", "1800")}{" "}
-            (approximate)
-          </Text>
-          <Text size="overline1" marginBottom="xs">
-            Library Locations
-          </Text>
-          <Text marginBottom="m">
-            {textLink(
-              "/divisions/billy-rose-theatre-division",
-              "Example division"
-            )}
-          </Text>
-          <Link hasVisitedState={false} isUnderlined={false}>
-            See more collection data
-          </Link>
-        </Flex>
+        <ActiveFilters searchManager={collectionSearchManager} />
+        <CollectionMetadata data={collectionData} />
         <Flex
           gap="xxl"
           sx={{
             flexDir: { base: "column", md: "row" },
           }}
         >
-          <Box
-            sx={{
-              background: "ui.bg.default",
-              padding: "l",
-              height: "400px",
-              minWidth: "300px",
-              justifyItems: "center",
-            }}
-          >
-            <Heading size="heading6">Collection structure</Heading>
-          </Box>
+          <CollectionStructure data={collectionChildren} />
           <Box width="100%">
+            <CollectionSearch />
             <Flex
-              flexDir="column"
               sx={{
-                background: "ui.bg.default",
-                paddingTop: "s",
-                paddingBottom: "s",
-                paddingLeft: "m",
-                paddingRight: "m",
-                marginBottom: "l",
-              }}
-            >
-              <SearchBar
-                headingText={
-                  <Heading
-                    sx={{ marginBottom: "xs", fontSize: "16px !important" }}
-                    size="heading6"
-                  >
-                    Search this collection:
-                  </Heading>
-                }
-                id="searchbar"
-                invalidText="Could not find the item"
-                labelText="Search this collection by item title"
-                onSubmit={() => {}}
-                textInputProps={{
-                  labelText: "Search this collection by item title",
-                  name: "textInputName",
-                  placeholder: "Search this collection by item title",
-                }}
-                sx={{
-                  width: "fill",
-                  flexFlow: "row nowrap",
-                  button: {
-                    borderRadius: "0px 2px 2px 0px",
-                    "> svg": {
-                      width: "14px",
-                      height: "14px",
-                    },
-                    paddingTop: "xs",
-                    paddingBottom: "xs",
-                    paddingLeft: "s !important",
-                    paddingRight: "s !important",
-                    "> span": {
-                      display: "block !important",
-                    },
+                [`@media screen and (min-width: ${headerBreakpoints.lgMobile}px)`]:
+                  {
+                    flexDir: "row",
+                    marginBottom: "s",
+                    alignItems: "center",
                   },
-                  [`@media screen and (max-width: ${headerBreakpoints.lgMobile}px)`]:
-                    {
-                      button: {
-                        padding: "xs !important",
-                        gap: 0,
-                        "> span": {
-                          display: "none !important",
-                        },
-                        "> svg": {
-                          width: "18px",
-                          height: "18px",
-                        },
-                      },
-                    },
-                }}
-              />
-            </Flex>
-            <Flex
-              marginTop="xl"
-              marginBottom="s"
-              alignItems="center"
-              justifyContent="space-between"
+                justifyContent: "space-between",
+                flexDir: "column",
+                marginBottom: "l",
+                marginTop: "l",
+                gap: "m",
+                alignItems: "flex-start",
+              }}
             >
               <Heading
                 size="heading5"
                 ref={headingRef}
                 tabIndex={-1}
                 margin="0"
+                aria-live="polite"
               >{`Displaying ${displayResults(
-                data.numResults,
+                searchResults.numResults,
                 CARDS_PER_PAGE,
                 1
-              )}
-                                results`}</Heading>
+              )} results`}</Heading>
               <SortMenu
                 options={SEARCH_SORT_LABELS}
-                searchManager={searchManager}
+                searchManager={collectionSearchManager}
                 updateURL={updateURL}
               />
             </Flex>
-            <SearchCardsGrid keywords={data.keyword} results={data.results} />
+            <SearchCardsGrid
+              keywords={searchResults.q}
+              results={searchResults.results}
+            />
             <Flex marginTop="xxl" marginBottom="xxl" alignContent="center">
               <Link
                 minWidth="100px"
@@ -267,12 +160,11 @@ const CollectionPage = ({ slug, data, searchParams }) => {
                 Back to top{"  "}
                 <Icon name="arrow" iconRotation="rotate180" size="xsmall" />
               </Link>
-
               <Pagination
                 id="pagination-id"
                 initialPage={1}
                 currentPage={1}
-                pageCount={10}
+                pageCount={10} //totalPages
                 sx={{
                   justifyContent: "flex-end",
                   gap: "s",
