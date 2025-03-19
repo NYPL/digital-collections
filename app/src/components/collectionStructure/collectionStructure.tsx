@@ -7,7 +7,7 @@ import {
   Heading,
   Tooltip,
 } from "@nypl/design-system-react-components";
-import { sampleStructure } from "__tests__/__mocks__/data/mockCollectionStructure";
+import { mockCollectionChildrenResponse } from "__tests__/__mocks__/data/mockCollectionStructure";
 import { useScrollIntoViewIfNeeded } from "@/src/hooks/useScrollIntoViewIfNeeded";
 import { headerBreakpoints } from "@/src/utils/breakpoints";
 
@@ -68,7 +68,7 @@ const fetchChildren = async (
         return [];
       };
 
-      resolve(findChildren(sampleStructure, title));
+      resolve(findChildren(mockCollectionChildrenResponse, title));
     }, 1000);
   });
 };

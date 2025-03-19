@@ -184,6 +184,24 @@ export class CollectionsApi {
     return response;
   }
 
+  static async getCollectionData(uuid: string) {
+    let apiUrl = `${process.env.COLLECTIONS_API_URL}/collections/${uuid}`;
+    const response = await fetchApi({
+      apiUrl: apiUrl,
+      options: { isRepoApi: false },
+    });
+    return response;
+  }
+
+  static async getCollectionChildren(uuid: string) {
+    let apiUrl = `${process.env.COLLECTIONS_API_URL}/collections/${uuid}/children`;
+    const response = await fetchApi({
+      apiUrl: apiUrl,
+      options: { isRepoApi: false },
+    });
+    return response;
+  }
+
   /**
    * Fetches search results based on the provided parameters, for /search/index and /collections/[uuid] pages.
    *
