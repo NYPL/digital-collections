@@ -38,7 +38,7 @@ describe("SearchProvider", () => {
         <TestComponent />
       </SearchProvider>
     );
-
+    console.log("document.body.textContent is: ", document.body.textContent);
     expect(document.body.textContent).toContain("2");
     expect(document.body.textContent).toContain("painting");
   });
