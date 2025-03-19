@@ -6,6 +6,8 @@ import CollectionPage from "@/src/components/pages/collectionPage/collectionPage
 import { mockSearchResponse } from "__tests__/__mocks__/data/collectionsApi/mockSearchResponse";
 import { CollectionsApi } from "@/src/utils/apiClients";
 import { SearchParams } from "@/search/index/page";
+import { mockCollectionChildrenResponse } from "__tests__/__mocks__/data/mockCollectionStructure";
+import { mockCollectionResponse } from "__tests__/__mocks__/data/collectionsApi/mockCollectionResponse";
 
 type CollectionProps = {
   params: { slug: string };
@@ -29,12 +31,19 @@ export default async function Collection({
   params,
   searchParams,
 }: CollectionProps) {
-  const data = await CollectionsApi.getSearchData({
-    keyword: searchParams.keywords,
-    sort: searchParams.sort,
-    page: searchParams.page,
-    //filters: collection
-  });
+  const searchResults = //await CollectionsApi.getSearchData({
+    //   keyword: searchParams.keywords,
+    //   sort: searchParams.sort,
+    //   page: searchParams.page,
+    //   //filters: searchParams.filters + [Collection=slug], // Needs collection filter every time
+    // });
+    mockSearchResponse;
+
+  let collectionData = //await CollectionsApi.getCollectionData();
+    mockCollectionResponse;
+
+  let collectionChildren = // await CollectionsApi.getCollectionChildren();
+    mockCollectionChildrenResponse;
 
   return (
     <PageLayout
@@ -55,7 +64,9 @@ export default async function Collection({
       <CollectionPage
         slug={"Example collection"}
         searchParams={searchParams}
-        data={mockSearchResponse}
+        searchResults={searchResults}
+        collectionData={collectionData}
+        collectionChildren={collectionChildren}
       />
     </PageLayout>
   );

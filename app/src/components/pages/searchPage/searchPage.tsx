@@ -7,7 +7,7 @@ import {
   Link,
   Icon,
 } from "@nypl/design-system-react-components";
-import React, { useRef } from "react";
+import React, { useEffect, useRef } from "react";
 import { CARDS_PER_PAGE, SEARCH_SORT_LABELS } from "@/src/config/constants";
 import { displayResults, totalNumPages } from "@/src/utils/utils";
 import Filters from "../../search/filters/filters";
@@ -19,9 +19,9 @@ import { MobileSearchBanner } from "../../mobileSearchBanner/mobileSearchBanner"
 import SortMenu from "../../sortMenu/sortMenu";
 import ActiveFilters from "../../search/filters/activeFilters";
 
-const SearchPage = ({ data }) => {
+const SearchPage = ({ searchResults }) => {
   const { searchManager } = useSearchContext();
-  const totalPages = totalNumPages(data.numResults, CARDS_PER_PAGE);
+  const totalPages = totalNumPages(searchResults.numResults, CARDS_PER_PAGE);
   const { push } = useRouter();
   const pathname = usePathname();
   const updateURL = async (queryString) => {
@@ -29,7 +29,6 @@ const SearchPage = ({ data }) => {
   };
 
   const headingRef = useRef<HTMLHeadingElement>(null);
-
   return (
     <Box id="mainContent">
       <MobileSearchBanner />
@@ -58,11 +57,14 @@ const SearchPage = ({ data }) => {
             }}
           >
             {`Displaying ${displayResults(
-              data.numResults,
+              searchResults.numResults,
               CARDS_PER_PAGE,
               searchManager.page
-            )}
-                    results for "${searchManager.keywords}"`}
+            )} results ${
+              searchManager.keywords?.length > 0
+                ? `for "${searchManager.keywords}"`
+                : ``
+            }`}
           </Heading>
           <Filters
             searchManager={searchManager}
@@ -105,19 +107,20 @@ const SearchPage = ({ data }) => {
             tabIndex={-1}
             margin="0"
           >{`Displaying ${displayResults(
-            data.numResults,
+            searchResults.numResults,
             CARDS_PER_PAGE,
             searchManager.page
-          )}
-                                        results`}</Heading>
-
+          )} results`}</Heading>
           <SortMenu
             options={SEARCH_SORT_LABELS}
             searchManager={searchManager}
             updateURL={updateURL}
           />
         </Flex>
-        <SearchCardsGrid keywords={data.keyword} results={data.results} />
+        <SearchCardsGrid
+          keywords={searchResults.keyword}
+          results={searchResults.results}
+        />
         <Flex
           paddingLeft="s"
           paddingRight="s"

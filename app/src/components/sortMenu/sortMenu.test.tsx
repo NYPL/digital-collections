@@ -1,6 +1,7 @@
 import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import SortMenu from "./sortMenu";
 import {
+  DEFAULT_FILTERS,
   DEFAULT_SEARCH_SORT,
   DEFAULT_SEARCH_TERM,
 } from "@/src/config/constants";
@@ -21,6 +22,7 @@ describe("SortMenu", () => {
       initialSort: DEFAULT_SEARCH_SORT,
       initialFilters: [],
       initialKeywords: DEFAULT_SEARCH_TERM,
+      initialAvailableFilters: DEFAULT_FILTERS,
     });
   });
 

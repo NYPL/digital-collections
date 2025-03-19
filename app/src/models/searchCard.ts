@@ -3,7 +3,12 @@ import type {
   SearchResultHighlightType,
   SearchResultRecordType,
 } from "../types/SearchCardType";
-import { imageURL, formatHighlightText, capitalize } from "../utils/utils";
+import {
+  imageURL,
+  formatHighlightText,
+  capitalize,
+  getRecordTypeFromURINYPLLink,
+} from "../utils/utils";
 
 export class SearchCardModel {
   title: string;
@@ -21,13 +26,18 @@ export class SearchCardModel {
   firstIndexed: string;
 
   constructor(data: any) {
+    // console.log("data.highlights is: ", data.highlights)
+
     this.title = data.title;
     this.uuid = data.uuid;
     this.url =
       data.recordType === "item"
         ? `/items/${data.uuid}`
         : `/collections/${data.uuid}`;
-    this.recordType = capitalize(data.recordType) as SearchResultRecordType;
+    // this.recordType = capitalize(data.recordType) as SearchResultRecordType;
+    this.recordType = getRecordTypeFromURINYPLLink(
+      data.type
+    ) as SearchResultRecordType;
     this.imageID = data.imageID;
     this.imageURL = imageURL(data.imageID, "square", "!288,288", "0");
     this.numberOfDigitizedItems = data.numberOfDigitizedItems;
@@ -37,7 +47,10 @@ export class SearchCardModel {
     this.contentType = data.contentType
       ? (capitalize(data.contentType) as SearchResultContentType)
       : null;
-    this.highlights = formatHighlightText(data.highlights);
+    this.highlights =
+      Object.keys(data.highlights).length > 0
+        ? formatHighlightText(data.highlights)
+        : [{ field: "", text: "" }];
     this.firstIndexed = data.firstIndexed_dt;
   }
 }
