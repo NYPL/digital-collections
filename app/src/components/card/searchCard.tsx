@@ -15,7 +15,6 @@ import SearchCardType, {
   SearchResultRecordType,
 } from "@/src/types/SearchCardType";
 import { TRUNCATED_SEARCH_CARD_LENGTH } from "@/src/config/constants";
-import parse from "html-react-parser";
 
 export interface SearchCardProps {
   result: SearchCardType;

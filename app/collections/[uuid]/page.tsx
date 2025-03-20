@@ -8,6 +8,7 @@ import { CollectionsApi } from "@/src/utils/apiClients";
 import { SearchParams } from "@/search/index/page";
 import { mockCollectionChildrenResponse } from "__tests__/__mocks__/data/mockCollectionStructure";
 import { mockCollectionResponse } from "__tests__/__mocks__/data/collectionsApi/mockCollectionResponse";
+import { Filter } from "../../src/types/FilterType";
 
 type CollectionProps = {
   params: { uuid: string };
@@ -31,16 +32,12 @@ export default async function Collection({
   params,
   searchParams,
 }: CollectionProps) {
-  const collectionFilters =
-    searchParams.filters + [{ filter: "Collection", value: `${params.uuid}` }];
   const searchResults = await CollectionsApi.getSearchData({
-    keywords: searchParams.q,
+    keyword: searchParams.q,
     sort: searchParams.sort,
     page: searchParams.page,
-    filters: collectionFilters,
-    //searchParams.filters
-    // collectionFilters
-    // filters: searchParams.filters + [`Collection=slug`], // Needs collection filter every time
+    filters: searchParams.filters,
+    // filters: searchParams.filters + [`Collection=uuid`], // Needs collection filter every time
   });
 
   // mockSearchResponse;
