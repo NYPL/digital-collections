@@ -4,6 +4,7 @@ import {
 } from "../config/constants";
 import CollectionDataType from "@/src/types/CollectionDataType";
 import ItemDataType from "@/src/types/ItemDataType";
+import { AvailableFilter } from "../types/AvailableFilterType";
 
 /**
  * Represents a IIIF Image API URL, which will be used globally throughout the application.
@@ -132,12 +133,8 @@ export function formatHighlightText(highlights) {
   return result;
 }
 
-// TO DO: if the api returns the <em> tags... can we just use those instead?
+// TODO: if the api returns the <em> tags... can we just use those instead?
 function removeEMTagsFromHighlightText(text) {
-  console.log(
-    "cleaned up text is: ",
-    text.replaceAll("(?i)<em[^>]*>", " ").replaceAll("\\s+", " ").trim()
-  );
   return text.replace(/<em>(.*?)<\/em>/gi, "$1");
 }
 
@@ -152,4 +149,16 @@ export const getRecordTypeFromURINYPLLink = (link: any): string => {
   } else {
     return type;
   }
+};
+
+export const getCollectionFilterFromUUID = (
+  uuid: string,
+  filters: AvailableFilter[]
+): any => {
+  return filters.find((filterObject) => {
+    if (filterObject.name.split("||")[1] === uuid) {
+      console.log("MATCH");
+    }
+    return filterObject.name.split("||")[1] === uuid;
+  });
 };

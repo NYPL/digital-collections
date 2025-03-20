@@ -119,7 +119,7 @@ const SearchPage = ({ searchResults }) => {
         </Flex>
         <SearchCardsGrid
           keywords={searchResults.keyword}
-          results={searchResults.results}
+          results={searchResults}
         />
         <Flex
           paddingLeft="s"
