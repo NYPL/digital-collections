@@ -10,14 +10,14 @@ import { mockCollectionChildrenResponse } from "__tests__/__mocks__/data/mockCol
 import { mockCollectionResponse } from "__tests__/__mocks__/data/collectionsApi/mockCollectionResponse";
 
 type CollectionProps = {
-  params: { slug: string };
+  params: { uuid: string };
   searchParams: SearchParams;
 };
 
 export async function generateMetadata({
   params,
 }: CollectionProps): Promise<Metadata> {
-  const slug = params.slug; //  TODO: this needs to support both a slug or a uuid.
+  const slug = params.uuid; //  TODO: this needs to support both a slug or a uuid.
   // We will need to update this later to check if slug is a uuid and then get the slugified title of the collection.
   return {
     title: `${slug} - NYPL Digital Collections`,
@@ -32,7 +32,7 @@ export default async function Collection({
   searchParams,
 }: CollectionProps) {
   const collectionFilters =
-    searchParams.filters + [{ filter: "Collection", value: `${params.slug}` }];
+    searchParams.filters + [{ filter: "Collection", value: `${params.uuid}` }];
   const searchResults = await CollectionsApi.getSearchData({
     keywords: searchParams.q,
     sort: searchParams.sort,
@@ -58,13 +58,13 @@ export default async function Collection({
         { text: "Home", url: "/" },
         { text: "Collections", url: "/collections" },
         {
-          text: `${params.slug}`,
-          url: `/collections/${params.slug}`,
+          text: `${params.uuid}`,
+          url: `/collections/${params.uuid}`,
         },
       ]}
       adobeAnalyticsPageName={createAdobeAnalyticsPageName(
         "collections",
-        params.slug
+        params.uuid
       )}
     >
       <CollectionPage
