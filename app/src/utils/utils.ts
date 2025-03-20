@@ -155,10 +155,12 @@ export const getCollectionFilterFromUUID = (
   uuid: string,
   filters: AvailableFilter[]
 ): any => {
-  return filters.find((filterObject) => {
+  const filter = filters.find((filterObject) => {
     if (filterObject.name.split("||")[1] === uuid) {
       console.log("MATCH");
     }
     return filterObject.name.split("||")[1] === uuid;
   });
+  console.log("filter is: ", filter);
+  return filter;
 };

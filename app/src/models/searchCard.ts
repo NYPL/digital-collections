@@ -43,12 +43,15 @@ export class SearchCardModel {
       "correspondingCollectionFilter is: ",
       correspondingCollectionFilter
     );
+    const queryParam = correspondingCollectionFilter
+      ? `&Collection=${correspondingCollectionFilter}`
+      : "";
     this.title = data.title;
     this.uuid = data.uuid;
     this.url =
       recordType === "Item"
         ? `/items/${data.uuid}`
-        : `/collections/${data.uuid}`;
+        : `/collections/${data.uuid}${queryParam}`;
 
     // TODO: comment this back in when recordType is added to the endpoint
     // data.recordType === "item"
