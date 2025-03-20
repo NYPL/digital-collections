@@ -52,6 +52,8 @@ export class SearchCardModel {
       recordType === "Item"
         ? `/items/${data.uuid}`
         : `/collections/${data.uuid}${queryParam}`;
+    // http://localhost:3000/collections/5cd94760-c52a-012f-bcd4-3c075448cc4b&Collection=[object%20Object]
+    // : `/collections/${data.uuid}${queryParam}`;
 
     // TODO: comment this back in when recordType is added to the endpoint
     // data.recordType === "item"

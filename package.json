@@ -42,6 +42,7 @@
     "dotenv": "16.4.5",
     "eslint": "8.48.0",
     "googleapis": "129.0.0",
+    "html-react-parser": "^5.2.2",
     "newrelic": "12.5.1",
     "next": "14.2.18",
     "react": "18.2.0",
