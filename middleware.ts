@@ -4,7 +4,7 @@ export function middleware(req: NextRequest) {
   const url = req.nextUrl;
   const searchParams = url.searchParams;
 
-  // TO DO: add 'keyword' and 'keywords' to the list of params to change to 'q'
+  // TODO: add 'keyword' and 'keywords' to the list of params to change to 'q'
   if (searchParams.has("collection_keywords")) {
     const keywordValue = searchParams.get("collection_keywords");
 

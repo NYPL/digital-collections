@@ -30,14 +30,11 @@ export type SearchProps = {
 };
 
 export default async function Search({ searchParams }: SearchProps) {
-  // console.log("searchParams are: ", searchParams)
-  // console.log("keyword is: ", searchParams.q)
   revalidatePath("/search/index", "page");
   const pageName = searchParams.q ? "search-results" : "all-items";
 
   const searchResults = await CollectionsApi.getSearchData({
     keyword: searchParams.q,
-    // q: searchParams.q,
     sort: searchParams.sort,
     filters: searchParams.filters,
     page: searchParams.page,
@@ -53,8 +50,6 @@ export default async function Search({ searchParams }: SearchProps) {
     ),
   };
 
-  // console.log("update searchParams are: ", updatedSearchParams)
-  // console.log(" search results are: ", searchResults)
   return (
     <PageLayout
       activePage="search"

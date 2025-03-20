@@ -33,13 +33,7 @@ const onSiteMaterialBadge = (recordType: SearchResultRecordType) => {
   );
 };
 
-const searchCardLink = (record: SearchCardType) => {
-  return record.recordType === "Item"
-    ? `/items/${record.uuid}`
-    : `/collections/${record.uuid}`;
-};
-
-// TO DO: update recordType
+// TODO: update recordType
 const contentTypeTag = (result: SearchCardType) => {
   const displayLabel =
     result.recordType === "Item"
@@ -75,7 +69,6 @@ const highlightedText = ({ highlight, keyword }) => {
             fontWeight: "400",
             margin: 0,
           }}
-          // dangerouslySetInnerHTML={{ __html: ` ${highlight.field}` }}
         >
           {highlight.field}:{" "}
         </Text>
@@ -88,14 +81,12 @@ const highlightedText = ({ highlight, keyword }) => {
           (keyword: string) => keyword.toLowerCase() === word.toLowerCase()
         );
 
-        console.log("isKeyword? : ", isKeyword);
-
         return (
           <span key={index}>
             {isKeyword ? (
               <Text
                 sx={{
-                  // TO DO: Replace with design token.
+                  // TODO: Replace with design token.
                   backgroundColor: "rgba(249, 224, 142, 0.70)",
                   margin: 0,
                   display: "inline",
@@ -119,7 +110,6 @@ export const SearchCard = ({
   keywords,
   isLargerThanLargeTablet,
 }: SearchCardProps) => {
-  // console.log("result.highlights[0] is: ", result.highlights[0])
   const truncatedTitle = result.title.length > TRUNCATED_SEARCH_CARD_LENGTH;
   const card = (
     <Card
@@ -135,7 +125,7 @@ export const SearchCard = ({
         size: "default",
         src: result.imageURL,
       }}
-      mainActionLink={searchCardLink(result)}
+      mainActionLink={result.url}
       layout="row"
       // Card width 225 and content width 720
       maxWidth="945px"

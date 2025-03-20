@@ -146,7 +146,7 @@ const CollectionPage = ({
             </Flex>
             <SearchCardsGrid
               keywords={searchResults.q}
-              results={searchResults.results}
+              results={searchResults}
             />
             <Flex marginTop="xxl" marginBottom="xxl" alignContent="center">
               <Link

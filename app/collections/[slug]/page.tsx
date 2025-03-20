@@ -31,12 +31,16 @@ export default async function Collection({
   params,
   searchParams,
 }: CollectionProps) {
-  const collectionFilters = `Collection=${params.slug}` + searchParams.filters;
+  const collectionFilters =
+    searchParams.filters + [{ filter: "Collection", value: `${params.slug}` }];
   const searchResults = await CollectionsApi.getSearchData({
-    keyword: searchParams.keywords,
+    keywords: searchParams.q,
     sort: searchParams.sort,
     page: searchParams.page,
-    filters: collectionFilters, //searchParams.filters + [`Collection=slug`], // Needs collection filter every time
+    filters: collectionFilters,
+    //searchParams.filters
+    // collectionFilters
+    // filters: searchParams.filters + [`Collection=slug`], // Needs collection filter every time
   });
 
   // mockSearchResponse;
