@@ -15,6 +15,7 @@ import SearchCardType, {
   SearchResultRecordType,
 } from "@/src/types/SearchCardType";
 import { TRUNCATED_SEARCH_CARD_LENGTH } from "@/src/config/constants";
+import parse from "html-react-parser";
 
 export interface SearchCardProps {
   result: SearchCardType;
@@ -56,9 +57,36 @@ const contentTypeTag = (result: SearchCardType) => {
   );
 };
 
+const getHighlightText = (highlights) => {
+  console.log("get highlighted text: ", highlights);
+  return highlights?.map((highlight) => {
+    console.log("highlight is: ", highlight);
+    // return highlightedText({
+    //   highlight: highlight,
+    //   keyword: keywords,
+    // })
+    return (
+      <>
+        <Box noOfLines={2}>
+          <Text
+            as="span"
+            sx={{
+              fontWeight: "400",
+              margin: 0,
+            }}
+          >
+            {highlight.field}:{parse(highlights.text)}
+          </Text>
+        </Box>
+      </>
+    );
+  });
+};
+
 const highlightedText = ({ highlight, keyword }) => {
   const words = highlight.text.split(" ");
   const keywords = keyword.split(" ");
+
   return (
     <Box noOfLines={2}>
       {words.length > 0 && words[0] !== "" ? (
@@ -89,12 +117,14 @@ const highlightedText = ({ highlight, keyword }) => {
                   backgroundColor: "rgba(249, 224, 142, 0.70)",
                   margin: 0,
                   display: "inline",
+                  // dangerouslySetInnerHTML={{ __html: `${word}`}}
                 }}
               >
                 {word}
               </Text>
             ) : (
-              word
+              parse(word)
+              // word
             )}
             {index < words.length - 1 ? " " : ""}
           </span>
@@ -109,6 +139,7 @@ export const SearchCard = ({
   keywords,
   isLargerThanLargeTablet,
 }: SearchCardProps) => {
+  console.log("result.highlights is: ", result.highlights);
   const truncatedTitle = result.title.length > TRUNCATED_SEARCH_CARD_LENGTH;
   const card = (
     <Card
@@ -149,6 +180,9 @@ export const SearchCard = ({
         <Flex flexDir="column" gap="xs">
           {result.containsOnSiteMaterial &&
             onSiteMaterialBadge(result.recordType)}
+          {/* {keywords?.length > 0 &&
+          getHighlightText(result.hightlights)
+          } */}
           {keywords?.length > 0 &&
             highlightedText({
               highlight: result.highlights[0],

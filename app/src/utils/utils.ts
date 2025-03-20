@@ -121,15 +121,18 @@ export function displayResults(
 }
 
 export function formatHighlightText(highlights) {
-  console.log("highlights: ", highlights);
+  console.log("highlights before: ", highlights);
   const result = Object.entries(highlights)
     .map(([field, values]) => {
       return (values as string[]).map((text) => ({
         field,
-        text: removeEMTagsFromHighlightText(text),
+        text,
+        // text: removeEMTagsFromHighlightText(text),
       }));
     })
     .flat();
+  console.log("highlights after: ", result);
+
   return result;
 }
 
