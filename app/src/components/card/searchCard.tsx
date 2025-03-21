@@ -13,6 +13,7 @@ import {
 } from "@nypl/design-system-react-components";
 import SearchCardType, {
   SearchResultRecordType,
+  SearchResultHighlightType,
 } from "@/src/types/SearchCardType";
 import { TRUNCATED_SEARCH_CARD_LENGTH } from "@/src/config/constants";
 import parse from "html-react-parser";
@@ -57,9 +58,9 @@ const contentTypeTag = (result: SearchCardType) => {
   );
 };
 
-const getHighlightText = (highlights) => {
-  console.log("get highlighted text: ", highlights);
-  return highlights?.map((highlight) => {
+const getHighlightText = (highlights: SearchResultHighlightType) => {
+  console.log("getHighlightText: ", highlights);
+  return highlights?.map((highlight, index) => {
     console.log("highlight is: ", highlight);
     // return highlightedText({
     //   highlight: highlight,
@@ -77,6 +78,7 @@ const getHighlightText = (highlights) => {
           >
             {highlight.field}:{parse(highlights.text)}
           </Text>
+          <span key={index}>{parse(highlights.text)}</span>
         </Box>
       </>
     );
@@ -180,14 +182,23 @@ export const SearchCard = ({
         <Flex flexDir="column" gap="xs">
           {result.containsOnSiteMaterial &&
             onSiteMaterialBadge(result.recordType)}
-          {/* {keywords?.length > 0 &&
-          getHighlightText(result.hightlights)
-          } */}
+          {/* {console.log("result is: ", result)} */}
+          {console.log("result.highlights is: ", result.highlights)}
+          {console.log(
+            "result.highlights.length is: ",
+            result.highlights.length
+          )}
+
+          {console.log("result.highlights[0] is: ", result.highlights[0])}
           {keywords?.length > 0 &&
+            // console.log("result.highlights in keywords?.length > 0 case  is: ", result.highlights) // returns correct data
+            getHighlightText(result.hightlights)}
+
+          {/* {keywords?.length > 0 &&
             highlightedText({
               highlight: result.highlights[0],
               keyword: keywords,
-            })}
+            })} */}
           {contentTypeTag(result)}
         </Flex>
       </CardContent>
