@@ -13,8 +13,10 @@ import {
 } from "@nypl/design-system-react-components";
 import SearchCardType, {
   SearchResultRecordType,
+  SearchResultHighlightType,
 } from "@/src/types/SearchCardType";
 import { TRUNCATED_SEARCH_CARD_LENGTH } from "@/src/config/constants";
+import parse from "html-react-parser";
 
 export interface SearchCardProps {
   result: SearchCardType;
@@ -32,13 +34,18 @@ const onSiteMaterialBadge = (recordType: SearchResultRecordType) => {
   );
 };
 
+// TODO: update recordType
 const contentTypeTag = (result: SearchCardType) => {
   const displayLabel =
     result.recordType === "Item"
       ? result.contentType === "Image" && result.containsMultipleCaptures
         ? "Multiple images"
         : result.contentType
-      : result.recordType;
+        ? result.contentType
+        : "nullContentType"
+      : result.recordType
+      ? result.recordType
+      : "nullRecordType";
 
   return (
     <TagSet
@@ -51,20 +58,53 @@ const contentTypeTag = (result: SearchCardType) => {
   );
 };
 
+const getHighlightText = (highlights, keywords) => {
+  console.log("getHighlightText: ", highlights);
+  return highlights?.map((highlight, index) => {
+    console.log("highlight is: ", highlight);
+    return highlightedText({
+      highlight: highlight,
+      keyword: keywords,
+    });
+    // return (
+    //   <>
+    //     <Box noOfLines={2}>
+    //       <Text
+    //         as="span"
+    //         sx={{
+    //           fontWeight: "400",
+    //           margin: 0,
+    //         }}
+    //       >
+    //         {highlight.field}:
+    //       </Text>
+    //       <span key={index}>{parse(highlights.text)}</span>
+    //     </Box>
+    //   </>
+    // );
+  });
+};
+
 const highlightedText = ({ highlight, keyword }) => {
   const words = highlight.text.split(" ");
   const keywords = keyword.split(" ");
+
   return (
     <Box noOfLines={2}>
-      <Text
-        as="span"
-        sx={{
-          fontWeight: "400",
-          margin: 0,
-        }}
-      >
-        {highlight.field}:{" "}
-      </Text>
+      {words.length > 0 && words[0] !== "" ? (
+        <Text
+          as="span"
+          sx={{
+            fontWeight: "400",
+            margin: 0,
+          }}
+        >
+          {highlight.field}:{" "}
+        </Text>
+      ) : (
+        <></>
+      )}
+
       {words.map((word: string, index: number) => {
         const isKeyword = keywords.some(
           (keyword: string) => keyword.toLowerCase() === word.toLowerCase()
@@ -75,16 +115,18 @@ const highlightedText = ({ highlight, keyword }) => {
             {isKeyword ? (
               <Text
                 sx={{
-                  // TO DO: Replace with design token.
+                  // TODO: Replace with design token.
                   backgroundColor: "rgba(249, 224, 142, 0.70)",
                   margin: 0,
                   display: "inline",
+                  // dangerouslySetInnerHTML={{ __html: `${word}`}}
                 }}
               >
                 {word}
               </Text>
             ) : (
-              word
+              parse(word)
+              // word
             )}
             {index < words.length - 1 ? " " : ""}
           </span>
@@ -99,6 +141,7 @@ export const SearchCard = ({
   keywords,
   isLargerThanLargeTablet,
 }: SearchCardProps) => {
+  console.log("result.highlights is: ", result.highlights);
   const truncatedTitle = result.title.length > TRUNCATED_SEARCH_CARD_LENGTH;
   const card = (
     <Card
@@ -139,11 +182,16 @@ export const SearchCard = ({
         <Flex flexDir="column" gap="xs">
           {result.containsOnSiteMaterial &&
             onSiteMaterialBadge(result.recordType)}
+          {console.log("result.highlights[0] is: ", result.highlights[0])}
           {keywords?.length > 0 &&
+            // console.log("result.highlights in keywords?.length > 0 case  is: ", result.highlights) // returns correct data
+            getHighlightText(result.highlights, keywords)}
+
+          {/* {keywords?.length > 0 &&
             highlightedText({
               highlight: result.highlights[0],
               keyword: keywords,
-            })}
+            })} */}
           {contentTypeTag(result)}
         </Flex>
       </CardContent>

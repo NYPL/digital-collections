@@ -12,8 +12,11 @@ const SearchCardsGrid = ({ results, keywords }) => {
   const cardRef = useRef<HTMLDivElement | null>(null);
   return (
     <SimpleGrid columns={1} gap="grid.l">
-      {results?.map((result: SearchCardType, index: number) => {
-        const searchResult = new SearchCardModel(result);
+      {results.results?.map((result: SearchCardType, index: number) => {
+        const searchResult = new SearchCardModel(
+          result,
+          results.availableFilters.collection
+        );
         return (
           <SearchCard
             key={index}

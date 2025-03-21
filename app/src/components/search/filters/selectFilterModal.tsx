@@ -232,7 +232,7 @@ const SelectFilterModal = forwardRef<HTMLButtonElement, SelectFilterModalProps>(
                     setModalCurrent(selected);
                   }}
                 >
-                  {radioFilterOptions(currentOptions)}
+                  {radioFilterOptions(currentOptions, filter.name)}
                 </RadioGroup>
               </Box>
               <Flex>

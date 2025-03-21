@@ -29,7 +29,6 @@ const SearchPage = ({ searchResults }) => {
   };
 
   const headingRef = useRef<HTMLHeadingElement>(null);
-
   return (
     <Box id="mainContent">
       <MobileSearchBanner />
@@ -62,7 +61,7 @@ const SearchPage = ({ searchResults }) => {
               CARDS_PER_PAGE,
               searchManager.page
             )} results ${
-              searchManager.keywords.length > 0
+              searchManager.keywords?.length > 0
                 ? `for "${searchManager.keywords}"`
                 : ``
             }`}
@@ -120,7 +119,7 @@ const SearchPage = ({ searchResults }) => {
         </Flex>
         <SearchCardsGrid
           keywords={searchResults.keyword}
-          results={searchResults.results}
+          results={searchResults}
         />
         <Flex
           paddingLeft="s"

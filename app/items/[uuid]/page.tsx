@@ -15,7 +15,7 @@ type ItemProps = {
 
 const getItemModel = async (uuid: string) => {
   const data = await RepoApi.getItemData(uuid);
-  const item = new ItemModel(data);
+  const item = new ItemModel(data, uuid);
   return item;
 };
 
@@ -39,7 +39,7 @@ export default async function ItemPage({ params }: ItemProps) {
       activePage="item"
       breadcrumbs={[
         { text: "Home", url: "/" },
-        { text: "All Items", url: "/items" },
+        { text: "All Items", url: "/search/index" },
         {
           text: `${item.title}`,
           url: `/items/${params.uuid}`,

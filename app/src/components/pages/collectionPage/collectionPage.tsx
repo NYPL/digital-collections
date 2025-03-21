@@ -46,7 +46,7 @@ const CollectionPage = ({
     initialPage: Number(searchParams?.page) || DEFAULT_PAGE_NUM,
     initialSort: searchParams?.sort || DEFAULT_SEARCH_SORT,
     initialFilters: stringToFilter(searchParams?.filters),
-    initialKeywords: searchParams?.keywords || DEFAULT_SEARCH_TERM,
+    initialKeywords: searchParams?.q || DEFAULT_SEARCH_TERM,
     initialAvailableFilters: searchResults?.availableFilters
       ? transformToAvailableFilters(searchResults?.availableFilters)
       : DEFAULT_FILTERS,
@@ -145,8 +145,8 @@ const CollectionPage = ({
               />
             </Flex>
             <SearchCardsGrid
-              keywords={searchResults.keyword}
-              results={searchResults.results}
+              keywords={searchResults.q}
+              results={searchResults}
             />
             <Flex marginTop="xxl" marginBottom="xxl" alignContent="center">
               <Link

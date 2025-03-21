@@ -14,10 +14,7 @@ describe("Nav menu component", () => {
 
   it("has links", () => {
     const { getByLabelText } = render(<NavMenu render={1} />);
-    expect(getByLabelText("Items")).toHaveAttribute(
-      "href",
-      `/search/index?utf8=%E2%9C%93&keywords=`
-    );
+    expect(getByLabelText("Items")).toHaveAttribute("href", `/search/index`);
     expect(getByLabelText("Divisions")).toHaveAttribute("href", `/divisions`);
     expect(getByLabelText("Collections")).toHaveAttribute(
       "href",
