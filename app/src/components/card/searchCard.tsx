@@ -58,30 +58,30 @@ const contentTypeTag = (result: SearchCardType) => {
   );
 };
 
-const getHighlightText = (highlights: SearchResultHighlightType) => {
+const getHighlightText = (highlights, keywords) => {
   console.log("getHighlightText: ", highlights);
   return highlights?.map((highlight, index) => {
     console.log("highlight is: ", highlight);
-    // return highlightedText({
-    //   highlight: highlight,
-    //   keyword: keywords,
-    // })
-    return (
-      <>
-        <Box noOfLines={2}>
-          <Text
-            as="span"
-            sx={{
-              fontWeight: "400",
-              margin: 0,
-            }}
-          >
-            {highlight.field}:{parse(highlights.text)}
-          </Text>
-          <span key={index}>{parse(highlights.text)}</span>
-        </Box>
-      </>
-    );
+    return highlightedText({
+      highlight: highlight,
+      keyword: keywords,
+    });
+    // return (
+    //   <>
+    //     <Box noOfLines={2}>
+    //       <Text
+    //         as="span"
+    //         sx={{
+    //           fontWeight: "400",
+    //           margin: 0,
+    //         }}
+    //       >
+    //         {highlight.field}:
+    //       </Text>
+    //       <span key={index}>{parse(highlights.text)}</span>
+    //     </Box>
+    //   </>
+    // );
   });
 };
 
@@ -182,17 +182,10 @@ export const SearchCard = ({
         <Flex flexDir="column" gap="xs">
           {result.containsOnSiteMaterial &&
             onSiteMaterialBadge(result.recordType)}
-          {/* {console.log("result is: ", result)} */}
-          {console.log("result.highlights is: ", result.highlights)}
-          {console.log(
-            "result.highlights.length is: ",
-            result.highlights.length
-          )}
-
           {console.log("result.highlights[0] is: ", result.highlights[0])}
           {keywords?.length > 0 &&
             // console.log("result.highlights in keywords?.length > 0 case  is: ", result.highlights) // returns correct data
-            getHighlightText(result.hightlights)}
+            getHighlightText(result.highlights, keywords)}
 
           {/* {keywords?.length > 0 &&
             highlightedText({
