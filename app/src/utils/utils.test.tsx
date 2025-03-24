@@ -3,6 +3,7 @@ import {
   stringToSlug,
   createAdobeAnalyticsPageName,
   displayResults,
+  dcflFilterToString,
 } from "./utils";
 
 // TODO:
@@ -201,5 +202,34 @@ describe("displayResults", () => {
 
   test("displays correct range when perPage is greater than numFound", () => {
     expect(displayResults(5, 10, 1)).toBe("1-5 of 5");
+  });
+});
+
+describe("dcflFilterToString", () => {
+  test("generates the correct filter syntax for a single filter", () => {
+    expect(dcflFilterToString("[Name=Swope, Martha]")).toBe(
+      "name=Swope, Martha"
+    );
+    expect(
+      dcflFilterToString(
+        "[Collection=Print Collection portrait file||16ad5350-c52e-012f-aecf-58d385a7bc34]"
+      )
+    ).toBe(
+      "collection=Print Collection portrait file||16ad5350-c52e-012f-aecf-58d385a7bc34"
+    );
+  });
+
+  test("generates the correct filter syntax for multiple filter", () => {
+    expect(
+      dcflFilterToString(
+        "[Name=Swope, Martha][Collection=Print Collection portrait file||16ad5350-c52e-012f-aecf-58d385a7bc34]"
+      )
+    ).toBe(
+      "name=Swope, Martha&collection=Print Collection portrait file||16ad5350-c52e-012f-aecf-58d385a7bc34"
+    );
+  });
+
+  test("generates the correct filter syntax for no filters", () => {
+    expect(dcflFilterToString("")).toBe("");
   });
 });

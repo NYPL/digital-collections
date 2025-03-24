@@ -1,6 +1,6 @@
 import data from "../data/lanes";
 import type { LaneDataType } from "../types/Lane";
-import { imageURL, addCommas } from "./utils";
+import { imageURL, addCommas, dcflFilterToString } from "./utils";
 import defaultFeaturedItems from "../data/defaultFeaturedItemData";
 import {
   CARDS_PER_PAGE,
@@ -230,15 +230,14 @@ export class CollectionsApi {
   } = {}): Promise<any> {
     console.log("filters are: ", filters);
     console.log("");
-    // let apiUrl = '';
-    // keyword? apiUrl = `${process.env.COLLECTIONS_API_URL}/search/""${filters}&sort=${sort}&page=${page}&perPage=${perPage}` : apiUrl = `${process.env.COLLECTIONS_API_URL}/search/${keyword}/${filters}&sort=${sort}&page=${page}&perPage=${perPage}`;
-    // console.log("filters ")
-    // let parsedFilters = filters.
-    let filterString = "";
-    // filters?.forEach((filterArray)=>{
-    console.log("filterArray: ", typeof filters);
-    // })
-    let filterURL = filters.length > 0 ? `&${filters.toString()}` : "";
+
+    let filterString = dcflFilterToString(filters.toString());
+    console.log("filterString is: ", filterString);
+
+    let filterURL = filters.length > 0 ? `&${filterString}` : "";
+
+    console.log("filterURL is: ", filterURL);
+
     let apiUrl = `${process.env.COLLECTIONS_API_URL}/search/?q=${keyword}${filterURL}&sort=${sort}&page=${page}&perPage=${perPage}`;
     console.log("api URL is: ", apiUrl);
 
