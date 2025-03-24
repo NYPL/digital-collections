@@ -59,9 +59,7 @@ const contentTypeTag = (result: SearchCardType) => {
 };
 
 const getHighlightText = (highlights, keywords) => {
-  console.log("getHighlightText: ", highlights);
   return highlights?.map((highlight, index) => {
-    console.log("highlight is: ", highlight);
     return highlightedText({
       highlight: highlight,
       keyword: keywords,
@@ -119,14 +117,12 @@ const highlightedText = ({ highlight, keyword }) => {
                   backgroundColor: "rgba(249, 224, 142, 0.70)",
                   margin: 0,
                   display: "inline",
-                  // dangerouslySetInnerHTML={{ __html: `${word}`}}
                 }}
               >
                 {word}
               </Text>
             ) : (
               parse(word)
-              // word
             )}
             {index < words.length - 1 ? " " : ""}
           </span>
@@ -141,7 +137,6 @@ export const SearchCard = ({
   keywords,
   isLargerThanLargeTablet,
 }: SearchCardProps) => {
-  console.log("result.highlights is: ", result.highlights);
   const truncatedTitle = result.title.length > TRUNCATED_SEARCH_CARD_LENGTH;
   const card = (
     <Card
@@ -155,7 +150,7 @@ export const SearchCard = ({
         isAtEnd: false,
         isLazy: true,
         size: "default",
-        src: result.imageURL,
+        src: result.imageID ? result.imageURL : "/noImage.png",
       }}
       mainActionLink={result.url}
       layout="row"
@@ -182,16 +177,8 @@ export const SearchCard = ({
         <Flex flexDir="column" gap="xs">
           {result.containsOnSiteMaterial &&
             onSiteMaterialBadge(result.recordType)}
-          {console.log("result.highlights[0] is: ", result.highlights[0])}
           {keywords?.length > 0 &&
-            // console.log("result.highlights in keywords?.length > 0 case  is: ", result.highlights) // returns correct data
             getHighlightText(result.highlights, keywords)}
-
-          {/* {keywords?.length > 0 &&
-            highlightedText({
-              highlight: result.highlights[0],
-              keyword: keywords,
-            })} */}
           {contentTypeTag(result)}
         </Flex>
       </CardContent>
