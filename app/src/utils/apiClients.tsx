@@ -228,15 +228,8 @@ export class CollectionsApi {
     page?: number;
     perPage?: number;
   } = {}): Promise<any> {
-    console.log("filters are: ", filters);
-    console.log("");
-
     let filterString = dcflFilterToString(filters.toString());
-    console.log("filterString is: ", filterString);
-
     let filterURL = filters.length > 0 ? `&${filterString}` : "";
-
-    console.log("filterURL is: ", filterURL);
 
     let apiUrl = `${process.env.COLLECTIONS_API_URL}/search/?q=${keyword}${filterURL}&sort=${sort}&page=${page}&perPage=${perPage}`;
     console.log("api URL is: ", apiUrl);

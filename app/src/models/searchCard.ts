@@ -30,7 +30,7 @@ export class SearchCardModel {
   highlights: SearchResultHighlightType;
   firstIndexed: string;
 
-  constructor(data: any, collectionFilters: AvailableFilter[]) {
+  constructor(data: any, collectionFilters: AvailableFilterOption[]) {
     const recordType = getRecordTypeFromURINYPLLink(
       data.type
     ) as SearchResultRecordType;
@@ -39,21 +39,27 @@ export class SearchCardModel {
       recordType !== "Item"
         ? getCollectionFilterFromUUID(data.uuid, collectionFilters)
         : "";
-    console.log(
-      "correspondingCollectionFilter is: ",
-      correspondingCollectionFilter
-    );
-    const queryParam = correspondingCollectionFilter
-      ? `&Collection=${correspondingCollectionFilter}`
-      : "";
+    let collectionFilterQueryParam = "";
+    if (recordType === "Collection") {
+      console.log(
+        "correspondingCollectionFilter is: ",
+        correspondingCollectionFilter
+      );
+      collectionFilterQueryParam = correspondingCollectionFilter
+        ? `?filters=[Collection=${correspondingCollectionFilter.name}]`
+        : "";
+      console.log(
+        "collectionFilterQueryParam is: ",
+        collectionFilterQueryParam
+      );
+    }
+
     this.title = data.title;
     this.uuid = data.uuid;
     this.url =
       recordType === "Item"
         ? `/items/${data.uuid}`
-        : `/collections/${data.uuid}${queryParam}`;
-    // http://localhost:3000/collections/5cd94760-c52a-012f-bcd4-3c075448cc4b&Collection=[object%20Object]
-    // : `/collections/${data.uuid}${queryParam}`;
+        : `/collections/${data.uuid}${collectionFilterQueryParam}`;
 
     // TODO: comment this back in when recordType is added to the endpoint
     // data.recordType === "item"

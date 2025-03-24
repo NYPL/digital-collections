@@ -4,7 +4,10 @@ import {
 } from "../config/constants";
 import CollectionDataType from "@/src/types/CollectionDataType";
 import ItemDataType from "@/src/types/ItemDataType";
-import { AvailableFilter } from "../types/AvailableFilterType";
+import {
+  AvailableFilter,
+  AvailableFilterOption,
+} from "../types/AvailableFilterType";
 import { Filter } from "../types/FilterType";
 
 /**
@@ -122,7 +125,6 @@ export function displayResults(
 }
 
 export function formatHighlightText(highlights) {
-  console.log("highlights before: ", highlights);
   const result = Object.entries(highlights)
     .map(([field, values]) => {
       return (values as string[]).map((text) => ({
@@ -132,7 +134,6 @@ export function formatHighlightText(highlights) {
       }));
     })
     .flat();
-  console.log("highlights after: ", result);
 
   return result;
 }
@@ -157,7 +158,7 @@ export const getRecordTypeFromURINYPLLink = (link: any): string => {
 
 export const getCollectionFilterFromUUID = (
   uuid: string,
-  filters: AvailableFilter[]
+  filters: AvailableFilterOption[]
 ): any => {
   const filter = filters.find((filterObject) => {
     if (filterObject.name.split("||")[1] === uuid) {
@@ -165,24 +166,18 @@ export const getCollectionFilterFromUUID = (
     }
     return filterObject.name.split("||")[1] === uuid;
   });
-  console.log("filter is: ", filter);
-  return filter;
+  return filter ? filter : null;
 };
 
 export const dcflFilterToString = (filters: string) => {
   if (filters !== "") {
-    console.log("filters in dcflFilterToString are: ", filters);
-    // console.log("filters to array: ",  Array([filters]))
     const dcflFiltersArray = filters.slice(1, -1).split("][");
-    console.log("dcflFiltersArray is: ", dcflFiltersArray);
     const apiFiltersArray = dcflFiltersArray.map((filter) => {
       const splitArray = filter.split("=");
       const name = splitArray[0].toLocaleLowerCase();
       const value = splitArray[1];
       return `${name}=${value}`;
     });
-    console.log("apiFiltersArray is: ", apiFiltersArray);
-    console.log("apiFiltersArray.join('&') is: ", apiFiltersArray.join("&"));
     return apiFiltersArray.join("&");
   } else {
     return "";
