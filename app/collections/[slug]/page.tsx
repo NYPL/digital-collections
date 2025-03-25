@@ -29,12 +29,13 @@ export default async function Collection({
   params,
   searchParams,
 }: CollectionProps) {
-  const data = await CollectionsApi.getSearchData({
-    keyword: searchParams.keywords,
-    sort: searchParams.sort,
-    page: searchParams.page,
-    //filters: collection
-  });
+  const data = mockSearchResponse;
+  // await CollectionsApi.getSearchData({
+  //   keyword: searchParams.keywords,
+  //   sort: searchParams.sort,
+  //   page: searchParams.page,
+  //   //filters: collection
+  // });
 
   return (
     <PageLayout
