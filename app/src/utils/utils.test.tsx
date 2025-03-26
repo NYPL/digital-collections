@@ -260,14 +260,14 @@ describe("getCollectionFilterFromUUID", () => {
 describe("dcflFilterToString", () => {
   test("generates the correct filter syntax for a single filter", () => {
     expect(dcflFilterToString("[Name=Swope, Martha]")).toBe(
-      "name=Swope, Martha"
+      "Name=Swope, Martha"
     );
     expect(
       dcflFilterToString(
         "[Collection=Print Collection portrait file||16ad5350-c52e-012f-aecf-58d385a7bc34]"
       )
     ).toBe(
-      "collection=Print Collection portrait file||16ad5350-c52e-012f-aecf-58d385a7bc34"
+      "Collection=Print Collection portrait file||16ad5350-c52e-012f-aecf-58d385a7bc34"
     );
   });
 
@@ -277,7 +277,7 @@ describe("dcflFilterToString", () => {
         "[Name=Swope, Martha][Collection=Print Collection portrait file||16ad5350-c52e-012f-aecf-58d385a7bc34]"
       )
     ).toBe(
-      "name=Swope, Martha&collection=Print Collection portrait file||16ad5350-c52e-012f-aecf-58d385a7bc34"
+      "Name=Swope, Martha&Collection=Print Collection portrait file||16ad5350-c52e-012f-aecf-58d385a7bc34"
     );
   });
 
