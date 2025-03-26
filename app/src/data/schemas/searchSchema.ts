@@ -31,7 +31,7 @@ const searchSchema = {
   results: [
     {
       uuid: "string",
-      recordType: "collection | sub-collection | item",
+      recordType: "collection | item",
       title: "string",
       imageID: "string | null",
       numberOfDigitizedItems: "number",
@@ -45,7 +45,7 @@ const searchSchema = {
     },
     {
       uuid: "string",
-      recordType: "collection | sub-collection | item",
+      recordType: "collection | item",
       title: "string",
       imageID: "string | null",
       numberOfDigitizedItems: "number",
@@ -58,7 +58,7 @@ const searchSchema = {
     },
     {
       uuid: "string",
-      recordType: "collection | sub-collection | item",
+      recordType: "collection | item",
       title: "string",
       imageID: "string | null",
       numberOfDigitizedItems: "number",

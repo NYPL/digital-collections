@@ -1,4 +1,4 @@
-export type SearchResultRecordType = "Collection" | "Sub-collection" | "Item";
+export type SearchResultRecordType = "Collection" | "Item";
 export type SearchResultContentType = "Image" | "Audio" | "Video" | null;
 export type SearchResultHighlightType = { field: string; text: string }[];
 
