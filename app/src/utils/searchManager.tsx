@@ -17,7 +17,7 @@ export interface SearchManager {
   handlePageChange(pageNumber: number): string;
   handleSortChange(id: string): string;
   handleAddFilter(newFilters: Filter[]): string;
-  handleRemoveFilter(filterToRemove: Filter): string;
+  handleRemoveFilter(filtersToRemove: Filter[]): string;
   clearAllFilters(): string;
   get keywords(): string;
   get sort(): string;
@@ -102,8 +102,20 @@ abstract class BaseSearchManager implements SearchManager {
     });
   }
 
-  handleRemoveFilter(filterToRemove: Filter) {
-    this.currentFilters.delete(JSON.stringify(filterToRemove));
+  handleRemoveFilter(filtersToRemove: Filter | Filter[]) {
+    const filtersToRemoveArray = Array.isArray(filtersToRemove)
+      ? filtersToRemove
+      : [filtersToRemove];
+
+    filtersToRemoveArray.forEach(({ filter }) => {
+      this.currentFilters.forEach((existingFilter) => {
+        const parsedFilter = JSON.parse(existingFilter);
+        if (parsedFilter.filter === filter) {
+          this.currentFilters.delete(existingFilter);
+        }
+      });
+    });
+
     return this.getQueryString({
       q: this.currentKeywords,
       sort: this.currentSort,
