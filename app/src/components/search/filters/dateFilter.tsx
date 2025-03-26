@@ -23,6 +23,9 @@ const DateFilter = forwardRef<HTMLHeadingElement, DateFilterProps>(
       push(`${pathname}?${queryString}`);
     };
 
+    const validDateInput = (input) => {
+      return input !== null && !/^\d*$/.test(input);
+    };
     let startValue = searchManager.filters.find((f) => f.filter === "dateStart")
       ? searchManager.filters.find((f) => f.filter === "dateStart")?.value ||
         null
@@ -61,6 +64,8 @@ const DateFilter = forwardRef<HTMLHeadingElement, DateFilterProps>(
                 },
               }}
               id="dateStart"
+              isInvalid={validDateInput(dateStart)}
+              showHelperInvalidText={false}
               labelText="Start year"
               value={dateStart || ""}
               onChange={(e) => setDateStart(e.target.value)}
@@ -72,7 +77,9 @@ const DateFilter = forwardRef<HTMLHeadingElement, DateFilterProps>(
                   width: "100px",
                 },
               }}
+              isInvalid={validDateInput(dateEnd)}
               id="dateEnd"
+              showHelperInvalidText={false}
               labelText="End year"
               value={dateEnd || ""}
               onChange={(e) => {
@@ -83,6 +90,7 @@ const DateFilter = forwardRef<HTMLHeadingElement, DateFilterProps>(
           <Button
             ref={buttonRef}
             id="date-filter-btn"
+            isDisabled={validDateInput(dateStart) || validDateInput(dateEnd)}
             sx={{
               whiteSpace: "nowrap",
               minWidth: "108px",
@@ -91,13 +99,24 @@ const DateFilter = forwardRef<HTMLHeadingElement, DateFilterProps>(
               },
             }}
             onClick={() => {
-              const newFilters = [
+              console.log(dateStart, dateEnd);
+              const filtersToRemove = [
+                dateStart === ""
+                  ? { filter: "dateStart", value: dateStart }
+                  : null,
+                dateEnd === "" ? { filter: "dateEnd", value: dateEnd } : null,
+              ].filter((filter): filter is Filter => filter !== null);
+              console.log(filtersToRemove);
+              if (filtersToRemove.length > 0) {
+                updateURL(searchManager.handleRemoveFilter(filtersToRemove));
+              }
+              const filtersToAdd = [
                 dateStart ? { filter: "dateStart", value: dateStart } : null,
                 dateEnd ? { filter: "dateEnd", value: dateEnd } : null,
               ].filter((filter): filter is Filter => filter !== null);
 
-              if (newFilters.length > 0) {
-                updateURL(searchManager.handleAddFilter(newFilters));
+              if (filtersToAdd.length > 0) {
+                updateURL(searchManager.handleAddFilter(filtersToAdd));
               }
             }}
           >
