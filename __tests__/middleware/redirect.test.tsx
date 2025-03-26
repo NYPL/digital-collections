@@ -1,6 +1,6 @@
 import { middleware } from "middleware";
 import { NextRequest, NextResponse } from "next/server";
-// TO DO: add tests for 'keyword' and 'keywords'
+// TODO: add tests for 'keyword' and 'keywords'
 
 jest.mock("next/server", () => {
   return {

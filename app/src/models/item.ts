@@ -76,6 +76,7 @@ export class ItemModel {
       const value = field.value["en"];
       manifestMetadataHash[label] = value;
     }
+
     console.log("manifestMetadataHash is: ", manifestMetadataHash);
 
     this.uuid = uuid; //data.uuid; //data.capture.uuid.$;
