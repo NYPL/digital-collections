@@ -97,7 +97,7 @@ abstract class BaseSearchManager implements SearchManager {
     return this.getQueryString({
       q: this.currentKeywords,
       sort: this.currentSort,
-      page: this.currentPage,
+      page: DEFAULT_PAGE_NUM,
       filters: filterToString(this.filters),
     });
   }
