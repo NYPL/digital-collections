@@ -25,7 +25,7 @@ describe("Mobile nav menu component", () => {
     fireEvent.click(screen.getByLabelText("Open Navigation"));
     expect(screen.getByLabelText("Items")).toHaveAttribute(
       "href",
-      `/search/index?utf8=%E2%9C%93&keywords=`
+      `/search/index`
     );
     expect(screen.getByLabelText("Divisions")).toHaveAttribute(
       "href",

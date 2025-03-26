@@ -25,13 +25,11 @@ let item;
 
 const getItem = async (uuid: string) => {
   const data = await RepoApi.getItemData(uuid);
-  // const item = new ItemModel(data, uuid);
   return data;
 };
 
 const getItemManifest = async (uuid: string) => {
   const data = await CollectionsApi.getManifestForItemUUID(uuid);
-  // const item = new ItemModel(data, uuid);
   return data;
 };
 
@@ -58,7 +56,7 @@ export default async function ItemViewer({ params, searchParams }: ItemProps) {
       activePage="item"
       breadcrumbs={[
         { text: "Home", url: "/" },
-        { text: "All Items", url: "/items" },
+        { text: "All Items", url: "/search/index" },
         {
           text: `${item.title}`,
           url: `/items/${params.uuid}`,

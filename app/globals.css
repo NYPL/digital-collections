@@ -13,3 +13,9 @@ html {
     scroll-padding-top: 150px;
   }
 }
+
+em {
+  background-color: rgba(249, 224, 142, 0.70);
+  margin: 0;
+  display: inline;
+}
