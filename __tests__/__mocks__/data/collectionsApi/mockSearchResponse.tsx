@@ -725,7 +725,7 @@ export const mockSearchResponse = {
     },
     {
       uuid: "e5462600-c5d9-012f-a6a3-58d385a7bc34",
-      recordType: "sub-collection",
+      recordType: "collection",
       title: "Farm Security Administration Photographs",
       imageID: "1952272",
       numberOfDigitizedItems: 36,
