@@ -13,7 +13,6 @@ import {
 } from "@nypl/design-system-react-components";
 import SearchCardType, {
   SearchResultRecordType,
-  SearchResultHighlightType,
 } from "@/src/types/SearchCardType";
 import { TRUNCATED_SEARCH_CARD_LENGTH } from "@/src/config/constants";
 import parse from "html-react-parser";

@@ -174,7 +174,7 @@ export const dcflFilterToString = (filters: string) => {
     const dcflFiltersArray = filters.slice(1, -1).split("][");
     const apiFiltersArray = dcflFiltersArray.map((filter) => {
       const splitArray = filter.split("=");
-      const name = splitArray[0].toLocaleLowerCase();
+      const name = splitArray[0];
       const value = splitArray[1];
       return `${name}=${value}`;
     });

@@ -39,8 +39,10 @@ export const radioFilterOptions = (
       key={`${option.name}-${index}`}
       id={`${option.name}-${index}`}
       labelText={
-        <Flex justifyContent="space-between">
-          <span>{radioFilterOptionDisplayName(option.name, filterName)}</span>
+        <Flex justifyContent="space-between" gap="s">
+          <Box noOfLines={1}>
+            {radioFilterOptionDisplayName(option.name, filterName)}
+          </Box>
           <span>{option.count}</span>
         </Flex>
       }
