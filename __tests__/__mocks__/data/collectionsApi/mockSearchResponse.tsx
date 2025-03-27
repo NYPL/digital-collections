@@ -702,8 +702,8 @@ export const mockSearchResponse = {
       containsAVMaterial: false,
       contentType: "image",
       highlights: {
-        Title: [
-          "Christopher Walken examples in the stage production example Kid Champion",
+        title: [
+          "Christopher Walken <em>example</em>s in the stage production example Kid Champion",
         ],
       },
       firstIndexed_dt: "1907-01-01T00:00:00Z",
@@ -719,7 +719,7 @@ export const mockSearchResponse = {
       containsMultipleCaptures: false,
       contentType: "image",
       highlights: {
-        Collection: ["Sarah example sitting in tree"],
+        collection: ["Sarah <em>example</em> sitting in tree"],
       },
       firstIndexed_dt: "1907-02-01T00:00:00Z",
     },
@@ -733,7 +733,7 @@ export const mockSearchResponse = {
       containsAVMaterial: false,
       contentType: null,
       highlights: {
-        Description: ["Farm in example photographs"],
+        description: ["Farm in <em>example</em> photographs"],
       },
       firstIndexed_dt: "1907-02-01T00:00:00Z",
     },
@@ -749,9 +749,13 @@ export const mockSearchResponse = {
       containsMultipleCaptures: true,
       contentType: "image",
       highlights: {
-        Title: [
-          "Reading in example room. They are reading lots of books in the example room that they are in. Unfortunately this is a really long description as well so it needs to be truncated to two lines.",
+        title: [
+          "Reading in <em>example</em> room. They are reading lots of books in the <em>example</em> room that they are in. Unfortunately this is a really long description as well so it needs to be truncated to two lines.",
         ],
+        note: [
+          "Reading in <em>example</em> room. They are reading lots of books in the <em>example</em> room that they are in. Unfortunately this is a really long description as well so it needs to be truncated to two lines.",
+        ],
+        collection: ["Reading in <em>example</em> room."],
       },
       firstIndexed_dt: "1908-02-01T00:00:00Z",
     },

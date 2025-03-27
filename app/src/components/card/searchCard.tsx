@@ -42,10 +42,10 @@ const contentTypeTag = (result: SearchCardType) => {
         ? "Multiple images"
         : result.contentType
         ? result.contentType
-        : "nullContentType"
+        : "MISSING contentType"
       : result.recordType
       ? result.recordType
-      : "nullRecordType";
+      : "MISSING recordType";
 
   return (
     <TagSet
@@ -58,79 +58,41 @@ const contentTypeTag = (result: SearchCardType) => {
   );
 };
 
-const getHighlightText = (highlights, keywords) => {
-  return highlights?.map((highlight, index) => {
-    return highlightedText({
-      highlight: highlight,
-      keyword: keywords,
-    });
-    // return (
-    //   <>
-    //     <Box noOfLines={2}>
-    //       <Text
-    //         as="span"
-    //         sx={{
-    //           fontWeight: "400",
-    //           margin: 0,
-    //         }}
-    //       >
-    //         {highlight.field}:
-    //       </Text>
-    //       <span key={index}>{parse(highlights.text)}</span>
-    //     </Box>
-    //   </>
-    // );
-  });
+const highlightField = (highlights) => {
+  const filteredHighlights = { ...highlights };
+  delete filteredHighlights.title;
+
+  return getHighestRankedHighlight(filteredHighlights);
 };
 
-const highlightedText = ({ highlight, keyword }) => {
-  const words = highlight.text.split(" ");
-  const keywords = keyword.split(" ");
-
-  return (
-    <Box noOfLines={2}>
-      {words.length > 0 && words[0] !== "" ? (
-        <Text
-          as="span"
-          sx={{
-            fontWeight: "400",
-            margin: 0,
-          }}
-        >
-          {capitalize(highlight.field)}:{" "}
-        </Text>
-      ) : (
-        <></>
-      )}
-
-      {words.map((word: string, index: number) => {
-        const isKeyword = keywords.some(
-          (keyword: string) => keyword.toLowerCase() === word.toLowerCase()
-        );
-
-        return (
-          <span key={index}>
-            {isKeyword ? (
-              <Text
-                sx={{
-                  // TODO: Replace with design token.
-                  backgroundColor: "rgba(249, 224, 142, 0.70)",
-                  margin: 0,
-                  display: "inline",
-                }}
-              >
-                {word}
-              </Text>
-            ) : (
-              parse(word)
-            )}
-            {index < words.length - 1 ? " " : ""}
-          </span>
-        );
-      })}
-    </Box>
-  );
+const replaceEmWithMark = (htmlString) => {
+  return htmlString.replace(/<em>(.*?)<\/em>/g, "<mark>$1</mark>");
 };
+
+function getHighestRankedHighlight(
+  highlights,
+  rankingOrder = [
+    "note",
+    "abstract",
+    "collection",
+    "name",
+    "topic",
+    "place",
+    "publisher",
+    "division",
+    "type",
+    "genre",
+    "identifier",
+  ]
+) {
+  // find the first available highlight based on ranking order
+  for (const key of rankingOrder) {
+    if (highlights[key] && highlights[key].length > 0) {
+      return { [key]: highlights[key][0] };
+    }
+  }
+  return null;
+}
 
 export const SearchCard = ({
   result,
@@ -177,8 +139,7 @@ export const SearchCard = ({
         <Flex flexDir="column" gap="xs">
           {result.containsOnSiteMaterial &&
             onSiteMaterialBadge(result.recordType)}
-          {keywords?.length > 0 &&
-            getHighlightText(result.highlights, keywords)}
+          {keywords?.length > 0 && highlightField(result.highlights)}
           {contentTypeTag(result)}
         </Flex>
       </CardContent>

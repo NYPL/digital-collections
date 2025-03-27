@@ -150,7 +150,8 @@ export const capitalize = (text: string): string => {
 export const getRecordTypeFromURINYPLLink = (link: any): string => {
   const type = link?.split("#").pop();
   if (type === "Container") {
-    return "Subcollection";
+    // To do: no Containers should be returned here at all
+    return "Sub-collection";
   } else {
     return type;
   }
