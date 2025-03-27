@@ -178,7 +178,7 @@ export const SearchCard = ({
         <Flex flexDir="column" gap="xs">
           {result.containsOnSiteMaterial &&
             onSiteMaterialBadge(result.recordType)}
-          {keywords.length > 0 && highlightField(result.highlights)}
+          {keywords?.length > 0 && highlightField(result.highlights)}
           {contentTypeTag(result)}
         </Flex>
       </CardContent>
