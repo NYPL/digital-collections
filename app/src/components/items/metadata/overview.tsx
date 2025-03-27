@@ -49,16 +49,18 @@ const MetadataOverview = ({ item }) => {
             Item metadata
           </Heading>
 
-          {Object.keys(item.metadata)?.map((field) => {
+          {Object.keys(item.metadata)?.map((field, index) => {
             // return (<Text> goodbye </Text>)
             const value = item.metadata[field];
             if (value !== "") {
               return (
                 <>
-                  <Text size="overline1" marginBottom="xs">
+                  <Text key={index} size="overline1" marginBottom="xs">
                     {metadataFieldToDisplay[field]}
                   </Text>
-                  <Text marginBottom="m">{value}</Text>
+                  <Text key={index} marginBottom="m">
+                    {value}
+                  </Text>
                 </>
               );
             }

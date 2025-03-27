@@ -27,9 +27,10 @@ const ItemMediaViewer = ({ item, type }: ItemProps) => {
         viewer = (
           <>
             <UniversalViewer
+              manifestId={item.manifestURL}
               // "http://localhost:8000/items/8e8dc6a0-c6eb-012f-7a58-58d385a7bc34"
               // "https://wellcomelibrary.org/iiif/b18035723/manifest"
-              manifestId={`http://localhost:8000/items/${item.uuid}`} //{"https://wellcomelibrary.org/iiif/b18035723/manifest"}
+              // manifestId={`http://localhost:8000/items/${item.uuid}`} //{"https://wellcomelibrary.org/iiif/b18035723/manifest"}
               canvasIndex={0}
               config={{}}
             />
@@ -39,7 +40,8 @@ const ItemMediaViewer = ({ item, type }: ItemProps) => {
         viewer = (
           <>
             <UniversalViewer
-              manifestId={`http://localhost:8000/items/${item.uuid}`} //{"https://wellcomelibrary.org/iiif/b18035723/manifest"} //{`https://be73-100-37-199-113.ngrok-free.app/items/${item.uuid}`} //{"https://wellcomelibrary.org/iiif/b18035723/manifest"}
+              manifestId={item.manifestURL}
+              // {`${process.env.COLLECTIONS_API_URL}/manifests/${item.uuid}`} //{"https://wellcomelibrary.org/iiif/b18035723/manifest"} //{`https://be73-100-37-199-113.ngrok-free.app/items/${item.uuid}`} //{"https://wellcomelibrary.org/iiif/b18035723/manifest"}
               canvasIndex={0}
               config={{}}
             />
