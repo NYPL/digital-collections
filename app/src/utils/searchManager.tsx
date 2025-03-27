@@ -16,8 +16,8 @@ export interface SearchManager {
   handleKeywordChange(value: string): void;
   handlePageChange(pageNumber: number): string;
   handleSortChange(id: string): string;
-  handleAddFilter(newFilters: Filter[]): string;
-  handleRemoveFilter(filtersToRemove: Filter[]): string;
+  handleAddFilter(newFilters: Filter[] | Filter): string;
+  handleRemoveFilter(filtersToRemove: Filter[] | Filter): string;
   clearAllFilters(): string;
   get keywords(): string;
   get sort(): string;
