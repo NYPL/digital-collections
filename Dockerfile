@@ -7,6 +7,7 @@ ARG APP_ENV
 ARG NEW_RELIC_LICENSE_KEY
 ARG AUTH_TOKEN
 ARG API_URL
+ARG COLLECTIONS_API_URL
 
 WORKDIR /app
 
@@ -23,6 +24,7 @@ ENV NEW_RELIC_LICENSE_KEY=${NEW_RELIC_LICENSE_KEY}
 ENV NEW_RELIC_APP_NAME="Facelift ${APP_ENV}"
 ENV API_URL=${API_URL}
 ENV AUTH_TOKEN=${AUTH_TOKEN}
+ENV COLLECTIONS_API_URL=${COLLECTIONS_API_URL}
 
 # Create a `.env.prod` file with the environment variables
 # This is a workaround to use environment variables in the `newrelic.js` file

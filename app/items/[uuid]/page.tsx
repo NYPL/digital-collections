@@ -6,6 +6,7 @@ import { RepoApi, CollectionsApi } from "../../src/utils/apiClients";
 import { createAdobeAnalyticsPageName } from "../../src/utils/utils";
 import { ItemModel } from "../../src/models/item";
 import { ItemPage } from "@/src/components/pages/itemPage/itemPage";
+import { revalidatePath } from "next/cache";
 
 type ItemProps = {
   params: {
@@ -47,6 +48,7 @@ export async function generateMetadata({
 }
 
 export default async function ItemViewer({ params, searchParams }: ItemProps) {
+  revalidatePath("/");
   const data = await getItem(params.uuid);
   const manifest = await getItemManifest(params.uuid);
   const item = new ItemModel(data, params.uuid, manifest);
