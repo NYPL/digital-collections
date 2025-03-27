@@ -7,9 +7,17 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+### Added
+- Added Google Tag Manager (DR-3434)
+- Added custom toggle tip component for rights filter (DR-3460)
+
+### Updated
+- Updated version of Next.js (DR-3524)
+
 ## [0.3.4] 2025-03-13
 
 ### Updated
+
 - Updated /collections page to use revalidatePath to clear cache
 
 ## [0.3.3] 2025-03-06
@@ -24,6 +32,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Added API wrappers for Collections and Repo API (DR-3414)
 
 ### Updated
+
 - Updated collection search to use `q` param and added redirect for `collection_keywords` (DR-3337)
 - Updated homepage collections item counts and `/collections` page to use Collections API (DR-3453)
 

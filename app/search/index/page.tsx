@@ -28,12 +28,13 @@ export type SearchProps = {
 export default async function Search({ searchParams }: SearchProps) {
   const pageName = searchParams.keywords ? "search-results" : "all-items";
 
-  const data = await CollectionsApi.getSearchData({
-    keyword: searchParams.keywords,
-    sort: searchParams.sort,
-    filters: searchParams.filters,
-    page: searchParams.page,
-  });
+  const data = mockSearchResponse;
+  // await CollectionsApi.getSearchData({
+  //   keyword: searchParams.keywords,
+  //   sort: searchParams.sort,
+  //   filters: searchParams.filters,
+  //   page: searchParams.page,
+  // });
 
   return (
     <PageLayout
