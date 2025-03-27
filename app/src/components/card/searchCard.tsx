@@ -1,4 +1,3 @@
-"use client";
 import React from "react";
 import {
   Card,
@@ -15,8 +14,8 @@ import SearchCardType, {
   SearchResultRecordType,
 } from "@/src/types/SearchCardType";
 import { TRUNCATED_SEARCH_CARD_LENGTH } from "@/src/config/constants";
-import parse from "html-react-parser";
 import { capitalize } from "@/src/utils/utils";
+import parse from "html-react-parser";
 
 export interface SearchCardProps {
   result: SearchCardType;
@@ -24,9 +23,14 @@ export interface SearchCardProps {
   isLargerThanLargeTablet: boolean;
 }
 
+type Highlight = {
+  field: string;
+  text: string;
+};
+
 const onSiteMaterialBadge = (recordType: SearchResultRecordType) => {
   return (
-    <StatusBadge sx={{ margin: "0p" }} type="informative">
+    <StatusBadge sx={{ margin: "0" }} type="informative">
       {recordType === "Item"
         ? "Available on-site only"
         : "Contains on-site only materials"}
@@ -34,7 +38,6 @@ const onSiteMaterialBadge = (recordType: SearchResultRecordType) => {
   );
 };
 
-// TODO: update recordType
 const contentTypeTag = (result: SearchCardType) => {
   const displayLabel =
     result.recordType === "Item"
@@ -58,20 +61,42 @@ const contentTypeTag = (result: SearchCardType) => {
   );
 };
 
-const highlightField = (highlights) => {
-  const filteredHighlights = { ...highlights };
-  delete filteredHighlights.title;
+const highlightField = (highlights: Highlight[]) => {
+  if (!highlights || !Array.isArray(highlights)) return null;
 
-  return getHighestRankedHighlight(filteredHighlights);
+  const filteredHighlights = highlights.filter(
+    (highlight) => highlight.field !== "title"
+  );
+
+  const displayHighlight = getHighestRankedHighlight(filteredHighlights);
+
+  if (displayHighlight) {
+    return (
+      <Box>
+        <Text
+          as="span"
+          sx={{
+            fontWeight: "400",
+            margin: 0,
+          }}
+        >
+          {capitalize(displayHighlight.field)}:{" "}
+        </Text>
+        <span>{parse(replaceEmWithMark(displayHighlight.text))}</span>
+      </Box>
+    );
+  }
+
+  return null;
 };
 
 const replaceEmWithMark = (htmlString) => {
   return htmlString.replace(/<em>(.*?)<\/em>/g, "<mark>$1</mark>");
 };
 
-function getHighestRankedHighlight(
-  highlights,
-  rankingOrder = [
+const getHighestRankedHighlight = (highlights: Highlight[]) => {
+  if (!highlights || !Array.isArray(highlights)) return null;
+  const rankingOrder = [
     "note",
     "abstract",
     "collection",
@@ -83,16 +108,24 @@ function getHighestRankedHighlight(
     "type",
     "genre",
     "identifier",
-  ]
-) {
-  // find the first available highlight based on ranking order
+  ];
   for (const key of rankingOrder) {
-    if (highlights[key] && highlights[key].length > 0) {
-      return { [key]: highlights[key][0] };
+    const matchedHighlight = highlights.find(
+      (highlight) => highlight.field === key
+    );
+    if (matchedHighlight) {
+      return matchedHighlight;
     }
   }
   return null;
-}
+};
+
+const getTitleWithHighlights = (highlights, title) => {
+  const titleHighlight = highlights.find(
+    (highlight) => highlight.field === "title"
+  );
+  return titleHighlight ? replaceEmWithMark(titleHighlight.text) : title;
+};
 
 export const SearchCard = ({
   result,
@@ -100,6 +133,12 @@ export const SearchCard = ({
   isLargerThanLargeTablet,
 }: SearchCardProps) => {
   const truncatedTitle = result.title.length > TRUNCATED_SEARCH_CARD_LENGTH;
+
+  const highlightedTitle = getTitleWithHighlights(
+    result.highlights,
+    result.title
+  );
+
   const card = (
     <Card
       id={result.uuid}
@@ -116,7 +155,6 @@ export const SearchCard = ({
       }}
       mainActionLink={result.url}
       layout="row"
-      // Card width 225 and content width 720
       maxWidth="945px"
     >
       <CardHeading
@@ -129,17 +167,18 @@ export const SearchCard = ({
             outline: "2px solid var(--nypl-colors-ui-link-primary)",
             "> a": {
               outline: "none",
+              color: "ui.link.primary !important",
             },
           },
         }}
       >
-        {result.title}
+        {parse(highlightedTitle)}
       </CardHeading>
       <CardContent>
         <Flex flexDir="column" gap="xs">
           {result.containsOnSiteMaterial &&
             onSiteMaterialBadge(result.recordType)}
-          {keywords?.length > 0 && highlightField(result.highlights)}
+          {keywords.length > 0 && highlightField(result.highlights)}
           {contentTypeTag(result)}
         </Flex>
       </CardContent>
