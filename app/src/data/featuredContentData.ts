@@ -23,6 +23,17 @@ const featuredContentData: FeaturedContentDataType[] = [
     imgSrc: "/service-artehouse.jpg",
     imgAlt: "Service Artehouse banner",
   },
+  {
+    heading: "Digital Exhibitions",
+    overline: "Featured",
+    text: "A New Correct Map of the Trading Part of the West Indies: A Digital exhibitions built with Storiiies using our IIIF resources",
+    link: "/exhibitions/A-new-correct-map-of-the-trading-part-of-the-West-Indies",
+    buttonText: "Visit",
+    buttonId: "featured-visit-exhibition",
+    ariaLabel: "Visit the Digital Collections print store",
+    imgSrc: "https://iiif.nypl.org/iiif/2/434512/full/693,/0/default.jpg",
+    imgAlt: "Service Artehouse banner",
+  },
 ];
 
 export default featuredContentData;

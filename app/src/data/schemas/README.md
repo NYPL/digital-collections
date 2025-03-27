@@ -1,4 +1,4 @@
-# Schemas for DCFL <-> NYPL Collections API connections
+# Schemas for DCFL <-> NYPL Collections API
 
 Helpful documents:
 [BRD](https://docs.google.com/document/d/1MHVFDTAOmDFo9S53SH5IM4zAhVNu9RcUSeGWvS5FZuQ/edit?tab=t.0)
@@ -6,22 +6,38 @@ Helpful documents:
 [Phase 3 Backend Requirements](https://docs.google.com/document/d/1S8Ww89LquPvkQeAou4MRmYNsi99y3X5FX5ZO0S4MOGI/edit?tab=t.0#heading=h.yvtsqvimdeo2)
 
 ## Phase 2
-### /collections
+
+### /collections endpoint
+
 schema route: /api/schema/collections
-pages used:
-  - /collections
-  - /collections/lane/:slug
+DCFL pages using it:
+
+- /collections
+- /collections/lane/:slug
 
 ## Phase 3
-### /search
+
+### /search endpoint
+
 schema route: /api/schema/search
 
-pages used: 
-  - /search
-  - /collections:uuid
+DCFL pages using it:
 
-### /collections/:uuid
+- /search
+- /collections/:uuid
+
+### /collections/:uuid endpoint
+
 schema route: /api/schema/collections/:uuid
 
-pages used:
-  - /collections/:uuid
+DCFL pages using it:
+
+- /collections/:uuid
+
+### /collections/:uuid/children endpoint
+
+schema route: /api/schema/collections/:uuid/children
+
+DCFL pages using it:
+
+- /collections/:uuid

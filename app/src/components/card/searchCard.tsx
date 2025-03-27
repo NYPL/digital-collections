@@ -15,6 +15,8 @@ import SearchCardType, {
   SearchResultRecordType,
 } from "@/src/types/SearchCardType";
 import { TRUNCATED_SEARCH_CARD_LENGTH } from "@/src/config/constants";
+import parse from "html-react-parser";
+import { capitalize } from "@/src/utils/utils";
 
 export interface SearchCardProps {
   result: SearchCardType;
@@ -32,13 +34,18 @@ const onSiteMaterialBadge = (recordType: SearchResultRecordType) => {
   );
 };
 
+// TODO: update recordType
 const contentTypeTag = (result: SearchCardType) => {
   const displayLabel =
     result.recordType === "Item"
       ? result.contentType === "Image" && result.containsMultipleCaptures
         ? "Multiple images"
         : result.contentType
-      : result.recordType;
+        ? result.contentType
+        : "nullContentType"
+      : result.recordType
+      ? result.recordType
+      : "nullRecordType";
 
   return (
     <TagSet
@@ -51,20 +58,51 @@ const contentTypeTag = (result: SearchCardType) => {
   );
 };
 
+const getHighlightText = (highlights, keywords) => {
+  return highlights?.map((highlight, index) => {
+    return highlightedText({
+      highlight: highlight,
+      keyword: keywords,
+    });
+    // return (
+    //   <>
+    //     <Box noOfLines={2}>
+    //       <Text
+    //         as="span"
+    //         sx={{
+    //           fontWeight: "400",
+    //           margin: 0,
+    //         }}
+    //       >
+    //         {highlight.field}:
+    //       </Text>
+    //       <span key={index}>{parse(highlights.text)}</span>
+    //     </Box>
+    //   </>
+    // );
+  });
+};
+
 const highlightedText = ({ highlight, keyword }) => {
   const words = highlight.text.split(" ");
   const keywords = keyword.split(" ");
+
   return (
     <Box noOfLines={2}>
-      <Text
-        as="span"
-        sx={{
-          fontWeight: "400",
-          margin: 0,
-        }}
-      >
-        {highlight.field}:{" "}
-      </Text>
+      {words.length > 0 && words[0] !== "" ? (
+        <Text
+          as="span"
+          sx={{
+            fontWeight: "400",
+            margin: 0,
+          }}
+        >
+          {capitalize(highlight.field)}:{" "}
+        </Text>
+      ) : (
+        <></>
+      )}
+
       {words.map((word: string, index: number) => {
         const isKeyword = keywords.some(
           (keyword: string) => keyword.toLowerCase() === word.toLowerCase()
@@ -75,7 +113,7 @@ const highlightedText = ({ highlight, keyword }) => {
             {isKeyword ? (
               <Text
                 sx={{
-                  // TO DO: Replace with design token.
+                  // TODO: Replace with design token.
                   backgroundColor: "rgba(249, 224, 142, 0.70)",
                   margin: 0,
                   display: "inline",
@@ -84,7 +122,7 @@ const highlightedText = ({ highlight, keyword }) => {
                 {word}
               </Text>
             ) : (
-              word
+              parse(word)
             )}
             {index < words.length - 1 ? " " : ""}
           </span>
@@ -112,7 +150,7 @@ export const SearchCard = ({
         isAtEnd: false,
         isLazy: true,
         size: "default",
-        src: result.imageURL,
+        src: result.imageID ? result.imageURL : "/noImage.png",
       }}
       mainActionLink={result.url}
       layout="row"
@@ -140,10 +178,7 @@ export const SearchCard = ({
           {result.containsOnSiteMaterial &&
             onSiteMaterialBadge(result.recordType)}
           {keywords?.length > 0 &&
-            highlightedText({
-              highlight: result.highlights[0],
-              keyword: keywords,
-            })}
+            getHighlightText(result.highlights, keywords)}
           {contentTypeTag(result)}
         </Flex>
       </CardContent>

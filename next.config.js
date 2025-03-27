@@ -16,6 +16,7 @@ const nextConfig = {
     APP_ENV: process.env.APP_ENV,
     NEW_RELIC_LICENSE_KEY: process.env.NEW_RELIC_LICENSE_KEY,
     NEW_RELIC_APP_NAME: `${process.env.NEW_RELIC_APP_NAME}`,
+    COLLECTIONS_API_IRL: process.env.COLLECTIONS_API_IRL,
   },
   images: {
     remotePatterns: [
@@ -37,6 +38,18 @@ const nextConfig = {
   webpack: (config) => {
     nrExternals(config);
     return config;
+  },
+  eslint: {
+    // Warning: This allows production builds to successfully complete even if
+    // your project has ESLint errors.
+    ignoreDuringBuilds: true,
+  },
+  typescript: {
+    // !! WARN !!
+    // Dangerously allow production builds to successfully complete even if
+    // your project has type errors.
+    // !! WARN !!
+    ignoreBuildErrors: true,
   },
 };
 

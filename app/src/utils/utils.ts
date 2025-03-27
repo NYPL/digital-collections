@@ -4,6 +4,11 @@ import {
 } from "../config/constants";
 import CollectionDataType from "@/src/types/CollectionDataType";
 import ItemDataType from "@/src/types/ItemDataType";
+import {
+  AvailableFilter,
+  AvailableFilterOption,
+} from "../types/AvailableFilterType";
+import { Filter } from "../types/FilterType";
 
 /**
  * Represents a IIIF Image API URL, which will be used globally throughout the application.
@@ -125,12 +130,56 @@ export function formatHighlightText(highlights) {
       return (values as string[]).map((text) => ({
         field,
         text,
+        // text: removeEMTagsFromHighlightText(text),
       }));
     })
     .flat();
+
   return result;
+}
+
+// TODO: if the api returns the <em> tags... can we just use those instead?
+function removeEMTagsFromHighlightText(text) {
+  return text.replace(/<em>(.*?)<\/em>/gi, "$1");
 }
 
 export const capitalize = (text: string): string => {
   return text.charAt(0).toUpperCase() + text.slice(1);
+};
+
+export const getRecordTypeFromURINYPLLink = (link: any): string => {
+  const type = link?.split("#").pop();
+  if (type === "Container") {
+    return "Subcollection";
+  } else {
+    return type;
+  }
+};
+
+export const getCollectionFilterFromUUID = (
+  uuid: string,
+  filters: AvailableFilterOption[]
+): any => {
+  const filter = filters.find((filterObject) => {
+    if (filterObject.name.split("||")[1] === uuid) {
+      console.log("MATCH");
+    }
+    return filterObject.name.split("||")[1] === uuid;
+  });
+  return filter ? filter : null;
+};
+
+export const dcflFilterToString = (filters: string) => {
+  if (filters !== "") {
+    const dcflFiltersArray = filters.slice(1, -1).split("][");
+    const apiFiltersArray = dcflFiltersArray.map((filter) => {
+      const splitArray = filter.split("=");
+      const name = splitArray[0];
+      const value = splitArray[1];
+      return `${name}=${value}`;
+    });
+    return apiFiltersArray.join("&");
+  } else {
+    return "";
+  }
 };
