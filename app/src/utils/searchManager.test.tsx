@@ -80,23 +80,19 @@ describe("SearchManager", () => {
     it("should handle adding filters", () => {
       const filter1: Filter = { filter: "topic", value: "art" };
       const result1 = manager.handleAddFilter(filter1);
-      expect(result1).toBe(
-        "q=test&sort=date-asc&page=2&filters=%5Btopic%3Dart%5D"
-      );
+      expect(result1).toBe("q=test&sort=date-asc&filters=%5Btopic%3Dart%5D");
 
       const filter2: Filter = { filter: "genre", value: "music" };
       const result2 = manager.handleAddFilter(filter2);
       expect(result2).toBe(
-        "q=test&sort=date-asc&page=2&filters=%5Btopic%3Dart%5D%5Bgenre%3Dmusic%5D"
+        "q=test&sort=date-asc&filters=%5Btopic%3Dart%5D%5Bgenre%3Dmusic%5D"
       );
     });
 
     it("should handle removing a filter", () => {
       const filter1: Filter = { filter: "genre", value: "music" };
       const result1 = manager.handleRemoveFilter(filter1);
-      expect(result1).toBe(
-        "q=test&sort=date-asc&page=2&filters=%5Btopic%3Dart%5D"
-      );
+      expect(result1).toBe("q=test&sort=date-asc&filters=%5Btopic%3Dart%5D");
     });
 
     it("should handle clearing all filters", () => {

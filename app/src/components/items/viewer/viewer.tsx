@@ -50,9 +50,10 @@ const ItemMediaViewer = ({ item, type }: ItemProps) => {
             <></>
           )}
           <UniversalViewer
+            manifestId={item.manifestURL}
             // "http://localhost:8000/items/8e8dc6a0-c6eb-012f-7a58-58d385a7bc34"
             // "https://wellcomelibrary.org/iiif/b18035723/manifest"
-            manifestId={"https://wellcomelibrary.org/iiif/b18035723/manifest"} //{`http://localhost:8000/items/${item.uuid}`} //{"https://wellcomelibrary.org/iiif/b18035723/manifest"}
+            // manifestId={"https://wellcomelibrary.org/iiif/b18035723/manifest"} //{`http://localhost:8000/items/${item.uuid}`} //{"https://wellcomelibrary.org/iiif/b18035723/manifest"}
             canvasIndex={0}
             config={{}}
           />

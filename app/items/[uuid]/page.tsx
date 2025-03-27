@@ -6,6 +6,7 @@ import { RepoApi, CollectionsApi } from "../../src/utils/apiClients";
 import { createAdobeAnalyticsPageName } from "../../src/utils/utils";
 import { ItemModel } from "../../src/models/item";
 import { ItemPage } from "@/src/components/pages/itemPage/itemPage";
+import { revalidatePath } from "next/cache";
 
 type ItemProps = {
   params: {
@@ -25,13 +26,11 @@ let item;
 
 const getItem = async (uuid: string) => {
   const data = await RepoApi.getItemData(uuid);
-  // const item = new ItemModel(data, uuid);
   return data;
 };
 
 const getItemManifest = async (uuid: string) => {
   const data = await CollectionsApi.getManifestForItemUUID(uuid);
-  // const item = new ItemModel(data, uuid);
   return data;
 };
 
@@ -48,10 +47,10 @@ export async function generateMetadata({
   };
 }
 
-export default async function git({ params, searchParams }: ItemProps) {
+export default async function ItemViewer({ params, searchParams }: ItemProps) {
+  revalidatePath("/");
   const data = await getItem(params.uuid);
-  const manifest = {};
-  //await getItemManifest(params.uuid);
+  const manifest = await getItemManifest(params.uuid);
   //getItemManifest('https://wellcomelibrary.org/iiif/b18035723/manifest')
   // await getItemManifest(params.uuid);
   const item = new ItemModel(data, params.uuid, manifest);
@@ -60,7 +59,7 @@ export default async function git({ params, searchParams }: ItemProps) {
       activePage="item"
       breadcrumbs={[
         { text: "Home", url: "/" },
-        { text: "All Items", url: "/items" },
+        { text: "All Items", url: "/search/index" },
         {
           text: `${item.title}`,
           url: `/items/${params.uuid}`,

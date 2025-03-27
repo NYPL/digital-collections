@@ -16,6 +16,7 @@ import SearchCardType, {
 } from "@/src/types/SearchCardType";
 import { TRUNCATED_SEARCH_CARD_LENGTH } from "@/src/config/constants";
 import parse from "html-react-parser";
+import { capitalize } from "@/src/utils/utils";
 
 export interface SearchCardProps {
   result: SearchCardType;
@@ -33,13 +34,7 @@ const onSiteMaterialBadge = (recordType: SearchResultRecordType) => {
   );
 };
 
-const searchCardLink = (record: SearchCardType) => {
-  return record.recordType === "Item"
-    ? `/items/${record.uuid}`
-    : `/collections/${record.uuid}`;
-};
-
-// TO DO: update recordType
+// TODO: update recordType
 const contentTypeTag = (result: SearchCardType) => {
   const displayLabel =
     result.recordType === "Item"
@@ -63,9 +58,35 @@ const contentTypeTag = (result: SearchCardType) => {
   );
 };
 
+const getHighlightText = (highlights, keywords) => {
+  return highlights?.map((highlight, index) => {
+    return highlightedText({
+      highlight: highlight,
+      keyword: keywords,
+    });
+    // return (
+    //   <>
+    //     <Box noOfLines={2}>
+    //       <Text
+    //         as="span"
+    //         sx={{
+    //           fontWeight: "400",
+    //           margin: 0,
+    //         }}
+    //       >
+    //         {highlight.field}:
+    //       </Text>
+    //       <span key={index}>{parse(highlights.text)}</span>
+    //     </Box>
+    //   </>
+    // );
+  });
+};
+
 const highlightedText = ({ highlight, keyword }) => {
   const words = highlight.text.split(" ");
   const keywords = keyword.split(" ");
+
   return (
     <Box noOfLines={2}>
       {words.length > 0 && words[0] !== "" ? (
@@ -75,9 +96,8 @@ const highlightedText = ({ highlight, keyword }) => {
             fontWeight: "400",
             margin: 0,
           }}
-          // dangerouslySetInnerHTML={{ __html: ` ${highlight.field}` }}
         >
-          {highlight.field}:{" "}
+          {capitalize(highlight.field)}:{" "}
         </Text>
       ) : (
         <></>
@@ -88,14 +108,12 @@ const highlightedText = ({ highlight, keyword }) => {
           (keyword: string) => keyword.toLowerCase() === word.toLowerCase()
         );
 
-        console.log("isKeyword? : ", isKeyword);
-
         return (
           <span key={index}>
             {isKeyword ? (
               <Text
                 sx={{
-                  // TO DO: Replace with design token.
+                  // TODO: Replace with design token.
                   backgroundColor: "rgba(249, 224, 142, 0.70)",
                   margin: 0,
                   display: "inline",
@@ -104,7 +122,7 @@ const highlightedText = ({ highlight, keyword }) => {
                 {word}
               </Text>
             ) : (
-              word
+              parse(word)
             )}
             {index < words.length - 1 ? " " : ""}
           </span>
@@ -119,7 +137,6 @@ export const SearchCard = ({
   keywords,
   isLargerThanLargeTablet,
 }: SearchCardProps) => {
-  // console.log("result.highlights[0] is: ", result.highlights[0])
   const truncatedTitle = result.title.length > TRUNCATED_SEARCH_CARD_LENGTH;
   const card = (
     <Card
@@ -133,9 +150,9 @@ export const SearchCard = ({
         isAtEnd: false,
         isLazy: true,
         size: "default",
-        src: result.imageURL,
+        src: result.imageID ? result.imageURL : "/noImage.png",
       }}
-      mainActionLink={searchCardLink(result)}
+      mainActionLink={result.url}
       layout="row"
       // Card width 225 and content width 720
       maxWidth="945px"
@@ -161,10 +178,7 @@ export const SearchCard = ({
           {result.containsOnSiteMaterial &&
             onSiteMaterialBadge(result.recordType)}
           {keywords?.length > 0 &&
-            highlightedText({
-              highlight: result.highlights[0],
-              keyword: keywords,
-            })}
+            getHighlightText(result.highlights, keywords)}
           {contentTypeTag(result)}
         </Flex>
       </CardContent>

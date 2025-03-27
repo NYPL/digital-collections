@@ -33,7 +33,7 @@ const Item = ({ item, type }: ItemProps) => {
   return (
     <>
       <ItemMediaViewer item={item} type={itemType} />
-      {/* <MetadataOverview item={item} /> */}
+      <MetadataOverview item={item} />
       {/* <ItemMediaViewer manifest={manifest} item={item} type={itemType} />
       <MetadataOverview manifest={manifest} item={item} /> */}
     </>

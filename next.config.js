@@ -16,6 +16,7 @@ const nextConfig = {
     APP_ENV: process.env.APP_ENV,
     NEW_RELIC_LICENSE_KEY: process.env.NEW_RELIC_LICENSE_KEY,
     NEW_RELIC_APP_NAME: `${process.env.NEW_RELIC_APP_NAME}`,
+    COLLECTIONS_API_IRL: process.env.COLLECTIONS_API_IRL,
   },
   images: {
     remotePatterns: [
