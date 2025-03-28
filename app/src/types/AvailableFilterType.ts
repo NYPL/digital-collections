@@ -6,4 +6,5 @@ export type AvailableFilter = {
 export type AvailableFilterOption = {
   name: string;
   count: number;
+  selected: boolean;
 };

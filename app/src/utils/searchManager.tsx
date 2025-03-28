@@ -262,3 +262,14 @@ export const transformToAvailableFilters = (
     options,
   }));
 };
+
+export const availableFilterDisplayName = (
+  name: string,
+  filterName: string
+) => {
+  if (filterName === "Collection") {
+    return name.split("||")[0];
+  } else {
+    return name;
+  }
+};
