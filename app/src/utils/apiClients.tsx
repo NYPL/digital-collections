@@ -1,6 +1,6 @@
 import data from "../data/lanes";
 import type { LaneDataType } from "../types/Lane";
-import { imageURL, addCommas } from "./utils";
+import { imageURL, addCommas, dcflFilterToString } from "./utils";
 import defaultFeaturedItems from "../data/defaultFeaturedItemData";
 import {
   CARDS_PER_PAGE,
@@ -228,7 +228,12 @@ export class CollectionsApi {
     page?: number;
     perPage?: number;
   } = {}): Promise<any> {
-    let apiUrl = `${process.env.COLLECTIONS_API_URL}/search/index?q=${keyword}${filters}&sort=${sort}&page=${page}&perPage=${perPage}`;
+    let filterString = dcflFilterToString(filters.toString());
+    let filterURL = filters.length > 0 ? `&${filterString}` : "";
+
+    let apiUrl = `${process.env.COLLECTIONS_API_URL}/search/?q=${keyword}${filterURL}&sort=${sort}&page=${page}&perPage=${perPage}`;
+    console.log("api URL is: ", apiUrl);
+
     const response = await fetchApi({
       apiUrl: apiUrl,
       options: { isRepoApi: false },

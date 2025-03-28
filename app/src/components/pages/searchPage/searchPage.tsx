@@ -18,6 +18,7 @@ import { headerBreakpoints } from "@/src/utils/breakpoints";
 import { MobileSearchBanner } from "../../mobileSearchBanner/mobileSearchBanner";
 import SortMenu from "../../sortMenu/sortMenu";
 import ActiveFilters from "../../search/filters/activeFilters";
+import NoResultsFound from "../../results/noResultsFound";
 
 const SearchPage = ({ searchResults }) => {
   const { searchManager } = useSearchContext();
@@ -29,7 +30,6 @@ const SearchPage = ({ searchResults }) => {
   };
 
   const headingRef = useRef<HTMLHeadingElement>(null);
-
   return (
     <Box id="mainContent">
       <MobileSearchBanner />
@@ -57,15 +57,21 @@ const SearchPage = ({ searchResults }) => {
               marginBottom: "m",
             }}
           >
-            {`Displaying ${displayResults(
-              searchResults.numResults,
-              CARDS_PER_PAGE,
-              searchManager.page
-            )} results ${
-              searchManager.keywords.length > 0
-                ? `for "${searchManager.keywords}"`
-                : ``
-            }`}
+            {searchResults.numResults > 0
+              ? `Displaying ${displayResults(
+                  searchResults.numResults,
+                  CARDS_PER_PAGE,
+                  searchManager.page
+                )} results ${
+                  searchManager.keywords?.length > 0
+                    ? `for "${searchManager.keywords}"`
+                    : ``
+                }`
+              : `No results ${
+                  searchManager.keywords?.length > 0
+                    ? `for "${searchManager.keywords}"`
+                    : ``
+                }`}
           </Heading>
           <Filters
             searchManager={searchManager}
@@ -102,25 +108,34 @@ const SearchPage = ({ searchResults }) => {
             alignItems: "flex-start",
           }}
         >
-          <Heading
-            size="heading5"
-            ref={headingRef}
-            tabIndex={-1}
-            margin="0"
-          >{`Displaying ${displayResults(
-            searchResults.numResults,
-            CARDS_PER_PAGE,
-            searchManager.page
-          )} results`}</Heading>
-          <SortMenu
-            options={SEARCH_SORT_LABELS}
-            searchManager={searchManager}
-            updateURL={updateURL}
-          />
+          {searchResults.numResults > 0 ? (
+            <>
+              <Heading
+                size="heading5"
+                ref={headingRef}
+                tabIndex={-1}
+                margin="0"
+              >{`Displaying ${displayResults(
+                searchResults.numResults,
+                CARDS_PER_PAGE,
+                searchManager.page
+              )} results`}</Heading>
+              <SortMenu
+                options={SEARCH_SORT_LABELS}
+                searchManager={searchManager}
+                updateURL={updateURL}
+              />{" "}
+            </>
+          ) : (
+            <NoResultsFound
+              searchTerm={searchResults.keyword}
+              page={searchResults.page}
+            />
+          )}
         </Flex>
         <SearchCardsGrid
           keywords={searchResults.keyword}
-          results={searchResults.results}
+          results={searchResults}
         />
         <Flex
           paddingLeft="s"

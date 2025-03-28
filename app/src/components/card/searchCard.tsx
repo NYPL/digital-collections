@@ -1,4 +1,3 @@
-"use client";
 import React from "react";
 import {
   Card,
@@ -15,6 +14,9 @@ import SearchCardType, {
   SearchResultRecordType,
 } from "@/src/types/SearchCardType";
 import { TRUNCATED_SEARCH_CARD_LENGTH } from "@/src/config/constants";
+import { capitalize } from "@/src/utils/utils";
+import parse from "html-react-parser";
+import type { Highlight } from "@/src/types/HighlightType";
 
 export interface SearchCardProps {
   result: SearchCardType;
@@ -24,7 +26,7 @@ export interface SearchCardProps {
 
 const onSiteMaterialBadge = (recordType: SearchResultRecordType) => {
   return (
-    <StatusBadge sx={{ margin: "0p" }} type="informative">
+    <StatusBadge sx={{ margin: "0" }} type="informative">
       {recordType === "Item"
         ? "Available on-site only"
         : "Contains on-site only materials"}
@@ -33,12 +35,17 @@ const onSiteMaterialBadge = (recordType: SearchResultRecordType) => {
 };
 
 const contentTypeTag = (result: SearchCardType) => {
+  // To do: Replace once contentType and recordType are synced.
   const displayLabel =
     result.recordType === "Item"
       ? result.contentType === "Image" && result.containsMultipleCaptures
         ? "Multiple images"
         : result.contentType
-      : result.recordType;
+        ? result.contentType
+        : "MISSING contentType"
+      : result.recordType
+      ? result.recordType
+      : "MISSING recordType";
 
   return (
     <TagSet
@@ -51,47 +58,70 @@ const contentTypeTag = (result: SearchCardType) => {
   );
 };
 
-const highlightedText = ({ highlight, keyword }) => {
-  const words = highlight.text.split(" ");
-  const keywords = keyword.split(" ");
-  return (
-    <Box noOfLines={2}>
-      <Text
-        as="span"
-        sx={{
-          fontWeight: "400",
-          margin: 0,
-        }}
-      >
-        {highlight.field}:{" "}
-      </Text>
-      {words.map((word: string, index: number) => {
-        const isKeyword = keywords.some(
-          (keyword: string) => keyword.toLowerCase() === word.toLowerCase()
-        );
+const highlightField = (highlights: Highlight[]) => {
+  if (!highlights || !Array.isArray(highlights)) return null;
 
-        return (
-          <span key={index}>
-            {isKeyword ? (
-              <Text
-                sx={{
-                  // TO DO: Replace with design token.
-                  backgroundColor: "rgba(249, 224, 142, 0.70)",
-                  margin: 0,
-                  display: "inline",
-                }}
-              >
-                {word}
-              </Text>
-            ) : (
-              word
-            )}
-            {index < words.length - 1 ? " " : ""}
-          </span>
-        );
-      })}
-    </Box>
+  const filteredHighlights = highlights.filter(
+    (highlight) => highlight.field !== "title"
   );
+
+  const displayHighlight = getHighestRankedHighlight(filteredHighlights);
+
+  if (displayHighlight) {
+    return (
+      <Box>
+        <Text
+          as="span"
+          sx={{
+            fontWeight: "400",
+            margin: 0,
+          }}
+        >
+          {capitalize(displayHighlight.field)}:{" "}
+        </Text>
+        <span>{parse(replaceEmWithMark(displayHighlight.text))}</span>
+      </Box>
+    );
+  }
+
+  return null;
+};
+
+const replaceEmWithMark = (htmlString) => {
+  return htmlString.replace(/<em>(.*?)<\/em>/g, "<mark>$1</mark>");
+};
+
+const getHighestRankedHighlight = (highlights: Highlight[]) => {
+  if (!highlights || !Array.isArray(highlights)) return null;
+  const rankingOrder = [
+    "note",
+    "abstract",
+    "collection",
+    "name",
+    "topic",
+    "place",
+    "publisher",
+    "division",
+    "type",
+    "genre",
+    "identifier",
+  ];
+  for (const key of rankingOrder) {
+    const matchedHighlight = highlights.find(
+      (highlight) => highlight.field === key
+    );
+    if (matchedHighlight) {
+      return matchedHighlight;
+    }
+  }
+  return null;
+};
+
+const getTitleWithHighlights = (highlights, title) => {
+  const titleHighlight = highlights.find(
+    (highlight) => highlight.field === "title"
+  );
+  return titleHighlight ? replaceEmWithMark(titleHighlight.text) : title;
 };
 
 export const SearchCard = ({
@@ -100,6 +130,12 @@ export const SearchCard = ({
   isLargerThanLargeTablet,
 }: SearchCardProps) => {
   const truncatedTitle = result.title.length > TRUNCATED_SEARCH_CARD_LENGTH;
+
+  const highlightedTitle = getTitleWithHighlights(
+    result.highlights,
+    result.title
+  );
+
   const card = (
     <Card
       id={result.uuid}
@@ -112,11 +148,10 @@ export const SearchCard = ({
         isAtEnd: false,
         isLazy: true,
         size: "default",
-        src: result.imageURL,
+        src: result.imageID ? result.imageURL : "/noImage.png",
       }}
       mainActionLink={result.url}
       layout="row"
-      // Card width 225 and content width 720
       maxWidth="945px"
     >
       <CardHeading
@@ -129,21 +164,18 @@ export const SearchCard = ({
             outline: "2px solid var(--nypl-colors-ui-link-primary)",
             "> a": {
               outline: "none",
+              color: "ui.link.primary !important",
             },
           },
         }}
       >
-        {result.title}
+        {parse(highlightedTitle)}
       </CardHeading>
       <CardContent>
         <Flex flexDir="column" gap="xs">
           {result.containsOnSiteMaterial &&
             onSiteMaterialBadge(result.recordType)}
-          {keywords?.length > 0 &&
-            highlightedText({
-              highlight: result.highlights[0],
-              keyword: keywords,
-            })}
+          {keywords?.length > 0 && highlightField(result.highlights)}
           {contentTypeTag(result)}
         </Flex>
       </CardContent>

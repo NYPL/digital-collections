@@ -48,7 +48,7 @@ export const mockSearchCards: SearchCardType[] = [
       "https://iiif.nypl.org/iiif/2/1952272/square/!288,288/0/default.jpg",
     numberOfDigitizedItems: 36,
     containsOnSiteMaterial: false,
-    recordType: "Sub-collection",
+    recordType: "Collection",
     containsAVMaterial: true,
     contentType: null,
     highlights: [{ field: "Description", text: "Farm in example photographs" }],

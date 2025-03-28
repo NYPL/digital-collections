@@ -3,7 +3,13 @@ import {
   stringToSlug,
   createAdobeAnalyticsPageName,
   displayResults,
+  getCollectionFilterFromUUID,
+  dcflFilterToString,
 } from "./utils";
+import {
+  AvailableFilter,
+  AvailableFilterOption,
+} from "../types/AvailableFilterType";
 
 // TODO:
 /**
@@ -201,5 +207,87 @@ describe("displayResults", () => {
 
   test("displays correct range when perPage is greater than numFound", () => {
     expect(displayResults(5, 10, 1)).toBe("1-5 of 5");
+  });
+});
+
+//
+
+describe("getCollectionFilterFromUUID", () => {
+  const availableCollections: AvailableFilterOption[] = [
+    {
+      name: "Print Collection portrait file||16ad5350-c52e-012f-aecf-58d385a7bc34",
+      count: 96377,
+      selected: false,
+    },
+    {
+      name: "Billy Rose Theatre Collection photograph file||2589a880-c52c-012f-2cb4-58d385a7bc34",
+      count: 71066,
+      selected: false,
+    },
+    {
+      name: "Martha Swope photographs||0146e060-c530-012f-1e6f-58d385a7bc34",
+      count: 53115,
+      selected: false,
+    },
+    {
+      name: "Cigarette cards||b50ab6f0-c52b-012f-5986-58d385a7bc34",
+      count: 50939,
+      selected: false,
+    },
+    {
+      name: "Robert N. Dennis collection of stereoscopic views||5261fd50-c52e-012f-85ec-58d385a7bc34",
+      count: 43135,
+      selected: false,
+    },
+  ];
+  test("returns the correct filter if there is a match", () => {
+    expect(
+      getCollectionFilterFromUUID(
+        "16ad5350-c52e-012f-aecf-58d385a7bc34",
+        availableCollections
+      )
+    ).toStrictEqual({
+      name: "Print Collection portrait file||16ad5350-c52e-012f-aecf-58d385a7bc34",
+      count: 96377,
+      selected: false,
+    } as AvailableFilterOption);
+  });
+
+  test("returns and empty filter if there is no match", () => {
+    expect(
+      getCollectionFilterFromUUID(
+        "16ad5350-c52e-012f-aecf-58d385a7bc35",
+        availableCollections
+      )
+    ).toStrictEqual(null);
+  });
+});
+
+describe("dcflFilterToString", () => {
+  test("generates the correct filter syntax for a single filter", () => {
+    expect(dcflFilterToString("[Name=Swope, Martha]")).toBe(
+      "name=Swope, Martha"
+    );
+    expect(
+      dcflFilterToString(
+        "[Collection=Print Collection portrait file||16ad5350-c52e-012f-aecf-58d385a7bc34]"
+      )
+    ).toBe(
+      "collection=Print Collection portrait file||16ad5350-c52e-012f-aecf-58d385a7bc34"
+    );
+  });
+
+  test("generates the correct filter syntax for multiple filter", () => {
+    expect(
+      dcflFilterToString(
+        "[name=Swope, Martha][collection=Print Collection portrait file||16ad5350-c52e-012f-aecf-58d385a7bc34]"
+      )
+    ).toBe(
+      "name=Swope, Martha&collection=Print Collection portrait file||16ad5350-c52e-012f-aecf-58d385a7bc34"
+    );
+  });
+
+  test("generates the correct filter syntax for no filters", () => {
+    expect(dcflFilterToString("")).toBe("");
   });
 });
