@@ -10,14 +10,15 @@ import {
   AvailableFilter,
   AvailableFilterOption,
 } from "../types/AvailableFilterType";
+import { capitalize } from "./utils";
 
 export interface SearchManager {
   handleSearchSubmit(): string;
   handleKeywordChange(value: string): void;
   handlePageChange(pageNumber: number): string;
   handleSortChange(id: string): string;
-  handleAddFilter(newFilters: Filter[]): string;
-  handleRemoveFilter(filterToRemove: Filter): string;
+  handleAddFilter(newFilters: Filter[] | Filter): string;
+  handleRemoveFilter(filtersToRemove: Filter[] | Filter): string;
   clearAllFilters(): string;
   get keywords(): string;
   get sort(): string;
@@ -43,7 +44,7 @@ abstract class BaseSearchManager implements SearchManager {
     initialSort: string;
     initialFilters?: Filter[];
     initialKeywords: string;
-    initialAvailableFilters?: AvailableFilter[];
+    initialAvailableFilters?: Record<string, AvailableFilterOption[]>;
   }) {
     this.currentPage = config.initialPage;
     this.currentSort = config.initialSort;
@@ -51,7 +52,9 @@ abstract class BaseSearchManager implements SearchManager {
       (config.initialFilters || []).map((filter) => JSON.stringify(filter))
     );
     this.currentKeywords = config.initialKeywords;
-    this.currentAvailableFilters = config.initialAvailableFilters || [];
+    this.currentAvailableFilters = transformToAvailableFilters(
+      config.initialAvailableFilters ?? {}
+    );
   }
 
   get keywords() {
@@ -73,7 +76,6 @@ abstract class BaseSearchManager implements SearchManager {
   }
 
   get availableFilters(): AvailableFilter[] {
-    // TODO: Formatting
     return this.currentAvailableFilters;
   }
 
@@ -95,20 +97,31 @@ abstract class BaseSearchManager implements SearchManager {
       )
     );
     return this.getQueryString({
-      keywords: this.currentKeywords,
+      q: this.currentKeywords,
       sort: this.currentSort,
-      page: this.currentPage,
+      page: DEFAULT_PAGE_NUM,
       filters: filterToString(this.filters),
     });
   }
 
-  handleRemoveFilter(filterToRemove: Filter) {
-    this.currentFilters.delete(JSON.stringify(filterToRemove));
+  handleRemoveFilter(filtersToRemove: Filter | Filter[]) {
+    const filtersToRemoveArray = Array.isArray(filtersToRemove)
+      ? filtersToRemove
+      : [filtersToRemove];
+
+    filtersToRemoveArray.forEach(({ filter }) => {
+      this.currentFilters.forEach((existingFilter) => {
+        const parsedFilter = JSON.parse(existingFilter);
+        if (parsedFilter.filter === filter) {
+          this.currentFilters.delete(existingFilter);
+        }
+      });
+    });
 
     return this.getQueryString({
-      keywords: this.currentKeywords,
+      q: this.currentKeywords,
       sort: this.currentSort,
-      page: this.currentPage,
+      page: DEFAULT_PAGE_NUM,
       filters: filterToString(this.filters),
     });
   }
@@ -116,7 +129,7 @@ abstract class BaseSearchManager implements SearchManager {
   clearAllFilters() {
     this.currentFilters.clear();
     return this.getQueryString({
-      keywords: this.currentKeywords,
+      q: this.currentKeywords,
       sort: this.currentSort,
       page: DEFAULT_PAGE_NUM,
       filters: filterToString(DEFAULT_FILTERS),
@@ -129,9 +142,8 @@ export class GeneralSearchManager extends BaseSearchManager {
     this.currentPage = DEFAULT_PAGE_NUM;
     this.currentFilters.clear();
     this.currentSort = DEFAULT_SEARCH_SORT;
-
     return this.getQueryString({
-      keywords: this.currentKeywords,
+      q: this.currentKeywords,
       sort: this.currentSort,
       page: this.currentPage,
     });
@@ -140,7 +152,7 @@ export class GeneralSearchManager extends BaseSearchManager {
   handlePageChange(pageNumber: number) {
     this.currentPage = pageNumber;
     return this.getQueryString({
-      keywords: this.currentKeywords,
+      q: this.currentKeywords,
       sort: this.currentSort,
       page: pageNumber,
       filters: filterToString(this.filters),
@@ -150,7 +162,7 @@ export class GeneralSearchManager extends BaseSearchManager {
   handleSortChange(sort: string) {
     this.currentSort = sort;
     return this.getQueryString({
-      keywords: this.currentKeywords,
+      q: this.currentKeywords,
       sort: sort,
       page: this.currentPage,
       filters: filterToString(this.filters),
@@ -225,7 +237,6 @@ export class CollectionSearchManager extends BaseSearchManager {
 
 const createQueryStringFromObject = (object: Record<string, string>) => {
   const params = new URLSearchParams();
-
   Object.keys(object).forEach((key) => {
     params.set(key, object[key]);
   });
@@ -241,6 +252,7 @@ export const stringToFilter = (filtersString: string | null): Filter[] => {
 
 export const filterToString = (filters: Filter[]): string => {
   if (!filters || filters.length === 0) return "";
+  // return filters.map(({ filter, value }) => `${filter}=${value}`).join("");
   return filters.map(({ filter, value }) => `[${filter}=${value}]`).join("");
 };
 
@@ -248,7 +260,18 @@ export const transformToAvailableFilters = (
   availableFilters: Record<string, AvailableFilterOption[]>
 ): AvailableFilter[] => {
   return Object.entries(availableFilters).map(([key, options]) => ({
-    name: key.charAt(0).toUpperCase() + key.slice(1),
+    name: key,
     options,
   }));
+};
+
+export const availableFilterDisplayName = (
+  name: string,
+  filterName: string
+) => {
+  if (filterName === "collection") {
+    return name.split("||")[0];
+  } else {
+    return capitalize(name);
+  }
 };

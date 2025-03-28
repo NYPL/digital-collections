@@ -4,6 +4,11 @@ import {
 } from "../config/constants";
 import CollectionDataType from "@/src/types/CollectionDataType";
 import ItemDataType from "@/src/types/ItemDataType";
+import {
+  AvailableFilter,
+  AvailableFilterOption,
+} from "../types/AvailableFilterType";
+import type { Highlight } from "../types/HighlightType";
 
 /**
  * Represents a IIIF Image API URL, which will be used globally throughout the application.
@@ -119,7 +124,7 @@ export function displayResults(
   return `${start}-${end} of ${numFound}`;
 }
 
-export function formatHighlightText(highlights) {
+export function formatHighlightText(highlights): Highlight[] {
   const result = Object.entries(highlights)
     .map(([field, values]) => {
       return (values as string[]).map((text) => ({
@@ -128,9 +133,53 @@ export function formatHighlightText(highlights) {
       }));
     })
     .flat();
+
   return result;
 }
 
 export const capitalize = (text: string): string => {
-  return text.charAt(0).toUpperCase() + text.slice(1);
+  return text?.charAt(0) ? text.charAt(0).toUpperCase() + text.slice(1) : text;
+};
+
+export const getRecordTypeFromURINYPLLink = (link: any): string => {
+  const type = link?.split("#").pop();
+  if (type === "Container") {
+    // To do: no Containers should be returned here at all. Revisit when Collections API updates
+    return "Sub-collection";
+  } else {
+    return type;
+  }
+};
+
+export const getCollectionFilterFromUUID = (
+  uuid: string,
+  filters: AvailableFilterOption[]
+): any => {
+  const filter = filters.find((filterObject) => {
+    if (filterObject.name.split("||")[1] === uuid) {
+      console.log("MATCH");
+    }
+    return filterObject.name.split("||")[1] === uuid;
+  });
+  return filter ? filter : null;
+};
+
+export const dcflFilterToString = (filters: string) => {
+  if (filters !== "") {
+    const dcflFiltersArray = filters.slice(1, -1).split("][");
+    const apiFiltersArray = dcflFiltersArray.map((filter) => {
+      const splitArray = filter.split("=");
+      const name =
+        splitArray[0] === "rightsFilter" ||
+        splitArray[0] === "dateEnd" ||
+        splitArray[0] === "dateStart"
+          ? splitArray[0]
+          : splitArray[0].toLowerCase();
+      const value = splitArray[1];
+      return `${name}=${value}`;
+    });
+    return apiFiltersArray.join("&");
+  } else {
+    return "";
+  }
 };

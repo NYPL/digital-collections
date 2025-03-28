@@ -13,3 +13,10 @@ html {
     scroll-padding-top: 150px;
   }
 }
+
+mark {
+  background-color: #FCF1CB;
+  margin: 0;
+  display: inline;
+  color: inherit;
+}
