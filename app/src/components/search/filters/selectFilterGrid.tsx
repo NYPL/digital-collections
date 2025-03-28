@@ -14,9 +14,12 @@ const SelectFilterGrid = ({
   filterRefs,
   searchManager,
 }: SelectFilterGridProps) => {
+  const filtersWithOptions = searchManager.availableFilters.filter(
+    (filter) => filter.options.length > 0
+  );
   const expandedFilters = isExpanded
-    ? searchManager.availableFilters
-    : searchManager.availableFilters.slice(0, 4);
+    ? filtersWithOptions
+    : filtersWithOptions.slice(0, 4);
 
   return (
     <Grid

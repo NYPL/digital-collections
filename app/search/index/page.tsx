@@ -42,9 +42,7 @@ export default async function Search({ searchParams }: SearchProps) {
   // Add available filters into searchParams
   const updatedSearchParams = {
     ...searchParams,
-    availableFilters: transformToAvailableFilters(
-      searchResults.availableFilters
-    ),
+    availableFilters: searchResults.availableFilters,
   };
 
   return (
