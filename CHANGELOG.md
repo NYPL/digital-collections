@@ -8,8 +8,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## Unreleased
 
 ### Added
-
+- Added Google Tag Manager (DR-3434)
 - Added custom toggle tip component for rights filter (DR-3460)
+
+### Updated
+- Updated version of Next.js (DR-3524)
 
 ## [0.3.4] 2025-03-13
 
