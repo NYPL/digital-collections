@@ -18,6 +18,7 @@ import {
   AvailableFilter,
   AvailableFilterOption,
 } from "@/src/types/AvailableFilterType";
+import { capitalize } from "@/src/utils/utils";
 
 export interface SelectFilterProps {
   filter: AvailableFilter;
@@ -194,7 +195,7 @@ const SelectFilterComponent = forwardRef<
           {
             accordionType: "default",
             buttonInteractionRef: mergedRef,
-            label: filter.name,
+            label: capitalize(filter.name),
             panel: accordionPanel,
             ariaLabel: `Select ${filter.name}`,
           },

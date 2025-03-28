@@ -170,9 +170,11 @@ export const dcflFilterToString = (filters: string) => {
     const apiFiltersArray = dcflFiltersArray.map((filter) => {
       const splitArray = filter.split("=");
       const name =
-        splitArray[0] === "rightsFilter" || "dateEnd" || "dateStart"
+        splitArray[0] === "rightsFilter" ||
+        splitArray[0] === "dateEnd" ||
+        splitArray[0] === "dateStart"
           ? splitArray[0]
-          : splitArray[0].toLocaleLowerCase();
+          : splitArray[0].toLowerCase();
       const value = splitArray[1];
       return `${name}=${value}`;
     });

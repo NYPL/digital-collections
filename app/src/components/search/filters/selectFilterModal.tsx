@@ -24,6 +24,7 @@ import {
   AvailableFilter,
   AvailableFilterOption,
 } from "@/src/types/AvailableFilterType";
+import { capitalize } from "@/src/utils/utils";
 
 type SelectFilterModalProps = {
   filter: AvailableFilter;
@@ -166,7 +167,7 @@ const SelectFilterModal = forwardRef<HTMLButtonElement, SelectFilterModalProps>(
                   paddingLeft="s"
                   marginBottom="xs"
                 >
-                  {`${filter.name}${filter.name === "Publishers" ? "" : "s"}`}
+                  {`${capitalize(filter.name)}s`}
                 </Heading>
               </ModalHeader>
             </Box>

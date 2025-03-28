@@ -26,7 +26,6 @@ import SearchCardsGrid from "../../grids/searchCardsGrid";
 import {
   GeneralSearchManager,
   stringToFilter,
-  transformToAvailableFilters,
 } from "@/src/utils/searchManager";
 import { usePathname, useRouter } from "next/navigation";
 import SortMenu from "../../sortMenu/sortMenu";
@@ -47,9 +46,7 @@ const CollectionPage = ({
     initialSort: searchParams?.sort || DEFAULT_SEARCH_SORT,
     initialFilters: stringToFilter(searchParams?.filters),
     initialKeywords: searchParams?.q || DEFAULT_SEARCH_TERM,
-    initialAvailableFilters: searchResults?.availableFilters
-      ? transformToAvailableFilters(searchResults?.availableFilters)
-      : DEFAULT_FILTERS,
+    initialAvailableFilters: searchResults?.availableFilters || DEFAULT_FILTERS,
   });
 
   const totalPages = totalNumPages(searchResults.numResults, CARDS_PER_PAGE);

@@ -10,6 +10,7 @@ import {
   AvailableFilter,
   AvailableFilterOption,
 } from "../types/AvailableFilterType";
+import { capitalize } from "./utils";
 
 export interface SearchManager {
   handleSearchSubmit(): string;
@@ -43,7 +44,7 @@ abstract class BaseSearchManager implements SearchManager {
     initialSort: string;
     initialFilters?: Filter[];
     initialKeywords: string;
-    initialAvailableFilters?: AvailableFilter[];
+    initialAvailableFilters?: Record<string, AvailableFilterOption[]>;
   }) {
     this.currentPage = config.initialPage;
     this.currentSort = config.initialSort;
@@ -51,7 +52,9 @@ abstract class BaseSearchManager implements SearchManager {
       (config.initialFilters || []).map((filter) => JSON.stringify(filter))
     );
     this.currentKeywords = config.initialKeywords;
-    this.currentAvailableFilters = config.initialAvailableFilters || [];
+    this.currentAvailableFilters = transformToAvailableFilters(
+      config.initialAvailableFilters ?? {}
+    );
   }
 
   get keywords() {
@@ -73,7 +76,6 @@ abstract class BaseSearchManager implements SearchManager {
   }
 
   get availableFilters(): AvailableFilter[] {
-    // TODO: Formatting
     return this.currentAvailableFilters;
   }
 
@@ -258,7 +260,7 @@ export const transformToAvailableFilters = (
   availableFilters: Record<string, AvailableFilterOption[]>
 ): AvailableFilter[] => {
   return Object.entries(availableFilters).map(([key, options]) => ({
-    name: key.charAt(0).toUpperCase() + key.slice(1),
+    name: key,
     options,
   }));
 };
@@ -270,6 +272,6 @@ export const availableFilterDisplayName = (
   if (filterName === "Collection") {
     return name.split("||")[0];
   } else {
-    return name;
+    return capitalize(name);
   }
 };
