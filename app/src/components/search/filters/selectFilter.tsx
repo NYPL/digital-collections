@@ -5,6 +5,7 @@ import {
   Radio,
   Flex,
   Button,
+  Tooltip,
 } from "@nypl/design-system-react-components";
 import React, { forwardRef, useEffect, useRef, useState } from "react";
 import SelectFilterModal from "./selectFilterModal";
@@ -29,16 +30,32 @@ export const availableFilterOptions = (
   options: AvailableFilterOption[],
   filterName: string
 ) => {
+  const truncationLimit = 80;
   return options.map((option, index) => (
     <Radio
       key={`${option.name}-${index}`}
       id={`${option.name}-${index}`}
       labelText={
         <Flex justifyContent="space-between" gap="s">
-          <Box noOfLines={1}>
-            {availableFilterDisplayName(option.name, filterName)}
-          </Box>
-          <span>{option.count}</span>
+          {option.name.length > truncationLimit ? (
+            <>
+              <Tooltip
+                content={availableFilterDisplayName(option.name, filterName)}
+              >
+                <Box noOfLines={2}>
+                  {availableFilterDisplayName(option.name, filterName)}
+                </Box>
+              </Tooltip>
+              <span>{option.count}</span>
+            </>
+          ) : (
+            <>
+              <Box noOfLines={2}>
+                {availableFilterDisplayName(option.name, filterName)}
+              </Box>
+              <span>{option.count}</span>
+            </>
+          )}
         </Flex>
       }
       value={option.name}

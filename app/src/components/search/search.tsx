@@ -12,13 +12,12 @@ const Search = () => {
   const [keywords, setKeywords] = useState("");
   const [publicDomainOnly, setPublicDomainOnly] = useState(false);
 
-  // TOsDO: update this to use DCFL search url
   const handleSubmit = (event) => {
     event.preventDefault();
     const searchUrl =
       `/search/index?` +
       `q=${encodeURIComponent(keywords)}` +
-      (publicDomainOnly ? `&filters=%5Brights%3DpublicDomain%5D` : ``);
+      (publicDomainOnly ? `&filters=%5BrightsFilter%3DpublicDomain%5D` : ``);
     router.push(searchUrl);
   };
 
