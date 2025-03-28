@@ -10,27 +10,21 @@ import React, { forwardRef, useEffect, useRef, useState } from "react";
 import SelectFilterModal from "./selectFilterModal";
 import FilterAccordion from "./filterAccordion";
 import { usePathname, useRouter } from "next/navigation";
-import { SearchManager } from "@/src/utils/searchManager";
+import {
+  availableFilterDisplayName,
+  SearchManager,
+} from "@/src/utils/searchManager";
 import {
   AvailableFilter,
   AvailableFilterOption,
 } from "@/src/types/AvailableFilterType";
-import { Filter } from "@/src/types/FilterType";
 
 export interface SelectFilterProps {
   filter: AvailableFilter;
   searchManager: SearchManager;
 }
 
-const radioFilterOptionDisplayName = (name: string, filterName: string) => {
-  if (filterName === "Collection") {
-    return name.split("||")[0];
-  } else {
-    return name;
-  }
-};
-
-export const radioFilterOptions = (
+export const availableFilterOptions = (
   options: AvailableFilterOption[],
   filterName: string
 ) => {
@@ -41,7 +35,7 @@ export const radioFilterOptions = (
       labelText={
         <Flex justifyContent="space-between" gap="s">
           <Box noOfLines={1}>
-            {radioFilterOptionDisplayName(option.name, filterName)}
+            {availableFilterDisplayName(option.name, filterName)}
           </Box>
           <span>{option.count}</span>
         </Flex>
@@ -136,7 +130,7 @@ const SelectFilterComponent = forwardRef<
         onChange={onChange}
         defaultValue={selected?.name ?? ""}
       >
-        {radioFilterOptions(sortedOptions.slice(0, 10), filter.name)}
+        {availableFilterOptions(sortedOptions.slice(0, 10), filter.name)}
       </RadioGroup>
       <Button
         id="apply"

@@ -6,7 +6,7 @@ import {
   ModalOverlay,
   useDisclosure,
 } from "@chakra-ui/react";
-import { radioFilterOptions } from "./selectFilter";
+import { availableFilterOptions } from "./selectFilter";
 import {
   Button,
   Box,
@@ -232,7 +232,7 @@ const SelectFilterModal = forwardRef<HTMLButtonElement, SelectFilterModalProps>(
                     setModalCurrent(selected);
                   }}
                 >
-                  {radioFilterOptions(currentOptions, filter.name)}
+                  {availableFilterOptions(currentOptions, filter.name)}
                 </RadioGroup>
               </Box>
               <Flex>

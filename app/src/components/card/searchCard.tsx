@@ -16,17 +16,13 @@ import SearchCardType, {
 import { TRUNCATED_SEARCH_CARD_LENGTH } from "@/src/config/constants";
 import { capitalize } from "@/src/utils/utils";
 import parse from "html-react-parser";
+import type { Highlight } from "@/src/types/HighlightType";
 
 export interface SearchCardProps {
   result: SearchCardType;
   keywords: string;
   isLargerThanLargeTablet: boolean;
 }
-
-type Highlight = {
-  field: string;
-  text: string;
-};
 
 const onSiteMaterialBadge = (recordType: SearchResultRecordType) => {
   return (
@@ -39,6 +35,7 @@ const onSiteMaterialBadge = (recordType: SearchResultRecordType) => {
 };
 
 const contentTypeTag = (result: SearchCardType) => {
+  // To do: Replace once contentType and recordType are synced.
   const displayLabel =
     result.recordType === "Item"
       ? result.contentType === "Image" && result.containsMultipleCaptures

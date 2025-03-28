@@ -8,7 +8,7 @@ import {
   AvailableFilter,
   AvailableFilterOption,
 } from "../types/AvailableFilterType";
-import { Filter } from "../types/FilterType";
+import type { Highlight } from "../types/HighlightType";
 
 /**
  * Represents a IIIF Image API URL, which will be used globally throughout the application.
@@ -124,13 +124,12 @@ export function displayResults(
   return `${start}-${end} of ${numFound}`;
 }
 
-export function formatHighlightText(highlights) {
+export function formatHighlightText(highlights): Highlight[] {
   const result = Object.entries(highlights)
     .map(([field, values]) => {
       return (values as string[]).map((text) => ({
         field,
         text,
-        // text: removeEMTagsFromHighlightText(text),
       }));
     })
     .flat();
@@ -138,19 +137,14 @@ export function formatHighlightText(highlights) {
   return result;
 }
 
-// TODO: if the api returns the <em> tags... can we just use those instead?
-function removeEMTagsFromHighlightText(text) {
-  return text.replace(/<em>(.*?)<\/em>/gi, "$1");
-}
-
 export const capitalize = (text: string): string => {
-  return text.charAt(0).toUpperCase() + text.slice(1);
+  return text?.charAt(0) ? text.charAt(0).toUpperCase() + text.slice(1) : text;
 };
 
 export const getRecordTypeFromURINYPLLink = (link: any): string => {
   const type = link?.split("#").pop();
   if (type === "Container") {
-    // To do: no Containers should be returned here at all
+    // To do: no Containers should be returned here at all. Revisit when Collections API updates
     return "Sub-collection";
   } else {
     return type;
@@ -175,7 +169,10 @@ export const dcflFilterToString = (filters: string) => {
     const dcflFiltersArray = filters.slice(1, -1).split("][");
     const apiFiltersArray = dcflFiltersArray.map((filter) => {
       const splitArray = filter.split("=");
-      const name = splitArray[0];
+      const name =
+        splitArray[0] === "rightsFilter" || "dateEnd" || "dateStart"
+          ? splitArray[0]
+          : splitArray[0].toLocaleLowerCase();
       const value = splitArray[1];
       return `${name}=${value}`;
     });

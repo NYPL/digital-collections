@@ -3,10 +3,7 @@ import type {
   SearchResultHighlightType,
   SearchResultRecordType,
 } from "../types/SearchCardType";
-import type {
-  AvailableFilter,
-  AvailableFilterOption,
-} from "../types/AvailableFilterType";
+import type { AvailableFilterOption } from "../types/AvailableFilterType";
 import {
   imageURL,
   formatHighlightText,
@@ -31,16 +28,13 @@ export class SearchCardModel {
   firstIndexed: string;
 
   constructor(data: any, collectionFilters: AvailableFilterOption[]) {
-    const recordType = getRecordTypeFromURINYPLLink(
-      data.type
-    ) as SearchResultRecordType;
     // const availableCollectionFilters = filters[]
     const correspondingCollectionFilter =
-      recordType !== "Item"
-        ? getCollectionFilterFromUUID(data.uuid, collectionFilters)
+      this.recordType !== "Item"
+        ? getCollectionFilterFromUUID(this.uuid, collectionFilters)
         : "";
     let collectionFilterQueryParam = "";
-    if (recordType === "Collection") {
+    if (this.recordType === "Collection") {
       console.log(
         "correspondingCollectionFilter is: ",
         correspondingCollectionFilter
@@ -56,30 +50,24 @@ export class SearchCardModel {
 
     this.title = data.title;
     this.uuid = data.uuid;
-    this.url =
-      recordType === "Item"
-        ? `/items/${data.uuid}`
-        : `/collections/${data.uuid}${collectionFilterQueryParam}`;
-
     // TODO: comment this back in when recordType is added to the endpoint
-    // data.recordType === "item"
-    //   ? `/items/${data.uuid}`
-    //   : `/collections/${data.uuid}`;
-
+    // this.recordType = capitalize(data.recordType) as SearchResultRecordType;
     this.recordType = getRecordTypeFromURINYPLLink(
       data.type
     ) as SearchResultRecordType;
-
-    // TODO: comment this back in when recordType is added to the endpoint
-    // this.recordType = capitalize(data.recordType) as SearchResultRecordType;
     this.imageID = data.imageID;
+    this.url =
+      this.recordType === "Item"
+        ? `/items/${data.uuid}`
+        : `/collections/${data.uuid}${collectionFilterQueryParam}`;
+
     this.imageURL = imageURL(data.imageID, "square", "!288,288", "0");
     this.numberOfDigitizedItems = data.numberOfDigitizedItems;
     this.containsOnSiteMaterial = data.containsOnSiteMaterial;
     this.containsAVMaterial = data.containsAVMaterial;
     this.containsMultipleCaptures = data.containsMultipleCaptures;
     this.contentType = data.contentType
-      ? (capitalize(data.contentType) as SearchResultContentType)
+      ? (capitalize(data.contentType[0]) as SearchResultContentType)
       : null;
     this.highlights =
       Object.keys(data.highlights).length > 0
