@@ -213,7 +213,7 @@ const SelectFilterModal = forwardRef<HTMLButtonElement, SelectFilterModalProps>(
                   border: "1px solid",
                   borderColor: "ui.border.hover",
                   padding: "s",
-                  height: "394px",
+                  minHeight: "394px",
                 }}
               >
                 <RadioGroup

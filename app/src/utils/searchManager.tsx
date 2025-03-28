@@ -269,7 +269,7 @@ export const availableFilterDisplayName = (
   name: string,
   filterName: string
 ) => {
-  if (filterName === "Collection") {
+  if (filterName === "collection") {
     return name.split("||")[0];
   } else {
     return capitalize(name);
