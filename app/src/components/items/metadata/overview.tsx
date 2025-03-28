@@ -50,7 +50,6 @@ const MetadataOverview = ({ item }) => {
           </Heading>
 
           {Object.keys(item.metadata)?.map((field, index) => {
-            // return (<Text> goodbye </Text>)
             const value = item.metadata[field];
             if (value !== "") {
               return (

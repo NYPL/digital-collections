@@ -5,45 +5,57 @@ import {
   Radio,
   Flex,
   Button,
+  Tooltip,
 } from "@nypl/design-system-react-components";
 import React, { forwardRef, useEffect, useRef, useState } from "react";
 import SelectFilterModal from "./selectFilterModal";
 import FilterAccordion from "./filterAccordion";
 import { usePathname, useRouter } from "next/navigation";
-import { SearchManager } from "@/src/utils/searchManager";
+import {
+  availableFilterDisplayName,
+  SearchManager,
+} from "@/src/utils/searchManager";
 import {
   AvailableFilter,
   AvailableFilterOption,
 } from "@/src/types/AvailableFilterType";
-import { Filter } from "@/src/types/FilterType";
+import { capitalize } from "@/src/utils/utils";
 
 export interface SelectFilterProps {
   filter: AvailableFilter;
   searchManager: SearchManager;
 }
 
-const radioFilterOptionDisplayName = (name: string, filterName: string) => {
-  if (filterName === "Collection") {
-    return name.split("||")[0];
-  } else {
-    return name;
-  }
-};
-
-export const radioFilterOptions = (
+export const availableFilterOptions = (
   options: AvailableFilterOption[],
   filterName: string
 ) => {
+  const truncationLimit = 80;
   return options.map((option, index) => (
     <Radio
       key={`${option.name}-${index}`}
       id={`${option.name}-${index}`}
       labelText={
         <Flex justifyContent="space-between" gap="s">
-          <Box noOfLines={1}>
-            {radioFilterOptionDisplayName(option.name, filterName)}
-          </Box>
-          <span>{option.count}</span>
+          {option.name.length > truncationLimit ? (
+            <>
+              <Tooltip
+                content={availableFilterDisplayName(option.name, filterName)}
+              >
+                <Box noOfLines={2}>
+                  {availableFilterDisplayName(option.name, filterName)}
+                </Box>
+              </Tooltip>
+              <span>{option.count}</span>
+            </>
+          ) : (
+            <>
+              <Box noOfLines={2}>
+                {availableFilterDisplayName(option.name, filterName)}
+              </Box>
+              <span>{option.count}</span>
+            </>
+          )}
         </Flex>
       }
       value={option.name}
@@ -58,13 +70,10 @@ const SelectFilterComponent = forwardRef<
   const { filter, searchManager, ...rest } = props;
   const [userClickedOutside, setUserClickedOutside] = useState<boolean>(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
+
   // Sets selected to filter's current URL value on mount.
-  const existingFilter = searchManager.filters.find(
-    (f) => f.filter === filter.name
-  );
-  let selected = existingFilter
-    ? filter.options.find((option) => option.name === existingFilter.value) ||
-      null
+  let selected = filter
+    ? filter.options.find((option) => option.selected === true) || null
     : null;
 
   // Manages current selection in state while user interacts with dropdown/modal.
@@ -136,7 +145,7 @@ const SelectFilterComponent = forwardRef<
         onChange={onChange}
         defaultValue={selected?.name ?? ""}
       >
-        {radioFilterOptions(sortedOptions.slice(0, 10), filter.name)}
+        {availableFilterOptions(sortedOptions.slice(0, 10), filter.name)}
       </RadioGroup>
       <Button
         id="apply"
@@ -185,10 +194,8 @@ const SelectFilterComponent = forwardRef<
   // Reset dropdown's current value to filter selection when dropdown closes/opens.
   const handleAccordionChange = () => {
     setCurrent(
-      existingFilter
-        ? filter.options.find(
-            (option) => option.name === existingFilter.value
-          ) || null
+      filter
+        ? filter.options.find((option) => option.selected === true) || null
         : null
     );
   };
@@ -200,7 +207,7 @@ const SelectFilterComponent = forwardRef<
           {
             accordionType: "default",
             buttonInteractionRef: mergedRef,
-            label: filter.name,
+            label: capitalize(filter.name),
             panel: accordionPanel,
             ariaLabel: `Select ${filter.name}`,
           },

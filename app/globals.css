@@ -14,8 +14,9 @@ html {
   }
 }
 
-em {
-  background-color: rgba(249, 224, 142, 0.70);
+mark {
+  background-color: #FCF1CB;
   margin: 0;
   display: inline;
+  color: inherit;
 }

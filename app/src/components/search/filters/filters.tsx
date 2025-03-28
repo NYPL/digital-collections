@@ -39,6 +39,7 @@ const Filters = ({ headingText, searchManager }: FiltersProps) => {
         isExpanded={isExpanded}
         filterRefs={filterRefs}
         searchManager={searchManager}
+        key={searchManager.filters.length}
       />
       {isExpanded && (
         <>
@@ -46,12 +47,12 @@ const Filters = ({ headingText, searchManager }: FiltersProps) => {
             ref={dateFilterRef}
             searchManager={searchManager}
             // Remounts when filters are cleared from active filter panel.
-            key={searchManager.filters.length}
+            key={searchManager.filters.length + 1}
           />
           <RightsFilter
             searchManager={searchManager}
             // Remounts when filters are cleared from active filter panel.
-            key={searchManager.filters.length + 1}
+            key={searchManager.filters.length + 2}
           />
         </>
       )}

@@ -4,7 +4,6 @@ import { createAdobeAnalyticsPageName } from "@/src/utils/utils";
 import { CollectionsApi } from "@/src/utils/apiClients";
 import { Metadata } from "next";
 import SearchPage from "@/src/components/pages/searchPage/searchPage";
-import { mockSearchResponse } from "__tests__/__mocks__/data/collectionsApi/mockSearchResponse";
 import { Filter } from "@/src/types/FilterType";
 import { AvailableFilter } from "@/src/types/AvailableFilterType";
 import { transformToAvailableFilters } from "@/src/utils/searchManager";
@@ -40,14 +39,10 @@ export default async function Search({ searchParams }: SearchProps) {
     page: searchParams.page,
   });
 
-  // mockSearchResponse;
-
   // Add available filters into searchParams
   const updatedSearchParams = {
     ...searchParams,
-    availableFilters: transformToAvailableFilters(
-      searchResults.availableFilters
-    ),
+    availableFilters: searchResults.availableFilters,
   };
 
   return (

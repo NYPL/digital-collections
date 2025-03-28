@@ -7,6 +7,7 @@ import {
 } from "@nypl/design-system-react-components";
 import type { SearchManager } from "@/src/utils/searchManager";
 import { usePathname, useRouter } from "next/navigation";
+import { capitalize } from "@/src/utils/utils";
 
 type ActiveFilterProps = {
   searchManager: SearchManager;
@@ -35,13 +36,12 @@ const ActiveFilters = ({ searchManager }: ActiveFilterProps) => {
   const getRightsFilterLabel = (value: string) => {
     const rightsLabels: Record<string, string> = {
       publicDomain: "Public domain",
-      onsiteMaterial: "Contains on-site materials",
+      onSiteMaterial: "Contains on-site materials",
       availableOnline: "Available online",
     };
 
     return rightsLabels[value] || value;
   };
-
   return searchManager.filters.length > 0 ? (
     <>
       <Flex alignContent="center" alignItems="center" gap="xs" flexDir="row">
@@ -55,9 +55,9 @@ const ActiveFilters = ({ searchManager }: ActiveFilterProps) => {
           tagSetData={searchManager.filters.map((filter: Filter) => ({
             id: filter.filter,
             label:
-              filter.filter === "rights"
+              filter.filter === "rightsFilter"
                 ? getRightsFilterLabel(filter.value)
-                : filter.value,
+                : capitalize(filter.value),
           }))}
           type="filter"
           sx={{ flexWrap: "unset" }}
