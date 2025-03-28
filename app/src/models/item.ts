@@ -67,7 +67,7 @@ export class ItemModel {
   constructor(data: any, uuid: string, manifest: any) {
     const parser = new Maniiifest(manifest);
     const label = parser?.getManifestLabelByLanguage("en");
-    const metadata = parser?.iterateManifestMetadata();
+    const metadata = Array.from(parser.iterateManifestMetadata());
     const manifestMetadataHash = {};
 
     if (metadata) {
