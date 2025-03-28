@@ -95,7 +95,7 @@ export class ItemModel {
     this.imageID = data.imageID;
     this.href = data.href;
     this.contentType = CONTENT_TYPES[this.typeOfResource];
-    this.manifestURL = `http://localhost:8000/manifests/${uuid}`;
+    this.manifestURL = `https://qa-api-collections.nypl.org/manifests/${uuid}`;
     // `${process.env.collectionS_API_URL}/manifests/${uuid}`
     /*
     field labels from manifest metadata section are: 

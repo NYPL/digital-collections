@@ -6,7 +6,7 @@ import {
   ModalOverlay,
   useDisclosure,
 } from "@chakra-ui/react";
-import { radioFilterOptions } from "./selectFilter";
+import { availableFilterOptions } from "./selectFilter";
 import {
   Button,
   Box,
@@ -24,6 +24,7 @@ import {
   AvailableFilter,
   AvailableFilterOption,
 } from "@/src/types/AvailableFilterType";
+import { capitalize } from "@/src/utils/utils";
 
 type SelectFilterModalProps = {
   filter: AvailableFilter;
@@ -166,7 +167,7 @@ const SelectFilterModal = forwardRef<HTMLButtonElement, SelectFilterModalProps>(
                   paddingLeft="s"
                   marginBottom="xs"
                 >
-                  {`${filter.name}${filter.name === "Publishers" ? "" : "s"}`}
+                  {`${capitalize(filter.name)}s`}
                 </Heading>
               </ModalHeader>
             </Box>
@@ -212,7 +213,7 @@ const SelectFilterModal = forwardRef<HTMLButtonElement, SelectFilterModalProps>(
                   border: "1px solid",
                   borderColor: "ui.border.hover",
                   padding: "s",
-                  height: "394px",
+                  minHeight: "394px",
                 }}
               >
                 <RadioGroup
@@ -232,7 +233,7 @@ const SelectFilterModal = forwardRef<HTMLButtonElement, SelectFilterModalProps>(
                     setModalCurrent(selected);
                   }}
                 >
-                  {radioFilterOptions(currentOptions, filter.name)}
+                  {availableFilterOptions(currentOptions, filter.name)}
                 </RadioGroup>
               </Box>
               <Flex>
