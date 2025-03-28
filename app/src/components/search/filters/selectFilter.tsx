@@ -70,13 +70,10 @@ const SelectFilterComponent = forwardRef<
   const { filter, searchManager, ...rest } = props;
   const [userClickedOutside, setUserClickedOutside] = useState<boolean>(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
+
   // Sets selected to filter's current URL value on mount.
-  const existingFilter = searchManager.filters.find(
-    (f) => f.filter === filter.name
-  );
-  let selected = existingFilter
-    ? filter.options.find((option) => option.name === existingFilter.value) ||
-      null
+  let selected = filter
+    ? filter.options.find((option) => option.selected === true) || null
     : null;
 
   // Manages current selection in state while user interacts with dropdown/modal.
@@ -197,10 +194,8 @@ const SelectFilterComponent = forwardRef<
   // Reset dropdown's current value to filter selection when dropdown closes/opens.
   const handleAccordionChange = () => {
     setCurrent(
-      existingFilter
-        ? filter.options.find(
-            (option) => option.name === existingFilter.value
-          ) || null
+      filter
+        ? filter.options.find((option) => option.selected === true) || null
         : null
     );
   };
