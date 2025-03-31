@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+### Updated
+
+- Resolve layout shift on header focus (DR-3523)
+
 ## [0.3.5] 2025-03-27
 
 ### Added
