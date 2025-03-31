@@ -26,9 +26,9 @@ const Header = () => {
       }
     };
     updateHeight();
-    window.addEventListener("resize", updateHeight);
+    window.addEventListener("scroll", updateHeight);
     return () => {
-      window.removeEventListener("resize", updateHeight);
+      window.addEventListener("scroll", updateHeight);
     };
   }, [isScrollingUp]);
 
@@ -52,8 +52,6 @@ const Header = () => {
           },
           alignItems: "center",
         }}
-        onFocusCapture={() => setIsFocused(true)}
-        onBlurCapture={() => setIsFocused(false)}
       >
         <Box
           maxWidth="1280px"
@@ -140,7 +138,7 @@ const Header = () => {
             >
               <NavMenu render={1} />
             </Box>
-            <Search />
+            <Search setIsFocused={setIsFocused} />
           </VStack>
         </Box>
         <HorizontalRule
