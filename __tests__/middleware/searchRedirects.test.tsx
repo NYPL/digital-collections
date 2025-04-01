@@ -138,7 +138,7 @@ it("maintains page", () => {
     "http://localhost/search/index?page=2",
     301
   );
-  expect(response).toBe("redirect response");
+  expect(response).toBe("next response");
 });
 
 it("maintains page but drops scroll", () => {
@@ -157,7 +157,7 @@ it("maintains page but drops scroll", () => {
 it("transforms a filter", () => {
   const request = {
     nextUrl: new URL(
-      "http://localhost/search/index?filters%5Bname%5D=Swope%2C+Martha&keywords="
+      "http://localhost/search/index?filters%5Bname%5D=Swope%2C+Martha"
     ),
   } as NextRequest;
   const response = middleware(request);
@@ -172,7 +172,7 @@ it("transforms a filter", () => {
 it("transforms multiple filters", () => {
   const request = {
     nextUrl: new URL(
-      "http://localhost/search/index?filters%5Bgenre%5D=Photographs&filters%5Bname%5D%5B%5D=Swope%2C+Martha&keywords="
+      "http://localhost/search/index?filters%5Bgenre%5D=Photographs&filters%5Bname%5D%5B%5D=Swope%2C+Martha"
     ),
   } as NextRequest;
   const response = middleware(request);
@@ -186,9 +186,7 @@ it("transforms multiple filters", () => {
 
 it("transforms rights filter", () => {
   const request = {
-    nextUrl: new URL(
-      "http://localhost/search/index?filters%5Brights%5D=pd&keywords="
-    ),
+    nextUrl: new URL("http://localhost/search/index?filters%5Brights%5D=pd"),
   } as NextRequest;
   const response = middleware(request);
 
@@ -202,7 +200,7 @@ it("transforms rights filter", () => {
 it("transforms many params", () => {
   const request = {
     nextUrl: new URL(
-      "http://localhost/search/index?filters%5Bgenre%5D=Photographs&filters%5Bname%5D%5B%5D=Swope%2C+Martha&keywords="
+      "http://localhost/search/index?filters%5Bgenre%5D=Photographs&filters%5Bname%5D%5B%5D=Swope%2C+Martha"
     ),
   } as NextRequest;
   const response = middleware(request);

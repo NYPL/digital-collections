@@ -54,4 +54,4 @@ it("transforms collection_keywords to q on collections search", () => {
   });
 });
 
-it.todo("redirects collection slug to uuid, or to a title search", () => {});
+it("redirects collection slug to uuid, or to a title search", () => {});
