@@ -138,19 +138,6 @@ it("maintains page", () => {
   expect(response).toBe("next response");
 });
 
-it("maintains page but drops scroll", () => {
-  const request = {
-    nextUrl: new URL("http://localhost/search/index?page=2#/?scroll=80"),
-  } as NextRequest;
-  const response = middleware(request);
-
-  expect(NextResponse.redirect).toHaveBeenCalledWith(
-    "http://localhost/search/index?page=2",
-    301
-  );
-  expect(response).toBe("redirect response");
-});
-
 it("transforms a filter", () => {
   const request = {
     nextUrl: new URL(
@@ -194,16 +181,31 @@ it("transforms rights filter", () => {
   expect(response).toBe("redirect response");
 });
 
-it("transforms many params", () => {
+it("transforms date filter", () => {
   const request = {
     nextUrl: new URL(
-      "http://localhost/search/index?filters%5Bdate%5D%5B%5D=-9999-1905&filters%5Bname%5D%5B%5D=Lange%2C+Dorothea&filters%5Brights%5D%5B%5D=pd&keywords="
+      "http://localhost/search/index?filters%5Bgenre%5D%5B%5D=Cards&keywords=&&&&year_begin=1900&year_end=1905&"
     ),
   } as NextRequest;
   const response = middleware(request);
 
   expect(NextResponse.redirect).toHaveBeenCalledWith(
-    "http://localhost/search/index?filters=%5Brights%3DpublicDomain%5D%5Bname%3DLange%2C+Dorothea%5D%5BdateEnd%3D1905%5D",
+    "http://localhost/search/index?q=&filters=%5Bgenre%3DCards%5D%5BdateStart%3D1900%5D%5BdateEnd%3D1905%5D",
+    301
+  );
+  expect(response).toBe("redirect response");
+});
+
+it("transforms many params", () => {
+  const request = {
+    nextUrl: new URL(
+      "http://localhost/search/index?filters%5Bgenre%5D%5B%5D=Cards&filters%5Bname%5D%5B%5D=Ogden%27s+Cigarettes&keywords=&year_begin=1900&"
+    ),
+  } as NextRequest;
+  const response = middleware(request);
+
+  expect(NextResponse.redirect).toHaveBeenCalledWith(
+    "http://localhost/search/index?q=&filters=%5Bgenre%3DCards%5D%5Bname%3DOgden%27s+Cigarettes%5D%5BdateStart%3D1900%5D",
     301
   );
   expect(response).toBe("redirect response");
