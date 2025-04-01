@@ -94,17 +94,17 @@ const replaceEmWithMark = (htmlString) => {
 const getHighestRankedHighlight = (highlights: Highlight[]) => {
   if (!highlights || !Array.isArray(highlights)) return null;
   const rankingOrder = [
+    "name",
+    "place",
+    "topic",
     "note",
     "abstract",
-    "collection",
-    "name",
-    "topic",
-    "place",
-    "publisher",
-    "division",
-    "type",
     "genre",
     "identifier",
+    "collection",
+    "division",
+    "publisher",
+    "type",
   ];
   for (const key of rankingOrder) {
     const matchedHighlight = highlights.find(
