@@ -11,7 +11,7 @@ jest.mock("next/server", () => {
   };
 });
 
-describe("redirects collection_keywords to q on collections search", () => {
+it("transforms collection_keywords to q on collections search", () => {
   let request: NextRequest;
 
   it("redirects collection_keywords to q", () => {
@@ -27,7 +27,7 @@ describe("redirects collection_keywords to q on collections search", () => {
     expect(response).toBe("redirect response");
   });
 
-  it("redirects collection_keywords to q and maintains other parameters", () => {
+  it("transforms collection_keywords to q and maintains other parameters", () => {
     const request = {
       nextUrl: new URL(
         "http://localhost/collections?collection_keywords=test&sort=title-asc&page=23"
@@ -53,3 +53,5 @@ describe("redirects collection_keywords to q on collections search", () => {
     expect(response).toBe("next response");
   });
 });
+
+it.todo("redirects collection slug to uuid, or to a title search", () => {});
