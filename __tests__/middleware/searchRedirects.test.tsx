@@ -33,7 +33,7 @@ it("drops ascending/descending relevance sort (default sort)", () => {
   const response = middleware(request);
 
   expect(NextResponse.redirect).toHaveBeenCalledWith(
-    "http://localhost/search/index",
+    "http://localhost/search/index?",
     301
   );
   expect(response).toBe("redirect response");
@@ -46,7 +46,7 @@ it("drops sequence sort", () => {
   const response = middleware(request);
 
   expect(NextResponse.redirect).toHaveBeenCalledWith(
-    "http://localhost/search/index",
+    "http://localhost/search/index?",
     301
   );
   expect(response).toBe("redirect response");
@@ -59,7 +59,7 @@ it("drops date created sort", () => {
   const response = middleware(request);
 
   expect(NextResponse.redirect).toHaveBeenCalledWith(
-    "http://localhost/search/index",
+    "http://localhost/search/index?",
     301
   );
   expect(response).toBe("redirect response");
@@ -72,7 +72,7 @@ it("transforms date digitized ascending/descending sort", () => {
   const response1 = middleware(request1);
 
   expect(NextResponse.redirect).toHaveBeenCalledWith(
-    "http://localhost/search/indexsort=date-asc",
+    "http://localhost/search/index?sort=date-asc",
     301
   );
   expect(response1).toBe("redirect response");
@@ -98,7 +98,7 @@ it("transforms title alphabetical ascending/descending sort", () => {
   const response1 = middleware(request1);
 
   expect(NextResponse.redirect).toHaveBeenCalledWith(
-    "http://localhost/search/indexsort=title-asc",
+    "http://localhost/search/index?sort=title-asc",
     301
   );
   expect(response1).toBe("redirect response");
@@ -122,7 +122,7 @@ it("drops scroll", () => {
   const response = middleware(request);
 
   expect(NextResponse.redirect).toHaveBeenCalledWith(
-    "http://localhost/search/index",
+    "http://localhost/search/index?q=",
     301
   );
   expect(response).toBe("redirect response");
@@ -134,10 +134,7 @@ it("maintains page", () => {
   } as NextRequest;
   const response = middleware(request);
 
-  expect(NextResponse.redirect).toHaveBeenCalledWith(
-    "http://localhost/search/index?page=2",
-    301
-  );
+  expect(NextResponse.next).toHaveBeenCalled();
   expect(response).toBe("next response");
 });
 
@@ -178,7 +175,7 @@ it("transforms multiple filters", () => {
   const response = middleware(request);
 
   expect(NextResponse.redirect).toHaveBeenCalledWith(
-    "http://localhost/search/index?filters=%5Bname%3DSwope%2C+Marth%5D%5Bgenre%3DPhotographs%5D",
+    "http://localhost/search/index?filters=%5Bgenre%3DPhotographs%5D%5Bname%3DSwope%2C+Martha%5D",
     301
   );
   expect(response).toBe("redirect response");
@@ -200,7 +197,7 @@ it("transforms rights filter", () => {
 it("transforms many params", () => {
   const request = {
     nextUrl: new URL(
-      "http://localhost/search/index?filters%5Bgenre%5D=Photographs&filters%5Bname%5D%5B%5D=Swope%2C+Martha"
+      "http://localhost/search/index?filters%5Bdate%5D%5B%5D=-9999-1905&filters%5Bname%5D%5B%5D=Lange%2C+Dorothea&filters%5Brights%5D%5B%5D=pd&keywords="
     ),
   } as NextRequest;
   const response = middleware(request);

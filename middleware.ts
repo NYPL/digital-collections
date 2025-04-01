@@ -52,62 +52,50 @@ export function middleware(req: NextRequest) {
     modified = true;
   }
 
-  // Drop scroll
-  if (searchParams.has("scroll")) {
-    searchParams.delete("scroll");
-    modified = true;
-  }
+  // Transform filters into an object
+  const filtersObj: Record<string, string[]> = {};
 
-  // Transform filters into a object
-  const filters: Record<string, string | string[]> = {};
   searchParams.forEach((value, key) => {
-    if (key.startsWith("filters[")) {
-      const match = key.match(/filters\[(.*?)\]/);
-      if (match) {
-        let filterKey = match[1];
-        let filterValue = value;
+    const match = key.match(/^filters\[(.*?)\](?:\[\])?$/);
+    if (match) {
+      let filterKey = match[1];
+      let filterValue = decodeURIComponent(value);
 
-        // Special transformation for rights filter
-        if (filterKey === "rights" && filterValue === "pd") {
-          filterValue = "publicDomain";
-        }
-
-        // Store filters in the object
-        if (!filters[filterKey]) {
-          filters[filterKey] = filterValue;
-        } else {
-          if (Array.isArray(filters[filterKey])) {
-            (filters[filterKey] as string[]).push(filterValue);
-          } else {
-            filters[filterKey] = [filters[filterKey] as string, filterValue];
-          }
-        }
-        searchParams.delete(key);
-        modified = true;
+      if (filterKey === "rights" && filterValue === "pd") {
+        filterValue = "publicDomain";
       }
+
+      if (!filtersObj[filterKey]) {
+        filtersObj[filterKey] = [];
+      }
+
+      filtersObj[filterKey].push(filterValue);
+      modified = true;
     }
   });
 
-  // If there are any filters, append them to the URL
-  if (Object.keys(filters).length > 0) {
-    const filterString = Object.entries(filters)
-      .map(([key, value]) => {
-        if (Array.isArray(value)) {
-          return `${key}=${value.join("&" + key + "=")}`;
-        }
-        return `${key}=${value}`;
-      })
-      .join("&");
-    searchParams.set("filters", filterString);
+  // Remove old filter keys
+  Object.keys(filtersObj).forEach((key) =>
+    searchParams.delete(`filters[${key}]`)
+  );
+
+  // Reconstruct filters
+  const filtersString = Object.entries(filtersObj)
+    .map(([key, values]) => `[${key}=${values.join(",")}]`)
+    .join("");
+
+  if (filtersString) {
+    searchParams.set("filters", filtersString);
   }
 
   // Remove all other params except allowed ones
-  for (const key of searchParams.keys()) {
+  const keys = Array.from(searchParams.keys());
+  keys.forEach((key) => {
     if (!allowedParams.has(key)) {
       searchParams.delete(key);
       modified = true;
     }
-  }
+  });
 
   // Redirect if changes were made
   if (modified) {
