@@ -3,7 +3,10 @@ import { Metadata } from "next";
 import PageLayout from "../../src/components/pageLayout/pageLayout";
 import Item from "../../src/components/items/item";
 import { RepoApi, CollectionsApi } from "../../src/utils/apiClients";
-import { createAdobeAnalyticsPageName } from "../../src/utils/utils";
+import {
+  createAdobeAnalyticsPageName,
+  getItemTitleFromRepoAPI,
+} from "../../src/utils/utils";
 import { ItemModel } from "../../src/models/item";
 import { ItemPage } from "@/src/components/pages/itemPage/itemPage";
 import { revalidatePath } from "next/cache";
@@ -39,10 +42,13 @@ export async function generateMetadata({
 }: ItemProps): Promise<Metadata> {
   item = await getItem(params.uuid);
   params.item = item;
+  const title = getItemTitleFromRepoAPI(item);
+  console.log("item is: ", item);
+  console.log("item.title is: ", item.title);
   return {
-    title: `${item.title} - NYPL Digital Collections`, //should be item title
+    title: `${title} - NYPL Digital Collections`, //should be item title
     openGraph: {
-      title: `${item.title} - NYPL Digital Collections`,
+      title: `${title} - NYPL Digital Collections`,
     },
   };
 }

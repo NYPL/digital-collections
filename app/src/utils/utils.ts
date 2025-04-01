@@ -183,3 +183,15 @@ export const dcflFilterToString = (filters: string) => {
     return "";
   }
 };
+
+export const getItemTitleFromRepoAPI = (data) => {
+  return data.mods.titleInfo.title
+    ? data.mods.titleInfo.title.$
+    : data.mods.titleInfo[0].title.$;
+};
+
+export const getTypeOfResourceFromRepoAPI = (data) => {
+  return data.mods.typeOfResource.$
+    ? data.mods.typeOfResource.$
+    : data.mods.typeOfResource.find((obj) => obj.usage === "primary").$;
+};

@@ -4,6 +4,10 @@ import { Maniiifest } from "maniiifest";
 // https://www.npmjs.com/package/@iiif/manifold
 // https://github.com/iiif-commons/manifold
 import { CONTENT_TYPES } from "../config/constants";
+import {
+  getItemTitleFromRepoAPI,
+  getTypeOfResourceFromRepoAPI,
+} from "../utils/utils";
 export class ItemModel {
   uuid: string;
   mods: any;
@@ -84,19 +88,16 @@ export class ItemModel {
     this.mods = data.mods;
     this.capture = data.capture;
     /* Metadata fields: Types */
-    this.typeOfResource = data.mods.typeOfResource.$
-      ? data.mods.typeOfResource.$
-      : data.mods.typeOfResource.find((obj) => obj.usage === "primary").$;
+    this.typeOfResource = getTypeOfResourceFromRepoAPI(data);
     /* Metadata fields: title */
-    this.title = data.mods.titleInfo.title
-      ? data.mods.titleInfo.title.$
-      : data.mods.titleInfo[0].title.$;
+    this.title = getItemTitleFromRepoAPI(data);
     this.isSingleCapture = data.numResults.$ == 1;
     this.imageID = data.imageID;
     this.href = data.href;
     this.contentType = CONTENT_TYPES[this.typeOfResource];
     this.manifestURL = `https://qa-api-collections.nypl.org/manifests/${uuid}`;
-    // `${process.env.collectionS_API_URL}/manifests/${uuid}`
+    // TO DO: `${process.env.collectionS_API_URL}/manifests/${uuid}`
+
     /*
     field labels from manifest metadata section are: 
     title
