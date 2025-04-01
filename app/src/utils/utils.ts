@@ -169,12 +169,14 @@ export const dcflFilterToString = (filters: string) => {
     const dcflFiltersArray = filters.slice(1, -1).split("][");
     const apiFiltersArray = dcflFiltersArray.map((filter) => {
       const splitArray = filter.split("=");
-      const name =
-        splitArray[0] === "rightsFilter" ||
-        splitArray[0] === "dateEnd" ||
-        splitArray[0] === "dateStart"
-          ? splitArray[0]
-          : splitArray[0].toLowerCase();
+      let name;
+      if (splitArray[0] === "rights") {
+        name = "rightsFilter";
+      } else if (splitArray[0] === "dateEnd" || splitArray[0] === "dateStart") {
+        name = splitArray[0];
+      } else {
+        name = splitArray[0].toLowerCase();
+      }
       const value = splitArray[1];
       return `${name}=${value}`;
     });
