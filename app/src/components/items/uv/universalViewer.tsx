@@ -59,7 +59,7 @@ const UniversalViewer: React.FC<UniversalViewerProps> = React.memo(
           rel="stylesheet"
           href="https://cdn.jsdelivr.net/npm/universalviewer@4.0.0-pre.66/dist/esm/index.css"
         />
-        <div className="uv" style={{ height: 500 }} ref={ref} />
+        <div className="uv" style={{ height: 800 }} ref={ref} />
       </>
     );
   }
