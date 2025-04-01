@@ -55,7 +55,7 @@ const ActiveFilters = ({ searchManager }: ActiveFilterProps) => {
           tagSetData={searchManager.filters.map((filter: Filter) => ({
             id: filter.filter,
             label:
-              filter.filter === "rightsFilter"
+              filter.filter === "rights"
                 ? getRightsFilterLabel(filter.value)
                 : capitalize(filter.value),
           }))}
