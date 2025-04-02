@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+### Added
+
+- Added search query redirects (DR-3529)
+
 ## [0.3.5] 2025-03-27
 
 ### Added
