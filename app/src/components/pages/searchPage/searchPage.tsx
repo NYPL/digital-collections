@@ -25,11 +25,22 @@ const SearchPage = ({ searchResults }) => {
   const totalPages = totalNumPages(searchResults.numResults, CARDS_PER_PAGE);
   const { push } = useRouter();
   const pathname = usePathname();
-  const updateURL = async (queryString) => {
-    push(`${pathname}?${queryString}`);
+  const headingRef = useRef<HTMLHeadingElement>(null);
+  const isFirstLoad = useRef<boolean>(false);
+
+  const updateURL = async (queryString: string) => {
+    const newUrl = `${pathname}?${queryString}`;
+    push(newUrl);
   };
 
-  const headingRef = useRef<HTMLHeadingElement>(null);
+  useEffect(() => {
+    if (isFirstLoad.current) {
+      headingRef.current?.focus();
+    }
+    isFirstLoad.current = true;
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [searchResults]);
+
   return (
     <Box id="mainContent">
       <MobileSearchBanner />
