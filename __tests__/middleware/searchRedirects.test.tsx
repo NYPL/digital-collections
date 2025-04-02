@@ -181,7 +181,7 @@ it("transforms rights filter", () => {
   expect(response).toBe("redirect response");
 });
 
-it("transforms date filter", () => {
+it("transforms year_begin and year_end filters", () => {
   const request = {
     nextUrl: new URL(
       "http://localhost/search/index?filters%5Bgenre%5D%5B%5D=Cards&keywords=&&&&year_begin=1900&year_end=1905&"
@@ -196,16 +196,62 @@ it("transforms date filter", () => {
   expect(response).toBe("redirect response");
 });
 
+it("transforms date filter", () => {
+  const requestWithOnlyDate = {
+    nextUrl: new URL(
+      "http://localhost/search/index?filters%5Bdate%5D%5B%5D=1900-1905"
+    ),
+  } as NextRequest;
+  const response = middleware(requestWithOnlyDate);
+
+  expect(NextResponse.redirect).toHaveBeenCalledWith(
+    "http://localhost/search/index?filters=%5BdateStart%3D1900%5D%5BdateEnd%3D1905%5D",
+    301
+  );
+  expect(response).toBe("redirect response");
+});
+
+it("transforms date and one year filter", () => {
+  const requestWithDateAndYear = {
+    nextUrl: new URL(
+      "http://localhost/search/index?filters%5Bdate%5D%5B%5D=-9999-1903&filters%5Bgenre%5D=Scores&keywords=hello"
+    ),
+  } as NextRequest;
+  const response = middleware(requestWithDateAndYear);
+
+  expect(NextResponse.redirect).toHaveBeenCalledWith(
+    "http://localhost/search/index?q=hello&filters=%5BdateEnd%3D1903%5D%5Bgenre%3DScores%5D",
+    301
+  );
+
+  expect(response).toBe("redirect response");
+});
+
+it("transforms date and both year filters", () => {
+  const requestWithDateAndYears = {
+    nextUrl: new URL(
+      "http://localhost/search/index?filters%5Bdate%5D%5B%5D=1900-1905&keywords=hello&year_begin=1901&year_end=1905&"
+    ),
+  } as NextRequest;
+  const response = middleware(requestWithDateAndYears);
+
+  expect(NextResponse.redirect).toHaveBeenCalledWith(
+    "http://localhost/search/index?q=hello&filters=%5BdateStart%3D1901%5D%5BdateEnd%3D1905%5D",
+    301
+  );
+  expect(response).toBe("redirect response");
+});
+
 it("transforms many params", () => {
   const request = {
     nextUrl: new URL(
-      "http://localhost/search/index?filters%5Bgenre%5D%5B%5D=Cards&filters%5Bname%5D%5B%5D=Ogden%27s+Cigarettes&keywords=&year_begin=1900&"
+      "http://localhost/search/index?filters%5Bdate%5D%5B%5D=1900-9999&filters%5Bgenre%5D%5B%5D=Cards&filters%5Bname%5D%5B%5D=Ogden%27s+Cigarettes&filters%5Brights%5D=pd&keywords="
     ),
   } as NextRequest;
   const response = middleware(request);
 
   expect(NextResponse.redirect).toHaveBeenCalledWith(
-    "http://localhost/search/index?q=&filters=%5Bgenre%3DCards%5D%5Bname%3DOgden%27s+Cigarettes%5D%5BdateStart%3D1900%5D",
+    "http://localhost/search/index?q=&filters=%5BdateStart%3D1900%5D%5Bgenre%3DCards%5D%5Bname%3DOgden%27s+Cigarettes%5D%5Brights%3DpublicDomain%5D",
     301
   );
   expect(response).toBe("redirect response");
