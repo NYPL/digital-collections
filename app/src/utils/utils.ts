@@ -141,16 +141,6 @@ export const capitalize = (text: string): string => {
   return text?.charAt(0) ? text.charAt(0).toUpperCase() + text.slice(1) : text;
 };
 
-export const getRecordTypeFromURINYPLLink = (link: any): string => {
-  const type = link?.split("#").pop();
-  if (type === "Container") {
-    // To do: no Containers (subcollections) should be returned here at all. Revisit when Collections API updates
-    return "Subcollection";
-  } else {
-    return type;
-  }
-};
-
 export const getCollectionFilterFromUUID = (
   uuid: string,
   filters: AvailableFilterOption[]

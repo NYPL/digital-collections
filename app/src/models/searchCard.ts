@@ -8,7 +8,6 @@ import {
   imageURL,
   formatHighlightText,
   capitalize,
-  getRecordTypeFromURINYPLLink,
   getCollectionFilterFromUUID,
 } from "../utils/utils";
 
@@ -28,7 +27,7 @@ export class SearchCardModel {
   firstIndexed: string;
 
   constructor(data: any, collectionFilters: AvailableFilterOption[]) {
-    // const availableCollectionFilters = filters[]
+    //const availableCollectionFilters = filters[]
     const correspondingCollectionFilter =
       this.recordType !== "Item"
         ? getCollectionFilterFromUUID(this.uuid, collectionFilters)
@@ -50,11 +49,7 @@ export class SearchCardModel {
 
     this.title = data.title;
     this.uuid = data.uuid;
-    // TODO: comment this back in when recordType is added to the endpoint
-    // this.recordType = capitalize(data.recordType) as SearchResultRecordType;
-    this.recordType = getRecordTypeFromURINYPLLink(
-      data.type
-    ) as SearchResultRecordType;
+    this.recordType = capitalize(data.recordType) as SearchResultRecordType;
     this.imageID = data.imageID;
     this.url =
       this.recordType === "Item"
