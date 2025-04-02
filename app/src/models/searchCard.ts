@@ -8,7 +8,7 @@ import {
   imageURL,
   formatHighlightText,
   capitalize,
-  getRecordTypeFromURINYPLLink,
+  getRecordType,
   getCollectionFilterFromUUID,
 } from "../utils/utils";
 
@@ -52,9 +52,7 @@ export class SearchCardModel {
     this.uuid = data.uuid;
     // TODO: comment this back in when recordType is added to the endpoint
     // this.recordType = capitalize(data.recordType) as SearchResultRecordType;
-    this.recordType = getRecordTypeFromURINYPLLink(
-      data.type
-    ) as SearchResultRecordType;
+    this.recordType = getRecordType(data.recordType);
     this.imageID = data.imageID;
     this.url =
       this.recordType === "Item"

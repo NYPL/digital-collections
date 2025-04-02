@@ -37,7 +37,7 @@ export const fetchApi = async ({
   }
 
   const timeout = 10000;
-
+  console.log("apiUrl is: ", apiUrl);
   const fetchWithTimeout = (url: string, opts: RequestInit) => {
     return Promise.race([
       fetch(url, opts),

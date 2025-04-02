@@ -8,7 +8,9 @@ import {
   AvailableFilter,
   AvailableFilterOption,
 } from "../types/AvailableFilterType";
+import type { SearchResultRecordType } from "../types/SearchCardType";
 import type { Highlight } from "../types/HighlightType";
+import { constants } from "crypto";
 
 /**
  * Represents a IIIF Image API URL, which will be used globally throughout the application.
@@ -141,14 +143,9 @@ export const capitalize = (text: string): string => {
   return text?.charAt(0) ? text.charAt(0).toUpperCase() + text.slice(1) : text;
 };
 
-export const getRecordTypeFromURINYPLLink = (link: any): string => {
-  const type = link?.split("#").pop();
-  if (type === "Container") {
-    // To do: no Containers should be returned here at all. Revisit when Collections API updates
-    return "Sub-collection";
-  } else {
-    return type;
-  }
+export const getRecordType = (type: any): SearchResultRecordType => {
+  // capitalize first character in strin
+  return type.charAt(0).toUpperCase() + type.slice(1);
 };
 
 export const getCollectionFilterFromUUID = (
