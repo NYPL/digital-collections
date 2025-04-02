@@ -41,6 +41,7 @@ export async function generateMetadata({
   params,
 }: ItemProps): Promise<Metadata> {
   item = await getItem(params.uuid);
+  console.log("item is: ", item);
   params.item = item;
   const title = getItemTitleFromRepoAPI(item);
   console.log("item is: ", item);
