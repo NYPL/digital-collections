@@ -60,26 +60,35 @@ export function middleware(req: NextRequest) {
     if (match) {
       let filterKey = match[1];
       let filterValue = decodeURIComponent(value);
-
       if (filterKey === "rights" && filterValue === "pd") {
         filterValue = "publicDomain";
       }
-
-      if (!filtersObj[filterKey]) {
-        filtersObj[filterKey] = [];
+      if (filterKey === "date") {
+        // Regular expression to match end date x-9999, start date -9999-x, or x-x (both)
+        const datePattern = /^(-?\d{4})?-(-?\d{4})?$/;
+        const dateMatch = filterValue.match(datePattern);
+        if (dateMatch) {
+          const [, start, end] = dateMatch;
+          if (start && start !== "-9999") {
+            filtersObj["dateStart"] = [start];
+          }
+          if (end && end !== "9999") {
+            filtersObj["dateEnd"] = [end];
+          }
+        }
+        modified = true;
+      } else {
+        if (!filtersObj[filterKey]) {
+          filtersObj[filterKey] = [];
+        }
+        filtersObj[filterKey].push(filterValue);
+        modified = true;
       }
-
-      filtersObj[filterKey].push(filterValue);
-      modified = true;
     } else if (key === "year_begin" || key === "year_end") {
+      // Replace with year_begin/year_end values if available
       let filterKey = key === "year_begin" ? "dateStart" : "dateEnd";
       let filterValue = decodeURIComponent(value);
-
-      if (!filtersObj[filterKey]) {
-        filtersObj[filterKey] = [];
-      }
-
-      filtersObj[filterKey].push(filterValue);
+      filtersObj[filterKey] = [filterValue];
       modified = true;
     }
   });
