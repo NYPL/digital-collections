@@ -25,7 +25,13 @@ export function middleware(req: NextRequest) {
   }
 
   // Drop specific sorts
-  const dropSorts = ["score desc", "sortString desc", "keyDate_st asc"];
+  const dropSorts = [
+    "score desc",
+    "sortString desc",
+    "sortString asc",
+    "keyDate_st asc",
+    "keyDate_st desc",
+  ];
   if (
     searchParams.has("sort") &&
     dropSorts.includes(searchParams.get("sort")!)
