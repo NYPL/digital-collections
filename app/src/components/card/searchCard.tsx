@@ -35,26 +35,30 @@ const onSiteMaterialBadge = (recordType: SearchResultRecordType) => {
 };
 
 const contentTypeTag = (result: SearchCardType) => {
-  // To do: Replace once contentType and recordType are synced.
   const displayLabel =
     result.recordType === "Item"
       ? result.contentType === "Image" && result.containsMultipleCaptures
         ? "Multiple images"
         : result.contentType
         ? result.contentType
-        : "MISSING contentType"
+        : null
       : result.recordType
       ? result.recordType
-      : "MISSING recordType";
+      : null;
 
   return (
-    <TagSet
-      tagSetData={[
-        { id: `type-${result.uuid}`, label: displayLabel ? displayLabel : "" },
-      ]}
-      type="filter"
-      sx={{ margin: 0 }}
-    />
+    displayLabel && (
+      <TagSet
+        tagSetData={[
+          {
+            id: `type-${result.uuid}`,
+            label: displayLabel ? displayLabel : "",
+          },
+        ]}
+        type="filter"
+        sx={{ margin: 0 }}
+      />
+    )
   );
 };
 
