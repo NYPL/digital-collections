@@ -20,6 +20,7 @@ export const DEFAULT_COLLECTION_SORT = "date-desc";
 export const DEFAULT_SEARCH_SORT = "relevance";
 export const DEFAULT_SEARCH_TERM = "";
 export const DEFAULT_FILTERS = [];
+// export const DEFAULT_SORT = [];
 
 export const COLLECTION_SORT_OPTIONS = {
   "date-desc": "date DESC",
@@ -33,6 +34,7 @@ export const COLLECTION_SORT_LABELS = {
   "title-desc": "Title Z to A",
   "title-asc": "Title A to Z",
 };
+
 export const SEARCH_SORT_LABELS = {
   relevance: "Relevance",
   "date-desc": "Newest to oldest",
@@ -41,4 +43,36 @@ export const SEARCH_SORT_LABELS = {
   "title-asc": "Title A to Z",
   "collections-first": "Collections first",
   "items-first": "Items first",
+};
+
+export const METADATA_FIELDS = [
+  "Title",
+  "Names",
+  "Collection",
+  "Date/Origin",
+  "Table of Contents",
+  "Library Locations",
+  "Subjects",
+  "Genres",
+  "Notes",
+  "Physical Description",
+  "Abstract",
+  "Types",
+  "Languages",
+  "Identifiers",
+  "Access",
+  "Rights",
+];
+
+export const CONTENT_TYPES = {
+  text: "image",
+  cartographic: "image",
+  "notated music": "image",
+  "still image": "image",
+  "moving image": "video",
+  "sound recording": "audio",
+  "sound recording-nonmusical": "audio",
+  "sound recording-musical": "audio",
+  "three dimensional object": "image",
+  "software, multimedia": "image",
 };
