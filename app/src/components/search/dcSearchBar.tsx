@@ -59,7 +59,6 @@ export interface SearchBarProps {
   maxWrapperWidth?: string;
   /** Sets if submit button displays (for autocomplete search). */
   showButton?: boolean;
-  setIsFocused?: (boolean) => void;
 }
 
 const SearchBarComponent = forwardRef<HTMLDivElement, SearchBarProps>(
@@ -74,7 +73,6 @@ const SearchBarComponent = forwardRef<HTMLDivElement, SearchBarProps>(
       labelText,
       maxWrapperWidth,
       showButton = true,
-      setIsFocused,
     } = props;
 
     const stateProps = {
