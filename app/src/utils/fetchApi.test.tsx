@@ -7,7 +7,7 @@ describe("fetchApi", () => {
 
   beforeEach(() => {
     process.env.AUTH_TOKEN = mockAuthToken;
-    process.env.QA_COLLECTIONS_API_AUTH_TOKEN = mockCollectionsAuthToken;
+    process.env.COLLECTIONS_API_AUTH_TOKEN = mockCollectionsAuthToken;
   });
 
   it("makes a GET request and returns response", async () => {
