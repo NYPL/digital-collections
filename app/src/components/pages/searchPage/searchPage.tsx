@@ -61,33 +61,49 @@ const SearchPage = ({ searchResults }) => {
             },
           }}
         >
-          <Heading
-            size="heading2"
-            sx={{
-              maxWidth: "1250px",
-              marginBottom: "m",
-            }}
-          >
-            {searchResults.numResults > 0
-              ? `Displaying ${displayResults(
+          {searchResults.numResults > 0 ? (
+            <>
+              <Heading
+                size="heading2"
+                sx={{
+                  maxWidth: "1250px",
+                  marginBottom: "m",
+                }}
+              >
+                {`Displaying ${displayResults(
                   searchResults.numResults,
                   CARDS_PER_PAGE,
                   searchManager.page
-                )} results ${
-                  searchManager.keywords?.length > 0
-                    ? `for "${searchManager.keywords}"`
-                    : ``
-                }`
-              : `No results ${
-                  searchManager.keywords?.length > 0
-                    ? `for "${searchManager.keywords}"`
-                    : ``
-                }`}
-          </Heading>
-          <Filters
-            searchManager={searchManager}
-            headingText="Refine your search"
-          />
+                )}
+            results ${
+              searchManager.keywords?.length > 0
+                ? `for "${searchManager.keywords}"`
+                : ``
+            }
+            `}
+              </Heading>
+
+              <Filters
+                searchManager={searchManager}
+                headingText="Refine your search"
+              />
+            </>
+          ) : (
+            <Heading
+              size="heading2"
+              sx={{
+                maxWidth: "1250px",
+                marginBottom: "l",
+              }}
+            >
+              {`No results ${
+                searchManager.keywords?.length > 0
+                  ? `for "${searchManager.keywords}"`
+                  : ``
+              }
+              `}
+            </Heading>
+          )}
         </Box>
       </Box>
       <Box
