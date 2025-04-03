@@ -176,8 +176,6 @@ const SearchBarComponent = forwardRef<HTMLDivElement, SearchBarProps>(
     return (
       <Box
         role="search"
-        {...(setIsFocused && { onFocusCapture: () => setIsFocused(true) })}
-        {...(setIsFocused && { onBlurCapture: () => setIsFocused(true) })}
         aria-label={labelText}
         aria-autocomplete={showButton ? undefined : "list"}
         sx={{
