@@ -5,24 +5,28 @@ function useHeaderState() {
     "up"
   );
   const [headerHeight, setHeaderHeight] = useState<number>(150);
+  const [isFocused, setIsFocused] = useState<boolean>(false);
   const headerRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
     let lastScrollY = window.scrollY;
 
     const updateScroll = () => {
-      const scrollY = window.scrollY;
-      let direction: "up" | "down" | null =
-        scrollY > lastScrollY ? "down" : "up";
+      if (!isFocused) {
+        // Only update scroll state when header is not focused
+        const scrollY = window.scrollY;
+        let direction: "up" | "down" | null =
+          scrollY > lastScrollY ? "down" : "up";
 
-      if (
-        direction !== scrollDirection &&
-        Math.abs(scrollY - lastScrollY) > 20
-      ) {
-        setScrollDirection(direction);
+        if (
+          direction !== scrollDirection &&
+          Math.abs(scrollY - lastScrollY) > 20
+        ) {
+          setScrollDirection(direction);
+        }
+
+        lastScrollY = scrollY > 0 ? scrollY : 0;
       }
-
-      lastScrollY = scrollY > 0 ? scrollY : 0;
 
       // Update header height
       if (headerRef.current) {
@@ -35,9 +39,21 @@ function useHeaderState() {
     return () => {
       window.removeEventListener("scroll", updateScroll);
     };
-  }, [scrollDirection]);
+  }, [scrollDirection, isFocused]);
 
-  return { headerRef, headerHeight, isScrollingUp: scrollDirection === "up" };
+  useEffect(() => {
+    if (isFocused) {
+      setScrollDirection("up");
+    }
+  }, [isFocused]);
+
+  return {
+    headerRef,
+    headerHeight,
+    isScrollingUp: isFocused || scrollDirection === "up",
+    isFocused,
+    setIsFocused,
+  };
 }
 
 export default useHeaderState;

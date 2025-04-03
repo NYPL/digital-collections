@@ -7,7 +7,7 @@ import PublicDomainFilter from "../publicDomainFilter/publicDomainFilter";
 import { headerBreakpoints } from "../../utils/breakpoints";
 import DCSearchBar from "./dcSearchBar";
 
-const Search = ({ setIsFocused }) => {
+const Search = () => {
   const router = useRouter();
   const [keywords, setKeywords] = useState("");
   const [publicDomainOnly, setPublicDomainOnly] = useState(false);
@@ -54,7 +54,6 @@ const Search = ({ setIsFocused }) => {
           placeholder: "Search keyword(s)",
         }}
         onSubmit={(e) => handleSubmit(e)}
-        setIsFocused={setIsFocused}
       />
       <PublicDomainFilter onCheckChange={handleCheckChange} />
     </Box>

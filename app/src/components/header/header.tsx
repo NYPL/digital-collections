@@ -1,4 +1,4 @@
-import React, { useLayoutEffect, useRef, useState } from "react";
+import React from "react";
 import {
   Box,
   HStack,
@@ -10,37 +10,23 @@ import DCLogo from "../logo/logo";
 import NavMenu from "../navMenu/navMenu";
 import MobileNavMenu from "../navMenu/mobileNavMenu";
 import { headerBreakpoints } from "../../utils/breakpoints";
-import useScrollDirection from "../../hooks/useScrollDirection";
+import useHeaderState from "@/src/hooks/useHeaderState";
 
 const Header = () => {
-  const headerRef = useRef<HTMLDivElement>(null);
-  const [headerHeight, setHeaderHeight] = useState<number>(150);
-  const [isFocused, setIsFocused] = useState(false);
-  const isScrollingUp = useScrollDirection();
-
-  useLayoutEffect(() => {
-    const updateHeight = () => {
-      if (headerRef.current) {
-        const newHeight = headerRef.current.offsetHeight;
-        setHeaderHeight((prev) => (prev !== newHeight ? newHeight : prev));
-      }
-    };
-    updateHeight();
-    window.addEventListener("scroll", updateHeight);
-    return () => {
-      window.addEventListener("scroll", updateHeight);
-    };
-  }, [isScrollingUp]);
+  const { headerRef, headerHeight, isScrollingUp, isFocused, setIsFocused } =
+    useHeaderState();
 
   return (
     <>
-      {/* Placeholder to avoid layout shift */}
+      {/* Placeholder to avoid layout shift when fixed */}
       {isFocused && <Box height={`${headerHeight}px`} />}
       <Box
         ref={headerRef}
         data-sticky-header
         data-sticky-offset="10"
         position={isFocused ? "fixed" : "sticky"}
+        {...(setIsFocused && { onFocusCapture: () => setIsFocused(true) })}
+        {...(setIsFocused && { onBlurCapture: () => setIsFocused(false) })}
         top="0px"
         left="0"
         right="0"
@@ -138,7 +124,7 @@ const Header = () => {
             >
               <NavMenu render={1} />
             </Box>
-            <Search setIsFocused={setIsFocused} />
+            <Search />
           </VStack>
         </Box>
         <HorizontalRule
