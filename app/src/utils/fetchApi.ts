@@ -26,7 +26,9 @@ export const fetchApi = async ({
   const { method = "GET", params, body, isRepoApi = true } = options;
   const apiKey = isRepoApi
     ? process.env.AUTH_TOKEN
-    : process.env.COLLECTIONS_API_AUTH_TOKEN;
+    : process.env.NODE_ENV === "production"
+    ? process.env.COLLECTIONS_API_AUTH_TOKEN
+    : process.env.QA_COLLECTIONS_API_AUTH_TOKEN;
 
   const headers = {
     Authorization: `Token token=${apiKey}`,
