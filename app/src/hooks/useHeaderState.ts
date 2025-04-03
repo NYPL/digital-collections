@@ -36,8 +36,10 @@ function useHeaderState() {
     };
 
     window.addEventListener("scroll", updateScroll);
+    window.addEventListener("resize", updateScroll);
     return () => {
       window.removeEventListener("scroll", updateScroll);
+      window.removeEventListener("resize", updateScroll);
     };
   }, [scrollDirection, isFocused]);
 
