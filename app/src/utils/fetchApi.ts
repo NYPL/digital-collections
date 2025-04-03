@@ -23,8 +23,10 @@ export const fetchApi = async ({
     isRepoApi?: boolean;
   };
 }) => {
-  const apiKey = process.env.AUTH_TOKEN;
   const { method = "GET", params, body, isRepoApi = true } = options;
+  const apiKey = isRepoApi
+    ? process.env.AUTH_TOKEN
+    : process.env.COLLECTIONS_API_AUTH_TOKEN;
 
   const headers = {
     Authorization: `Token token=${apiKey}`,
@@ -53,7 +55,7 @@ export const fetchApi = async ({
   try {
     const response = (await fetchWithTimeout(apiUrl, {
       method,
-      ...(isRepoApi ? { headers } : {}),
+      headers,
       body: method === "POST" ? JSON.stringify(body) : undefined,
     })) as Response;
 
