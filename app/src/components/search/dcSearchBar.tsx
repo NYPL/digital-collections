@@ -123,6 +123,14 @@ const SearchBarComponent = forwardRef<HTMLDivElement, SearchBarProps>(
         id={`searchbar-button-${id}`}
         isDisabled={isDisabled}
         onClick={onSubmit}
+        {...{
+          onMouseDown: (e) => {
+            if (document.activeElement instanceof HTMLElement) {
+              document.activeElement.blur();
+            }
+            onSubmit(e);
+          },
+        }}
         type="submit"
         aria-labelledby="searchbar-text"
         sx={{
