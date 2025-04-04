@@ -122,7 +122,7 @@ it("drops scroll", () => {
   const response = middleware(request);
 
   expect(NextResponse.redirect).toHaveBeenCalledWith(
-    "http://localhost/search/index?q=",
+    "http://localhost/search/index?",
     301
   );
   expect(response).toBe("redirect response");
@@ -190,7 +190,7 @@ it("transforms year_begin and year_end filters", () => {
   const response = middleware(request);
 
   expect(NextResponse.redirect).toHaveBeenCalledWith(
-    "http://localhost/search/index?q=&filters=%5Bgenre%3DCards%5D%5BdateStart%3D1900%5D%5BdateEnd%3D1905%5D",
+    "http://localhost/search/index?filters=%5Bgenre%3DCards%5D%5BdateStart%3D1900%5D%5BdateEnd%3D1905%5D",
     301
   );
   expect(response).toBe("redirect response");
@@ -251,7 +251,7 @@ it("transforms many params", () => {
   const response = middleware(request);
 
   expect(NextResponse.redirect).toHaveBeenCalledWith(
-    "http://localhost/search/index?q=&filters=%5BdateStart%3D1900%5D%5Bgenre%3DCards%5D%5Bname%3DOgden%27s+Cigarettes%5D%5Brights%3DpublicDomain%5D",
+    "http://localhost/search/index?filters=%5BdateStart%3D1900%5D%5Bgenre%3DCards%5D%5Bname%3DOgden%27s+Cigarettes%5D%5Brights%3DpublicDomain%5D",
     301
   );
   expect(response).toBe("redirect response");

@@ -20,7 +20,9 @@ export function middleware(req: NextRequest) {
   if (searchParams.has("keywords")) {
     const keywordValue = searchParams.get("keywords");
     searchParams.delete("keywords");
-    searchParams.set("q", keywordValue!);
+    if (keywordValue && keywordValue.length > 0) {
+      searchParams.set("q", keywordValue!);
+    }
     modified = true;
   }
 
