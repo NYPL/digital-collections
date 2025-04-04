@@ -25,8 +25,8 @@ const Header = () => {
         data-sticky-header
         data-sticky-offset="10"
         position={isFocused ? "fixed" : "sticky"}
-        {...(setIsFocused && { onFocusCapture: () => setIsFocused(true) })}
-        {...(setIsFocused && { onBlurCapture: () => setIsFocused(false) })}
+        onFocusCapture={() => setIsFocused(true)}
+        onBlurCapture={() => setIsFocused(false)}
         top="0px"
         left="0"
         right="0"
