@@ -78,7 +78,7 @@ describe("fetchApi", () => {
     expect(fetch).toHaveBeenCalledWith(mockApiUrl, {
       method: "GET",
       headers: {
-        Authorization: `Token token=${mockCollectionsAuthToken}`,
+        "x-nypl-collections-api-key": `${mockCollectionsAuthToken}`,
       },
       body: undefined,
     });
