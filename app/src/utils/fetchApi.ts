@@ -24,14 +24,18 @@ export const fetchApi = async ({
   };
 }) => {
   const { method = "GET", params, body, isRepoApi = true } = options;
-  const apiKey = isRepoApi
-    ? process.env.AUTH_TOKEN
-    : process.env.COLLECTIONS_API_AUTH_TOKEN;
 
-  const headers = {
-    Authorization: `Token token=${apiKey}`,
-    ...(method === "POST" && { "Content-Type": "application/json" }),
-  };
+  const headers: Record<string, string> = {};
+
+  if (isRepoApi) {
+    headers["Authorization"] = `Token token=${process.env.AUTH_TOKEN || ""}`;
+    if (method === "POST") {
+      headers["Content-Type"] = "application/json";
+    }
+  } else {
+    headers["x-nypl-collections-api-key"] =
+      process.env.COLLECTIONS_API_AUTH_TOKEN || "";
+  }
 
   if (method === "GET" && params) {
     const queryString = "?" + new URLSearchParams(params).toString();
