@@ -39,13 +39,16 @@ export default async function Collection({
     // filters: searchParams.filters + [`Collection=uuid`], // Needs collection filter every time
   });
 
+  // Add available filters into searchParams
+  const updatedSearchParams = {
+    ...searchParams,
+    availableFilters: searchResults.availableFilters,
+  };
+
   // mockSearchResponse;
 
   let collectionData = //await CollectionsApi.getCollectionData();
     mockCollectionResponse;
-
-  let collectionChildren = // await CollectionsApi.getCollectionChildren();
-    mockCollectionChildrenResponse;
 
   return (
     <PageLayout
@@ -68,7 +71,6 @@ export default async function Collection({
         searchParams={searchParams}
         searchResults={searchResults}
         collectionData={collectionData}
-        collectionChildren={collectionChildren}
       />
     </PageLayout>
   );

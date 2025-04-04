@@ -1,4 +1,4 @@
-import { useState, forwardRef } from "react";
+import { useState, useEffect, forwardRef } from "react";
 import { Box, Button, Collapse } from "@chakra-ui/react";
 import {
   Flex,
@@ -7,16 +7,14 @@ import {
   Heading,
   Tooltip,
 } from "@nypl/design-system-react-components";
-//import { mockCollectionChildrenResponse } from "__tests__/__mocks__/data/mockCollectionStructure";
 import { useScrollIntoViewIfNeeded } from "@/src/hooks/useScrollIntoViewIfNeeded";
 import { headerBreakpoints } from "@/src/utils/breakpoints";
-import { CollectionsApi } from "@/src/utils/apiClients";
 
 export interface CollectionChildProps {
   title: string;
   itemCount: string;
   children?: CollectionChildProps[];
-  hasChildren: boolean;
+  hasSubContainers: boolean;
   uuid: string;
 }
 
@@ -26,41 +24,58 @@ interface OpenStateItem {
   isOpen: boolean;
 }
 
-const ButtonText = ({ title, hasChildren, level }) => {
-  let text = (
+const ButtonText = ({
+  title,
+  hasSubContainers,
+  level,
+}: {
+  title: string;
+  hasSubContainers: boolean;
+  level: number;
+}) => {
+  const text = (
     <Text
       flex="1"
       marginBottom="0"
       whiteSpace="nowrap"
       overflow="hidden"
       textOverflow="ellipsis"
-      paddingLeft={hasChildren ? "s" : "28px"}
+      paddingLeft={hasSubContainers ? "s" : "28px"}
       fontWeight="500"
     >
       {title}
     </Text>
   );
-  let truncationLength = 30 - level * 7;
-  if (title.length > truncationLength) {
-    return (
-      <Tooltip zIndex="1000" content={text}>
-        {text}
-      </Tooltip>
-    );
-  }
-  return text;
+
+  const truncationLength = 30 - level * 7;
+  return title.length > truncationLength ? (
+    <Tooltip zIndex="1000" content={text}>
+      {text}
+    </Tooltip>
+  ) : (
+    text
+  );
 };
 
-const fetchChildren = async (uuid: string): Promise<CollectionChildProps[]> => {
-  return CollectionsApi.getCollectionChildren(uuid);
+const fetchChildren = async (uuid: string) => {
+  const res = await fetch(`/api/collectionchildren?uuid=${uuid}`);
+  if (!res.ok) {
+    throw new Error(`Failed to fetch children for uuid: ${uuid}`);
+  }
+  return res.json();
 };
 
 const prefetchNextLevel = async (children: CollectionChildProps[]) => {
   for (const child of children) {
-    if (child.children && child.children.length > 0) {
-      console.log("now pre-fetching children of", child.title);
-      // only fetch and add children if they aren't already there
-      child.children = await fetchChildren(child.uuid);
+    if (
+      child.hasSubContainers &&
+      (!child.children || child.children.length === 0)
+    ) {
+      try {
+        child.children = await fetchChildren(child.uuid);
+      } catch (err) {
+        console.error("Prefetch failed for", child.uuid, err);
+      }
     }
   }
 };
@@ -69,7 +84,7 @@ const AccordionItem = ({
   title,
   itemCount,
   uuid,
-  hasChildren,
+  hasSubContainers,
   children = [],
   level = 0,
   headingRef,
@@ -90,40 +105,28 @@ const AccordionItem = ({
   const [fetchedChildren, setFetchedChildren] =
     useState<CollectionChildProps[]>(children);
 
-  const toggleItem = async (title: string, level: number) => {
-    const updateStateAndFetch = async (newState: any) => {
-      const isCurrentlyOpen = newState.some(
-        (item) => item.title === title && item.isOpen
-      );
-
-      if (isCurrentlyOpen && hasChildren) {
-        try {
-          // Fetch children of the clicked item only when opening
-          const nextChildren = await fetchChildren(title);
-          setFetchedChildren(nextChildren);
-          // Prefetch the next level of children in advance
-          await prefetchNextLevel(nextChildren);
-        } catch (error) {
-          console.error("Failed to fetch children:", error);
-        }
-      }
-    };
-
+  const toggleItem = async () => {
     setOpenState((prev) => {
-      // Close all siblings at the same level
-      let newState = prev.filter((item) => item.level !== level);
-
       const isCurrentlyOpen = prev.some(
         (item) => item.title === title && item.isOpen
       );
+      let newState = prev.filter((item) => item.level !== level);
 
-      // Close all children when the parent is closed
       if (!isCurrentlyOpen) {
         newState = newState.filter((item) => item.level < level);
         newState.push({ title, level, isOpen: true });
+
+        (async () => {
+          try {
+            const nextChildren = await fetchChildren(uuid);
+            setFetchedChildren(nextChildren.children);
+            await prefetchNextLevel(nextChildren);
+          } catch (error) {
+            console.error("Failed to fetch children:", error);
+          }
+        })();
       }
 
-      updateStateAndFetch(newState);
       return newState;
     });
   };
@@ -152,32 +155,34 @@ const AccordionItem = ({
           paddingRight="s"
           paddingBottom="m"
           onClick={() => {
-            toggleItem(title, level);
+            toggleItem();
             scrollIntoViewIfNeeded();
           }}
-          sx={{
-            zIndex: "0 !important",
-          }}
-          {...(hasChildren ? { "aria-expanded": isOpen } : {})}
+          sx={{ zIndex: "0 !important" }}
+          aria-expanded={hasSubContainers ? isOpen : undefined}
           aria-current={isCurrent ? "true" : undefined}
         >
           <Flex width="100%" alignItems="center">
-            {hasChildren && (
+            {hasSubContainers && (
               <Icon
                 size="small"
                 name={isOpen ? "minus" : "plus"}
-                visibility={hasChildren ? "visible" : "hidden"}
+                visibility="visible"
               />
             )}
-            <ButtonText title={title} hasChildren={hasChildren} level={level} />
+            <ButtonText
+              title={title}
+              hasSubContainers={hasSubContainers}
+              level={level}
+            />
             <Box as="span" marginLeft="s" fontWeight="400">
               {itemCount}
             </Box>
           </Flex>
         </Button>
-        {(hasChildren || fetchedChildren.length > 0) && (
+        {(hasSubContainers || fetchedChildren.length > 0) && (
           <Collapse in={isOpen}>
-            <ul style={{ margin: "0" }}>
+            <ul style={{ margin: 0 }}>
               {fetchedChildren.map((child, index) => (
                 <AccordionItem
                   key={index}
@@ -196,44 +201,60 @@ const AccordionItem = ({
   );
 };
 
-const CollectionStructure = forwardRef<
-  HTMLHeadingElement,
-  { data: CollectionChildProps[] }
->(({ data }, headingRef) => {
-  const [openState, setOpenState] = useState<OpenStateItem[]>([]);
-  return (
-    <Flex
-      flexDir="column"
-      sx={{
-        [`@media screen and (max-width: ${headerBreakpoints.smTablet}px)`]: {
-          display: "none",
-        },
-      }}
-    >
-      <Heading size="heading6">Collection structure</Heading>
+const CollectionStructure = forwardRef<HTMLHeadingElement>(
+  (_props, headingRef) => {
+    const [openState, setOpenState] = useState<OpenStateItem[]>([]);
+    const [data, setData] = useState<CollectionChildProps[]>([]);
 
-      <Box
-        w="300px"
-        maxH="750px"
-        overflowY="auto"
-        borderTop="1px solid var(--ui-gray-medium, #BDBDBD)"
+    useEffect(() => {
+      const loadData = async () => {
+        try {
+          const topLevel = await fetchChildren(
+            "d3802d10-f49a-0139-3bff-0242ac110002"
+          );
+          setData(topLevel?.children);
+        } catch (err) {
+          console.error("Error loading top-level collections:", err);
+        }
+      };
+      loadData();
+    }, []);
+
+    return (
+      <Flex
+        flexDir="column"
+        sx={{
+          [`@media screen and (max-width: ${headerBreakpoints.smTablet}px)`]: {
+            display: "none",
+          },
+        }}
       >
-        <ul>
-          {data.map((item, index) => (
-            <AccordionItem
-              key={index}
-              {...item}
-              level={0}
-              headingRef={headingRef}
-              openState={openState}
-              setOpenState={setOpenState}
-            />
-          ))}
-        </ul>
-      </Box>
-    </Flex>
-  );
-});
+        <Heading ref={headingRef as any} size="heading6">
+          Collection structure
+        </Heading>
+        <Box
+          w="300px"
+          maxH="750px"
+          overflowY="auto"
+          borderTop="1px solid var(--ui-gray-medium, #BDBDBD)"
+        >
+          <ul>
+            {data.map((item, index) => (
+              <AccordionItem
+                key={index}
+                {...item}
+                level={0}
+                headingRef={headingRef}
+                openState={openState}
+                setOpenState={setOpenState}
+              />
+            ))}
+          </ul>
+        </Box>
+      </Flex>
+    );
+  }
+);
 
 CollectionStructure.displayName = "CollectionStructure";
 

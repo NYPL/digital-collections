@@ -37,7 +37,6 @@ const CollectionPage = ({
   searchResults,
   searchParams,
   collectionData,
-  collectionChildren,
 }) => {
   const headingRef = useRef<HTMLHeadingElement>(null);
 
@@ -105,7 +104,7 @@ const CollectionPage = ({
             flexDir: { base: "column", md: "row" },
           }}
         >
-          <CollectionStructure data={collectionChildren} />
+          <CollectionStructure />
           <Box width="100%">
             <CollectionSearch />
             <Flex
