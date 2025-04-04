@@ -7,9 +7,10 @@ import {
   Heading,
   Tooltip,
 } from "@nypl/design-system-react-components";
-import { mockCollectionChildrenResponse } from "__tests__/__mocks__/data/mockCollectionStructure";
+//import { mockCollectionChildrenResponse } from "__tests__/__mocks__/data/mockCollectionStructure";
 import { useScrollIntoViewIfNeeded } from "@/src/hooks/useScrollIntoViewIfNeeded";
 import { headerBreakpoints } from "@/src/utils/breakpoints";
+import { CollectionsApi } from "@/src/utils/apiClients";
 
 export interface CollectionChildProps {
   title: string;
@@ -50,27 +51,8 @@ const ButtonText = ({ title, hasChildren, level }) => {
   return text;
 };
 
-const fetchChildren = async (
-  title: string
-): Promise<CollectionChildProps[]> => {
-  return new Promise((resolve) => {
-    setTimeout(() => {
-      // simulating fetching real data but actually just filtering the mock
-      const findChildren = (data: CollectionChildProps[], title: string) => {
-        for (const item of data) {
-          if (item.title === title) {
-            return item.children || [];
-          } else if (item.children) {
-            const result = findChildren(item.children, title);
-            if (result.length > 0) return result;
-          }
-        }
-        return [];
-      };
-
-      resolve(findChildren(mockCollectionChildrenResponse, title));
-    }, 1000);
-  });
+const fetchChildren = async (uuid: string): Promise<CollectionChildProps[]> => {
+  return CollectionsApi.getCollectionChildren(uuid);
 };
 
 const prefetchNextLevel = async (children: CollectionChildProps[]) => {
@@ -78,7 +60,7 @@ const prefetchNextLevel = async (children: CollectionChildProps[]) => {
     if (child.children && child.children.length > 0) {
       console.log("now pre-fetching children of", child.title);
       // only fetch and add children if they aren't already there
-      child.children = await fetchChildren(child.title);
+      child.children = await fetchChildren(child.uuid);
     }
   }
 };
