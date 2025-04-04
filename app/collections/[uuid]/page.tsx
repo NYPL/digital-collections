@@ -45,8 +45,6 @@ export default async function Collection({
     availableFilters: searchResults.availableFilters,
   };
 
-  // mockSearchResponse;
-
   let collectionData = //await CollectionsApi.getCollectionData();
     mockCollectionResponse;
 
@@ -70,7 +68,7 @@ export default async function Collection({
         slug={"Example collection"}
         searchParams={searchParams}
         searchResults={searchResults}
-        collectionData={collectionData}
+        collectionData={{ ...collectionData, uuid: params.uuid }}
       />
     </PageLayout>
   );
