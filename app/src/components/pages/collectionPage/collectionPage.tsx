@@ -104,7 +104,7 @@ const CollectionPage = ({
             flexDir: { base: "column", md: "row" },
           }}
         >
-          <CollectionStructure />
+          <CollectionStructure uuid={collectionData.uuid} />
           <Box width="100%">
             <CollectionSearch />
             <Flex

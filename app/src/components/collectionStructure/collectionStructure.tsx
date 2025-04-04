@@ -201,17 +201,15 @@ const AccordionItem = ({
   );
 };
 
-const CollectionStructure = forwardRef<HTMLHeadingElement>(
-  (_props, headingRef) => {
+const CollectionStructure = forwardRef<HTMLHeadingElement, { uuid: string }>(
+  ({ uuid }, headingRef) => {
     const [openState, setOpenState] = useState<OpenStateItem[]>([]);
     const [data, setData] = useState<CollectionChildProps[]>([]);
 
     useEffect(() => {
       const loadData = async () => {
         try {
-          const topLevel = await fetchChildren(
-            "d3802d10-f49a-0139-3bff-0242ac110002"
-          );
+          const topLevel = await fetchChildren(uuid);
           setData(topLevel?.children);
         } catch (err) {
           console.error("Error loading top-level collections:", err);
