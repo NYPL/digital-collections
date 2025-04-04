@@ -6,8 +6,8 @@ const searchSchema = {
   page: "integer",
   perPage: "integer",
   // Filters:
-  // The 5 fields below would not be returned if not requested
-  sort: "string ie: title DESC",
+  // The 4 fields below would not be returned if not requested
+  sort: "string ie: title-desc",
   rightsFilter: "publicDomain | availableOnline | onSiteMaterial",
   dateStart: "integer ie: 1800",
   dateEnd: "integer ie: 1900",
