@@ -49,7 +49,7 @@ const ButtonText = ({
 
   const truncationLength = 30 - level * 7;
   return title.length > truncationLength ? (
-    <Tooltip zIndex="1000" content={text}>
+    <Tooltip zIndex="1000" content={title}>
       {text}
     </Tooltip>
   ) : (
@@ -180,7 +180,7 @@ const AccordionItem = ({
             </Box>
           </Flex>
         </Button>
-        {(hasSubContainers || fetchedChildren.length > 0) && (
+        {hasSubContainers && (
           <Collapse in={isOpen}>
             <ul style={{ margin: 0 }}>
               {fetchedChildren.map((child, index) => (
