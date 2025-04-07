@@ -1,9 +1,10 @@
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import { Box, Checkbox, Link } from "@nypl/design-system-react-components";
 import { PublicDomainFilterProps } from "../../types/props/PublicDomainFilterProps";
 
 const PublicDomainFilter = ({ onCheckChange }: PublicDomainFilterProps) => {
   const [isChecked, setIsChecked] = useState(false);
+  const checkboxRef = useRef<HTMLInputElement>(null);
 
   const text = (
     <>
@@ -12,21 +13,24 @@ const PublicDomainFilter = ({ onCheckChange }: PublicDomainFilterProps) => {
     </>
   );
 
-  const handleCheckChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const newValue = event.target.checked;
+  const handleClick = (e: React.MouseEvent<HTMLInputElement>) => {
+    e.preventDefault();
+    checkboxRef.current?.focus({ preventScroll: true });
+    const newValue = !isChecked;
     setIsChecked(newValue);
     onCheckChange(newValue);
   };
 
   return (
-    <Box sx={{ paddingTop: "15px", paddingBottom: "15px" }}>
+    <Box sx={{ pt: "15px", pb: "15px" }}>
       <Checkbox
         id="pd-checkbox"
         data-testid="pd-checkbox"
         labelText={text}
         name="pd_filter"
         isChecked={isChecked}
-        onChange={handleCheckChange}
+        {...{ onClick: handleClick }}
+        ref={checkboxRef}
       />
     </Box>
   );
