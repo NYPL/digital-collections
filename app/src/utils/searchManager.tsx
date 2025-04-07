@@ -4,6 +4,7 @@ import {
   DEFAULT_PAGE_NUM,
   DEFAULT_SEARCH_TERM,
   DEFAULT_FILTERS,
+  ALLOWED_FILTERS,
 } from "../config/constants";
 import { Filter } from "../types/FilterType";
 import {
@@ -245,21 +246,15 @@ const createQueryStringFromObject = (object: Record<string, string>) => {
 
 export const stringToFilter = (filtersString: string | null): Filter[] => {
   if (!filtersString) return [];
-
-  // Match all valid filters
   const matches = Array.from(filtersString.matchAll(/\[([^\]=]+)=([^\]]+)\]/g));
-
   return matches
     .map(([_, filter, value]) => ({ filter, value }))
-    .filter(({ filter }) => isValidFilter(filter)); // Only include valid filters
+    .filter(({ filter }) => isValidFilter(filter));
 };
 
 export const filterToString = (filters: Filter[]): string => {
   if (!filters || filters.length === 0) return "";
-
-  // Filter out invalid filters before converting to string
   const validFilters = filters.filter(({ filter }) => isValidFilter(filter));
-
   return validFilters
     .map(({ filter, value }) => `[${filter}=${value}]`)
     .join("");
@@ -286,21 +281,5 @@ export const availableFilterDisplayName = (
 };
 
 export const isValidFilter = (param: string) => {
-  const allowedFilter = [
-    "topic",
-    "name",
-    "collection",
-    // To do: subcollection?
-    "place",
-    "genre",
-    "publisher",
-    "division",
-    "type",
-    "dateStart",
-    "dateEnd",
-    "rights",
-    "materialType",
-  ];
-
-  return allowedFilter.includes(param);
+  return ALLOWED_FILTERS.includes(param);
 };
