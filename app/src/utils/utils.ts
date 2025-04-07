@@ -1,6 +1,7 @@
 import {
   ADOBE_ANALYTICS_SITE_SECTION,
   ADOBE_ANALYTICS_DC_PREFIX,
+  ALLOWED_FILTERS,
 } from "../config/constants";
 import CollectionDataType from "@/src/types/CollectionDataType";
 import ItemDataType from "@/src/types/ItemDataType";
@@ -154,21 +155,6 @@ export const getCollectionFilterFromUUID = (
   return filter ? filter : null;
 };
 
-const allowedFilters = [
-  "topic",
-  "name",
-  "collection",
-  "place",
-  "genre",
-  "publisher",
-  "division",
-  "type",
-  "dateStart",
-  "dateEnd",
-  "rightsFilter",
-  "materialTypeFilter",
-];
-
 export const dcflFilterToString = (filters: string) => {
   if (filters !== "") {
     const dcflFiltersArray = filters.slice(1, -1).split("][");
@@ -176,7 +162,6 @@ export const dcflFilterToString = (filters: string) => {
       .map((filter) => {
         const splitArray = filter.split("=");
         let name;
-
         if (splitArray[0] === "rights") {
           name = "rightsFilter";
         } else if (
@@ -188,7 +173,7 @@ export const dcflFilterToString = (filters: string) => {
           name = splitArray[0].toLowerCase();
         }
         const value = splitArray[1];
-        if (!allowedFilters.includes(splitArray[0])) {
+        if (!ALLOWED_FILTERS.includes(name)) {
           return null;
         }
         return `${name}=${value}`;
