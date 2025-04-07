@@ -39,8 +39,6 @@ export default async function Search({ searchParams }: SearchProps) {
     page: searchParams.page,
   });
 
-  console.log(searchResults);
-
   // Add available filters into searchParams
   const updatedSearchParams = {
     ...searchParams,
