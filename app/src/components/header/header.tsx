@@ -16,7 +16,7 @@ import { useStickyMargin } from "@/src/hooks/useStickyMargin";
 const Header = () => {
   const { headerRef, headerHeight, isScrollingUp, isFocused, setIsFocused } =
     useHeaderState();
-  useStickyMargin();
+  //useStickyMargin();
 
   return (
     <>
