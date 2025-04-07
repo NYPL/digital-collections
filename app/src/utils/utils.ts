@@ -154,22 +154,47 @@ export const getCollectionFilterFromUUID = (
   return filter ? filter : null;
 };
 
+const allowedFilters = [
+  "topic",
+  "name",
+  "collection",
+  "place",
+  "genre",
+  "publisher",
+  "division",
+  "type",
+  "dateStart",
+  "dateEnd",
+  "rightsFilter",
+  "materialTypeFilter",
+];
+
 export const dcflFilterToString = (filters: string) => {
   if (filters !== "") {
     const dcflFiltersArray = filters.slice(1, -1).split("][");
-    const apiFiltersArray = dcflFiltersArray.map((filter) => {
-      const splitArray = filter.split("=");
-      let name;
-      if (splitArray[0] === "rights") {
-        name = "rightsFilter";
-      } else if (splitArray[0] === "dateEnd" || splitArray[0] === "dateStart") {
-        name = splitArray[0];
-      } else {
-        name = splitArray[0].toLowerCase();
-      }
-      const value = splitArray[1];
-      return `${name}=${value}`;
-    });
+    const apiFiltersArray = dcflFiltersArray
+      .map((filter) => {
+        const splitArray = filter.split("=");
+        let name;
+
+        if (splitArray[0] === "rights") {
+          name = "rightsFilter";
+        } else if (
+          splitArray[0] === "dateEnd" ||
+          splitArray[0] === "dateStart"
+        ) {
+          name = splitArray[0];
+        } else {
+          name = splitArray[0].toLowerCase();
+        }
+        const value = splitArray[1];
+        if (!allowedFilters.includes(splitArray[0])) {
+          return null;
+        }
+        return `${name}=${value}`;
+      })
+      .filter(Boolean);
+
     return apiFiltersArray.join("&");
   } else {
     return "";

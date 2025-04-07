@@ -245,15 +245,24 @@ const createQueryStringFromObject = (object: Record<string, string>) => {
 
 export const stringToFilter = (filtersString: string | null): Filter[] => {
   if (!filtersString) return [];
-  return Array.from(filtersString.matchAll(/\[([^\]=]+)=([^\]]+)\]/g)).map(
-    ([, filter, value]) => ({ filter, value })
-  );
+
+  // Match all valid filters
+  const matches = Array.from(filtersString.matchAll(/\[([^\]=]+)=([^\]]+)\]/g));
+
+  return matches
+    .map(([_, filter, value]) => ({ filter, value }))
+    .filter(({ filter }) => isValidFilter(filter)); // Only include valid filters
 };
 
 export const filterToString = (filters: Filter[]): string => {
   if (!filters || filters.length === 0) return "";
-  // return filters.map(({ filter, value }) => `${filter}=${value}`).join("");
-  return filters.map(({ filter, value }) => `[${filter}=${value}]`).join("");
+
+  // Filter out invalid filters before converting to string
+  const validFilters = filters.filter(({ filter }) => isValidFilter(filter));
+
+  return validFilters
+    .map(({ filter, value }) => `[${filter}=${value}]`)
+    .join("");
 };
 
 export const transformToAvailableFilters = (
@@ -274,4 +283,24 @@ export const availableFilterDisplayName = (
   } else {
     return capitalize(name);
   }
+};
+
+export const isValidFilter = (param: string) => {
+  const allowedFilter = [
+    "topic",
+    "name",
+    "collection",
+    // To do: subcollection?
+    "place",
+    "genre",
+    "publisher",
+    "division",
+    "type",
+    "dateStart",
+    "dateEnd",
+    "rights",
+    "materialType",
+  ];
+
+  return allowedFilter.includes(param);
 };
