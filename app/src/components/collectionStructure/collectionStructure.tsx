@@ -9,6 +9,7 @@ import {
 } from "@nypl/design-system-react-components";
 import { useScrollIntoViewIfNeeded } from "@/src/hooks/useScrollIntoViewIfNeeded";
 import { headerBreakpoints } from "@/src/utils/breakpoints";
+import { SearchManager } from "@/src/utils/searchManager";
 
 export interface CollectionChildProps {
   title: string;
@@ -90,11 +91,15 @@ const AccordionItem = ({
   headingRef,
   openState,
   setOpenState,
+  searchManager,
+  updateURL,
 }: CollectionChildProps & {
   level?: number;
   headingRef: any;
   openState: OpenStateItem[];
   setOpenState: React.Dispatch<React.SetStateAction<OpenStateItem[]>>;
+  updateURL: (queryString: string) => Promise<void>;
+  searchManager: SearchManager;
 }) => {
   const { ref, scrollIntoViewIfNeeded } = useScrollIntoViewIfNeeded();
   const isOpen = openState.some((item) => item.title === title && item.isOpen);
@@ -115,6 +120,11 @@ const AccordionItem = ({
       if (!isCurrentlyOpen) {
         newState = newState.filter((item) => item.level < level);
         newState.push({ title, level, isOpen: true });
+        updateURL(
+          searchManager.handleAddFilter([
+            { filter: "collection", value: `${title}||${uuid}` },
+          ])
+        );
 
         (async () => {
           try {
@@ -191,6 +201,8 @@ const AccordionItem = ({
                   headingRef={headingRef}
                   openState={openState}
                   setOpenState={setOpenState}
+                  searchManager={searchManager}
+                  updateURL={updateURL}
                 />
               ))}
             </ul>
@@ -201,58 +213,65 @@ const AccordionItem = ({
   );
 };
 
-const CollectionStructure = forwardRef<HTMLHeadingElement, { uuid: string }>(
-  ({ uuid }, headingRef) => {
-    const [openState, setOpenState] = useState<OpenStateItem[]>([]);
-    const [data, setData] = useState<CollectionChildProps[]>([]);
-
-    useEffect(() => {
-      const loadData = async () => {
-        try {
-          const topLevel = await fetchChildren(uuid);
-          setData(topLevel?.children);
-        } catch (err) {
-          console.error("Error loading top-level collections:", err);
-        }
-      };
-      loadData();
-    }, []);
-
-    return (
-      <Flex
-        flexDir="column"
-        sx={{
-          [`@media screen and (max-width: ${headerBreakpoints.smTablet}px)`]: {
-            display: "none",
-          },
-        }}
-      >
-        <Heading ref={headingRef as any} size="heading6">
-          Collection structure
-        </Heading>
-        <Box
-          w="300px"
-          maxH="750px"
-          overflowY="auto"
-          borderTop="1px solid var(--ui-gray-medium, #BDBDBD)"
-        >
-          <ul>
-            {data.map((item, index) => (
-              <AccordionItem
-                key={index}
-                {...item}
-                level={0}
-                headingRef={headingRef}
-                openState={openState}
-                setOpenState={setOpenState}
-              />
-            ))}
-          </ul>
-        </Box>
-      </Flex>
-    );
+const CollectionStructure = forwardRef<
+  HTMLHeadingElement,
+  {
+    uuid: string;
+    updateURL: (queryString: string) => Promise<void>;
+    searchManager: SearchManager;
   }
-);
+>(({ uuid, searchManager, updateURL }, headingRef) => {
+  const [openState, setOpenState] = useState<OpenStateItem[]>([]);
+  const [data, setData] = useState<CollectionChildProps[]>([]);
+
+  useEffect(() => {
+    const loadData = async () => {
+      try {
+        const topLevel = await fetchChildren(uuid);
+        setData(topLevel?.children);
+      } catch (err) {
+        console.error("Error loading top-level collections:", err);
+      }
+    };
+    loadData();
+  }, []);
+
+  return (
+    <Flex
+      flexDir="column"
+      sx={{
+        [`@media screen and (max-width: ${headerBreakpoints.smTablet}px)`]: {
+          display: "none",
+        },
+      }}
+    >
+      <Heading ref={headingRef as any} size="heading6">
+        Collection structure
+      </Heading>
+      <Box
+        w="300px"
+        maxH="750px"
+        overflowY="auto"
+        borderTop="1px solid var(--ui-gray-medium, #BDBDBD)"
+      >
+        <ul>
+          {data.map((item, index) => (
+            <AccordionItem
+              key={index}
+              {...item}
+              level={0}
+              headingRef={headingRef}
+              openState={openState}
+              setOpenState={setOpenState}
+              searchManager={searchManager}
+              updateURL={updateURL}
+            />
+          ))}
+        </ul>
+      </Box>
+    </Flex>
+  );
+});
 
 CollectionStructure.displayName = "CollectionStructure";
 

@@ -104,9 +104,17 @@ const CollectionPage = ({
             flexDir: { base: "column", md: "row" },
           }}
         >
-          <CollectionStructure uuid={collectionData.uuid} />
+          <CollectionStructure
+            uuid={collectionData.uuid}
+            searchManager={collectionSearchManager}
+            updateURL={updateURL}
+          />
           <Box width="100%">
-            <CollectionSearch />
+            <CollectionSearch
+              collectionData={collectionData}
+              searchManager={collectionSearchManager}
+              updateURL={updateURL}
+            />
             <Flex
               sx={{
                 [`@media screen and (min-width: ${headerBreakpoints.lgMobile}px)`]:
