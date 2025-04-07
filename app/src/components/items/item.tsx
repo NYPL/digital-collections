@@ -4,6 +4,7 @@ import { ItemModel } from "../../models/item";
 import React from "react";
 import ItemMediaViewer from "./viewer/viewer";
 import MetadataOverview from "./metadata/overview";
+import { Heading } from "@nypl/design-system-react-components";
 
 interface ItemProps {
   manifest: any;
@@ -29,6 +30,7 @@ const Item = ({ item, type }: ItemProps) => {
   const itemType = type ? type : item.contentType; //contentTypes[item.typeOfResource]; // for proof of concept only
   return (
     <>
+      <Heading level="h2">{item.title}</Heading>
       <ItemMediaViewer item={item} type={itemType} />
       <MetadataOverview item={item} />
     </>

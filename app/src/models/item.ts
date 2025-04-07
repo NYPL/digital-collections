@@ -4,9 +4,11 @@ import { Maniiifest } from "maniiifest";
 // https://www.npmjs.com/package/@iiif/manifold
 // https://github.com/iiif-commons/manifold
 import { CONTENT_TYPES } from "../config/constants";
+
 import {
   getItemTitleFromRepoAPI,
   getTypeOfResourceFromRepoAPI,
+  getContentType,
 } from "../utils/utils";
 export class ItemModel {
   uuid: string;
@@ -90,13 +92,16 @@ export class ItemModel {
     /* Metadata fields: Types */
     this.typeOfResource = getTypeOfResourceFromRepoAPI(data);
     /* Metadata fields: title */
-    this.title = getItemTitleFromRepoAPI(data);
-    this.isSingleCapture = data.numResults.$ == 1;
+    (this.title = manifestMetadataHash["Title"]
+      ? manifestMetadataHash["Title"].toString()
+      : ""), //getItemTitleFromRepoAPI(data);
+      (this.isSingleCapture = data.numResults.$ == 1); //isSingleCapture
     this.imageID = data.imageID;
     this.href = data.href;
-    this.contentType = CONTENT_TYPES[this.typeOfResource];
-    this.manifestURL = `https://qa-api-collections.nypl.org/manifests/${uuid}`;
-    // TO DO: `${process.env.collectionS_API_URL}/manifests/${uuid}`
+    // TO DO: What to do if there is more than one type present?
+    this.contentType = getContentType(manifestMetadataHash["Content Type"][0]); //CONTENT_TYPES[this.typeOfResource];
+    this.manifestURL = `http://localhost:8000/manifests/${uuid}`; //`https://qa-api-collections.nypl.org/manifests/${uuid}`;
+    // TO DO: use ENV var ie. `${process.env.collectionS_API_URL}/manifests/${uuid}`
 
     /*
     field labels from manifest metadata section are: 
@@ -111,56 +116,56 @@ export class ItemModel {
     */
 
     this.metadata = {
-      title: manifestMetadataHash["title"]
-        ? manifestMetadataHash["title"].toString()
+      title: manifestMetadataHash["Title"]
+        ? manifestMetadataHash["Title"].toString()
         : "",
-      collection: manifestMetadataHash["collection"]
-        ? manifestMetadataHash["collection"].toString()
+      collection: manifestMetadataHash["Collection"]
+        ? manifestMetadataHash["Collection"].toString()
         : "",
-      names: manifestMetadataHash["names"]
-        ? manifestMetadataHash["names"].toString()
+      names: manifestMetadataHash["Names"]
+        ? manifestMetadataHash["Names"].toString()
         : "",
-      origin: manifestMetadataHash["date_indexed"]
-        ? manifestMetadataHash["date_indexed"].toString()
+      origin: manifestMetadataHash["Date Indexed"]
+        ? manifestMetadataHash["Date Indexed"].toString()
         : "",
-      tableOfContents: manifestMetadataHash["table_of_contents"]
-        ? manifestMetadataHash["table_of_contents"].toString()
+      tableOfContents: manifestMetadataHash["Table of Contents"]
+        ? manifestMetadataHash["Table of Contents"].toString()
         : "",
-      locations: manifestMetadataHash["library_location"]
-        ? manifestMetadataHash["library_location"].toString()
+      locations: manifestMetadataHash["Library Location"]
+        ? manifestMetadataHash["Library Location"].toString()
         : "",
-      subjects: manifestMetadataHash["subjects"]
-        ? manifestMetadataHash["subjects"].toString()
+      subjects: manifestMetadataHash["Subjects"]
+        ? manifestMetadataHash["Subjects"].toString()
         : "",
-      genres: manifestMetadataHash["genres"]
-        ? manifestMetadataHash["genres"].toString()
+      genres: manifestMetadataHash["Genres"]
+        ? manifestMetadataHash["Genres"].toString()
         : "",
-      notes: manifestMetadataHash["notes"]
-        ? manifestMetadataHash["notes"]?.toString().toString()
+      notes: manifestMetadataHash["Notes"]
+        ? manifestMetadataHash["Notes"]?.toString().toString()
         : "",
-      physicalDescription: manifestMetadataHash["physical_description"]
-        ? manifestMetadataHash["physical_description"].toString()
+      physicalDescription: manifestMetadataHash["Physical Description"]
+        ? manifestMetadataHash["Physical Description"].toString()
         : "",
-      typeOfResource: manifestMetadataHash["resource_type"]
-        ? manifestMetadataHash["resource_type"].toString()
+      typeOfResource: manifestMetadataHash["Resource Type"]
+        ? manifestMetadataHash["Resource Type"].toString()
         : "",
-      abstract: manifestMetadataHash["abstract"]
-        ? manifestMetadataHash["abstract"].toString()
+      abstract: manifestMetadataHash["Abstract"]
+        ? manifestMetadataHash["Abstract"].toString()
         : "",
-      languages: manifestMetadataHash["languages"]
-        ? manifestMetadataHash["lanugages"].toString()
+      languages: manifestMetadataHash["Languages"]
+        ? manifestMetadataHash["Lanugages"].toString()
         : "",
-      link: manifestMetadataHash["link"]
-        ? manifestMetadataHash["link"].toString()
+      link: manifestMetadataHash["Link"]
+        ? manifestMetadataHash["Link"].toString()
         : "",
-      identifiers: manifestMetadataHash["identifiers"]
-        ? manifestMetadataHash["identifiers"].toString()
+      identifiers: manifestMetadataHash["Identifiers"]
+        ? manifestMetadataHash["Identifiers"].toString()
         : "",
-      access: manifestMetadataHash["access"]
-        ? manifestMetadataHash["access"].toString()
+      access: manifestMetadataHash["Access"]
+        ? manifestMetadataHash["Access"].toString()
         : "",
-      rights: manifestMetadataHash["rights"]
-        ? manifestMetadataHash["rights"].toString()
+      rights: manifestMetadataHash["Rights"]
+        ? manifestMetadataHash["Rights"].toString()
         : "",
     };
   }
