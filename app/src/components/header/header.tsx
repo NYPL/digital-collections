@@ -11,12 +11,10 @@ import NavMenu from "../navMenu/navMenu";
 import MobileNavMenu from "../navMenu/mobileNavMenu";
 import { headerBreakpoints } from "../../utils/breakpoints";
 import useHeaderState from "@/src/hooks/useHeaderState";
-import { useStickyMargin } from "@/src/hooks/useStickyMargin";
 
 const Header = () => {
   const { headerRef, headerHeight, isScrollingUp, isFocused, setIsFocused } =
     useHeaderState();
-  //useStickyMargin();
 
   return (
     <>
