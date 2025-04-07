@@ -188,20 +188,19 @@ const SearchPage = ({ searchResults }) => {
                 flexDir: "column-reverse",
               }}
             >
-              <Link
-                minWidth="100px"
-                isUnderlined={false}
-                hasVisitedState={false}
-                gap="xxs"
-                type="action"
-                href="#"
-                sx={{
-                  display: searchResults.results?.length > 0 ? "block" : "none",
-                }}
-              >
-                Back to top{"  "}
-                <Icon name="arrow" iconRotation="rotate180" size="xsmall" />
-              </Link>{" "}
+              {searchResults.results?.length > 0 && (
+                <Link
+                  minWidth="100px"
+                  isUnderlined={false}
+                  hasVisitedState={false}
+                  gap="xxs"
+                  type="action"
+                  href="#"
+                >
+                  Back to top{"  "}
+                  <Icon name="arrow" iconRotation="rotate180" size="xsmall" />
+                </Link>
+              )}{" "}
               <Pagination
                 id="pagination-id"
                 initialPage={searchManager.page}
