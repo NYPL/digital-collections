@@ -62,7 +62,14 @@ describe("SearchManager", () => {
       initialKeywords: "test",
     });
 
-    it("should handle search submit wth no keywords", () => {
+    it("should handle search submit with no keywords (dropping q param)", () => {
+      manager.handleKeywordChange("");
+      const result = manager.handleSearchSubmit();
+      expect(result).toBe("");
+    });
+
+    it("should handle adding a keyword", () => {
+      manager.handleKeywordChange("test");
       const result = manager.handleSearchSubmit();
       expect(result).toBe("q=test");
     });
@@ -72,32 +79,37 @@ describe("SearchManager", () => {
       expect(result).toBe("q=test&sort=date-asc");
     });
 
+    it("should drop sort=relevance", () => {
+      const result = manager.handleSortChange("relevance");
+      expect(result).toBe("q=test");
+    });
+
     it("should handle page change", () => {
       const result = manager.handlePageChange(2);
-      expect(result).toBe("q=test&sort=date-asc&page=2");
+      expect(result).toBe("q=test&page=2");
     });
 
     it("should handle adding filters", () => {
       const filter1: Filter = { filter: "topic", value: "art" };
       const result1 = manager.handleAddFilter(filter1);
-      expect(result1).toBe("q=test&sort=date-asc&filters=%5Btopic%3Dart%5D");
+      expect(result1).toBe("q=test&filters=%5Btopic%3Dart%5D");
 
       const filter2: Filter = { filter: "genre", value: "music" };
       const result2 = manager.handleAddFilter(filter2);
       expect(result2).toBe(
-        "q=test&sort=date-asc&filters=%5Btopic%3Dart%5D%5Bgenre%3Dmusic%5D"
+        "q=test&filters=%5Btopic%3Dart%5D%5Bgenre%3Dmusic%5D"
       );
     });
 
     it("should handle removing a filter", () => {
       const filter1: Filter = { filter: "genre", value: "music" };
       const result1 = manager.handleRemoveFilter(filter1);
-      expect(result1).toBe("q=test&sort=date-asc&filters=%5Btopic%3Dart%5D");
+      expect(result1).toBe("q=test&filters=%5Btopic%3Dart%5D");
     });
 
-    it("should handle clearing all filters", () => {
+    it("should handle clearing all filters (dropping filters param)", () => {
       const result = manager.clearAllFilters();
-      expect(result).toBe("q=test&sort=date-asc");
+      expect(result).toBe("q=test");
     });
   });
 
