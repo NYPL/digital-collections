@@ -57,6 +57,7 @@ export const ALLOWED_FILTERS = [
   "type",
   "dateStart",
   "dateEnd",
+  "rightsFilter",
   "rights",
   "materialType",
 ];
