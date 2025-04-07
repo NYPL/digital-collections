@@ -41,6 +41,7 @@ const SearchPage = ({ searchResults }) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [searchResults]);
 
+  console.log(searchResults.results.length);
   return (
     <Box id="mainContent">
       <MobileSearchBanner />
@@ -49,6 +50,7 @@ const SearchPage = ({ searchResults }) => {
           background: "ui.bg.default",
           padding: "l",
           marginBottom: "m",
+          display: searchResults.results.length > 0 ? "block" : "none",
         }}
       >
         <Box
@@ -61,7 +63,7 @@ const SearchPage = ({ searchResults }) => {
             },
           }}
         >
-          {searchResults.numResults > 0 ? (
+          {searchResults.results.length > 0 ? (
             <>
               <Heading
                 size="heading2"
@@ -73,7 +75,7 @@ const SearchPage = ({ searchResults }) => {
                 {`Displaying ${displayResults(
                   searchResults.numResults,
                   CARDS_PER_PAGE,
-                  searchManager.page
+                  searchResults.page
                 )}
             results ${
               searchManager.keywords?.length > 0
@@ -116,6 +118,7 @@ const SearchPage = ({ searchResults }) => {
             paddingLeft: "s",
             paddingRight: "s",
           },
+          marginTop: searchResults.results.length > 0 ? "0" : "m",
         }}
       >
         <ActiveFilters searchManager={searchManager} />
@@ -135,7 +138,7 @@ const SearchPage = ({ searchResults }) => {
             alignItems: "flex-start",
           }}
         >
-          {searchResults.numResults > 0 ? (
+          {searchResults.results.length > 0 ? (
             <>
               <Heading
                 size="heading5"
@@ -193,6 +196,9 @@ const SearchPage = ({ searchResults }) => {
                 gap="xxs"
                 type="action"
                 href="#"
+                sx={{
+                  display: searchResults.results.length > 0 ? "block" : "none",
+                }}
               >
                 Back to top{"  "}
                 <Icon name="arrow" iconRotation="rotate180" size="xsmall" />
