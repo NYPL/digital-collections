@@ -9,6 +9,7 @@ import { SearchParams } from "@/search/index/page";
 import { mockCollectionChildrenResponse } from "__tests__/__mocks__/data/mockCollectionStructure";
 import { mockCollectionResponse } from "__tests__/__mocks__/data/collectionsApi/mockCollectionResponse";
 import { Filter } from "../../src/types/FilterType";
+import { filterToString } from "@/src/utils/searchManager";
 
 type CollectionProps = {
   params: { uuid: string };
@@ -31,12 +32,18 @@ export default async function Collection({
   params,
   searchParams,
 }: CollectionProps) {
+  console.log("filters here", searchParams.filters);
+  const requiredCollectionFilter: Filter = {
+    filter: "collection",
+    value: "uuid",
+  };
   const searchResults = await CollectionsApi.getSearchData({
     keyword: searchParams.q,
     sort: searchParams.sort,
     page: searchParams.page,
-    filters: searchParams.filters,
-    // filters: searchParams.filters + [`Collection=uuid`], // Needs collection filter every time
+    // filters: searchParams.filters
+    //   ? [...searchParams.filters, requiredCollectionFilter]
+    //   : requiredCollectionFilter,
   });
 
   // Add available filters into searchParams

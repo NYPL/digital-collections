@@ -155,6 +155,7 @@ export const getCollectionFilterFromUUID = (
 };
 
 export const dcflFilterToString = (filters: string) => {
+  console.log("before being parsed", filters);
   if (filters !== "") {
     const dcflFiltersArray = filters.slice(1, -1).split("][");
     const apiFiltersArray = dcflFiltersArray.map((filter) => {
