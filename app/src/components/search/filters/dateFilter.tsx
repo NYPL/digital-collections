@@ -113,7 +113,7 @@ const DateFilter = forwardRef<HTMLHeadingElement, DateFilterProps>(
                   : null,
                 dateEnd === "" ? { filter: "dateEnd", value: dateEnd } : null,
               ].filter((filter): filter is Filter => filter !== null);
-              console.log(filtersToRemove);
+
               if (filtersToRemove.length > 0) {
                 updateURL(searchManager.handleRemoveFilter(filtersToRemove));
               }
