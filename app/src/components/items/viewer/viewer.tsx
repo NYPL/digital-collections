@@ -6,60 +6,44 @@ import { ItemModel } from "../../../models/item";
 import React from "react";
 import { UniversalViewer } from "../uv/universalViewerLazy";
 import "universalviewer/dist/esm/index.css";
+import {
+  IMAGE_CONTENT_TYPE_NAMES,
+  AUDIO_CONTENT_TYPE_NAMES,
+  VIDEO_CONTENT_TYPE_NAMES,
+} from "../../../config/constants";
 
 interface ItemProps {
   item: ItemModel;
   type: string;
 }
 
-const contentTypes = {
-  "still image": "image",
-  "moving image": "video",
-  "sound recording": "audio",
-};
-
 const ItemMediaViewer = ({ item, type }: ItemProps) => {
   console.log("Item metadata: ", item.metadata);
   let viewer;
   switch (type) {
     case "image":
-      if (item.isSingleCapture) {
-        viewer = (
-          <>
-            <UniversalViewer
-              manifestId={item.manifestURL}
-              // "http://localhost:8000/items/8e8dc6a0-c6eb-012f-7a58-58d385a7bc34"
-              // "https://wellcomelibrary.org/iiif/b18035723/manifest"
-              // manifestId={`http://localhost:8000/items/${item.uuid}`} //{"https://wellcomelibrary.org/iiif/b18035723/manifest"}
-              canvasIndex={0}
-              config={{}}
-            />
-          </>
-        );
-      } else {
-        viewer = (
-          <>
-            <UniversalViewer
-              manifestId={item.manifestURL}
-              // {`${process.env.COLLECTIONS_API_URL}/manifests/${item.uuid}`} //{"https://wellcomelibrary.org/iiif/b18035723/manifest"} //{`https://be73-100-37-199-113.ngrok-free.app/items/${item.uuid}`} //{"https://wellcomelibrary.org/iiif/b18035723/manifest"}
-              canvasIndex={0}
-              config={{}}
-            />
-          </>
-        );
-      }
+      viewer = (
+        <>
+          <UniversalViewer
+            manifestId={item.manifestURL}
+            // {`${process.env.COLLECTIONS_API_URL}/manifests/${item.uuid}`} //{"https://wellcomelibrary.org/iiif/b18035723/manifest"} //{`https://be73-100-37-199-113.ngrok-free.app/items/${item.uuid}`} //{"https://wellcomelibrary.org/iiif/b18035723/manifest"}
+            canvasIndex={0}
+            config={{}}
+          />
+        </>
+      );
       return viewer;
     case "video":
       viewer = (
         <>
-          <VideoViewer />
+          <VideoViewer manifestId={item.manifestURL} />
         </>
       );
       return viewer;
     case "audio":
       viewer = (
         <>
-          <AudioViewer />
+          <AudioViewer manifestId={item.manifestURL} />
         </>
       );
       return viewer;

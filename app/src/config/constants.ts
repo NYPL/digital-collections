@@ -76,3 +76,30 @@ export const CONTENT_TYPES = {
   "three dimensional object": "image",
   "software, multimedia": "image",
 };
+
+export const IMAGE_CONTENT_TYPE_NAMES = [
+  "recto",
+  "verso",
+  "page (from a bound volume)",
+  "volume of a multi-volume work",
+  "one page of a multi-page document",
+  "item in a scrapbook",
+  "detail view (of an image, map, etc.)",
+  "single image",
+  "complex image",
+  "spine",
+  "back cover",
+  "front cover",
+  "component image",
+  "composite image",
+];
+
+export const VIDEO_CONTENT_TYPE_NAMES = [
+  "video recording",
+  "multiple camera view of simultaneous content",
+];
+
+export const AUDIO_CONTENT_TYPE_NAMES = [
+  "audio track, discrete (song on an album, etc.)",
+  "a single piece of recorded music spread over multiple discs because of its duration",
+];

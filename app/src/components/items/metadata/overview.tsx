@@ -9,6 +9,7 @@ import {
   TagSet,
   HorizontalRule,
 } from "@nypl/design-system-react-components";
+import parse from "html-react-parser";
 
 const metadataFieldToDisplay = {
   title: "Title",
@@ -46,7 +47,7 @@ const MetadataOverview = ({ item }) => {
       >
         <Flex marginTop="m" marginBottom="m" flexDir="column">
           <Heading size="heading6" marginBottom="xs">
-            Item metadata
+            Item data
           </Heading>
 
           {Object.keys(item.metadata)?.map((field, index) => {
@@ -58,7 +59,7 @@ const MetadataOverview = ({ item }) => {
                     {metadataFieldToDisplay[field]}
                   </Text>
                   <Text key={index} marginBottom="m">
-                    {value}
+                    {parse(value)}
                   </Text>
                 </>
               );
