@@ -24,8 +24,16 @@ const DateFilter = forwardRef<HTMLHeadingElement, DateFilterProps>(
     };
 
     const validDateInput = (input) => {
-      return input !== null && !/^\d*$/.test(input);
+      return (
+        input !== null &&
+        !(
+          /^\d{1,4}$/.test(input) &&
+          Number(input) >= 0 &&
+          Number(input) <= 9999
+        )
+      );
     };
+
     let startValue = searchManager.filters.find((f) => f.filter === "dateStart")
       ? searchManager.filters.find((f) => f.filter === "dateStart")?.value ||
         null
@@ -99,7 +107,6 @@ const DateFilter = forwardRef<HTMLHeadingElement, DateFilterProps>(
               },
             }}
             onClick={() => {
-              console.log(dateStart, dateEnd);
               const filtersToRemove = [
                 dateStart === ""
                   ? { filter: "dateStart", value: dateStart }

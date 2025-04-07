@@ -160,58 +160,62 @@ const SearchPage = ({ searchResults }) => {
             />
           )}
         </Flex>
-        <SearchCardsGrid
-          keywords={searchResults.keyword}
-          results={searchResults}
-        />
-        <Flex
-          paddingLeft="s"
-          paddingRight="s"
-          marginTop="xxl"
-          marginBottom="xxl"
-          sx={{
-            "> a": {
-              marginTop: "xl",
-              justifyContent: "end",
-            },
-            [`@media screen and (min-width: ${headerBreakpoints.lgMobile}px)`]:
-              {
+        {searchResults.numResults > 0 && (
+          <>
+            <SearchCardsGrid
+              keywords={searchResults.keyword}
+              results={searchResults}
+            />
+            <Flex
+              paddingLeft="s"
+              paddingRight="s"
+              marginTop="xxl"
+              marginBottom="xxl"
+              sx={{
                 "> a": {
-                  marginTop: "0",
+                  marginTop: "xl",
+                  justifyContent: "end",
                 },
-                flexDir: "row",
-              },
-            flexDir: "column-reverse",
-          }}
-        >
-          <Link
-            minWidth="100px"
-            isUnderlined={false}
-            hasVisitedState={false}
-            gap="xxs"
-            type="action"
-            href="#"
-          >
-            Back to top{"  "}
-            <Icon name="arrow" iconRotation="rotate180" size="xsmall" />
-          </Link>{" "}
-          <Pagination
-            id="pagination-id"
-            initialPage={searchManager.page}
-            currentPage={searchManager.page}
-            pageCount={totalPages}
-            onPageChange={(newPage) => {
-              updateURL(searchManager.handlePageChange(newPage));
-            }}
-            sx={{
-              justifyContent: "center",
-              [`@media screen and (min-width: ${headerBreakpoints.lgMobile}px)`]:
-                {
-                  justifyContent: "flex-end",
-                },
-            }}
-          />
-        </Flex>
+                [`@media screen and (min-width: ${headerBreakpoints.lgMobile}px)`]:
+                  {
+                    "> a": {
+                      marginTop: "0",
+                    },
+                    flexDir: "row",
+                  },
+                flexDir: "column-reverse",
+              }}
+            >
+              <Link
+                minWidth="100px"
+                isUnderlined={false}
+                hasVisitedState={false}
+                gap="xxs"
+                type="action"
+                href="#"
+              >
+                Back to top{"  "}
+                <Icon name="arrow" iconRotation="rotate180" size="xsmall" />
+              </Link>{" "}
+              <Pagination
+                id="pagination-id"
+                initialPage={searchManager.page}
+                currentPage={searchManager.page}
+                pageCount={totalPages}
+                onPageChange={(newPage) => {
+                  updateURL(searchManager.handlePageChange(newPage));
+                }}
+                sx={{
+                  justifyContent: "center",
+                  [`@media screen and (min-width: ${headerBreakpoints.lgMobile}px)`]:
+                    {
+                      justifyContent: "flex-end",
+                    },
+                }}
+              />
+            </Flex>
+          </>
+        )}
       </Box>
     </Box>
   );
