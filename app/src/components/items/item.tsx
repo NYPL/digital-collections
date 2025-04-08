@@ -4,7 +4,13 @@ import { ItemModel } from "../../models/item";
 import React from "react";
 import ItemMediaViewer from "./viewer/viewer";
 import ItemOverview from "./overview/overview";
-import { Heading, Banner, Box } from "@nypl/design-system-react-components";
+import {
+  Heading,
+  Banner,
+  Box,
+  Text,
+  Link,
+} from "@nypl/design-system-react-components";
 
 interface ItemProps {
   manifest: any;
@@ -22,9 +28,17 @@ const Item = ({ item, type }: ItemProps) => {
         {/* TO DO: Add link */}
         <Banner
           marginTop="m"
-          content={`Our collections include some content that may be harmful or dificult to view. Learn more.`}
+          content={
+            <>
+              Our collections include some content that may be harmful or
+              dificult to view.{" "}
+              <Link href="https://digitalcollections.nypl.org/about#nypl_harmful_content_statement">
+                Learn more.
+              </Link>{" "}
+            </>
+          }
           type="informative"
-        />
+        ></Banner>
         <ItemOverview item={item} />
       </Box>
     </>
