@@ -3,9 +3,11 @@ import { fetchApi } from "./fetchApi";
 describe("fetchApi", () => {
   const mockApiUrl = "mockurl.org";
   const mockAuthToken = "mockAuthToken";
+  const mockCollectionsAuthToken = "mockCollectionsAuthToken";
 
-  beforeAll(() => {
+  beforeEach(() => {
     process.env.AUTH_TOKEN = mockAuthToken;
+    process.env.COLLECTIONS_API_AUTH_TOKEN = mockCollectionsAuthToken;
   });
 
   it("makes a GET request and returns response", async () => {
@@ -55,6 +57,30 @@ describe("fetchApi", () => {
         "Content-Type": "application/json",
       },
       body: JSON.stringify(mockBody),
+    });
+    expect(response).toEqual(mockResponse);
+  });
+
+  it("passes Collections API auth if isRepoApi option is false", async () => {
+    const mockResponse = { nyplAPI: { response: "mockResponse" } };
+    (global as any).fetch = jest.fn(() =>
+      Promise.resolve({
+        ok: true,
+        status: 200,
+        json: async () => mockResponse,
+      })
+    ) as jest.Mock;
+
+    const response = await fetchApi({
+      apiUrl: mockApiUrl,
+      options: { isRepoApi: false },
+    });
+    expect(fetch).toHaveBeenCalledWith(mockApiUrl, {
+      method: "GET",
+      headers: {
+        "x-nypl-collections-api-key": `${mockCollectionsAuthToken}`,
+      },
+      body: undefined,
     });
     expect(response).toEqual(mockResponse);
   });
