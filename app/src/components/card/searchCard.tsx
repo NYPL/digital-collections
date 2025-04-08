@@ -125,6 +125,7 @@ const getTitleWithHighlights = (highlights, title) => {
   const titleHighlight = highlights.find(
     (highlight) => highlight.field === "title"
   );
+  console.log(titleHighlight);
   return titleHighlight ? replaceEmWithMark(titleHighlight.text) : title;
 };
 
