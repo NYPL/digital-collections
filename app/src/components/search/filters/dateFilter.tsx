@@ -24,13 +24,11 @@ const DateFilter = forwardRef<HTMLHeadingElement, DateFilterProps>(
     };
 
     const validDateInput = (input) => {
+      if (input === null || input === "") {
+        return true;
+      }
       return (
-        input !== null &&
-        !(
-          /^\d{1,4}$/.test(input) &&
-          Number(input) >= 0 &&
-          Number(input) <= 9999
-        )
+        /^\d{1,4}$/.test(input) && Number(input) >= 0 && Number(input) <= 9999
       );
     };
 
@@ -72,7 +70,7 @@ const DateFilter = forwardRef<HTMLHeadingElement, DateFilterProps>(
                 },
               }}
               id="dateStart"
-              isInvalid={validDateInput(dateStart)}
+              isInvalid={!validDateInput(dateStart)}
               showHelperInvalidText={false}
               labelText="Start year"
               value={dateStart || ""}
@@ -85,7 +83,7 @@ const DateFilter = forwardRef<HTMLHeadingElement, DateFilterProps>(
                   width: "100px",
                 },
               }}
-              isInvalid={validDateInput(dateEnd)}
+              isInvalid={!validDateInput(dateEnd)}
               id="dateEnd"
               showHelperInvalidText={false}
               labelText="End year"
@@ -98,7 +96,7 @@ const DateFilter = forwardRef<HTMLHeadingElement, DateFilterProps>(
           <Button
             ref={buttonRef}
             id="date-filter-btn"
-            isDisabled={validDateInput(dateStart) || validDateInput(dateEnd)}
+            isDisabled={!validDateInput(dateStart) || !validDateInput(dateEnd)}
             sx={{
               whiteSpace: "nowrap",
               minWidth: "108px",
