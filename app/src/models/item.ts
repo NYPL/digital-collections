@@ -87,34 +87,25 @@ export class ItemModel {
 
     console.log("manifestMetadataHash is: ", manifestMetadataHash);
     this.uuid = uuid; //data.uuid; //data.capture.uuid.$;
-    this.mods = data.mods;
-    this.capture = data.capture;
+    // this.mods = data.mods;
+    // this.capture = data.capture;
     /* Metadata fields: Types */
-    this.typeOfResource = getTypeOfResourceFromRepoAPI(data);
-    /* Metadata fields: title */
-    (this.title = manifestMetadataHash["Title"]
-      ? manifestMetadataHash["Title"].toString()
-      : ""), //getItemTitleFromRepoAPI(data);
+    (this.typeOfResource = manifestMetadataHash["Resource Type"]
+      ? manifestMetadataHash["Resource Type"].toString()
+      : ""),
+      //getTypeOfResourceFromRepoAPI(data);
+      /* Metadata fields: title */
+      (this.title = manifestMetadataHash["Title"]
+        ? manifestMetadataHash["Title"].toString()
+        : ""), //getItemTitleFromRepoAPI(data);
       (this.isSingleCapture = data.numResults.$ == 1); //isSingleCapture
-    this.imageID = data.imageID;
-    this.href = data.href;
+    // this.imageID = data.imageID;
+    // this.href = data.href;
     // TO DO: What to do if there is more than one type present?
     this.contentType = getContentType(manifestMetadataHash["Content Type"][0]); //CONTENT_TYPES[this.typeOfResource];
     this.manifestURL = `http://localhost:8000/manifests/${uuid}`; //`https://qa-api-collections.nypl.org/manifests/${uuid}`;
     // TO DO: use ENV var ie. `${process.env.collectionS_API_URL}/manifests/${uuid}`
-
-    /*
-    field labels from manifest metadata section are: 
-    title
-    collection
-    Subjects
-    Genres
-    Rights
-    "Date Indexed"
-    "Library Location"
-    'Resource Type'
-    */
-
+    // TO DO: add _isCartographic for map stuff
     this.metadata = {
       title: manifestMetadataHash["Title"]
         ? manifestMetadataHash["Title"].toString()
@@ -125,8 +116,8 @@ export class ItemModel {
       names: manifestMetadataHash["Names"]
         ? manifestMetadataHash["Names"].toString()
         : "",
-      origin: manifestMetadataHash["Date Indexed"]
-        ? manifestMetadataHash["Date Indexed"].toString()
+      origin: manifestMetadataHash["Dates / origin"]
+        ? manifestMetadataHash["Dates / origin"].toString()
         : "",
       tableOfContents: manifestMetadataHash["Table of Contents"]
         ? manifestMetadataHash["Table of Contents"].toString()

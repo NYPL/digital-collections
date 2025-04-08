@@ -3,8 +3,8 @@
 import { ItemModel } from "../../models/item";
 import React from "react";
 import ItemMediaViewer from "./viewer/viewer";
-import MetadataOverview from "./metadata/overview";
-import { Heading } from "@nypl/design-system-react-components";
+import ItemOverview from "./overview/overview";
+import { Heading, Banner } from "@nypl/design-system-react-components";
 
 interface ItemProps {
   manifest: any;
@@ -12,27 +12,19 @@ interface ItemProps {
   type: string;
 }
 
-const contentTypes = {
-  text: "image",
-  cartographic: "image",
-  "notated music": "image",
-  "still image": "image",
-  "moving image": "video",
-  "sound recording": "audio",
-  "sound recording-nonmusical": "audio",
-  "sound recording-musical": "audio",
-  "three dimensional object": "image",
-  "software, multimedia": "image",
-};
-
 const Item = ({ item, type }: ItemProps) => {
-  console.log("uuid is: ", item.uuid);
-  const itemType = type ? type : item.contentType; //contentTypes[item.typeOfResource]; // for proof of concept only
+  const itemType = type ? type : item.contentType; //TO DO: do we want to keep this?
   return (
     <>
       <Heading level="h2">{item.title}</Heading>
       <ItemMediaViewer item={item} type={itemType} />
-      <MetadataOverview item={item} />
+      {/* TO DO: Add link */}
+      <Banner
+        marginTop="m"
+        content={`Our collections include some content that may be harmful or dificult to view. Learn more.`}
+        type="informative"
+      />
+      <ItemOverview item={item} />
     </>
   );
 };
