@@ -13,6 +13,7 @@ const PublicDomainFilter = ({ onCheckChange }: PublicDomainFilterProps) => {
     </>
   );
 
+  // Overriding click() behavior on checkbox to focus and prevent header scroll.
   const handleClick = (e: React.MouseEvent<HTMLInputElement>) => {
     e.preventDefault();
     checkboxRef.current?.focus({ preventScroll: true });
