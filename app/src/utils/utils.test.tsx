@@ -4,12 +4,9 @@ import {
   createAdobeAnalyticsPageName,
   displayResults,
   getCollectionFilterFromUUID,
-  dcflFilterToString,
+  filterStringToCollectionApiFilterString,
 } from "./utils";
-import {
-  AvailableFilter,
-  AvailableFilterOption,
-} from "../types/AvailableFilterType";
+import { AvailableFilterOption } from "../types/AvailableFilterType";
 
 // TODO:
 /**
@@ -263,13 +260,13 @@ describe("getCollectionFilterFromUUID", () => {
   });
 });
 
-describe("dcflFilterToString", () => {
+describe("filterStringToCollectionApiFilterString", () => {
   test("generates the correct filter syntax for a single filter", () => {
-    expect(dcflFilterToString("[Name=Swope, Martha]")).toBe(
-      "name=Swope, Martha"
-    );
     expect(
-      dcflFilterToString(
+      filterStringToCollectionApiFilterString("[Name=Swope, Martha]")
+    ).toBe("name=Swope, Martha");
+    expect(
+      filterStringToCollectionApiFilterString(
         "[Collection=Print Collection portrait file||16ad5350-c52e-012f-aecf-58d385a7bc34]"
       )
     ).toBe(
@@ -279,7 +276,7 @@ describe("dcflFilterToString", () => {
 
   test("generates the correct filter syntax for multiple filter", () => {
     expect(
-      dcflFilterToString(
+      filterStringToCollectionApiFilterString(
         "[name=Swope, Martha][collection=Print Collection portrait file||16ad5350-c52e-012f-aecf-58d385a7bc34]"
       )
     ).toBe(
@@ -288,6 +285,6 @@ describe("dcflFilterToString", () => {
   });
 
   test("generates the correct filter syntax for no filters", () => {
-    expect(dcflFilterToString("")).toBe("");
+    expect(filterStringToCollectionApiFilterString("")).toBe("");
   });
 });
