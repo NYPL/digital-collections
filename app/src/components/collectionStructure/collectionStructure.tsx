@@ -76,7 +76,7 @@ const fetchChildren = async (
 const prefetchNextLevel = async (children: CollectionChildProps[]) => {
   for (const child of children) {
     if (child.children && child.children.length > 0) {
-      console.log("now pre-fetching children of", child.title);
+      //console.log("now pre-fetching children of", child.title);
       // only fetch and add children if they aren't already there
       child.children = await fetchChildren(child.title);
     }
