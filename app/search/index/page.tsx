@@ -39,7 +39,7 @@ export default async function Search({ searchParams }: SearchProps) {
     page: searchParams.page,
   });
 
-  // Add available filters into searchParams
+  // Add available filters from response into searchParams
   const updatedSearchParams = {
     ...searchParams,
     availableFilters: searchResults.availableFilters,
