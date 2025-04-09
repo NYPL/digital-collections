@@ -43,7 +43,7 @@ const PublicDomainFilter = ({ onCheckChange }: PublicDomainFilterProps) => {
         id="pd-checkbox"
         data-testid="pd-checkbox"
         name="pd_filter"
-        labelText=""
+        labelText="Search only public domain"
         showLabel={false}
         isChecked={isChecked}
         {...{ onClick: handleClick }}
