@@ -1,7 +1,42 @@
+import collectionSlugToUuid from "@/src/data/collectionSlugUuidMapping";
 import { NextRequest, NextResponse } from "next/server";
+
+function deSlugify(slug: string): string {
+  return slug.replace(/-/g, " ").replace(/\b\w/g, (c) => c.toUpperCase());
+}
 
 export function middleware(req: NextRequest) {
   const url = req.nextUrl;
+
+  const pathname = url.pathname;
+  const collectionMatch = pathname.match(/^\/collections\/([^\/?#]+)/);
+  console.log("collection match", collectionMatch);
+  if (collectionMatch) {
+    const identifier = collectionMatch[1];
+
+    if (
+      /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i.test(
+        identifier
+      )
+    ) {
+      console.log("thats a uudi");
+      return NextResponse.next();
+    } else {
+      const uuid = collectionSlugToUuid[identifier];
+      const newUrl = new URL(req.nextUrl);
+
+      if (uuid) {
+        newUrl.pathname = `/collections/${uuid}`;
+      } else {
+        const query = deSlugify(identifier);
+        newUrl.pathname = "/search/index";
+        newUrl.searchParams.set("q", query);
+      }
+
+      return NextResponse.redirect(newUrl, 301);
+    }
+  }
+
   const searchParams = url.searchParams;
   let modified = false;
 
