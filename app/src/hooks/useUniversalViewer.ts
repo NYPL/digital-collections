@@ -30,7 +30,5 @@ export function useUniversalViewer(
     }
   }, [ref]);
 
-  console.log(uv);
-
   return uv;
 }

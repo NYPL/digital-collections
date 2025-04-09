@@ -29,9 +29,12 @@ const metadataFieldToDisplay = {
   access: "Access",
   rights: "Rights",
   typeOfResource: "Type Of Resource",
+  dateCreated: "Date Created",
+  dateIssued: "Date Issued",
 };
 
 const MetadataOverview = ({ metadata }) => {
+  console.log("metadata is: ", metadata);
   return (
     <>
       <Box>
@@ -41,8 +44,13 @@ const MetadataOverview = ({ metadata }) => {
         </Heading>
 
         {Object.keys(metadata)?.map((field, index) => {
+          console.log(
+            " metadataFieldToDisplay[field] is: ",
+            metadataFieldToDisplay[field]
+          );
+
           const value = metadata[field];
-          if (value !== "") {
+          if (value !== "" && metadataFieldToDisplay[field] !== "") {
             return (
               <>
                 <Text key={index} size="overline1" marginBottom="xs">

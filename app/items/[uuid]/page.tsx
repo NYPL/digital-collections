@@ -41,13 +41,9 @@ export async function generateMetadata({
   params,
 }: ItemProps): Promise<Metadata> {
   item = await getItem(params.uuid);
-  console.log("item is: ", item);
   params.item = item;
   // TO DO: use manifest
   const title = getItemTitleFromRepoAPI(item);
-
-  console.log("item is: ", item);
-  console.log("item title is: ", title);
   return {
     title: `${title} - NYPL Digital Collections`, //should be item title
     openGraph: {

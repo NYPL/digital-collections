@@ -36,8 +36,6 @@ const onSiteMaterialBadge = (recordType: SearchResultRecordType) => {
 
 const contentTypeTag = (result: SearchCardType) => {
   // To do: Replace once contentType and recordType are synced.
-  console.log("result is: ", result);
-  console.log("result.recordType is: ", result.recordType);
   const displayLabel =
     result.recordType === "Item"
       ? result.contentType === "Image" && result.containsMultipleCaptures
