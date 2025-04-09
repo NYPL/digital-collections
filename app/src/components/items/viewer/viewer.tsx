@@ -18,7 +18,6 @@ interface ItemProps {
 }
 
 const ItemMediaViewer = ({ item, type }: ItemProps) => {
-  console.log("Item metadata: ", item.metadata);
   let viewer;
   switch (type) {
     case "image":

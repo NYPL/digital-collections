@@ -25,7 +25,6 @@ const Item = ({ item, type }: ItemProps) => {
       <Box marginTop="-3em">
         <Heading level="h2">{item.title}</Heading>
         <ItemMediaViewer item={item} type={itemType} />
-        {/* TO DO: Add link */}
         <Banner
           marginTop="m"
           content={

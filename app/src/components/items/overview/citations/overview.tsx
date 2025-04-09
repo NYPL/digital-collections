@@ -1,14 +1,69 @@
 import { Box, Flex, Heading, Text } from "@nypl/design-system-react-components";
+import parse from "html-react-parser";
 
-const citationFormatDummyData = {
-  "MLA format": `Manuscripts and Archives Division, The New York Public Library. "Explicit, final note and (last rule line) erased ex libris. 2-line initials with penwork, name of book in red and blue" The New York Public Library Digital Collections. 1200 - 1299. https://digitalcollections.nypl.org/items/510d47da-e36e-a3d9-e040-e00a18064a99`,
-  "APA format": `Manuscripts and Archives Division, The New York Public Library. (1200 - 1299). Explicit, final note and (last rule line) erased ex libris. 2-line initials with penwork, name of book in red and blue Retrieved from https://digitalcollections.nypl.org/items/510d47da-e36e-a3d9-e040-e00a18064a99`,
-  "Chicago/Turabian Format": `Manuscripts and Archives Division, The New York Public Library. "Explicit, final note and (last rule line) erased ex libris. 2-line initials with penwork, name of book in red and blue" New York Public Library Digital Collections. Accessed March 13, 2025. https://digitalcollections.nypl.org/items/510d47da-e36e-a3d9-e040-e00a18064a99`,
-  "Wikipedia Citation": `<ref name=NYPL>{{cite web | url=https://digitalcollections.nypl.org/items/510d47da-e36e-a3d9-e040-e00a18064a99 | title= (text) Explicit, final note and (last rule line) erased ex libris. 2-line initials with penwork, name of book in red and blue, (1200 - 1299)|author=Digital Collections, The New York Public Library |accessdate=March 13, 2025 |publisher=The New York Public Library, Astor, Lenox, and Tilden Foundations}}</ref>`,
-};
+// TO DO: generate on the fly: https://github.com/NYPL/digitalreadingroom/blob/qa/app/views/partials/_item_metadata.html.erb
+// TO DO: add tests for citations, use https://digitalcollections.nypl.org/items/a3fff740-395b-0138-983a-7f56d1f9ecb7#/?uuid=9cf949b0-d298-0139-4999-0242ac110003 as example
 
 const CitationsOverview = ({ item }) => {
-  console.log("item.metadata is: ", item.metadata);
+  const metadata = item.metadata;
+  const shareUrl = `https://digitalcollections.nypl.org/items/` + item.uuid;
+  console.log("metadata is: ", metadata);
+
+  const today = new Date().toLocaleDateString("en-us", {
+    day: "numeric",
+    month: "long",
+    year: "numeric",
+  });
+
+  // TO DO: metadata.origin should be metadata.date_created
+  const MLA = `<p>
+    ${metadata.locations ? metadata.locations : ""}
+    The New York Public Library. "${metadata.title}"
+    <em>The New York Public Library Digital Collections</em>.
+    ${metadata.origin ? metadata.origin + "." : ""}
+    ${metadata.dateIssued ? metadata.dateIssued + "." : ""}
+    ${shareUrl} 
+  </p>`;
+
+  const CHICAGO = `<p>
+  ${metadata.locations ? metadata.locations : ""}
+  The New York Public Library. "${metadata.title}"
+    New York Public Library Digital Collections.
+    Accessed ${today}.
+    ${shareUrl}
+    </p>
+  `;
+  // TO DO: metadata.origin should be metadata.date_created
+  const APA = `
+      <p>
+      ${metadata.locations ? metadata.locations : ""}
+      The New York Public Library.
+          ${metadata.origin ? metadata.origin + "." : ""}
+          ${metadata.dateIssued ? metadata.dateIssued + "." : ""}
+          <em>${metadata.title}</em>
+          Retrieved from ${shareUrl}
+      </p>`;
+
+  // TO DO: metadata.origin should be metadata.date_created
+  // TO DO: replace metadata.orgin conditional with an if else, see code in OG DC for details
+  const WIKI = `
+          <p>
+<p>&lt;ref name=NYPL&gt;{{cite web | url=${shareUrl} | title=
+${metadata.typeOfResource ? "(" + metadata.typeOfResource + ")" : ""}
+${metadata.title}
+${metadata.origin ? "(" + metadata.origin + ")" : ""}${
+    metadata.dateIssued ? "(" + metadata.dateIssued + ")" : ""
+  }
+|author=Digital Collections, The New York Public Library |accessdate=${today} |publisher=The New York Public Library, Astor, Lenox, and Tilden Foundations}}&lt;/ref&gt;</p>
+  `;
+
+  const citationFormatDummyData = {
+    "MLA format": MLA,
+    "APA format": APA,
+    "Chicago/Turabian Format": CHICAGO,
+    "Wikipedia citation": WIKI,
+  };
+
   return (
     <>
       <Box>
@@ -25,7 +80,7 @@ const CitationsOverview = ({ item }) => {
                   {field}
                 </Text>
                 <Text key={index} marginBottom="m">
-                  {value}
+                  {parse(value)}
                 </Text>
               </>
             );

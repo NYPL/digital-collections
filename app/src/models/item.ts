@@ -36,6 +36,8 @@ export class ItemModel {
     // .mods.relatedItem?
     /* Date/Origin */
     origin: string;
+    dateCreated: string;
+    dateIssued: string;
     // .mods.originInfo
     /* Table of Contents */
     tableOfContents?: string;
@@ -78,7 +80,6 @@ export class ItemModel {
 
     if (metadata) {
       for (const field of metadata) {
-        // console.log("with just parser.iterateManifest")
         const label = field.label["en"][0];
         const value = field.value["en"];
         manifestMetadataHash[label] = value;
@@ -118,6 +119,12 @@ export class ItemModel {
         : "",
       origin: manifestMetadataHash["Dates / origin"]
         ? manifestMetadataHash["Dates / origin"].toString()
+        : "",
+      // dateCreated: manifestMetadataHash["Dates / origin"]
+      //   ? manifestMetadataHash["Dates / origin"].toString()
+      //   : "",
+      dateIssued: manifestMetadataHash["Date Issued"]
+        ? manifestMetadataHash["Date Issued"].toString()
         : "",
       tableOfContents: manifestMetadataHash["Table of Contents"]
         ? manifestMetadataHash["Table of Contents"].toString()
