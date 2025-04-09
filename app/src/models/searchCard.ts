@@ -28,24 +28,24 @@ export class SearchCardModel {
 
   constructor(data: any, collectionFilters: AvailableFilterOption[]) {
     //const availableCollectionFilters = filters[]
-    const correspondingCollectionFilter =
-      this.recordType !== "Item"
-        ? getCollectionFilterFromUUID(this.uuid, collectionFilters)
-        : "";
-    let collectionFilterQueryParam = "";
-    if (this.recordType === "Collection") {
-      console.log(
-        "correspondingCollectionFilter is: ",
-        correspondingCollectionFilter
-      );
-      collectionFilterQueryParam = correspondingCollectionFilter
-        ? `?filters=[Collection=${correspondingCollectionFilter.name}]`
-        : "";
-      console.log(
-        "collectionFilterQueryParam is: ",
-        collectionFilterQueryParam
-      );
-    }
+    // const correspondingCollectionFilter =
+    //   this.recordType !== "Item"
+    //     ? getCollectionFilterFromUUID(this.uuid, collectionFilters)
+    //     : "";
+    // let collectionFilterQueryParam = "";
+    // if (this.recordType === "Collection") {
+    //   console.log(
+    //     "correspondingCollectionFilter is: ",
+    //     correspondingCollectionFilter
+    //   );
+    //   collectionFilterQueryParam = correspondingCollectionFilter
+    //     ? `?filters=[Collection=${correspondingCollectionFilter.name}]`
+    //     : "";
+    //   console.log(
+    //     "collectionFilterQueryParam is: ",
+    //     collectionFilterQueryParam
+    //   );
+    // }
 
     this.title = data.title;
     this.uuid = data.uuid;
@@ -54,7 +54,7 @@ export class SearchCardModel {
     this.url =
       this.recordType === "Item"
         ? `/items/${data.uuid}`
-        : `/collections/${data.uuid}${collectionFilterQueryParam}`;
+        : `/collections/${data.uuid}`;
 
     this.imageURL = imageURL(data.imageID, "square", "!288,288", "0");
     this.numberOfDigitizedItems = data.numberOfDigitizedItems;
