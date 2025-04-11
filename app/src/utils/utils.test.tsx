@@ -3,6 +3,7 @@ import {
   stringToSlug,
   createAdobeAnalyticsPageName,
   displayResults,
+  deSlugify,
 } from "./utils";
 
 // TODO:
@@ -201,5 +202,35 @@ describe("displayResults", () => {
 
   test("displays correct range when perPage is greater than numFound", () => {
     expect(displayResults(5, 10, 1)).toBe("1-5 of 5");
+  });
+});
+
+describe("deSlugify", () => {
+  it("should convert a simple kebab string to title case", () => {
+    expect(deSlugify("hello-world")).toBe("Hello World");
+  });
+
+  it("should handle multiple words correctly", () => {
+    expect(deSlugify("the-quick-brown-fox")).toBe("The Quick Brown Fox");
+  });
+
+  it("should handle single word", () => {
+    expect(deSlugify("javascript")).toBe("Javascript");
+  });
+
+  it("should return an empty string if input is empty", () => {
+    expect(deSlugify("")).toBe("");
+  });
+
+  it("should handle already formatted strings (with no dashes)", () => {
+    expect(deSlugify("hello world")).toBe("Hello World");
+  });
+
+  it("should handle strings with multiple dashes in a row", () => {
+    expect(deSlugify("hello--world")).toBe("Hello  World");
+  });
+
+  it("should handle strings with trailing or leading dashes", () => {
+    expect(deSlugify("-hello-world-")).toBe(" Hello World ");
   });
 });
