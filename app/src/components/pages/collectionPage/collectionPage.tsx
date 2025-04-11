@@ -31,6 +31,15 @@ import { usePathname, useRouter } from "next/navigation";
 import SortMenu from "../../sortMenu/sortMenu";
 import ActiveFilters from "../../search/filters/activeFilters";
 import CollectionMetadata from "../../collectionMetadata/collectionMetadata";
+import { SearchResultsType } from "../searchPage/searchPage";
+
+type CollectionPageProps = {
+  slug: string;
+  searchResults: SearchResultsType;
+  searchParams;
+  collectionData;
+  collectionChildren;
+};
 
 const CollectionPage = ({
   slug,
@@ -38,7 +47,7 @@ const CollectionPage = ({
   searchParams,
   collectionData,
   collectionChildren,
-}) => {
+}: CollectionPageProps) => {
   const headingRef = useRef<HTMLHeadingElement>(null);
 
   const collectionSearchManager = new GeneralSearchManager({
@@ -49,7 +58,10 @@ const CollectionPage = ({
     initialAvailableFilters: searchResults?.availableFilters || DEFAULT_FILTERS,
   });
 
-  const totalPages = totalNumPages(searchResults.numResults, CARDS_PER_PAGE);
+  const totalPages = totalNumPages(
+    searchResults.numResults.toString(),
+    CARDS_PER_PAGE
+  );
   const { push } = useRouter();
   const pathname = usePathname();
 
@@ -142,8 +154,8 @@ const CollectionPage = ({
               />
             </Flex>
             <SearchCardsGrid
-              keywords={searchResults.q}
-              results={searchResults}
+              keywords={searchResults.keyword}
+              results={searchResults.results}
             />
             <Flex marginTop="xxl" marginBottom="xxl" alignContent="center">
               <Link

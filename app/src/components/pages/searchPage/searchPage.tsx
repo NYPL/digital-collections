@@ -19,10 +19,32 @@ import { MobileSearchBanner } from "../../mobileSearchBanner/mobileSearchBanner"
 import SortMenu from "../../sortMenu/sortMenu";
 import ActiveFilters from "../../search/filters/activeFilters";
 import NoResultsFound from "../../results/noResultsFound";
+import SearchCardType from "@/src/types/SearchCardType";
+import { AvailableFilterOption } from "@/src/types/AvailableFilterType";
 
-const SearchPage = ({ searchResults }) => {
+export type SearchResultsType = {
+  keyword: string;
+  numResults: number;
+  page: number;
+  perPage: number;
+  rightsFilter: string;
+  dateStart: string;
+  dateEnd: string;
+  availableFilters: Record<string, AvailableFilterOption[]>;
+  sort: string;
+  results: SearchCardType[];
+};
+
+const SearchPage = ({
+  searchResults,
+}: {
+  searchResults: SearchResultsType;
+}) => {
   const { searchManager } = useSearchContext();
-  const totalPages = totalNumPages(searchResults.numResults, CARDS_PER_PAGE);
+  const totalPages = totalNumPages(
+    searchResults.numResults.toString(),
+    CARDS_PER_PAGE
+  );
   const { push } = useRouter();
   const pathname = usePathname();
   const headingRef = useRef<HTMLHeadingElement>(null);
@@ -166,7 +188,7 @@ const SearchPage = ({ searchResults }) => {
           <>
             <SearchCardsGrid
               keywords={searchResults.keyword}
-              results={searchResults}
+              results={searchResults.results}
             />
             <Flex
               paddingLeft="s"
