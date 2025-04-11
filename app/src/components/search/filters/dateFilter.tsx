@@ -31,13 +31,14 @@ const DateFilter = ({ searchManager }: DateFilterProps) => {
     );
   };
 
-  let startValue = searchManager.filters.find((f) => f.filter === "dateStart")
-    ? searchManager.filters.find((f) => f.filter === "dateStart")?.value || null
-    : null;
+  // To do: memoize?
+  const startFilter = searchManager.filters.find(
+    (f) => f.filter === "dateStart"
+  );
+  const endFilter = searchManager.filters.find((f) => f.filter === "dateEnd");
 
-  let endValue = searchManager.filters.find((f) => f.filter === "dateEnd")
-    ? searchManager.filters.find((f) => f.filter === "dateEnd")?.value || null
-    : null;
+  const startValue = startFilter?.value ?? null;
+  const endValue = endFilter?.value ?? null;
 
   const [dateStart, setDateStart] = useState(startValue);
   const [dateEnd, setDateEnd] = useState(endValue);
