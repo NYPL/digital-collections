@@ -131,14 +131,13 @@ describe("Search card displaying highlighted text for keywords", () => {
   });
 
   it("displays text with highlight field in card", () => {
-    const component = (
+    render(
       <SearchCard
         result={itemResultData}
         keywords={"example"}
         isLargerThanLargeTablet={false}
       />
     );
-    render(component);
     const descriptionElement = screen.getAllByText(/example/)[0];
     expect(descriptionElement).toBeInTheDocument();
   });

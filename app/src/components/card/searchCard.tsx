@@ -35,24 +35,30 @@ const onSiteMaterialBadge = (recordType: SearchResultRecordType) => {
 };
 
 const contentTypeTag = (result: SearchCardType) => {
-  const displayLabel =
-    result.recordType === "Item"
-      ? result.contentType === "Image" && result.containsMultipleCaptures
-        ? "Multiple images"
-        : result.contentType
-        ? result.contentType
-        : null
-      : result.recordType
-      ? result.recordType
-      : null;
+  const { recordType, contentType, containsMultipleCaptures, uuid } = result;
+
+  const isItem = recordType === "Item";
+  const isImage = contentType === "Image";
+
+  let displayLabel: string | null = null;
+
+  if (isItem) {
+    if (isImage && containsMultipleCaptures) {
+      displayLabel = "Multiple images";
+    } else if (contentType) {
+      displayLabel = contentType;
+    }
+  } else {
+    displayLabel = recordType;
+  }
 
   return (
     displayLabel && (
       <TagSet
         tagSetData={[
           {
-            id: `type-${result.uuid}`,
-            label: displayLabel ? displayLabel : "",
+            id: `type-${uuid}`,
+            label: displayLabel,
           },
         ]}
         type="filter"

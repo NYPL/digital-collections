@@ -162,7 +162,7 @@ export function CollectionsPage({ data, collectionsSearchParams }) {
           <NoResultsFound
             searchTerm={collectionsSearchParams.q}
             page={collectionsSearchParams.page}
-            isCollections={true}
+            isCollections
           />
         )
       ) : (
