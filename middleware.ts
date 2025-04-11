@@ -1,9 +1,6 @@
 import collectionSlugToUuidMapping from "@/src/data/collectionSlugUuidMapping";
+import { deSlugify } from "@/src/utils/utils";
 import { NextRequest, NextResponse } from "next/server";
-
-function deSlugify(slug: string): string {
-  return slug.replace(/-/g, " ").replace(/\b\w/g, (c) => c.toUpperCase());
-}
 
 export function middleware(req: NextRequest) {
   const url = req.nextUrl;
