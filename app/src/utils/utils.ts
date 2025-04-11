@@ -10,6 +10,7 @@ import {
   AvailableFilterOption,
 } from "../types/AvailableFilterType";
 import type { Highlight } from "../types/HighlightType";
+import { isValidFilter } from "./searchManager";
 
 /**
  * Represents a IIIF Image API URL, which will be used globally throughout the application.
@@ -173,7 +174,7 @@ export const filterStringToCollectionApiFilterString = (filters: string) => {
           name = splitArray[0].toLowerCase();
         }
         const value = splitArray[1];
-        if (!ALLOWED_FILTERS.includes(name)) {
+        if (!isValidFilter(name)) {
           return null;
         }
         return `${name}=${value}`;

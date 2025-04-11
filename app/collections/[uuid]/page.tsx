@@ -37,8 +37,7 @@ export default async function Collection({
     // filters: searchParams.filters + [`Collection=uuid`], // Needs collection filter every time
   });
 
-  // mockSearchResponse;
-
+  // Use Promise.all() to fetch these so they're called concurrently
   let collectionData = //await CollectionsApi.getCollectionData();
     mockCollectionResponse;
 

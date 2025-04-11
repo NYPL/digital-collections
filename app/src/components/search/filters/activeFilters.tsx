@@ -42,6 +42,7 @@ const ActiveFilters = ({ searchManager }: ActiveFilterProps) => {
 
     return rightsLabels[value] || value;
   };
+
   return searchManager.filters.length > 0 ? (
     <>
       <Flex alignContent="center" alignItems="center" gap="xs" flexDir="row">
