@@ -5,6 +5,9 @@ import {
   displayResults,
   getCollectionFilterFromUUID,
   filterStringToCollectionApiFilterString,
+  getHighestRankedHighlight,
+  replaceEmWithMark,
+  getTitleWithHighlights,
 } from "./utils";
 import { AvailableFilterOption } from "../types/AvailableFilterType";
 
@@ -286,5 +289,58 @@ describe("filterStringToCollectionApiFilterString", () => {
 
   test("generates the correct filter syntax for no filters", () => {
     expect(filterStringToCollectionApiFilterString("")).toBe("");
+  });
+});
+
+describe("getHighestRankedHighlight", () => {
+  const mockHighlights = [
+    { field: "abstract", text: "Something" },
+    { field: "note", text: "Note text" },
+    { field: "topic", text: "Topic text" },
+  ];
+
+  it("returns the highest-ranked highlight based on priority", () => {
+    const result = getHighestRankedHighlight(mockHighlights);
+    // topic comes before note and abstract
+    expect(result).toEqual({ field: "topic", text: "Topic text" });
+  });
+
+  it("returns null if no highlight matches the ranking list", () => {
+    const highlights = [{ field: "random", text: "text" }];
+    expect(getHighestRankedHighlight(highlights)).toBeNull();
+  });
+});
+
+describe("replaceEmWithMark", () => {
+  it("replaces <em> tags with <mark> tags", () => {
+    const input = "This is <em>important</em> text.";
+    const output = "This is <mark>important</mark> text.";
+    expect(replaceEmWithMark(input)).toBe(output);
+  });
+
+  it("replaces multiple <em> tags", () => {
+    const input = "<em>First</em> and <em>second</em>";
+    const output = "<mark>First</mark> and <mark>second</mark>";
+    expect(replaceEmWithMark(input)).toBe(output);
+  });
+
+  it("returns original string if there are no <em> tags", () => {
+    const input = "No highlights here";
+    expect(replaceEmWithMark(input)).toBe(input);
+  });
+});
+
+describe("getTitleWithHighlights", () => {
+  it("returns marked-up highlight if title field exists", () => {
+    const highlights = [{ field: "title", text: "The <em>Great</em> Gatsby" }];
+    const title = "The Great Gatsby";
+    const result = getTitleWithHighlights(highlights, title);
+    expect(result).toBe("The <mark>Great</mark> Gatsby");
+  });
+
+  it("returns original title if no title highlight exists", () => {
+    const highlights = [{ field: "topic", text: "Not a title" }];
+    const title = "Original Title";
+    expect(getTitleWithHighlights(highlights, title)).toBe(title);
   });
 });
