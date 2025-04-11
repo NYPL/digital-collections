@@ -1,7 +1,7 @@
 import SearchPage from "@/src/components/pages/searchPage/searchPage";
 import { SearchProvider } from "@/src/context/SearchProvider";
 import { render } from "@testing-library/react";
-import { mockItems } from "__tests__/__mocks__/data/mockItems";
+import { mockSearchResponse } from "__tests__/__mocks__/data/collectionsApi/mockSearchResponse";
 import { axe } from "jest-axe";
 import React from "react";
 
@@ -12,11 +12,11 @@ jest.mock("next/navigation", () => ({
   usePathname: jest.fn(),
 }));
 
-describe.skip("Search page accessibility", () => {
+describe("Search page accessibility", () => {
   it("passes axe accessibility test", async () => {
     const { container } = render(
       <SearchProvider>
-        <SearchPage data={mockItems} />
+        <SearchPage searchResults={mockSearchResponse} />
       </SearchProvider>
     );
     expect(await axe(container)).toHaveNoViolations();

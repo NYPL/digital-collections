@@ -1,6 +1,7 @@
 "use client";
 import React, { createContext, useContext } from "react";
 import {
+  DEFAULT_FILTERS,
   DEFAULT_PAGE_NUM,
   DEFAULT_SEARCH_SORT,
   DEFAULT_SEARCH_TERM,
@@ -10,7 +11,6 @@ import {
   SearchManager,
   stringToFilter,
 } from "../utils/searchManager";
-import { mockFacetFilters } from "__tests__/__mocks__/data/mockFacetFilters";
 
 interface SearchContextType {
   searchManager: SearchManager;
@@ -29,8 +29,8 @@ export const SearchProvider = ({
     initialPage: Number(searchParams?.page) || DEFAULT_PAGE_NUM,
     initialSort: searchParams?.sort || DEFAULT_SEARCH_SORT,
     initialFilters: stringToFilter(searchParams?.filters),
-    initialKeywords: searchParams?.keywords || DEFAULT_SEARCH_TERM,
-    initialFacets: mockFacetFilters,
+    initialKeywords: searchParams?.q || DEFAULT_SEARCH_TERM,
+    initialAvailableFilters: searchParams?.availableFilters || DEFAULT_FILTERS,
   });
 
   return (

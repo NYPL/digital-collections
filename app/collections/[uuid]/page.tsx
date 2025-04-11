@@ -3,20 +3,20 @@ import { Metadata } from "next";
 import PageLayout from "../../src/components/pageLayout/pageLayout";
 import { createAdobeAnalyticsPageName } from "@/src/utils/utils";
 import CollectionPage from "@/src/components/pages/collectionPage/collectionPage";
-import { mockSearchResponse } from "__tests__/__mocks__/data/collectionsApi/mockSearchResponse";
 import { CollectionsApi } from "@/src/utils/apiClients";
 import { SearchParams } from "@/search/index/page";
+import { mockCollectionChildrenResponse } from "__tests__/__mocks__/data/mockCollectionStructure";
+import { mockCollectionResponse } from "__tests__/__mocks__/data/collectionsApi/mockCollectionResponse";
 
 type CollectionProps = {
-  params: { slug: string };
+  params: { uuid: string };
   searchParams: SearchParams;
 };
 
 export async function generateMetadata({
   params,
 }: CollectionProps): Promise<Metadata> {
-  const slug = params.slug; //  TODO: this needs to support both a slug or a uuid.
-  // We will need to update this later to check if slug is a uuid and then get the slugified title of the collection.
+  const slug = params.uuid; //  TODO: this needs to support both a slug or a uuid.
   return {
     title: `${slug} - NYPL Digital Collections`,
     openGraph: {
@@ -29,13 +29,20 @@ export default async function Collection({
   params,
   searchParams,
 }: CollectionProps) {
-  const data = mockSearchResponse;
-  // await CollectionsApi.getSearchData({
-  //   keyword: searchParams.keywords,
-  //   sort: searchParams.sort,
-  //   page: searchParams.page,
-  //   //filters: collection
-  // });
+  const searchResults = await CollectionsApi.getSearchData({
+    keyword: searchParams.q,
+    sort: searchParams.sort,
+    page: searchParams.page,
+    filters: searchParams.filters,
+    // filters: searchParams.filters + [`Collection=uuid`], // Needs collection filter every time
+  });
+
+  // Use Promise.all() to fetch these so they're called concurrently
+  let collectionData = //await CollectionsApi.getCollectionData();
+    mockCollectionResponse;
+
+  let collectionChildren = // await CollectionsApi.getCollectionChildren();
+    mockCollectionChildrenResponse;
 
   return (
     <PageLayout
@@ -44,19 +51,21 @@ export default async function Collection({
         { text: "Home", url: "/" },
         { text: "Collections", url: "/collections" },
         {
-          text: `${params.slug}`,
-          url: `/collections/${params.slug}`,
+          text: `${params.uuid}`,
+          url: `/collections/${params.uuid}`,
         },
       ]}
       adobeAnalyticsPageName={createAdobeAnalyticsPageName(
         "collections",
-        params.slug
+        params.uuid
       )}
     >
       <CollectionPage
         slug={"Example collection"}
         searchParams={searchParams}
-        data={mockSearchResponse}
+        searchResults={searchResults}
+        collectionData={collectionData}
+        collectionChildren={collectionChildren}
       />
     </PageLayout>
   );

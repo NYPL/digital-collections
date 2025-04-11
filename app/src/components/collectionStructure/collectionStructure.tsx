@@ -7,7 +7,7 @@ import {
   Heading,
   Tooltip,
 } from "@nypl/design-system-react-components";
-import { sampleStructure } from "__tests__/__mocks__/data/mockCollectionStructure";
+import { mockCollectionChildrenResponse } from "__tests__/__mocks__/data/mockCollectionStructure";
 import { useScrollIntoViewIfNeeded } from "@/src/hooks/useScrollIntoViewIfNeeded";
 import { headerBreakpoints } from "@/src/utils/breakpoints";
 
@@ -68,7 +68,7 @@ const fetchChildren = async (
         return [];
       };
 
-      resolve(findChildren(sampleStructure, title));
+      resolve(findChildren(mockCollectionChildrenResponse, title));
     }, 1000);
   });
 };
@@ -76,7 +76,7 @@ const fetchChildren = async (
 const prefetchNextLevel = async (children: CollectionChildProps[]) => {
   for (const child of children) {
     if (child.children && child.children.length > 0) {
-      console.log("now pre-fetching children of", child.title);
+      //console.log("now pre-fetching children of", child.title);
       // only fetch and add children if they aren't already there
       child.children = await fetchChildren(child.title);
     }

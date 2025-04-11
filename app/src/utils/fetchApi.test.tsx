@@ -62,7 +62,7 @@ describe("fetchApi", () => {
   });
 
   it("passes Collections API auth if isRepoApi option is false", async () => {
-    const mockResponse = { nyplAPI: { response: "mockResponse" } };
+    const mockResponse = { response: "mockResponse" };
     (global as any).fetch = jest.fn(() =>
       Promise.resolve({
         ok: true,
@@ -113,6 +113,28 @@ describe("fetchApi", () => {
         body: undefined,
       }
     );
+    expect(response).toEqual(mockResponse);
+  });
+
+  it("handles a Collections API 422 error for invalid param values", async () => {
+    const mockBadParams = { param1: "value1", param2: "value2" };
+    const mockResponse = { response: "mockResponse" };
+    (global as any).fetch = jest.fn(() =>
+      Promise.resolve({
+        status: 422,
+        statusText: "Invalid parameter value: something something",
+        json: async () => mockResponse,
+      })
+    ) as jest.Mock;
+
+    const response = await fetchApi({
+      apiUrl: mockApiUrl,
+      options: {
+        isRepoApi: false,
+        params: mockBadParams,
+      },
+    });
+
     expect(response).toEqual(mockResponse);
   });
 
