@@ -121,8 +121,8 @@ export function middleware(req: NextRequest) {
       }
     } else if (key === "year_begin" || key === "year_end") {
       // Replace with year_begin/year_end values if available
-      const filterKey = key === "year_begin" ? "dateStart" : "dateEnd";
-      const filterValue = decodeURIComponent(value);
+      let filterKey = key === "year_begin" ? "dateStart" : "dateEnd";
+      let filterValue = decodeURIComponent(value);
       filtersObj[filterKey] = [filterValue];
       modified = true;
     }
