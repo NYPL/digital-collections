@@ -67,13 +67,13 @@ const SelectFilterComponent = forwardRef<
   HTMLButtonElement,
   { filter: AvailableFilter; searchManager: SearchManager }
 >((props, filterRef) => {
-  const { filter, searchManager, ...rest } = props;
+  const { filter, searchManager } = props;
   const [userClickedOutside, setUserClickedOutside] = useState<boolean>(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   // Sets selected to filter's current URL value on mount.
   let selected = filter
-    ? filter.options.find((option) => option.selected === true) || null
+    ? filter.options.find((option) => !!option.selected) || null
     : null;
 
   // Manages current selection in state while user interacts with dropdown/modal.
@@ -201,7 +201,7 @@ const SelectFilterComponent = forwardRef<
   };
 
   return (
-    <Box {...rest} ref={containerRef}>
+    <Box ref={containerRef}>
       <FilterAccordion
         accordionData={[
           {
