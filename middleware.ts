@@ -1,4 +1,4 @@
-import collectionSlugToUuid from "@/src/data/collectionSlugUuidMapping";
+import collectionSlugToUuidMapping from "@/src/data/collectionSlugUuidMapping";
 import { NextRequest, NextResponse } from "next/server";
 
 function deSlugify(slug: string): string {
@@ -7,43 +7,39 @@ function deSlugify(slug: string): string {
 
 export function middleware(req: NextRequest) {
   const url = req.nextUrl;
-
   const pathname = url.pathname;
+
   const collectionMatch = pathname.match(/^\/collections\/([^\/?#]+)/);
-  console.log("collection match", collectionMatch);
   if (collectionMatch) {
     const identifier = collectionMatch[1];
-
-    if (
-      /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i.test(
-        identifier
-      )
-    ) {
-      console.log("thats a uudi");
+    // DC uuids are not uuid v1-5 compliant– they're v0 (kind of?), which this regex tests
+    const isLikeUuid = /^[\da-f]{8}-([\da-f]{4}-){3}[\da-f]{12}$/i.test(
+      identifier
+    );
+    if (isLikeUuid) {
       return NextResponse.next();
-    } else {
-      const uuid = collectionSlugToUuid[identifier];
-      const newUrl = new URL(req.nextUrl);
-
-      if (uuid) {
-        newUrl.pathname = `/collections/${uuid}`;
-      } else {
-        const query = deSlugify(identifier);
-        newUrl.pathname = "/search/index";
-        newUrl.searchParams.set("q", query);
-      }
-
-      return NextResponse.redirect(newUrl, 301);
     }
+
+    const uuid = collectionSlugToUuidMapping[identifier];
+    const newUrl = new URL(req.nextUrl);
+
+    if (uuid) {
+      newUrl.pathname = `/collections/${uuid}`;
+    } else {
+      const query = deSlugify(identifier);
+      newUrl.pathname = "/search/index";
+      newUrl.searchParams.set("q", query);
+    }
+
+    return NextResponse.redirect(newUrl.toString(), 301);
   }
 
   const searchParams = url.searchParams;
   let modified = false;
 
-  // Allowed params
   const allowedParams = new Set(["q", "sort", "page", "filters"]);
 
-  // Transform "collection_keywords" to "q"
+  // Transform collection_keywords to q
   if (searchParams.has("collection_keywords")) {
     const keywordValue = searchParams.get("collection_keywords");
     searchParams.delete("collection_keywords");
@@ -51,7 +47,7 @@ export function middleware(req: NextRequest) {
     modified = true;
   }
 
-  // Transform "keywords" to "q"
+  // Transform keywords to q
   if (searchParams.has("keywords")) {
     const keywordValue = searchParams.get("keywords");
     searchParams.delete("keywords");
@@ -85,7 +81,6 @@ export function middleware(req: NextRequest) {
     searchParams.set("sort", "date-desc");
     modified = true;
   }
-
   // Transform title sort
   if (searchParams.get("sort") === "mainTitle_ns asc") {
     searchParams.set("sort", "title-asc");
@@ -129,8 +124,8 @@ export function middleware(req: NextRequest) {
       }
     } else if (key === "year_begin" || key === "year_end") {
       // Replace with year_begin/year_end values if available
-      let filterKey = key === "year_begin" ? "dateStart" : "dateEnd";
-      let filterValue = decodeURIComponent(value);
+      const filterKey = key === "year_begin" ? "dateStart" : "dateEnd";
+      const filterValue = decodeURIComponent(value);
       filtersObj[filterKey] = [filterValue];
       modified = true;
     }
