@@ -79,7 +79,7 @@ describe("SearchManager", () => {
       expect(result).toBe("q=test&sort=date-asc");
     });
 
-    it("should drop sort=relevance", () => {
+    it("should drop sort=relevance if selected", () => {
       const result = manager.handleSortChange("relevance");
       expect(result).toBe("q=test");
     });

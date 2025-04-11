@@ -103,20 +103,24 @@ const DateFilter = ({ searchManager }: DateFilterProps) => {
             },
           }}
           onClick={() => {
-            const filtersToRemove = [
-              dateStart === ""
-                ? { filter: "dateStart", value: dateStart }
-                : null,
-              dateEnd === "" ? { filter: "dateEnd", value: dateEnd } : null,
-            ].filter((filter): filter is Filter => filter !== null);
+            const filtersToRemove: Filter[] = [];
+            if (dateStart === "") {
+              filtersToRemove.push({ filter: "dateStart", value: dateStart });
+            }
+            if (dateEnd === "") {
+              filtersToRemove.push({ filter: "dateEnd", value: dateEnd });
+            }
 
             if (filtersToRemove.length > 0) {
               updateURL(searchManager.handleRemoveFilter(filtersToRemove));
             }
-            const filtersToAdd = [
-              dateStart ? { filter: "dateStart", value: dateStart } : null,
-              dateEnd ? { filter: "dateEnd", value: dateEnd } : null,
-            ].filter((filter): filter is Filter => filter !== null);
+            const filtersToAdd: Filter[] = [];
+            if (dateStart) {
+              filtersToAdd.push({ filter: "dateStart", value: dateStart });
+            }
+            if (dateEnd) {
+              filtersToAdd.push({ filter: "dateEnd", value: dateEnd });
+            }
 
             if (filtersToAdd.length > 0) {
               updateURL(searchManager.handleAddFilter(filtersToAdd));

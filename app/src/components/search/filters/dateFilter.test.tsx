@@ -15,7 +15,7 @@ let mockPush = jest.fn();
 
 const mockManager = {
   filters: [],
-  handleAddFilter: jest.fn(() => "filters=dateStart=1900,dateEnd=2000"),
+  handleAddFilter: jest.fn(() => "filters=[dateStart=1900][dateEnd=2000]"),
   handleRemoveFilter: jest.fn(() => "filters="),
 };
 
@@ -86,7 +86,7 @@ describe("DateFilter", () => {
     ]);
 
     expect(mockPush).toHaveBeenCalledWith(
-      "/search?filters=dateStart=1900,dateEnd=2000"
+      "/search?filters=[dateStart=1900][dateEnd=2000]"
     );
   });
 
