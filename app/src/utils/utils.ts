@@ -134,3 +134,7 @@ export function formatHighlightText(highlights) {
 export const capitalize = (text: string): string => {
   return text.charAt(0).toUpperCase() + text.slice(1);
 };
+
+export const deSlugify = (slug: string): string => {
+  return slug.replace(/-/g, " ").replace(/\b\w/g, (c) => c.toUpperCase());
+};
