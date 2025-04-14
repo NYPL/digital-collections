@@ -205,6 +205,8 @@ export const getHighestRankedHighlight = (highlights: Highlight[]) => {
     "division",
     "publisher",
     "type",
+    "exhibition ID",
+    "bNumber",
   ];
   for (const key of rankingOrder) {
     const matchedHighlight = highlights.find(
