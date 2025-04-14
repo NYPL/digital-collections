@@ -30,7 +30,7 @@ describe("SearchProvider", () => {
       page: 2,
       sort: "date-asc",
       filters: "[topic=art]",
-      keywords: "painting",
+      q: "painting",
     };
 
     render(
@@ -38,7 +38,6 @@ describe("SearchProvider", () => {
         <TestComponent />
       </SearchProvider>
     );
-
     expect(document.body.textContent).toContain("2");
     expect(document.body.textContent).toContain("painting");
   });

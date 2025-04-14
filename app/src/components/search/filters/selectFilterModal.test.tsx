@@ -6,7 +6,7 @@ import {
   DEFAULT_SEARCH_TERM,
 } from "@/src/config/constants";
 import { GeneralSearchManager } from "@/src/utils/searchManager";
-import { FacetFilter } from "@/src/types/FacetFilterType";
+import { AvailableFilter } from "@/src/types/AvailableFilterType";
 
 jest.mock("@chakra-ui/react", () => {
   const actual = jest.requireActual("@chakra-ui/react");
@@ -36,12 +36,12 @@ describe("SelectFilterModal", () => {
   const mockSetSelected = jest.fn();
   const mockSetModalCurrent = jest.fn();
 
-  const mockFilter: FacetFilter = {
+  const mockFilter: AvailableFilter = {
     name: "Genre",
     options: [
-      { name: "Fiction", count: 10 },
-      { name: "Non-Fiction", count: 20 },
-      { name: "Mystery", count: 30 },
+      { name: "Fiction", count: 10, selected: false },
+      { name: "Non-Fiction", count: 20, selected: false },
+      { name: "Mystery", count: 30, selected: false },
     ],
   };
 
@@ -113,6 +113,7 @@ describe("SelectFilterModal", () => {
       expect(mockSetModalCurrent).toHaveBeenCalledWith({
         name: "Fiction",
         count: 10,
+        selected: false,
       });
     });
   });
@@ -164,14 +165,17 @@ describe("SelectFilterModal", () => {
         selected={{
           name: "Fiction",
           count: 10,
+          selected: true,
         }}
         current={{
           name: "Fiction",
           count: 10,
+          selected: true,
         }}
         modalCurrent={{
           name: "Fiction",
           count: 10,
+          selected: true,
         }}
         setModalCurrent={mockSetModalCurrent}
         searchManager={mockManager}
@@ -186,6 +190,7 @@ describe("SelectFilterModal", () => {
       expect(mockSetSelected).toHaveBeenCalledWith({
         name: "Fiction",
         count: 10,
+        selected: false,
       });
       expect(mockOnClose).toHaveBeenCalled();
     }, 100);
@@ -200,14 +205,17 @@ describe("SelectFilterModal", () => {
         selected={{
           name: "Fiction",
           count: 10,
+          selected: false,
         }}
         current={{
           name: "Fiction",
           count: 10,
+          selected: false,
         }}
         modalCurrent={{
           name: "Fiction",
           count: 10,
+          selected: false,
         }}
         setModalCurrent={mockSetModalCurrent}
         searchManager={mockManager}

@@ -34,17 +34,17 @@ describe("ActiveFilters", () => {
   it("renders the applied filters", () => {
     render(component);
     expect(screen.getByText("Filters applied:")).toBeInTheDocument();
-    expect(screen.getByText("art")).toBeInTheDocument();
-    expect(screen.getByText("book")).toBeInTheDocument();
+    expect(screen.getByText("Art")).toBeInTheDocument();
+    expect(screen.getByText("Book")).toBeInTheDocument();
   });
 
   it("removes a filter when a tag is clicked", () => {
     render(component);
-    const tag = screen.getByText("book");
+    const tag = screen.getByText("Book");
     fireEvent.click(tag);
 
     setTimeout(() => {
-      expect(screen.getByText("book")).not.toBeInTheDocument();
+      expect(screen.getByText("Book")).not.toBeInTheDocument();
     }, 100);
   });
 

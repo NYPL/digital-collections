@@ -1,6 +1,10 @@
 import data from "../data/lanes";
 import type { LaneDataType } from "../types/Lane";
-import { imageURL, addCommas } from "./utils";
+import {
+  imageURL,
+  addCommas,
+  filterStringToCollectionApiFilterString,
+} from "./utils";
 import defaultFeaturedItems from "../data/defaultFeaturedItemData";
 import {
   CARDS_PER_PAGE,
@@ -184,6 +188,24 @@ export class CollectionsApi {
     return response;
   }
 
+  static async getCollectionData(uuid: string) {
+    let apiUrl = `${process.env.COLLECTIONS_API_URL}/collections/${uuid}`;
+    const response = await fetchApi({
+      apiUrl: apiUrl,
+      options: { isRepoApi: false },
+    });
+    return response;
+  }
+
+  static async getCollectionChildren(uuid: string) {
+    let apiUrl = `${process.env.COLLECTIONS_API_URL}/collections/${uuid}/children`;
+    const response = await fetchApi({
+      apiUrl: apiUrl,
+      options: { isRepoApi: false },
+    });
+    return response;
+  }
+
   /**
    * Fetches search results based on the provided parameters, for /search/index and /collections/[uuid] pages.
    *
@@ -210,7 +232,13 @@ export class CollectionsApi {
     page?: number;
     perPage?: number;
   } = {}): Promise<any> {
-    let apiUrl = `${process.env.COLLECTIONS_API_URL}/search/index?q=${keyword}${filters}&sort=${sort}&page=${page}&perPage=${perPage}`;
+    let filterString = filterStringToCollectionApiFilterString(
+      filters.toString()
+    );
+    let filterURL = filters.length > 0 ? `&${filterString}` : "";
+
+    let apiUrl = `${process.env.COLLECTIONS_API_URL}/search/?q=${keyword}${filterURL}&sort=${sort}&page=${page}&perPage=${perPage}`;
+
     const response = await fetchApi({
       apiUrl: apiUrl,
       options: { isRepoApi: false },

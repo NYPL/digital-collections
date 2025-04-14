@@ -1,6 +1,6 @@
 export const dcNavLinks = [
   {
-    href: `/search/index?utf8=%E2%9C%93&keywords=`,
+    href: `/search/index`,
     text: "Items",
   },
   {
