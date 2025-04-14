@@ -6,10 +6,11 @@ import {
   DEFAULT_SEARCH_SORT,
   DEFAULT_SEARCH_TERM,
 } from "@/src/config/constants";
-import { mockFacetFilters } from "__tests__/__mocks__/data/mockFacetFilters";
+import { mockAvailableFilters } from "__tests__/__mocks__/data/mockAvailableFilters";
+import { mockSearchResponse } from "__tests__/__mocks__/data/collectionsApi/mockSearchResponse";
 
 const mockFilterRefs: MutableRefObject<(HTMLButtonElement | null)[]> = {
-  current: Array(mockFacetFilters.length).fill(null),
+  current: Array(mockAvailableFilters.length).fill(null),
 };
 jest.mock("next/navigation", () => ({
   useRouter: jest.fn(() => ({
@@ -23,7 +24,7 @@ const manager = new GeneralSearchManager({
   initialSort: DEFAULT_SEARCH_SORT,
   initialFilters: [],
   initialKeywords: DEFAULT_SEARCH_TERM,
-  initialFacets: mockFacetFilters,
+  initialAvailableFilters: mockSearchResponse.availableFilters,
 });
 
 describe("SelectFilterGrid", () => {
@@ -42,13 +43,13 @@ describe("SelectFilterGrid", () => {
     expect(screen.getByText("Collection")).toBeInTheDocument();
     expect(screen.getByText("Topic")).toBeInTheDocument();
 
-    expect(screen.queryByText("Name")).not.toBeInTheDocument();
+    expect(screen.queryByText("Type")).not.toBeInTheDocument();
   });
 
   it("renders all filters when expanded", () => {
     render(component(true));
 
-    mockFacetFilters.forEach((filter) => {
+    mockAvailableFilters.forEach((filter) => {
       expect(screen.getByText(filter.name)).toBeInTheDocument();
     });
   });
