@@ -10,10 +10,9 @@ export function middleware(req: NextRequest) {
   if (collectionMatch) {
     const identifier = collectionMatch[1];
     // DC uuids are not uuid v1-5 compliant– they're v0 (kind of?), which this regex tests
-    const isLikeUuid = /^[\da-f]{8}-([\da-f]{4}-){3}[\da-f]{12}$/i.test(
-      identifier
-    );
-    if (isLikeUuid) {
+    const dcUuidRegex = /^[\da-f]{8}-([\da-f]{4}-){3}[\da-f]{12}$/i;
+    const isDCUuid = dcUuidRegex.test(identifier);
+    if (isDCUuid) {
       return NextResponse.next();
     }
 
