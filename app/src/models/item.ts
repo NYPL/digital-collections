@@ -36,7 +36,7 @@ export class ItemModel {
     // .mods.relatedItem?
     /* Date/Origin */
     origin: string;
-    dateCreated: string;
+    dateCreated?: string;
     dateIssued: string;
     // .mods.originInfo
     /* Table of Contents */
@@ -86,7 +86,7 @@ export class ItemModel {
       }
     }
 
-    console.log("manifestMetadataHash is: ", manifestMetadataHash);
+    // console.log("manifestMetadataHash is: ", manifestMetadataHash);
     this.uuid = uuid; //data.uuid; //data.capture.uuid.$;
     // this.mods = data.mods;
     // this.capture = data.capture;
