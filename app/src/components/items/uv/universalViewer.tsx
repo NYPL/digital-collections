@@ -4,7 +4,8 @@ import {
   useEvent,
 } from "../../../hooks/useUniversalViewer";
 import React, { useEffect, useMemo, useRef } from "react";
-import { IIIFEvents as BaseEvents } from "universalviewer";
+import { IIIFEvents as BaseEvents, IIIFURLAdapter } from "universalviewer";
+import { UVConfig } from "./uv-config";
 
 export type UniversalViewerProps = {
   config?: any;
@@ -23,35 +24,58 @@ const UniversalViewer: React.FC<UniversalViewerProps> = React.memo(
         manifest: manifestId,
         canvasIndex: canvasIndex || 0,
         embedded: true,
-        config: config || {},
+        // footerPanelEnabled: false,
+        // options: {
+        //   "headerPanel": {
+        //     "options": {
+        //       "centerOptionsEnabled": true,
+        //       "localeToggleEnabled": false,
+        //       "settingsButtonEnabled": false
+        //     }
+        //   },
+        // }
+        //UVConfig.options
+        // config: config || UVConfig, //{},
       }),
       []
     );
+
     const uv = useUniversalViewer(ref, options);
 
     useEffect(() => {
-      if (uv && (canvasIndex || canvasIndex === 0)) {
-        if (lastIndex.current !== canvasIndex) {
-          uv._assignedContentHandler?.publish(
-            BaseEvents.CANVAS_INDEX_CHANGE,
-            canvasIndex
-          );
-          lastIndex.current = canvasIndex;
-        }
+      if (uv) {
+        // override config using an inline json object
+        uv.on("configure", function ({ config, cb }) {
+          cb({
+            options: UVConfig.options, //{ footerPanelEnabled: true }
+          });
+        });
       }
-    }, [canvasIndex, uv]);
+    }, [uv]);
 
-    useEvent(uv, BaseEvents.CANVAS_INDEX_CHANGE, (i) => {
-      if (onChangeCanvas) {
-        if (lastIndex.current !== i) {
-          const canvas = (uv as any)?.extension?.helper.getCanvasByIndex(i);
-          if (canvas) {
-            lastIndex.current = i;
-            onChangeCanvas(manifestId, canvas.id);
-          }
-        }
-      }
-    });
+    // useEffect(() => {
+    //   if (uv && (canvasIndex || canvasIndex === 0)) {
+    //     if (lastIndex.current !== canvasIndex) {
+    //       uv._assignedContentHandler?.publish(
+    //         BaseEvents.CANVAS_INDEX_CHANGE,
+    //         canvasIndex
+    //       );
+    //       lastIndex.current = canvasIndex;
+    //     }
+    //   }
+    // }, [canvasIndex, uv]);
+
+    // useEvent(uv, BaseEvents.CANVAS_INDEX_CHANGE, (i) => {
+    //   if (onChangeCanvas) {
+    //     if (lastIndex.current !== i) {
+    //       const canvas = (uv as any)?.extension?.helper.getCanvasByIndex(i);
+    //       if (canvas) {
+    //         lastIndex.current = i;
+    //         onChangeCanvas(manifestId, canvas.id);
+    //       }
+    //     }
+    //   }
+    // });
 
     return (
       <>
