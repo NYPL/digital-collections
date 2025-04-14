@@ -9,7 +9,7 @@ import {
   ChakraComponent,
 } from "@chakra-ui/react";
 import { Icon, AccordionDataProps } from "@nypl/design-system-react-components";
-import React, { forwardRef, useEffect, useState } from "react";
+import React, { forwardRef, useEffect, useRef, useState } from "react";
 
 export interface FilterAccordionProps {
   /** Array of data to display, and an optional accordionType */
@@ -45,20 +45,23 @@ const getIcon = (isExpanded: boolean) => {
 };
 
 /**
- * Returns `AccordionItems` for every accordion object in the data
- * array. This automatically creates the `AccordionButton` and `AccordionPanel`
- * combination that is required for the Chakra `Accordion` component.
+ * Returns AccordionItems for every accordion object in the data
+ * array. This creates the AccordionButton and AccordionPanel combination
+ * expected by the Chakra Accordion component.
+ *
  */
 const getElementsFromData = (
   data: AccordionDataProps[] = [],
   ariaLabel: string,
-  id: string
+  id: string,
+  buttonRefs: React.MutableRefObject<(HTMLElement | null)[]>
 ) => {
   return data.map((content, index) => {
     const panel = (
       <AccordionPanel
         id={`${id}-panel-${index}`}
         key={index}
+        data-index={index}
         overflow="auto"
         sx={{
           bg: "ui.white",
@@ -83,24 +86,24 @@ const getElementsFromData = (
 
     return (
       <AccordionItem id={`${id}-item-${index}`} key={index} position="relative">
-        {/* Get the current state to render the correct icon. */}
         {({ isExpanded }) => {
           return (
             <>
               <AccordionButton
                 aria-label={finalAriaLabel}
                 id={`${id}-button-${index}`}
+                data-index={index}
                 borderColor={"ui.gray.medium"}
                 padding="xs s"
-                ref={content.buttonInteractionRef}
+                ref={(node: HTMLElement | null) => {
+                  buttonRefs.current[index] = node;
+                }}
                 sx={{
                   fontWeight: "light",
                   fontSize: "desktop.body.body2",
                   bg: "ui.white",
                   _expanded: { bg: "ui.bg.active" },
-                  _hover: {
-                    borderColor: "ui.gray.dark",
-                  },
+                  _hover: { borderColor: "ui.gray.dark" },
                 }}
               >
                 <Box as="span" flex="1" textAlign="start">
@@ -140,39 +143,32 @@ const FilterAccordionComponent = forwardRef<
     isDefaultOpen ? [0] : []
   );
 
-  // If the accordionData doesn't already contain refs for the panel
-  // buttons, add them now.
-  const updatedAccordionData = accordionData.map((item) => ({
-    ...item,
-    buttonInteractionRef: item.buttonInteractionRef || React.createRef(),
-  }));
+  // Mutable ref array to store the AccordionButton DOM nodes.
+  const buttonRefs = useRef<(HTMLElement | null)[]>([]);
 
-  const handleKeyDown = (e) => {
-    // If the 'esc' key is pressed, find the panel the
-    // user is focused on or within, and remove it as
-    // an expanded panel. (Nothing will happen if the
-    // panel is already collapsed.)
-    if (e.code === "Escape") {
-      let focusedPanelIndex;
-      if (e.target.dataset.index) {
-        // If the user is focused on an accordion button...
-        focusedPanelIndex = Number(e.target.dataset.index);
-      } else {
-        // If the user is focused on an element within the panel...
-        focusedPanelIndex = Number(
-          e.target.closest("[role='region']").id.split("-").pop()
-        );
+  const handleKeyDown = (e: React.KeyboardEvent) => {
+    if (e.key === "Escape") {
+      // Try to find the closest element with a data-index attribute.
+      const targetElement = e.target as HTMLElement;
+      const panelElement = targetElement.closest("[data-index]");
+      if (!panelElement) return;
+      const indexAttr = panelElement.getAttribute("data-index");
+      if (!indexAttr) return;
+      const idx = Number(indexAttr);
+      if (isNaN(idx)) return;
+
+      // Collapse this panel.
+      setExpandedPanels((prev) => prev.filter((i) => i !== idx));
+
+      // Return focus to the corresponding button.
+      const button = buttonRefs.current[idx];
+      if (button) {
+        setTimeout(() => {
+          button.focus();
+        }, 0);
       }
-
-      setExpandedPanels(expandedPanels.filter((i) => i !== focusedPanelIndex));
-
-      // If something *inside* the accordion was in focus and 'esc' was clicked,
-      // return focus to the accordion panel
-      if (updatedAccordionData[focusedPanelIndex].buttonInteractionRef) {
-        updatedAccordionData[
-          focusedPanelIndex
-        ].buttonInteractionRef.current?.focus();
-      }
+      // e.preventDefault();
+      // e.stopPropagation();
     }
   };
 
@@ -190,12 +186,17 @@ const FilterAccordionComponent = forwardRef<
         setExpandedPanels(expandedIdxs);
         parentOnChange();
       }}
-      onKeyDown={handleKeyDown}
+      onKeyDownCapture={handleKeyDown}
       id={id}
       ref={ref}
       {...rest}
     >
-      {getElementsFromData(updatedAccordionData, ariaLabel || "", id || "")}
+      {getElementsFromData(
+        accordionData,
+        ariaLabel || "",
+        id || "",
+        buttonRefs
+      )}
     </ChakraAccordion>
   );
 });
