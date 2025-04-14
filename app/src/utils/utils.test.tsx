@@ -210,8 +210,6 @@ describe("displayResults", () => {
   });
 });
 
-//
-
 describe("getCollectionFilterFromUUID", () => {
   const availableCollections: AvailableFilterOption[] = [
     {
@@ -332,14 +330,14 @@ describe("replaceEmWithMark", () => {
 
 describe("getTitleWithHighlights", () => {
   it("returns marked-up highlight if title field exists", () => {
-    const highlights = [{ field: "title", text: "The <em>Great</em> Gatsby" }];
+    const highlights = [{ field: "Title", text: "The <em>Great</em> Gatsby" }];
     const title = "The Great Gatsby";
     const result = getTitleWithHighlights(highlights, title);
     expect(result).toBe("The <mark>Great</mark> Gatsby");
   });
 
   it("returns original title if no title highlight exists", () => {
-    const highlights = [{ field: "topic", text: "Not a title" }];
+    const highlights = [{ field: "Topic", text: "Not a title" }];
     const title = "Original Title";
     expect(getTitleWithHighlights(highlights, title)).toBe(title);
   });
