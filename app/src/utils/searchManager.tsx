@@ -264,10 +264,12 @@ export const filterToString = (filters: Filter[]): string => {
 export const transformToAvailableFilters = (
   availableFilters: Record<string, AvailableFilterOption[]>
 ): AvailableFilter[] => {
-  return Object.entries(availableFilters).map(([key, options]) => ({
-    name: key,
-    options,
-  }));
+  return Object.entries(availableFilters)
+    .filter(([key]) => key !== "subcollection")
+    .map(([key, options]) => ({
+      name: key,
+      options,
+    }));
 };
 
 export const availableFilterDisplayName = (
