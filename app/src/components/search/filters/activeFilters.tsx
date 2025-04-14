@@ -5,7 +5,10 @@ import {
   TagSet,
   Text,
 } from "@nypl/design-system-react-components";
-import type { SearchManager } from "@/src/utils/searchManager";
+import {
+  availableFilterDisplayName,
+  type SearchManager,
+} from "@/src/utils/searchManager";
 import { usePathname, useRouter } from "next/navigation";
 import { capitalize } from "@/src/utils/utils";
 
@@ -58,7 +61,7 @@ const ActiveFilters = ({ searchManager }: ActiveFilterProps) => {
             label:
               filter.filter === "rights"
                 ? getRightsFilterLabel(filter.value)
-                : capitalize(filter.value),
+                : availableFilterDisplayName(filter.value, filter.filter),
           }))}
           type="filter"
           sx={{ flexWrap: "unset" }}
