@@ -162,6 +162,7 @@ export class GeneralSearchManager extends BaseSearchManager {
 
   handleSortChange(sort: string) {
     this.currentSort = sort;
+    this.currentPage = DEFAULT_PAGE_NUM;
     return this.getQueryString({
       q: this.currentKeywords,
       sort: sort,
