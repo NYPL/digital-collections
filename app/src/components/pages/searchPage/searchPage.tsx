@@ -21,6 +21,7 @@ import ActiveFilters from "../../search/filters/activeFilters";
 import NoResultsFound from "../../results/noResultsFound";
 import SearchCardType from "@/src/types/SearchCardType";
 import { AvailableFilterOption } from "@/src/types/AvailableFilterType";
+import { useScrollHeading } from "@/src/hooks/useScrollHeading";
 
 export type SearchResultsType = {
   keyword: string;
@@ -47,7 +48,7 @@ const SearchPage = ({
   );
   const { push } = useRouter();
   const pathname = usePathname();
-  const headingRef = useRef<HTMLHeadingElement>(null);
+  const { headingRef, scrollHeading } = useScrollHeading();
   const isFirstLoad = useRef<boolean>(false);
 
   const updateURL = async (queryString: string) => {
@@ -57,7 +58,8 @@ const SearchPage = ({
 
   useEffect(() => {
     if (isFirstLoad.current) {
-      headingRef.current?.focus();
+      headingRef?.current?.focus();
+      scrollHeading();
     }
     isFirstLoad.current = true;
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -139,7 +141,7 @@ const SearchPage = ({
             paddingLeft: "s",
             paddingRight: "s",
           },
-          marginTop: searchResults.results?.length > 0 ? "0" : "m",
+          marginTop: searchResults.results?.length > 0 ? "0" : "xl",
         }}
       >
         <ActiveFilters searchManager={searchManager} />
