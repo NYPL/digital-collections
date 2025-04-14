@@ -1,4 +1,4 @@
-import React, { useRef } from "react";
+import React from "react";
 import {
   Card,
   CardHeading,
@@ -23,7 +23,6 @@ import {
 import parse from "html-react-parser";
 import type { Highlight } from "@/src/types/HighlightType";
 import SearchCardImage from "./searchCardImage";
-import { useCardImageHeight } from "@/src/hooks/useCardImageHeight";
 
 export interface SearchCardProps {
   result: SearchCardType;
