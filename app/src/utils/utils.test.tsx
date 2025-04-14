@@ -211,11 +211,13 @@ describe("deSlugify", () => {
   });
 
   it("should handle multiple words correctly", () => {
-    expect(deSlugify("the-quick-brown-fox")).toBe("The Quick Brown Fox");
+    expect(deSlugify("javaScript-thank-you-edwin")).toBe(
+      "JavaScript Thank You Edwin"
+    );
   });
 
   it("should handle single word", () => {
-    expect(deSlugify("javascript")).toBe("Javascript");
+    expect(deSlugify("java")).toBe("Java");
   });
 
   it("should return an empty string if input is empty", () => {
