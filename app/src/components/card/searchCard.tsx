@@ -45,7 +45,7 @@ const contentTypeTag = (result: SearchCardType) => {
   const isItem = recordType === "Item";
   const isImage = contentType === "Image";
 
-  let displayLabel: string | null = null;
+  let displayLabel: string | null = recordType;
 
   if (isItem) {
     if (isImage && containsMultipleCaptures) {
@@ -53,8 +53,6 @@ const contentTypeTag = (result: SearchCardType) => {
     } else if (contentType) {
       displayLabel = contentType;
     }
-  } else {
-    displayLabel = recordType;
   }
 
   return (
