@@ -1,23 +1,24 @@
 import Image from "next/image";
 import React from "react";
 import { useState } from "react";
-import { DCCardProps } from "./card";
+import { Box } from "@nypl/design-system-react-components";
 
-interface CardImageProps extends Pick<DCCardProps, "record"> {
-  imageHeight: number;
-}
-
-export const SearchCardImage = ({ record, imageHeight }: CardImageProps) => {
+export const SearchCardImage = ({ record }) => {
   const [imageSrc, setImageSrc] = useState(
     record.imageID ? record.imageURL : "/noImage.png"
   );
-  const initialImageHeight = 127;
 
   return (
-    <div
-      style={{
+    <Box
+      sx={{
+        position: "relative",
+        width: "100%",
         overflow: "hidden",
-        height: imageHeight,
+        height: "126px",
+        "@media (max-width: 650px)": {
+          height: "auto",
+          aspectRatio: "16 / 9",
+        },
       }}
     >
       <Image
@@ -29,17 +30,14 @@ export const SearchCardImage = ({ record, imageHeight }: CardImageProps) => {
             ? `image-${record.imageID}`
             : `no-image-${record.imageID}-${record.uuid}`
         }
-        //sizes="(max-width: 480px) 100vw, (max-width: 1024px) 25vw"
-        style={{
-          width: "100%",
-          minHeight: "100%",
-          height: "auto",
-        }}
+        sizes="(max-width: 650px) 100vw, 25vw"
         quality={100}
         placeholder="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mN8WQ8AAlcBas53/MIAAAAASUVORK5CYII="
-        width={225}
-        height={126}
+        fill
         decoding="sync"
+        style={{
+          objectFit: "cover",
+        }}
         onError={(_event) => {
           console.warn(
             `SearchCardImage: Card image failed to load, fallback image loaded instead. ImageURL: ${record.imageURL}`
@@ -47,7 +45,7 @@ export const SearchCardImage = ({ record, imageHeight }: CardImageProps) => {
           setImageSrc("/noImage.png");
         }}
       />
-    </div>
+    </Box>
   );
 };
 

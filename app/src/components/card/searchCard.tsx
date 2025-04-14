@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useRef } from "react";
 import {
   Card,
   CardHeading,
@@ -23,6 +23,7 @@ import {
 import parse from "html-react-parser";
 import type { Highlight } from "@/src/types/HighlightType";
 import SearchCardImage from "./searchCardImage";
+import { useCardImageHeight } from "@/src/hooks/useCardImageHeight";
 
 export interface SearchCardProps {
   result: SearchCardType;
@@ -116,25 +117,8 @@ export const SearchCard = ({
   const card = (
     <Card
       id={result.uuid}
-      // imageProps={{
-      //   alt: "",
-      //   aspectRatio: "sixteenByNine",
-      //   id: result.imageID
-      //     ? `image-${result.imageID}`
-      //     : `no-image-${result.uuid}`,
-      //   isAtEnd: false,
-      //   isLazy: true,
-      //   size: "default",
-      //   src: result.imageID ? result.imageURL : "/noImage.png",
-      // }}
       imageProps={{
-        component: (
-          <SearchCardImage
-            key={result.imageID}
-            imageHeight={126}
-            record={result}
-          />
-        ),
+        component: <SearchCardImage key={result.imageID} record={result} />,
       }}
       mainActionLink={result.url}
       layout="row"
