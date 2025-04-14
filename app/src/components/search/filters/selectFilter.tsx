@@ -204,7 +204,11 @@ const SelectFilterComponent = forwardRef<
           {
             accordionType: "default",
             buttonInteractionRef: mergedRef,
-            label: capitalize(filter.name),
+            label: (
+              <Box noOfLines={1}>{`${capitalize(filter.name)}${
+                selected ? `: ${selected.name}` : ``
+              }`}</Box>
+            ),
             panel: accordionPanel,
             ariaLabel: `Select ${filter.name}`,
           },
