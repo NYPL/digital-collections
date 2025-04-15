@@ -257,6 +257,7 @@ export class CollectionsApi {
     const response = await fetchApi({
       apiUrl: apiUrl,
       options: {
+        isRepoApi: false,
         method: "POST",
         body: { uuids },
       },

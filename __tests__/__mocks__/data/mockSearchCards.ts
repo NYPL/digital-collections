@@ -76,8 +76,8 @@ export const mockSearchCards: SearchCardType[] = [
     containsMultipleCaptures: true,
     contentType: "Image",
     highlights: [
-      { field: "title", text: "Reading <em>in</em> <em>example</em> room" },
-      { field: "note", text: "Reading <em>example</em> room" },
+      { field: "Title", text: "Reading <em>in</em> <em>example</em> room" },
+      { field: "Note", text: "Reading <em>example</em> room" },
     ],
     firstIndexed: "1908-02-01T00:00:00Z",
   },
