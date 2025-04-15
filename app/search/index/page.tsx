@@ -31,7 +31,8 @@ export default async function Search({ searchParams }: SearchProps) {
   revalidatePath("/search/index");
   const pageName = searchParams.q ? "search-results" : "all-items";
 
-  const searchResults = await CollectionsApi.getSearchData({
+  //await new Promise((resolve) => setTimeout(resolve, 5000));
+  let searchResults = await CollectionsApi.getSearchData({
     keyword: searchParams.q,
     sort: searchParams.sort,
     filters: searchParams.filters,
