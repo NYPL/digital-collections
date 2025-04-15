@@ -6,7 +6,6 @@ import { Metadata } from "next";
 import SearchPage from "@/src/components/pages/searchPage/searchPage";
 import { Filter } from "@/src/types/FilterType";
 import { AvailableFilter } from "@/src/types/AvailableFilterType";
-import { transformToAvailableFilters } from "@/src/utils/searchManager";
 import { revalidatePath } from "next/cache";
 
 export interface SearchParams {
@@ -29,7 +28,7 @@ export type SearchProps = {
 };
 
 export default async function Search({ searchParams }: SearchProps) {
-  revalidatePath("/search/index", "page");
+  revalidatePath("/search/index");
   const pageName = searchParams.q ? "search-results" : "all-items";
 
   const searchResults = await CollectionsApi.getSearchData({
@@ -39,7 +38,7 @@ export default async function Search({ searchParams }: SearchProps) {
     page: searchParams.page,
   });
 
-  // Add available filters into searchParams
+  // Add available filters from response into searchParams
   const updatedSearchParams = {
     ...searchParams,
     availableFilters: searchResults.availableFilters,

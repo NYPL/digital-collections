@@ -3,13 +3,7 @@ import type {
   SearchResultHighlightType,
   SearchResultRecordType,
 } from "../types/SearchCardType";
-import type { AvailableFilterOption } from "../types/AvailableFilterType";
-import {
-  imageURL,
-  formatHighlightText,
-  capitalize,
-  getCollectionFilterFromUUID,
-} from "../utils/utils";
+import { imageURL, formatHighlightText, capitalize } from "../utils/utils";
 
 export class SearchCardModel {
   title: string;
@@ -26,27 +20,7 @@ export class SearchCardModel {
   highlights: SearchResultHighlightType;
   firstIndexed: string;
 
-  constructor(data: any, collectionFilters: AvailableFilterOption[]) {
-    //const availableCollectionFilters = filters[]
-    const correspondingCollectionFilter =
-      this.recordType !== "Item"
-        ? getCollectionFilterFromUUID(this.uuid, collectionFilters)
-        : "";
-    let collectionFilterQueryParam = "";
-    if (this.recordType === "Collection") {
-      console.log(
-        "correspondingCollectionFilter is: ",
-        correspondingCollectionFilter
-      );
-      collectionFilterQueryParam = correspondingCollectionFilter
-        ? `?filters=[Collection=${correspondingCollectionFilter.name}]`
-        : "";
-      console.log(
-        "collectionFilterQueryParam is: ",
-        collectionFilterQueryParam
-      );
-    }
-
+  constructor(data: any) {
     this.title = data.title;
     this.uuid = data.uuid;
     this.recordType = capitalize(data.recordType) as SearchResultRecordType;
@@ -54,7 +28,7 @@ export class SearchCardModel {
     this.url =
       this.recordType === "Item"
         ? `/items/${data.uuid}`
-        : `/collections/${data.uuid}${collectionFilterQueryParam}`;
+        : `/collections/${data.uuid}`;
 
     this.imageURL = imageURL(data.imageID, "square", "!288,288", "0");
     this.numberOfDigitizedItems = data.numberOfDigitizedItems;

@@ -1,6 +1,7 @@
 import {
   ADOBE_ANALYTICS_SITE_SECTION,
   ADOBE_ANALYTICS_DC_PREFIX,
+  ALLOWED_FILTERS,
 } from "../config/constants";
 import CollectionDataType from "@/src/types/CollectionDataType";
 import ItemDataType from "@/src/types/ItemDataType";
@@ -9,6 +10,7 @@ import {
   AvailableFilterOption,
 } from "../types/AvailableFilterType";
 import type { Highlight } from "../types/HighlightType";
+import { isValidFilter } from "./searchManager";
 
 /**
  * Represents a IIIF Image API URL, which will be used globally throughout the application.
@@ -147,32 +149,84 @@ export const getCollectionFilterFromUUID = (
 ): any => {
   const filter = filters.find((filterObject) => {
     if (filterObject.name.split("||")[1] === uuid) {
-      console.log("MATCH");
+      //console.log("MATCH");
     }
     return filterObject.name.split("||")[1] === uuid;
   });
   return filter ? filter : null;
 };
 
-export const dcflFilterToString = (filters: string) => {
-  console.log("before being parsed", filters);
+export const filterStringToCollectionApiFilterString = (filters: string) => {
   if (filters !== "") {
     const dcflFiltersArray = filters.slice(1, -1).split("][");
-    const apiFiltersArray = dcflFiltersArray.map((filter) => {
-      const splitArray = filter.split("=");
-      let name;
-      if (splitArray[0] === "rights") {
-        name = "rightsFilter";
-      } else if (splitArray[0] === "dateEnd" || splitArray[0] === "dateStart") {
-        name = splitArray[0];
-      } else {
-        name = splitArray[0].toLowerCase();
-      }
-      const value = splitArray[1];
-      return `${name}=${value}`;
-    });
+    const apiFiltersArray = dcflFiltersArray
+      .map((filter) => {
+        const splitArray = filter.split("=");
+        let name;
+        if (splitArray[0] === "rights") {
+          name = "rightsFilter";
+        } else if (
+          splitArray[0] === "dateEnd" ||
+          splitArray[0] === "dateStart"
+        ) {
+          name = splitArray[0];
+        } else {
+          name = splitArray[0].toLowerCase();
+        }
+        const value = splitArray[1];
+        if (!isValidFilter(name)) {
+          return null;
+        }
+        return `${name}=${value}`;
+      })
+      .filter(Boolean);
+
     return apiFiltersArray.join("&");
   } else {
     return "";
   }
+};
+
+export const replaceEmWithMark = (htmlString) => {
+  return htmlString.replace(/<em>(.*?)<\/em>/g, "<mark>$1</mark>");
+};
+
+export const getHighestRankedHighlight = (highlights: Highlight[]) => {
+  if (!highlights || !Array.isArray(highlights)) return null;
+  const rankingOrder = [
+    "name",
+    "place",
+    "topic",
+    "note",
+    "abstract",
+    "genre",
+    "identifier",
+    "collection",
+    "division",
+    "publisher",
+    "type",
+    "exhibition id",
+    "image id",
+    "bnumber",
+  ];
+  for (const key of rankingOrder) {
+    const matchedHighlight = highlights.find(
+      (highlight) => highlight.field.toLowerCase() === key
+    );
+    if (matchedHighlight) {
+      return matchedHighlight;
+    }
+  }
+  return null;
+};
+
+export const getTitleWithHighlights = (highlights, title) => {
+  const titleHighlight = highlights.find(
+    (highlight) => highlight.field === "Title"
+  );
+  return titleHighlight ? replaceEmWithMark(titleHighlight.text) : title;
+};
+
+export const deSlugify = (slug: string): string => {
+  return slug.replace(/-/g, " ").replace(/\b\w/g, (c) => c.toUpperCase());
 };

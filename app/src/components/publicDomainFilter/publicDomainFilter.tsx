@@ -1,33 +1,57 @@
-import React, { useState } from "react";
-import { Box, Checkbox, Link } from "@nypl/design-system-react-components";
+import React, { useState, useRef } from "react";
+import {
+  Box,
+  Checkbox,
+  Link,
+  Text,
+} from "@nypl/design-system-react-components";
 import { PublicDomainFilterProps } from "../../types/props/PublicDomainFilterProps";
 
 const PublicDomainFilter = ({ onCheckChange }: PublicDomainFilterProps) => {
   const [isChecked, setIsChecked] = useState(false);
+  const checkboxRef = useRef<HTMLInputElement>(null);
 
   const text = (
     <>
       Search only public domain.{" "}
-      <Link href="/about#public_domain">What is public domain?</Link>
+      <Link hasVisitedState={false} href="/about#public_domain">
+        What is public domain?
+      </Link>
     </>
   );
 
-  const handleCheckChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const newValue = event.target.checked;
+  // Overriding click() behavior on checkbox to focus and prevent header scroll.
+  const handleClick = (e: React.MouseEvent<HTMLInputElement>) => {
+    e.preventDefault();
+    checkboxRef.current?.focus({ preventScroll: true });
+    const newValue = !isChecked;
     setIsChecked(newValue);
     onCheckChange(newValue);
   };
 
   return (
-    <Box sx={{ paddingTop: "15px", paddingBottom: "15px" }}>
+    <Box
+      sx={{
+        pt: "15px",
+        pb: "15px",
+        display: "flex",
+        gap: "xs",
+        justifyItems: "center",
+      }}
+    >
       <Checkbox
         id="pd-checkbox"
         data-testid="pd-checkbox"
-        labelText={text}
         name="pd_filter"
+        labelText="Search only public domain"
+        showLabel={false}
         isChecked={isChecked}
-        onChange={handleCheckChange}
+        {...{ onClick: handleClick }}
+        ref={checkboxRef}
       />
+      <Text fontSize="14px" marginBottom="0">
+        {text}
+      </Text>
     </Box>
   );
 };

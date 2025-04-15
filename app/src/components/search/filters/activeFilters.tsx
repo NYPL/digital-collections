@@ -5,7 +5,10 @@ import {
   TagSet,
   Text,
 } from "@nypl/design-system-react-components";
-import type { SearchManager } from "@/src/utils/searchManager";
+import {
+  availableFilterDisplayName,
+  type SearchManager,
+} from "@/src/utils/searchManager";
 import { usePathname, useRouter } from "next/navigation";
 import { capitalize } from "@/src/utils/utils";
 
@@ -42,6 +45,7 @@ const ActiveFilters = ({ searchManager }: ActiveFilterProps) => {
 
     return rightsLabels[value] || value;
   };
+
   return searchManager.filters.length > 0 ? (
     <>
       <Flex alignContent="center" alignItems="center" gap="xs" flexDir="row">
@@ -52,21 +56,13 @@ const ActiveFilters = ({ searchManager }: ActiveFilterProps) => {
           isDismissible
           id="search-filter-tags"
           onClick={handleOnClick}
-          tagSetData={searchManager.filters.map((filter: Filter) => {
-            const getLabel = () => {
-              if (filter.filter === "rights") {
-                return getRightsFilterLabel(filter.value);
-              } else if (filter.filter === "collection") {
-                return filter.value.split("||")[0];
-              } else {
-                return capitalize(filter.value);
-              }
-            };
-            return {
-              id: filter.filter,
-              label: getLabel(),
-            };
-          })}
+          tagSetData={searchManager.filters.map((filter: Filter) => ({
+            id: filter.filter,
+            label:
+              filter.filter === "rights"
+                ? getRightsFilterLabel(filter.value)
+                : availableFilterDisplayName(filter.value, filter.filter),
+          }))}
           type="filter"
           sx={{ flexWrap: "unset" }}
         />

@@ -44,7 +44,6 @@ const Filters = ({ headingText, searchManager }: FiltersProps) => {
       {isExpanded && (
         <>
           <DateFilter
-            ref={dateFilterRef}
             searchManager={searchManager}
             // Remounts when filters are cleared from active filter panel.
             key={searchManager.filters.length + 1}
