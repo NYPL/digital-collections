@@ -205,10 +205,13 @@ export const getHighestRankedHighlight = (highlights: Highlight[]) => {
     "division",
     "publisher",
     "type",
+    "exhibition id",
+    "image id",
+    "bnumber",
   ];
   for (const key of rankingOrder) {
     const matchedHighlight = highlights.find(
-      (highlight) => highlight.field === key
+      (highlight) => highlight.field.toLowerCase() === key
     );
     if (matchedHighlight) {
       return matchedHighlight;
@@ -219,7 +222,7 @@ export const getHighestRankedHighlight = (highlights: Highlight[]) => {
 
 export const getTitleWithHighlights = (highlights, title) => {
   const titleHighlight = highlights.find(
-    (highlight) => highlight.field === "title"
+    (highlight) => highlight.field === "Title"
   );
   return titleHighlight ? replaceEmWithMark(titleHighlight.text) : title;
 };
