@@ -21,7 +21,6 @@ import ActiveFilters from "../../search/filters/activeFilters";
 import NoResultsFound from "../../results/noResultsFound";
 import SearchCardType from "@/src/types/SearchCardType";
 import { AvailableFilterOption } from "@/src/types/AvailableFilterType";
-import LaneLoading from "../../lane/laneLoading";
 import SearchCardGridLoading from "../../grids/searchCardGridLoading";
 
 export type SearchResultsType = {
@@ -188,7 +187,7 @@ const SearchPage = ({
         </Flex>
         {searchResults.numResults > 0 && (
           <>
-            {isLoaded ? (
+            {!isLoaded ? (
               <SearchCardsGrid
                 keywords={searchResults.keyword}
                 results={searchResults.results}
