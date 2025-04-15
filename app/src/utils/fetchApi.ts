@@ -29,14 +29,13 @@ export const fetchApi = async ({
 
   if (isRepoApi) {
     headers["Authorization"] = `Token token=${process.env.AUTH_TOKEN || ""}`;
-    if (method === "POST") {
-      headers["Content-Type"] = "application/json";
-    }
   } else {
     headers["x-nypl-collections-api-key"] =
       process.env.COLLECTIONS_API_AUTH_TOKEN || "";
   }
-
+  if (method === "POST") {
+    headers["Content-Type"] = "application/json";
+  }
   if (method === "GET" && params) {
     const queryString = "?" + new URLSearchParams(params).toString();
     apiUrl += queryString;
