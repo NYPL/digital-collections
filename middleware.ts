@@ -1,14 +1,41 @@
+import collectionSlugToUuidMapping from "@/src/data/collectionSlugUuidMapping";
+import { deSlugify } from "@/src/utils/utils";
 import { NextRequest, NextResponse } from "next/server";
 
 export function middleware(req: NextRequest) {
   const url = req.nextUrl;
+  const pathname = url.pathname;
+
+  const collectionMatch = pathname.match(/^\/collections\/([^\/?#]+)/);
+  if (collectionMatch) {
+    const identifier = collectionMatch[1];
+    // DC uuids are not uuid v1-5 compliant– they're v0 (kind of?), which this regex tests
+    const dcUuidRegex = /^[\da-f]{8}-([\da-f]{4}-){3}[\da-f]{12}$/i;
+    const isDCUuid = dcUuidRegex.test(identifier);
+    if (isDCUuid) {
+      return NextResponse.next();
+    }
+
+    const uuid = collectionSlugToUuidMapping[identifier];
+    const newUrl = new URL(req.nextUrl);
+
+    if (uuid) {
+      newUrl.pathname = `/collections/${uuid}`;
+    } else {
+      const query = deSlugify(identifier);
+      newUrl.pathname = "/search/index";
+      newUrl.searchParams.set("q", query);
+    }
+
+    return NextResponse.redirect(newUrl.toString(), 301);
+  }
+
   const searchParams = url.searchParams;
   let modified = false;
 
-  // Allowed params
   const allowedParams = new Set(["q", "sort", "page", "filters"]);
 
-  // Transform "collection_keywords" to "q"
+  // Transform collection_keywords to q
   if (searchParams.has("collection_keywords")) {
     const keywordValue = searchParams.get("collection_keywords");
     searchParams.delete("collection_keywords");
@@ -16,7 +43,7 @@ export function middleware(req: NextRequest) {
     modified = true;
   }
 
-  // Transform "keywords" to "q"
+  // Transform keywords to q
   if (searchParams.has("keywords")) {
     const keywordValue = searchParams.get("keywords");
     searchParams.delete("keywords");
@@ -50,7 +77,6 @@ export function middleware(req: NextRequest) {
     searchParams.set("sort", "date-desc");
     modified = true;
   }
-
   // Transform title sort
   if (searchParams.get("sort") === "mainTitle_ns asc") {
     searchParams.set("sort", "title-asc");
