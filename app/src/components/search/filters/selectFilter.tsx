@@ -5,56 +5,80 @@ import {
   Radio,
   Flex,
   Button,
+  Tooltip,
 } from "@nypl/design-system-react-components";
 import React, { forwardRef, useEffect, useRef, useState } from "react";
 import SelectFilterModal from "./selectFilterModal";
 import FilterAccordion from "./filterAccordion";
 import { usePathname, useRouter } from "next/navigation";
-import { SearchManager } from "@/src/utils/searchManager";
-import { FacetFilter, FacetFilterOption } from "@/src/types/FacetFilterType";
+import {
+  availableFilterDisplayName,
+  SearchManager,
+} from "@/src/utils/searchManager";
+import {
+  AvailableFilter,
+  AvailableFilterOption,
+} from "@/src/types/AvailableFilterType";
+import { capitalize } from "@/src/utils/utils";
 
 export interface SelectFilterProps {
-  filter: FacetFilter;
+  filter: AvailableFilter;
   searchManager: SearchManager;
 }
 
-export const radioFilterOptions = (options: FacetFilterOption[]) => {
-  return options.map((option, index) => (
-    <Radio
-      key={`${option.name}-${index}`}
-      id={`${option.name}-${index}`}
-      labelText={
-        <Flex justifyContent="space-between">
-          <span>{option.name}</span>
-          <span>{option.count}</span>
-        </Flex>
-      }
-      value={option.name}
-    />
-  ));
+export const availableFilterOptions = (
+  options: AvailableFilterOption[],
+  filterName: string
+) => {
+  const truncationLimit = 80;
+
+  return options.map((option, index) => {
+    const displayName = availableFilterDisplayName(option.name, filterName);
+    const isTruncated = option.name.length > truncationLimit;
+
+    const label = (
+      <Flex justifyContent="space-between" gap="s">
+        {isTruncated ? (
+          <Tooltip content={displayName}>
+            <Box noOfLines={2}>{displayName}</Box>
+          </Tooltip>
+        ) : (
+          <Box noOfLines={2}>{displayName}</Box>
+        )}
+        <span>{option.count}</span>
+      </Flex>
+    );
+
+    return (
+      <Radio
+        key={`${option.name}-${index}`}
+        id={`${option.name}-${index}`}
+        labelText={label}
+        value={option.name}
+      />
+    );
+  });
 };
 
 const SelectFilterComponent = forwardRef<
   HTMLButtonElement,
-  { filter: FacetFilter; searchManager: SearchManager }
+  { filter: AvailableFilter; searchManager: SearchManager }
 >((props, filterRef) => {
-  const { filter, searchManager, ...rest } = props;
+  const { filter, searchManager } = props;
   const [userClickedOutside, setUserClickedOutside] = useState<boolean>(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
+
   // Sets selected to filter's current URL value on mount.
-  const existingFilter = searchManager.filters.find(
-    (f) => f.filter === filter.name
-  );
-  let selected = existingFilter
-    ? filter.options.find((option) => option.name === existingFilter.value) ||
-      null
+  let selected = filter
+    ? filter.options.find((option) => !!option.selected) || null
     : null;
 
   // Manages current selection in state while user interacts with dropdown/modal.
-  const [current, setCurrent] = useState<FacetFilterOption | null>(selected);
-  const [modalCurrent, setModalCurrent] = useState<FacetFilterOption | null>(
+  const [current, setCurrent] = useState<AvailableFilterOption | null>(
     selected
   );
+  const [modalCurrent, setModalCurrent] =
+    useState<AvailableFilterOption | null>(selected);
 
   const { push } = useRouter();
   const pathname = usePathname();
@@ -118,7 +142,7 @@ const SelectFilterComponent = forwardRef<
         onChange={onChange}
         defaultValue={selected?.name ?? ""}
       >
-        {radioFilterOptions(sortedOptions.slice(0, 10))}
+        {availableFilterOptions(sortedOptions.slice(0, 10), filter.name)}
       </RadioGroup>
       <Button
         id="apply"
@@ -130,10 +154,12 @@ const SelectFilterComponent = forwardRef<
           accordionButtonRef.current?.focus();
           // Push the current filter selection to URL.
           updateURL(
-            searchManager.handleAddFilter({
-              filter: filter.name,
-              value: current?.name!,
-            })
+            searchManager.handleAddFilter([
+              {
+                filter: filter.name,
+                value: current?.name!,
+              },
+            ])
           );
           setUserClickedOutside(true);
         }}
@@ -165,22 +191,20 @@ const SelectFilterComponent = forwardRef<
   // Reset dropdown's current value to filter selection when dropdown closes/opens.
   const handleAccordionChange = () => {
     setCurrent(
-      existingFilter
-        ? filter.options.find(
-            (option) => option.name === existingFilter.value
-          ) || null
+      filter
+        ? filter.options.find((option) => option.selected === true) || null
         : null
     );
   };
 
   return (
-    <Box {...rest} ref={containerRef}>
+    <Box ref={containerRef}>
       <FilterAccordion
         accordionData={[
           {
             accordionType: "default",
             buttonInteractionRef: mergedRef,
-            label: filter.name,
+            label: capitalize(filter.name),
             panel: accordionPanel,
             ariaLabel: `Select ${filter.name}`,
           },
