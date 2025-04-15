@@ -21,7 +21,6 @@ import ActiveFilters from "../../search/filters/activeFilters";
 import NoResultsFound from "../../results/noResultsFound";
 import SearchCardType from "@/src/types/SearchCardType";
 import { AvailableFilterOption } from "@/src/types/AvailableFilterType";
-import { useScrollHeading } from "@/src/hooks/useScrollHeading";
 
 export type SearchResultsType = {
   keyword: string;
@@ -48,8 +47,10 @@ const SearchPage = ({
   );
   const { push } = useRouter();
   const pathname = usePathname();
-  const { headingRef, scrollHeading } = useScrollHeading();
+  const headingRef = useRef<HTMLHeadingElement>(null);
   const isFirstLoad = useRef<boolean>(false);
+  const lastFilterRadio = useRef<boolean>(false);
+  const lastFilterNotRadio = useRef<boolean>(true);
 
   const updateURL = async (queryString: string) => {
     const newUrl = `${pathname}?${queryString}`;
@@ -58,8 +59,7 @@ const SearchPage = ({
 
   useEffect(() => {
     if (isFirstLoad.current) {
-      headingRef?.current?.focus();
-      scrollHeading();
+      headingRef.current?.focus();
     }
     isFirstLoad.current = true;
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -73,7 +73,6 @@ const SearchPage = ({
           background: "ui.bg.default",
           padding: "l",
           marginBottom: "m",
-          display: searchResults.results?.length > 0 ? "block" : "none",
         }}
       >
         <Box
@@ -107,11 +106,6 @@ const SearchPage = ({
             }
             `}
               </Heading>
-
-              <Filters
-                searchManager={searchManager}
-                headingText="Refine your search"
-              />
             </>
           ) : (
             <Heading
@@ -129,6 +123,10 @@ const SearchPage = ({
               `}
             </Heading>
           )}
+          <Filters
+            searchManager={searchManager}
+            headingText="Refine your search"
+          />
         </Box>
       </Box>
       <Box
@@ -141,7 +139,7 @@ const SearchPage = ({
             paddingLeft: "s",
             paddingRight: "s",
           },
-          marginTop: searchResults.results?.length > 0 ? "0" : "xl",
+          marginTop: searchResults.results?.length > 0 ? "0" : "m",
         }}
       >
         <ActiveFilters searchManager={searchManager} />
