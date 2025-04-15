@@ -4,6 +4,7 @@ import {
   DEFAULT_PAGE_NUM,
   DEFAULT_SEARCH_TERM,
   DEFAULT_FILTERS,
+  ALLOWED_FILTERS,
 } from "../config/constants";
 import { Filter } from "../types/FilterType";
 import {
@@ -161,6 +162,7 @@ export class GeneralSearchManager extends BaseSearchManager {
 
   handleSortChange(sort: string) {
     this.currentSort = sort;
+    this.currentPage = DEFAULT_PAGE_NUM;
     return this.getQueryString({
       q: this.currentKeywords,
       sort: sort,
@@ -245,33 +247,38 @@ const createQueryStringFromObject = (object: Record<string, string>) => {
 
 export const stringToFilter = (filtersString: string | null): Filter[] => {
   if (!filtersString) return [];
-  return Array.from(filtersString.matchAll(/\[([^\]=]+)=([^\]]+)\]/g)).map(
-    ([, filter, value]) => ({ filter, value })
-  );
+  const matches = Array.from(filtersString.matchAll(/\[([^\]=]+)=([^\]]+)\]/g));
+  return matches
+    .map(([_, filter, value]) => ({ filter, value }))
+    .filter(({ filter }) => isValidFilter(filter));
 };
 
 export const filterToString = (filters: Filter[]): string => {
   if (!filters || filters.length === 0) return "";
-  // return filters.map(({ filter, value }) => `${filter}=${value}`).join("");
-  return filters.map(({ filter, value }) => `[${filter}=${value}]`).join("");
+  const validFilters = filters.filter(({ filter }) => isValidFilter(filter));
+  return validFilters
+    .map(({ filter, value }) => `[${filter}=${value}]`)
+    .join("");
 };
 
 export const transformToAvailableFilters = (
   availableFilters: Record<string, AvailableFilterOption[]>
 ): AvailableFilter[] => {
-  return Object.entries(availableFilters).map(([key, options]) => ({
-    name: key,
-    options,
-  }));
+  return Object.entries(availableFilters)
+    .filter(([key]) => key !== "subcollection")
+    .map(([key, options]) => ({
+      name: key,
+      options,
+    }));
 };
 
 export const availableFilterDisplayName = (
   name: string,
   filterName: string
 ) => {
-  if (filterName === "collection") {
-    return name.split("||")[0];
-  } else {
-    return capitalize(name);
-  }
+  return filterName === "collection" ? name.split("||")[0] : capitalize(name);
+};
+
+export const isValidFilter = (param: string) => {
+  return ALLOWED_FILTERS.includes(param);
 };

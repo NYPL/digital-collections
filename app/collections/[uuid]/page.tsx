@@ -3,7 +3,6 @@ import { Metadata } from "next";
 import PageLayout from "../../src/components/pageLayout/pageLayout";
 import { createAdobeAnalyticsPageName } from "@/src/utils/utils";
 import CollectionPage from "@/src/components/pages/collectionPage/collectionPage";
-import { mockSearchResponse } from "__tests__/__mocks__/data/collectionsApi/mockSearchResponse";
 import { CollectionsApi } from "@/src/utils/apiClients";
 import { SearchParams } from "@/search/index/page";
 import { mockCollectionChildrenResponse } from "__tests__/__mocks__/data/mockCollectionStructure";
@@ -52,6 +51,7 @@ export default async function Collection({
     availableFilters: searchResults.availableFilters,
   };
 
+  // Use Promise.all() to fetch these so they're called concurrently
   let collectionData = //await CollectionsApi.getCollectionData();
     mockCollectionResponse;
 

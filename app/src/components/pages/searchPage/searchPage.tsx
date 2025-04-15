@@ -19,10 +19,32 @@ import { MobileSearchBanner } from "../../mobileSearchBanner/mobileSearchBanner"
 import SortMenu from "../../sortMenu/sortMenu";
 import ActiveFilters from "../../search/filters/activeFilters";
 import NoResultsFound from "../../results/noResultsFound";
+import SearchCardType from "@/src/types/SearchCardType";
+import { AvailableFilterOption } from "@/src/types/AvailableFilterType";
 
-const SearchPage = ({ searchResults }) => {
+export type SearchResultsType = {
+  keyword: string;
+  numResults: number;
+  page: number;
+  perPage: number;
+  rightsFilter: string;
+  dateStart: string;
+  dateEnd: string;
+  availableFilters: Record<string, AvailableFilterOption[]>;
+  sort: string;
+  results: SearchCardType[];
+};
+
+const SearchPage = ({
+  searchResults,
+}: {
+  searchResults: SearchResultsType;
+}) => {
   const { searchManager } = useSearchContext();
-  const totalPages = totalNumPages(searchResults.numResults, CARDS_PER_PAGE);
+  const totalPages = totalNumPages(
+    searchResults.numResults.toString(),
+    CARDS_PER_PAGE
+  );
   const { push } = useRouter();
   const pathname = usePathname();
   const headingRef = useRef<HTMLHeadingElement>(null);
@@ -49,6 +71,7 @@ const SearchPage = ({ searchResults }) => {
           background: "ui.bg.default",
           padding: "l",
           marginBottom: "m",
+          display: searchResults.results?.length > 0 ? "block" : "none",
         }}
       >
         <Box
@@ -61,7 +84,7 @@ const SearchPage = ({ searchResults }) => {
             },
           }}
         >
-          {searchResults.numResults > 0 ? (
+          {searchResults.results?.length > 0 ? (
             <>
               <Heading
                 size="heading2"
@@ -73,7 +96,7 @@ const SearchPage = ({ searchResults }) => {
                 {`Displaying ${displayResults(
                   searchResults.numResults,
                   CARDS_PER_PAGE,
-                  searchManager.page
+                  searchResults.page
                 )}
             results ${
               searchManager.keywords?.length > 0
@@ -116,6 +139,7 @@ const SearchPage = ({ searchResults }) => {
             paddingLeft: "s",
             paddingRight: "s",
           },
+          marginTop: searchResults.results?.length > 0 ? "0" : "m",
         }}
       >
         <ActiveFilters searchManager={searchManager} />
@@ -135,7 +159,7 @@ const SearchPage = ({ searchResults }) => {
             alignItems: "flex-start",
           }}
         >
-          {searchResults.numResults > 0 ? (
+          {searchResults.results?.length > 0 ? (
             <>
               <Heading
                 size="heading5"
@@ -160,58 +184,64 @@ const SearchPage = ({ searchResults }) => {
             />
           )}
         </Flex>
-        <SearchCardsGrid
-          keywords={searchResults.keyword}
-          results={searchResults}
-        />
-        <Flex
-          paddingLeft="s"
-          paddingRight="s"
-          marginTop="xxl"
-          marginBottom="xxl"
-          sx={{
-            "> a": {
-              marginTop: "xl",
-              justifyContent: "end",
-            },
-            [`@media screen and (min-width: ${headerBreakpoints.lgMobile}px)`]:
-              {
+        {searchResults.numResults > 0 && (
+          <>
+            <SearchCardsGrid
+              keywords={searchResults.keyword}
+              results={searchResults.results}
+            />
+            <Flex
+              paddingLeft="s"
+              paddingRight="s"
+              marginTop="xxl"
+              marginBottom="xxl"
+              sx={{
                 "> a": {
-                  marginTop: "0",
+                  marginTop: "xl",
+                  justifyContent: "end",
                 },
-                flexDir: "row",
-              },
-            flexDir: "column-reverse",
-          }}
-        >
-          <Link
-            minWidth="100px"
-            isUnderlined={false}
-            hasVisitedState={false}
-            gap="xxs"
-            type="action"
-            href="#"
-          >
-            Back to top{"  "}
-            <Icon name="arrow" iconRotation="rotate180" size="xsmall" />
-          </Link>{" "}
-          <Pagination
-            id="pagination-id"
-            initialPage={searchManager.page}
-            currentPage={searchManager.page}
-            pageCount={totalPages}
-            onPageChange={(newPage) => {
-              updateURL(searchManager.handlePageChange(newPage));
-            }}
-            sx={{
-              justifyContent: "center",
-              [`@media screen and (min-width: ${headerBreakpoints.lgMobile}px)`]:
-                {
-                  justifyContent: "flex-end",
-                },
-            }}
-          />
-        </Flex>
+                [`@media screen and (min-width: ${headerBreakpoints.lgMobile}px)`]:
+                  {
+                    "> a": {
+                      marginTop: "0",
+                    },
+                    flexDir: "row",
+                  },
+                flexDir: "column-reverse",
+              }}
+            >
+              {searchResults.results?.length > 0 && (
+                <Link
+                  minWidth="100px"
+                  isUnderlined={false}
+                  hasVisitedState={false}
+                  gap="xxs"
+                  type="action"
+                  href="#"
+                >
+                  Back to top{"  "}
+                  <Icon name="arrow" iconRotation="rotate180" size="xsmall" />
+                </Link>
+              )}{" "}
+              <Pagination
+                id="pagination-id"
+                initialPage={searchManager.page}
+                currentPage={searchManager.page}
+                pageCount={totalPages}
+                onPageChange={(newPage) => {
+                  updateURL(searchManager.handlePageChange(newPage));
+                }}
+                sx={{
+                  justifyContent: "center",
+                  [`@media screen and (min-width: ${headerBreakpoints.lgMobile}px)`]:
+                    {
+                      justifyContent: "flex-end",
+                    },
+                }}
+              />
+            </Flex>
+          </>
+        )}
       </Box>
     </Box>
   );
