@@ -7,7 +7,7 @@ import {
   Link,
   Icon,
 } from "@nypl/design-system-react-components";
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { CARDS_PER_PAGE, SEARCH_SORT_LABELS } from "@/src/config/constants";
 import { displayResults, totalNumPages } from "@/src/utils/utils";
 import Filters from "../../search/filters/filters";
@@ -21,6 +21,8 @@ import ActiveFilters from "../../search/filters/activeFilters";
 import NoResultsFound from "../../results/noResultsFound";
 import SearchCardType from "@/src/types/SearchCardType";
 import { AvailableFilterOption } from "@/src/types/AvailableFilterType";
+import LaneLoading from "../../lane/laneLoading";
+import SearchCardGridLoading from "../../grids/searchCardGridLoading";
 
 export type SearchResultsType = {
   keyword: string;
@@ -49,8 +51,7 @@ const SearchPage = ({
   const pathname = usePathname();
   const headingRef = useRef<HTMLHeadingElement>(null);
   const isFirstLoad = useRef<boolean>(false);
-  const lastFilterRadio = useRef<boolean>(false);
-  const lastFilterNotRadio = useRef<boolean>(true);
+  const [isLoaded, setIsLoaded] = useState(false);
 
   const updateURL = async (queryString: string) => {
     const newUrl = `${pathname}?${queryString}`;
@@ -58,6 +59,7 @@ const SearchPage = ({
   };
 
   useEffect(() => {
+    setIsLoaded(true);
     if (isFirstLoad.current) {
       headingRef.current?.focus();
     }
@@ -186,10 +188,17 @@ const SearchPage = ({
         </Flex>
         {searchResults.numResults > 0 && (
           <>
-            <SearchCardsGrid
-              keywords={searchResults.keyword}
-              results={searchResults.results}
-            />
+            {isLoaded ? (
+              <SearchCardsGrid
+                keywords={searchResults.keyword}
+                results={searchResults.results}
+              />
+            ) : (
+              [...Array(12)].map((_, index) => (
+                <SearchCardGridLoading id={index} key={index} />
+              ))
+            )}
+
             <Flex
               paddingLeft="s"
               paddingRight="s"
