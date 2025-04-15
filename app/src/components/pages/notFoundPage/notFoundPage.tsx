@@ -8,8 +8,21 @@ import {
 import PageLayout from "../../pageLayout/pageLayout";
 import Image from "next/image";
 import { createAdobeAnalyticsPageName } from "@/src/utils/utils";
+import { useEffect } from "react";
+import { usePathname } from "next/navigation";
 
 export default function NotFoundPage() {
+  const pathname = usePathname();
+  useEffect(() => {
+    const errorMessage = `${pathname} not found`;
+    console.error(pathname);
+
+    // Send message to New Relic
+    if ((window as any).newrelic) {
+      (window as any).newrelic.noticeError(errorMessage);
+    }
+  }, ["error"]);
+
   return (
     <PageLayout
       activePage="notFound"
