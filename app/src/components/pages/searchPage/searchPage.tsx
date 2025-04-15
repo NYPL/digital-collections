@@ -49,6 +49,8 @@ const SearchPage = ({
   const pathname = usePathname();
   const headingRef = useRef<HTMLHeadingElement>(null);
   const isFirstLoad = useRef<boolean>(false);
+  const lastFilterRadio = useRef<boolean>(false);
+  const lastFilterNotRadio = useRef<boolean>(true);
 
   const updateURL = async (queryString: string) => {
     const newUrl = `${pathname}?${queryString}`;
@@ -71,7 +73,6 @@ const SearchPage = ({
           background: "ui.bg.default",
           padding: "l",
           marginBottom: "m",
-          display: searchResults.results?.length > 0 ? "block" : "none",
         }}
       >
         <Box
@@ -105,11 +106,6 @@ const SearchPage = ({
             }
             `}
               </Heading>
-
-              <Filters
-                searchManager={searchManager}
-                headingText="Refine your search"
-              />
             </>
           ) : (
             <Heading
@@ -127,6 +123,10 @@ const SearchPage = ({
               `}
             </Heading>
           )}
+          <Filters
+            searchManager={searchManager}
+            headingText="Refine your search"
+          />
         </Box>
       </Box>
       <Box
