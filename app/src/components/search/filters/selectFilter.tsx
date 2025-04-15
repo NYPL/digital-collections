@@ -206,7 +206,7 @@ const SelectFilterComponent = forwardRef<
             buttonInteractionRef: mergedRef,
             label: (
               <Box noOfLines={1}>{`${capitalize(filter.name)}${
-                selected ? `: ${selected.name}` : ``
+                selected ? `: ${capitalize(selected.name)}` : ``
               }`}</Box>
             ),
             panel: accordionPanel,
