@@ -38,7 +38,6 @@ type CollectionPageProps = {
   searchResults: SearchResultsType;
   searchParams;
   collectionData;
-  collectionChildren;
 };
 
 const CollectionPage = ({
@@ -46,7 +45,6 @@ const CollectionPage = ({
   searchResults,
   searchParams,
   collectionData,
-  collectionChildren,
 }: CollectionPageProps) => {
   const headingRef = useRef<HTMLHeadingElement>(null);
 

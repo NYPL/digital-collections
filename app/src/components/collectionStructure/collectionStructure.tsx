@@ -59,7 +59,7 @@ const ButtonText = ({
 };
 
 const fetchChildren = async (uuid: string) => {
-  const res = await fetch(`/api/collectionchildren?uuid=${uuid}`);
+  const res = await fetch(`/api/collectionchildren/${uuid}`);
   if (!res.ok) {
     throw new Error(`Failed to fetch children for uuid: ${uuid}`);
   }
@@ -122,7 +122,7 @@ const AccordionItem = ({
         newState.push({ title, level, isOpen: true });
         updateURL(
           searchManager.handleAddFilter([
-            { filter: "collection", value: `${title}||${uuid}` },
+            { filter: "subcollection", value: `${title}||${uuid}` },
           ])
         );
 
