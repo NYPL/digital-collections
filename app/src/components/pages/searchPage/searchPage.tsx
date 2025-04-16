@@ -187,7 +187,7 @@ const SearchPage = ({
         </Flex>
         {searchResults.numResults > 0 && (
           <>
-            {!isLoaded ? (
+            {isLoaded ? (
               <SearchCardsGrid
                 keywords={searchResults.keyword}
                 results={searchResults.results}
