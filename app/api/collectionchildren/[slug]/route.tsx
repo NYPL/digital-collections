@@ -7,8 +7,6 @@ export async function GET(
 ) {
   const uuid = params.slug;
 
-  console.log("UUID:", uuid);
-
   if (!uuid) {
     return new Response(JSON.stringify({ error: "Missing or invalid UUID" }), {
       status: 400,
@@ -17,13 +15,10 @@ export async function GET(
   try {
     const apiUrl = `${process.env.COLLECTIONS_API_URL}/collections/${uuid}/children`;
 
-    console.log(apiUrl);
     const response = await fetchApi({
       apiUrl,
       options: { isRepoApi: false },
     });
-
-    console.log(response);
 
     return new Response(JSON.stringify(response), {
       status: 200,
