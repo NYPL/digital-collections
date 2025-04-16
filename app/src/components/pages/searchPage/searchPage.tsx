@@ -51,6 +51,7 @@ const SearchPage = ({
   const headingRef = useRef<HTMLHeadingElement>(null);
   const isFirstLoad = useRef<boolean>(false);
   const [isLoaded, setIsLoaded] = useState(false);
+  const [filtersExpanded, setFiltersExpanded] = useState(false);
 
   const updateURL = async (queryString: string) => {
     const newUrl = `${pathname}?${queryString}`;
@@ -127,6 +128,8 @@ const SearchPage = ({
           <Filters
             searchManager={searchManager}
             headingText="Refine your search"
+            filtersExpanded={filtersExpanded}
+            setFiltersExpanded={setFiltersExpanded}
           />
         </Box>
       </Box>
@@ -175,6 +178,7 @@ const SearchPage = ({
               <SortMenu
                 options={SEARCH_SORT_LABELS}
                 searchManager={searchManager}
+                setFiltersExpanded={setFiltersExpanded}
                 updateURL={updateURL}
               />{" "}
             </>
@@ -237,6 +241,7 @@ const SearchPage = ({
                 currentPage={searchManager.page}
                 pageCount={totalPages}
                 onPageChange={(newPage) => {
+                  setFiltersExpanded(false);
                   updateURL(searchManager.handlePageChange(newPage));
                 }}
                 sx={{
