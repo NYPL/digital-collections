@@ -47,7 +47,7 @@ export const ALLOWED_FILTERS = [
   "topic",
   "name",
   "collection",
-  // To do: subcollection?
+  "subcollection",
   "place",
   "format",
   "name",

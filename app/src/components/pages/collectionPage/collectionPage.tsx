@@ -7,7 +7,7 @@ import {
   Icon,
   Pagination,
 } from "@nypl/design-system-react-components";
-import React, { useRef } from "react";
+import React, { useEffect, useRef } from "react";
 import Filters from "../../search/filters/filters";
 import CollectionStructure from "../../collectionStructure/collectionStructure";
 import { headerBreakpoints } from "@/src/utils/breakpoints";
@@ -32,6 +32,7 @@ import SortMenu from "../../sortMenu/sortMenu";
 import ActiveFilters from "../../search/filters/activeFilters";
 import CollectionMetadata from "../../collectionMetadata/collectionMetadata";
 import { SearchResultsType } from "../searchPage/searchPage";
+import NoResultsFound from "../../results/noResultsFound";
 
 type CollectionPageProps = {
   slug: string;
@@ -47,6 +48,7 @@ const CollectionPage = ({
   collectionData,
 }: CollectionPageProps) => {
   const headingRef = useRef<HTMLHeadingElement>(null);
+  const isFirstLoad = useRef<boolean>(false);
 
   const collectionSearchManager = new GeneralSearchManager({
     initialPage: Number(searchParams?.page) || DEFAULT_PAGE_NUM,
@@ -64,9 +66,16 @@ const CollectionPage = ({
   const pathname = usePathname();
 
   const updateURL = async (queryString) => {
-    push(`${pathname}?${queryString}`);
-    headingRef.current?.focus();
+    push(`${pathname}?${queryString}`, { scroll: false });
   };
+
+  useEffect(() => {
+    if (isFirstLoad.current) {
+      headingRef.current?.focus();
+    }
+    isFirstLoad.current = true;
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [searchResults]);
 
   return (
     <Box id="mainContent">
@@ -142,50 +151,73 @@ const CollectionPage = ({
                 alignItems: "flex-start",
               }}
             >
-              <Heading
-                size="heading5"
-                ref={headingRef}
-                tabIndex={-1}
-                margin="0"
-                aria-live="polite"
-              >{`Displaying ${displayResults(
-                searchResults.numResults,
-                CARDS_PER_PAGE,
-                1
-              )} results`}</Heading>
-              <SortMenu
-                options={SEARCH_SORT_LABELS}
-                searchManager={collectionSearchManager}
-                updateURL={updateURL}
-              />
+              {searchResults.results.length > 0 && (
+                <>
+                  <Heading
+                    size="heading5"
+                    ref={headingRef}
+                    tabIndex={-1}
+                    margin="0"
+                    aria-live="polite"
+                  >
+                    {`Displaying
+                    ${displayResults(
+                      searchResults.numResults,
+                      CARDS_PER_PAGE,
+                      1
+                    )}
+                    results`}
+                  </Heading>
+                  <SortMenu
+                    options={SEARCH_SORT_LABELS}
+                    searchManager={collectionSearchManager}
+                    updateURL={updateURL}
+                  />
+                </>
+              )}
             </Flex>
-            <SearchCardsGrid
-              keywords={searchResults.keyword}
-              results={searchResults.results}
-            />
-            <Flex marginTop="xxl" marginBottom="xxl" alignContent="center">
-              <Link
-                minWidth="100px"
-                isUnderlined={false}
-                hasVisitedState={false}
-                gap="xxs"
-                type="action"
-                href="#"
-              >
-                Back to top{"  "}
-                <Icon name="arrow" iconRotation="rotate180" size="xsmall" />
-              </Link>
-              <Pagination
-                id="pagination-id"
-                initialPage={1}
-                currentPage={1}
-                pageCount={10} //totalPages
-                sx={{
-                  justifyContent: "flex-end",
-                  gap: "s",
-                }}
+
+            {searchResults.results.length > 0 ? (
+              <>
+                <SearchCardsGrid
+                  keywords={searchResults.keyword}
+                  results={searchResults.results}
+                />
+                <Flex marginTop="xxl" marginBottom="xxl" alignContent="center">
+                  <Link
+                    minWidth="100px"
+                    isUnderlined={false}
+                    hasVisitedState={false}
+                    gap="xxs"
+                    type="action"
+                    href="#"
+                  >
+                    Back to top{"  "}
+                    <Icon name="arrow" iconRotation="rotate180" size="xsmall" />
+                  </Link>
+                  <Pagination
+                    id="pagination-id"
+                    initialPage={1}
+                    currentPage={1}
+                    pageCount={totalPages}
+                    onPageChange={(newPage) => {
+                      updateURL(
+                        collectionSearchManager.handlePageChange(newPage)
+                      );
+                    }}
+                    sx={{
+                      justifyContent: "flex-end",
+                      gap: "s",
+                    }}
+                  />
+                </Flex>
+              </>
+            ) : (
+              <NoResultsFound
+                searchTerm={searchResults.keyword}
+                page={searchResults.page}
               />
-            </Flex>
+            )}
           </Box>
         </Flex>
       </Box>

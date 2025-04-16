@@ -32,15 +32,15 @@ export default async function Collection({
   searchParams,
 }: CollectionProps) {
   console.log("filters here", searchParams.filters);
-  const requiredCollectionFilter: Filter = {
-    filter: "collection",
-    value: "uuid",
-  };
+  // const requiredCollectionFilter: Filter = {
+  //   filter: "collection",
+  //   value: "uuid",
+  // };
   const searchResults = await CollectionsApi.getSearchData({
     keyword: searchParams.q,
     sort: searchParams.sort,
     page: searchParams.page,
-    // filters: searchParams.filters
+    filters: searchParams.filters,
     //   ? [...searchParams.filters, requiredCollectionFilter]
     //   : requiredCollectionFilter,
   });
