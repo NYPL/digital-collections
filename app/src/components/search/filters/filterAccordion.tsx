@@ -167,8 +167,6 @@ const FilterAccordionComponent = forwardRef<
           button.focus();
         }, 0);
       }
-      // e.preventDefault();
-      // e.stopPropagation();
     }
   };
 

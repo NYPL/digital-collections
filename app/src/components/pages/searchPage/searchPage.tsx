@@ -115,6 +115,7 @@ const SearchPage = ({
               sx={{
                 maxWidth: "1250px",
                 marginBottom: "l",
+                tabIndex: "-1",
               }}
             >
               {`No results ${
