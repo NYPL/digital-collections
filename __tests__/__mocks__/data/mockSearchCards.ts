@@ -15,8 +15,8 @@ export const mockSearchCards: SearchCardType[] = [
     contentType: null,
     highlights: [
       {
-        field: "Title",
-        text: "Christopher Walken examples in the stage production example Kid Champion",
+        field: "note",
+        text: "Christopher Walken <em>examples</em> <em>in</em> the stage production example Kid Champion",
       },
     ],
     firstIndexed: "1907-01-01T00:00:00Z",
@@ -35,13 +35,16 @@ export const mockSearchCards: SearchCardType[] = [
     containsMultipleCaptures: false,
     contentType: "Image",
     highlights: [
-      { field: "Collection", text: "Sarah example sitting in tree" },
+      {
+        field: "collection",
+        text: "Sarah <em>example</em> sitting <em>in</em> tree",
+      },
     ],
     firstIndexed: "1907-02-01T00:00:00Z",
   },
   {
     uuid: "e5462600-c5d9-012f-a6a3-58d385a7bc34",
-    title: "Farm Security Administration Photographs",
+    title: "Farm Security Administration example photographs",
     url: "https://digitalcollections.nypl.org/collections/farm-security-administration-photographs#/?tab=navigation",
     imageID: "1952272",
     imageURL:
@@ -51,13 +54,17 @@ export const mockSearchCards: SearchCardType[] = [
     recordType: "Collection",
     containsAVMaterial: true,
     contentType: null,
-    highlights: [{ field: "Description", text: "Farm in example photographs" }],
+    highlights: [
+      {
+        field: "description",
+        text: "Farm <em>in</em> <em>example</em> photographs",
+      },
+    ],
     firstIndexed: "1907-02-01T00:00:00Z",
   },
   {
     uuid: "12563fb0-63a2-013b-bd44-0242ac110003",
-    title:
-      "Reading room of the Schomburg Collection at the 135th Street Branch Library. Lawrence Reddick, curator, seated at right",
+    title: "Reading in example room",
     imageID: "58613608",
     url: "https://digitalcollections.nypl.org/items/12563fb0-63a2-013b-bd44-0242ac110003",
     imageURL:
@@ -68,7 +75,10 @@ export const mockSearchCards: SearchCardType[] = [
     containsAVMaterial: false,
     containsMultipleCaptures: true,
     contentType: "Image",
-    highlights: [{ field: "Title", text: "Reading in example room" }],
+    highlights: [
+      { field: "Title", text: "Reading <em>in</em> <em>example</em> room" },
+      { field: "Note", text: "Reading <em>example</em> room" },
+    ],
     firstIndexed: "1908-02-01T00:00:00Z",
   },
 ];

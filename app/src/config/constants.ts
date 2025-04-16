@@ -45,6 +45,25 @@ export const SEARCH_SORT_LABELS = {
   "items-first": "Items first",
 };
 
+export const ALLOWED_FILTERS = [
+  "topic",
+  "name",
+  "collection",
+  // To do: subcollection?
+  "place",
+  "format",
+  "name",
+  "genre",
+  "publisher",
+  "division",
+  "type",
+  "dateStart",
+  "dateEnd",
+  "rightsFilter",
+  "rights",
+  "materialType",
+];
+
 export const METADATA_FIELDS = [
   "Title",
   "Names",

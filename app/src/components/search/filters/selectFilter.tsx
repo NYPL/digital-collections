@@ -31,49 +31,46 @@ export const availableFilterOptions = (
   filterName: string
 ) => {
   const truncationLimit = 80;
-  return options.map((option, index) => (
-    <Radio
-      key={`${option.name}-${index}`}
-      id={`${option.name}-${index}`}
-      labelText={
-        <Flex justifyContent="space-between" gap="s">
-          {option.name.length > truncationLimit ? (
-            <>
-              <Tooltip
-                content={availableFilterDisplayName(option.name, filterName)}
-              >
-                <Box noOfLines={2}>
-                  {availableFilterDisplayName(option.name, filterName)}
-                </Box>
-              </Tooltip>
-              <span>{option.count}</span>
-            </>
-          ) : (
-            <>
-              <Box noOfLines={2}>
-                {availableFilterDisplayName(option.name, filterName)}
-              </Box>
-              <span>{option.count}</span>
-            </>
-          )}
-        </Flex>
-      }
-      value={option.name}
-    />
-  ));
+
+  return options.map((option, index) => {
+    const displayName = availableFilterDisplayName(option.name, filterName);
+    const isTruncated = option.name.length > truncationLimit;
+
+    const label = (
+      <Flex justifyContent="space-between" gap="s">
+        {isTruncated ? (
+          <Tooltip content={displayName}>
+            <Box noOfLines={2}>{displayName}</Box>
+          </Tooltip>
+        ) : (
+          <Box noOfLines={2}>{displayName}</Box>
+        )}
+        <span>{option.count}</span>
+      </Flex>
+    );
+
+    return (
+      <Radio
+        key={`${option.name}-${index}`}
+        id={`${option.name}-${index}`}
+        labelText={label}
+        value={option.name}
+      />
+    );
+  });
 };
 
 const SelectFilterComponent = forwardRef<
   HTMLButtonElement,
   { filter: AvailableFilter; searchManager: SearchManager }
 >((props, filterRef) => {
-  const { filter, searchManager, ...rest } = props;
+  const { filter, searchManager } = props;
   const [userClickedOutside, setUserClickedOutside] = useState<boolean>(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   // Sets selected to filter's current URL value on mount.
   let selected = filter
-    ? filter.options.find((option) => option.selected === true) || null
+    ? filter.options.find((option) => !!option.selected) || null
     : null;
 
   // Manages current selection in state while user interacts with dropdown/modal.
@@ -201,7 +198,7 @@ const SelectFilterComponent = forwardRef<
   };
 
   return (
-    <Box {...rest} ref={containerRef}>
+    <Box ref={containerRef}>
       <FilterAccordion
         accordionData={[
           {

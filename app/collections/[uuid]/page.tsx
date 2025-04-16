@@ -3,12 +3,10 @@ import { Metadata } from "next";
 import PageLayout from "../../src/components/pageLayout/pageLayout";
 import { createAdobeAnalyticsPageName } from "@/src/utils/utils";
 import CollectionPage from "@/src/components/pages/collectionPage/collectionPage";
-import { mockSearchResponse } from "__tests__/__mocks__/data/collectionsApi/mockSearchResponse";
 import { CollectionsApi } from "@/src/utils/apiClients";
 import { SearchParams } from "@/search/index/page";
 import { mockCollectionChildrenResponse } from "__tests__/__mocks__/data/mockCollectionStructure";
 import { mockCollectionResponse } from "__tests__/__mocks__/data/collectionsApi/mockCollectionResponse";
-import { Filter } from "../../src/types/FilterType";
 
 type CollectionProps = {
   params: { uuid: string };
@@ -39,8 +37,7 @@ export default async function Collection({
     // filters: searchParams.filters + [`Collection=uuid`], // Needs collection filter every time
   });
 
-  // mockSearchResponse;
-
+  // Use Promise.all() to fetch these so they're called concurrently
   let collectionData = //await CollectionsApi.getCollectionData();
     mockCollectionResponse;
 

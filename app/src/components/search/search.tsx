@@ -16,8 +16,8 @@ const Search = () => {
     event.preventDefault();
     const searchUrl =
       `/search/index?` +
-      `q=${encodeURIComponent(keywords)}` +
-      (publicDomainOnly ? `&filters=%5BrightsFilter%3DpublicDomain%5D` : ``);
+      (keywords.length > 0 ? `q=${encodeURIComponent(keywords)}` : "") +
+      (publicDomainOnly ? `&filters=%5Brights%3DpublicDomain%5D` : "");
     router.push(searchUrl);
   };
 

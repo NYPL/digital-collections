@@ -138,14 +138,16 @@ const SelectFilterModal = forwardRef<HTMLButtonElement, SelectFilterModalProps>(
           }
           isOpen={isOpen}
           onClose={() => {
-            updateURL(
-              searchManager.handleAddFilter([
-                {
-                  filter: filter.name,
-                  value: modalCurrent?.name!,
-                },
-              ])
-            );
+            if (modalCurrent && focusOutside) {
+              updateURL(
+                searchManager.handleAddFilter([
+                  {
+                    filter: filter.name,
+                    value: modalCurrent?.name!,
+                  },
+                ])
+              );
+            }
             handleClose(false);
           }}
         >
