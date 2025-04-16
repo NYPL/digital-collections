@@ -67,15 +67,17 @@ const fetchChildren = async (uuid: string) => {
 };
 
 const prefetchNextLevel = async (children: CollectionChildProps[]) => {
-  for (const child of children) {
-    if (
-      child.hasSubContainers &&
-      (!child.children || child.children.length === 0)
-    ) {
-      try {
-        child.children = await fetchChildren(child.uuid);
-      } catch (err) {
-        console.error("Prefetch failed for", child.uuid, err);
+  if (children.length > 0) {
+    for (const child of children) {
+      if (
+        child.hasSubContainers &&
+        (!child.children || child.children.length === 0)
+      ) {
+        try {
+          child.children = await fetchChildren(child.uuid);
+        } catch (err) {
+          console.error("Prefetch failed for", child.uuid, err);
+        }
       }
     }
   }
@@ -111,34 +113,39 @@ const AccordionItem = ({
     useState<CollectionChildProps[]>(children);
 
   const toggleItem = async () => {
+    let isCurrentlyOpen = false;
+    let newState: OpenStateItem[] = [];
+
     setOpenState((prev) => {
-      const isCurrentlyOpen = prev.some(
+      isCurrentlyOpen = prev.some(
         (item) => item.title === title && item.isOpen
       );
-      let newState = prev.filter((item) => item.level !== level);
+      newState = prev.filter((item) => item.level !== level);
 
       if (!isCurrentlyOpen) {
         newState = newState.filter((item) => item.level < level);
         newState.push({ title, level, isOpen: true });
-        updateURL(
-          searchManager.handleAddFilter([
-            { filter: "subcollection", value: `${title}||${uuid}` },
-          ])
-        );
-
-        (async () => {
-          try {
-            const nextChildren = await fetchChildren(uuid);
-            setFetchedChildren(nextChildren.children);
-            await prefetchNextLevel(nextChildren);
-          } catch (error) {
-            console.error("Failed to fetch children:", error);
-          }
-        })();
       }
 
       return newState;
     });
+
+    if (!isCurrentlyOpen) {
+      searchManager.handleKeywordChange("");
+      updateURL(
+        searchManager.handleAddFilter([
+          { filter: "subcollection", value: `${title}||${uuid}` },
+        ])
+      );
+
+      try {
+        const nextChildren = await fetchChildren(uuid);
+        setFetchedChildren(nextChildren.children);
+        await prefetchNextLevel(nextChildren);
+      } catch (error) {
+        console.error("Failed to fetch children:", error);
+      }
+    }
   };
 
   return (
@@ -195,7 +202,7 @@ const AccordionItem = ({
             <ul style={{ margin: 0 }}>
               {fetchedChildren.map((child, index) => (
                 <AccordionItem
-                  key={index}
+                  key={child.uuid}
                   {...child}
                   level={level + 1}
                   headingRef={headingRef}
@@ -257,7 +264,7 @@ const CollectionStructure = forwardRef<
         <ul>
           {data.map((item, index) => (
             <AccordionItem
-              key={index}
+              key={item.uuid}
               {...item}
               level={0}
               headingRef={headingRef}

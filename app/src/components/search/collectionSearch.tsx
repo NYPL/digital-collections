@@ -88,7 +88,7 @@ export const CollectionSearch = ({
             labelText: "Search this collection by item title",
             name: "q",
             placeholder: "Search this collection by item title",
-            defaultValue: "",
+            defaultValue: searchManager.keywords,
             onChange: (e) => {
               searchManager.handleKeywordChange(e.target.value);
             },
