@@ -14,7 +14,12 @@ import SearchCardType, {
   SearchResultRecordType,
 } from "@/src/types/SearchCardType";
 import { TRUNCATED_SEARCH_CARD_LENGTH } from "@/src/config/constants";
-import { capitalize } from "@/src/utils/utils";
+import {
+  capitalize,
+  getHighestRankedHighlight,
+  getTitleWithHighlights,
+  replaceEmWithMark,
+} from "@/src/utils/utils";
 import parse from "html-react-parser";
 import type { Highlight } from "@/src/types/HighlightType";
 
@@ -35,26 +40,34 @@ const onSiteMaterialBadge = (recordType: SearchResultRecordType) => {
 };
 
 const contentTypeTag = (result: SearchCardType) => {
-  // To do: Replace once contentType and recordType are synced.
-  const displayLabel =
-    result.recordType === "Item"
-      ? result.contentType === "Image" && result.containsMultipleCaptures
-        ? "Multiple images"
-        : result.contentType
-        ? result.contentType
-        : "MISSING contentType"
-      : result.recordType
-      ? result.recordType
-      : "MISSING recordType";
+  const { recordType, contentType, containsMultipleCaptures, uuid } = result;
+
+  const isItem = recordType === "Item";
+  const isImage = contentType === "Image";
+
+  let displayLabel: string | null = recordType;
+
+  if (isItem) {
+    if (isImage && containsMultipleCaptures) {
+      displayLabel = "Multiple images";
+    } else if (contentType) {
+      displayLabel = contentType;
+    }
+  }
 
   return (
-    <TagSet
-      tagSetData={[
-        { id: `type-${result.uuid}`, label: displayLabel ? displayLabel : "" },
-      ]}
-      type="filter"
-      sx={{ margin: 0 }}
-    />
+    displayLabel && (
+      <TagSet
+        tagSetData={[
+          {
+            id: `type-${uuid}`,
+            label: displayLabel,
+          },
+        ]}
+        type="filter"
+        sx={{ margin: 0 }}
+      />
+    )
   );
 };
 
@@ -85,43 +98,6 @@ const highlightField = (highlights: Highlight[]) => {
   }
 
   return null;
-};
-
-const replaceEmWithMark = (htmlString) => {
-  return htmlString.replace(/<em>(.*?)<\/em>/g, "<mark>$1</mark>");
-};
-
-const getHighestRankedHighlight = (highlights: Highlight[]) => {
-  if (!highlights || !Array.isArray(highlights)) return null;
-  const rankingOrder = [
-    "note",
-    "abstract",
-    "collection",
-    "name",
-    "topic",
-    "place",
-    "publisher",
-    "division",
-    "type",
-    "genre",
-    "identifier",
-  ];
-  for (const key of rankingOrder) {
-    const matchedHighlight = highlights.find(
-      (highlight) => highlight.field === key
-    );
-    if (matchedHighlight) {
-      return matchedHighlight;
-    }
-  }
-  return null;
-};
-
-const getTitleWithHighlights = (highlights, title) => {
-  const titleHighlight = highlights.find(
-    (highlight) => highlight.field === "title"
-  );
-  return titleHighlight ? replaceEmWithMark(titleHighlight.text) : title;
 };
 
 export const SearchCard = ({

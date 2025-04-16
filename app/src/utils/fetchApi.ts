@@ -23,14 +23,19 @@ export const fetchApi = async ({
     isRepoApi?: boolean;
   };
 }) => {
-  const apiKey = process.env.AUTH_TOKEN;
   const { method = "GET", params, body, isRepoApi = true } = options;
 
-  const headers = {
-    Authorization: `Token token=${apiKey}`,
-    ...(method === "POST" && { "Content-Type": "application/json" }),
-  };
+  const headers: Record<string, string> = {};
 
+  if (isRepoApi) {
+    headers["Authorization"] = `Token token=${process.env.AUTH_TOKEN || ""}`;
+  } else {
+    headers["x-nypl-collections-api-key"] =
+      process.env.COLLECTIONS_API_AUTH_TOKEN || "";
+  }
+  if (method === "POST") {
+    headers["Content-Type"] = "application/json";
+  }
   if (method === "GET" && params) {
     const queryString = "?" + new URLSearchParams(params).toString();
     apiUrl += queryString;
@@ -55,18 +60,19 @@ export const fetchApi = async ({
   try {
     const response = (await fetchWithTimeout(apiUrl, {
       method,
-      ...(isRepoApi ? { headers } : {}),
+      headers,
       body: method === "POST" ? JSON.stringify(body) : undefined,
     })) as Response;
 
-    if (!response.ok) {
+    if (response.status === 422) {
+      logger.error(`Invalid parameter value: ${apiUrl}`);
+    } else if (!response.ok) {
       throw new Error(
         `fetchApi: ${response.status} ${
           response.statusText ? response.statusText : "No message"
         }`
       );
     }
-
     return await response.json();
   } catch (error) {
     logger.error(error);

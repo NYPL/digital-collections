@@ -21,11 +21,8 @@ const RadioOption = ({ id, text, tooltip }) => (
 
 const RightsFilter = forwardRef<HTMLHeadingElement, RightsFilterProps>(
   ({ searchManager }, ref) => {
-    let selected = searchManager.filters.find(
-      (f) => f.filter === "rightsFilter"
-    )
-      ? searchManager.filters.find((f) => f.filter === "rightsFilter")?.value ||
-        null
+    let selected = searchManager.filters.find((f) => f.filter === "rights")
+      ? searchManager.filters.find((f) => f.filter === "rights")?.value || null
       : null;
     const [selectedFilter, setSelectedFilter] = useState<string | null>(
       selected
@@ -39,9 +36,7 @@ const RightsFilter = forwardRef<HTMLHeadingElement, RightsFilterProps>(
 
     const handleRadioChange = (value: string) => {
       setSelectedFilter(value);
-      updateURL(
-        searchManager.handleAddFilter([{ filter: "rightsFilter", value }])
-      );
+      updateURL(searchManager.handleAddFilter([{ filter: "rights", value }]));
     };
 
     return (

@@ -3,13 +3,14 @@ import {
   stringToSlug,
   createAdobeAnalyticsPageName,
   displayResults,
+  deSlugify,
+  filterStringToCollectionApiFilterString,
   getCollectionFilterFromUUID,
-  dcflFilterToString,
+  getHighestRankedHighlight,
+  getTitleWithHighlights,
+  replaceEmWithMark,
 } from "./utils";
-import {
-  AvailableFilter,
-  AvailableFilterOption,
-} from "../types/AvailableFilterType";
+import { AvailableFilterOption } from "../types/AvailableFilterType";
 
 // TODO:
 /**
@@ -210,7 +211,37 @@ describe("displayResults", () => {
   });
 });
 
-//
+describe("deSlugify", () => {
+  it("should convert a simple kebab string to title case", () => {
+    expect(deSlugify("hello-world")).toBe("Hello World");
+  });
+
+  it("should handle multiple words correctly", () => {
+    expect(deSlugify("javaScript-thank-you-edwin")).toBe(
+      "JavaScript Thank You Edwin"
+    );
+  });
+
+  it("should handle single word", () => {
+    expect(deSlugify("java")).toBe("Java");
+  });
+
+  it("should return an empty string if input is empty", () => {
+    expect(deSlugify("")).toBe("");
+  });
+
+  it("should handle already formatted strings (with no dashes)", () => {
+    expect(deSlugify("hello world")).toBe("Hello World");
+  });
+
+  it("should handle strings with multiple dashes in a row", () => {
+    expect(deSlugify("hello--world")).toBe("Hello  World");
+  });
+
+  it("should handle strings with trailing or leading dashes", () => {
+    expect(deSlugify("-hello-world-")).toBe(" Hello World ");
+  });
+});
 
 describe("getCollectionFilterFromUUID", () => {
   const availableCollections: AvailableFilterOption[] = [
@@ -263,13 +294,13 @@ describe("getCollectionFilterFromUUID", () => {
   });
 });
 
-describe("dcflFilterToString", () => {
+describe("filterStringToCollectionApiFilterString", () => {
   test("generates the correct filter syntax for a single filter", () => {
-    expect(dcflFilterToString("[Name=Swope, Martha]")).toBe(
-      "name=Swope, Martha"
-    );
     expect(
-      dcflFilterToString(
+      filterStringToCollectionApiFilterString("[Name=Swope, Martha]")
+    ).toBe("name=Swope, Martha");
+    expect(
+      filterStringToCollectionApiFilterString(
         "[Collection=Print Collection portrait file||16ad5350-c52e-012f-aecf-58d385a7bc34]"
       )
     ).toBe(
@@ -279,7 +310,7 @@ describe("dcflFilterToString", () => {
 
   test("generates the correct filter syntax for multiple filter", () => {
     expect(
-      dcflFilterToString(
+      filterStringToCollectionApiFilterString(
         "[name=Swope, Martha][collection=Print Collection portrait file||16ad5350-c52e-012f-aecf-58d385a7bc34]"
       )
     ).toBe(
@@ -288,6 +319,59 @@ describe("dcflFilterToString", () => {
   });
 
   test("generates the correct filter syntax for no filters", () => {
-    expect(dcflFilterToString("")).toBe("");
+    expect(filterStringToCollectionApiFilterString("")).toBe("");
+  });
+});
+
+describe("getHighestRankedHighlight", () => {
+  const mockHighlights = [
+    { field: "abstract", text: "Something" },
+    { field: "note", text: "Note text" },
+    { field: "topic", text: "Topic text" },
+  ];
+
+  it("returns the highest-ranked highlight based on priority", () => {
+    const result = getHighestRankedHighlight(mockHighlights);
+    // topic comes before note and abstract
+    expect(result).toEqual({ field: "topic", text: "Topic text" });
+  });
+
+  it("returns null if no highlight matches the ranking list", () => {
+    const highlights = [{ field: "random", text: "text" }];
+    expect(getHighestRankedHighlight(highlights)).toBeNull();
+  });
+});
+
+describe("replaceEmWithMark", () => {
+  it("replaces <em> tags with <mark> tags", () => {
+    const input = "This is <em>important</em> text.";
+    const output = "This is <mark>important</mark> text.";
+    expect(replaceEmWithMark(input)).toBe(output);
+  });
+
+  it("replaces multiple <em> tags", () => {
+    const input = "<em>First</em> and <em>second</em>";
+    const output = "<mark>First</mark> and <mark>second</mark>";
+    expect(replaceEmWithMark(input)).toBe(output);
+  });
+
+  it("returns original string if there are no <em> tags", () => {
+    const input = "No highlights here";
+    expect(replaceEmWithMark(input)).toBe(input);
+  });
+});
+
+describe("getTitleWithHighlights", () => {
+  it("returns marked-up highlight if title field exists", () => {
+    const highlights = [{ field: "Title", text: "The <em>Great</em> Gatsby" }];
+    const title = "The Great Gatsby";
+    const result = getTitleWithHighlights(highlights, title);
+    expect(result).toBe("The <mark>Great</mark> Gatsby");
+  });
+
+  it("returns original title if no title highlight exists", () => {
+    const highlights = [{ field: "Topic", text: "Not a title" }];
+    const title = "Original Title";
+    expect(getTitleWithHighlights(highlights, title)).toBe(title);
   });
 });
