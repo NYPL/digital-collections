@@ -213,12 +213,16 @@ const SearchPage = ({
                   marginTop: "xl",
                   justifyContent: "end",
                 },
+                paddingLeft: "s",
+                paddingRight: "s",
                 [`@media screen and (min-width: ${headerBreakpoints.lgMobile}px)`]:
                   {
                     "> a": {
                       marginTop: "0",
                     },
                     flexDir: "row",
+                    paddingLeft: 0,
+                    paddingRight: 0,
                   },
                 flexDir: "column-reverse",
               }}
