@@ -11,7 +11,6 @@ import {
   getRecordType,
   getCollectionFilterFromUUID,
 } from "../utils/utils";
-import { imageURL, formatHighlightText, capitalize } from "../utils/utils";
 
 export class SearchCardModel {
   title: string;
