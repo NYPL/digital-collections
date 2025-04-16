@@ -57,46 +57,37 @@ describe("SelectFilterGrid", () => {
   it("toggles filter expansion correctly", async () => {
     render(component(true));
 
-    const collectionAccordionButton = screen.getByText("Collection");
-    expect(collectionAccordionButton.parentElement).toHaveAttribute(
-      "aria-expanded",
-      "false"
-    );
+    const collectionAccordionButton = screen.getByRole("button", {
+      name: /collection/i,
+    });
+    expect(collectionAccordionButton).toHaveAttribute("aria-expanded", "false");
 
     fireEvent.click(collectionAccordionButton);
-    expect(collectionAccordionButton.parentElement).toHaveAttribute(
-      "aria-expanded",
-      "true"
-    );
+    expect(collectionAccordionButton).toHaveAttribute("aria-expanded", "true");
   });
 
   it("collapses the previous filter when you click a new one", async () => {
     render(component(true));
 
-    const collectionAccordionButton = screen.getByText("Collection");
+    const collectionAccordionButton = screen.getByRole("button", {
+      name: /collection/i,
+    });
 
-    const genreAccordionButton = screen.getByText("Genre");
+    const genreAccordionButton = screen.getByRole("button", {
+      name: /genre/i,
+    });
 
-    expect(collectionAccordionButton.parentElement).toHaveAttribute(
-      "aria-expanded",
-      "false"
-    );
+    expect(collectionAccordionButton).toHaveAttribute("aria-expanded", "false");
 
     fireEvent.click(collectionAccordionButton);
-    expect(collectionAccordionButton.parentElement).toHaveAttribute(
-      "aria-expanded",
-      "true"
-    );
+    expect(collectionAccordionButton).toHaveAttribute("aria-expanded", "true");
 
     fireEvent.click(genreAccordionButton);
 
-    expect(genreAccordionButton.parentElement).toHaveAttribute(
-      "aria-expanded",
-      "true"
-    );
+    expect(genreAccordionButton).toHaveAttribute("aria-expanded", "true");
 
     setTimeout(() => {
-      expect(collectionAccordionButton.parentElement).toHaveAttribute(
+      expect(collectionAccordionButton).toHaveAttribute(
         "aria-expanded",
         "false"
       );

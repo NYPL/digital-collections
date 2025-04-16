@@ -17,10 +17,12 @@ const searchSchema = {
       {
         name: "string",
         count: "integer",
+        selected: "boolean",
       },
     ],
     name: [],
     collection: [],
+    subcollection: [],
     genre: [],
     place: [],
     publisher: [],

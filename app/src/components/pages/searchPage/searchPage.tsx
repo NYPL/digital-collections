@@ -7,7 +7,7 @@ import {
   Link,
   Icon,
 } from "@nypl/design-system-react-components";
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { CARDS_PER_PAGE, SEARCH_SORT_LABELS } from "@/src/config/constants";
 import { displayResults, totalNumPages } from "@/src/utils/utils";
 import Filters from "../../search/filters/filters";
@@ -21,6 +21,7 @@ import ActiveFilters from "../../search/filters/activeFilters";
 import NoResultsFound from "../../results/noResultsFound";
 import SearchCardType from "@/src/types/SearchCardType";
 import { AvailableFilterOption } from "@/src/types/AvailableFilterType";
+import SearchCardGridLoading from "../../grids/searchCardGridLoading";
 
 export type SearchResultsType = {
   keyword: string;
@@ -49,6 +50,8 @@ const SearchPage = ({
   const pathname = usePathname();
   const headingRef = useRef<HTMLHeadingElement>(null);
   const isFirstLoad = useRef<boolean>(false);
+  const [isLoaded, setIsLoaded] = useState(false);
+  const [filtersExpanded, setFiltersExpanded] = useState(false);
 
   const updateURL = async (queryString: string) => {
     const newUrl = `${pathname}?${queryString}`;
@@ -56,6 +59,7 @@ const SearchPage = ({
   };
 
   useEffect(() => {
+    setIsLoaded(true);
     if (isFirstLoad.current) {
       headingRef.current?.focus();
     }
@@ -71,7 +75,6 @@ const SearchPage = ({
           background: "ui.bg.default",
           padding: "l",
           marginBottom: "m",
-          display: searchResults.results?.length > 0 ? "block" : "none",
         }}
       >
         <Box
@@ -105,11 +108,6 @@ const SearchPage = ({
             }
             `}
               </Heading>
-
-              <Filters
-                searchManager={searchManager}
-                headingText="Refine your search"
-              />
             </>
           ) : (
             <Heading
@@ -117,6 +115,7 @@ const SearchPage = ({
               sx={{
                 maxWidth: "1250px",
                 marginBottom: "l",
+                tabIndex: "-1",
               }}
             >
               {`No results ${
@@ -127,6 +126,12 @@ const SearchPage = ({
               `}
             </Heading>
           )}
+          <Filters
+            searchManager={searchManager}
+            headingText="Refine your search"
+            filtersExpanded={filtersExpanded}
+            setFiltersExpanded={setFiltersExpanded}
+          />
         </Box>
       </Box>
       <Box
@@ -174,6 +179,7 @@ const SearchPage = ({
               <SortMenu
                 options={SEARCH_SORT_LABELS}
                 searchManager={searchManager}
+                setFiltersExpanded={setFiltersExpanded}
                 updateURL={updateURL}
               />{" "}
             </>
@@ -186,10 +192,17 @@ const SearchPage = ({
         </Flex>
         {searchResults.numResults > 0 && (
           <>
-            <SearchCardsGrid
-              keywords={searchResults.keyword}
-              results={searchResults.results}
-            />
+            {isLoaded ? (
+              <SearchCardsGrid
+                keywords={searchResults.keyword}
+                results={searchResults.results}
+              />
+            ) : (
+              [...Array(12)].map((_, index) => (
+                <SearchCardGridLoading id={index} key={index} />
+              ))
+            )}
+
             <Flex
               paddingLeft="s"
               paddingRight="s"
@@ -229,6 +242,7 @@ const SearchPage = ({
                 currentPage={searchManager.page}
                 pageCount={totalPages}
                 onPageChange={(newPage) => {
+                  setFiltersExpanded(false);
                   updateURL(searchManager.handlePageChange(newPage));
                 }}
                 sx={{

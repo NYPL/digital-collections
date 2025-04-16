@@ -48,7 +48,7 @@ const ActiveFilters = ({ searchManager }: ActiveFilterProps) => {
 
   return searchManager.filters.length > 0 ? (
     <>
-      <Flex alignContent="center" alignItems="center" gap="xs" flexDir="row">
+      <Flex alignItems="flex-start" flexWrap="wrap" gap="xs" width="100%">
         <Text size="subtitle2" sx={{ margin: 0, fontWeight: 400 }}>
           Filters applied:
         </Text>
@@ -64,7 +64,7 @@ const ActiveFilters = ({ searchManager }: ActiveFilterProps) => {
                 : availableFilterDisplayName(filter.value, filter.filter),
           }))}
           type="filter"
-          sx={{ flexWrap: "unset" }}
+          sx={{ flexWrap: "wrap" }}
         />
       </Flex>
       <HorizontalRule />
