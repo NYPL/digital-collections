@@ -8,11 +8,7 @@ import {
 import DCSearchBar from "./dcSearchBar";
 import { useState } from "react";
 
-export const CollectionSearch = ({
-  collectionData,
-  searchManager,
-  updateURL,
-}) => {
+export const CollectionSearch = ({ keyword, searchManager, updateURL }) => {
   const [isExpanded, setIsExpanded] = useState(false);
 
   return (
@@ -88,20 +84,13 @@ export const CollectionSearch = ({
             labelText: "Search this collection by item title",
             name: "q",
             placeholder: "Search this collection by item title",
-            defaultValue: searchManager.keywords,
+            defaultValue: keyword,
             onChange: (e) => {
               searchManager.handleKeywordChange(e.target.value);
             },
           }}
           onSubmit={() => {
-            updateURL(
-              searchManager.handleAddFilter([
-                {
-                  filter: "collection",
-                  value: `${collectionData.title}||${collectionData.uuid}`,
-                },
-              ])
-            );
+            updateURL(searchManager.handleSearchSubmit());
           }}
           sx={{
             display: isExpanded ? "block" : "none",

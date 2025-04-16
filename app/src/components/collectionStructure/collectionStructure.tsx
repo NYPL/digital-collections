@@ -6,6 +6,7 @@ import {
   Text,
   Heading,
   Tooltip,
+  SkeletonLoader,
 } from "@nypl/design-system-react-components";
 import { useScrollIntoViewIfNeeded } from "@/src/hooks/useScrollIntoViewIfNeeded";
 import { headerBreakpoints } from "@/src/utils/breakpoints";
@@ -230,12 +231,17 @@ const CollectionStructure = forwardRef<
 >(({ uuid, searchManager, updateURL }, headingRef) => {
   const [openState, setOpenState] = useState<OpenStateItem[]>([]);
   const [data, setData] = useState<CollectionChildProps[]>([]);
+  const [isLoaded, setIsLoaded] = useState(false);
 
   useEffect(() => {
     const loadData = async () => {
       try {
         const topLevel = await fetchChildren(uuid);
-        setData(topLevel?.children);
+        const filteredChildren = topLevel?.children?.filter(
+          (child: any) => child.itemCount > 1
+        );
+        setData(filteredChildren || []);
+        setIsLoaded(true);
       } catch (err) {
         console.error("Error loading top-level collections:", err);
       }
@@ -243,16 +249,36 @@ const CollectionStructure = forwardRef<
     loadData();
   }, []);
 
+  if (!isLoaded) {
+    return (
+      <SkeletonLoader
+        contentSize={12}
+        headingSize={1}
+        imageAspectRatio="square"
+        layout="column"
+        showHeading
+        showImage={false}
+        width="425px"
+        marginY="0"
+      />
+    );
+  }
+
+  if (data.length === 0) {
+    return null;
+  }
+
   return (
     <Flex
       flexDir="column"
       sx={{
+        marginBottom: "xxl",
         [`@media screen and (max-width: ${headerBreakpoints.smTablet}px)`]: {
           display: "none",
         },
       }}
     >
-      <Heading ref={headingRef as any} size="heading6">
+      <Heading ref={headingRef} size="heading6">
         Collection structure
       </Heading>
       <Box
@@ -262,7 +288,7 @@ const CollectionStructure = forwardRef<
         borderTop="1px solid var(--ui-gray-medium, #BDBDBD)"
       >
         <ul>
-          {data.map((item, index) => (
+          {data.map((item) => (
             <AccordionItem
               key={item.uuid}
               {...item}

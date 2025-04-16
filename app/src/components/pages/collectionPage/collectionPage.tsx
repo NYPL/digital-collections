@@ -7,7 +7,7 @@ import {
   Icon,
   Pagination,
 } from "@nypl/design-system-react-components";
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import Filters from "../../search/filters/filters";
 import CollectionStructure from "../../collectionStructure/collectionStructure";
 import { headerBreakpoints } from "@/src/utils/breakpoints";
@@ -35,27 +35,24 @@ import { SearchResultsType } from "../searchPage/searchPage";
 import NoResultsFound from "../../results/noResultsFound";
 
 type CollectionPageProps = {
-  slug: string;
   searchResults: SearchResultsType;
   searchParams;
   collectionData;
 };
 
 const CollectionPage = ({
-  slug,
   searchResults,
   searchParams,
   collectionData,
 }: CollectionPageProps) => {
   const headingRef = useRef<HTMLHeadingElement>(null);
   const isFirstLoad = useRef<boolean>(false);
-
   const collectionSearchManager = new GeneralSearchManager({
     initialPage: Number(searchParams?.page) || DEFAULT_PAGE_NUM,
     initialSort: searchParams?.sort || DEFAULT_SEARCH_SORT,
     initialFilters: stringToFilter(searchParams?.filters),
     initialKeywords: searchParams?.q || DEFAULT_SEARCH_TERM,
-    initialAvailableFilters: searchResults?.availableFilters || DEFAULT_FILTERS,
+    initialAvailableFilters: searchParams?.availableFilters || DEFAULT_FILTERS,
   });
 
   const totalPages = totalNumPages(
@@ -100,7 +97,7 @@ const CollectionPage = ({
               marginBottom: "m",
             }}
           >
-            {slug}
+            {collectionData.title}
           </Heading>
           <Filters
             headingText="Refine your results"
@@ -131,9 +128,9 @@ const CollectionPage = ({
           />
           <Box width="100%">
             <CollectionSearch
-              collectionData={collectionData}
               searchManager={collectionSearchManager}
               updateURL={updateURL}
+              keyword={searchResults.keyword}
             />
             <Flex
               sx={{
