@@ -86,7 +86,7 @@ export class ItemModel {
       }
     }
 
-    // console.log("manifestMetadataHash is: ", manifestMetadataHash);
+    console.log("manifestMetadataHash is: ", manifestMetadataHash);
     this.uuid = uuid; //data.uuid; //data.capture.uuid.$;
     // this.mods = data.mods;
     // this.capture = data.capture;
@@ -103,7 +103,11 @@ export class ItemModel {
     // this.imageID = data.imageID;
     // this.href = data.href;
     // TO DO: What to do if there is more than one type present?
-    this.contentType = getContentType(manifestMetadataHash["Content Type"][0]); //CONTENT_TYPES[this.typeOfResource];
+    this.contentType = getContentType(
+      manifestMetadataHash["Content Type"].length > 0
+        ? manifestMetadataHash["Content Type"][0]
+        : manifestMetadataHash["Content Type"]
+    ); //CONTENT_TYPES[this.typeOfResource];
     this.manifestURL = `http://localhost:8000/manifests/${uuid}`; //`https://qa-api-collections.nypl.org/manifests/${uuid}`;
     // TO DO: use ENV var ie. `${process.env.collectionS_API_URL}/manifests/${uuid}`
     // TO DO: add _isCartographic for map stuff
