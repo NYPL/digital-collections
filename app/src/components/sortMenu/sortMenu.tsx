@@ -5,7 +5,7 @@ type SortMenuProps = {
   updateURL: (queryString: string) => Promise<void>;
   searchManager: SearchManager;
   options: Record<string, string>;
-  setFiltersExpanded: React.Dispatch<React.SetStateAction<boolean>>;
+  setFiltersExpanded?: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
 const SortMenu = ({
@@ -23,7 +23,9 @@ const SortMenu = ({
         id,
         label,
         onClick: () => {
-          setFiltersExpanded(false);
+          if (setFiltersExpanded) {
+            setFiltersExpanded(false);
+          }
           updateURL(searchManager.handleSortChange(id));
         },
         type: "action",
