@@ -10,7 +10,6 @@ import {
   type SearchManager,
 } from "@/src/utils/searchManager";
 import { usePathname, useRouter } from "next/navigation";
-import { capitalize } from "@/src/utils/utils";
 
 type ActiveFilterProps = {
   searchManager: SearchManager;

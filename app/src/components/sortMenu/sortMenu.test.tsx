@@ -6,6 +6,7 @@ import {
   DEFAULT_SEARCH_TERM,
 } from "@/src/config/constants";
 import { GeneralSearchManager } from "@/src/utils/searchManager";
+import { SetStateAction } from "react";
 
 describe("SortMenu", () => {
   const updateURL = jest.fn();
@@ -22,7 +23,6 @@ describe("SortMenu", () => {
       initialSort: DEFAULT_SEARCH_SORT,
       initialFilters: [],
       initialKeywords: DEFAULT_SEARCH_TERM,
-      initialAvailableFilters: DEFAULT_FILTERS,
     });
   });
 
@@ -32,6 +32,9 @@ describe("SortMenu", () => {
         updateURL={updateURL}
         searchManager={manager}
         options={options}
+        setFiltersExpanded={() => {
+          console.log("expanded");
+        }}
       />
     );
     expect(screen.getByText("Sort by: Relevance")).toBeInTheDocument();
@@ -43,6 +46,9 @@ describe("SortMenu", () => {
         updateURL={updateURL}
         searchManager={manager}
         options={options}
+        setFiltersExpanded={() => {
+          console.log("expanded");
+        }}
       />
     );
     expect(screen.getByText("Date")).not.toBeVisible();
@@ -59,6 +65,9 @@ describe("SortMenu", () => {
         updateURL={updateURL}
         searchManager={manager}
         options={options}
+        setFiltersExpanded={() => {
+          console.log("expanded");
+        }}
       />
     );
 
