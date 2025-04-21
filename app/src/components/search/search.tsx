@@ -17,7 +17,7 @@ const Search = () => {
     const searchUrl =
       `/search/index?` +
       (keywords.length > 0 ? `q=${encodeURIComponent(keywords)}` : "") +
-      (publicDomainOnly ? `&filters=%5Brights%3DpublicDomain%5D` : "");
+      (publicDomainOnly ? `&filters%5Brights%5D=pd` : "");
     router.push(searchUrl);
   };
 
