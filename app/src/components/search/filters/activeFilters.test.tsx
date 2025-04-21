@@ -5,7 +5,6 @@ import {
   DEFAULT_SEARCH_TERM,
 } from "@/src/config/constants";
 import { GeneralSearchManager } from "@/src/utils/searchManager";
-import { useRef } from "react";
 
 jest.mock("next/navigation", () => ({
   useRouter: jest.fn(() => ({
