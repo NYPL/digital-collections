@@ -20,6 +20,7 @@ import {
   AvailableFilterOption,
 } from "@/src/types/AvailableFilterType";
 import { capitalize } from "@/src/utils/utils";
+import { useSearchContext } from "@/src/context/SearchProvider";
 
 export interface SelectFilterProps {
   filter: AvailableFilter;
@@ -67,6 +68,7 @@ const SelectFilterComponent = forwardRef<
   const { filter, searchManager } = props;
   const [userClickedOutside, setUserClickedOutside] = useState<boolean>(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const { lastFilterRef } = useSearchContext();
 
   // Sets selected to filter's current URL value on mount.
   let selected = filter
@@ -152,6 +154,8 @@ const SelectFilterComponent = forwardRef<
         isDisabled={!current}
         onClick={() => {
           accordionButtonRef.current?.focus();
+          lastFilterRef.current =
+            containerRef.current?.querySelector("button")!!;
           // Push the current filter selection to URL.
           updateURL(
             searchManager.handleAddFilter([
@@ -168,6 +172,7 @@ const SelectFilterComponent = forwardRef<
       </Button>
       {sortedOptions.length > 10 && (
         <SelectFilterModal
+          containerRef={containerRef}
           filter={filter}
           ref={accordionButtonRef}
           onOpen={() => {

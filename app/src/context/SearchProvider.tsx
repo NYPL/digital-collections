@@ -1,5 +1,5 @@
 "use client";
-import React, { createContext, useContext } from "react";
+import React, { createContext, useContext, useRef } from "react";
 import {
   DEFAULT_FILTERS,
   DEFAULT_PAGE_NUM,
@@ -11,9 +11,14 @@ import {
   SearchManager,
   stringToFilter,
 } from "../utils/searchManager";
+import { MutableRefObject } from "react";
+import { FocusableElement } from "../components/search/filters/selectFilterModal";
 
 interface SearchContextType {
   searchManager: SearchManager;
+  lastFilterRef: MutableRefObject<
+    HTMLButtonElement | HTMLInputElement | FocusableElement | null
+  >;
 }
 
 const SearchContext = createContext<SearchContextType | undefined>(undefined);
@@ -25,6 +30,9 @@ export const SearchProvider = ({
   searchParams?;
   children: React.ReactNode;
 }) => {
+  const lastFilterRef = useRef<HTMLButtonElement | HTMLInputElement | null>(
+    null
+  );
   const searchManager = new GeneralSearchManager({
     initialPage: Number(searchParams?.page) || DEFAULT_PAGE_NUM,
     initialSort: searchParams?.sort || DEFAULT_SEARCH_SORT,
@@ -34,7 +42,7 @@ export const SearchProvider = ({
   });
 
   return (
-    <SearchContext.Provider value={{ searchManager }}>
+    <SearchContext.Provider value={{ searchManager, lastFilterRef }}>
       {children}
     </SearchContext.Provider>
   );

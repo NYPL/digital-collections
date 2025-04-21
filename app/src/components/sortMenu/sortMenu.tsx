@@ -1,3 +1,4 @@
+import { useSearchContext } from "@/src/context/SearchProvider";
 import { SearchManager } from "@/src/utils/searchManager";
 import { Menu } from "@nypl/design-system-react-components";
 

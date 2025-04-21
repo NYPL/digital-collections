@@ -1,3 +1,4 @@
+import { useSearchContext } from "@/src/context/SearchProvider";
 import { Filter } from "@/src/types/FilterType";
 import { headerBreakpoints } from "@/src/utils/breakpoints";
 import { SearchManager } from "@/src/utils/searchManager";
@@ -18,7 +19,10 @@ type DateFilterProps = {
 const DateFilter = ({ searchManager }: DateFilterProps) => {
   const { push } = useRouter();
   const pathname = usePathname();
+  const { lastFilterRef } = useSearchContext();
+
   const updateURL = async (queryString) => {
+    lastFilterRef.current = buttonRef.current;
     push(`${pathname}?${queryString}`);
   };
 
@@ -43,8 +47,7 @@ const DateFilter = ({ searchManager }: DateFilterProps) => {
   const [dateStart, setDateStart] = useState(startValue);
   const [dateEnd, setDateEnd] = useState(endValue);
 
-  const buttonRef: React.RefObject<HTMLButtonElement> =
-    useRef<HTMLButtonElement>(null);
+  const buttonRef = useRef<HTMLButtonElement>(null);
   return (
     <>
       <Heading size="heading6" level="h3">
