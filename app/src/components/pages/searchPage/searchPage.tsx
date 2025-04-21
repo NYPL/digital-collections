@@ -52,6 +52,8 @@ const SearchPage = ({
   const isFirstLoad = useRef<boolean>(false);
   const [isLoaded, setIsLoaded] = useState(false);
   const [filtersExpanded, setFiltersExpanded] = useState(false);
+  const lastFilterRadio = useRef<boolean>(false);
+  const lastFilterNotRadio = useRef<boolean>(true);
 
   const updateURL = async (queryString: string) => {
     const newUrl = `${pathname}?${queryString}`;

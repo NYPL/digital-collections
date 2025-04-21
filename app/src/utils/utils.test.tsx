@@ -3,11 +3,12 @@ import {
   stringToSlug,
   createAdobeAnalyticsPageName,
   displayResults,
-  getCollectionFilterFromUUID,
+  deSlugify,
   filterStringToCollectionApiFilterString,
+  getCollectionFilterFromUUID,
   getHighestRankedHighlight,
-  replaceEmWithMark,
   getTitleWithHighlights,
+  replaceEmWithMark,
 } from "./utils";
 import { AvailableFilterOption } from "../types/AvailableFilterType";
 
@@ -207,6 +208,38 @@ describe("displayResults", () => {
 
   test("displays correct range when perPage is greater than numFound", () => {
     expect(displayResults(5, 10, 1)).toBe("1-5 of 5");
+  });
+});
+
+describe("deSlugify", () => {
+  it("should convert a simple kebab string to title case", () => {
+    expect(deSlugify("hello-world")).toBe("Hello World");
+  });
+
+  it("should handle multiple words correctly", () => {
+    expect(deSlugify("javaScript-thank-you-edwin")).toBe(
+      "JavaScript Thank You Edwin"
+    );
+  });
+
+  it("should handle single word", () => {
+    expect(deSlugify("java")).toBe("Java");
+  });
+
+  it("should return an empty string if input is empty", () => {
+    expect(deSlugify("")).toBe("");
+  });
+
+  it("should handle already formatted strings (with no dashes)", () => {
+    expect(deSlugify("hello world")).toBe("Hello World");
+  });
+
+  it("should handle strings with multiple dashes in a row", () => {
+    expect(deSlugify("hello--world")).toBe("Hello  World");
+  });
+
+  it("should handle strings with trailing or leading dashes", () => {
+    expect(deSlugify("-hello-world-")).toBe(" Hello World ");
   });
 });
 
