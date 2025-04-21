@@ -1,6 +1,6 @@
 const resultObject = {
   uuid: "string",
-  recordType: "collection | sub-collection | item",
+  recordType: "collection | item",
   title: "string",
   imageID: "string | null",
   numberOfDigitizedItems: "number",

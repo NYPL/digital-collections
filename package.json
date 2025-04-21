@@ -1,6 +1,6 @@
 {
   "name": "digital-collections",
-  "version": "0.3.5",
+  "version": "0.3.6",
   "private": true,
   "scripts": {
     "dev": "next dev",
@@ -42,6 +42,7 @@
     "dotenv": "16.4.5",
     "eslint": "8.48.0",
     "googleapis": "129.0.0",
+    "html-react-parser": "5.2.2",
     "newrelic": "12.5.1",
     "next": "14.2.25",
     "react": "18.2.0",
@@ -54,7 +55,7 @@
     "winston": "3.9.0"
   },
   "devDependencies": {
-    "@nypl/design-system-react-components": "3.5.3",
+    "@nypl/design-system-react-components": "3.6.0",
     "@testing-library/jest-dom": "6.1.4",
     "@testing-library/react": "14.0.0",
     "@types/jest": "29.5.5",
