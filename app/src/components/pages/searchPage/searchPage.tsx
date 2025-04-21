@@ -7,7 +7,13 @@ import {
   Link,
   Icon,
 } from "@nypl/design-system-react-components";
-import React, { useEffect, useRef, useState } from "react";
+import React, {
+  MutableRefObject,
+  useEffect,
+  useLayoutEffect,
+  useRef,
+  useState,
+} from "react";
 import { CARDS_PER_PAGE, SEARCH_SORT_LABELS } from "@/src/config/constants";
 import { displayResults, totalNumPages } from "@/src/utils/utils";
 import Filters from "../../search/filters/filters";
@@ -41,7 +47,7 @@ const SearchPage = ({
 }: {
   searchResults: SearchResultsType;
 }) => {
-  const { searchManager } = useSearchContext();
+  const { searchManager, lastFilterRef } = useSearchContext();
   const totalPages = totalNumPages(
     searchResults.numResults.toString(),
     CARDS_PER_PAGE
@@ -52,20 +58,53 @@ const SearchPage = ({
   const isFirstLoad = useRef<boolean>(false);
   const [isLoaded, setIsLoaded] = useState(false);
   const [filtersExpanded, setFiltersExpanded] = useState(false);
-  const lastFilterRadio = useRef<boolean>(false);
-  const lastFilterNotRadio = useRef<boolean>(true);
 
   const updateURL = async (queryString: string) => {
+    lastFilterRef.current = null;
     const newUrl = `${pathname}?${queryString}`;
     push(newUrl);
   };
 
+  // useEffect(() => {
+  //   setIsLoaded(true);
+  //   console.log(lastFilterRef.current);
+  //   console.log(lastFilterRef.current?.tabIndex);
+  //   console.log(
+  //     "Bounding rect:",
+  //     lastFilterRef.current?.getBoundingClientRect()
+  //   );
+  //   if (lastFilterRef.current) {
+  //     console.log("hello");
+  //     lastFilterRef.current?.focus();
+  //   } else if (isFirstLoad.current) {
+  //     headingRef.current?.focus();
+  //   }
+  //   isFirstLoad.current = true;
+  //   // eslint-disable-next-line react-hooks/exhaustive-deps
+  // }, [searchResults]);
+
   useEffect(() => {
     setIsLoaded(true);
-    if (isFirstLoad.current) {
-      headingRef.current?.focus();
-    }
-    isFirstLoad.current = true;
+    let animationFrame: number;
+
+    const focusWhenReady = () => {
+      const el = lastFilterRef.current;
+      if (
+        el &&
+        el.getBoundingClientRect().height > 0 &&
+        getComputedStyle(el)?.display
+      ) {
+        el.focus();
+      } else {
+        animationFrame = requestAnimationFrame(focusWhenReady);
+      }
+    };
+
+    focusWhenReady();
+
+    return () => {
+      cancelAnimationFrame(animationFrame);
+    };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [searchResults]);
 

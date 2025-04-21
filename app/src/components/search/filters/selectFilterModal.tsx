@@ -25,6 +25,7 @@ import {
   AvailableFilterOption,
 } from "@/src/types/AvailableFilterType";
 import { capitalize } from "@/src/utils/utils";
+import { useSearchContext } from "@/src/context/SearchProvider";
 
 type SelectFilterModalProps = {
   filter: AvailableFilter;
@@ -37,9 +38,10 @@ type SelectFilterModalProps = {
     React.SetStateAction<AvailableFilterOption | null>
   >;
   searchManager: SearchManager;
+  containerRef: React.RefObject<HTMLDivElement>;
 };
 
-type FocusableElement = HTMLElement & { focus: () => void };
+export type FocusableElement = HTMLElement & { focus: () => void };
 
 const SelectFilterModal = forwardRef<HTMLButtonElement, SelectFilterModalProps>(
   (props, accordionButtonRef) => {
@@ -52,6 +54,7 @@ const SelectFilterModal = forwardRef<HTMLButtonElement, SelectFilterModalProps>(
       modalCurrent,
       setModalCurrent,
       searchManager,
+      containerRef,
     } = props;
     const {
       isOpen,
@@ -61,6 +64,7 @@ const SelectFilterModal = forwardRef<HTMLButtonElement, SelectFilterModalProps>(
     const [searchText, setSearchText] = useState("");
     const [currentPage, setCurrentPage] = useState(1);
     const itemsPerPage = 10;
+    const { lastFilterRef } = useSearchContext();
 
     // Whether modal closing should focus on open or closed dropdown.
     const [focusOutside, setFocusOutside] = useState(false);
@@ -139,6 +143,8 @@ const SelectFilterModal = forwardRef<HTMLButtonElement, SelectFilterModalProps>(
           isOpen={isOpen}
           onClose={() => {
             if (modalCurrent && focusOutside) {
+              lastFilterRef.current =
+                containerRef.current?.querySelector("button")!!;
               updateURL(
                 searchManager.handleAddFilter([
                   {
@@ -283,6 +289,8 @@ const SelectFilterModal = forwardRef<HTMLButtonElement, SelectFilterModalProps>(
                   isDisabled={!modalCurrent}
                   onClick={() => {
                     handleClose(true);
+                    lastFilterRef.current =
+                      containerRef.current?.querySelector("button")!!;
                     updateURL(
                       searchManager.handleAddFilter([
                         {
