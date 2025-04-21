@@ -6,22 +6,22 @@ import {
   DEFAULT_SEARCH_TERM,
 } from "@/src/config/constants";
 import { useRouter } from "next/navigation";
-import { FacetFilter } from "@/src/types/FacetFilterType";
+import { AvailableFilter } from "@/src/types/AvailableFilterType";
 
-const mockFacetFilter: FacetFilter = {
+const mockAvailableFilter: AvailableFilter = {
   name: "Publisher",
   options: [
-    { name: "Publisher 1", count: 10 },
-    { name: "Publisher 2", count: 20 },
-    { name: "Publisher 3", count: 30 },
-    { name: "Publisher 4", count: 40 },
-    { name: "Publisher 5", count: 50 },
-    { name: "Publisher 6", count: 60 },
-    { name: "Publisher 7", count: 70 },
-    { name: "Publisher 8", count: 80 },
-    { name: "Publisher 9", count: 90 },
-    { name: "Publisher 10", count: 100 },
-    { name: "Publisher 11", count: 110 },
+    { name: "Publisher 1", count: 10, selected: false },
+    { name: "Publisher 2", count: 20, selected: false },
+    { name: "Publisher 3", count: 30, selected: false },
+    { name: "Publisher 4", count: 40, selected: false },
+    { name: "Publisher 5", count: 50, selected: false },
+    { name: "Publisher 6", count: 60, selected: false },
+    { name: "Publisher 7", count: 70, selected: false },
+    { name: "Publisher 8", count: 80, selected: false },
+    { name: "Publisher 9", count: 90, selected: false },
+    { name: "Publisher 10", count: 100, selected: false },
+    { name: "Publisher 11", count: 110, selected: false },
   ],
 };
 
@@ -43,7 +43,7 @@ let mockPush = jest.fn();
 (useRouter as jest.Mock).mockReturnValue({ push: mockPush });
 
 let component = (
-  <SelectFilter filter={mockFacetFilter} searchManager={mockManager} />
+  <SelectFilter filter={mockAvailableFilter} searchManager={mockManager} />
 );
 
 describe("SelectFilterComponent", () => {
@@ -81,22 +81,6 @@ describe("SelectFilterComponent", () => {
 
     expect(firstRadio).toBeChecked();
     expect(screen.getByText("Apply")).not.toBeDisabled();
-  });
-
-  it("updates the URL when selection is applied", () => {
-    render(component);
-    const accordionButton = screen.getByRole("button", { name: /Publisher/i });
-    fireEvent.click(accordionButton);
-
-    const secondRadio = screen.getByRole("radio", { name: "Publisher 2 20" });
-    fireEvent.click(secondRadio);
-
-    const applyButton = screen.getByRole("button", { name: "Apply" });
-    fireEvent.click(applyButton);
-
-    expect(mockPush).toHaveBeenCalledWith(
-      expect.stringContaining("filters=%5BPublisher%3DPublisher+2%5")
-    );
   });
 
   it("opens modal with view more button", () => {

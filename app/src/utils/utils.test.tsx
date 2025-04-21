@@ -3,7 +3,14 @@ import {
   stringToSlug,
   createAdobeAnalyticsPageName,
   displayResults,
+  deSlugify,
+  filterStringToCollectionApiFilterString,
+  getCollectionFilterFromUUID,
+  getHighestRankedHighlight,
+  getTitleWithHighlights,
+  replaceEmWithMark,
 } from "./utils";
+import { AvailableFilterOption } from "../types/AvailableFilterType";
 
 // TODO:
 /**
@@ -201,5 +208,170 @@ describe("displayResults", () => {
 
   test("displays correct range when perPage is greater than numFound", () => {
     expect(displayResults(5, 10, 1)).toBe("1-5 of 5");
+  });
+});
+
+describe("deSlugify", () => {
+  it("should convert a simple kebab string to title case", () => {
+    expect(deSlugify("hello-world")).toBe("Hello World");
+  });
+
+  it("should handle multiple words correctly", () => {
+    expect(deSlugify("javaScript-thank-you-edwin")).toBe(
+      "JavaScript Thank You Edwin"
+    );
+  });
+
+  it("should handle single word", () => {
+    expect(deSlugify("java")).toBe("Java");
+  });
+
+  it("should return an empty string if input is empty", () => {
+    expect(deSlugify("")).toBe("");
+  });
+
+  it("should handle already formatted strings (with no dashes)", () => {
+    expect(deSlugify("hello world")).toBe("Hello World");
+  });
+
+  it("should handle strings with multiple dashes in a row", () => {
+    expect(deSlugify("hello--world")).toBe("Hello  World");
+  });
+
+  it("should handle strings with trailing or leading dashes", () => {
+    expect(deSlugify("-hello-world-")).toBe(" Hello World ");
+  });
+});
+
+describe("getCollectionFilterFromUUID", () => {
+  const availableCollections: AvailableFilterOption[] = [
+    {
+      name: "Print Collection portrait file||16ad5350-c52e-012f-aecf-58d385a7bc34",
+      count: 96377,
+      selected: false,
+    },
+    {
+      name: "Billy Rose Theatre Collection photograph file||2589a880-c52c-012f-2cb4-58d385a7bc34",
+      count: 71066,
+      selected: false,
+    },
+    {
+      name: "Martha Swope photographs||0146e060-c530-012f-1e6f-58d385a7bc34",
+      count: 53115,
+      selected: false,
+    },
+    {
+      name: "Cigarette cards||b50ab6f0-c52b-012f-5986-58d385a7bc34",
+      count: 50939,
+      selected: false,
+    },
+    {
+      name: "Robert N. Dennis collection of stereoscopic views||5261fd50-c52e-012f-85ec-58d385a7bc34",
+      count: 43135,
+      selected: false,
+    },
+  ];
+  test("returns the correct filter if there is a match", () => {
+    expect(
+      getCollectionFilterFromUUID(
+        "16ad5350-c52e-012f-aecf-58d385a7bc34",
+        availableCollections
+      )
+    ).toStrictEqual({
+      name: "Print Collection portrait file||16ad5350-c52e-012f-aecf-58d385a7bc34",
+      count: 96377,
+      selected: false,
+    } as AvailableFilterOption);
+  });
+
+  test("returns and empty filter if there is no match", () => {
+    expect(
+      getCollectionFilterFromUUID(
+        "16ad5350-c52e-012f-aecf-58d385a7bc35",
+        availableCollections
+      )
+    ).toStrictEqual(null);
+  });
+});
+
+describe("filterStringToCollectionApiFilterString", () => {
+  test("generates the correct filter syntax for a single filter", () => {
+    expect(
+      filterStringToCollectionApiFilterString("[Name=Swope, Martha]")
+    ).toBe("name=Swope, Martha");
+    expect(
+      filterStringToCollectionApiFilterString(
+        "[Collection=Print Collection portrait file||16ad5350-c52e-012f-aecf-58d385a7bc34]"
+      )
+    ).toBe(
+      "collection=Print Collection portrait file||16ad5350-c52e-012f-aecf-58d385a7bc34"
+    );
+  });
+
+  test("generates the correct filter syntax for multiple filter", () => {
+    expect(
+      filterStringToCollectionApiFilterString(
+        "[name=Swope, Martha][collection=Print Collection portrait file||16ad5350-c52e-012f-aecf-58d385a7bc34]"
+      )
+    ).toBe(
+      "name=Swope, Martha&collection=Print Collection portrait file||16ad5350-c52e-012f-aecf-58d385a7bc34"
+    );
+  });
+
+  test("generates the correct filter syntax for no filters", () => {
+    expect(filterStringToCollectionApiFilterString("")).toBe("");
+  });
+});
+
+describe("getHighestRankedHighlight", () => {
+  const mockHighlights = [
+    { field: "abstract", text: "Something" },
+    { field: "note", text: "Note text" },
+    { field: "topic", text: "Topic text" },
+  ];
+
+  it("returns the highest-ranked highlight based on priority", () => {
+    const result = getHighestRankedHighlight(mockHighlights);
+    // topic comes before note and abstract
+    expect(result).toEqual({ field: "topic", text: "Topic text" });
+  });
+
+  it("returns null if no highlight matches the ranking list", () => {
+    const highlights = [{ field: "random", text: "text" }];
+    expect(getHighestRankedHighlight(highlights)).toBeNull();
+  });
+});
+
+describe("replaceEmWithMark", () => {
+  it("replaces <em> tags with <mark> tags", () => {
+    const input = "This is <em>important</em> text.";
+    const output = "This is <mark>important</mark> text.";
+    expect(replaceEmWithMark(input)).toBe(output);
+  });
+
+  it("replaces multiple <em> tags", () => {
+    const input = "<em>First</em> and <em>second</em>";
+    const output = "<mark>First</mark> and <mark>second</mark>";
+    expect(replaceEmWithMark(input)).toBe(output);
+  });
+
+  it("returns original string if there are no <em> tags", () => {
+    const input = "No highlights here";
+    expect(replaceEmWithMark(input)).toBe(input);
+  });
+});
+
+describe("getTitleWithHighlights", () => {
+  it("returns marked-up highlight if title field exists", () => {
+    const highlights = [{ field: "Title", text: "The <em>Great</em> Gatsby" }];
+    const title = "The Great Gatsby";
+    const result = getTitleWithHighlights(highlights, title);
+    expect(result).toBe("The <mark>Great</mark> Gatsby");
+  });
+
+  it("returns original title if no title highlight exists", () => {
+    const highlights = [{ field: "Topic", text: "Not a title" }];
+    const title = "Original Title";
+    expect(getTitleWithHighlights(highlights, title)).toBe(title);
   });
 });
