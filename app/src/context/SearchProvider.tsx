@@ -12,13 +12,10 @@ import {
   stringToFilter,
 } from "../utils/searchManager";
 import { MutableRefObject } from "react";
-import { FocusableElement } from "../components/search/filters/selectFilterModal";
 
 interface SearchContextType {
   searchManager: SearchManager;
-  lastFilterRef: MutableRefObject<
-    HTMLButtonElement | HTMLInputElement | FocusableElement | null
-  >;
+  lastFilterRef: MutableRefObject<string | null>;
 }
 
 const SearchContext = createContext<SearchContextType | undefined>(undefined);
@@ -30,9 +27,7 @@ export const SearchProvider = ({
   searchParams?;
   children: React.ReactNode;
 }) => {
-  const lastFilterRef = useRef<HTMLButtonElement | HTMLInputElement | null>(
-    null
-  );
+  const lastFilterRef = useRef<string | null>(null);
   const searchManager = new GeneralSearchManager({
     initialPage: Number(searchParams?.page) || DEFAULT_PAGE_NUM,
     initialSort: searchParams?.sort || DEFAULT_SEARCH_SORT,

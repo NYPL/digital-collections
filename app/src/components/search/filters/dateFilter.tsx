@@ -22,7 +22,7 @@ const DateFilter = ({ searchManager }: DateFilterProps) => {
   const { lastFilterRef } = useSearchContext();
 
   const updateURL = async (queryString) => {
-    lastFilterRef.current = buttonRef.current;
+    lastFilterRef.current = "Apply dates";
     push(`${pathname}?${queryString}`);
   };
 
@@ -97,6 +97,7 @@ const DateFilter = ({ searchManager }: DateFilterProps) => {
         </Flex>
         <Button
           ref={buttonRef}
+          aria-label="Apply dates"
           id="date-filter-btn"
           isDisabled={!validDateInput(dateStart) || !validDateInput(dateEnd)}
           sx={{

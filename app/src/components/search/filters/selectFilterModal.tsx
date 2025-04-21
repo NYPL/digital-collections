@@ -38,7 +38,6 @@ type SelectFilterModalProps = {
     React.SetStateAction<AvailableFilterOption | null>
   >;
   searchManager: SearchManager;
-  containerRef: React.RefObject<HTMLDivElement>;
 };
 
 export type FocusableElement = HTMLElement & { focus: () => void };
@@ -54,7 +53,6 @@ const SelectFilterModal = forwardRef<HTMLButtonElement, SelectFilterModalProps>(
       modalCurrent,
       setModalCurrent,
       searchManager,
-      containerRef,
     } = props;
     const {
       isOpen,
@@ -143,8 +141,7 @@ const SelectFilterModal = forwardRef<HTMLButtonElement, SelectFilterModalProps>(
           isOpen={isOpen}
           onClose={() => {
             if (modalCurrent && focusOutside) {
-              lastFilterRef.current =
-                containerRef.current?.querySelector("button")!!;
+              lastFilterRef.current = `Select ${filter.name}`;
               updateURL(
                 searchManager.handleAddFilter([
                   {
@@ -289,8 +286,7 @@ const SelectFilterModal = forwardRef<HTMLButtonElement, SelectFilterModalProps>(
                   isDisabled={!modalCurrent}
                   onClick={() => {
                     handleClose(true);
-                    lastFilterRef.current =
-                      containerRef.current?.querySelector("button")!!;
+                    lastFilterRef.current = `Select ${filter.name}`;
                     updateURL(
                       searchManager.handleAddFilter([
                         {
