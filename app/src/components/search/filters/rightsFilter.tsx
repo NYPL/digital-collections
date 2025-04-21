@@ -7,7 +7,7 @@ import {
   Box,
 } from "@nypl/design-system-react-components";
 import { useRouter, usePathname } from "next/navigation";
-import { useRef, useState } from "react";
+import { useState } from "react";
 import { ToggleTip } from "../../toggleTip/toggleTip";
 import { useSearchContext } from "@/src/context/SearchProvider";
 import { SearchManager } from "@/src/utils/searchManager";
@@ -22,21 +22,11 @@ const RightsFilter = ({ searchManager }: RightsFilterProps) => {
   const [selectedFilter, setSelectedFilter] = useState<string | null>(selected);
 
   const { lastFilterRef } = useSearchContext();
-  const radioRefs = {
-    publicDomain: useRef<HTMLInputElement>(null),
-    availableOnline: useRef<HTMLInputElement>(null),
-    onSiteMaterial: useRef<HTMLInputElement>(null),
-  };
-
   const { push } = useRouter();
   const pathname = usePathname();
 
   const updateURL = async (queryString: string, selectedValue: string) => {
-    const selectedRadioRef = radioRefs[selectedValue as keyof typeof radioRefs];
-    if (selectedRadioRef?.current) {
-      lastFilterRef.current = selectedRadioRef.current;
-    }
-
+    lastFilterRef.current = selectedValue;
     push(`${pathname}?${queryString}`);
   };
 
@@ -75,7 +65,6 @@ const RightsFilter = ({ searchManager }: RightsFilterProps) => {
             id="publicDomain"
             value="publicDomain"
             labelText="Public domain"
-            ref={radioRefs.publicDomain}
           />
           <ToggleTip
             toggleTipContent="View materials that are free to download, reuse, and share."
@@ -88,7 +77,6 @@ const RightsFilter = ({ searchManager }: RightsFilterProps) => {
             id="availableOnline"
             value="availableOnline"
             labelText="Available online"
-            ref={radioRefs.availableOnline}
           />
           <ToggleTip
             toggleTipContent="View digital materials from anywhere, any time."
@@ -101,7 +89,6 @@ const RightsFilter = ({ searchManager }: RightsFilterProps) => {
             id="onSiteMaterial"
             value="onSiteMaterial"
             labelText="Contains on-site materials"
-            ref={radioRefs.onSiteMaterial}
           />
           <ToggleTip
             toggleTipContent="View materials accessible only at an NYPL location."

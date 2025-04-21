@@ -154,8 +154,7 @@ const SelectFilterComponent = forwardRef<
         isDisabled={!current}
         onClick={() => {
           accordionButtonRef.current?.focus();
-          lastFilterRef.current =
-            containerRef.current?.querySelector("button")!!;
+          lastFilterRef.current = `Select ${filter.name}`;
           // Push the current filter selection to URL.
           updateURL(
             searchManager.handleAddFilter([
@@ -172,7 +171,6 @@ const SelectFilterComponent = forwardRef<
       </Button>
       {sortedOptions.length > 10 && (
         <SelectFilterModal
-          containerRef={containerRef}
           filter={filter}
           ref={accordionButtonRef}
           onOpen={() => {

@@ -7,13 +7,7 @@ import {
   Link,
   Icon,
 } from "@nypl/design-system-react-components";
-import React, {
-  MutableRefObject,
-  useEffect,
-  useLayoutEffect,
-  useRef,
-  useState,
-} from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { CARDS_PER_PAGE, SEARCH_SORT_LABELS } from "@/src/config/constants";
 import { displayResults, totalNumPages } from "@/src/utils/utils";
 import Filters from "../../search/filters/filters";
@@ -65,46 +59,26 @@ const SearchPage = ({
     push(newUrl);
   };
 
-  // useEffect(() => {
-  //   setIsLoaded(true);
-  //   console.log(lastFilterRef.current);
-  //   console.log(lastFilterRef.current?.tabIndex);
-  //   console.log(
-  //     "Bounding rect:",
-  //     lastFilterRef.current?.getBoundingClientRect()
-  //   );
-  //   if (lastFilterRef.current) {
-  //     console.log("hello");
-  //     lastFilterRef.current?.focus();
-  //   } else if (isFirstLoad.current) {
-  //     headingRef.current?.focus();
-  //   }
-  //   isFirstLoad.current = true;
-  //   // eslint-disable-next-line react-hooks/exhaustive-deps
-  // }, [searchResults]);
-
   useEffect(() => {
     setIsLoaded(true);
-    let animationFrame: number;
-
-    const focusWhenReady = () => {
-      const el = lastFilterRef.current;
-      if (
-        el &&
-        el.getBoundingClientRect().height > 0 &&
-        getComputedStyle(el)?.display
-      ) {
-        el.focus();
-      } else {
-        animationFrame = requestAnimationFrame(focusWhenReady);
+    if (lastFilterRef.current) {
+      // Search for the last used filter, if there is one focus it
+      const button = document.querySelector(
+        `button[aria-label="${lastFilterRef.current}"]`
+      );
+      if (button) {
+        (button as HTMLButtonElement).focus();
       }
-    };
-
-    focusWhenReady();
-
-    return () => {
-      cancelAnimationFrame(animationFrame);
-    };
+      const input = document.querySelector(
+        `input[value="${lastFilterRef.current}"]`
+      );
+      if (input) {
+        (input as HTMLInputElement).focus();
+      }
+    } else if (isFirstLoad.current) {
+      headingRef.current?.focus();
+    }
+    isFirstLoad.current = true;
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [searchResults]);
 

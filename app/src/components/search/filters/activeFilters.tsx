@@ -10,6 +10,7 @@ import {
   type SearchManager,
 } from "@/src/utils/searchManager";
 import { usePathname, useRouter } from "next/navigation";
+import { useSearchContext } from "@/src/context/SearchProvider";
 
 type ActiveFilterProps = {
   searchManager: SearchManager;
@@ -18,7 +19,9 @@ type ActiveFilterProps = {
 const ActiveFilters = ({ searchManager }: ActiveFilterProps) => {
   const { push } = useRouter();
   const pathname = usePathname();
+  const { lastFilterRef } = useSearchContext();
   const updateURL = async (queryString) => {
+    lastFilterRef.current = null;
     push(`${pathname}?${queryString}`);
   };
 
