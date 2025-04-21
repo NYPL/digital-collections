@@ -25,7 +25,6 @@ export const SearchProvider = ({
   searchParams?;
   children: React.ReactNode;
 }) => {
-  const lastFilterRef = useRef<string | null>(null);
   const searchManager = new GeneralSearchManager({
     initialPage: Number(searchParams?.page) || DEFAULT_PAGE_NUM,
     initialSort: searchParams?.sort || DEFAULT_SEARCH_SORT,
