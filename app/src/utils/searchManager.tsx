@@ -265,7 +265,9 @@ export const transformToAvailableFilters = (
   availableFilters: Record<string, AvailableFilterOption[]>
 ): AvailableFilter[] => {
   return Object.entries(availableFilters)
-    .filter(([key]) => key !== "subcollection")
+    .filter(
+      ([key]) => key !== "subcollection" && key !== "language" && key !== "form"
+    )
     .map(([key, options]) => ({
       name: key,
       options,
