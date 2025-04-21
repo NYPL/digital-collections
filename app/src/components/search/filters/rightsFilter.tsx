@@ -21,12 +21,11 @@ const RightsFilter = ({ searchManager }: RightsFilterProps) => {
     searchManager.filters.find((f) => f.filter === "rights")?.value || null;
   const [selectedFilter, setSelectedFilter] = useState<string | null>(selected);
 
-  const { lastFilterRef } = useSearchContext();
   const { push } = useRouter();
   const pathname = usePathname();
 
   const updateURL = async (queryString: string, selectedValue: string) => {
-    lastFilterRef.current = selectedValue;
+    searchManager.setLastFilter(selectedValue);
     push(`${pathname}?${queryString}`);
   };
 

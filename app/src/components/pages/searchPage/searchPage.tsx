@@ -41,7 +41,7 @@ const SearchPage = ({
 }: {
   searchResults: SearchResultsType;
 }) => {
-  const { searchManager, lastFilterRef } = useSearchContext();
+  const { searchManager } = useSearchContext();
   const totalPages = totalNumPages(
     searchResults.numResults.toString(),
     CARDS_PER_PAGE
@@ -54,28 +54,32 @@ const SearchPage = ({
   const [filtersExpanded, setFiltersExpanded] = useState(false);
 
   const updateURL = async (queryString: string) => {
-    lastFilterRef.current = null;
+    searchManager.setLastFilter(null);
     const newUrl = `${pathname}?${queryString}`;
     push(newUrl);
   };
 
   useEffect(() => {
     setIsLoaded(true);
-    if (lastFilterRef.current) {
+    if (
+      searchManager.lastFilterRef?.current &&
+      searchManager.filters.length > 0
+    ) {
       // Search for the last used filter, if there is one focus it
       const button = document.querySelector(
-        `button[aria-label="${lastFilterRef.current}"]`
+        `button[aria-label="${searchManager.lastFilterRef?.current}"]`
       );
       if (button) {
         (button as HTMLButtonElement).focus();
       }
       const input = document.querySelector(
-        `input[value="${lastFilterRef.current}"]`
+        `input[value="${searchManager.lastFilterRef?.current}"]`
       );
       if (input) {
         (input as HTMLInputElement).focus();
       }
     } else if (isFirstLoad.current) {
+      setFiltersExpanded(false);
       headingRef.current?.focus();
     }
     isFirstLoad.current = true;

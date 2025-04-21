@@ -5,6 +5,7 @@ import {
   DEFAULT_SEARCH_TERM,
 } from "@/src/config/constants";
 import { GeneralSearchManager } from "@/src/utils/searchManager";
+import { useRef } from "react";
 
 jest.mock("next/navigation", () => ({
   useRouter: jest.fn(() => ({
@@ -27,6 +28,7 @@ describe("ActiveFilters", () => {
         { filter: "format", value: "book" },
       ],
       initialKeywords: DEFAULT_SEARCH_TERM,
+      lastFilterRef: { current: null },
     });
     component = <ActiveFilters searchManager={mockManager} />;
   });
@@ -62,6 +64,7 @@ describe("ActiveFilters", () => {
       initialSort: DEFAULT_SEARCH_SORT,
       initialFilters: [],
       initialKeywords: DEFAULT_SEARCH_TERM,
+      lastFilterRef: { current: null },
     });
     render(<ActiveFilters searchManager={mockEmptyManager} />);
     expect(screen.queryByText("Filters applied:")).not.toBeInTheDocument();

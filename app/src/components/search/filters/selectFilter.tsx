@@ -7,7 +7,7 @@ import {
   Button,
   Tooltip,
 } from "@nypl/design-system-react-components";
-import React, { forwardRef, useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import SelectFilterModal from "./selectFilterModal";
 import FilterAccordion from "./filterAccordion";
 import { usePathname, useRouter } from "next/navigation";
@@ -20,7 +20,6 @@ import {
   AvailableFilterOption,
 } from "@/src/types/AvailableFilterType";
 import { capitalize } from "@/src/utils/utils";
-import { useSearchContext } from "@/src/context/SearchProvider";
 
 export interface SelectFilterProps {
   filter: AvailableFilter;
@@ -61,14 +60,12 @@ export const availableFilterOptions = (
   });
 };
 
-const SelectFilterComponent = forwardRef<
-  HTMLButtonElement,
-  { filter: AvailableFilter; searchManager: SearchManager }
->((props, filterRef) => {
-  const { filter, searchManager } = props;
+const SelectFilterComponent = ({
+  filter,
+  searchManager,
+}: SelectFilterProps) => {
   const [userClickedOutside, setUserClickedOutside] = useState<boolean>(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const { lastFilterRef } = useSearchContext();
 
   // Sets selected to filter's current URL value on mount.
   let selected = filter
@@ -93,8 +90,6 @@ const SelectFilterComponent = forwardRef<
     useRef<HTMLButtonElement>(null);
   const containerRef: React.RefObject<HTMLDivElement> =
     useRef<HTMLDivElement>(null);
-
-  const mergedRef = useMergeRefs(filterRef, accordionButtonRef);
 
   // Tells the dropdown to close if user focus leaves.
   const handleFocus = (e) => {
@@ -154,7 +149,7 @@ const SelectFilterComponent = forwardRef<
         isDisabled={!current}
         onClick={() => {
           accordionButtonRef.current?.focus();
-          lastFilterRef.current = `Select ${filter.name}`;
+          searchManager.setLastFilter(`Select ${filter.name}`);
           // Push the current filter selection to URL.
           updateURL(
             searchManager.handleAddFilter([
@@ -172,7 +167,6 @@ const SelectFilterComponent = forwardRef<
       {sortedOptions.length > 10 && (
         <SelectFilterModal
           filter={filter}
-          ref={accordionButtonRef}
           onOpen={() => {
             setModalCurrent(current);
             setIsModalOpen(true);
@@ -206,7 +200,7 @@ const SelectFilterComponent = forwardRef<
         accordionData={[
           {
             accordionType: "default",
-            buttonInteractionRef: mergedRef,
+            buttonInteractionRef: accordionButtonRef,
             label: (
               <Box noOfLines={1}>{`${capitalize(filter.name)}${
                 selected ? `: ${capitalize(selected.name)}` : ``
@@ -222,7 +216,7 @@ const SelectFilterComponent = forwardRef<
       />
     </Box>
   );
-});
+};
 
 SelectFilterComponent.displayName = "SelectFilterComponent";
 

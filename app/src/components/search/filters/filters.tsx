@@ -25,13 +25,18 @@ const Filters = ({
   filtersExpanded,
   setFiltersExpanded,
 }: FiltersProps) => {
-  const filterRefs = useRef<(HTMLButtonElement | null)[]>([]);
   const dateFilterRef = useRef<TextInputRefType | null>(null);
   const secondRowFilter = 4;
   useEffect(() => {
     if (filtersExpanded) {
-      if (filterRefs.current[secondRowFilter]) {
-        filterRefs.current[secondRowFilter]?.focus();
+      // If there are 4> dropdown filters visible, focus the 4th.
+      if (searchManager.availableFilters[secondRowFilter].options.length > 0) {
+        const button = document.querySelector(
+          `button[aria-label="Select ${searchManager.availableFilters[secondRowFilter].name}"]`
+        );
+        if (button) {
+          (button as HTMLButtonElement).focus();
+        }
       } else {
         dateFilterRef.current?.focus();
       }
@@ -42,7 +47,6 @@ const Filters = ({
     <>
       <SelectFilterGrid
         isExpanded={filtersExpanded}
-        filterRefs={filterRefs}
         searchManager={searchManager}
         key={searchManager.filters.length}
       />
@@ -52,6 +56,7 @@ const Filters = ({
             searchManager={searchManager}
             // Remounts when filters are cleared from active filter panel.
             key={searchManager.filters.length + 1}
+            ref={dateFilterRef}
           />
           <RightsFilter
             searchManager={searchManager}

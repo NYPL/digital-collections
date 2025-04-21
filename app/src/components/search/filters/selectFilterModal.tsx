@@ -62,7 +62,6 @@ const SelectFilterModal = forwardRef<HTMLButtonElement, SelectFilterModalProps>(
     const [searchText, setSearchText] = useState("");
     const [currentPage, setCurrentPage] = useState(1);
     const itemsPerPage = 10;
-    const { lastFilterRef } = useSearchContext();
 
     // Whether modal closing should focus on open or closed dropdown.
     const [focusOutside, setFocusOutside] = useState(false);
@@ -141,7 +140,7 @@ const SelectFilterModal = forwardRef<HTMLButtonElement, SelectFilterModalProps>(
           isOpen={isOpen}
           onClose={() => {
             if (modalCurrent && focusOutside) {
-              lastFilterRef.current = `Select ${filter.name}`;
+              searchManager.setLastFilter(`Select ${filter.name}`);
               updateURL(
                 searchManager.handleAddFilter([
                   {
@@ -286,7 +285,7 @@ const SelectFilterModal = forwardRef<HTMLButtonElement, SelectFilterModalProps>(
                   isDisabled={!modalCurrent}
                   onClick={() => {
                     handleClose(true);
-                    lastFilterRef.current = `Select ${filter.name}`;
+                    searchManager.setLastFilter(`Select ${filter.name}`);
                     updateURL(
                       searchManager.handleAddFilter([
                         {
