@@ -226,3 +226,7 @@ export const getTitleWithHighlights = (highlights, title) => {
   );
   return titleHighlight ? replaceEmWithMark(titleHighlight.text) : title;
 };
+
+export const deSlugify = (slug: string): string => {
+  return slug.replace(/-/g, " ").replace(/\b\w/g, (c) => c.toUpperCase());
+};
