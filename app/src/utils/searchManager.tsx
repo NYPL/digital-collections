@@ -12,6 +12,7 @@ import {
   AvailableFilterOption,
 } from "../types/AvailableFilterType";
 import { capitalize } from "./utils";
+import { MutableRefObject } from "react";
 
 export interface SearchManager {
   handleSearchSubmit(): string;
@@ -26,6 +27,8 @@ export interface SearchManager {
   get page(): number;
   get filters(): Filter[];
   get availableFilters(): AvailableFilter[];
+  get lastFilterRef(): MutableRefObject<string | null>;
+  setLastFilter(value: string | null): void;
 }
 
 abstract class BaseSearchManager implements SearchManager {
@@ -34,6 +37,7 @@ abstract class BaseSearchManager implements SearchManager {
   protected currentKeywords: string;
   protected currentFilters: Set<string>;
   protected currentAvailableFilters: AvailableFilter[];
+  public lastFilterRef: MutableRefObject<string | null>;
 
   abstract handlePageChange(pageNumber: number): string;
   abstract handleSortChange(id: string): string;
@@ -46,6 +50,7 @@ abstract class BaseSearchManager implements SearchManager {
     initialFilters?: Filter[];
     initialKeywords: string;
     initialAvailableFilters?: Record<string, AvailableFilterOption[]>;
+    lastFilterRef?: MutableRefObject<string | null>;
   }) {
     this.currentPage = config.initialPage;
     this.currentSort = config.initialSort;
@@ -56,6 +61,7 @@ abstract class BaseSearchManager implements SearchManager {
     this.currentAvailableFilters = transformToAvailableFilters(
       config.initialAvailableFilters ?? {}
     );
+    this.lastFilterRef = config.lastFilterRef!!;
   }
 
   get keywords() {
@@ -74,6 +80,10 @@ abstract class BaseSearchManager implements SearchManager {
     return Array.from(this.currentFilters).map((filterStr) =>
       JSON.parse(filterStr)
     );
+  }
+
+  setLastFilter(value: string | null): void {
+    this.lastFilterRef.current = value;
   }
 
   get availableFilters(): AvailableFilter[] {

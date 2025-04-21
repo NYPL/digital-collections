@@ -11,11 +11,9 @@ import {
   SearchManager,
   stringToFilter,
 } from "../utils/searchManager";
-import { MutableRefObject } from "react";
 
 interface SearchContextType {
   searchManager: SearchManager;
-  lastFilterRef: MutableRefObject<string | null>;
 }
 
 const SearchContext = createContext<SearchContextType | undefined>(undefined);
@@ -34,10 +32,11 @@ export const SearchProvider = ({
     initialFilters: stringToFilter(searchParams?.filters),
     initialKeywords: searchParams?.q || DEFAULT_SEARCH_TERM,
     initialAvailableFilters: searchParams?.availableFilters || DEFAULT_FILTERS,
+    lastFilterRef: useRef<string | null>(null),
   });
 
   return (
-    <SearchContext.Provider value={{ searchManager, lastFilterRef }}>
+    <SearchContext.Provider value={{ searchManager }}>
       {children}
     </SearchContext.Provider>
   );

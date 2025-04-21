@@ -1,12 +1,10 @@
 import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import SortMenu from "./sortMenu";
 import {
-  DEFAULT_FILTERS,
   DEFAULT_SEARCH_SORT,
   DEFAULT_SEARCH_TERM,
 } from "@/src/config/constants";
 import { GeneralSearchManager } from "@/src/utils/searchManager";
-import { SetStateAction } from "react";
 
 describe("SortMenu", () => {
   const updateURL = jest.fn();
