@@ -61,7 +61,7 @@ abstract class BaseSearchManager implements SearchManager {
     this.currentAvailableFilters = transformToAvailableFilters(
       config.initialAvailableFilters ?? {}
     );
-    this.lastFilterRef = config.lastFilterRef!!;
+    this.lastFilterRef = config.lastFilterRef!;
   }
 
   get keywords() {
