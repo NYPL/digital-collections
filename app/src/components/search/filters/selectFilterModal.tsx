@@ -140,7 +140,9 @@ const SelectFilterModal = forwardRef<HTMLButtonElement, SelectFilterModalProps>(
           isOpen={isOpen}
           onClose={() => {
             if (modalCurrent && focusOutside) {
-              searchManager.setLastFilter(`Select ${filter.name}`);
+              searchManager.setLastFilter(
+                `accordion-button-select-${filter.name}`
+              );
               updateURL(
                 searchManager.handleAddFilter([
                   {
@@ -285,7 +287,9 @@ const SelectFilterModal = forwardRef<HTMLButtonElement, SelectFilterModalProps>(
                   isDisabled={!modalCurrent}
                   onClick={() => {
                     handleClose(true);
-                    searchManager.setLastFilter(`Select ${filter.name}`);
+                    searchManager.setLastFilter(
+                      `accordion-button-select-${filter.name}`
+                    );
                     updateURL(
                       searchManager.handleAddFilter([
                         {

@@ -18,20 +18,23 @@ type ActiveFilterProps = {
 const ActiveFilters = ({ searchManager }: ActiveFilterProps) => {
   const { push } = useRouter();
   const pathname = usePathname();
-  const updateURL = async (queryString) => {
-    searchManager.setLastFilter(null);
+  const updateURL = async (queryString, focusIndicator) => {
+    searchManager.setLastFilter(focusIndicator);
     push(`${pathname}?${queryString}`);
   };
 
   const handleOnClick = (tag) => {
     if (tag.id === "clear-filters") {
-      updateURL(searchManager.clearAllFilters());
+      updateURL(searchManager.clearAllFilters(), null);
     } else {
       const filterToRemove = searchManager.filters.find(
         (filter) => filter.filter === tag.id
       );
       if (filterToRemove) {
-        updateURL(searchManager.handleRemoveFilter(filterToRemove));
+        updateURL(
+          searchManager.handleRemoveFilter(filterToRemove),
+          "filters-applied"
+        );
       }
     }
   };
@@ -49,7 +52,13 @@ const ActiveFilters = ({ searchManager }: ActiveFilterProps) => {
   return searchManager.filters.length > 0 ? (
     <>
       <Flex alignItems="flex-start" flexWrap="wrap" gap="xs" width="100%">
-        <Text size="subtitle2" sx={{ margin: 0, fontWeight: 400 }}>
+        <Text
+          size="subtitle2"
+          // @ts-ignore
+          tabIndex={-1}
+          id="filters-applied"
+          sx={{ margin: 0, fontWeight: 400 }}
+        >
           Filters applied:
         </Text>
         <TagSet

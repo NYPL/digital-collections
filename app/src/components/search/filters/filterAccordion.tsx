@@ -85,13 +85,13 @@ const getElementsFromData = (
     }
 
     return (
-      <AccordionItem id={`${id}-item-${index}`} key={index} position="relative">
+      <AccordionItem id={id} key={index} position="relative">
         {({ isExpanded }) => {
           return (
             <>
               <AccordionButton
                 aria-label={finalAriaLabel}
-                id={`${id}-button-${index}`}
+                id={id}
                 data-index={index}
                 borderColor={"ui.gray.medium"}
                 padding="xs s"
