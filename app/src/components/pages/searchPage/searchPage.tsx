@@ -109,7 +109,6 @@ const SearchPage = ({
             <>
               <Heading
                 size="heading2"
-                role="status"
                 sx={{
                   maxWidth: "1250px",
                   marginBottom: "m",
@@ -187,7 +186,7 @@ const SearchPage = ({
               <Heading
                 size="heading5"
                 ref={headingRef}
-                tabIndex={-1}
+                role="status"
                 margin="0"
               >{`Displaying ${displayResults(
                 searchResults.numResults,
