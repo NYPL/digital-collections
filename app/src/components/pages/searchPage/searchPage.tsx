@@ -54,7 +54,6 @@ const SearchPage = ({
   const [filtersExpanded, setFiltersExpanded] = useState(false);
 
   const updateURL = async (queryString: string) => {
-    searchManager.setLastFilter(null);
     const newUrl = `${pathname}?${queryString}`;
     push(newUrl);
   };
@@ -63,9 +62,9 @@ const SearchPage = ({
     setIsLoaded(true);
     if (
       searchManager.lastFilterRef?.current &&
-      searchManager.filters.length > 0
+      (searchManager.filters.length > 0 || searchManager.sort)
     ) {
-      // Search for the button or input associated with the last used filter
+      // Search for the button or input associated with the last used filter/sort
       const button = document.querySelector(
         `button[aria-label="${searchManager.lastFilterRef?.current}"]`
       );
@@ -110,6 +109,7 @@ const SearchPage = ({
             <>
               <Heading
                 size="heading2"
+                role="status"
                 sx={{
                   maxWidth: "1250px",
                   marginBottom: "m",
@@ -265,6 +265,7 @@ const SearchPage = ({
                 pageCount={totalPages}
                 onPageChange={(newPage) => {
                   setFiltersExpanded(false);
+                  searchManager.setLastFilter(null);
                   updateURL(searchManager.handlePageChange(newPage));
                 }}
                 sx={{

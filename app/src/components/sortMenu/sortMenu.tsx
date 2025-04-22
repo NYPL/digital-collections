@@ -1,4 +1,3 @@
-import { useSearchContext } from "@/src/context/SearchProvider";
 import { SearchManager } from "@/src/utils/searchManager";
 import { Menu } from "@nypl/design-system-react-components";
 
@@ -27,6 +26,7 @@ const SortMenu = ({
           if (setFiltersExpanded) {
             setFiltersExpanded(false);
           }
+          searchManager.setLastFilter(`Sort by: ${[id]}: ${options[id]}`);
           updateURL(searchManager.handleSortChange(id));
         },
         type: "action",
