@@ -65,7 +65,7 @@ const SearchPage = ({
       searchManager.lastFilterRef?.current &&
       searchManager.filters.length > 0
     ) {
-      // Search for the last used filter, if there is one focus it
+      // Search for the button or input associated with the last used filter
       const button = document.querySelector(
         `button[aria-label="${searchManager.lastFilterRef?.current}"]`
       );
@@ -134,7 +134,6 @@ const SearchPage = ({
               sx={{
                 maxWidth: "1250px",
                 marginBottom: "l",
-                tabIndex: "-1",
               }}
             >
               {`No results ${
