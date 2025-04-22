@@ -29,7 +29,7 @@ const Filters = ({
   const secondRowFilter = 4;
   useEffect(() => {
     if (filtersExpanded) {
-      // If there are 4> dropdown filters visible, focus the 4th.
+      // If there are >4 dropdown filters visible, focus the 5th.
       if (searchManager.availableFilters[secondRowFilter].options.length > 0) {
         const button = document.querySelector(
           `button[aria-label="Select ${searchManager.availableFilters[secondRowFilter].name}"]`

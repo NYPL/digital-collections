@@ -40,11 +40,12 @@ export const DateFilter = forwardRef<TextInputRefType, DateFilterProps>(
     );
     const endFilter = searchManager.filters.find((f) => f.filter === "dateEnd");
 
+    // Values must be defined or null.
     const startValue = startFilter?.value ?? null;
     const endValue = endFilter?.value ?? null;
 
-    const [dateStart, setDateStart] = useState(startValue);
-    const [dateEnd, setDateEnd] = useState(endValue);
+    const [dateStart, setDateStart] = useState(startValue || "");
+    const [dateEnd, setDateEnd] = useState(endValue || "");
 
     const buttonRef = useRef<HTMLButtonElement>(null);
 
@@ -102,7 +103,7 @@ export const DateFilter = forwardRef<TextInputRefType, DateFilterProps>(
                 isInvalid={!validDateInput(dateStart)}
                 showHelperInvalidText={false}
                 labelText="Start year"
-                value={dateStart || ""}
+                value={dateStart}
                 onChange={(e) => setDateStart(e.target.value)}
                 ref={ref}
               />
@@ -117,7 +118,7 @@ export const DateFilter = forwardRef<TextInputRefType, DateFilterProps>(
                 id="dateEnd"
                 showHelperInvalidText={false}
                 labelText="End year"
-                value={dateEnd || ""}
+                value={dateEnd}
                 onChange={(e) => {
                   setDateEnd(e.target.value);
                 }}
