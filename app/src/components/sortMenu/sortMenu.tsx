@@ -16,6 +16,7 @@ const SortMenu = ({
 }: SortMenuProps) => {
   return (
     <Menu
+      id="sort-menu"
       showLabel
       selectedItem={searchManager.sort}
       labelText={`Sort by: ${options[searchManager.sort]}`}
@@ -26,7 +27,7 @@ const SortMenu = ({
           if (setFiltersExpanded) {
             setFiltersExpanded(false);
           }
-          searchManager.setLastFilter(`Sort by: ${[id]}: ${options[id]}`);
+          searchManager.setLastFilter("menu-button-sort-menu");
           updateURL(searchManager.handleSortChange(id));
         },
         type: "action",

@@ -21,6 +21,7 @@ describe("SortMenu", () => {
       initialSort: DEFAULT_SEARCH_SORT,
       initialFilters: [],
       initialKeywords: DEFAULT_SEARCH_TERM,
+      lastFilterRef: { current: null },
     });
   });
 

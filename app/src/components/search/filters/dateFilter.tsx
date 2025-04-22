@@ -22,7 +22,7 @@ export const DateFilter = forwardRef<TextInputRefType, DateFilterProps>(
     const pathname = usePathname();
 
     const updateURL = async (queryString) => {
-      searchManager.setLastFilter("Apply dates");
+      searchManager.setLastFilter("apply-dates");
       push(`${pathname}?${queryString}`);
     };
 
@@ -35,7 +35,6 @@ export const DateFilter = forwardRef<TextInputRefType, DateFilterProps>(
       );
     };
 
-    // To do: memoize?
     const startFilter = searchManager.filters.find(
       (f) => f.filter === "dateStart"
     );
@@ -48,94 +47,102 @@ export const DateFilter = forwardRef<TextInputRefType, DateFilterProps>(
     const [dateEnd, setDateEnd] = useState(endValue);
 
     const buttonRef = useRef<HTMLButtonElement>(null);
+
+    const handleSubmit = (e: React.FormEvent) => {
+      e.preventDefault();
+      const filtersToRemove: Filter[] = [];
+      if (dateStart === "") {
+        filtersToRemove.push({ filter: "dateStart", value: dateStart });
+      }
+      if (dateEnd === "") {
+        filtersToRemove.push({ filter: "dateEnd", value: dateEnd });
+      }
+
+      if (filtersToRemove.length > 0) {
+        updateURL(searchManager.handleRemoveFilter(filtersToRemove));
+      }
+      const filtersToAdd: Filter[] = [];
+      if (dateStart) {
+        filtersToAdd.push({ filter: "dateStart", value: dateStart });
+      }
+      if (dateEnd) {
+        filtersToAdd.push({ filter: "dateEnd", value: dateEnd });
+      }
+
+      if (filtersToAdd.length > 0) {
+        updateURL(searchManager.handleAddFilter(filtersToAdd));
+      }
+    };
+
     return (
       <>
         <Heading size="heading6" level="h3">
           Date range:
         </Heading>
-        <Flex
-          gap="s"
-          marginBottom="m"
-          sx={{
-            flexDirection: "column",
-            alignContent: "center",
-            [`@media (min-width: ${headerBreakpoints.lgMobile}px)`]: {
-              flexDirection: "row",
-            },
-          }}
-        >
-          <Flex gap="s" alignItems="center">
-            <TextInput
-              sx={{
-                [`@media (min-width: ${headerBreakpoints.lgMobile}px)`]: {
-                  width: "100px",
-                },
-              }}
-              id="dateStart"
-              isInvalid={!validDateInput(dateStart)}
-              showHelperInvalidText={false}
-              labelText="Start year"
-              value={dateStart || ""}
-              onChange={(e) => setDateStart(e.target.value)}
-              ref={ref}
-            />
-            <Text sx={{ marginBottom: "0", marginTop: "m" }}> to </Text>
-            <TextInput
-              sx={{
-                [`@media (min-width: ${headerBreakpoints.lgMobile}px)`]: {
-                  width: "100px",
-                },
-              }}
-              isInvalid={!validDateInput(dateEnd)}
-              id="dateEnd"
-              showHelperInvalidText={false}
-              labelText="End year"
-              value={dateEnd || ""}
-              onChange={(e) => {
-                setDateEnd(e.target.value);
-              }}
-            />
-          </Flex>
-          <Button
-            ref={buttonRef}
-            aria-label="Apply dates"
-            id="date-filter-btn"
-            isDisabled={!validDateInput(dateStart) || !validDateInput(dateEnd)}
+        <form onSubmit={handleSubmit}>
+          <Flex
+            gap="s"
+            marginBottom="m"
             sx={{
-              whiteSpace: "nowrap",
-              minWidth: "108px",
+              flexDirection: "column",
+              alignContent: "center",
               [`@media (min-width: ${headerBreakpoints.lgMobile}px)`]: {
-                marginTop: "m",
+                flexDirection: "row",
               },
             }}
-            onClick={() => {
-              const filtersToRemove: Filter[] = [];
-              if (dateStart === "") {
-                filtersToRemove.push({ filter: "dateStart", value: dateStart });
-              }
-              if (dateEnd === "") {
-                filtersToRemove.push({ filter: "dateEnd", value: dateEnd });
-              }
-
-              if (filtersToRemove.length > 0) {
-                updateURL(searchManager.handleRemoveFilter(filtersToRemove));
-              }
-              const filtersToAdd: Filter[] = [];
-              if (dateStart) {
-                filtersToAdd.push({ filter: "dateStart", value: dateStart });
-              }
-              if (dateEnd) {
-                filtersToAdd.push({ filter: "dateEnd", value: dateEnd });
-              }
-
-              if (filtersToAdd.length > 0) {
-                updateURL(searchManager.handleAddFilter(filtersToAdd));
-              }
-            }}
           >
-            Apply dates
-          </Button>
-        </Flex>
+            <Flex gap="s" alignItems="center">
+              <TextInput
+                sx={{
+                  [`@media (min-width: ${headerBreakpoints.lgMobile}px)`]: {
+                    width: "100px",
+                  },
+                }}
+                id="dateStart"
+                isInvalid={!validDateInput(dateStart)}
+                showHelperInvalidText={false}
+                labelText="Start year"
+                value={dateStart || ""}
+                onChange={(e) => setDateStart(e.target.value)}
+                ref={ref}
+              />
+              <Text sx={{ marginBottom: "0", marginTop: "m" }}> to </Text>
+              <TextInput
+                sx={{
+                  [`@media (min-width: ${headerBreakpoints.lgMobile}px)`]: {
+                    width: "100px",
+                  },
+                }}
+                isInvalid={!validDateInput(dateEnd)}
+                id="dateEnd"
+                showHelperInvalidText={false}
+                labelText="End year"
+                value={dateEnd || ""}
+                onChange={(e) => {
+                  setDateEnd(e.target.value);
+                }}
+              />
+            </Flex>
+            <Button
+              ref={buttonRef}
+              aria-label="Apply dates"
+              id="apply-dates"
+              type="submit"
+              isDisabled={
+                !validDateInput(dateStart) || !validDateInput(dateEnd)
+              }
+              sx={{
+                whiteSpace: "nowrap",
+                minWidth: "108px",
+                [`@media (min-width: ${headerBreakpoints.lgMobile}px)`]: {
+                  marginTop: "m",
+                },
+              }}
+            >
+              Apply dates
+            </Button>
+          </Flex>
+        </form>
       </>
     );
   }

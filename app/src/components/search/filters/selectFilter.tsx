@@ -149,7 +149,7 @@ const SelectFilterComponent = ({
         isDisabled={!current}
         onClick={() => {
           accordionButtonRef.current?.focus();
-          searchManager.setLastFilter(`Select ${filter.name}`);
+          searchManager.setLastFilter(`accordion-button-select-${filter.name}`);
           // Push the current filter selection to URL.
           updateURL(
             searchManager.handleAddFilter([

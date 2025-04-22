@@ -57,30 +57,33 @@ const SearchPage = ({
     const newUrl = `${pathname}?${queryString}`;
     push(newUrl);
   };
-
   useEffect(() => {
     setIsLoaded(true);
+    let didFocusElement = false;
     if (
       searchManager.lastFilterRef?.current &&
-      (searchManager.filters.length > 0 || searchManager.sort)
+      (searchManager.filters.length > 0 || searchManager.sort !== "relevance")
     ) {
-      // Search for the button or input associated with the last used filter/sort
-      const button = document.querySelector(
-        `button[aria-label="${searchManager.lastFilterRef?.current}"]`
-      );
-      if (button) {
-        (button as HTMLButtonElement).focus();
+      // Search for the button, input, or text element associated with the last used filter/sort
+      const selectors = ["button", "input", "p"];
+
+      for (const selector of selectors) {
+        const el = document.querySelector(
+          `${selector}[id="${searchManager.lastFilterRef.current}"]`
+        );
+        if (el) {
+          (el as HTMLElement).focus();
+          didFocusElement = true;
+          break;
+        }
       }
-      const input = document.querySelector(
-        `input[value="${searchManager.lastFilterRef?.current}"]`
-      );
-      if (input) {
-        (input as HTMLInputElement).focus();
-      }
-    } else if (isFirstLoad.current) {
+    }
+
+    if (!didFocusElement && isFirstLoad.current) {
       setFiltersExpanded(false);
       headingRef.current?.focus();
     }
+
     isFirstLoad.current = true;
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [searchResults]);
@@ -186,7 +189,9 @@ const SearchPage = ({
               <Heading
                 size="heading5"
                 ref={headingRef}
-                role="status"
+                aria-live="polite"
+                // @ts-ignore
+                tabIndex="-1"
                 margin="0"
               >{`Displaying ${displayResults(
                 searchResults.numResults,
