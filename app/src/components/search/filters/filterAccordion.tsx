@@ -12,19 +12,11 @@ import { Icon, AccordionDataProps } from "@nypl/design-system-react-components";
 import React, { forwardRef, useEffect, useRef, useState } from "react";
 
 export interface FilterAccordionProps {
-  /** Array of data to display, and an optional accordionType */
-  accordionData: AccordionDataProps[];
-  /** Global aria-label value that is applied to all accordions if individual
-   * ariaLabel props are not included with accordionData entries. */
+  accordionItem: AccordionDataProps;
   ariaLabel?: string;
-  /** ID that other components can cross reference for accessibility purposes */
   id?: string;
-  /** Whether the accordion is open by default only on its initial rendering */
   isDefaultOpen?: boolean;
-  /** For internal use only. This value toggles the accordion closed if the user clicks
-   * outside the component. */
   userClickedOutside?: boolean;
-  /** For updating the state of the current filter selection when accordion is opened or closed. */
   onChange: () => void;
 }
 
@@ -44,92 +36,12 @@ const getIcon = (isExpanded: boolean) => {
   );
 };
 
-/**
- * Returns AccordionItems for every accordion object in the data
- * array. This creates the AccordionButton and AccordionPanel combination
- * expected by the Chakra Accordion component.
- *
- */
-const getElementsFromData = (
-  data: AccordionDataProps[] = [],
-  ariaLabel: string,
-  id: string,
-  buttonRefs: React.MutableRefObject<(HTMLElement | null)[]>
-) => {
-  return data.map((content, index) => {
-    const panel = (
-      <AccordionPanel
-        id={`${id}-panel-${index}`}
-        key={index}
-        data-index={index}
-        overflow="auto"
-        sx={{
-          bg: "ui.white",
-          [`@media screen and (min-width: ${headerBreakpoints.lgMobile}px)`]: {
-            position: "absolute",
-            zIndex: "1",
-            width: "100%",
-          },
-        }}
-      >
-        {content.panel}
-      </AccordionPanel>
-    );
-    const finalAriaLabel = content.ariaLabel ? content.ariaLabel : ariaLabel;
-    if (content.ariaLabel && ariaLabel) {
-      console.warn(
-        "NYPL Reservoir Accordion: An ariaLabel value has been passed for the " +
-          "overall component and as part of the accordionData prop. Both can not " +
-          "be used, so the value in the accordionData prop will be used."
-      );
-    }
-
-    return (
-      <AccordionItem id={id} key={index} position="relative">
-        {({ isExpanded }) => {
-          return (
-            <>
-              <AccordionButton
-                aria-label={finalAriaLabel}
-                id={id}
-                data-index={index}
-                borderColor={"ui.gray.medium"}
-                padding="xs s"
-                ref={(node: HTMLElement | null) => {
-                  buttonRefs.current[index] = node;
-                }}
-                sx={{
-                  fontWeight: "light",
-                  fontSize: "desktop.body.body2",
-                  bg: "ui.white",
-                  _expanded: { bg: "ui.bg.active" },
-                  _hover: { borderColor: "ui.gray.dark" },
-                }}
-              >
-                <Box as="span" flex="1" textAlign="start">
-                  {content.label}
-                </Box>
-                {getIcon(isExpanded)}
-              </AccordionButton>
-              {isExpanded && panel}
-            </>
-          );
-        }}
-      </AccordionItem>
-    );
-  });
-};
-
-/**
- * Accordion component that shows content on toggle. Can be used to display
- * multiple accordion items together.
- */
 const FilterAccordionComponent = forwardRef<
   HTMLDivElement,
   FilterAccordionProps
 >((props, ref?) => {
   const {
-    accordionData,
+    accordionItem,
     ariaLabel,
     id,
     onChange: parentOnChange,
@@ -138,50 +50,35 @@ const FilterAccordionComponent = forwardRef<
     ...rest
   } = props;
 
-  // Pass `0` to open the first accordion in the 0-index based array.
-  const [expandedPanels, setExpandedPanels] = useState<number[]>(
-    isDefaultOpen ? [0] : []
-  );
-
-  // Mutable ref array to store the AccordionButton DOM nodes.
-  const buttonRefs = useRef<(HTMLElement | null)[]>([]);
+  const [isExpanded, setIsExpanded] = useState(isDefaultOpen);
+  const buttonRef = useRef<HTMLButtonElement | null>(null);
 
   const handleKeyDown = (e: React.KeyboardEvent) => {
-    if (e.key === "Escape") {
-      // Try to find the closest element with a data-index attribute.
-      const targetElement = e.target as HTMLElement;
-      const panelElement = targetElement.closest("[data-index]");
-      if (!panelElement) return;
-      const indexAttr = panelElement.getAttribute("data-index");
-      if (!indexAttr) return;
-      const idx = Number(indexAttr);
-      if (isNaN(idx)) return;
-
-      // Collapse this panel.
-      setExpandedPanels((prev) => prev.filter((i) => i !== idx));
-
-      // Return focus to the corresponding button.
-      const button = buttonRefs.current[idx];
-      if (button) {
-        setTimeout(() => {
-          button.focus();
-        }, 0);
-      }
+    if (e.key === "Escape" && isExpanded) {
+      setIsExpanded(false);
+      setTimeout(() => {
+        buttonRef.current?.focus();
+      }, 0);
     }
   };
 
   useEffect(() => {
     if (userClickedOutside) {
-      setExpandedPanels([]);
+      setIsExpanded(false);
     }
   }, [userClickedOutside]);
 
+  const finalAriaLabel = accordionItem.ariaLabel || ariaLabel || "";
+
   return (
     <ChakraAccordion
-      allowMultiple
-      index={expandedPanels}
-      onChange={(expandedIdxs: number[]) => {
-        setExpandedPanels(expandedIdxs);
+      allowToggle
+      index={isExpanded ? 0 : -1}
+      onChange={(expandedIdx: number | number[]) => {
+        const open = Array.isArray(expandedIdx)
+          ? expandedIdx.length > 0
+          : expandedIdx === 0;
+        setIsExpanded(open);
         parentOnChange();
       }}
       onKeyDownCapture={handleKeyDown}
@@ -189,17 +86,53 @@ const FilterAccordionComponent = forwardRef<
       ref={ref}
       {...rest}
     >
-      {getElementsFromData(
-        accordionData,
-        ariaLabel || "",
-        id || "",
-        buttonRefs
-      )}
+      <AccordionItem id={id} position="relative">
+        {({ isExpanded }) => (
+          <>
+            <AccordionButton
+              aria-label={finalAriaLabel}
+              id={id}
+              ref={buttonRef}
+              borderColor="ui.gray.medium"
+              padding="xs s"
+              sx={{
+                fontWeight: "light",
+                fontSize: "desktop.body.body2",
+                bg: "ui.white",
+                _expanded: { bg: "ui.bg.active" },
+                _hover: { borderColor: "ui.gray.dark" },
+              }}
+            >
+              <Box as="span" flex="1" textAlign="start">
+                {accordionItem.label}
+              </Box>
+              {getIcon(isExpanded)}
+            </AccordionButton>
+            {isExpanded && (
+              <AccordionPanel
+                id={`${id}-panel`}
+                overflow="auto"
+                sx={{
+                  bg: "ui.white",
+                  [`@media screen and (min-width: ${headerBreakpoints.lgMobile}px)`]:
+                    {
+                      position: "absolute",
+                      zIndex: "1",
+                      width: "100%",
+                    },
+                }}
+              >
+                {accordionItem.panel}
+              </AccordionPanel>
+            )}
+          </>
+        )}
+      </AccordionItem>
     </ChakraAccordion>
   );
 });
 
-FilterAccordionComponent.displayName = "FilterAccordionComponent";
+FilterAccordionComponent.displayName = "FilterAccordion";
 
 const FilterAccordion: ChakraComponent<
   React.ForwardRefExoticComponent<

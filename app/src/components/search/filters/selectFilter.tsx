@@ -197,19 +197,16 @@ const SelectFilterComponent = ({
   return (
     <Box ref={containerRef}>
       <FilterAccordion
-        accordionData={[
-          {
-            accordionType: "default",
-            buttonInteractionRef: accordionButtonRef,
-            label: (
-              <Box noOfLines={1}>{`${capitalize(filter.name)}${
-                selected ? `: ${capitalize(selected.name)}` : ``
-              }`}</Box>
-            ),
-            panel: accordionPanel,
-            ariaLabel: `Select ${filter.name}`,
-          },
-        ]}
+        accordionItem={{
+          buttonInteractionRef: accordionButtonRef,
+          label: (
+            <Box noOfLines={1}>{`${capitalize(filter.name)}${
+              selected ? `: ${capitalize(selected.name)}` : ``
+            }`}</Box>
+          ),
+          panel: accordionPanel,
+          ariaLabel: `Select ${filter.name}`,
+        }}
         id={`select-${filter.name}`}
         userClickedOutside={userClickedOutside}
         onChange={handleAccordionChange}
