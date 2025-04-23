@@ -22,6 +22,7 @@ export interface CollectionChildProps {
 
 interface OpenStateItem {
   title: string;
+  uuid: string;
   level: number;
   isOpen: boolean;
 }
@@ -121,17 +122,19 @@ const AccordionItem = ({
       isCurrentlyOpen = prev.some(
         (item) => item.title === title && item.isOpen
       );
+
       newState = prev.filter((item) => item.level !== level);
 
       if (!isCurrentlyOpen) {
         newState = newState.filter((item) => item.level < level);
-        newState.push({ title, level, isOpen: true });
+        newState.push({ title, uuid, level, isOpen: true });
       }
 
       return newState;
     });
 
     if (!isCurrentlyOpen) {
+      // Opening subcollection filter
       searchManager.handleKeywordChange("");
       updateURL(
         searchManager.handleAddFilter([
@@ -145,6 +148,26 @@ const AccordionItem = ({
         await prefetchNextLevel(nextChildren);
       } catch (error) {
         console.error("Failed to fetch children:", error);
+      }
+    } else {
+      // Closing subcollection filter– if there's a parent, return to that filter
+      const parent = openState.find((item) => item.level === level - 1);
+      if (parent) {
+        searchManager.handleKeywordChange("");
+        updateURL(
+          searchManager.handleAddFilter([
+            {
+              filter: "subcollection",
+              value: `${parent.title}||${parent.uuid}`,
+            },
+          ])
+        );
+      } else {
+        updateURL(
+          searchManager.handleRemoveFilter([
+            { filter: "subcollection", value: `${title}||${uuid}` },
+          ])
+        );
       }
     }
   };
