@@ -9,6 +9,9 @@ export function middleware(req: NextRequest) {
   const collectionMatch = pathname.match(/^\/collections\/([^\/?#]+)/);
   if (collectionMatch) {
     const identifier = collectionMatch[1];
+    if (identifier === "lane") {
+      return NextResponse.next();
+    }
     // DC uuids are not uuid v1-5 compliant– they're v0 (kind of?), which this regex tests
     const dcUuidRegex = /^[\da-f]{8}-([\da-f]{4}-){3}[\da-f]{12}$/i;
     const isDCUuid = dcUuidRegex.test(identifier);
