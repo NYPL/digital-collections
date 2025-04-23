@@ -15,11 +15,12 @@ const options = {
   },
 };
 
-const VideoViewer = () => {
+const VideoViewer = (manifestId: any) => {
   const iiifContent =
     "https://iiif.io/api/cookbook/recipe/0003-mvm-video/manifest.json";
 
-  return <Viewer iiifContent={iiifContent} options={options} />;
+  // return <Viewer iiifContent={iiifContent} options={options} />;
+  return <Viewer iiifContent={manifestId} options={options} />;
 };
 
 export default VideoViewer;

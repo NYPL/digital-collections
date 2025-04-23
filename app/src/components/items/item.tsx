@@ -1,64 +1,47 @@
-import ImageViewer from "./clover/image/image";
-import CloverImageViewer from "./clover/image/viewer";
-import AudioViewer from "./clover/audio/viewer";
-import VideoViewer from "./clover/video/viewer";
-import BookViewer from "./clover/book/viewer";
-import PDFViewer from "./clover/pdf/viewer";
+"use client";
+
 import { ItemModel } from "../../models/item";
 import React from "react";
+import ItemMediaViewer from "./viewer/viewer";
+import ItemOverview from "./overview/overview";
+import {
+  Heading,
+  Banner,
+  Box,
+  Text,
+  Link,
+} from "@nypl/design-system-react-components";
 
 interface ItemProps {
+  manifest: any;
   item: ItemModel;
+  type: string;
 }
 
-const Item = ({ item }: ItemProps) => {
-  let viewer;
-  switch (item.typeOfResource) {
-    case "still image":
-      if (item.isSingleCapture) {
-        viewer = (
-          <>
-            <h2> Image: {item.title} </h2>
-            <ImageViewer imageID={item.capture.imageID.$} />
-          </>
-        );
-      } else {
-        viewer = (
-          <>
-            <h2> Image: {item.title} </h2>
-            <CloverImageViewer />
-          </>
-        );
-      }
-      return viewer;
-    case "moving image":
-      viewer = (
-        <>
-          <h2> Video: {item.title} </h2>
-          <VideoViewer />
-        </>
-      );
-      return viewer;
-    case "sound recording":
-      viewer = (
-        <>
-          <h2> Audio: {item.title} </h2>
-          <AudioViewer />
-        </>
-      );
-      return viewer;
-    case "text":
-      //also PDF
-      viewer = (
-        <>
-          <h2> Book: {item.title} </h2>
-          <BookViewer />
-        </>
-      );
-      return viewer;
-    default:
-      return <h2>No type of resource match</h2>;
-  }
+const Item = ({ item, type }: ItemProps) => {
+  const itemType = type ? type : item.contentType; //TO DO: do we want to keep this?
+  return (
+    <>
+      <Box marginTop="-3em">
+        <Heading level="h2">{item.title}</Heading>
+        <ItemMediaViewer item={item} type={itemType} />
+        <Banner
+          marginTop="m"
+          content={
+            <>
+              Our collections include some content that may be harmful or
+              dificult to view.{" "}
+              <Link href="https://digitalcollections.nypl.org/about#nypl_harmful_content_statement">
+                Learn more.
+              </Link>{" "}
+            </>
+          }
+          type="informative"
+        ></Banner>
+        <ItemOverview item={item} />
+      </Box>
+    </>
+  );
 };
 
 export default Item;
