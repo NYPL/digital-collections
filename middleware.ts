@@ -1,8 +1,9 @@
 import collectionSlugToUuidMapping from "@/src/data/collectionSlugUuidMapping";
+import { CollectionsApi } from "@/src/utils/apiClients";
 import { deSlugify } from "@/src/utils/utils";
 import { NextRequest, NextResponse } from "next/server";
 
-export function middleware(req: NextRequest) {
+export async function middleware(req: NextRequest) {
   const url = req.nextUrl;
   const pathname = url.pathname;
 
@@ -89,31 +90,23 @@ export function middleware(req: NextRequest) {
     modified = true;
   }
 
+  // Transform filters into an object
   const filtersObj: Record<string, string[]> = {};
 
-  searchParams.forEach((value, key) => {
+  for (const [key, value] of searchParams.entries()) {
     const match = key.match(/^filters\[(.*?)\](?:\[\])?$/);
-
     if (match) {
       let filterKey = match[1];
       let filterValue = decodeURIComponent(value);
-
-      // Normalize key and value
+      if (filterKey === "rights" && filterValue === "pd") {
+        filterValue = "publicDomain";
+      }
       switch (filterKey) {
         case "rights":
-          if (filterValue === "pd") filterValue = "publicDomain";
-          break;
-        case "date":
-          // Handle x-y, x-9999, 9999-y
-          const datePattern = /^(-?\d{4})?-(-?\d{4})?$/;
-          const dateMatch = filterValue.match(datePattern);
-          if (dateMatch) {
-            const [, start, end] = dateMatch;
-            if (start && start !== "-9999") filtersObj["dateStart"] = [start];
-            if (end && end !== "9999") filtersObj["dateEnd"] = [end];
-            modified = true;
+          if (filterValue === "pd") {
+            filterValue = "publicDomain";
           }
-          return;
+          break;
         case "placeTerm_mtxt_s":
           filterKey = "place";
           break;
@@ -140,33 +133,53 @@ export function middleware(req: NextRequest) {
           break;
         case "root-collection":
           filterKey = "collection";
-          // What can we do here?
-          // Hit Collections API for the collection data with the uuid, get the title, append, and continue with the search
-          // Redirect entirely to the collection landing page with other params intact
-          // Drop it
+          try {
+            const collectionData =
+              await CollectionsApi.getCollectionData(filterValue);
+            filterValue = `${collectionData.title}||${filterValue}`;
+          } catch (err) {
+            console.error("Error fetching root collection:", err);
+          }
           break;
         default:
           break;
       }
-      if (!filtersObj[filterKey]) {
-        filtersObj[filterKey] = [];
+      if (filterKey === "date") {
+        // Regular expression to match end date x-9999, start date -9999-x, or x-x (both)
+        const datePattern = /^(-?\d{4})?-(-?\d{4})?$/;
+        const dateMatch = filterValue.match(datePattern);
+        if (dateMatch) {
+          const [, start, end] = dateMatch;
+          if (start && start !== "-9999") {
+            filtersObj["dateStart"] = [start];
+          }
+          if (end && end !== "9999") {
+            filtersObj["dateEnd"] = [end];
+          }
+        }
+        modified = true;
+      } else {
+        if (!filtersObj[filterKey]) {
+          filtersObj[filterKey] = [];
+        }
+        filtersObj[filterKey].push(filterValue);
+        modified = true;
       }
-      filtersObj[filterKey].push(filterValue);
-      modified = true;
     } else if (key === "year_begin" || key === "year_end") {
-      const filterKey = key === "year_begin" ? "dateStart" : "dateEnd";
-      const filterValue = decodeURIComponent(value);
+      // Replace with year_begin/year_end values if available
+      let filterKey = key === "year_begin" ? "dateStart" : "dateEnd";
+      let filterValue = decodeURIComponent(value);
       filtersObj[filterKey] = [filterValue];
       modified = true;
     }
-  });
+  }
 
-  // Clean up original filters
-  Object.keys(filtersObj).forEach((key) => {
-    searchParams.delete(`filters[${key}]`);
-  });
+  // Remove old filter keys
+  Object.keys(filtersObj).forEach((key) =>
+    searchParams.delete(`filters[${key}]`)
+  );
 
-  // Reconstruct filters string
+  // Reconstruct filters
   const filtersString = Object.entries(filtersObj)
     .map(([key, values]) => `[${key}=${values.join(",")}]`)
     .join("");
