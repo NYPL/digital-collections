@@ -43,6 +43,7 @@ export function CollectionsPage({ data, collectionsSearchParams }) {
     initialPage: Number(collectionsSearchParams?.page) || DEFAULT_PAGE_NUM,
     initialSort: collectionsSearchParams?.sort || DEFAULT_COLLECTION_SORT,
     initialKeywords: collectionsSearchParams?.q || DEFAULT_SEARCH_TERM,
+    lastFilterRef: useRef<string | null>(null),
   });
 
   const updateURL = async (queryString: string) => {
