@@ -5,13 +5,11 @@ import { SearchManager } from "@/src/utils/searchManager";
 
 type SelectFilterGridProps = {
   isExpanded: boolean;
-  filterRefs: React.MutableRefObject<(HTMLButtonElement | null)[]>;
   searchManager: SearchManager;
 };
 
 const SelectFilterGrid = ({
   isExpanded,
-  filterRefs,
   searchManager,
 }: SelectFilterGridProps) => {
   const filtersWithOptions = searchManager.availableFilters.filter(
@@ -36,13 +34,10 @@ const SelectFilterGrid = ({
       marginBottom="s"
       width="full"
     >
-      {expandedFilters.map((filter, index) => (
+      {expandedFilters.map((filter) => (
         <SelectFilter
           key={filter.name}
           filter={filter}
-          ref={(el) => {
-            filterRefs.current[index] = el;
-          }}
           searchManager={searchManager}
         />
       ))}
