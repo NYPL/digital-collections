@@ -37,6 +37,7 @@ let mockManager = new GeneralSearchManager({
   initialSort: DEFAULT_SEARCH_SORT,
   initialFilters: [],
   initialKeywords: DEFAULT_SEARCH_TERM,
+  lastFilterRef: { current: null },
 });
 
 let mockPush = jest.fn();
