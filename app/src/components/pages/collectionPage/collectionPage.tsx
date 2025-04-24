@@ -57,6 +57,7 @@ const CollectionPage = ({
     initialFilters: stringToFilter(searchParams?.filters),
     initialKeywords: searchParams?.q || DEFAULT_SEARCH_TERM,
     initialAvailableFilters: searchResults?.availableFilters || DEFAULT_FILTERS,
+    lastFilterRef: useRef<string | null>(null),
   });
 
   const totalPages = totalNumPages(
