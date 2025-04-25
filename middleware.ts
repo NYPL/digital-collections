@@ -5,11 +5,12 @@ import { NextRequest, NextResponse } from "next/server";
 async function getCollectionTitle(uuid): Promise<string> {
   try {
     const response = await fetch(
-      `${process.env.COLLECTIONS_API_URL}/collections/${uuid}`,
+      `${process.env.COLLECTIONS_API_URL}/collections/${uuid}}`,
       {
         method: "GET",
         headers: {
           "x-nypl-collections-api-key": `${process.env.COLLECTIONS_API_AUTH_TOKEN}`,
+          "Cache-Control": "no-cache",
         },
       }
     );
@@ -150,7 +151,6 @@ export async function middleware(req: NextRequest) {
           filterKey = "form";
           break;
         case "root-collection":
-          console.log("this is happening");
           filterKey = "collection";
           filterValue = await getCollectionTitle(filterValue);
           break;
