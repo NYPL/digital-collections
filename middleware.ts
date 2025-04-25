@@ -11,13 +11,12 @@ async function getCollectionTitle(uuid): Promise<string> {
         headers: {
           "x-nypl-collections-api-key": `${process.env.COLLECTIONS_API_AUTH_TOKEN}`,
         },
-        body: undefined,
       }
     );
     const collectionData = await response.json();
     return `${collectionData.title}||${uuid}`;
-  } catch (err) {
-    console.error("Error fetching root collection:", err);
+  } catch (error) {
+    console.error("Error fetching root collection:", error);
     return "";
   }
 }
