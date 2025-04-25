@@ -1,7 +1,26 @@
 import collectionSlugToUuidMapping from "@/src/data/collectionSlugUuidMapping";
-import { CollectionsApi } from "@/src/utils/apiClients";
 import { deSlugify } from "@/src/utils/utils";
 import { NextRequest, NextResponse } from "next/server";
+
+async function getCollectionTitle(uuid): Promise<string> {
+  try {
+    const response = await fetch(
+      `${process.env.COLLECTIONS_API_URL}/collections/${uuid}`,
+      {
+        method: "GET",
+        headers: {
+          "x-nypl-collections-api-key": `${process.env.COLLECTIONS_API_AUTH_TOKEN}`,
+        },
+        body: undefined,
+      }
+    );
+    const collectionData = await response.json();
+    return `${collectionData.title}||${uuid}`;
+  } catch (err) {
+    console.error("Error fetching root collection:", err);
+    return "";
+  }
+}
 
 export async function middleware(req: NextRequest) {
   const url = req.nextUrl;
@@ -132,14 +151,9 @@ export async function middleware(req: NextRequest) {
           filterKey = "form";
           break;
         case "root-collection":
+          console.log("this is happening");
           filterKey = "collection";
-          try {
-            const collectionData =
-              await CollectionsApi.getCollectionData(filterValue);
-            filterValue = `${collectionData.title}||${filterValue}`;
-          } catch (err) {
-            console.error("Error fetching root collection:", err);
-          }
+          filterValue = await getCollectionTitle(filterValue);
           break;
         default:
           break;

@@ -1,16 +1,11 @@
 import { middleware } from "middleware";
 import { NextRequest, NextResponse } from "next/server";
-import { CollectionsApi } from "../../app/src/utils/apiClients";
 
-jest.mock("../../app/src/utils/apiClients", () => {
-  return {
-    CollectionsApi: {
-      getCollectionData: jest
-        .fn()
-        .mockResolvedValue({ title: "Mocked Collection Title" }),
-    },
-  };
-});
+(global as any).fetch = jest.fn(() =>
+  Promise.resolve({
+    json: () => Promise.resolve({ title: "Mocked Collection Title" }),
+  })
+);
 
 jest.mock("next/server", () => {
   return {

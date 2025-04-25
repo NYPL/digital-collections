@@ -63,7 +63,7 @@ export const fetchApi = async ({
     })) as Response;
 
     if (response.status === 422) {
-      //logger.error(`Invalid parameter value: ${apiUrl}`);
+      logger.error(`Invalid parameter value: ${apiUrl}`);
     } else if (!response.ok) {
       throw new Error(
         `fetchApi: ${response.status} ${
@@ -73,7 +73,7 @@ export const fetchApi = async ({
     }
     return await response.json();
   } catch (error) {
-    //logger.error(error);
+    logger.error(error);
     throw new Error(error.message);
   }
 };
