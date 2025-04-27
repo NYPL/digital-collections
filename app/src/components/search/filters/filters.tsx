@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from "react";
+import React, { useRef, useEffect } from "react";
 import {
   Button,
   Heading,
@@ -15,38 +15,48 @@ import { SearchManager } from "@/src/utils/searchManager";
 type FiltersProps = {
   headingText: string;
   searchManager: SearchManager;
+  filtersExpanded: boolean;
+  setFiltersExpanded: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
-const Filters = ({ headingText, searchManager }: FiltersProps) => {
-  const [isExpanded, setIsExpanded] = useState(false);
-
-  const filterRefs = useRef<(HTMLButtonElement | null)[]>([]);
+const Filters = ({
+  headingText,
+  searchManager,
+  filtersExpanded,
+  setFiltersExpanded,
+}: FiltersProps) => {
   const dateFilterRef = useRef<TextInputRefType | null>(null);
   const secondRowFilter = 4;
   useEffect(() => {
-    if (isExpanded) {
-      if (filterRefs.current[secondRowFilter]) {
-        filterRefs.current[secondRowFilter]?.focus();
+    if (filtersExpanded) {
+      // If there are >4 dropdown filters visible, focus the 5th.
+      if (searchManager.availableFilters[secondRowFilter].options.length > 0) {
+        const button = document.querySelector(
+          `button[aria-label="Select ${searchManager.availableFilters[secondRowFilter].name}"]`
+        );
+        if (button) {
+          (button as HTMLButtonElement).focus();
+        }
       } else {
         dateFilterRef.current?.focus();
       }
     }
-  }, [isExpanded]);
+  }, [filtersExpanded]);
 
   const filterContent = (
     <>
       <SelectFilterGrid
-        isExpanded={isExpanded}
-        filterRefs={filterRefs}
+        isExpanded={filtersExpanded}
         searchManager={searchManager}
         key={searchManager.filters.length}
       />
-      {isExpanded && (
+      {filtersExpanded && (
         <>
           <DateFilter
             searchManager={searchManager}
             // Remounts when filters are cleared from active filter panel.
             key={searchManager.filters.length + 1}
+            ref={dateFilterRef}
           />
           <RightsFilter
             searchManager={searchManager}
@@ -59,10 +69,10 @@ const Filters = ({ headingText, searchManager }: FiltersProps) => {
         id="see-more-filters"
         buttonType="secondary"
         onClick={() => {
-          setIsExpanded((prev) => !prev);
+          setFiltersExpanded((prev) => !prev);
         }}
       >
-        {isExpanded ? "Less filter options" : "See all filter options"}
+        {filtersExpanded ? "Less filter options" : "See all filter options"}
       </Button>
     </>
   );

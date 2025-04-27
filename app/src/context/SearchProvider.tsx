@@ -1,5 +1,5 @@
 "use client";
-import React, { createContext, useContext } from "react";
+import React, { createContext, useContext, useRef } from "react";
 import {
   DEFAULT_FILTERS,
   DEFAULT_PAGE_NUM,
@@ -31,6 +31,7 @@ export const SearchProvider = ({
     initialFilters: stringToFilter(searchParams?.filters),
     initialKeywords: searchParams?.q || DEFAULT_SEARCH_TERM,
     initialAvailableFilters: searchParams?.availableFilters || DEFAULT_FILTERS,
+    lastFilterRef: useRef<string | null>(null),
   });
 
   return (

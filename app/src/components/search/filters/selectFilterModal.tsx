@@ -25,6 +25,7 @@ import {
   AvailableFilterOption,
 } from "@/src/types/AvailableFilterType";
 import { capitalize } from "@/src/utils/utils";
+import { useSearchContext } from "@/src/context/SearchProvider";
 
 type SelectFilterModalProps = {
   filter: AvailableFilter;
@@ -39,7 +40,7 @@ type SelectFilterModalProps = {
   searchManager: SearchManager;
 };
 
-type FocusableElement = HTMLElement & { focus: () => void };
+export type FocusableElement = HTMLElement & { focus: () => void };
 
 const SelectFilterModal = forwardRef<HTMLButtonElement, SelectFilterModalProps>(
   (props, accordionButtonRef) => {
@@ -139,6 +140,9 @@ const SelectFilterModal = forwardRef<HTMLButtonElement, SelectFilterModalProps>(
           isOpen={isOpen}
           onClose={() => {
             if (modalCurrent && focusOutside) {
+              searchManager.setLastFilter(
+                `accordion-button-select-${filter.name}`
+              );
               updateURL(
                 searchManager.handleAddFilter([
                   {
@@ -283,6 +287,9 @@ const SelectFilterModal = forwardRef<HTMLButtonElement, SelectFilterModalProps>(
                   isDisabled={!modalCurrent}
                   onClick={() => {
                     handleClose(true);
+                    searchManager.setLastFilter(
+                      `accordion-button-select-${filter.name}`
+                    );
                     updateURL(
                       searchManager.handleAddFilter([
                         {

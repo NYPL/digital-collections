@@ -7,7 +7,7 @@ import {
   Icon,
   Pagination,
 } from "@nypl/design-system-react-components";
-import React, { useEffect, useRef, useState } from "react";
+import React, { useRef, useState } from "react";
 import Filters from "../../search/filters/filters";
 import CollectionStructure from "../../collectionStructure/collectionStructure";
 import { headerBreakpoints } from "@/src/utils/breakpoints";
@@ -47,6 +47,8 @@ const CollectionPage = ({
 }: CollectionPageProps) => {
   const headingRef = useRef<HTMLHeadingElement>(null);
   const isFirstLoad = useRef<boolean>(false);
+  const [filtersExpanded, setFiltersExpanded] = useState(false);
+
   const collectionSearchManager = new GeneralSearchManager({
     initialPage: Number(searchParams?.page) || DEFAULT_PAGE_NUM,
     initialSort: searchParams?.sort || DEFAULT_SEARCH_SORT,
@@ -102,6 +104,8 @@ const CollectionPage = ({
           <Filters
             headingText="Refine your results"
             searchManager={collectionSearchManager}
+            setFiltersExpanded={setFiltersExpanded}
+            filtersExpanded={filtersExpanded}
           />
         </Box>
       </Box>
@@ -148,30 +152,23 @@ const CollectionPage = ({
                 alignItems: "flex-start",
               }}
             >
-              {searchResults.results.length > 0 && (
-                <>
-                  <Heading
-                    size="heading5"
-                    ref={headingRef}
-                    tabIndex={-1}
-                    margin="0"
-                    aria-live="polite"
-                  >
-                    {`Displaying
-                    ${displayResults(
-                      searchResults.numResults,
-                      CARDS_PER_PAGE,
-                      1
-                    )}
-                    results`}
-                  </Heading>
-                  <SortMenu
-                    options={SEARCH_SORT_LABELS}
-                    searchManager={collectionSearchManager}
-                    updateURL={updateURL}
-                  />
-                </>
-              )}
+              <Heading
+                size="heading5"
+                ref={headingRef}
+                tabIndex={-1}
+                margin="0"
+                aria-live="polite"
+              >{`Displaying ${displayResults(
+                searchResults.numResults,
+                CARDS_PER_PAGE,
+                1
+              )} results`}</Heading>
+              <SortMenu
+                options={SEARCH_SORT_LABELS}
+                searchManager={collectionSearchManager}
+                updateURL={updateURL}
+                setFiltersExpanded={setFiltersExpanded}
+              />
             </Flex>
 
             {searchResults.results.length > 0 ? (

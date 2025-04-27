@@ -7,7 +7,7 @@ import {
   Link,
   Icon,
 } from "@nypl/design-system-react-components";
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { CARDS_PER_PAGE, SEARCH_SORT_LABELS } from "@/src/config/constants";
 import { displayResults, totalNumPages } from "@/src/utils/utils";
 import Filters from "../../search/filters/filters";
@@ -21,6 +21,7 @@ import ActiveFilters from "../../search/filters/activeFilters";
 import NoResultsFound from "../../results/noResultsFound";
 import SearchCardType from "@/src/types/SearchCardType";
 import { AvailableFilterOption } from "@/src/types/AvailableFilterType";
+import SearchCardGridLoading from "../../grids/searchCardGridLoading";
 
 export type SearchResultsType = {
   keyword: string;
@@ -49,16 +50,40 @@ const SearchPage = ({
   const pathname = usePathname();
   const headingRef = useRef<HTMLHeadingElement>(null);
   const isFirstLoad = useRef<boolean>(false);
+  const [isLoaded, setIsLoaded] = useState(false);
+  const [filtersExpanded, setFiltersExpanded] = useState(false);
 
   const updateURL = async (queryString: string) => {
     const newUrl = `${pathname}?${queryString}`;
     push(newUrl);
   };
-
   useEffect(() => {
-    if (isFirstLoad.current) {
+    setIsLoaded(true);
+    let didFocusElement = false;
+    if (
+      searchManager.lastFilterRef?.current &&
+      (searchManager.filters.length > 0 || searchManager.sort !== "relevance")
+    ) {
+      // Search for the button, input, or text element associated with the last used filter/sort
+      const selectors = ["button", "input", "p"];
+
+      for (const selector of selectors) {
+        const el = document.querySelector(
+          `${selector}[id="${searchManager.lastFilterRef.current}"]`
+        );
+        if (el) {
+          (el as HTMLElement).focus();
+          didFocusElement = true;
+          break;
+        }
+      }
+    }
+
+    if (!didFocusElement && isFirstLoad.current) {
+      setFiltersExpanded(false);
       headingRef.current?.focus();
     }
+
     isFirstLoad.current = true;
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [searchResults]);
@@ -71,7 +96,6 @@ const SearchPage = ({
           background: "ui.bg.default",
           padding: "l",
           marginBottom: "m",
-          display: searchResults.results?.length > 0 ? "block" : "none",
         }}
       >
         <Box
@@ -105,11 +129,6 @@ const SearchPage = ({
             }
             `}
               </Heading>
-
-              <Filters
-                searchManager={searchManager}
-                headingText="Refine your search"
-              />
             </>
           ) : (
             <Heading
@@ -127,6 +146,12 @@ const SearchPage = ({
               `}
             </Heading>
           )}
+          <Filters
+            searchManager={searchManager}
+            headingText="Refine your search"
+            filtersExpanded={filtersExpanded}
+            setFiltersExpanded={setFiltersExpanded}
+          />
         </Box>
       </Box>
       <Box
@@ -164,7 +189,9 @@ const SearchPage = ({
               <Heading
                 size="heading5"
                 ref={headingRef}
-                tabIndex={-1}
+                aria-live="polite"
+                // @ts-ignore
+                tabIndex="-1"
                 margin="0"
               >{`Displaying ${displayResults(
                 searchResults.numResults,
@@ -174,6 +201,7 @@ const SearchPage = ({
               <SortMenu
                 options={SEARCH_SORT_LABELS}
                 searchManager={searchManager}
+                setFiltersExpanded={setFiltersExpanded}
                 updateURL={updateURL}
               />{" "}
             </>
@@ -186,10 +214,17 @@ const SearchPage = ({
         </Flex>
         {searchResults.numResults > 0 && (
           <>
-            <SearchCardsGrid
-              keywords={searchResults.keyword}
-              results={searchResults.results}
-            />
+            {isLoaded ? (
+              <SearchCardsGrid
+                keywords={searchResults.keyword}
+                results={searchResults.results}
+              />
+            ) : (
+              [...Array(12)].map((_, index) => (
+                <SearchCardGridLoading id={index} key={index} />
+              ))
+            )}
+
             <Flex
               paddingLeft="s"
               paddingRight="s"
@@ -200,12 +235,16 @@ const SearchPage = ({
                   marginTop: "xl",
                   justifyContent: "end",
                 },
+                paddingLeft: "s",
+                paddingRight: "s",
                 [`@media screen and (min-width: ${headerBreakpoints.lgMobile}px)`]:
                   {
                     "> a": {
                       marginTop: "0",
                     },
                     flexDir: "row",
+                    paddingLeft: 0,
+                    paddingRight: 0,
                   },
                 flexDir: "column-reverse",
               }}
@@ -229,6 +268,8 @@ const SearchPage = ({
                 currentPage={searchManager.page}
                 pageCount={totalPages}
                 onPageChange={(newPage) => {
+                  setFiltersExpanded(false);
+                  searchManager.setLastFilter(null);
                   updateURL(searchManager.handlePageChange(newPage));
                 }}
                 sx={{
