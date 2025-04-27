@@ -91,6 +91,7 @@ abstract class BaseSearchManager implements SearchManager {
   }
 
   handleKeywordChange(value: string) {
+    console.log(value);
     this.currentKeywords = value;
   }
 

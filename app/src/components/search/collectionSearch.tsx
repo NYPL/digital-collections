@@ -7,8 +7,19 @@ import {
 } from "@nypl/design-system-react-components";
 import DCSearchBar from "./dcSearchBar";
 import { useState } from "react";
+import type { SearchManager } from "@/src/utils/searchManager";
 
-export const CollectionSearch = ({ keyword, searchManager, updateURL }) => {
+type CollectionSearchProps = {
+  searchManager: SearchManager;
+  updateURL: (queryString: string) => Promise<void>;
+  setIsLoaded;
+};
+
+export const CollectionSearch = ({
+  searchManager,
+  updateURL,
+  setIsLoaded,
+}: CollectionSearchProps) => {
   const [isExpanded, setIsExpanded] = useState(false);
 
   return (
@@ -80,14 +91,15 @@ export const CollectionSearch = ({ keyword, searchManager, updateURL }) => {
           textInputProps={{
             id: "collection-search-text",
             isClearable: true,
-            isClearableCallback: () => {},
+            isClearableCallback: () => searchManager.handleKeywordChange(""),
             labelText: "Search this collection by item title",
             name: "q",
             placeholder: "Search this collection by item title",
-            defaultValue: keyword,
-            onChange: (e) => {
-              searchManager.handleKeywordChange(e.target.value);
-            },
+            defaultValue: searchManager.keywords || "",
+            onChange: (e) =>
+              searchManager.handleKeywordChange(
+                (e.target as HTMLInputElement).value
+              ),
           }}
           onSubmit={() => {
             updateURL(searchManager.handleSearchSubmit());
