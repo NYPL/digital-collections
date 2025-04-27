@@ -17,6 +17,10 @@ const mockManager = {
   filters: [],
   handleAddFilter: jest.fn(() => "filters=[dateStart=1900][dateEnd=2000]"),
   handleRemoveFilter: jest.fn(() => "filters="),
+  lastFilterRef: { current: null },
+  setLastFilter: () => {
+    return;
+  },
 };
 
 let component = (

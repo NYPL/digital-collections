@@ -13,10 +13,9 @@ const collectionsUUIDSchema = {
   genres: "string[]",
   topics: "string[]", //topic_mtxt_s
   typeOfResource: "string[]",
-  //more identifiers, need to go through DC to see which ones we return beyond bNumber, MSS ID, and uuid
   contentNote: "string",
   abstract: "string",
   donorCredit: "string",
-  // DESCRIPTION: includes related resources, collection history, etc. lives as HTML in DC database, not in MMS.
+  // **AND ALL OTHER POSSIBLE METADATA FIELDS– WIP
 };
 export default collectionsUUIDSchema;
