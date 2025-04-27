@@ -50,24 +50,25 @@ const CollectionMetadata = ({ data }: { data: CollectionMetadataProps }) => {
 
   return (
     <Flex marginTop="l" marginBottom="m" flexDir="column" maxWidth="720px">
-      <Heading size="heading6" marginBottom="s">
-        Collection data
-      </Heading>
+      <Heading size="heading6">Collection data</Heading>
       {(archivesCollectionID || bNumber) && (
-        <Text marginBottom="xs">This collection is also available:</Text>
+        <>
+          <Text marginBottom="xs">This collection is also available:</Text>
+
+          <ButtonGroup marginBottom="m">
+            {archivesCollectionID && (
+              <Button buttonType="secondary" id="finding-aid-btn">
+                View Finding Aid
+              </Button>
+            )}
+            {bNumber && (
+              <Button buttonType="secondary" id="catalog-btn">
+                View Catalog
+              </Button>
+            )}
+          </ButtonGroup>
+        </>
       )}
-      <ButtonGroup marginBottom="m">
-        {archivesCollectionID && (
-          <Button buttonType="secondary" id="finding-aid-btn">
-            View Finding Aid
-          </Button>
-        )}
-        {bNumber && (
-          <Button buttonType="secondary" id="catalog-btn">
-            View Catalog
-          </Button>
-        )}
-      </ButtonGroup>
 
       {abstract && (
         <>

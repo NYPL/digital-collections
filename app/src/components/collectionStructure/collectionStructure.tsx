@@ -20,7 +20,7 @@ export interface CollectionChildProps {
   uuid: string;
 }
 
-interface OpenStateItem {
+export interface OpenStateItem {
   title: string;
   uuid: string;
   level: number;
@@ -136,6 +136,8 @@ const AccordionItem = ({
     if (!isCurrentlyOpen) {
       // Opening subcollection filter
       searchManager.handleKeywordChange("");
+      searchManager.handleSearchSubmit();
+      searchManager.setLastFilter(null);
       updateURL(
         searchManager.handleAddFilter([
           { filter: "subcollection", value: `${title}||${uuid}` },
@@ -154,6 +156,8 @@ const AccordionItem = ({
       const parent = openState.find((item) => item.level === level - 1);
       if (parent) {
         searchManager.handleKeywordChange("");
+        searchManager.handleSearchSubmit();
+        searchManager.setLastFilter(null);
         updateURL(
           searchManager.handleAddFilter([
             {
@@ -250,9 +254,10 @@ const CollectionStructure = forwardRef<
     uuid: string;
     updateURL: (queryString: string) => Promise<void>;
     searchManager: SearchManager;
+    setOpenState: React.Dispatch<React.SetStateAction<OpenStateItem[]>>;
+    openState: OpenStateItem[];
   }
->(({ uuid, searchManager, updateURL }, headingRef) => {
-  const [openState, setOpenState] = useState<OpenStateItem[]>([]);
+>(({ uuid, searchManager, updateURL, setOpenState, openState }, headingRef) => {
   const [data, setData] = useState<CollectionChildProps[]>([]);
   const [isLoaded, setIsLoaded] = useState(false);
 

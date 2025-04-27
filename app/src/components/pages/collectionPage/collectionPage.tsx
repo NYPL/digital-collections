@@ -7,9 +7,11 @@ import {
   Icon,
   Pagination,
 } from "@nypl/design-system-react-components";
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import Filters from "../../search/filters/filters";
-import CollectionStructure from "../../collectionStructure/collectionStructure";
+import CollectionStructure, {
+  OpenStateItem,
+} from "../../collectionStructure/collectionStructure";
 import { headerBreakpoints } from "@/src/utils/breakpoints";
 import { CollectionSearch } from "../../search/collectionSearch";
 import { MobileSearchBanner } from "../../mobileSearchBanner/mobileSearchBanner";
@@ -33,6 +35,7 @@ import ActiveFilters from "../../search/filters/activeFilters";
 import CollectionMetadata from "../../collectionMetadata/collectionMetadata";
 import { SearchResultsType } from "../searchPage/searchPage";
 import NoResultsFound from "../../results/noResultsFound";
+import SearchCardGridLoading from "../../grids/searchCardGridLoading";
 
 type CollectionPageProps = {
   searchResults: SearchResultsType;
@@ -55,6 +58,7 @@ const CollectionPage = ({
     initialFilters: stringToFilter(searchParams?.filters),
     initialKeywords: searchParams?.q || DEFAULT_SEARCH_TERM,
     initialAvailableFilters: searchParams?.availableFilters || DEFAULT_FILTERS,
+    lastFilterRef: useRef<string | null>(null),
   });
 
   const totalPages = totalNumPages(
@@ -67,11 +71,44 @@ const CollectionPage = ({
   const updateURL = async (queryString) => {
     push(`${pathname}?${queryString}`, { scroll: false });
   };
+  const [isLoaded, setIsLoaded] = useState(false);
+  const [openState, setOpenState] = useState<OpenStateItem[]>([]);
 
   useEffect(() => {
-    if (isFirstLoad.current) {
+    setIsLoaded(true);
+    let didFocusElement = false;
+    if (
+      collectionSearchManager.lastFilterRef?.current &&
+      (collectionSearchManager.filters.length > 0 ||
+        collectionSearchManager.sort !== "relevance")
+    ) {
+      // Search for the button, input, or text element associated with the last used filter/sort
+      const selectors = ["button", "input", "p"];
+
+      for (const selector of selectors) {
+        const el = document.querySelector(
+          `${selector}[id="${collectionSearchManager.lastFilterRef.current}"]`
+        );
+        if (el) {
+          (el as HTMLElement).focus();
+          didFocusElement = true;
+          break;
+        }
+      }
+    }
+
+    if (!didFocusElement && isFirstLoad.current) {
+      setFiltersExpanded(false);
       headingRef.current?.focus();
     }
+    if (
+      !collectionSearchManager.filters.find(
+        (filter) => filter.filter === "subcollection"
+      )
+    ) {
+      setOpenState([]);
+    }
+
     isFirstLoad.current = true;
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [searchResults]);
@@ -129,12 +166,15 @@ const CollectionPage = ({
             uuid={collectionData.uuid}
             searchManager={collectionSearchManager}
             updateURL={updateURL}
+            setOpenState={setOpenState}
+            openState={openState}
           />
           <Box width="100%">
             <CollectionSearch
               searchManager={collectionSearchManager}
               updateURL={updateURL}
-              keyword={searchResults.keyword}
+              setIsLoaded={setIsLoaded}
+              key={searchResults.keyword.length}
             />
             <Flex
               sx={{
@@ -152,31 +192,42 @@ const CollectionPage = ({
                 alignItems: "flex-start",
               }}
             >
-              <Heading
-                size="heading5"
-                ref={headingRef}
-                tabIndex={-1}
-                margin="0"
-                aria-live="polite"
-              >{`Displaying ${displayResults(
-                searchResults.numResults,
-                CARDS_PER_PAGE,
-                1
-              )} results`}</Heading>
-              <SortMenu
-                options={SEARCH_SORT_LABELS}
-                searchManager={collectionSearchManager}
-                updateURL={updateURL}
-                setFiltersExpanded={setFiltersExpanded}
-              />
+              {searchResults.results.length > 0 && (
+                <>
+                  <Heading
+                    size="heading5"
+                    ref={headingRef}
+                    aria-live="polite"
+                    // @ts-ignore
+                    tabIndex="-1"
+                    margin="0"
+                  >{`Displaying ${displayResults(
+                    searchResults.numResults,
+                    CARDS_PER_PAGE,
+                    collectionSearchManager.page
+                  )} results`}</Heading>
+                  <SortMenu
+                    options={SEARCH_SORT_LABELS}
+                    searchManager={collectionSearchManager}
+                    updateURL={updateURL}
+                    setFiltersExpanded={setFiltersExpanded}
+                  />
+                </>
+              )}
             </Flex>
 
             {searchResults.results.length > 0 ? (
               <>
-                <SearchCardsGrid
-                  keywords={searchResults.keyword}
-                  results={searchResults.results}
-                />
+                {isLoaded ? (
+                  <SearchCardsGrid
+                    keywords={searchResults.keyword}
+                    results={searchResults.results}
+                  />
+                ) : (
+                  [...Array(12)].map((_, index) => (
+                    <SearchCardGridLoading id={index} key={index} />
+                  ))
+                )}
                 <Flex marginTop="xxl" marginBottom="xxl" alignContent="center">
                   <Link
                     minWidth="100px"
@@ -192,9 +243,10 @@ const CollectionPage = ({
                   <Pagination
                     id="pagination-id"
                     initialPage={1}
-                    currentPage={1}
+                    currentPage={collectionSearchManager.page}
                     pageCount={totalPages}
                     onPageChange={(newPage) => {
+                      collectionSearchManager.setLastFilter(null);
                       updateURL(
                         collectionSearchManager.handlePageChange(newPage)
                       );

@@ -54,6 +54,7 @@ const SearchPage = ({
   const [filtersExpanded, setFiltersExpanded] = useState(false);
 
   const updateURL = async (queryString: string) => {
+    setIsLoaded(false);
     const newUrl = `${pathname}?${queryString}`;
     push(newUrl);
   };
