@@ -20,6 +20,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Added search query redirects (DR-3529)
 - Added collection slug to uuid redirects (DR-3538)
 - Connected search page to API (DR-3416)
+- Log path in notFoundPage.tsx to New Relic. (DR-3550)
 
 ## [0.3.5] 2025-03-27
 
