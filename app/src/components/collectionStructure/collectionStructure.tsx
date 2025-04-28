@@ -106,10 +106,10 @@ const AccordionItem = ({
   searchManager: SearchManager;
 }) => {
   const { ref, scrollIntoViewIfNeeded } = useScrollIntoViewIfNeeded();
-  const isOpen = openState.some((item) => item.title === title && item.isOpen);
+  const isOpen = openState.some((item) => item.uuid === uuid && item.isOpen);
   const deepestOpenItem =
-    openState.length > 0 ? openState[openState.length - 1].title : null;
-  const isCurrent = title === deepestOpenItem;
+    openState.length > 0 ? openState[openState.length - 1].uuid : null;
+  const isCurrent = uuid === deepestOpenItem;
 
   const [fetchedChildren, setFetchedChildren] =
     useState<CollectionChildProps[]>(children);
@@ -119,9 +119,7 @@ const AccordionItem = ({
     let newState: OpenStateItem[] = [];
 
     setOpenState((prev) => {
-      isCurrentlyOpen = prev.some(
-        (item) => item.title === title && item.isOpen
-      );
+      isCurrentlyOpen = prev.some((item) => item.uuid === uuid && item.isOpen);
 
       newState = prev.filter((item) => item.level !== level);
 
