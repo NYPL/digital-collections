@@ -1,3 +1,4 @@
+import { capitalize } from "@/src/utils/utils";
 import {
   Flex,
   Heading,
@@ -54,16 +55,15 @@ const CollectionMetadata = ({ data }: { data: CollectionMetadataProps }) => {
       {(archivesCollectionID || bNumber) && (
         <>
           <Text marginBottom="xs">This collection is also available:</Text>
-
           <ButtonGroup marginBottom="m">
             {archivesCollectionID && (
               <Button buttonType="secondary" id="finding-aid-btn">
-                View Finding Aid
+                View finding aid
               </Button>
             )}
             {bNumber && (
               <Button buttonType="secondary" id="catalog-btn">
-                View Catalog
+                View catalog
               </Button>
             )}
           </ButtonGroup>
@@ -79,19 +79,23 @@ const CollectionMetadata = ({ data }: { data: CollectionMetadataProps }) => {
         </>
       )}
 
-      <Text size="overline1" marginBottom="xs">
-        Dates / Origin
-      </Text>
-      <Text marginBottom="m">
-        Date created:{" "}
-        <Link
-          hasVisitedState={false}
-          href={`/search/index?year_begin=${yearBegin}`}
-        >
-          {yearBegin}
-        </Link>{" "}
-        (approximate)
-      </Text>
+      {yearBegin && (
+        <>
+          <Text size="overline1" marginBottom="xs">
+            Dates / Origin
+          </Text>
+          <Text marginBottom="m">
+            Date created:{" "}
+            <Link
+              hasVisitedState={false}
+              href={`/search/index?year_begin=${yearBegin}`}
+            >
+              {yearBegin}
+            </Link>{" "}
+            (approximate)
+          </Text>
+        </>
+      )}
 
       <Text size="overline1" marginBottom="xs">
         Library locations
@@ -160,13 +164,13 @@ const CollectionMetadata = ({ data }: { data: CollectionMetadataProps }) => {
                   hasVisitedState={false}
                   href={`/search/index?filters=%5Btype%3D${resource}%5D`}
                 >
-                  {resource}
+                  {capitalize(resource)}
                 </Link>
               ))}
             </Box>
           )}
 
-          {contentNote && (
+          {contentNote.length > 0 && (
             <>
               <Text size="overline1" marginBottom="xs">
                 Content note

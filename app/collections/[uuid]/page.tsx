@@ -5,10 +5,6 @@ import { createAdobeAnalyticsPageName } from "@/src/utils/utils";
 import CollectionPage from "@/src/components/pages/collectionPage/collectionPage";
 import { CollectionsApi } from "@/src/utils/apiClients";
 import { SearchParams } from "@/search/index/page";
-import { mockCollectionChildrenResponse } from "__tests__/__mocks__/data/mockCollectionStructure";
-import { mockCollectionResponse } from "__tests__/__mocks__/data/collectionsApi/mockCollectionResponse";
-import { Filter } from "../../src/types/FilterType";
-import { filterToString, stringToFilter } from "@/src/utils/searchManager";
 
 type CollectionProps = {
   params: { uuid: string };
@@ -18,7 +14,7 @@ type CollectionProps = {
 export async function generateMetadata({
   params,
 }: CollectionProps): Promise<Metadata> {
-  const slug = params.uuid; //  TODO: this needs to support both a slug or a uuid.
+  const slug = params.uuid;
   return {
     title: `${slug} - NYPL Digital Collections`,
     openGraph: {
@@ -33,6 +29,7 @@ export default async function Collection({
 }: CollectionProps) {
   let collectionData = await CollectionsApi.getCollectionData(params.uuid);
 
+  // Add collection filter to every search.
   let filters;
   if (searchParams.filters) {
     filters = `${
@@ -49,7 +46,7 @@ export default async function Collection({
     filters,
   });
 
-  // Filter out the collection filter for this page.
+  // Remove the collection filter from displaying on this page.
   const { collection, ...filteredAvailableFilters } =
     searchResults.availableFilters || {};
 
