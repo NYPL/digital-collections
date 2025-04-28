@@ -2,6 +2,17 @@ import collectionSlugToUuidMapping from "@/src/data/collectionSlugUuidMapping";
 import { deSlugify } from "@/src/utils/utils";
 import { NextRequest, NextResponse } from "next/server";
 
+const filterMap = {
+  placeTerm_mtxt_s: "place",
+  genre_mtxt_s: "genre",
+  typeOfResource_mtxt_s: "type",
+  publisher_mtxt_s: "publisher",
+  namePart_mtxt_s: "name",
+  topic_mtxt_s: "topic",
+  languageTerm_mtxt_s: "language",
+  form_mtxt_s: "form",
+};
+
 async function getCollectionTitle(uuid): Promise<string> {
   try {
     const response = await fetch(
@@ -119,43 +130,11 @@ export async function middleware(req: NextRequest) {
       let filterValue = decodeURIComponent(value);
       if (filterKey === "rights" && filterValue === "pd") {
         filterValue = "publicDomain";
-      }
-      switch (filterKey) {
-        case "rights":
-          if (filterValue === "pd") {
-            filterValue = "publicDomain";
-          }
-          break;
-        case "placeTerm_mtxt_s":
-          filterKey = "place";
-          break;
-        case "genre_mtxt_s":
-          filterKey = "genre";
-          break;
-        case "typeOfResource_mtxt_s":
-          filterKey = "type";
-          break;
-        case "publisher_mtxt_s":
-          filterKey = "publisher";
-          break;
-        case "namePart_mtxt_s":
-          filterKey = "name";
-          break;
-        case "topic_mtxt_s":
-          filterKey = "topic";
-          break;
-        case "languageTerm_mtxt_s":
-          filterKey = "language";
-          break;
-        case "form_mtxt_s":
-          filterKey = "form";
-          break;
-        case "root-collection":
-          filterKey = "collection";
-          filterValue = await getCollectionTitle(filterValue);
-          break;
-        default:
-          break;
+      } else if (filterKey === "root-collection") {
+        filterKey = "collection";
+        filterValue = await getCollectionTitle(filterValue);
+      } else if (filterMap[filterKey]) {
+        filterKey = filterMap[filterKey];
       }
       if (filterKey === "date") {
         // Regular expression to match end date x-9999, start date -9999-x, or x-x (both)
