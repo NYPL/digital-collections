@@ -304,7 +304,7 @@ describe("filterStringToCollectionApiFilterString", () => {
         "[Collection=Print Collection portrait file||16ad5350-c52e-012f-aecf-58d385a7bc34]"
       )
     ).toBe(
-      "collection=Print Collection portrait file||16ad5350-c52e-012f-aecf-58d385a7bc34"
+      "collection=Print%20Collection%20portrait%20file%7C%7C16ad5350-c52e-012f-aecf-58d385a7bc34"
     );
   });
 
