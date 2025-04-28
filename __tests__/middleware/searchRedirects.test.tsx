@@ -1,6 +1,12 @@
 import { middleware } from "middleware";
 import { NextRequest, NextResponse } from "next/server";
 
+(global as any).fetch = jest.fn(() =>
+  Promise.resolve({
+    json: () => Promise.resolve({ title: "Mocked Collection Title" }),
+  })
+);
+
 jest.mock("next/server", () => {
   return {
     NextRequest: jest.fn(),
@@ -13,11 +19,11 @@ jest.mock("next/server", () => {
 
 let request: NextRequest;
 
-it("transforms keywords to q", () => {
+it("transforms keywords to q", async () => {
   const request = {
     nextUrl: new URL("http://localhost/search/index?keywords=test"),
   } as NextRequest;
-  const response = middleware(request);
+  const response = await middleware(request);
 
   expect(NextResponse.redirect).toHaveBeenCalledWith(
     "http://localhost/search/index?q=test",
@@ -26,11 +32,11 @@ it("transforms keywords to q", () => {
   expect(response).toBe("redirect response");
 });
 
-it("drops ascending/descending relevance sort (default sort)", () => {
+it("drops ascending/descending relevance sort (default sort)", async () => {
   const request = {
     nextUrl: new URL("http://localhost/search/index?sort=score+desc"),
   } as NextRequest;
-  const response = middleware(request);
+  const response = await middleware(request);
 
   expect(NextResponse.redirect).toHaveBeenCalledWith(
     "http://localhost/search/index?",
@@ -39,11 +45,11 @@ it("drops ascending/descending relevance sort (default sort)", () => {
   expect(response).toBe("redirect response");
 });
 
-it("drops sequence sort", () => {
+it("drops sequence sort", async () => {
   const request = {
     nextUrl: new URL("http://localhost/search/index?sort=sortString+desc"),
   } as NextRequest;
-  const response = middleware(request);
+  const response = await middleware(request);
 
   expect(NextResponse.redirect).toHaveBeenCalledWith(
     "http://localhost/search/index?",
@@ -52,11 +58,11 @@ it("drops sequence sort", () => {
   expect(response).toBe("redirect response");
 });
 
-it("drops date created sort", () => {
+it("drops date created sort", async () => {
   const request = {
     nextUrl: new URL("http://localhost/search/index?sort=keyDate_st+asc"),
   } as NextRequest;
-  const response = middleware(request);
+  const response = await middleware(request);
 
   expect(NextResponse.redirect).toHaveBeenCalledWith(
     "http://localhost/search/index?",
@@ -65,11 +71,11 @@ it("drops date created sort", () => {
   expect(response).toBe("redirect response");
 });
 
-it("transforms date digitized ascending/descending sort", () => {
+it("transforms date digitized ascending/descending sort", async () => {
   const request1 = {
     nextUrl: new URL("http://localhost/search/index?sort=dateDigitized_dt+asc"),
   } as NextRequest;
-  const response1 = middleware(request1);
+  const response1 = await middleware(request1);
 
   expect(NextResponse.redirect).toHaveBeenCalledWith(
     "http://localhost/search/index?sort=date-asc",
@@ -82,7 +88,7 @@ it("transforms date digitized ascending/descending sort", () => {
       "http://localhost/search/index?sort=dateDigitized_dt+desc"
     ),
   } as NextRequest;
-  const response2 = middleware(request2);
+  const response2 = await middleware(request2);
 
   expect(NextResponse.redirect).toHaveBeenCalledWith(
     "http://localhost/search/index?sort=date-desc",
@@ -91,11 +97,11 @@ it("transforms date digitized ascending/descending sort", () => {
   expect(response2).toBe("redirect response");
 });
 
-it("transforms title alphabetical ascending/descending sort", () => {
+it("transforms title alphabetical ascending/descending sort", async () => {
   const request1 = {
     nextUrl: new URL("http://localhost/search/index?sort=mainTitle_ns+asc"),
   } as NextRequest;
-  const response1 = middleware(request1);
+  const response1 = await middleware(request1);
 
   expect(NextResponse.redirect).toHaveBeenCalledWith(
     "http://localhost/search/index?sort=title-asc",
@@ -106,7 +112,7 @@ it("transforms title alphabetical ascending/descending sort", () => {
   const request2 = {
     nextUrl: new URL("http://localhost/search/index?sort=mainTitle_ns+desc"),
   } as NextRequest;
-  const response2 = middleware(request2);
+  const response2 = await middleware(request2);
 
   expect(NextResponse.redirect).toHaveBeenCalledWith(
     "http://localhost/search/index?sort=title-desc",
@@ -115,11 +121,11 @@ it("transforms title alphabetical ascending/descending sort", () => {
   expect(response2).toBe("redirect response");
 });
 
-it("drops scroll", () => {
+it("drops scroll", async () => {
   const request = {
     nextUrl: new URL("http://localhost/search/index?keywords=#/?scroll=136"),
   } as NextRequest;
-  const response = middleware(request);
+  const response = await middleware(request);
 
   expect(NextResponse.redirect).toHaveBeenCalledWith(
     "http://localhost/search/index?",
@@ -128,23 +134,23 @@ it("drops scroll", () => {
   expect(response).toBe("redirect response");
 });
 
-it("maintains page", () => {
+it("maintains page", async () => {
   const request = {
     nextUrl: new URL("http://localhost/search/index?page=2"),
   } as NextRequest;
-  const response = middleware(request);
+  const response = await middleware(request);
 
   expect(NextResponse.next).toHaveBeenCalled();
   expect(response).toBe("next response");
 });
 
-it("transforms a filter", () => {
+it("transforms a filter", async () => {
   const request = {
     nextUrl: new URL(
       "http://localhost/search/index?filters%5Bname%5D=Swope%2C+Martha"
     ),
   } as NextRequest;
-  const response = middleware(request);
+  const response = await middleware(request);
 
   expect(NextResponse.redirect).toHaveBeenCalledWith(
     "http://localhost/search/index?filters=%5Bname%3DSwope%2C+Martha%5D",
@@ -153,13 +159,13 @@ it("transforms a filter", () => {
   expect(response).toBe("redirect response");
 });
 
-it("transforms multiple filters", () => {
+it("transforms multiple filters", async () => {
   const request = {
     nextUrl: new URL(
       "http://localhost/search/index?filters%5Bgenre%5D=Photographs&filters%5Bname%5D%5B%5D=Swope%2C+Martha"
     ),
   } as NextRequest;
-  const response = middleware(request);
+  const response = await middleware(request);
 
   expect(NextResponse.redirect).toHaveBeenCalledWith(
     "http://localhost/search/index?filters=%5Bgenre%3DPhotographs%5D%5Bname%3DSwope%2C+Martha%5D",
@@ -168,11 +174,11 @@ it("transforms multiple filters", () => {
   expect(response).toBe("redirect response");
 });
 
-it("transforms rights filter", () => {
+it("transforms rights filter", async () => {
   const request = {
     nextUrl: new URL("http://localhost/search/index?filters%5Brights%5D=pd"),
   } as NextRequest;
-  const response = middleware(request);
+  const response = await middleware(request);
 
   expect(NextResponse.redirect).toHaveBeenCalledWith(
     "http://localhost/search/index?filters=%5Brights%3DpublicDomain%5D",
@@ -181,13 +187,13 @@ it("transforms rights filter", () => {
   expect(response).toBe("redirect response");
 });
 
-it("transforms year_begin and year_end filters", () => {
+it("transforms year_begin and year_end filters", async () => {
   const request = {
     nextUrl: new URL(
       "http://localhost/search/index?filters%5Bgenre%5D%5B%5D=Cards&keywords=&&&&year_begin=1900&year_end=1905&"
     ),
   } as NextRequest;
-  const response = middleware(request);
+  const response = await middleware(request);
 
   expect(NextResponse.redirect).toHaveBeenCalledWith(
     "http://localhost/search/index?filters=%5Bgenre%3DCards%5D%5BdateStart%3D1900%5D%5BdateEnd%3D1905%5D",
@@ -196,13 +202,13 @@ it("transforms year_begin and year_end filters", () => {
   expect(response).toBe("redirect response");
 });
 
-it("transforms date filter", () => {
+it("transforms date filter", async () => {
   const requestWithOnlyDate = {
     nextUrl: new URL(
       "http://localhost/search/index?filters%5Bdate%5D%5B%5D=1900-1905"
     ),
   } as NextRequest;
-  const response = middleware(requestWithOnlyDate);
+  const response = await middleware(requestWithOnlyDate);
 
   expect(NextResponse.redirect).toHaveBeenCalledWith(
     "http://localhost/search/index?filters=%5BdateStart%3D1900%5D%5BdateEnd%3D1905%5D",
@@ -211,13 +217,13 @@ it("transforms date filter", () => {
   expect(response).toBe("redirect response");
 });
 
-it("transforms date and one year filter", () => {
+it("transforms date and one year filter", async () => {
   const requestWithDateAndYear = {
     nextUrl: new URL(
       "http://localhost/search/index?filters%5Bdate%5D%5B%5D=-9999-1903&filters%5Bgenre%5D=Scores&keywords=hello"
     ),
   } as NextRequest;
-  const response = middleware(requestWithDateAndYear);
+  const response = await middleware(requestWithDateAndYear);
 
   expect(NextResponse.redirect).toHaveBeenCalledWith(
     "http://localhost/search/index?q=hello&filters=%5BdateEnd%3D1903%5D%5Bgenre%3DScores%5D",
@@ -227,13 +233,13 @@ it("transforms date and one year filter", () => {
   expect(response).toBe("redirect response");
 });
 
-it("transforms date and both year filters", () => {
+it("transforms date and both year filters", async () => {
   const requestWithDateAndYears = {
     nextUrl: new URL(
       "http://localhost/search/index?filters%5Bdate%5D%5B%5D=1900-1905&keywords=hello&year_begin=1901&year_end=1905&"
     ),
   } as NextRequest;
-  const response = middleware(requestWithDateAndYears);
+  const response = await middleware(requestWithDateAndYears);
 
   expect(NextResponse.redirect).toHaveBeenCalledWith(
     "http://localhost/search/index?q=hello&filters=%5BdateStart%3D1901%5D%5BdateEnd%3D1905%5D",
@@ -242,13 +248,58 @@ it("transforms date and both year filters", () => {
   expect(response).toBe("redirect response");
 });
 
-it("transforms many params", () => {
+it("transforms filter titles where necessary (form)", async () => {
+  const requestWithDateAndYears = {
+    nextUrl: new URL(
+      "http://localhost/search/index?filters%5Bform_mtxt_s%5D%5B%5D=Photocopies&filters%5Bpublisher%5D=The+Division&keywords="
+    ),
+  } as NextRequest;
+  const response = await middleware(requestWithDateAndYears);
+
+  expect(NextResponse.redirect).toHaveBeenCalledWith(
+    "http://localhost/search/index?filters=%5Bform%3DPhotocopies%5D%5Bpublisher%3DThe+Division%5D",
+    301
+  );
+  expect(response).toBe("redirect response");
+});
+
+it("transforms filter titles (place)", async () => {
+  const requestWithDateAndYears = {
+    nextUrl: new URL(
+      "http://localhost/search/index?filters%5BplaceTerm_mtxt_s%5D%5B%5D=Photocopies&filters%5Bpublisher%5D=The+Division&keywords="
+    ),
+  } as NextRequest;
+  const response = await middleware(requestWithDateAndYears);
+
+  expect(NextResponse.redirect).toHaveBeenCalledWith(
+    "http://localhost/search/index?filters=%5Bplace%3DPhotocopies%5D%5Bpublisher%3DThe+Division%5D",
+    301
+  );
+  expect(response).toBe("redirect response");
+});
+
+it("transforms root-collection and fetches collection title", async () => {
+  const requestWithRootCollection = {
+    nextUrl: new URL(
+      "http://localhost/search/index?filters%5Broot-collection%5D=16ad5350-c52e-012f-aecf-58d385a7bc34&keywords="
+    ),
+  } as NextRequest;
+  const response = await middleware(requestWithRootCollection);
+
+  expect(NextResponse.redirect).toHaveBeenCalledWith(
+    "http://localhost/search/index?filters=%5Bcollection%3DMocked+Collection+Title%7C%7C16ad5350-c52e-012f-aecf-58d385a7bc34%5D",
+    301
+  );
+  expect(response).toBe("redirect response");
+});
+
+it("transforms many params", async () => {
   const request = {
     nextUrl: new URL(
       "http://localhost/search/index?filters%5Bdate%5D%5B%5D=1900-9999&filters%5Bgenre%5D%5B%5D=Cards&filters%5Bname%5D%5B%5D=Ogden%27s+Cigarettes&filters%5Brights%5D=pd&keywords="
     ),
   } as NextRequest;
-  const response = middleware(request);
+  const response = await middleware(request);
 
   expect(NextResponse.redirect).toHaveBeenCalledWith(
     "http://localhost/search/index?filters=%5BdateStart%3D1900%5D%5Bgenre%3DCards%5D%5Bname%3DOgden%27s+Cigarettes%5D%5Brights%3DpublicDomain%5D",
