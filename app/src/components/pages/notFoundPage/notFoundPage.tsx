@@ -13,15 +13,16 @@ import { usePathname } from "next/navigation";
 
 export default function NotFoundPage() {
   const pathname = usePathname();
+
   useEffect(() => {
-    const errorMessage = `${pathname} not found`;
-    console.error(pathname);
+    const errorMessage = `DCF: ${pathname} not found`;
+    console.error(errorMessage);
 
     // Send message to New Relic
     if ((window as any).newrelic) {
       (window as any).newrelic.noticeError(errorMessage);
     }
-  }, ["error"]);
+  }, [pathname]);
 
   return (
     <PageLayout
