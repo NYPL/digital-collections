@@ -248,7 +248,7 @@ it("transforms date and both year filters", async () => {
   expect(response).toBe("redirect response");
 });
 
-it("transforms filter titles where necessary", async () => {
+it("transforms filter titles where necessary (form)", async () => {
   const requestWithDateAndYears = {
     nextUrl: new URL(
       "http://localhost/search/index?filters%5Bform_mtxt_s%5D%5B%5D=Photocopies&filters%5Bpublisher%5D=The+Division&keywords="
@@ -258,6 +258,21 @@ it("transforms filter titles where necessary", async () => {
 
   expect(NextResponse.redirect).toHaveBeenCalledWith(
     "http://localhost/search/index?filters=%5Bform%3DPhotocopies%5D%5Bpublisher%3DThe+Division%5D",
+    301
+  );
+  expect(response).toBe("redirect response");
+});
+
+it("transforms filter titles (place)", async () => {
+  const requestWithDateAndYears = {
+    nextUrl: new URL(
+      "http://localhost/search/index?filters%5BplaceTerm_mtxt_s%5D%5B%5D=Photocopies&filters%5Bpublisher%5D=The+Division&keywords="
+    ),
+  } as NextRequest;
+  const response = await middleware(requestWithDateAndYears);
+
+  expect(NextResponse.redirect).toHaveBeenCalledWith(
+    "http://localhost/search/index?filters=%5Bplace%3DPhotocopies%5D%5Bpublisher%3DThe+Division%5D",
     301
   );
   expect(response).toBe("redirect response");
