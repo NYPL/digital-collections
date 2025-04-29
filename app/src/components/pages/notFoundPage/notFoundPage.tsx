@@ -15,7 +15,7 @@ export default function NotFoundPage() {
   const pathname = usePathname();
 
   useEffect(() => {
-    const errorMessage = `DCF: ${pathname} not found`;
+    const errorMessage = `DCF notFoundPage: ${pathname} not found`;
     console.error(errorMessage);
 
     // Send message to New Relic
