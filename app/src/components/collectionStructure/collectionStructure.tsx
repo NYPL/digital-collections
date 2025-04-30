@@ -85,6 +85,80 @@ const prefetchNextLevel = async (children: CollectionChildProps[]) => {
   }
 };
 
+// Toggle item open/close
+const toggleItem = async ({
+  title,
+  itemCount,
+  uuid,
+  hasSubContainers,
+  children = [],
+  level = 0,
+  openState,
+  setOpenState,
+  searchManager,
+  updateURL,
+  setFetchedChildren,
+}: CollectionChildProps & {
+  level?: number;
+  openState: OpenStateItem[];
+  setOpenState: React.Dispatch<React.SetStateAction<OpenStateItem[]>>;
+  updateURL: (queryString: string) => Promise<void>;
+  searchManager: SearchManager;
+  setFetchedChildren;
+}) => {
+  let isCurrentlyOpen = false;
+  let newState: OpenStateItem[] = [];
+
+  setOpenState((prev) => {
+    isCurrentlyOpen = prev.some((item) => item.uuid === uuid && item.isOpen);
+
+    newState = prev.filter((item) => item.level !== level);
+
+    if (!isCurrentlyOpen) {
+      newState = newState.filter((item) => item.level < level);
+      newState.push({ title, uuid, level, isOpen: true });
+    }
+
+    return newState;
+  });
+
+  if (!isCurrentlyOpen) {
+    searchManager.handleKeywordChange("");
+    searchManager.handleSearchSubmit();
+    searchManager.setLastFilter(null);
+    updateURL(
+      searchManager.handleAddFilter([
+        { filter: "subcollection", value: `${title}||${uuid}` },
+      ])
+    );
+    try {
+      const nextChildren = await fetchChildren(uuid);
+      setFetchedChildren(nextChildren.children);
+      await prefetchNextLevel(nextChildren);
+    } catch (error) {
+      console.error("Failed to fetch children:", error);
+    }
+  } else {
+    const parent = openState.find((item) => item.level === level - 1);
+    if (parent) {
+      searchManager.handleKeywordChange("");
+      searchManager.handleSearchSubmit();
+      searchManager.setLastFilter(null);
+      updateURL(
+        searchManager.handleAddFilter([
+          { filter: "subcollection", value: `${title}||${uuid}` },
+        ])
+      );
+    } else {
+      updateURL(
+        searchManager.handleRemoveFilter([
+          { filter: "subcollection", value: `${title}||${uuid}` },
+        ])
+      );
+    }
+  }
+};
+
 const AccordionItem = ({
   title,
   itemCount,
@@ -92,14 +166,12 @@ const AccordionItem = ({
   hasSubContainers,
   children = [],
   level = 0,
-  headingRef,
   openState,
   setOpenState,
   searchManager,
   updateURL,
 }: CollectionChildProps & {
   level?: number;
-  headingRef: any;
   openState: OpenStateItem[];
   setOpenState: React.Dispatch<React.SetStateAction<OpenStateItem[]>>;
   updateURL: (queryString: string) => Promise<void>;
@@ -113,66 +185,6 @@ const AccordionItem = ({
 
   const [fetchedChildren, setFetchedChildren] =
     useState<CollectionChildProps[]>(children);
-
-  const toggleItem = async () => {
-    let isCurrentlyOpen = false;
-    let newState: OpenStateItem[] = [];
-
-    setOpenState((prev) => {
-      isCurrentlyOpen = prev.some((item) => item.uuid === uuid && item.isOpen);
-
-      newState = prev.filter((item) => item.level !== level);
-
-      if (!isCurrentlyOpen) {
-        newState = newState.filter((item) => item.level < level);
-        newState.push({ title, uuid, level, isOpen: true });
-      }
-
-      return newState;
-    });
-
-    if (!isCurrentlyOpen) {
-      // Opening subcollection filter
-      searchManager.handleKeywordChange("");
-      searchManager.handleSearchSubmit();
-      searchManager.setLastFilter(null);
-      updateURL(
-        searchManager.handleAddFilter([
-          { filter: "subcollection", value: `${title}||${uuid}` },
-        ])
-      );
-
-      try {
-        const nextChildren = await fetchChildren(uuid);
-        setFetchedChildren(nextChildren.children);
-        await prefetchNextLevel(nextChildren);
-      } catch (error) {
-        console.error("Failed to fetch children:", error);
-      }
-    } else {
-      // Closing subcollection filter– if there's a parent, return to that filter
-      const parent = openState.find((item) => item.level === level - 1);
-      if (parent) {
-        searchManager.handleKeywordChange("");
-        searchManager.handleSearchSubmit();
-        searchManager.setLastFilter(null);
-        updateURL(
-          searchManager.handleAddFilter([
-            {
-              filter: "subcollection",
-              value: `${parent.title}||${parent.uuid}`,
-            },
-          ])
-        );
-      } else {
-        updateURL(
-          searchManager.handleRemoveFilter([
-            { filter: "subcollection", value: `${title}||${uuid}` },
-          ])
-        );
-      }
-    }
-  };
 
   return (
     <li>
@@ -198,7 +210,19 @@ const AccordionItem = ({
           paddingRight="s"
           paddingBottom="m"
           onClick={() => {
-            toggleItem();
+            toggleItem({
+              title,
+              itemCount,
+              uuid,
+              hasSubContainers,
+              children,
+              level,
+              openState,
+              setOpenState,
+              searchManager,
+              updateURL,
+              setFetchedChildren,
+            });
             scrollIntoViewIfNeeded();
           }}
           sx={{ zIndex: "0 !important" }}
@@ -223,6 +247,7 @@ const AccordionItem = ({
             </Box>
           </Flex>
         </Button>
+
         {hasSubContainers && (
           <Collapse in={isOpen}>
             <ul style={{ margin: 0 }}>
@@ -231,7 +256,6 @@ const AccordionItem = ({
                   key={child.uuid}
                   {...child}
                   level={level + 1}
-                  headingRef={headingRef}
                   openState={openState}
                   setOpenState={setOpenState}
                   searchManager={searchManager}
@@ -272,8 +296,9 @@ const CollectionStructure = forwardRef<
         console.error("Error loading top-level collections:", err);
       }
     };
+
     loadData();
-  }, []);
+  }, [uuid]);
 
   if (!isLoaded) {
     return (
@@ -318,8 +343,6 @@ const CollectionStructure = forwardRef<
             <AccordionItem
               key={item.uuid}
               {...item}
-              level={0}
-              headingRef={headingRef}
               openState={openState}
               setOpenState={setOpenState}
               searchManager={searchManager}
