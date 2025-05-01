@@ -117,7 +117,8 @@ const SelectFilterComponent = ({
     selected && !isModalOpen
       ? [
           selected,
-          ...filter.options.filter((option) => option.name !== selected?.name),
+          // If an option is selected, don't display any others.
+          //...filter.options.filter((option) => option.name !== selected?.name),
         ]
       : filter.options;
 
