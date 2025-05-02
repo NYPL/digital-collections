@@ -46,8 +46,8 @@ export default async function Collection({
     filters,
   });
 
-  // Remove the collection filter from displaying on this page.
-  const { collection, ...filteredAvailableFilters } =
+  // Remove the collection and division filters from displaying on this page.
+  const { collection, division, ...filteredAvailableFilters } =
     searchResults.availableFilters || {};
 
   const updatedSearchParams = {

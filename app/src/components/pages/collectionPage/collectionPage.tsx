@@ -36,6 +36,7 @@ import CollectionMetadata from "../../collectionMetadata/collectionMetadata";
 import { SearchResultsType } from "../searchPage/searchPage";
 import NoResultsFound from "../../results/noResultsFound";
 import SearchCardGridLoading from "../../grids/searchCardGridLoading";
+import CollectionStructure2 from "../../collectionStructure/collectionStructure2";
 
 type CollectionPageProps = {
   searchResults: SearchResultsType;
@@ -162,12 +163,17 @@ const CollectionPage = ({
             flexDir: { base: "column", md: "row" },
           }}
         >
-          <CollectionStructure
+          {/* <CollectionStructure
             uuid={collectionData.uuid}
             searchManager={collectionSearchManager}
             updateURL={updateURL}
             setOpenState={setOpenState}
             openState={openState}
+          /> */}
+          <CollectionStructure2
+            uuid={collectionData.uuid}
+            updateURL={updateURL}
+            searchManager={collectionSearchManager}
           />
           <Box width="100%">
             <CollectionSearch
