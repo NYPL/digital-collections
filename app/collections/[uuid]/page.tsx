@@ -50,6 +50,8 @@ export default async function Collection({
   const { collection, division, ...filteredAvailableFilters } =
     searchResults.availableFilters || {};
 
+  console.log("filtered ss", filteredAvailableFilters);
+
   const updatedSearchParams = {
     ...searchParams,
     availableFilters: filteredAvailableFilters,

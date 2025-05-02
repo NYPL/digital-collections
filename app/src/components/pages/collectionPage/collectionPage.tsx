@@ -58,7 +58,7 @@ const CollectionPage = ({
     initialSort: searchParams?.sort || DEFAULT_SEARCH_SORT,
     initialFilters: stringToFilter(searchParams?.filters),
     initialKeywords: searchParams?.q || DEFAULT_SEARCH_TERM,
-    initialAvailableFilters: searchResults?.availableFilters || DEFAULT_FILTERS,
+    initialAvailableFilters: searchParams?.availableFilters || DEFAULT_FILTERS,
     lastFilterRef: useRef<string | null>(null),
   });
 
@@ -73,7 +73,9 @@ const CollectionPage = ({
     push(`${pathname}?${queryString}`, { scroll: false });
   };
   const [isLoaded, setIsLoaded] = useState(false);
-  const [openState, setOpenState] = useState<OpenStateItem[]>([]);
+  const [collectionStructureState, setCollectionStructureState] = useState<
+    OpenStateItem[]
+  >([]);
 
   useEffect(() => {
     setIsLoaded(true);
@@ -107,7 +109,7 @@ const CollectionPage = ({
         (filter) => filter.filter === "subcollection"
       )
     ) {
-      setOpenState([]);
+      setCollectionStructureState([]);
     }
 
     isFirstLoad.current = true;
@@ -174,6 +176,8 @@ const CollectionPage = ({
             uuid={collectionData.uuid}
             updateURL={updateURL}
             searchManager={collectionSearchManager}
+            // setTree={setCollectionStructureState}
+            // tree={collectionStructureState}
           />
           <Box width="100%">
             <CollectionSearch
@@ -253,6 +257,7 @@ const CollectionPage = ({
                     pageCount={totalPages}
                     onPageChange={(newPage) => {
                       collectionSearchManager.setLastFilter(null);
+                      setIsLoaded(false);
                       updateURL(
                         collectionSearchManager.handlePageChange(newPage)
                       );

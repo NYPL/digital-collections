@@ -102,6 +102,9 @@ export const CollectionSearch = ({
               ),
           }}
           onSubmit={() => {
+            searchManager.handleRemoveFilter([
+              { filter: "subcollection", value: "null" },
+            ]);
             updateURL(searchManager.handleSearchSubmit());
           }}
           sx={{
