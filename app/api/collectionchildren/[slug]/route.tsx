@@ -3,9 +3,10 @@ import { fetchApi } from "@/src/utils/fetchApi";
 
 export async function GET(
   req: NextRequest,
-  { params }: { params: { slug: string } }
+  { params }: { params: { slug: string; page: number } }
 ) {
   const uuid = params.slug;
+  const page = params.page || 1;
 
   if (!uuid) {
     return new Response(JSON.stringify({ error: "Missing or invalid UUID" }), {
@@ -13,7 +14,7 @@ export async function GET(
     });
   }
   try {
-    const apiUrl = `${process.env.COLLECTIONS_API_URL}/collections/${uuid}/children`;
+    const apiUrl = `${process.env.COLLECTIONS_API_URL}/collections/${uuid}/children?page=${page}&perPage=30`;
 
     const response = await fetchApi({
       apiUrl,
