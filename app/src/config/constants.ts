@@ -47,7 +47,6 @@ export const ALLOWED_FILTERS = [
   "topic",
   "name",
   "collection",
-  "subcollection",
   "place",
   "format",
   "name",
@@ -59,5 +58,8 @@ export const ALLOWED_FILTERS = [
   "dateEnd",
   "rightsFilter",
   "rights",
+  "form",
+  "language",
+  "subcollection",
   "materialType",
 ];

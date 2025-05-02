@@ -2,7 +2,38 @@ import collectionSlugToUuidMapping from "@/src/data/collectionSlugUuidMapping";
 import { deSlugify } from "@/src/utils/utils";
 import { NextRequest, NextResponse } from "next/server";
 
-export function middleware(req: NextRequest) {
+const filterMap = {
+  placeTerm_mtxt_s: "place",
+  genre_mtxt_s: "genre",
+  typeOfResource_mtxt_s: "type",
+  publisher_mtxt_s: "publisher",
+  namePart_mtxt_s: "name",
+  topic_mtxt_s: "topic",
+  languageTerm_mtxt_s: "language",
+  form_mtxt_s: "form",
+};
+
+async function getCollectionTitle(uuid): Promise<string> {
+  try {
+    const response = await fetch(
+      `${process.env.COLLECTIONS_API_URL}/collections/${uuid}}`,
+      {
+        method: "GET",
+        headers: {
+          "x-nypl-collections-api-key": `${process.env.COLLECTIONS_API_AUTH_TOKEN}`,
+          "Cache-Control": "no-cache",
+        },
+      }
+    );
+    const collectionData = await response.json();
+    return `${collectionData.title}||${uuid}`;
+  } catch (error) {
+    console.error("Error fetching root collection:", error);
+    return "";
+  }
+}
+
+export async function middleware(req: NextRequest) {
   const url = req.nextUrl;
   const pathname = url.pathname;
 
@@ -92,13 +123,18 @@ export function middleware(req: NextRequest) {
   // Transform filters into an object
   const filtersObj: Record<string, string[]> = {};
 
-  searchParams.forEach((value, key) => {
+  for (const [key, value] of searchParams.entries()) {
     const match = key.match(/^filters\[(.*?)\](?:\[\])?$/);
     if (match) {
       let filterKey = match[1];
       let filterValue = decodeURIComponent(value);
       if (filterKey === "rights" && filterValue === "pd") {
         filterValue = "publicDomain";
+      } else if (filterKey === "root-collection") {
+        filterKey = "collection";
+        filterValue = await getCollectionTitle(filterValue);
+      } else if (filterMap[filterKey]) {
+        filterKey = filterMap[filterKey];
       }
       if (filterKey === "date") {
         // Regular expression to match end date x-9999, start date -9999-x, or x-x (both)
@@ -128,7 +164,7 @@ export function middleware(req: NextRequest) {
       filtersObj[filterKey] = [filterValue];
       modified = true;
     }
-  });
+  }
 
   // Remove old filter keys
   Object.keys(filtersObj).forEach((key) =>
