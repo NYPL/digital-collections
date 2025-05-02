@@ -58,7 +58,7 @@ const CollectionPage = ({
     initialSort: searchParams?.sort || DEFAULT_SEARCH_SORT,
     initialFilters: stringToFilter(searchParams?.filters),
     initialKeywords: searchParams?.q || DEFAULT_SEARCH_TERM,
-    initialAvailableFilters: searchParams?.availableFilters || DEFAULT_FILTERS,
+    initialAvailableFilters: searchResults?.availableFilters || DEFAULT_FILTERS,
     lastFilterRef: useRef<string | null>(null),
   });
 
