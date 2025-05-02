@@ -243,6 +243,7 @@ export class CollectionsApi {
       keyword
     )}${filterURL}&sort=${sort}&page=${page}&perPage=${perPage}`;
 
+    console.log(apiUrl);
     const response = await fetchApi({
       apiUrl: apiUrl,
       options: { isRepoApi: false },
