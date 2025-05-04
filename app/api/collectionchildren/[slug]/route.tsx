@@ -1,12 +1,13 @@
 import { NextRequest } from "next/server";
 import { fetchApi } from "@/src/utils/fetchApi";
+import { CARDS_PER_PAGE } from "@/src/config/constants";
 
 export async function GET(
   req: NextRequest,
-  { params }: { params: { slug: string; page: number } }
+  { params }: { params: { slug: string } }
 ) {
   const uuid = params.slug;
-  const page = params.page || 1;
+  const page = Number(req.nextUrl.searchParams.get("page")) || 1;
 
   if (!uuid) {
     return new Response(JSON.stringify({ error: "Missing or invalid UUID" }), {
@@ -14,7 +15,7 @@ export async function GET(
     });
   }
   try {
-    const apiUrl = `${process.env.COLLECTIONS_API_URL}/collections/${uuid}/children?page=${page}&perPage=30`;
+    const apiUrl = `${process.env.COLLECTIONS_API_URL}/collections/${uuid}/children?page=${page}&perPage=${CARDS_PER_PAGE}`;
 
     const response = await fetchApi({
       apiUrl,
