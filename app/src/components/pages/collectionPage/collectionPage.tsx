@@ -52,6 +52,11 @@ const CollectionPage = ({
   const headingRef = useRef<HTMLHeadingElement>(null);
   const isFirstLoad = useRef<boolean>(false);
   const [filtersExpanded, setFiltersExpanded] = useState(false);
+  console.log("searchParams fiklters", searchParams?.filters);
+  console.log(
+    "string to filter those filters",
+    stringToFilter(searchParams?.filters)
+  );
 
   const collectionSearchManager = new GeneralSearchManager({
     initialPage: Number(searchParams?.page) || DEFAULT_PAGE_NUM,

@@ -155,13 +155,46 @@ export const getCollectionFilterFromUUID = (
   return filter ? filter : null;
 };
 
+// export const filterStringToCollectionApiFilterString = (filters: string) => {
+//   if (filters !== "") {
+//     const dcflFiltersArray = filters.slice(1, -1).split("][");
+//     const apiFiltersArray = dcflFiltersArray
+//       .map((filter) => {
+//         const splitArray = filter.split("=");
+//         let name;
+//         if (splitArray[0] === "rights") {
+//           name = "rightsFilter";
+//         } else if (
+//           splitArray[0] === "dateEnd" ||
+//           splitArray[0] === "dateStart"
+//         ) {
+//           name = splitArray[0];
+//         } else {
+//           name = splitArray[0].toLowerCase();
+//         }
+//         const value = splitArray[1];
+//         if (!isValidFilter(name)) {
+//           return null;
+//         }
+//         return `${encodeURIComponent(name)}=${encodeURIComponent(value)}`;
+//       })
+//       .filter(Boolean);
+
+//     return apiFiltersArray.join("&");
+//   } else {
+//     return "";
+//   }
+// };
+
 export const filterStringToCollectionApiFilterString = (filters: string) => {
   if (filters !== "") {
     const dcflFiltersArray = filters.slice(1, -1).split("][");
+
     const apiFiltersArray = dcflFiltersArray
       .map((filter) => {
         const splitArray = filter.split("=");
         let name;
+
         if (splitArray[0] === "rights") {
           name = "rightsFilter";
         } else if (
@@ -172,7 +205,12 @@ export const filterStringToCollectionApiFilterString = (filters: string) => {
         } else {
           name = splitArray[0].toLowerCase();
         }
-        const value = splitArray[1];
+
+        const value = splitArray[1]
+          .replace("[", "%5B")
+          .replace("]", "%5D")
+          .replace("||", "%7C%7C");
+
         if (!isValidFilter(name)) {
           return null;
         }

@@ -242,6 +242,7 @@ export class CollectionsApi {
     }/search/?q=${encodeURIComponent(
       keyword
     )}${filterURL}&sort=${sort}&page=${page}&perPage=${perPage}`;
+    console.log(apiUrl);
 
     const response = await fetchApi({
       apiUrl: apiUrl,

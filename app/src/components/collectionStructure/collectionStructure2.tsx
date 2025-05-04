@@ -8,9 +8,10 @@ import {
   Tooltip,
   SkeletonLoader,
 } from "@nypl/design-system-react-components";
-import { SearchManager } from "@/src/utils/searchManager";
+import { SearchManager, stringToFilter } from "@/src/utils/searchManager";
 import { headerBreakpoints } from "@/src/utils/breakpoints";
 import AccordionTree from "./accordionTree";
+import { CARDS_PER_PAGE } from "@/src/config/constants";
 
 export interface OpenStateItem {
   title: string;
@@ -23,19 +24,30 @@ export interface OpenStateItem {
 }
 
 const fetchChildren = async (uuid: string): Promise<OpenStateItem[]> => {
-  const res = await fetch(`/api/collectionchildren/${uuid}`);
-  if (!res.ok) throw new Error("Failed to fetch children");
-  const data = await res.json();
+  const allChildren: OpenStateItem[] = [];
+  let page = 1;
+  while (true) {
+    const res = await fetch(`/api/collectionchildren/${uuid}?page=${page}`);
+    if (!res.ok) throw new Error("Failed to fetch children");
 
-  return data.children.map((child) => ({
-    title: child.title,
-    uuid: child.uuid,
-    itemCount: child.itemCount,
-    hasSubContainers: child.hasSubContainers,
-    level: 0,
-    isOpen: false,
-    children: [],
-  }));
+    const data = await res.json();
+
+    const mappedChildren = data.children.map((child) => ({
+      title: child.title,
+      uuid: child.uuid,
+      itemCount: child.itemCount,
+      hasSubContainers: child.hasSubContainers,
+      level: 0,
+      isOpen: false,
+      children: [],
+    }));
+    allChildren.push(...mappedChildren);
+
+    if (data.children.length < CARDS_PER_PAGE) break;
+    page++;
+  }
+
+  return allChildren;
 };
 
 const closeAllChildren = (node: OpenStateItem): OpenStateItem => ({
@@ -160,9 +172,15 @@ const CollectionStructure2 = forwardRef<
   const [tree, setTree] = useState<OpenStateItem[]>([]);
   const [isLoaded, setIsLoaded] = useState(false);
 
-  const targetUuid = searchManager.filters
-    .find((filter) => filter.filter === "subcollection")
-    ?.value?.split("||")[1];
+  console.log("searchmanager filters", searchManager.filters);
+
+  const subCollectionFilter = searchManager.filters.find(
+    (filter) => filter.filter === "subcollection"
+  );
+  console.log(subCollectionFilter?.value);
+
+  const targetUuid = subCollectionFilter?.value?.split("||")[1];
+  console.log(targetUuid);
 
   const buildTreeWithPathToUuid = async (
     parentUuid: string,
@@ -305,7 +323,7 @@ const CollectionStructure2 = forwardRef<
       }
     };
     loadTree();
-  }, []);
+  }, [searchManager]);
 
   if (!isLoaded) {
     return (
@@ -323,7 +341,6 @@ const CollectionStructure2 = forwardRef<
   }
 
   const handleToggle = (uuid: string) => {
-    console.log(uuid);
     toggleItem(uuid, tree, setTree, searchManager, updateURL);
   };
 
