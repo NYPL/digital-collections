@@ -5,7 +5,7 @@ import {
   Text,
   Tooltip,
 } from "@nypl/design-system-react-components";
-import { OpenStateItem } from "./collectionStructure2";
+import { OpenStateItem } from "./collectionStructure";
 
 const ButtonText = ({
   title,
@@ -80,6 +80,7 @@ const AccordionTree = ({
               onClick={() => toggle(item.uuid)}
               aria-expanded={item.isOpen}
               sx={{ zIndex: "0 !important" }}
+              id={item.uuid}
             >
               <Flex alignItems="center" width="100%">
                 {item.hasSubContainers && (

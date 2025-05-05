@@ -9,9 +9,6 @@ import {
 } from "@nypl/design-system-react-components";
 import React, { useEffect, useRef, useState } from "react";
 import Filters from "../../search/filters/filters";
-import CollectionStructure, {
-  OpenStateItem,
-} from "../../collectionStructure/collectionStructure";
 import { headerBreakpoints } from "@/src/utils/breakpoints";
 import { CollectionSearch } from "../../search/collectionSearch";
 import { MobileSearchBanner } from "../../mobileSearchBanner/mobileSearchBanner";
@@ -36,7 +33,7 @@ import CollectionMetadata from "../../collectionMetadata/collectionMetadata";
 import { SearchResultsType } from "../searchPage/searchPage";
 import NoResultsFound from "../../results/noResultsFound";
 import SearchCardGridLoading from "../../grids/searchCardGridLoading";
-import CollectionStructure2 from "../../collectionStructure/collectionStructure2";
+import CollectionStructure from "../../collectionStructure/collectionStructure";
 
 type CollectionPageProps = {
   searchResults: SearchResultsType;
@@ -52,11 +49,6 @@ const CollectionPage = ({
   const headingRef = useRef<HTMLHeadingElement>(null);
   const isFirstLoad = useRef<boolean>(false);
   const [filtersExpanded, setFiltersExpanded] = useState(false);
-  console.log("searchParams fiklters", searchParams?.filters);
-  console.log(
-    "string to filter those filters",
-    stringToFilter(searchParams?.filters)
-  );
 
   const collectionSearchManager = new GeneralSearchManager({
     initialPage: Number(searchParams?.page) || DEFAULT_PAGE_NUM,
@@ -75,12 +67,10 @@ const CollectionPage = ({
   const pathname = usePathname();
 
   const updateURL = async (queryString) => {
+    setIsLoaded(false);
     push(`${pathname}?${queryString}`, { scroll: false });
   };
   const [isLoaded, setIsLoaded] = useState(false);
-  const [collectionStructureState, setCollectionStructureState] = useState<
-    OpenStateItem[]
-  >([]);
 
   useEffect(() => {
     setIsLoaded(true);
@@ -108,13 +98,6 @@ const CollectionPage = ({
     if (!didFocusElement && isFirstLoad.current) {
       setFiltersExpanded(false);
       headingRef.current?.focus();
-    }
-    if (
-      !collectionSearchManager.filters.find(
-        (filter) => filter.filter === "subcollection"
-      )
-    ) {
-      setCollectionStructureState([]);
     }
 
     isFirstLoad.current = true;
@@ -170,19 +153,10 @@ const CollectionPage = ({
             flexDir: { base: "column", md: "row" },
           }}
         >
-          {/* <CollectionStructure
-            uuid={collectionData.uuid}
-            searchManager={collectionSearchManager}
-            updateURL={updateURL}
-            setOpenState={setOpenState}
-            openState={openState}
-          /> */}
-          <CollectionStructure2
+          <CollectionStructure
             uuid={collectionData.uuid}
             updateURL={updateURL}
             searchManager={collectionSearchManager}
-            // setTree={setCollectionStructureState}
-            // tree={collectionStructureState}
           />
           <Box width="100%">
             <CollectionSearch
