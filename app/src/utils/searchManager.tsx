@@ -35,7 +35,7 @@ abstract class BaseSearchManager implements SearchManager {
   protected currentPage: number;
   protected currentSort: string;
   protected currentKeywords: string;
-  protected currentFilters: Map<string, Filter>;
+  protected currentFilters: Set<string>;
   protected currentAvailableFilters: AvailableFilter[];
   public lastFilterRef: MutableRefObject<string | null>;
 
@@ -54,8 +54,8 @@ abstract class BaseSearchManager implements SearchManager {
   }) {
     this.currentPage = config.initialPage;
     this.currentSort = config.initialSort;
-    this.currentFilters = new Map(
-      (config.initialFilters || []).map((filter) => [filter.filter, filter])
+    this.currentFilters = new Set(
+      (config.initialFilters || []).map((filter) => JSON.stringify(filter))
     );
     this.currentKeywords = config.initialKeywords;
     this.currentAvailableFilters = transformToAvailableFilters(
@@ -77,7 +77,9 @@ abstract class BaseSearchManager implements SearchManager {
   }
 
   get filters(): Filter[] {
-    return Array.from(this.currentFilters.values());
+    return Array.from(this.currentFilters).map((filterStr) =>
+      JSON.parse(filterStr)
+    );
   }
 
   setLastFilter(value: string | null): void {
@@ -93,11 +95,18 @@ abstract class BaseSearchManager implements SearchManager {
   }
 
   handleAddFilter(newFilters: Filter | Filter[]) {
+    const existingFilters = new Map(
+      this.filters.map(({ filter, value }) => [filter, value])
+    );
     const filtersToAdd = Array.isArray(newFilters) ? newFilters : [newFilters];
     filtersToAdd.forEach(({ filter, value }) => {
-      this.currentFilters.set(filter, { filter, value });
+      existingFilters.set(filter, value);
     });
-
+    this.currentFilters = new Set(
+      Array.from(existingFilters.entries()).map(([filter, value]) =>
+        JSON.stringify({ filter, value })
+      )
+    );
     return this.getQueryString({
       q: this.currentKeywords,
       sort: this.currentSort,
@@ -107,12 +116,17 @@ abstract class BaseSearchManager implements SearchManager {
   }
 
   handleRemoveFilter(filtersToRemove: Filter | Filter[]) {
-    const filtersArray = Array.isArray(filtersToRemove)
+    const filtersToRemoveArray = Array.isArray(filtersToRemove)
       ? filtersToRemove
       : [filtersToRemove];
 
-    filtersArray.forEach(({ filter }) => {
-      this.currentFilters.delete(filter);
+    filtersToRemoveArray.forEach(({ filter }) => {
+      this.currentFilters.forEach((existingFilter) => {
+        const parsedFilter = JSON.parse(existingFilter);
+        if (parsedFilter.filter === filter) {
+          this.currentFilters.delete(existingFilter);
+        }
+      });
     });
 
     return this.getQueryString({
@@ -241,30 +255,11 @@ const createQueryStringFromObject = (object: Record<string, string>) => {
   return params.toString();
 };
 
-// export const stringToFilter = (filtersString: string | null): Filter[] => {
-//   if (!filtersString) return [];
-//   const matches = Array.from(filtersString.matchAll(/\[([^\]=]+)=([^\]]+)\]/g));
-//   return matches
-//     .map(([_, filter, value]) => ({
-//       filter: decodeURIComponent(filter),
-//       value: decodeURIComponent(value),
-//     }))
-//     .filter(({ filter }) => isValidFilter(filter));
-// };
-
 export const stringToFilter = (filtersString: string | null): Filter[] => {
   if (!filtersString) return [];
-
   const matches = Array.from(filtersString.matchAll(/\[([^\]=]+)=([^\]]+)\]/g));
-
   return matches
-    .map(([_, filter, value]) => ({
-      filter: decodeURIComponent(filter),
-      value: decodeURIComponent(value)
-        .replace("%5B", "[")
-        .replace("%5D", "]")
-        .replace("%7C%7C", "||"),
-    }))
+    .map(([_, filter, value]) => ({ filter, value }))
     .filter(({ filter }) => isValidFilter(filter));
 };
 
@@ -272,10 +267,7 @@ export const filterToString = (filters: Filter[]): string => {
   if (!filters || filters.length === 0) return "";
   const validFilters = filters.filter(({ filter }) => isValidFilter(filter));
   return validFilters
-    .map(
-      ({ filter, value }) =>
-        `[${encodeURIComponent(filter)}=${encodeURIComponent(value)}]`
-    )
+    .map(({ filter, value }) => `[${filter}=${value}]`)
     .join("");
 };
 
@@ -296,8 +288,9 @@ export const availableFilterDisplayName = (
   name: string,
   filterName: string
 ) => {
+  console.log(name);
   return filterName === "collection" || filterName === "subcollection"
-    ? name.split("||")[0]
+    ? decodeURIComponent(name.split("||")[0])
     : capitalize(name);
 };
 

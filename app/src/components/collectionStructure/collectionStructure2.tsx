@@ -1,14 +1,11 @@
 import { useState, useEffect, forwardRef } from "react";
-import { Box, Button, Collapse } from "@chakra-ui/react";
+import { Box } from "@chakra-ui/react";
 import {
   Flex,
-  Icon,
-  Text,
   Heading,
-  Tooltip,
   SkeletonLoader,
 } from "@nypl/design-system-react-components";
-import { SearchManager, stringToFilter } from "@/src/utils/searchManager";
+import { SearchManager } from "@/src/utils/searchManager";
 import { headerBreakpoints } from "@/src/utils/breakpoints";
 import AccordionTree from "./accordionTree";
 import { CARDS_PER_PAGE } from "@/src/config/constants";
@@ -29,9 +26,7 @@ const fetchChildren = async (uuid: string): Promise<OpenStateItem[]> => {
   while (true) {
     const res = await fetch(`/api/collectionchildren/${uuid}?page=${page}`);
     if (!res.ok) throw new Error("Failed to fetch children");
-
     const data = await res.json();
-
     const mappedChildren = data.children.map((child) => ({
       title: child.title,
       uuid: child.uuid,
@@ -116,7 +111,9 @@ const toggleItem = async (
 
         const filter = {
           filter: "subcollection",
-          value: `${node.title}||${uuid}`,
+          value: `${encodeURIComponent(node.title)}||${encodeURIComponent(
+            uuid
+          )}`,
         };
 
         // Clear search query
@@ -133,7 +130,9 @@ const toggleItem = async (
             ? searchManager.handleAddFilter([
                 {
                   filter: "subcollection",
-                  value: `${parentNode.title}||${parentNode.uuid}`,
+                  value: `${encodeURIComponent(
+                    parentNode.title
+                  )}||${encodeURIComponent(parentNode.uuid)}`,
                 },
               ])
             : searchManager.handleRemoveFilter([filter])
@@ -306,16 +305,17 @@ const CollectionStructure2 = forwardRef<
               }
             }
           }
+        } else {
+          // Otherwise, just show the first level of children
+          setTree(
+            topLevelChildren.map((c) => ({
+              ...c,
+              level: 0,
+              isOpen: false,
+              children: [],
+            }))
+          );
         }
-        // Otherwise, just show the first level of children
-        setTree(
-          topLevelChildren.map((c) => ({
-            ...c,
-            level: 0,
-            isOpen: false,
-            children: [],
-          }))
-        );
       } catch (error) {
         console.error("Error loading collection structure:", error);
       } finally {
@@ -323,7 +323,7 @@ const CollectionStructure2 = forwardRef<
       }
     };
     loadTree();
-  }, [searchManager]);
+  }, [searchManager.keywords]);
 
   if (!isLoaded) {
     return (
