@@ -1,308 +1,334 @@
-import { useState, useEffect, forwardRef } from "react";
-import { Box, Button, Collapse } from "@chakra-ui/react";
+import { useState, useEffect, useRef } from "react";
+import { Box } from "@chakra-ui/react";
 import {
   Flex,
-  Icon,
-  Text,
   Heading,
-  Tooltip,
   SkeletonLoader,
 } from "@nypl/design-system-react-components";
-import { useScrollIntoViewIfNeeded } from "@/src/hooks/useScrollIntoViewIfNeeded";
-import { headerBreakpoints } from "@/src/utils/breakpoints";
 import { SearchManager } from "@/src/utils/searchManager";
-
-export interface CollectionChildProps {
-  title: string;
-  itemCount: string;
-  children?: CollectionChildProps[];
-  hasSubContainers: boolean;
-  uuid: string;
-}
+import { headerBreakpoints } from "@/src/utils/breakpoints";
+import AccordionTree from "./accordionTree";
+import { CARDS_PER_PAGE } from "@/src/config/constants";
 
 export interface OpenStateItem {
   title: string;
   uuid: string;
   level: number;
+  itemCount: string | number;
   isOpen: boolean;
+  hasSubContainers: boolean;
+  children?: OpenStateItem[];
 }
 
-const ButtonText = ({
-  title,
-  hasSubContainers,
-  level,
-}: {
-  title: string;
-  hasSubContainers: boolean;
-  level: number;
-}) => {
-  const text = (
-    <Text
-      flex="1"
-      marginBottom="0"
-      whiteSpace="nowrap"
-      overflow="hidden"
-      textOverflow="ellipsis"
-      paddingLeft={hasSubContainers ? "s" : "28px"}
-      fontWeight="500"
-    >
-      {title}
-    </Text>
-  );
+interface CollectionStructureProps {
+  uuid: string;
+  updateURL: (queryString: string) => Promise<void>;
+  searchManager: SearchManager;
+}
 
-  const truncationLength = 30 - level * 7;
-  return title.length > truncationLength ? (
-    <Tooltip zIndex="1000" content={title}>
-      {text}
-    </Tooltip>
-  ) : (
-    text
-  );
-};
+const fetchChildren = async (uuid: string): Promise<OpenStateItem[]> => {
+  const allChildren: OpenStateItem[] = [];
+  let page = 1;
+  while (true) {
+    const res = await fetch(`/api/collectionchildren/${uuid}?page=${page}`);
+    if (!res.ok) throw new Error("Failed to fetch children");
+    const data = await res.json();
+    const mappedChildren = data.children.map((child) => ({
+      title: child.title,
+      uuid: child.uuid,
+      itemCount: child.itemCount,
+      hasSubContainers: child.hasSubContainers,
+      level: 0,
+      isOpen: false,
+      children: [],
+    }));
+    allChildren.push(...mappedChildren);
 
-const fetchChildren = async (uuid: string) => {
-  const res = await fetch(`/api/collectionchildren/${uuid}`);
-  if (!res.ok) {
-    throw new Error(`Failed to fetch children for uuid: ${uuid}`);
+    if (data.children.length < CARDS_PER_PAGE) break;
+    page++;
   }
-  return res.json();
+
+  return allChildren;
 };
 
-const prefetchNextLevel = async (children: CollectionChildProps[]) => {
-  if (children.length > 0) {
-    for (const child of children) {
-      if (
-        child.hasSubContainers &&
-        (!child.children || child.children.length === 0)
-      ) {
-        try {
-          child.children = await fetchChildren(child.uuid);
-        } catch (err) {
-          console.error("Prefetch failed for", child.uuid, err);
+const closeAllChildren = (node: OpenStateItem): OpenStateItem => ({
+  ...node,
+  isOpen: false,
+  children: node.children?.map(closeAllChildren) ?? [],
+});
+
+const toggleItem = async (
+  uuid: string,
+  tree: OpenStateItem[],
+  setTree: React.Dispatch<React.SetStateAction<OpenStateItem[]>>,
+  searchManager: SearchManager,
+  updateURL: (query: string) => Promise<void>
+) => {
+  let toggledNodeLevel: number | undefined;
+  let parentNode: OpenStateItem | null = null;
+
+  const findNodeLevel = (
+    nodes: OpenStateItem[],
+    level = 0,
+    parent: OpenStateItem | null = null
+  ): void => {
+    for (const node of nodes) {
+      if (node.uuid === uuid) {
+        toggledNodeLevel = node.level;
+        parentNode = parent;
+        return;
+      }
+      if (node.children) findNodeLevel(node.children, level + 1, node);
+    }
+  };
+  findNodeLevel(tree);
+
+  const recursiveUpdateTree = async (
+    nodes: OpenStateItem[]
+  ): Promise<OpenStateItem[]> => {
+    const updated: OpenStateItem[] = [];
+
+    for (const node of nodes) {
+      if (node.uuid === uuid) {
+        const isOpening = !node.isOpen;
+
+        let children = node.children;
+
+        if (isOpening && (!children || children.length === 0)) {
+          try {
+            children = await fetchChildren(uuid);
+            children = children.map((c) => ({
+              ...c,
+              level: node.level + 1,
+              isOpen: false,
+              children: [],
+            }));
+          } catch (e) {
+            console.error("fetch error:", e);
+            children = [];
+          }
+        }
+
+        updated.push({
+          ...node,
+          isOpen: isOpening,
+          children: isOpening ? children : children?.map(closeAllChildren),
+        });
+
+        const filter = {
+          filter: "subcollection",
+          value: `${encodeURIComponent(node.title)}||${encodeURIComponent(
+            uuid
+          )}`,
+        };
+
+        // Clear search query
+        searchManager.handleKeywordChange("");
+        searchManager.handleSearchSubmit();
+        searchManager.setLastFilter(null);
+
+        // If opening the item, add the subcollection filter.
+        // If closing, remove the subcollection filter or replace it with its parent subcollection filter.
+        await updateURL(
+          isOpening
+            ? searchManager.handleAddFilter([filter])
+            : parentNode
+            ? searchManager.handleAddFilter([
+                {
+                  filter: "subcollection",
+                  value: `${encodeURIComponent(
+                    parentNode.title
+                  )}||${encodeURIComponent(parentNode.uuid)}`,
+                },
+              ])
+            : searchManager.handleRemoveFilter([filter])
+        );
+      } else {
+        const shouldClose = toggledNodeLevel === node.level;
+        const updatedChildren = node.children
+          ? await recursiveUpdateTree(node.children)
+          : [];
+
+        updated.push({
+          ...node,
+          isOpen: shouldClose ? false : node.isOpen,
+          children: shouldClose
+            ? node.children?.map(closeAllChildren)
+            : updatedChildren,
+        });
+      }
+    }
+
+    return updated;
+  };
+
+  const newTree = await recursiveUpdateTree(tree);
+  setTree(newTree);
+  searchManager.setLastFilter(`${uuid}`);
+};
+
+const CollectionStructure = ({
+  uuid,
+  searchManager,
+  updateURL,
+}: CollectionStructureProps) => {
+  const [tree, setTree] = useState<OpenStateItem[]>([]);
+  const [isLoaded, setIsLoaded] = useState(false);
+  const scrollContainerRef = useRef<HTMLDivElement>(null);
+
+  const subCollectionFilter = searchManager.filters.find(
+    (filter) => filter.filter === "subcollection"
+  );
+  const targetUuid = subCollectionFilter?.value?.split("||")[1];
+
+  const buildTreeWithPathToUuid = async (
+    parentUuid: string,
+    targetUuid: string,
+    level: number
+  ): Promise<OpenStateItem[] | null> => {
+    const siblings = await fetchChildren(parentUuid);
+    for (const sibling of siblings) {
+      if (sibling.uuid === targetUuid) {
+        const targetChildren = await fetchChildren(targetUuid);
+        return siblings.map((s) =>
+          s.uuid === targetUuid
+            ? {
+                ...s,
+                level,
+                isOpen: true,
+                children: targetChildren.map((c) => ({
+                  ...c,
+                  level: level + 1,
+                  isOpen: false,
+                  children: [],
+                })),
+              }
+            : {
+                ...s,
+                level,
+                isOpen: false,
+                children: [],
+              }
+        );
+      }
+      if (sibling.hasSubContainers) {
+        const childSubtree = await buildTreeWithPathToUuid(
+          sibling.uuid,
+          targetUuid,
+          level + 1
+        );
+
+        if (childSubtree) {
+          return siblings.map((s) =>
+            s.uuid === sibling.uuid
+              ? {
+                  ...s,
+                  level,
+                  isOpen: true,
+                  children: childSubtree,
+                }
+              : {
+                  ...s,
+                  level,
+                  isOpen: false,
+                  children: [],
+                }
+          );
         }
       }
     }
-  }
-};
-
-// Toggle item open/close
-const toggleItem = async ({
-  title,
-  itemCount,
-  uuid,
-  hasSubContainers,
-  children = [],
-  level = 0,
-  openState,
-  setOpenState,
-  searchManager,
-  updateURL,
-  setFetchedChildren,
-}: CollectionChildProps & {
-  level?: number;
-  openState: OpenStateItem[];
-  setOpenState: React.Dispatch<React.SetStateAction<OpenStateItem[]>>;
-  updateURL: (queryString: string) => Promise<void>;
-  searchManager: SearchManager;
-  setFetchedChildren;
-}) => {
-  let isCurrentlyOpen = false;
-  let newState: OpenStateItem[] = [];
-
-  setOpenState((prev) => {
-    isCurrentlyOpen = prev.some((item) => item.uuid === uuid && item.isOpen);
-
-    newState = prev.filter((item) => item.level !== level);
-
-    if (!isCurrentlyOpen) {
-      newState = newState.filter((item) => item.level < level);
-      newState.push({ title, uuid, level, isOpen: true });
-    }
-
-    return newState;
-  });
-
-  if (!isCurrentlyOpen) {
-    searchManager.handleKeywordChange("");
-    searchManager.handleSearchSubmit();
-    searchManager.setLastFilter(null);
-    updateURL(
-      searchManager.handleAddFilter([
-        { filter: "subcollection", value: `${title}||${uuid}` },
-      ])
-    );
-    try {
-      const nextChildren = await fetchChildren(uuid);
-      setFetchedChildren(nextChildren.children);
-      await prefetchNextLevel(nextChildren);
-    } catch (error) {
-      console.error("Failed to fetch children:", error);
-    }
-  } else {
-    const parent = openState.find((item) => item.level === level - 1);
-    if (parent) {
-      searchManager.handleKeywordChange("");
-      searchManager.handleSearchSubmit();
-      searchManager.setLastFilter(null);
-      updateURL(
-        searchManager.handleAddFilter([
-          { filter: "subcollection", value: `${title}||${uuid}` },
-        ])
-      );
-    } else {
-      updateURL(
-        searchManager.handleRemoveFilter([
-          { filter: "subcollection", value: `${title}||${uuid}` },
-        ])
-      );
-    }
-  }
-};
-
-const AccordionItem = ({
-  title,
-  itemCount,
-  uuid,
-  hasSubContainers,
-  children = [],
-  level = 0,
-  openState,
-  setOpenState,
-  searchManager,
-  updateURL,
-}: CollectionChildProps & {
-  level?: number;
-  openState: OpenStateItem[];
-  setOpenState: React.Dispatch<React.SetStateAction<OpenStateItem[]>>;
-  updateURL: (queryString: string) => Promise<void>;
-  searchManager: SearchManager;
-}) => {
-  const { ref, scrollIntoViewIfNeeded } = useScrollIntoViewIfNeeded();
-  const isOpen = openState.some((item) => item.uuid === uuid && item.isOpen);
-  const deepestOpenItem =
-    openState.length > 0 ? openState[openState.length - 1].uuid : null;
-  const isCurrent = uuid === deepestOpenItem;
-
-  const [fetchedChildren, setFetchedChildren] =
-    useState<CollectionChildProps[]>(children);
-
-  return (
-    <li>
-      <Box>
-        <Button
-          _focus={{
-            outline: "none !important",
-            boxShadow: "inset 0 0 0 2px var(--nypl-colors-ui-focus) !important",
-          }}
-          ref={ref}
-          id={`${uuid}-btn`}
-          w="100%"
-          color="black"
-          borderRadius="0"
-          textAlign="left"
-          fontWeight="semibold"
-          border="1px solid var(--ui-gray-medium, #BDBDBD)"
-          borderTop="unset"
-          bg={isOpen ? "ui.gray.light-cool" : "ui.white"}
-          _hover={{ bg: "ui.hover.default" }}
-          paddingLeft={level > 0 ? (level < 12 ? level * 8 : "96px") : "s"}
-          paddingTop="m"
-          paddingRight="s"
-          paddingBottom="m"
-          onClick={() => {
-            toggleItem({
-              title,
-              itemCount,
-              uuid,
-              hasSubContainers,
-              children,
-              level,
-              openState,
-              setOpenState,
-              searchManager,
-              updateURL,
-              setFetchedChildren,
-            });
-            scrollIntoViewIfNeeded();
-          }}
-          sx={{ zIndex: "0 !important" }}
-          aria-expanded={hasSubContainers ? isOpen : undefined}
-          aria-current={isCurrent ? "true" : undefined}
-        >
-          <Flex width="100%" alignItems="center">
-            {hasSubContainers && (
-              <Icon
-                size="small"
-                name={isOpen ? "minus" : "plus"}
-                visibility="visible"
-              />
-            )}
-            <ButtonText
-              title={title}
-              hasSubContainers={hasSubContainers}
-              level={level}
-            />
-            <Box as="span" marginLeft="s" fontWeight="400">
-              {itemCount}
-            </Box>
-          </Flex>
-        </Button>
-
-        {hasSubContainers && (
-          <Collapse in={isOpen}>
-            <ul style={{ margin: 0 }}>
-              {fetchedChildren.map((child, index) => (
-                <AccordionItem
-                  key={child.uuid}
-                  {...child}
-                  level={level + 1}
-                  openState={openState}
-                  setOpenState={setOpenState}
-                  searchManager={searchManager}
-                  updateURL={updateURL}
-                />
-              ))}
-            </ul>
-          </Collapse>
-        )}
-      </Box>
-    </li>
-  );
-};
-
-const CollectionStructure = forwardRef<
-  HTMLHeadingElement,
-  {
-    uuid: string;
-    updateURL: (queryString: string) => Promise<void>;
-    searchManager: SearchManager;
-    setOpenState: React.Dispatch<React.SetStateAction<OpenStateItem[]>>;
-    openState: OpenStateItem[];
-  }
->(({ uuid, searchManager, updateURL, setOpenState, openState }, headingRef) => {
-  const [data, setData] = useState<CollectionChildProps[]>([]);
-  const [isLoaded, setIsLoaded] = useState(false);
+    return null;
+  };
 
   useEffect(() => {
-    const loadData = async () => {
+    const loadTree = async () => {
       try {
-        const topLevel = await fetchChildren(uuid);
-        const filteredChildren = topLevel?.children?.filter(
-          (child: any) => child.itemCount > 1
-        );
-        setData(filteredChildren || []);
+        const topLevelChildren = await fetchChildren(uuid);
+        // If already filtering on a subcollection, build tree to that uuid
+        if (targetUuid) {
+          for (const top of topLevelChildren) {
+            if (top.uuid === targetUuid) {
+              const children = await fetchChildren(top.uuid);
+              setTree(
+                topLevelChildren.map((node) =>
+                  node.uuid === top.uuid
+                    ? {
+                        ...top,
+                        level: 0,
+                        isOpen: true,
+                        children: children.map((child) => ({
+                          ...child,
+                          level: 1,
+                          isOpen: false,
+                          children: [],
+                        })),
+                      }
+                    : {
+                        ...node,
+                        level: 0,
+                        isOpen: false,
+                        children: [],
+                      }
+                )
+              );
+              setIsLoaded(true);
+              return;
+            }
+
+            if (top.hasSubContainers) {
+              const subtree = await buildTreeWithPathToUuid(
+                top.uuid,
+                targetUuid,
+                1
+              );
+
+              if (subtree) {
+                setTree(
+                  topLevelChildren.map((node) =>
+                    node.uuid === top.uuid
+                      ? {
+                          ...top,
+                          level: 0,
+                          isOpen: true,
+                          children: subtree,
+                        }
+                      : {
+                          ...node,
+                          level: 0,
+                          isOpen: false,
+                          children: [],
+                        }
+                  )
+                );
+                setIsLoaded(true);
+                return;
+              }
+            }
+          }
+        } else {
+          // Otherwise, just show the first level of children
+          setTree(
+            topLevelChildren.map((c) => ({
+              ...c,
+              level: 0,
+              isOpen: false,
+              children: [],
+            }))
+          );
+        }
+      } catch (error) {
+        console.error("Error loading collection structure:", error);
+      } finally {
         setIsLoaded(true);
-      } catch (err) {
-        console.error("Error loading top-level collections:", err);
       }
     };
-
-    loadData();
-  }, [uuid]);
+    loadTree();
+  }, [searchManager.keywords]);
 
   if (!isLoaded) {
     return (
       <SkeletonLoader
+        data-testid="loading-collection-structure"
         contentSize={12}
         headingSize={1}
         imageAspectRatio="square"
@@ -315,7 +341,12 @@ const CollectionStructure = forwardRef<
     );
   }
 
-  if (data.length === 0) {
+  const handleToggle = (uuid: string) => {
+    toggleItem(uuid, tree, setTree, searchManager, updateURL);
+  };
+
+  // If no subcontainers, don't display Collection structure
+  if (tree.length === 0) {
     return null;
   }
 
@@ -329,32 +360,21 @@ const CollectionStructure = forwardRef<
         },
       }}
     >
-      <Heading ref={headingRef} size="heading6">
-        Collection structure
-      </Heading>
+      <Heading size="heading6">Collection structure</Heading>
       <Box
+        ref={scrollContainerRef}
         w="300px"
         maxH="750px"
         overflowY="auto"
         borderTop="1px solid var(--ui-gray-medium, #BDBDBD)"
       >
         <ul>
-          {data.map((item) => (
-            <AccordionItem
-              key={item.uuid}
-              {...item}
-              openState={openState}
-              setOpenState={setOpenState}
-              searchManager={searchManager}
-              updateURL={updateURL}
-            />
-          ))}
+          <AccordionTree items={tree} toggle={handleToggle} />
         </ul>
       </Box>
     </Flex>
   );
-});
+};
 
 CollectionStructure.displayName = "CollectionStructure";
-
 export default CollectionStructure;

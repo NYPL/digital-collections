@@ -16,8 +16,6 @@ export async function GET(
   }
   try {
     const apiUrl = `${process.env.COLLECTIONS_API_URL}/collections/${uuid}/children?page=${page}&perPage=48`;
-
-    console.log("apiUrl", apiUrl);
     const response = await fetchApi({
       apiUrl,
       options: { isRepoApi: false, next: { revalidate: 60 * 60 * 24 * 30 } },

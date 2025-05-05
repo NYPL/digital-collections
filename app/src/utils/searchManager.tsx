@@ -288,7 +288,6 @@ export const availableFilterDisplayName = (
   name: string,
   filterName: string
 ) => {
-  console.log(name);
   return filterName === "collection" || filterName === "subcollection"
     ? decodeURIComponent(name.split("||")[0])
     : capitalize(name);
