@@ -21,9 +21,10 @@ export const fetchApi = async ({
     params?: { [key: string]: any };
     body?: any;
     isRepoApi?: boolean;
+    next?;
   };
 }) => {
-  const { method = "GET", params, body, isRepoApi = true } = options;
+  const { method = "GET", params, body, isRepoApi = true, next } = options;
 
   const headers: Record<string, string> = {};
 
