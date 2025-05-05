@@ -121,7 +121,10 @@ export const ToggleTip = ({
               background: "ui.gray.xx-dark",
               borderRadius: "md",
               zIndex: "10",
-              padding: "xs",
+              paddingTop: "xs",
+              paddingBottom: "xs",
+              paddingLeft: "s",
+              paddingRight: "s",
               minWidth: "180px",
               maxWidth: "240px",
             }}
@@ -141,7 +144,7 @@ export const ToggleTip = ({
               marginBottom="0"
               fontSize="desktop.caption"
               fontWeight="medium"
-              color="ui.typography.inverse.body"
+              color="ui.typography.inverse.heading"
             >
               {toggleTipContent}
             </Text>
