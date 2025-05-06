@@ -9,6 +9,7 @@ const filterMap = {
   publisher_mtxt_s: "publisher",
   namePart_mtxt_s: "name",
   topic_mtxt_s: "topic",
+  geographic_mtxt_s: "topic",
   languageTerm_mtxt_s: "language",
   form_mtxt_s: "form",
 };
