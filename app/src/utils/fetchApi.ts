@@ -9,6 +9,7 @@ import logger from "logger";
  *   - params: URL parameters for GET requests.
  *   - body: Body data for POST requests.
  *   - isRepoApi: Boolean flag to determine if Repo API or Collections API authorization should be included.
+ *   - next: Next.js-specific options (revalidate, tags)
  * @returns {Promise<any>} - The API response.
  */
 export const fetchApi = async ({

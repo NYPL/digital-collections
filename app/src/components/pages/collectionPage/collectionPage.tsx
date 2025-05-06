@@ -161,8 +161,6 @@ const CollectionPage = ({
           <Box width="100%">
             <CollectionSearch
               searchManager={collectionSearchManager}
-              updateURL={updateURL}
-              setIsLoaded={setIsLoaded}
               key={searchResults.keyword.length}
             />
             <Flex

@@ -8,19 +8,19 @@ import {
 import DCSearchBar from "./dcSearchBar";
 import { useState } from "react";
 import type { SearchManager } from "@/src/utils/searchManager";
+import { usePathname, useRouter } from "next/navigation";
 
 type CollectionSearchProps = {
   searchManager: SearchManager;
-  updateURL: (queryString: string) => Promise<void>;
-  setIsLoaded;
 };
 
-export const CollectionSearch = ({
-  searchManager,
-  updateURL,
-  setIsLoaded,
-}: CollectionSearchProps) => {
+export const CollectionSearch = ({ searchManager }: CollectionSearchProps) => {
   const [isExpanded, setIsExpanded] = useState(false);
+  const { push } = useRouter();
+  const pathname = usePathname();
+  const updateURL = async (queryString) => {
+    push(`${pathname}?${queryString}`, { scroll: false });
+  };
 
   return (
     <Flex
