@@ -92,7 +92,6 @@ const CollectionMetadata = ({ data }: { data: CollectionMetadataProps }) => {
             >
               {yearBegin}
             </Link>{" "}
-            (approximate)
           </Text>
         </>
       )}
