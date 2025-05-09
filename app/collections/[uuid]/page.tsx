@@ -54,6 +54,16 @@ export default async function Collection({
   const { collection, division, ...filteredAvailableFilters } =
     searchResults.availableFilters || {};
 
+  // Remove the collection if it's returned in the search results.
+  const updatedResults = searchResults.results.filter(
+    (item) => item.uuid !== collectionData.uuid
+  );
+
+  const updatedSearchResults = {
+    ...searchResults,
+    results: updatedResults,
+  };
+
   const updatedSearchParams = {
     ...searchParams,
     availableFilters: filteredAvailableFilters,
@@ -77,7 +87,7 @@ export default async function Collection({
     >
       <CollectionPage
         searchParams={updatedSearchParams}
-        searchResults={searchResults}
+        searchResults={updatedSearchResults}
         collectionData={collectionData}
       />
     </PageLayout>
