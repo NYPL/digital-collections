@@ -1,3 +1,4 @@
+import { capitalize } from "@/src/utils/utils";
 import {
   Flex,
   Heading,
@@ -50,24 +51,24 @@ const CollectionMetadata = ({ data }: { data: CollectionMetadataProps }) => {
 
   return (
     <Flex marginTop="l" marginBottom="m" flexDir="column" maxWidth="720px">
-      <Heading size="heading6" marginBottom="s">
-        Collection data
-      </Heading>
+      <Heading size="heading6">Collection data</Heading>
       {(archivesCollectionID || bNumber) && (
-        <Text marginBottom="xs">This collection is also available:</Text>
+        <>
+          <Text marginBottom="xs">This collection is also available:</Text>
+          <ButtonGroup marginBottom="m">
+            {archivesCollectionID && (
+              <Button buttonType="secondary" id="finding-aid-btn">
+                View finding aid
+              </Button>
+            )}
+            {bNumber && (
+              <Button buttonType="secondary" id="catalog-btn">
+                View catalog
+              </Button>
+            )}
+          </ButtonGroup>
+        </>
       )}
-      <ButtonGroup marginBottom="m">
-        {archivesCollectionID && (
-          <Button buttonType="secondary" id="finding-aid-btn">
-            View Finding Aid
-          </Button>
-        )}
-        {bNumber && (
-          <Button buttonType="secondary" id="catalog-btn">
-            View Catalog
-          </Button>
-        )}
-      </ButtonGroup>
 
       {abstract && (
         <>
@@ -78,19 +79,23 @@ const CollectionMetadata = ({ data }: { data: CollectionMetadataProps }) => {
         </>
       )}
 
-      <Text size="overline1" marginBottom="xs">
-        Dates / Origin
-      </Text>
-      <Text marginBottom="m">
-        Date created:{" "}
-        <Link
-          hasVisitedState={false}
-          href={`/search/index?year_begin=${yearBegin}`}
-        >
-          {yearBegin}
-        </Link>{" "}
-        (approximate)
-      </Text>
+      {yearBegin && (
+        <>
+          <Text size="overline1" marginBottom="xs">
+            Dates / Origin
+          </Text>
+          <Text marginBottom="m">
+            Date created:{" "}
+            <Link
+              hasVisitedState={false}
+              href={`/search/index?year_begin=${yearBegin}`}
+            >
+              {yearBegin}
+            </Link>{" "}
+            (approximate)
+          </Text>
+        </>
+      )}
 
       <Text size="overline1" marginBottom="xs">
         Library locations
@@ -159,13 +164,13 @@ const CollectionMetadata = ({ data }: { data: CollectionMetadataProps }) => {
                   hasVisitedState={false}
                   href={`/search/index?filters=%5Btype%3D${resource}%5D`}
                 >
-                  {resource}
+                  {capitalize(resource)}
                 </Link>
               ))}
             </Box>
           )}
 
-          {contentNote && (
+          {contentNote.length > 0 && (
             <>
               <Text size="overline1" marginBottom="xs">
                 Content note

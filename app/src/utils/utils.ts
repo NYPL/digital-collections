@@ -149,7 +149,6 @@ export const getCollectionFilterFromUUID = (
 ): any => {
   const filter = filters.find((filterObject) => {
     if (filterObject.name.split("||")[1] === uuid) {
-      //console.log("MATCH");
     }
     return filterObject.name.split("||")[1] === uuid;
   });
@@ -177,7 +176,11 @@ export const filterStringToCollectionApiFilterString = (filters: string) => {
         if (!isValidFilter(name)) {
           return null;
         }
-        return `${encodeURIComponent(name)}=${encodeURIComponent(value)}`;
+        if (name === "subcollection" || name === "collection") {
+          return `${name}=${value}`;
+        } else {
+          return `${encodeURIComponent(name)}=${encodeURIComponent(value)}`;
+        }
       })
       .filter(Boolean);
 
