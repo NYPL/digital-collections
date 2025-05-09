@@ -1,21 +1,35 @@
-// /collections/:uuid
+// collections/:uuid
 const collectionsUUIDSchema = {
   title: "string",
-  uuid: "string",
-  // for the below fields: if not returned, assuming there isn't one
-  archivesCollectionID: "number", // MSS ID, to be used in a archives.nypl.org url
-  bNumber: "number", // to be used in a nypl.org/research/research-catalog/bib/ url
-  keyDate: "string",
-  yearBegin: "datetime",
-  divisionTitle: "string", // divisionFullName_mtxt_s
-  divisionSlug: "string", // this will be manually pulled from database, slug for division
-  shelfLocator: "string", // shelfLocator_mtxt_s
-  genres: "string[]",
-  topics: "string[]", //topic_mtxt_s
-  typeOfResource: "string[]",
-  contentNote: "string",
+  uuid: "3fa85f64-5717-4562-b3fc-2c963f66afa6",
   abstract: "string",
-  donorCredit: "string",
-  // **AND ALL OTHER POSSIBLE METADATA FIELDS– WIP
+  accessCondition: ["string"],
+  archivesCollectionID: "string", // MSS ID, to be used in a archives.nypl.org url
+  bNumber: "string", // to be used in a nypl.org/research/research-catalog/bib/ url
+  contentNote: ["string"],
+  dateCaptured: "string",
+  dateCreated: "string",
+  dateIssued: "string",
+  dateother: "string",
+  displayNames: ["string"],
+  divisionSlug: "string",
+  divisionTitle: "string",
+  edition: "string",
+  extent: "string",
+  form: "string",
+  genres: ["string"],
+  languages: ["string"],
+  names: [
+    {
+      name: "string",
+      roles: ["string"],
+    },
+  ],
+  place: "string",
+  shelfLocator: "string",
+  tableOfContents: ["string"],
+  topics: ["string"],
+  typeOfResource: ["string"],
+  yearBegin: "integer",
+  yearEnd: "integer",
 };
-export default collectionsUUIDSchema;
