@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+### Added
+
+- Connects collection landing page (metadata) to API (DR-3362)
+
 ### Fixed
 
 - Fixed filters to be encoded as URI components (DR-3564)
