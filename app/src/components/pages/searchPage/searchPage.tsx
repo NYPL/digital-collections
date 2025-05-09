@@ -19,22 +19,8 @@ import { MobileSearchBanner } from "../../mobileSearchBanner/mobileSearchBanner"
 import SortMenu from "../../sortMenu/sortMenu";
 import ActiveFilters from "../../search/filters/activeFilters";
 import NoResultsFound from "../../results/noResultsFound";
-import SearchCardType from "@/src/types/SearchCardType";
-import { AvailableFilterOption } from "@/src/types/AvailableFilterType";
 import SearchCardGridLoading from "../../grids/searchCardGridLoading";
-
-export type SearchResultsType = {
-  keyword: string;
-  numResults: number;
-  page: number;
-  perPage: number;
-  rightsFilter: string;
-  dateStart: string;
-  dateEnd: string;
-  availableFilters: Record<string, AvailableFilterOption[]>;
-  sort: string;
-  results: SearchCardType[];
-};
+import { SearchResultsType } from "@/src/types/SearchResultsType";
 
 const SearchPage = ({
   searchResults,

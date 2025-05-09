@@ -2,36 +2,9 @@ import React from "react";
 import { render, screen, fireEvent } from "@testing-library/react";
 import CollectionMetadata from "./collectionMetadata";
 import { CollectionModel } from "@/src/models/collection";
+import { mockCollectionResponse } from "__tests__/__mocks__/data/collectionsApi/mockCollectionResponse";
 
-const mockData = {
-  title: "Sample Collection",
-  uuid: "123-uuid",
-  abstract: "This is a sample abstract.",
-  accessCondition: ["Open access"],
-  archivesCollectionID: "12345",
-  bNumber: "b1234567",
-  contentNote: ["Content note 1", "Content note 2"],
-  dateCaptured: "2022",
-  dateCreated: "2020",
-  dateIssued: "2021",
-  dateOther: "",
-  displayNames: ["Sample Name"],
-  divisionSlug: "research-division",
-  divisionTitle: "Research Division",
-  edition: "2nd Edition",
-  extent: "200 pages",
-  form: "Book",
-  genres: ["Fiction"],
-  languages: ["English"],
-  names: [{ name: "John Doe", roles: ["cre", "creator"] }],
-  place: "New York",
-  shelfLocator: "QA123",
-  tableOfContents: ["Chapter 1", "Chapter 2"],
-  topics: ["Science (Topic)", "Mathematics (Name)"],
-  typeOfResource: ["Text"],
-  yearBegin: 2020,
-  yearEnd: 2022,
-} as CollectionModel;
+const mockData = new CollectionModel(mockCollectionResponse);
 
 describe("CollectionMetadata component", () => {
   it("renders collection data", () => {

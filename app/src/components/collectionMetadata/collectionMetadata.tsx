@@ -10,7 +10,7 @@ import {
 } from "@nypl/design-system-react-components";
 import { useState } from "react";
 
-type CollectionMetadataProps = {
+export type CollectionMetadataProps = {
   title: string;
   uuid: string;
   abstract?: string;

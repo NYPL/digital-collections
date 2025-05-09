@@ -4,11 +4,11 @@ import PageLayout from "../../src/components/pageLayout/pageLayout";
 import { createAdobeAnalyticsPageName } from "@/src/utils/utils";
 import CollectionPage from "@/src/components/pages/collectionPage/collectionPage";
 import { CollectionsApi } from "@/src/utils/apiClients";
-import { SearchParams } from "@/search/index/page";
+import CollectionSearchParamsType from "@/src/types/CollectionSearchParams";
 
 type CollectionProps = {
   params: { uuid: string };
-  searchParams: SearchParams;
+  searchParams: CollectionSearchParamsType;
 };
 
 export async function generateMetadata({
