@@ -34,9 +34,13 @@ export default async function Collection({
   if (searchParams.filters) {
     filters = `${
       searchParams?.filters ? searchParams?.filters : ""
-    }[collection=${collectionData.title}||${collectionData.uuid}]`;
+    }[collection=${encodeURIComponent(collectionData.title)}||${
+      collectionData.uuid
+    }]`;
   } else {
-    filters = `[collection=${collectionData.title}||${collectionData.uuid}]`;
+    filters = `[collection=${encodeURIComponent(collectionData.title)}||${
+      collectionData.uuid
+    }]`;
   }
 
   const searchResults = await CollectionsApi.getSearchData({
