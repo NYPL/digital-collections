@@ -220,7 +220,7 @@ const CollectionMetadata = ({ data }: { data: CollectionMetadataProps }) => {
       <Heading size="heading6">Collection information</Heading>
       {(archivesCollectionID || bNumber) && (
         <>
-          <Text marginBottom="xs">This collection is also available:</Text>
+          <Text marginBottom="xs">Collection description:</Text>
           <ButtonGroup marginBottom="m">
             {archivesCollectionID && (
               <Button
@@ -247,7 +247,7 @@ const CollectionMetadata = ({ data }: { data: CollectionMetadataProps }) => {
                   )
                 }
               >
-                View catalog
+                View catalog record
               </Button>
             )}
           </ButtonGroup>
