@@ -217,7 +217,7 @@ const CollectionMetadata = ({ data }: { data: CollectionMetadataProps }) => {
 
   return (
     <Flex marginTop="l" marginBottom="m" flexDir="column" maxWidth="720px">
-      <Heading size="heading6">Collection data</Heading>
+      <Heading size="heading6">Collection information</Heading>
       {(archivesCollectionID || bNumber) && (
         <>
           <Text marginBottom="xs">This collection is also available:</Text>
