@@ -1,7 +1,7 @@
 // collections/:uuid
 export const collectionsUUIDSchema = {
   title: "string",
-  uuid: "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+  uuid: "string",
   abstract: "string",
   accessCondition: ["string"],
   archivesCollectionID: "string", // MSS ID, to be used in a archives.nypl.org url
