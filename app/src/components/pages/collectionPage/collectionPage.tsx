@@ -29,11 +29,11 @@ import {
 import { usePathname, useRouter } from "next/navigation";
 import SortMenu from "../../sortMenu/sortMenu";
 import ActiveFilters from "../../search/filters/activeFilters";
-import CollectionMetadata from "../../collectionMetadata/collectionMetadata";
 import { SearchResultsType } from "../searchPage/searchPage";
 import NoResultsFound from "../../results/noResultsFound";
 import SearchCardGridLoading from "../../grids/searchCardGridLoading";
 import CollectionStructure from "../../collectionStructure/collectionStructure";
+import CollectionMetadata from "../../collectionMetadata/collectionMetadata";
 
 type CollectionPageProps = {
   searchResults: SearchResultsType;
