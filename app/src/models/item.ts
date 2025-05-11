@@ -73,6 +73,8 @@ export class ItemModel {
   };
 
   constructor(data: any, uuid: string, manifest: any) {
+    // get custom label from manifest
+
     const parser = new Maniiifest(manifest);
     const label = parser?.getManifestLabelByLanguage("en");
     const metadata = Array.from(parser.iterateManifestMetadata());
