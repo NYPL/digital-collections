@@ -36,6 +36,7 @@ import CollectionMetadata, {
 } from "../../collectionMetadata/collectionMetadata";
 import CollectionSearchParamsType from "@/src/types/CollectionSearchParams";
 import { SearchResultsType } from "@/src/types/SearchResultsType";
+import { CollectionModel } from "@/src/models/collection";
 
 type CollectionPageProps = {
   searchResults: SearchResultsType;
@@ -148,7 +149,7 @@ const CollectionPage = ({
         }}
       >
         <ActiveFilters searchManager={collectionSearchManager} />
-        <CollectionMetadata data={collectionData} />
+        <CollectionMetadata data={new CollectionModel(collectionData)} />
         <Flex
           gap="xxl"
           sx={{

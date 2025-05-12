@@ -4,7 +4,7 @@ export class CollectionModel {
   abstract?: string;
   accessCondition?: string[];
   archivesCollectionID?: string;
-  bNumber?: string;
+  bNumbers?: string[];
   contentNote?: string[];
   dateCaptured: string;
   dateCreated: string;
@@ -38,7 +38,7 @@ export class CollectionModel {
     this.abstract = data.abstract;
     this.accessCondition = data.accessCondition;
     this.archivesCollectionID = data.archivesCollectionID;
-    this.bNumber = data.bNumber;
+    this.bNumbers = data.bNumber?.split(" ");
     this.contentNote = data.contentNote;
     this.dateCaptured = data.dateCaptured;
     this.dateCreated = data.dateCreated;
