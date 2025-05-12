@@ -10,10 +10,8 @@ describe("CollectionMetadata component", () => {
   it("renders collection data", () => {
     render(<CollectionMetadata data={mockData} />);
 
-    expect(screen.getByText("Collection data")).toBeInTheDocument();
-    expect(
-      screen.getByText("This collection is also available:")
-    ).toBeInTheDocument();
+    expect(screen.getByText("Collection information")).toBeInTheDocument();
+
     expect(screen.getByText("This is a sample abstract.")).toBeInTheDocument();
     expect(screen.getByText("Date created:"));
     expect(screen.getByText("Research Division")).toBeInTheDocument();
