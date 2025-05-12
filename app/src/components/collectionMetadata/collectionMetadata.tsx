@@ -167,14 +167,13 @@ const renderIdentifiers = (
             {bNumbers.length > 1 ? `s` : ``}):{" "}
           </Text>
           {bNumbers.map((bNumber, index) => (
-            <Text as="span" key={index} marginBottom="0">
+            <Text key={index} marginBottom="0">
               <Link
                 hasVisitedState={false}
                 href={`https://www.nypl.org/research/research-catalog/bib/${bNumber}`}
               >
                 {bNumber}
               </Link>
-              {index !== bNumbers.length - 1 && ", "}
             </Text>
           ))}
         </>
