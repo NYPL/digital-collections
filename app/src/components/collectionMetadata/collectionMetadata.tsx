@@ -66,11 +66,7 @@ function splitLabelAndSubjectType(label: string): {
   subjectType: string | null;
 } {
   const match = label.match(/\(([^)]+)\)\s*$/);
-  const subjectType = match
-    ? match[1] === "Name"
-      ? "name"
-      : "topic"
-    : "topic";
+  const subjectType = match && match[1] === "Name" ? "name" : "topic";
   const text = match
     ? label.replace(/\s*\([^)]+\)\s*$/, "").trim()
     : label.trim();
