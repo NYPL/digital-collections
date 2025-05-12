@@ -62,6 +62,7 @@ export const fetchApi = async ({
       method,
       headers,
       body: method === "POST" ? JSON.stringify(body) : undefined,
+      next,
     })) as Response;
 
     if (response.status === 422) {

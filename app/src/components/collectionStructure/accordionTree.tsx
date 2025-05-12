@@ -40,6 +40,15 @@ const ButtonText = ({
   );
 };
 
+/**
+ * Recursively renders a collapsible accordion, where each node is a <li> element
+ * (so component must be rendered inside a <ol> or <ul>). Each node in the tree can be expanded or collapsed.
+ * If the node has children, it nests another `AccordionTree` component within a `Collapse`.
+ *
+ * @param {OpenStateItem[]} items - List of tree nodes to render
+ * @param {(uuid: string) => void} toggle - Callback to toggle a node's open/closed state
+ * @returns {JSX.Element} The rendered accordion tree
+ */
 const AccordionTree = ({
   items,
   toggle,
