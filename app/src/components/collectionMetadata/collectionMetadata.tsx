@@ -225,7 +225,9 @@ const CollectionMetadata = ({ data }: { data: CollectionMetadataProps }) => {
       <Heading size="heading6">Collection information</Heading>
       {(archivesCollectionID || bNumbers) && (
         <>
-          <Text marginBottom="xs">Collection source information:</Text>
+          <Text marginBottom="xs">
+            {`Data source${archivesCollectionID && bNumbers ? `s` : ``}:`}
+          </Text>
           <ButtonGroup marginBottom="m">
             {archivesCollectionID && (
               <Button
