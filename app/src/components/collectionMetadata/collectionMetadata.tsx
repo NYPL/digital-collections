@@ -164,7 +164,7 @@ const renderIdentifiers = (
         (bNumbers.length > 1 ? (
           <>
             <Text as="span" marginBottom="0">
-              NYPL Catalog IDs (bNumbers):{" "}
+              NYPL Catalog IDs (bnumbers):{" "}
             </Text>
             {bNumbers.map((bNumber, index) => (
               <Text key={index} marginBottom="0">
@@ -224,8 +224,6 @@ const CollectionMetadata = ({ data }: { data: CollectionMetadataProps }) => {
     yearBegin,
     yearEnd,
   } = data;
-
-  console.log(bNumbers);
 
   const dateOriginSection =
     dateIssued || dateCaptured || dateCreated || dateOther || place || edition;
