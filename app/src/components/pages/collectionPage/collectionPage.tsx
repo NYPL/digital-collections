@@ -34,6 +34,7 @@ import { SearchResultsType } from "../searchPage/searchPage";
 import NoResultsFound from "../../results/noResultsFound";
 import SearchCardGridLoading from "../../grids/searchCardGridLoading";
 import CollectionStructure from "../../collectionStructure/collectionStructure";
+import BackToTopLink from "../../backToTopLink/backToTopLink";
 
 type CollectionPageProps = {
   searchResults: SearchResultsType;
@@ -216,17 +217,7 @@ const CollectionPage = ({
                   ))
                 )}
                 <Flex marginTop="xxl" marginBottom="xxl" alignContent="center">
-                  <Link
-                    minWidth="100px"
-                    isUnderlined={false}
-                    hasVisitedState={false}
-                    gap="xxs"
-                    type="action"
-                    href="#"
-                  >
-                    Back to top{"  "}
-                    <Icon name="arrow" iconRotation="rotate180" size="xsmall" />
-                  </Link>
+                  <BackToTopLink />
                   <Pagination
                     id="pagination-id"
                     initialPage={1}
