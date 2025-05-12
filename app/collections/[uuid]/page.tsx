@@ -4,11 +4,11 @@ import PageLayout from "../../src/components/pageLayout/pageLayout";
 import { createAdobeAnalyticsPageName } from "@/src/utils/utils";
 import CollectionPage from "@/src/components/pages/collectionPage/collectionPage";
 import { CollectionsApi } from "@/src/utils/apiClients";
-import { SearchParams } from "@/search/index/page";
+import CollectionSearchParamsType from "@/src/types/CollectionSearchParams";
 
 type CollectionProps = {
   params: { uuid: string };
-  searchParams: SearchParams;
+  searchParams: CollectionSearchParamsType;
 };
 
 export async function generateMetadata({
@@ -34,9 +34,13 @@ export default async function Collection({
   if (searchParams.filters) {
     filters = `${
       searchParams?.filters ? searchParams?.filters : ""
-    }[collection=${collectionData.title}||${collectionData.uuid}]`;
+    }[collection=${encodeURIComponent(collectionData.title)}||${
+      collectionData.uuid
+    }]`;
   } else {
-    filters = `[collection=${collectionData.title}||${collectionData.uuid}]`;
+    filters = `[collection=${encodeURIComponent(collectionData.title)}||${
+      collectionData.uuid
+    }]`;
   }
 
   const searchResults = await CollectionsApi.getSearchData({
@@ -49,6 +53,16 @@ export default async function Collection({
   // Remove the collection and division filters from displaying on this page.
   const { collection, division, ...filteredAvailableFilters } =
     searchResults.availableFilters || {};
+
+  // Remove the collection if it's returned in the search results.
+  const updatedResults = searchResults.results.filter(
+    (item) => item.uuid !== collectionData.uuid
+  );
+
+  const updatedSearchResults = {
+    ...searchResults,
+    results: updatedResults,
+  };
 
   const updatedSearchParams = {
     ...searchParams,
@@ -73,7 +87,7 @@ export default async function Collection({
     >
       <CollectionPage
         searchParams={updatedSearchParams}
-        searchResults={searchResults}
+        searchResults={updatedSearchResults}
         collectionData={collectionData}
       />
     </PageLayout>

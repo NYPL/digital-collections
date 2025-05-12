@@ -21,6 +21,7 @@ import ActiveFilters from "../../search/filters/activeFilters";
 import NoResultsFound from "../../results/noResultsFound";
 import SearchCardGridLoading from "../../grids/searchCardGridLoading";
 import BackToTopLink from "../../backToTopLink/backToTopLink";
+import { SearchResultsType } from "@/src/types/SearchResultsType";
 
 const SearchPage = ({
   searchResults,

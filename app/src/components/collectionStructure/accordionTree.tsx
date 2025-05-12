@@ -56,6 +56,8 @@ const AccordionTree = ({
   items: OpenStateItem[];
   toggle: (uuid: string) => void;
 }) => {
+  const deepestOpenItem =
+    items.length > 0 ? items[items.length - 1].title : null;
   return (
     <>
       {items.map((item) => (
@@ -90,6 +92,7 @@ const AccordionTree = ({
               aria-expanded={item.isOpen}
               sx={{ zIndex: "0 !important" }}
               id={item.uuid}
+              aria-current={item.title === deepestOpenItem ? "true" : undefined}
             >
               <Flex alignItems="center" width="100%">
                 {item.hasSubContainers && (
