@@ -160,24 +160,36 @@ const renderIdentifiers = (
           </Link>
         </Text>
       )}
-      {bNumbers && (
-        <>
-          <Text marginBottom="0" as="span">
-            NYPL Catalog ID{bNumbers.length > 1 ? `s` : ``} (bNumber
-            {bNumbers.length > 1 ? `s` : ``}):{" "}
-          </Text>
-          {bNumbers.map((bNumber, index) => (
-            <Text key={index} marginBottom="0">
+      {bNumbers &&
+        (bNumbers.length > 1 ? (
+          <>
+            <Text as="span" marginBottom="0">
+              NYPL Catalog IDs (bNumbers):{" "}
+            </Text>
+            {bNumbers.map((bNumber, index) => (
+              <Text key={index} marginBottom="0">
+                <Link
+                  hasVisitedState={false}
+                  href={`https://www.nypl.org/research/research-catalog/bib/${bNumber}`}
+                >
+                  {bNumber}
+                </Link>
+              </Text>
+            ))}
+          </>
+        ) : (
+          <>
+            <Text marginBottom="0">
+              NYPL Catalog ID (bNumber):{" "}
               <Link
                 hasVisitedState={false}
-                href={`https://www.nypl.org/research/research-catalog/bib/${bNumber}`}
+                href={`https://www.nypl.org/research/research-catalog/bib/${bNumbers[0]}`}
               >
-                {bNumber}
+                {bNumbers[0]}
               </Link>
             </Text>
-          ))}
-        </>
-      )}
+          </>
+        ))}
     </Box>
   );
 };
@@ -383,7 +395,7 @@ const CollectionMetadata = ({ data }: { data: CollectionMetadataProps }) => {
         isUnderlined={false}
         onClick={() => setIsExpanded((prev) => !prev)}
       >
-        See {isExpanded ? "less" : "more"} collection data
+        See {isExpanded ? "less" : "more"} collection information
       </Link>
     </Flex>
   );
