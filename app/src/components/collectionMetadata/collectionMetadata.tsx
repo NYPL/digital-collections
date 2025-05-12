@@ -16,7 +16,7 @@ export type CollectionMetadataProps = {
   abstract?: string;
   accessCondition?: string[];
   archivesCollectionID?: string;
-  bNumber?: string;
+  bNumbers?: string[];
   contentNote?: string[];
   dateCaptured: string;
   dateCreated: string;
@@ -113,8 +113,8 @@ const renderLabeledLinks = (
   );
 };
 
-const renderNamesSection = (names: CollectionMetadataProps["names"]) => {
-  if (!names) return null;
+const renderNamesSection = (names) => {
+  if (names.length === 0) return null;
   return (
     <Box marginBottom="m">
       <Text size="overline1" marginBottom="xs">
@@ -138,9 +138,9 @@ const renderNamesSection = (names: CollectionMetadataProps["names"]) => {
 const renderIdentifiers = (
   uuid: string | undefined,
   archivesID: string | undefined,
-  bNumber: string | undefined
+  bNumbers: string[] | undefined
 ) => {
-  if (!uuid && !archivesID && !bNumber) return null;
+  if (!uuid && !archivesID && !bNumbers) return null;
   return (
     <Box marginBottom="m">
       <Text size="overline1" marginBottom="xs">
@@ -160,16 +160,24 @@ const renderIdentifiers = (
           </Link>
         </Text>
       )}
-      {bNumber && (
-        <Text marginBottom="0">
-          NYPL Catalog ID (bNumber):{" "}
-          <Link
-            hasVisitedState={false}
-            href={`https://www.nypl.org/research/research-catalog/bib/${bNumber}`}
-          >
-            {bNumber}
-          </Link>
-        </Text>
+      {bNumbers && (
+        <>
+          <Text marginBottom="0" as="span">
+            NYPL Catalog ID{bNumbers.length > 1 ? `s` : ``} (bNumber
+            {bNumbers.length > 1 ? `s` : ``}):{" "}
+          </Text>
+          {bNumbers.map((bNumber, index) => (
+            <Text as="span" key={index} marginBottom="0">
+              <Link
+                hasVisitedState={false}
+                href={`https://www.nypl.org/research/research-catalog/bib/${bNumber}`}
+              >
+                {bNumber}
+              </Link>
+              {index !== bNumbers.length - 1 && ", "}
+            </Text>
+          ))}
+        </>
       )}
     </Box>
   );
@@ -182,7 +190,7 @@ const CollectionMetadata = ({ data }: { data: CollectionMetadataProps }) => {
     abstract,
     accessCondition,
     archivesCollectionID,
-    bNumber,
+    bNumbers,
     contentNote,
     dateCaptured,
     dateCreated,
@@ -206,6 +214,8 @@ const CollectionMetadata = ({ data }: { data: CollectionMetadataProps }) => {
     yearEnd,
   } = data;
 
+  console.log(bNumbers);
+
   const dateOriginSection =
     dateIssued || dateCaptured || dateCreated || dateOther || place || edition;
 
@@ -214,7 +224,7 @@ const CollectionMetadata = ({ data }: { data: CollectionMetadataProps }) => {
   return (
     <Flex marginTop="l" marginBottom="m" flexDir="column" maxWidth="720px">
       <Heading size="heading6">Collection information</Heading>
-      {(archivesCollectionID || bNumber) && (
+      {(archivesCollectionID || bNumbers) && (
         <>
           <Text marginBottom="xs">Collection source information:</Text>
           <ButtonGroup marginBottom="m">
@@ -232,13 +242,13 @@ const CollectionMetadata = ({ data }: { data: CollectionMetadataProps }) => {
                 Finding aid
               </Button>
             )}
-            {bNumber && (
+            {bNumbers && (
               <Button
                 buttonType="secondary"
                 id="catalog-btn"
                 onClick={() =>
                   window.open(
-                    `https://www.nypl.org/research/research-catalog/bib/${bNumber}`,
+                    `https://www.nypl.org/research/research-catalog/bib/${bNumbers[0]}`,
                     "_blank"
                   )
                 }
@@ -316,7 +326,7 @@ const CollectionMetadata = ({ data }: { data: CollectionMetadataProps }) => {
             </Box>
           )}
           {renderLabeledLinks("Type of resource", typeOfResource, "type")}
-          {displayNames && renderNamesSection(names)}
+          {names && renderNamesSection(names)}
           {renderLabeledLinks("Languages", languages, "language")}
           {contentNote && contentNote.length > 0 && (
             <Box marginBottom="m">
@@ -363,7 +373,7 @@ const CollectionMetadata = ({ data }: { data: CollectionMetadataProps }) => {
               <Text marginBottom="0">{accessCondition}</Text>
             </Box>
           )}
-          {renderIdentifiers(uuid, archivesCollectionID, bNumber)}
+          {renderIdentifiers(uuid, archivesCollectionID, bNumbers)}
         </>
       )}
 
