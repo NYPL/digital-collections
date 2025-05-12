@@ -36,12 +36,16 @@ describe("CollectionMetadata component", () => {
   it("toggles between expanded and collapsed states", () => {
     render(<CollectionMetadata data={mockData} />);
 
-    const toggleButton = screen.getByText(/See more collection data/i);
+    const toggleButton = screen.getByText(/See more collection information/i);
     fireEvent.click(toggleButton);
-    expect(screen.getByText(/See less collection data/i)).toBeInTheDocument();
+    expect(
+      screen.getByText(/See less collection information/i)
+    ).toBeInTheDocument();
 
     fireEvent.click(toggleButton);
-    expect(screen.getByText(/See more collection data/i)).toBeInTheDocument();
+    expect(
+      screen.getByText(/See more collection information/i)
+    ).toBeInTheDocument();
   });
 
   it("renders names with correct formatting including role", () => {
