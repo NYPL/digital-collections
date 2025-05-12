@@ -1,10 +1,9 @@
 import CollectionPage from "@/src/components/pages/collectionPage/collectionPage";
 import { SearchProvider } from "@/src/context/SearchProvider";
+import { CollectionModel } from "@/src/models/collection";
 import { render } from "@testing-library/react";
 import { mockCollectionResponse } from "__tests__/__mocks__/data/collectionsApi/mockCollectionResponse";
 import { mockSearchResponse } from "__tests__/__mocks__/data/collectionsApi/mockSearchResponse";
-import { mockCollectionChildrenResponse } from "__tests__/__mocks__/data/mockCollectionStructure";
-import { mockItems } from "__tests__/__mocks__/data/mockItems";
 
 import { axe } from "jest-axe";
 import { useRouter } from "next/navigation";
@@ -23,19 +22,19 @@ beforeEach(() => {
 
 describe("Collection page accessibility", () => {
   const searchParams = {
-    keywords: "flower",
+    q: "flower",
     sort: "title-asc",
-    page: "2",
+    page: 1,
+    filters: "",
   };
+  const mockMetadata = new CollectionModel(mockCollectionResponse);
   it("passes axe accessibility test", async () => {
     const { container } = render(
       <SearchProvider>
         <CollectionPage
           searchParams={searchParams}
-          slug="Example collection"
           searchResults={mockSearchResponse}
-          collectionData={mockCollectionResponse}
-          collectionChildren={mockCollectionChildrenResponse}
+          collectionData={mockMetadata}
         />
       </SearchProvider>
     );

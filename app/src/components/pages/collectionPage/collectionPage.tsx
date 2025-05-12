@@ -15,7 +15,6 @@ import { MobileSearchBanner } from "../../mobileSearchBanner/mobileSearchBanner"
 import { displayResults, totalNumPages } from "@/src/utils/utils";
 import {
   CARDS_PER_PAGE,
-  DEFAULT_FILTERS,
   DEFAULT_PAGE_NUM,
   DEFAULT_SEARCH_SORT,
   DEFAULT_SEARCH_TERM,
@@ -29,17 +28,20 @@ import {
 import { usePathname, useRouter } from "next/navigation";
 import SortMenu from "../../sortMenu/sortMenu";
 import ActiveFilters from "../../search/filters/activeFilters";
-import CollectionMetadata from "../../collectionMetadata/collectionMetadata";
-import { SearchResultsType } from "../searchPage/searchPage";
 import NoResultsFound from "../../results/noResultsFound";
 import SearchCardGridLoading from "../../grids/searchCardGridLoading";
 import CollectionStructure from "../../collectionStructure/collectionStructure";
 import BackToTopLink from "../../backToTopLink/backToTopLink";
+import CollectionMetadata, {
+  CollectionMetadataProps,
+} from "../../collectionMetadata/collectionMetadata";
+import CollectionSearchParamsType from "@/src/types/CollectionSearchParams";
+import { SearchResultsType } from "@/src/types/SearchResultsType";
 
 type CollectionPageProps = {
   searchResults: SearchResultsType;
-  searchParams;
-  collectionData;
+  searchParams: CollectionSearchParamsType;
+  collectionData: CollectionMetadataProps;
 };
 
 const CollectionPage = ({
@@ -56,7 +58,7 @@ const CollectionPage = ({
     initialSort: searchParams?.sort || DEFAULT_SEARCH_SORT,
     initialFilters: stringToFilter(searchParams?.filters),
     initialKeywords: searchParams?.q || DEFAULT_SEARCH_TERM,
-    initialAvailableFilters: searchParams?.availableFilters || DEFAULT_FILTERS,
+    initialAvailableFilters: searchParams?.availableFilters,
     lastFilterRef: useRef<string | null>(null),
   });
 

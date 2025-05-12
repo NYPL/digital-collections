@@ -343,7 +343,8 @@ const CollectionStructure = ({
       }
     };
     loadTree();
-  }, [searchManager.keywords]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [searchManager.keywords, targetUuid]);
 
   if (!isLoaded) {
     return (
