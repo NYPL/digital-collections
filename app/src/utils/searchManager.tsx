@@ -288,7 +288,9 @@ export const availableFilterDisplayName = (
   name: string,
   filterName: string
 ) => {
-  return filterName === "collection" ? name.split("||")[0] : capitalize(name);
+  return filterName === "collection" || filterName === "subcollection"
+    ? decodeURIComponent(name.split("||")[0])
+    : capitalize(name);
 };
 
 export const isValidFilter = (param: string) => {

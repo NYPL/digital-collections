@@ -299,12 +299,15 @@ describe("filterStringToCollectionApiFilterString", () => {
     expect(
       filterStringToCollectionApiFilterString("[Name=Swope, Martha]")
     ).toBe("name=Swope%2C%20Martha");
+  });
+
+  test("does not encode collection/subcollection filters", () => {
     expect(
       filterStringToCollectionApiFilterString(
         "[Collection=Print Collection portrait file||16ad5350-c52e-012f-aecf-58d385a7bc34]"
       )
     ).toBe(
-      "collection=Print%20Collection%20portrait%20file%7C%7C16ad5350-c52e-012f-aecf-58d385a7bc34"
+      "collection=Print Collection portrait file||16ad5350-c52e-012f-aecf-58d385a7bc34"
     );
   });
 
@@ -314,7 +317,7 @@ describe("filterStringToCollectionApiFilterString", () => {
         "[name=Swope, Martha][collection=Print Collection portrait file||16ad5350-c52e-012f-aecf-58d385a7bc34]"
       )
     ).toBe(
-      "name=Swope%2C%20Martha&collection=Print%20Collection%20portrait%20file%7C%7C16ad5350-c52e-012f-aecf-58d385a7bc34"
+      "name=Swope%2C%20Martha&collection=Print Collection portrait file||16ad5350-c52e-012f-aecf-58d385a7bc34"
     );
   });
 

@@ -19,22 +19,9 @@ import { MobileSearchBanner } from "../../mobileSearchBanner/mobileSearchBanner"
 import SortMenu from "../../sortMenu/sortMenu";
 import ActiveFilters from "../../search/filters/activeFilters";
 import NoResultsFound from "../../results/noResultsFound";
-import SearchCardType from "@/src/types/SearchCardType";
-import { AvailableFilterOption } from "@/src/types/AvailableFilterType";
 import SearchCardGridLoading from "../../grids/searchCardGridLoading";
-
-export type SearchResultsType = {
-  keyword: string;
-  numResults: number;
-  page: number;
-  perPage: number;
-  rightsFilter: string;
-  dateStart: string;
-  dateEnd: string;
-  availableFilters: Record<string, AvailableFilterOption[]>;
-  sort: string;
-  results: SearchCardType[];
-};
+import BackToTopLink from "../../backToTopLink/backToTopLink";
+import { SearchResultsType } from "@/src/types/SearchResultsType";
 
 const SearchPage = ({
   searchResults,
@@ -54,6 +41,7 @@ const SearchPage = ({
   const [filtersExpanded, setFiltersExpanded] = useState(false);
 
   const updateURL = async (queryString: string) => {
+    setIsLoaded(false);
     const newUrl = `${pathname}?${queryString}`;
     push(newUrl);
   };
@@ -249,19 +237,7 @@ const SearchPage = ({
                 flexDir: "column-reverse",
               }}
             >
-              {searchResults.results?.length > 0 && (
-                <Link
-                  minWidth="100px"
-                  isUnderlined={false}
-                  hasVisitedState={false}
-                  gap="xxs"
-                  type="action"
-                  href="#"
-                >
-                  Back to top{"  "}
-                  <Icon name="arrow" iconRotation="rotate180" size="xsmall" />
-                </Link>
-              )}{" "}
+              {searchResults.results?.length > 0 && <BackToTopLink />}{" "}
               <Pagination
                 id="pagination-id"
                 initialPage={searchManager.page}
