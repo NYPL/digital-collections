@@ -38,7 +38,7 @@ export class CollectionModel {
     this.abstract = data.abstract;
     this.accessCondition = data.accessCondition;
     this.archivesCollectionID = data.archivesCollectionID;
-    this.bNumbers = data.bNumber?.split(" ");
+    this.bNumbers = data.bnumber?.split(" ");
     this.contentNote = data.contentNote;
     this.dateCaptured = data.dateCaptured;
     this.dateCreated = data.dateCreated;

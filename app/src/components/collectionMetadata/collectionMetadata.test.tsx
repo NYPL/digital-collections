@@ -50,7 +50,7 @@ describe("CollectionMetadata component", () => {
 
   it("renders names with correct formatting including role", () => {
     render(<CollectionMetadata data={mockData} />);
-    const toggleButton = screen.getByText(/See more collection data/i);
+    const toggleButton = screen.getByText(/See more collection information/i);
     fireEvent.click(toggleButton);
 
     expect(screen.getByRole("link", { name: "John Doe" })).toBeInTheDocument();
