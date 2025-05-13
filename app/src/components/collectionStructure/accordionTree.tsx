@@ -43,12 +43,12 @@ const ButtonText = ({
 const AccordionTree = ({
   items,
   toggle,
+  targetUuid,
 }: {
   items: OpenStateItem[];
   toggle: (uuid: string) => void;
+  targetUuid: string;
 }) => {
-  const deepestOpenItem =
-    items.length > 0 ? items[items.length - 1].title : null;
   return (
     <>
       {items.map((item) => (
@@ -80,10 +80,12 @@ const AccordionTree = ({
               paddingRight="s"
               paddingBottom="m"
               onClick={() => toggle(item.uuid)}
-              aria-expanded={item.isOpen}
+              {...(item.hasSubContainers
+                ? { "aria-expanded": item.isOpen }
+                : {})}
               sx={{ zIndex: "0 !important" }}
               id={item.uuid}
-              aria-current={item.title === deepestOpenItem ? "true" : undefined}
+              aria-current={item.uuid === targetUuid ? "true" : undefined}
             >
               <Flex alignItems="center" width="100%">
                 {item.hasSubContainers && (
@@ -106,7 +108,11 @@ const AccordionTree = ({
             {item.hasSubContainers && item.children && (
               <Collapse in={item.isOpen}>
                 <ul style={{ margin: 0 }}>
-                  <AccordionTree items={item.children} toggle={toggle} />
+                  <AccordionTree
+                    targetUuid={targetUuid}
+                    items={item.children}
+                    toggle={toggle}
+                  />
                 </ul>
               </Collapse>
             )}

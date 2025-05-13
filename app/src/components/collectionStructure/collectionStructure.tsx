@@ -370,7 +370,11 @@ const CollectionStructure = ({
         borderTop="1px solid var(--ui-gray-medium, #BDBDBD)"
       >
         <ul>
-          <AccordionTree items={tree} toggle={handleToggle} />
+          <AccordionTree
+            items={tree}
+            toggle={handleToggle}
+            targetUuid={targetUuid!}
+          />
         </ul>
       </Box>
     </Flex>
