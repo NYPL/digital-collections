@@ -15,10 +15,17 @@ export async function generateMetadata({
   params,
 }: CollectionProps): Promise<Metadata> {
   const slug = params.uuid;
+
+  const collectionData = await CollectionsApi.getCollectionData(slug);
+
+  const title = collectionData?.title ?? slug;
+
+  // TO DO: image
+
   return {
-    title: `${slug} - NYPL Digital Collections`,
+    title: `${title} - NYPL Digital Collections`,
     openGraph: {
-      title: `${slug} - NYPL Digital Collections`,
+      title: `${title} - NYPL Digital Collections`,
     },
   };
 }
