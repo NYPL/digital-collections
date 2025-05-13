@@ -20,7 +20,7 @@ describe("CollectionMetadata component", () => {
   it("shows more collection data on expand", () => {
     render(<CollectionMetadata data={mockData} />);
 
-    const toggleButton = screen.getByText(/See more collection data/i);
+    const toggleButton = screen.getByText(/See more collection information/i);
     fireEvent.click(toggleButton);
 
     expect(screen.getByText("Genres")).toBeInTheDocument();
