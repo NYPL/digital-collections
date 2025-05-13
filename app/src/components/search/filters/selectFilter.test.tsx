@@ -1,4 +1,4 @@
-import { render, screen, fireEvent } from "@testing-library/react";
+import { render, screen, fireEvent, waitFor } from "@testing-library/react";
 import SelectFilter from "./selectFilter";
 import { GeneralSearchManager } from "@/src/utils/searchManager";
 import {
@@ -82,6 +82,33 @@ describe("SelectFilterComponent", () => {
 
     expect(firstRadio).toBeChecked();
     expect(screen.getByText("Apply")).not.toBeDisabled();
+  });
+
+  it("allows user to apply, then clear selected filter", async () => {
+    render(component);
+
+    fireEvent.click(screen.getByRole("button", { name: /Publisher/i }));
+    expect(screen.getByText("Apply")).toBeDisabled();
+
+    const firstRadio = screen.getByRole("radio", { name: "Publisher 1 10" });
+    fireEvent.click(firstRadio);
+
+    expect(firstRadio).toBeChecked();
+    expect(screen.getByText("Apply")).not.toBeDisabled();
+    fireEvent.click(screen.getByRole("button", { name: /Apply/i }));
+
+    setTimeout(() => {
+      expect(screen.getByText("Publisher: Publisher 1")).toBeInTheDocument();
+      fireEvent.click(
+        screen.getByRole("button", { name: /Select publisher/i })
+      );
+      expect(
+        screen.getByRole("button", { name: /Clear filter/i })
+      ).toBeInTheDocument();
+      expect(
+        screen.getByRole("button", { name: /Clear filter/i })
+      ).toBeEnabled();
+    }, 2000);
   });
 
   it("opens modal with view more button", () => {
