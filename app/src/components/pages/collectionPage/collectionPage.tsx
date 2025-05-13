@@ -50,6 +50,7 @@ const CollectionPage = ({
   collectionData,
 }: CollectionPageProps) => {
   const headingRef = useRef<HTMLHeadingElement>(null);
+  const refineHeadingRef = useRef<HTMLHeadingElement>(null);
   const isFirstLoad = useRef<boolean>(false);
   const [filtersExpanded, setFiltersExpanded] = useState(false);
 
@@ -79,12 +80,12 @@ const CollectionPage = ({
     setIsLoaded(true);
     let didFocusElement = false;
     if (
-      collectionSearchManager.lastFilterRef?.current &&
-      (collectionSearchManager.filters.length > 0 ||
-        collectionSearchManager.sort !== "relevance")
+      (collectionSearchManager.lastFilterRef?.current &&
+        collectionSearchManager.filters.length > 0) ||
+      collectionSearchManager.sort
     ) {
       // Search for the button, input, or text element associated with the last used filter/sort
-      const selectors = ["button", "input", "p"];
+      const selectors = ["button", "input", "p", "h2"];
 
       for (const selector of selectors) {
         const el = document.querySelector(
@@ -97,7 +98,6 @@ const CollectionPage = ({
         }
       }
     }
-
     if (!didFocusElement && isFirstLoad.current) {
       setFiltersExpanded(false);
       headingRef.current?.focus();
@@ -135,6 +135,7 @@ const CollectionPage = ({
           <Filters
             headingText="Refine your results"
             searchManager={collectionSearchManager}
+            refineHeadingRef={refineHeadingRef}
             setFiltersExpanded={setFiltersExpanded}
             filtersExpanded={filtersExpanded}
           />

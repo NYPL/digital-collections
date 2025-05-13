@@ -35,6 +35,7 @@ const SearchPage = ({
   const { push } = useRouter();
   const pathname = usePathname();
   const headingRef = useRef<HTMLHeadingElement>(null);
+  const refineHeadingRef = useRef<HTMLHeadingElement>(null);
   const isFirstLoad = useRef<boolean>(false);
   const [isLoaded, setIsLoaded] = useState(false);
   const [filtersExpanded, setFiltersExpanded] = useState(false);
@@ -48,11 +49,12 @@ const SearchPage = ({
     setIsLoaded(true);
     let didFocusElement = false;
     if (
-      searchManager.lastFilterRef?.current &&
-      (searchManager.filters.length > 0 || searchManager.sort !== "relevance")
+      (searchManager.lastFilterRef?.current &&
+        searchManager.filters.length > 0) ||
+      searchManager.sort
     ) {
       // Search for the button, input, or text element associated with the last used filter/sort
-      const selectors = ["button", "input", "p"];
+      const selectors = ["button", "input", "p", "h2"];
 
       for (const selector of selectors) {
         const el = document.querySelector(
@@ -65,7 +67,6 @@ const SearchPage = ({
         }
       }
     }
-
     if (!didFocusElement && isFirstLoad.current) {
       setFiltersExpanded(false);
       headingRef.current?.focus();
@@ -136,6 +137,7 @@ const SearchPage = ({
           <Filters
             searchManager={searchManager}
             headingText="Refine your search"
+            refineHeadingRef={refineHeadingRef}
             filtersExpanded={filtersExpanded}
             setFiltersExpanded={setFiltersExpanded}
           />
@@ -175,8 +177,9 @@ const SearchPage = ({
             <>
               <Heading
                 size="heading5"
-                ref={headingRef}
                 aria-live="polite"
+                ref={headingRef}
+                aria-atomic="true"
                 // @ts-ignore
                 tabIndex="-1"
                 margin="0"

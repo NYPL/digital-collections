@@ -25,16 +25,17 @@ const ActiveFilters = ({ searchManager }: ActiveFilterProps) => {
 
   const handleOnClick = (tag) => {
     if (tag.id === "clear-filters") {
-      updateURL(searchManager.clearAllFilters(), null);
+      updateURL(searchManager.clearAllFilters(), "refine-search-heading");
     } else {
       const filterToRemove = searchManager.filters.find(
         (filter) => filter.filter === tag.id
       );
       if (filterToRemove) {
-        updateURL(
-          searchManager.handleRemoveFilter(filterToRemove),
-          "filters-applied"
-        );
+        const focus =
+          searchManager.filters.length >= 2
+            ? `filters-applied`
+            : `refine-search-heading`;
+        updateURL(searchManager.handleRemoveFilter(filterToRemove), focus);
       }
     }
   };
