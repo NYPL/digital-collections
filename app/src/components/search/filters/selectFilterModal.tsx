@@ -290,14 +290,29 @@ const SelectFilterModal = forwardRef<HTMLButtonElement, SelectFilterModalProps>(
                     searchManager.setLastFilter(
                       `accordion-button-select-${filter.name}`
                     );
-                    updateURL(
-                      searchManager.handleAddFilter([
-                        {
-                          filter: filter.name,
-                          value: modalCurrent?.name!,
-                        },
-                      ])
-                    );
+                    if (filter.name === "collection") {
+                      const [collectionTitle, collectionUuid] =
+                        modalCurrent?.name!.split("||") ?? [];
+                      updateURL(
+                        searchManager.handleAddFilter([
+                          {
+                            filter: filter.name,
+                            value: `${encodeURIComponent(
+                              collectionTitle
+                            )}||${encodeURIComponent(collectionUuid)}`,
+                          },
+                        ])
+                      );
+                    } else {
+                      updateURL(
+                        searchManager.handleAddFilter([
+                          {
+                            filter: filter.name,
+                            value: modalCurrent?.name!,
+                          },
+                        ])
+                      );
+                    }
                     setModalCurrent(current);
                   }}
                 >

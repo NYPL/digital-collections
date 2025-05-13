@@ -1,147 +1,128 @@
+import React from "react";
 import {
   render,
   screen,
-  fireEvent,
   waitFor,
-  within,
+  fireEvent,
+  act,
 } from "@testing-library/react";
 import CollectionStructure from "./collectionStructure";
-import { mockCollectionChildrenResponse } from "__tests__/__mocks__/data/mockCollectionStructure";
-import React from "react";
+import {
+  DEFAULT_SEARCH_SORT,
+  DEFAULT_SEARCH_TERM,
+} from "@/src/config/constants";
+import { GeneralSearchManager } from "@/src/utils/searchManager";
 
-jest.mock("../../hooks/useScrollIntoViewIfNeeded", () => ({
-  useScrollIntoViewIfNeeded: jest.fn(() => ({
-    ref: { current: null },
-    scrollIntoViewIfNeeded: jest.fn(),
-  })),
-}));
+const mockSearchManager = new GeneralSearchManager({
+  initialPage: 1,
+  initialSort: DEFAULT_SEARCH_SORT,
+  initialFilters: [],
+  initialKeywords: DEFAULT_SEARCH_TERM,
+  lastFilterRef: { current: null },
+});
 
-describe("CollectionStructure", () => {
-  const mockHeadingRef = React.createRef<HTMLHeadingElement>();
+const mockUpdateURL = jest.fn().mockResolvedValue(undefined);
 
-  it("should render the collection structure with items", () => {
-    render(
-      <CollectionStructure
-        data={mockCollectionChildrenResponse}
-        ref={mockHeadingRef}
-      />
-    );
-    mockCollectionChildrenResponse.forEach((item) => {
-      expect(screen.getByText(item.title)).toBeInTheDocument();
+describe("Collection structure", () => {
+  beforeEach(() => {
+    global.fetch = jest.fn().mockImplementation((url) => {
+      return Promise.resolve({
+        ok: true,
+        json: () =>
+          Promise.resolve({
+            children: [
+              {
+                title: "Item 1",
+                uuid: "uuid-1",
+                itemCount: "5",
+                hasSubContainers: false,
+              },
+              {
+                title: "Item 2",
+                uuid: "uuid-2",
+                itemCount: "3",
+                hasSubContainers: true,
+              },
+            ],
+          }),
+      });
     });
   });
 
-  it("should toggle the visibility of children when an item is opened", async () => {
+  afterEach(() => {
+    jest.restoreAllMocks();
+  });
+
+  it("renders loader while loading", async () => {
     render(
       <CollectionStructure
-        data={mockCollectionChildrenResponse}
-        ref={mockHeadingRef}
+        uuid="root-uuid"
+        searchManager={mockSearchManager}
+        updateURL={mockUpdateURL}
       />
     );
-
-    const firstItemButton = screen.getByText(
-      mockCollectionChildrenResponse[0].title
+    await waitFor(() =>
+      expect(
+        screen.queryByTestId("loading-collection-structure")
+      ).toBeInTheDocument()
     );
-    fireEvent.click(firstItemButton);
+  });
 
-    const firstItemChildren = mockCollectionChildrenResponse[0].children;
-    firstItemChildren?.forEach((child) => {
-      expect(screen.getByText(child.title)).toBeInTheDocument();
+  it("renders tree after loading", async () => {
+    render(
+      <CollectionStructure
+        uuid="root-uuid"
+        searchManager={mockSearchManager}
+        updateURL={mockUpdateURL}
+      />
+    );
+    await waitFor(() => expect(screen.getByText("Item 1")).toBeInTheDocument());
+    expect(screen.getByText("Item 2")).toBeInTheDocument();
+  });
+
+  it("doesn't render when no children exist", async () => {
+    global.fetch = jest.fn().mockImplementation((url) => {
+      return Promise.resolve({
+        ok: true,
+        json: () =>
+          Promise.resolve({
+            children: [],
+          }),
+      });
+    });
+    const { container } = render(
+      <CollectionStructure
+        uuid="root-uuid"
+        searchManager={mockSearchManager}
+        updateURL={mockUpdateURL}
+      />
+    );
+    await waitFor(() => {
+      expect(container).toBeEmptyDOMElement();
     });
   });
 
-  it("should fetch and display children", async () => {
+  it("fetches children on click", async () => {
+    const fetchSpy = jest.spyOn(global, "fetch");
+
     render(
       <CollectionStructure
-        data={mockCollectionChildrenResponse}
-        ref={mockHeadingRef}
+        uuid="root-uuid"
+        searchManager={mockSearchManager}
+        updateURL={mockUpdateURL}
       />
     );
-    const firstItemButton = screen.getByText(
-      mockCollectionChildrenResponse[0].title
-    );
-    fireEvent.click(firstItemButton);
+
+    await waitFor(() => screen.getByText("Item 1"));
+
+    await act(async () => {
+      fireEvent.click(screen.getByText("Item 1"));
+    });
 
     await waitFor(() => {
-      const firstItemChildren = mockCollectionChildrenResponse[0].children;
-      if (firstItemChildren) {
-        firstItemChildren.forEach((child) => {
-          expect(screen.getByText(child.title)).toBeInTheDocument();
-        });
-      }
-    });
-  });
-
-  it("should handle toggling sibling visibility", async () => {
-    render(
-      <CollectionStructure
-        data={mockCollectionChildrenResponse}
-        ref={mockHeadingRef}
-      />
-    );
-
-    const firstItemButton = screen.getByText(
-      mockCollectionChildrenResponse[0].title
-    );
-    const secondItemButton = screen.getByText(
-      mockCollectionChildrenResponse[1].title
-    );
-
-    fireEvent.click(firstItemButton);
-    await waitFor(() => {
-      expect(
-        screen.getByText(
-          mockCollectionChildrenResponse[0]?.children?.[0]?.title!
-        )
-      ).toBeVisible();
-    });
-
-    fireEvent.click(secondItemButton);
-    await waitFor(() => {
-      expect(
-        screen.getByText(
-          mockCollectionChildrenResponse[1]?.children?.[0]?.title!
-        )
-      ).toBeVisible();
-      expect(
-        screen.getByText(
-          mockCollectionChildrenResponse[0]?.children?.[0]?.title!
-        )
-      ).not.toBeVisible();
-    });
-  });
-
-  it("should display the plus/minus icon for items with children", () => {
-    render(
-      <CollectionStructure
-        data={mockCollectionChildrenResponse}
-        ref={mockHeadingRef}
-      />
-    );
-
-    const firstItemButton = screen.getByRole("button", {
-      name: `${mockCollectionChildrenResponse[0].title} ${mockCollectionChildrenResponse[0].itemCount}`,
-    });
-
-    expect(within(firstItemButton).getByTitle("plus icon")).toBeInTheDocument();
-
-    fireEvent.click(firstItemButton);
-
-    expect(
-      within(firstItemButton).getByTitle("minus icon")
-    ).toBeInTheDocument();
-  });
-
-  it("should display the correct number of items", () => {
-    render(
-      <CollectionStructure
-        data={mockCollectionChildrenResponse}
-        ref={mockHeadingRef}
-      />
-    );
-
-    mockCollectionChildrenResponse.forEach((item) => {
-      expect(screen.getByText(item.itemCount)).toBeInTheDocument();
+      expect(fetchSpy).toHaveBeenCalledWith(
+        "/api/collectionchildren/uuid-1?page=1"
+      );
     });
   });
 });

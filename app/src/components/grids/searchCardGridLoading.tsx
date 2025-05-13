@@ -7,8 +7,13 @@ import React from "react";
 
 export default function SearchCardGridLoading({ id }) {
   return (
-    <Box data-testid="cardgrid-skeleton-loader-1" key={id} marginBottom="l">
-      <SimpleGrid columns={1} width="30%">
+    <Box
+      data-testid="cardgrid-skeleton-loader-1"
+      key={id}
+      marginBottom="l"
+      width="100%"
+    >
+      <SimpleGrid columns={1} width="60%">
         <SkeletonLoader
           imageAspectRatio="landscape"
           layout="row"

@@ -4,19 +4,17 @@ import PageLayout from "../../src/components/pageLayout/pageLayout";
 import { createAdobeAnalyticsPageName } from "@/src/utils/utils";
 import CollectionPage from "@/src/components/pages/collectionPage/collectionPage";
 import { CollectionsApi } from "@/src/utils/apiClients";
-import { SearchParams } from "@/search/index/page";
-import { mockCollectionChildrenResponse } from "__tests__/__mocks__/data/mockCollectionStructure";
-import { mockCollectionResponse } from "__tests__/__mocks__/data/collectionsApi/mockCollectionResponse";
+import CollectionSearchParamsType from "@/src/types/CollectionSearchParams";
 
 type CollectionProps = {
   params: { uuid: string };
-  searchParams: SearchParams;
+  searchParams: CollectionSearchParamsType;
 };
 
 export async function generateMetadata({
   params,
 }: CollectionProps): Promise<Metadata> {
-  const slug = params.uuid; //  TODO: this needs to support both a slug or a uuid.
+  const slug = params.uuid;
   return {
     title: `${slug} - NYPL Digital Collections`,
     openGraph: {
@@ -29,20 +27,47 @@ export default async function Collection({
   params,
   searchParams,
 }: CollectionProps) {
+  let collectionData = await CollectionsApi.getCollectionData(params.uuid);
+
+  // Add collection filter to every search.
+  let filters;
+  if (searchParams.filters) {
+    filters = `${
+      searchParams?.filters ? searchParams?.filters : ""
+    }[collection=${encodeURIComponent(collectionData.title)}||${
+      collectionData.uuid
+    }]`;
+  } else {
+    filters = `[collection=${encodeURIComponent(collectionData.title)}||${
+      collectionData.uuid
+    }]`;
+  }
+
   const searchResults = await CollectionsApi.getSearchData({
     keyword: searchParams.q,
     sort: searchParams.sort,
     page: searchParams.page,
-    filters: searchParams.filters,
-    // filters: searchParams.filters + [`Collection=uuid`], // Needs collection filter every time
+    filters,
   });
 
-  // Use Promise.all() to fetch these so they're called concurrently
-  let collectionData = //await CollectionsApi.getCollectionData();
-    mockCollectionResponse;
+  // Remove the collection and division filters from displaying on this page.
+  const { collection, division, ...filteredAvailableFilters } =
+    searchResults.availableFilters || {};
 
-  let collectionChildren = // await CollectionsApi.getCollectionChildren();
-    mockCollectionChildrenResponse;
+  // Remove the collection if it's returned in the search results.
+  const updatedResults = searchResults.results.filter(
+    (item) => item.uuid !== collectionData.uuid
+  );
+
+  const updatedSearchResults = {
+    ...searchResults,
+    results: updatedResults,
+  };
+
+  const updatedSearchParams = {
+    ...searchParams,
+    availableFilters: filteredAvailableFilters,
+  };
 
   return (
     <PageLayout
@@ -61,11 +86,9 @@ export default async function Collection({
       )}
     >
       <CollectionPage
-        slug={"Example collection"}
-        searchParams={searchParams}
-        searchResults={searchResults}
+        searchParams={updatedSearchParams}
+        searchResults={updatedSearchResults}
         collectionData={collectionData}
-        collectionChildren={collectionChildren}
       />
     </PageLayout>
   );

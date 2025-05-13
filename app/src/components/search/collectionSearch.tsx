@@ -7,9 +7,20 @@ import {
 } from "@nypl/design-system-react-components";
 import DCSearchBar from "./dcSearchBar";
 import { useState } from "react";
+import type { SearchManager } from "@/src/utils/searchManager";
+import { usePathname, useRouter } from "next/navigation";
 
-export const CollectionSearch = () => {
+type CollectionSearchProps = {
+  searchManager: SearchManager;
+};
+
+export const CollectionSearch = ({ searchManager }: CollectionSearchProps) => {
   const [isExpanded, setIsExpanded] = useState(false);
+  const { push } = useRouter();
+  const pathname = usePathname();
+  const updateURL = async (queryString) => {
+    push(`${pathname}?${queryString}`, { scroll: false });
+  };
 
   return (
     <Flex
@@ -80,14 +91,22 @@ export const CollectionSearch = () => {
           textInputProps={{
             id: "collection-search-text",
             isClearable: true,
-            isClearableCallback: () => {},
+            isClearableCallback: () => searchManager.handleKeywordChange(""),
             labelText: "Search this collection by item title",
             name: "q",
             placeholder: "Search this collection by item title",
-            defaultValue: "",
-            onChange: (e) => {},
+            defaultValue: searchManager.keywords || "",
+            onChange: (e) =>
+              searchManager.handleKeywordChange(
+                (e.target as HTMLInputElement).value
+              ),
           }}
-          onSubmit={() => {}}
+          onSubmit={() => {
+            searchManager.handleRemoveFilter([
+              { filter: "subcollection", value: "null" },
+            ]);
+            updateURL(searchManager.handleSearchSubmit());
+          }}
           sx={{
             display: isExpanded ? "block" : "none",
             [`@media (min-width:  ${headerBreakpoints.lgMobile}px)`]: {
