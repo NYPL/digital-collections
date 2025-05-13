@@ -219,18 +219,47 @@ const CollectionPage = ({
                     <SearchCardGridLoading id={index} key={index} />
                   ))
                 )}
-                <Flex marginTop="xxl" marginBottom="xxl" alignContent="center">
-                  <Link
-                    minWidth="100px"
-                    isUnderlined={false}
-                    hasVisitedState={false}
-                    gap="xxs"
-                    type="action"
-                    href="#"
-                  >
-                    Back to top{"  "}
-                    <Icon name="arrow" iconRotation="rotate180" size="xsmall" />
-                  </Link>
+                <Flex
+                  paddingLeft="s"
+                  paddingRight="s"
+                  marginTop="xxl"
+                  marginBottom="xxl"
+                  sx={{
+                    "> a": {
+                      marginTop: "xl",
+                      justifyContent: "end",
+                    },
+                    paddingLeft: "s",
+                    paddingRight: "s",
+                    [`@media screen and (min-width: ${headerBreakpoints.lgMobile}px)`]:
+                      {
+                        "> a": {
+                          marginTop: "0",
+                        },
+                        flexDir: "row",
+                        paddingLeft: 0,
+                        paddingRight: 0,
+                      },
+                    flexDir: "column-reverse",
+                  }}
+                >
+                  {searchResults.results?.length > 0 && (
+                    <Link
+                      minWidth="100px"
+                      isUnderlined={false}
+                      hasVisitedState={false}
+                      gap="xxs"
+                      type="action"
+                      href="#"
+                    >
+                      Back to top{"  "}
+                      <Icon
+                        name="arrow"
+                        iconRotation="rotate180"
+                        size="xsmall"
+                      />
+                    </Link>
+                  )}
                   <Pagination
                     id="pagination-id"
                     initialPage={1}
@@ -244,8 +273,11 @@ const CollectionPage = ({
                       );
                     }}
                     sx={{
-                      justifyContent: "flex-end",
-                      gap: "s",
+                      justifyContent: "center",
+                      [`@media screen and (min-width: ${headerBreakpoints.lgMobile}px)`]:
+                        {
+                          justifyContent: "flex-end",
+                        },
                     }}
                   />
                 </Flex>
