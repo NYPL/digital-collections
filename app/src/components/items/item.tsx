@@ -24,7 +24,11 @@ const Item = ({ item, type }: ItemProps) => {
     <>
       <Box marginTop="-3em">
         <Heading level="h2">{item.title}</Heading>
-        <ItemMediaViewer item={item} type={itemType} />
+        {item.hasItems ? (
+          <ItemMediaViewer item={item} type={itemType} />
+        ) : (
+          <></>
+        )}
         <Banner
           marginTop="m"
           content={
