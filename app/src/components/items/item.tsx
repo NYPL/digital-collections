@@ -10,6 +10,7 @@ import {
   Box,
   Text,
   Link,
+  Icon,
 } from "@nypl/design-system-react-components";
 
 interface ItemProps {
@@ -27,7 +28,24 @@ const Item = ({ item, type }: ItemProps) => {
         {item.hasItems ? (
           <ItemMediaViewer item={item} type={itemType} />
         ) : (
-          <></>
+          <Banner
+            marginTop="m"
+            content={
+              <>
+                This item has no media to return. Help us resolve this by
+                submitting feedback with the feedback form.
+              </>
+            }
+            icon={
+              <Icon
+                name="alertWarningOutline"
+                title="Banner with custom icon"
+                size="large"
+                marginTop="xxxs"
+              />
+            }
+            type="negative"
+          />
         )}
         <Banner
           marginTop="m"
@@ -40,7 +58,7 @@ const Item = ({ item, type }: ItemProps) => {
               </Link>{" "}
             </>
           }
-          type="informative"
+          type="neutral"
         ></Banner>
         <ItemOverview item={item} />
       </Box>
