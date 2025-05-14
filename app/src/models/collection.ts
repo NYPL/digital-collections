@@ -3,7 +3,7 @@ export class CollectionModel {
   uuid: string;
   abstract?: string;
   accessCondition?: string[];
-  archivesCollectionID?: string;
+  mssID?: string;
   bNumbers?: string[];
   contentNote?: string[];
   dateCaptured: string;
@@ -37,8 +37,8 @@ export class CollectionModel {
     this.uuid = data.uuid;
     this.abstract = data.abstract;
     this.accessCondition = data.accessCondition;
-    this.archivesCollectionID = data.archivesCollectionID;
-    this.bNumbers = data.bNumber?.split(" ");
+    this.mssID = data.mssID;
+    this.bNumbers = data.bnumber?.split(" ");
     this.contentNote = data.contentNote;
     this.dateCaptured = data.dateCaptured;
     this.dateCreated = data.dateCreated;

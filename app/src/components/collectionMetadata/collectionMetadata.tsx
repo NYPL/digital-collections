@@ -15,7 +15,7 @@ export type CollectionMetadataProps = {
   uuid: string;
   abstract?: string;
   accessCondition?: string[];
-  archivesCollectionID?: string;
+  mssID?: string;
   bNumbers?: string[];
   contentNote?: string[];
   dateCaptured: string;
@@ -137,10 +137,10 @@ const renderNamesSection = (names) => {
 
 const renderIdentifiers = (
   uuid: string | undefined,
-  archivesID: string | undefined,
+  mssID: string | undefined,
   bNumbers: string[] | undefined
 ) => {
-  if (!uuid && !archivesID && !bNumbers) return null;
+  if (!uuid && !mssID && !bNumbers) return null;
   return (
     <Box marginBottom="m">
       <Text size="overline1" marginBottom="xs">
@@ -149,14 +149,14 @@ const renderIdentifiers = (
       {uuid && (
         <Text marginBottom="0">Universal Unique Identifier (UUID): {uuid}</Text>
       )}
-      {archivesID && (
+      {mssID && (
         <Text marginBottom="0">
           Archives ID:{" "}
           <Link
             hasVisitedState={false}
-            href={`https://archives.nypl.org/${archivesID}`}
+            href={`https://archives.nypl.org/${mssID}`}
           >
-            {archivesID}
+            {mssID}
           </Link>
         </Text>
       )}
@@ -200,7 +200,7 @@ const CollectionMetadata = ({ data }: { data: CollectionMetadataProps }) => {
     uuid,
     abstract,
     accessCondition,
-    archivesCollectionID,
+    mssID,
     bNumbers,
     contentNote,
     dateCaptured,
@@ -233,21 +233,18 @@ const CollectionMetadata = ({ data }: { data: CollectionMetadataProps }) => {
   return (
     <Flex marginTop="l" marginBottom="m" flexDir="column" maxWidth="720px">
       <Heading size="heading6">Collection information</Heading>
-      {(archivesCollectionID || bNumbers) && (
+      {(mssID || bNumbers) && (
         <>
           <Text marginBottom="xs">
-            {`Data source${archivesCollectionID && bNumbers ? `s` : ``}:`}
+            {`Data source${mssID && bNumbers ? `s` : ``}:`}
           </Text>
           <ButtonGroup marginBottom="m">
-            {archivesCollectionID && (
+            {mssID && (
               <Button
                 buttonType="secondary"
                 id="finding-aid-btn"
                 onClick={() =>
-                  window.open(
-                    `https://archives.nypl.org/${archivesCollectionID}`,
-                    "_blank"
-                  )
+                  window.open(`https://archives.nypl.org/${mssID}`, "_blank")
                 }
               >
                 Finding aid
@@ -384,7 +381,7 @@ const CollectionMetadata = ({ data }: { data: CollectionMetadataProps }) => {
               <Text marginBottom="0">{accessCondition}</Text>
             </Box>
           )}
-          {renderIdentifiers(uuid, archivesCollectionID, bNumbers)}
+          {renderIdentifiers(uuid, mssID, bNumbers)}
         </>
       )}
 
