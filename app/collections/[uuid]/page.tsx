@@ -27,9 +27,7 @@ export async function generateMetadata({
       title: `${title} - NYPL Digital Collections`,
       images: [
         {
-          url: imageURL(collectionData.imageID, "full", "!288,200", "0"),
-          width: 1200,
-          height: 630,
+          url: imageURL(collectionData.imageID, "full", "!288,288", "0"),
           alt: `${title} - NYPL Digital Collections`,
         },
       ],
