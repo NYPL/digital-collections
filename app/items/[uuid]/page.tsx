@@ -3,10 +3,7 @@ import { Metadata } from "next";
 import PageLayout from "../../src/components/pageLayout/pageLayout";
 import Item from "../../src/components/items/item";
 import { RepoApi, CollectionsApi } from "../../src/utils/apiClients";
-import {
-  createAdobeAnalyticsPageName,
-  getItemTitleFromRepoAPI,
-} from "../../src/utils/utils";
+import { createAdobeAnalyticsPageName } from "../../src/utils/utils";
 import { ItemModel } from "../../src/models/item";
 import { ItemPage } from "@/src/components/pages/itemPage/itemPage";
 import { revalidatePath } from "next/cache";
@@ -21,17 +18,6 @@ type ItemProps = {
 
 let item;
 
-// const getItemModel = async (uuid: string) => {
-//   const data = await RepoApi.getItemData(uuid);
-//   return new ItemModel(data, uuid);
-//   // return item;
-// };
-
-const getItem = async (uuid: string) => {
-  const data = await RepoApi.getItemData(uuid);
-  return data;
-};
-
 const getItemManifest = async (uuid: string) => {
   const data = await CollectionsApi.getManifestForItemUUID(uuid);
   return data;
@@ -40,10 +26,10 @@ const getItemManifest = async (uuid: string) => {
 export async function generateMetadata({
   params,
 }: ItemProps): Promise<Metadata> {
-  item = await getItem(params.uuid);
+  const manifest = await getItemManifest(params.uuid);
+  const item = new ItemModel(params.uuid, manifest);
   params.item = item;
-  // TO DO: use manifest
-  const title = getItemTitleFromRepoAPI(item);
+  const title = item.title;
   return {
     title: `${title} - NYPL Digital Collections`, //should be item title
     openGraph: {
@@ -54,9 +40,8 @@ export async function generateMetadata({
 
 export default async function ItemViewer({ params, searchParams }: ItemProps) {
   revalidatePath("/");
-  const data = await getItem(params.uuid);
   const manifest = await getItemManifest(params.uuid);
-  const item = new ItemModel(data, params.uuid, manifest);
+  const item = new ItemModel(params.uuid, manifest);
 
   return (
     <PageLayout
@@ -73,7 +58,6 @@ export default async function ItemViewer({ params, searchParams }: ItemProps) {
     >
       <ItemPage
         manifest={manifest}
-        data={data}
         type={searchParams.type}
         uuid={params.uuid}
       />
