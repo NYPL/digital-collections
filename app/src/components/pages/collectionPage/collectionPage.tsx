@@ -189,6 +189,7 @@ const CollectionPage = ({
                     size="heading5"
                     ref={headingRef}
                     aria-live="polite"
+                    aria-atomic="true"
                     // @ts-ignore
                     tabIndex="-1"
                     margin="0"
