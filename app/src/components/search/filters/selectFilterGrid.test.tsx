@@ -9,9 +9,6 @@ import {
 import { mockAvailableFilters } from "__tests__/__mocks__/data/mockAvailableFilters";
 import { mockSearchResponse } from "__tests__/__mocks__/data/collectionsApi/mockSearchResponse";
 
-const mockFilterRefs: MutableRefObject<(HTMLButtonElement | null)[]> = {
-  current: Array(mockAvailableFilters.length).fill(null),
-};
 jest.mock("next/navigation", () => ({
   useRouter: jest.fn(() => ({
     push: jest.fn(),
@@ -29,13 +26,7 @@ const manager = new GeneralSearchManager({
 
 describe("SelectFilterGrid", () => {
   const component = (expanded: boolean) => {
-    return (
-      <SelectFilterGrid
-        isExpanded={expanded}
-        filterRefs={mockFilterRefs}
-        searchManager={manager}
-      />
-    );
+    return <SelectFilterGrid isExpanded={expanded} searchManager={manager} />;
   };
   it("renders the correct number of filters when collapsed", () => {
     render(component(false));
