@@ -15,10 +15,7 @@ export async function generateMetadata({
   params,
 }: CollectionProps): Promise<Metadata> {
   const slug = params.uuid;
-
   const collectionData = await CollectionsApi.getCollectionData(slug);
-  console.log(collectionData);
-
   const title = collectionData?.title ?? slug;
 
   return {
@@ -27,7 +24,9 @@ export async function generateMetadata({
       title: `${title} - NYPL Digital Collections`,
       images: [
         {
-          url: imageURL(collectionData.imageID, "full", "!288,288", "0"),
+          url: collectionData.imageID
+            ? imageURL(collectionData.imageID, "full", "!288,288", "0")
+            : "https://digitalcollections.nypl.org/featured_items/ps_mss_831.jpg",
           alt: `${title} - NYPL Digital Collections`,
         },
       ],
