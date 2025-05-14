@@ -274,15 +274,3 @@ export const getTitleWithHighlights = (highlights, title) => {
 export const deSlugify = (slug: string): string => {
   return slug.replace(/-/g, " ").replace(/\b\w/g, (c) => c.toUpperCase());
 };
-
-export const getItemTitleFromRepoAPI = (data) => {
-  return data.mods.titleInfo.title
-    ? data.mods.titleInfo.title.$
-    : data.mods.titleInfo[0].title.$;
-};
-
-export const getTypeOfResourceFromRepoAPI = (data) => {
-  return data.mods.typeOfResource.$
-    ? data.mods.typeOfResource.$
-    : data.mods.typeOfResource.find((obj) => obj.usage === "primary").$;
-};
