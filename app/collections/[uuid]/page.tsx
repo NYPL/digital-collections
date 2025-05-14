@@ -1,7 +1,7 @@
 import React from "react";
 import { Metadata } from "next";
 import PageLayout from "../../src/components/pageLayout/pageLayout";
-import { createAdobeAnalyticsPageName } from "@/src/utils/utils";
+import { createAdobeAnalyticsPageName, imageURL } from "@/src/utils/utils";
 import CollectionPage from "@/src/components/pages/collectionPage/collectionPage";
 import { CollectionsApi } from "@/src/utils/apiClients";
 import CollectionSearchParamsType from "@/src/types/CollectionSearchParams";
@@ -17,15 +17,22 @@ export async function generateMetadata({
   const slug = params.uuid;
 
   const collectionData = await CollectionsApi.getCollectionData(slug);
+  console.log(collectionData);
 
   const title = collectionData?.title ?? slug;
-
-  // TO DO: image
 
   return {
     title: `${title} - NYPL Digital Collections`,
     openGraph: {
       title: `${title} - NYPL Digital Collections`,
+      images: [
+        {
+          url: imageURL(collectionData.imageID, "square", "!288,288", "0"),
+          width: 1200,
+          height: 630,
+          alt: `${title} - NYPL Digital Collections`,
+        },
+      ],
     },
   };
 }
