@@ -37,6 +37,7 @@ import CollectionMetadata, {
 import CollectionSearchParamsType from "@/src/types/CollectionSearchParams";
 import { SearchResultsType } from "@/src/types/SearchResultsType";
 import { CollectionModel } from "@/src/models/collection";
+import { useSubcollectionRedirect } from "@/src/hooks/useSubcollectionRedirect";
 
 type CollectionPageProps = {
   searchResults: SearchResultsType;
@@ -75,6 +76,8 @@ const CollectionPage = ({
     push(`${pathname}?${queryString}`, { scroll: false });
   };
   const [isLoaded, setIsLoaded] = useState(false);
+
+  useSubcollectionRedirect();
 
   useEffect(() => {
     setIsLoaded(true);
