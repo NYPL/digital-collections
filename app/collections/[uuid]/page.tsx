@@ -56,7 +56,7 @@ export default async function Collection({
 
   const searchResults = await CollectionsApi.getSearchData({
     keyword: searchParams.q,
-    sort: searchParams.sort,
+    sort: searchParams.sort ? searchParams.sort : "sequence",
     page: searchParams.page,
     filters,
   });

@@ -15,10 +15,9 @@ import { MobileSearchBanner } from "../../mobileSearchBanner/mobileSearchBanner"
 import { displayResults, totalNumPages } from "@/src/utils/utils";
 import {
   CARDS_PER_PAGE,
+  COLLECTION_LANDING_SORT_LABELS,
   DEFAULT_PAGE_NUM,
-  DEFAULT_SEARCH_SORT,
   DEFAULT_SEARCH_TERM,
-  SEARCH_SORT_LABELS,
 } from "@/src/config/constants";
 import SearchCardsGrid from "../../grids/searchCardsGrid";
 import {
@@ -56,7 +55,8 @@ const CollectionPage = ({
 
   const collectionSearchManager = new GeneralSearchManager({
     initialPage: Number(searchParams?.page) || DEFAULT_PAGE_NUM,
-    initialSort: searchParams?.sort || DEFAULT_SEARCH_SORT,
+    initialSort: searchParams.sort || "sequence",
+    defaultSort: "sequence",
     initialFilters: stringToFilter(searchParams?.filters),
     initialKeywords: searchParams?.q || DEFAULT_SEARCH_TERM,
     initialAvailableFilters: searchParams?.availableFilters,
@@ -199,8 +199,9 @@ const CollectionPage = ({
                     collectionSearchManager.page
                   )} results`}</Heading>
                   <SortMenu
-                    options={SEARCH_SORT_LABELS}
+                    options={COLLECTION_LANDING_SORT_LABELS}
                     searchManager={collectionSearchManager}
+                    sort={searchResults.sort}
                     updateURL={updateURL}
                     setFiltersExpanded={setFiltersExpanded}
                   />

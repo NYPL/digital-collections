@@ -124,6 +124,7 @@ const toggleItem = async (
 
         // Clear search query
         searchManager.handleKeywordChange("");
+        searchManager.handleSortChange("sequence");
         searchManager.handleSearchSubmit();
         searchManager.setLastFilter(null);
 
