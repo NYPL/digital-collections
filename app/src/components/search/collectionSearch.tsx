@@ -70,7 +70,7 @@ export const CollectionSearch = ({ searchManager }: CollectionSearchProps) => {
               { filter: "subcollection", value: "null" },
             ]);
             searchManager.setLastFilter(null);
-            updateURL(searchManager.handleSearchSubmit());
+            updateURL(searchManager.handleSearchSubmit("relevance"));
           }}
           sx={{
             display: "block",

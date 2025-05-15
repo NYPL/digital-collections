@@ -20,6 +20,7 @@ const manager = new GeneralSearchManager({
   initialPage: 1,
   initialSort: DEFAULT_SEARCH_SORT,
   initialFilters: [],
+  defaultSort: DEFAULT_SEARCH_SORT,
   initialKeywords: DEFAULT_SEARCH_TERM,
   initialAvailableFilters: mockSearchResponse.availableFilters,
 });

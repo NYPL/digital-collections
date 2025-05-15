@@ -18,6 +18,7 @@ import {
   DEFAULT_COLLECTION_SORT,
   DEFAULT_SEARCH_TERM,
   COLLECTION_SORT_LABELS,
+  DEFAULT_SEARCH_SORT,
 } from "@/src/config/constants";
 import { CollectionSearchManager } from "@/src/utils/searchManager";
 import { headerBreakpoints } from "@/src/utils/breakpoints";
@@ -42,6 +43,7 @@ export function CollectionsPage({ data, collectionsSearchParams }) {
   const collectionsSearchManager = new CollectionSearchManager({
     initialPage: Number(collectionsSearchParams?.page) || DEFAULT_PAGE_NUM,
     initialSort: collectionsSearchParams?.sort || DEFAULT_COLLECTION_SORT,
+    defaultSort: DEFAULT_SEARCH_SORT,
     initialKeywords: collectionsSearchParams?.q || DEFAULT_SEARCH_TERM,
     lastFilterRef: useRef<string | null>(null),
   });
@@ -151,6 +153,7 @@ export function CollectionsPage({ data, collectionsSearchParams }) {
         >
           <SortMenu
             options={COLLECTION_SORT_LABELS}
+            sort={data.sort}
             searchManager={collectionsSearchManager}
             updateURL={updateURL}
           />
