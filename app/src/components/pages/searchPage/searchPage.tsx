@@ -190,6 +190,7 @@ const SearchPage = ({
               )} results`}</Heading>
               <SortMenu
                 options={SEARCH_SORT_LABELS}
+                sort={searchResults.sort}
                 searchManager={searchManager}
                 setFiltersExpanded={setFiltersExpanded}
                 updateURL={updateURL}
