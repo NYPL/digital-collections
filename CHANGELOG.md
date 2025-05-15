@@ -7,6 +7,17 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+## [0.4.0] 2025-05-15
+
+### Fixed
+
+- Fixed filters to be encoded as URI components (DR-3564)
+- Fixed dropdown filters to only display selection (DR-3598)
+
+### Added
+
+- Logged 404 path to New Relic (DR-3550)
+
 ## [0.3.6] 2025-04-21
 
 ### Updated

@@ -7,7 +7,7 @@ import {
   Icon,
   Pagination,
 } from "@nypl/design-system-react-components";
-import React, { useRef } from "react";
+import React, { useRef, useState } from "react";
 import Filters from "../../search/filters/filters";
 import CollectionStructure from "../../collectionStructure/collectionStructure";
 import { headerBreakpoints } from "@/src/utils/breakpoints";
@@ -49,6 +49,7 @@ const CollectionPage = ({
   collectionChildren,
 }: CollectionPageProps) => {
   const headingRef = useRef<HTMLHeadingElement>(null);
+  const [filtersExpanded, setFiltersExpanded] = useState(false);
 
   const collectionSearchManager = new GeneralSearchManager({
     initialPage: Number(searchParams?.page) || DEFAULT_PAGE_NUM,
@@ -56,6 +57,7 @@ const CollectionPage = ({
     initialFilters: stringToFilter(searchParams?.filters),
     initialKeywords: searchParams?.q || DEFAULT_SEARCH_TERM,
     initialAvailableFilters: searchResults?.availableFilters || DEFAULT_FILTERS,
+    lastFilterRef: useRef<string | null>(null),
   });
 
   const totalPages = totalNumPages(
@@ -98,6 +100,8 @@ const CollectionPage = ({
           <Filters
             headingText="Refine your results"
             searchManager={collectionSearchManager}
+            setFiltersExpanded={setFiltersExpanded}
+            filtersExpanded={filtersExpanded}
           />
         </Box>
       </Box>
@@ -151,6 +155,7 @@ const CollectionPage = ({
                 options={SEARCH_SORT_LABELS}
                 searchManager={collectionSearchManager}
                 updateURL={updateURL}
+                setFiltersExpanded={setFiltersExpanded}
               />
             </Flex>
             <SearchCardsGrid

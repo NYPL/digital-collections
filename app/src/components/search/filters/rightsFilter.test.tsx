@@ -15,6 +15,10 @@ const mockPush = jest.fn();
 const mockManager = {
   filters: [],
   handleAddFilter: jest.fn(() => "filters=rights=publicDomain"),
+  lastFilterRef: { current: null },
+  setLastFilter: () => {
+    return;
+  },
 };
 
 describe("RightsFilter", () => {
