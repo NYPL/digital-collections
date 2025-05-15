@@ -62,7 +62,7 @@ describe("ActiveFilters", () => {
     const mockEmptyManager = new GeneralSearchManager({
       initialPage: 1,
       initialSort: DEFAULT_SEARCH_SORT,
-      defaultSort: "relevance",
+      defaultSort: DEFAULT_SEARCH_SORT,
       initialFilters: [],
       initialKeywords: DEFAULT_SEARCH_TERM,
       lastFilterRef: { current: null },
