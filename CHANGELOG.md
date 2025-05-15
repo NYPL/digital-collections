@@ -16,7 +16,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
-- Logged 404 pathto New Relic (DR-3550)
+- Logged 404 path to New Relic (DR-3550)
 
 ## [0.3.6] 2025-04-21
 
