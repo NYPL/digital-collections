@@ -9,7 +9,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
-- Connects collection landing page (metadata) to API (DR-3362)
+- Added sequence sort option and new default sort functionality to search (DR-3609)
+- Connected collection landing page (metadata) to API (DR-3362)
 
 ### Fixed
 

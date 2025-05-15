@@ -19,6 +19,7 @@ describe("SortMenu", () => {
     manager = new GeneralSearchManager({
       initialPage: 1,
       initialSort: DEFAULT_SEARCH_SORT,
+      defaultSort: DEFAULT_SEARCH_SORT,
       initialFilters: [],
       initialKeywords: DEFAULT_SEARCH_TERM,
       lastFilterRef: { current: null },
@@ -29,6 +30,7 @@ describe("SortMenu", () => {
     render(
       <SortMenu
         updateURL={updateURL}
+        sort={manager.sort}
         searchManager={manager}
         options={options}
         setFiltersExpanded={() => {
@@ -43,6 +45,7 @@ describe("SortMenu", () => {
     render(
       <SortMenu
         updateURL={updateURL}
+        sort={manager.sort}
         searchManager={manager}
         options={options}
         setFiltersExpanded={() => {
@@ -63,6 +66,7 @@ describe("SortMenu", () => {
       <SortMenu
         updateURL={updateURL}
         searchManager={manager}
+        sort={manager.sort}
         options={options}
         setFiltersExpanded={() => {
           console.log("expanded");
