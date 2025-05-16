@@ -48,6 +48,7 @@ describe("SelectFilterModal", () => {
   let mockManager = new GeneralSearchManager({
     initialPage: 1,
     initialSort: DEFAULT_SEARCH_SORT,
+    defaultSort: DEFAULT_SEARCH_SORT,
     initialFilters: [],
     initialKeywords: DEFAULT_SEARCH_TERM,
   });

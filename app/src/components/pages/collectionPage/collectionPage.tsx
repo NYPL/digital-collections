@@ -15,10 +15,9 @@ import { MobileSearchBanner } from "../../mobileSearchBanner/mobileSearchBanner"
 import { displayResults, totalNumPages } from "@/src/utils/utils";
 import {
   CARDS_PER_PAGE,
+  COLLECTION_LANDING_SORT_LABELS,
   DEFAULT_PAGE_NUM,
-  DEFAULT_SEARCH_SORT,
   DEFAULT_SEARCH_TERM,
-  SEARCH_SORT_LABELS,
 } from "@/src/config/constants";
 import SearchCardsGrid from "../../grids/searchCardsGrid";
 import {
@@ -37,6 +36,7 @@ import CollectionMetadata, {
 } from "../../collectionMetadata/collectionMetadata";
 import CollectionSearchParamsType from "@/src/types/CollectionSearchParams";
 import { SearchResultsType } from "@/src/types/SearchResultsType";
+import { CollectionModel } from "@/src/models/collection";
 
 type CollectionPageProps = {
   searchResults: SearchResultsType;
@@ -50,12 +50,14 @@ const CollectionPage = ({
   collectionData,
 }: CollectionPageProps) => {
   const headingRef = useRef<HTMLHeadingElement>(null);
+  const refineHeadingRef = useRef<HTMLHeadingElement>(null);
   const isFirstLoad = useRef<boolean>(false);
   const [filtersExpanded, setFiltersExpanded] = useState(false);
 
   const collectionSearchManager = new GeneralSearchManager({
     initialPage: Number(searchParams?.page) || DEFAULT_PAGE_NUM,
-    initialSort: searchParams?.sort || DEFAULT_SEARCH_SORT,
+    initialSort: searchParams.sort || "sequence",
+    defaultSort: "sequence",
     initialFilters: stringToFilter(searchParams?.filters),
     initialKeywords: searchParams?.q || DEFAULT_SEARCH_TERM,
     initialAvailableFilters: searchParams?.availableFilters,
@@ -79,12 +81,12 @@ const CollectionPage = ({
     setIsLoaded(true);
     let didFocusElement = false;
     if (
-      collectionSearchManager.lastFilterRef?.current &&
-      (collectionSearchManager.filters.length > 0 ||
-        collectionSearchManager.sort !== "relevance")
+      (collectionSearchManager.lastFilterRef?.current &&
+        collectionSearchManager.filters.length > 0) ||
+      collectionSearchManager.sort
     ) {
       // Search for the button, input, or text element associated with the last used filter/sort
-      const selectors = ["button", "input", "p"];
+      const selectors = ["button", "input", "p", "h2"];
 
       for (const selector of selectors) {
         const el = document.querySelector(
@@ -97,7 +99,6 @@ const CollectionPage = ({
         }
       }
     }
-
     if (!didFocusElement && isFirstLoad.current) {
       setFiltersExpanded(false);
       headingRef.current?.focus();
@@ -135,6 +136,7 @@ const CollectionPage = ({
           <Filters
             headingText="Refine your results"
             searchManager={collectionSearchManager}
+            refineHeadingRef={refineHeadingRef}
             setFiltersExpanded={setFiltersExpanded}
             filtersExpanded={filtersExpanded}
           />
@@ -149,7 +151,7 @@ const CollectionPage = ({
         }}
       >
         <ActiveFilters searchManager={collectionSearchManager} />
-        <CollectionMetadata data={collectionData} />
+        <CollectionMetadata data={new CollectionModel(collectionData)} />
         <Flex
           gap="xxl"
           sx={{
@@ -188,6 +190,7 @@ const CollectionPage = ({
                     size="heading5"
                     ref={headingRef}
                     aria-live="polite"
+                    aria-atomic="true"
                     // @ts-ignore
                     tabIndex="-1"
                     margin="0"
@@ -197,8 +200,9 @@ const CollectionPage = ({
                     collectionSearchManager.page
                   )} results`}</Heading>
                   <SortMenu
-                    options={SEARCH_SORT_LABELS}
+                    options={COLLECTION_LANDING_SORT_LABELS}
                     searchManager={collectionSearchManager}
+                    sort={searchResults.sort}
                     updateURL={updateURL}
                     setFiltersExpanded={setFiltersExpanded}
                   />
@@ -218,8 +222,31 @@ const CollectionPage = ({
                     <SearchCardGridLoading id={index} key={index} />
                   ))
                 )}
-                <Flex marginTop="xxl" marginBottom="xxl" alignContent="center">
-                  <BackToTopLink />
+                <Flex
+                  paddingLeft="s"
+                  paddingRight="s"
+                  marginTop="xxl"
+                  marginBottom="xxl"
+                  sx={{
+                    "> a": {
+                      marginTop: "xl",
+                      justifyContent: "end",
+                    },
+                    paddingLeft: "s",
+                    paddingRight: "s",
+                    [`@media screen and (min-width: ${headerBreakpoints.lgMobile}px)`]:
+                      {
+                        "> a": {
+                          marginTop: "0",
+                        },
+                        flexDir: "row",
+                        paddingLeft: 0,
+                        paddingRight: 0,
+                      },
+                    flexDir: "column-reverse",
+                  }}
+                >
+                  {searchResults.results?.length > 0 && <BackToTopLink />}
                   <Pagination
                     id="pagination-id"
                     initialPage={1}
@@ -233,8 +260,11 @@ const CollectionPage = ({
                       );
                     }}
                     sx={{
-                      justifyContent: "flex-end",
-                      gap: "s",
+                      justifyContent: "center",
+                      [`@media screen and (min-width: ${headerBreakpoints.lgMobile}px)`]:
+                        {
+                          justifyContent: "flex-end",
+                        },
                     }}
                   />
                 </Flex>
