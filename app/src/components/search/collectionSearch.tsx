@@ -1,12 +1,7 @@
 import { headerBreakpoints } from "@/src/utils/breakpoints";
-import {
-  Button,
-  Flex,
-  Heading,
-  Icon,
-} from "@nypl/design-system-react-components";
+import { Flex, Heading } from "@nypl/design-system-react-components";
 import DCSearchBar from "./dcSearchBar";
-import { useState } from "react";
+
 import type { SearchManager } from "@/src/utils/searchManager";
 import { usePathname, useRouter } from "next/navigation";
 
@@ -15,7 +10,6 @@ type CollectionSearchProps = {
 };
 
 export const CollectionSearch = ({ searchManager }: CollectionSearchProps) => {
-  const [isExpanded, setIsExpanded] = useState(false);
   const { push } = useRouter();
   const pathname = usePathname();
   const updateURL = async (queryString) => {
@@ -42,46 +36,16 @@ export const CollectionSearch = ({ searchManager }: CollectionSearchProps) => {
         alignItems="center"
         justifyContent="space-between"
         sx={{
-          marginBottom: isExpanded ? "s" : "0",
-          [`@media (min-width:  ${headerBreakpoints.lgMobile}px)`]: {
-            marginBottom: "xs",
-          },
+          marginBottom: "xs",
         }}
       >
         <Heading size="heading8" marginBottom="0">
           Search this collection
         </Heading>
-        <Button
-          id={isExpanded ? "close-search" : "open-search"}
-          buttonType="text"
-          aria-label={isExpanded ? "Close search" : "Open search"}
-          sx={{
-            display: "flex",
-            [`@media (min-width:  ${headerBreakpoints.lgMobile}px)`]: {
-              display: "none",
-            },
-            padding: "0 !important",
-            minWidth: "unset",
-            minHeight: "unset",
-            height: "unset",
-            _hover: { background: "unset", color: "unset" },
-          }}
-          onClick={() => setIsExpanded((prev) => !prev)}
-        >
-          {" "}
-          <Icon
-            name={isExpanded ? "close" : "search"}
-            size="medium"
-            color="ui.black"
-          />
-        </Button>
       </Flex>
       <Flex
         sx={{
-          display: isExpanded ? "block" : "none",
-          [`@media (min-width:  ${headerBreakpoints.lgMobile}px)`]: {
-            display: "block",
-          },
+          display: "block",
         }}
       >
         <DCSearchBar
@@ -105,13 +69,11 @@ export const CollectionSearch = ({ searchManager }: CollectionSearchProps) => {
             searchManager.handleRemoveFilter([
               { filter: "subcollection", value: "null" },
             ]);
-            updateURL(searchManager.handleSearchSubmit());
+            searchManager.setLastFilter(null);
+            updateURL(searchManager.handleSearchSubmit("relevance"));
           }}
           sx={{
-            display: isExpanded ? "block" : "none",
-            [`@media (min-width:  ${headerBreakpoints.lgMobile}px)`]: {
-              display: "block",
-            },
+            display: "block",
           }}
         />
       </Flex>

@@ -18,6 +18,7 @@ import {
   DEFAULT_COLLECTION_SORT,
   DEFAULT_SEARCH_TERM,
   COLLECTION_SORT_LABELS,
+  DEFAULT_SEARCH_SORT,
 } from "@/src/config/constants";
 import { CollectionSearchManager } from "@/src/utils/searchManager";
 import { headerBreakpoints } from "@/src/utils/breakpoints";
@@ -42,6 +43,7 @@ export function CollectionsPage({ data, collectionsSearchParams }) {
   const collectionsSearchManager = new CollectionSearchManager({
     initialPage: Number(collectionsSearchParams?.page) || DEFAULT_PAGE_NUM,
     initialSort: collectionsSearchParams?.sort || DEFAULT_COLLECTION_SORT,
+    defaultSort: DEFAULT_COLLECTION_SORT,
     initialKeywords: collectionsSearchParams?.q || DEFAULT_SEARCH_TERM,
     lastFilterRef: useRef<string | null>(null),
   });
@@ -63,9 +65,29 @@ export function CollectionsPage({ data, collectionsSearchParams }) {
 
   useEffect(() => {
     setIsLoaded(true);
-    if (isFirstLoad.current) {
+    let didFocusElement = false;
+    if (
+      collectionsSearchManager.lastFilterRef?.current ||
+      collectionsSearchManager.sort
+    ) {
+      // Search for the button, input, or text element associated with the last used filter/sort
+      const selectors = ["button", "input", "p", "h2"];
+
+      for (const selector of selectors) {
+        const el = document.querySelector(
+          `${selector}[id="${collectionsSearchManager.lastFilterRef.current}"]`
+        );
+        if (el) {
+          (el as HTMLElement).focus();
+          didFocusElement = true;
+          break;
+        }
+      }
+    }
+    if (!didFocusElement && isFirstLoad.current) {
       headingRef.current?.focus();
     }
+
     isFirstLoad.current = true;
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [collections]);
@@ -109,13 +131,14 @@ export function CollectionsPage({ data, collectionsSearchParams }) {
             labelText: "Search by collection title",
             name: "collection_keywords",
             placeholder: "Search by collection title",
-            defaultValue: collectionsSearchManager.keywords,
+            defaultValue: data.keywords,
             onChange: (e) =>
               collectionsSearchManager.handleKeywordChange(
                 (e.target as HTMLInputElement).value
               ),
           }}
           onSubmit={() => {
+            collectionsSearchManager.setLastFilter(null);
             updateURL(collectionsSearchManager.handleSearchSubmit());
           }}
         />
@@ -151,6 +174,7 @@ export function CollectionsPage({ data, collectionsSearchParams }) {
         >
           <SortMenu
             options={COLLECTION_SORT_LABELS}
+            sort={data.sort}
             searchManager={collectionsSearchManager}
             updateURL={updateURL}
           />
@@ -178,6 +202,7 @@ export function CollectionsPage({ data, collectionsSearchParams }) {
           initialPage={collectionsSearchManager.page}
           pageCount={totalPages}
           onPageChange={(newPage) => {
+            collectionsSearchManager.setLastFilter(null);
             updateURL(collectionsSearchManager.handlePageChange(newPage));
           }}
           sx={{

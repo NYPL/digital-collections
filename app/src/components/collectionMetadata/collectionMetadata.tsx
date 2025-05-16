@@ -15,8 +15,8 @@ export type CollectionMetadataProps = {
   uuid: string;
   abstract?: string;
   accessCondition?: string[];
-  archivesCollectionID?: string;
-  bNumber?: string;
+  mssID?: string;
+  bNumbers?: string[];
   contentNote?: string[];
   dateCaptured: string;
   dateCreated: string;
@@ -113,8 +113,8 @@ const renderLabeledLinks = (
   );
 };
 
-const renderNamesSection = (names: CollectionMetadataProps["names"]) => {
-  if (!names) return null;
+const renderNamesSection = (names) => {
+  if (names.length === 0) return null;
   return (
     <Box marginBottom="m">
       <Text size="overline1" marginBottom="xs">
@@ -137,10 +137,10 @@ const renderNamesSection = (names: CollectionMetadataProps["names"]) => {
 
 const renderIdentifiers = (
   uuid: string | undefined,
-  archivesID: string | undefined,
-  bNumber: string | undefined
+  mssID: string | undefined,
+  bNumbers: string[] | undefined
 ) => {
-  if (!uuid && !archivesID && !bNumber) return null;
+  if (!uuid && !mssID && !bNumbers) return null;
   return (
     <Box marginBottom="m">
       <Text size="overline1" marginBottom="xs">
@@ -149,28 +149,47 @@ const renderIdentifiers = (
       {uuid && (
         <Text marginBottom="0">Universal Unique Identifier (UUID): {uuid}</Text>
       )}
-      {archivesID && (
+      {mssID && (
         <Text marginBottom="0">
           Archives ID:{" "}
           <Link
             hasVisitedState={false}
-            href={`https://archives.nypl.org/${archivesID}`}
+            href={`https://archives.nypl.org/${mssID}`}
           >
-            {archivesID}
+            {mssID}
           </Link>
         </Text>
       )}
-      {bNumber && (
-        <Text marginBottom="0">
-          NYPL Catalog ID (bNumber):{" "}
-          <Link
-            hasVisitedState={false}
-            href={`https://www.nypl.org/research/research-catalog/bib/${bNumber}`}
-          >
-            {bNumber}
-          </Link>
-        </Text>
-      )}
+      {bNumbers &&
+        (bNumbers.length > 1 ? (
+          <>
+            <Text as="span" marginBottom="0">
+              NYPL Catalog IDs (bnumbers):{" "}
+            </Text>
+            {bNumbers.map((bNumber, index) => (
+              <Text key={index} marginBottom="0">
+                <Link
+                  hasVisitedState={false}
+                  href={`https://www.nypl.org/research/research-catalog/bib/${bNumber}`}
+                >
+                  {bNumber}
+                </Link>
+              </Text>
+            ))}
+          </>
+        ) : (
+          <>
+            <Text marginBottom="0">
+              NYPL Catalog ID (bNumber):{" "}
+              <Link
+                hasVisitedState={false}
+                href={`https://www.nypl.org/research/research-catalog/bib/${bNumbers[0]}`}
+              >
+                {bNumbers[0]}
+              </Link>
+            </Text>
+          </>
+        ))}
     </Box>
   );
 };
@@ -181,8 +200,8 @@ const CollectionMetadata = ({ data }: { data: CollectionMetadataProps }) => {
     uuid,
     abstract,
     accessCondition,
-    archivesCollectionID,
-    bNumber,
+    mssID,
+    bNumbers,
     contentNote,
     dateCaptured,
     dateCreated,
@@ -214,31 +233,30 @@ const CollectionMetadata = ({ data }: { data: CollectionMetadataProps }) => {
   return (
     <Flex marginTop="l" marginBottom="m" flexDir="column" maxWidth="720px">
       <Heading size="heading6">Collection information</Heading>
-      {(archivesCollectionID || bNumber) && (
+      {(mssID || bNumbers) && (
         <>
-          <Text marginBottom="xs">Collection source information:</Text>
+          <Text marginBottom="xs">
+            {`Data source${mssID && bNumbers ? `s` : ``}:`}
+          </Text>
           <ButtonGroup marginBottom="m">
-            {archivesCollectionID && (
+            {mssID && (
               <Button
                 buttonType="secondary"
                 id="finding-aid-btn"
                 onClick={() =>
-                  window.open(
-                    `https://archives.nypl.org/${archivesCollectionID}`,
-                    "_blank"
-                  )
+                  window.open(`https://archives.nypl.org/${mssID}`, "_blank")
                 }
               >
                 Finding aid
               </Button>
             )}
-            {bNumber && (
+            {bNumbers && (
               <Button
                 buttonType="secondary"
                 id="catalog-btn"
                 onClick={() =>
                   window.open(
-                    `https://www.nypl.org/research/research-catalog/bib/${bNumber}`,
+                    `https://www.nypl.org/research/research-catalog/bib/${bNumbers[0]}`,
                     "_blank"
                   )
                 }
@@ -316,7 +334,7 @@ const CollectionMetadata = ({ data }: { data: CollectionMetadataProps }) => {
             </Box>
           )}
           {renderLabeledLinks("Type of resource", typeOfResource, "type")}
-          {displayNames && renderNamesSection(names)}
+          {names && renderNamesSection(names)}
           {renderLabeledLinks("Languages", languages, "language")}
           {contentNote && contentNote.length > 0 && (
             <Box marginBottom="m">
@@ -363,7 +381,7 @@ const CollectionMetadata = ({ data }: { data: CollectionMetadataProps }) => {
               <Text marginBottom="0">{accessCondition}</Text>
             </Box>
           )}
-          {renderIdentifiers(uuid, archivesCollectionID, bNumber)}
+          {renderIdentifiers(uuid, mssID, bNumbers)}
         </>
       )}
 
@@ -372,7 +390,7 @@ const CollectionMetadata = ({ data }: { data: CollectionMetadataProps }) => {
         isUnderlined={false}
         onClick={() => setIsExpanded((prev) => !prev)}
       >
-        See {isExpanded ? "less" : "more"} collection data
+        See {isExpanded ? "less" : "more"} collection information
       </Link>
     </Flex>
   );

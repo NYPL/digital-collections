@@ -29,6 +29,7 @@ export const SearchProvider = ({
     initialPage: Number(searchParams?.page) || DEFAULT_PAGE_NUM,
     initialSort: searchParams?.sort || DEFAULT_SEARCH_SORT,
     initialFilters: stringToFilter(searchParams?.filters),
+    defaultSort: DEFAULT_SEARCH_SORT,
     initialKeywords: searchParams?.q || DEFAULT_SEARCH_TERM,
     initialAvailableFilters: searchParams?.availableFilters || DEFAULT_FILTERS,
     lastFilterRef: useRef<string | null>(null),
