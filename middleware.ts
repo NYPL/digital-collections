@@ -12,6 +12,7 @@ const filterMap = {
   geographic_mtxt_s: "topic",
   languageTerm_mtxt_s: "language",
   form_mtxt_s: "form",
+  divisionFullname_mtxt_s: "division",
 };
 
 async function getCollectionTitle(uuid): Promise<string> {
