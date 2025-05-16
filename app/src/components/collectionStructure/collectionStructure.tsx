@@ -26,6 +26,14 @@ interface CollectionStructureProps {
   searchManager: SearchManager;
 }
 
+interface ToggleItemAndChildrenParams {
+  uuid: string;
+  tree: OpenStateItem[];
+  setTree: React.Dispatch<React.SetStateAction<OpenStateItem[]>>;
+  searchManager: SearchManager;
+  updateURL: (query: string) => Promise<void>;
+}
+
 const fetchChildren = async (uuid: string): Promise<OpenStateItem[]> => {
   const allChildren: OpenStateItem[] = [];
   let page = 1;
@@ -57,13 +65,52 @@ const closeAllChildren = (node: OpenStateItem): OpenStateItem => ({
   children: node.children?.map(closeAllChildren) ?? [],
 });
 
-const toggleItem = async (
-  uuid: string,
-  tree: OpenStateItem[],
-  setTree: React.Dispatch<React.SetStateAction<OpenStateItem[]>>,
+const applyNodeFilter = async (
+  node: OpenStateItem,
+  parentNode: OpenStateItem | null,
+  isOpening: boolean,
   searchManager: SearchManager,
   updateURL: (query: string) => Promise<void>
 ) => {
+  const filter = {
+    filter: "subcollection",
+    value: `${encodeURIComponent(node.title)}||${encodeURIComponent(
+      node.uuid
+    )}`,
+  };
+
+  // Clear search query
+  searchManager.handleKeywordChange("");
+  searchManager.handleSearchSubmit();
+  searchManager.setLastFilter(null);
+
+  /* 
+  If opening the item, add the subcollection filter. If closing, remove 
+  the subcollection filter or replace it with its parent subcollection filter.
+  */
+  await updateURL(
+    isOpening
+      ? searchManager.handleAddFilter([filter])
+      : parentNode
+      ? searchManager.handleAddFilter([
+          {
+            filter: "subcollection",
+            value: `${encodeURIComponent(
+              parentNode.title
+            )}||${encodeURIComponent(parentNode.uuid)}`,
+          },
+        ])
+      : searchManager.handleRemoveFilter([filter])
+  );
+};
+
+const toggleItemAndChildren = async ({
+  uuid,
+  tree,
+  setTree,
+  searchManager,
+  updateURL,
+}: ToggleItemAndChildrenParams) => {
   let toggledNodeLevel: number | undefined;
   let parentNode: OpenStateItem | null = null;
 
@@ -104,7 +151,7 @@ const toggleItem = async (
               children: [],
             }));
           } catch (e) {
-            console.error("fetch error:", e);
+            console.error("Fetch error in toggleItemAndChildren:", e);
             children = [];
           }
         }
@@ -115,34 +162,7 @@ const toggleItem = async (
           children: isOpening ? children : children?.map(closeAllChildren),
         });
 
-        const filter = {
-          filter: "subcollection",
-          value: `${encodeURIComponent(node.title)}||${encodeURIComponent(
-            uuid
-          )}`,
-        };
-
-        // Clear search query
-        searchManager.handleKeywordChange("");
-        searchManager.handleSearchSubmit();
-        searchManager.setLastFilter(null);
-
-        // If opening the item, add the subcollection filter.
-        // If closing, remove the subcollection filter or replace it with its parent subcollection filter.
-        await updateURL(
-          isOpening
-            ? searchManager.handleAddFilter([filter])
-            : parentNode
-            ? searchManager.handleAddFilter([
-                {
-                  filter: "subcollection",
-                  value: `${encodeURIComponent(
-                    parentNode.title
-                  )}||${encodeURIComponent(parentNode.uuid)}`,
-                },
-              ])
-            : searchManager.handleRemoveFilter([filter])
-        );
+        applyNodeFilter(node, parentNode, isOpening, searchManager, updateURL);
       } else {
         const shouldClose = toggledNodeLevel === node.level;
         const updatedChildren = node.children
@@ -246,14 +266,14 @@ const CollectionStructure = ({
         const topLevelChildren = await fetchChildren(uuid);
         // If already filtering on a subcollection, build tree to that uuid
         if (targetUuid) {
-          for (const top of topLevelChildren) {
-            if (top.uuid === targetUuid) {
-              const children = await fetchChildren(top.uuid);
+          for (const child of topLevelChildren) {
+            if (child.uuid === targetUuid) {
+              const children = await fetchChildren(child.uuid);
               setTree(
                 topLevelChildren.map((node) =>
-                  node.uuid === top.uuid
+                  node.uuid === child.uuid
                     ? {
-                        ...top,
+                        ...child,
                         level: 0,
                         isOpen: true,
                         children: children.map((child) => ({
@@ -275,9 +295,9 @@ const CollectionStructure = ({
               return;
             }
 
-            if (top.hasSubContainers) {
+            if (child.hasSubContainers) {
               const subtree = await buildTreeWithPathToUuid(
-                top.uuid,
+                child.uuid,
                 targetUuid,
                 1
               );
@@ -285,9 +305,9 @@ const CollectionStructure = ({
               if (subtree) {
                 setTree(
                   topLevelChildren.map((node) =>
-                    node.uuid === top.uuid
+                    node.uuid === child.uuid
                       ? {
-                          ...top,
+                          ...child,
                           level: 0,
                           isOpen: true,
                           children: subtree,
@@ -343,10 +363,16 @@ const CollectionStructure = ({
   }
 
   const handleToggle = (uuid: string) => {
-    toggleItem(uuid, tree, setTree, searchManager, updateURL);
+    toggleItemAndChildren({
+      uuid,
+      tree,
+      setTree,
+      searchManager,
+      updateURL,
+    });
   };
 
-  // If no subcontainers, don't display Collection structure
+  // If no subcontainers, don't display collection structure
   if (tree.length === 0) {
     return null;
   }

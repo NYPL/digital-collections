@@ -30,6 +30,7 @@ import ActiveFilters from "../../search/filters/activeFilters";
 import NoResultsFound from "../../results/noResultsFound";
 import SearchCardGridLoading from "../../grids/searchCardGridLoading";
 import CollectionStructure from "../../collectionStructure/collectionStructure";
+import BackToTopLink from "../../backToTopLink/backToTopLink";
 import CollectionMetadata, {
   CollectionMetadataProps,
 } from "../../collectionMetadata/collectionMetadata";
@@ -245,23 +246,7 @@ const CollectionPage = ({
                     flexDir: "column-reverse",
                   }}
                 >
-                  {searchResults.results?.length > 0 && (
-                    <Link
-                      minWidth="100px"
-                      isUnderlined={false}
-                      hasVisitedState={false}
-                      gap="xxs"
-                      type="action"
-                      href="#"
-                    >
-                      Back to top{"  "}
-                      <Icon
-                        name="arrow"
-                        iconRotation="rotate180"
-                        size="xsmall"
-                      />
-                    </Link>
-                  )}
+                  {searchResults.results?.length > 0 && <BackToTopLink />}
                   <Pagination
                     id="pagination-id"
                     initialPage={1}
