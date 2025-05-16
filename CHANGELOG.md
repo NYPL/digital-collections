@@ -7,11 +7,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
-## [0.4.0] 2025-05-15
+## [0.4.1] 2025-05-16
 
 ### Updated
 
 - HOT FIX: updated search results to use full title instead of just highlights
+
+## [0.4.0] 2025-05-15
 
 ### Fixed
 
