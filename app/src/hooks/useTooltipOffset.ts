@@ -21,7 +21,8 @@ export function useTooltipOffset(cardRef) {
       const slightlyMoreHeight = 1.01;
       const offset = imageHeight * slightlyMoreHeight;
 
-      setToolTipOffset([0, -offset]);
+      console.log(offset);
+      setToolTipOffset([0, -offset + 130]);
     }
   };
   useEffect(() => {
