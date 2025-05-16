@@ -7,8 +7,8 @@ import {
   filterStringToCollectionApiFilterString,
   getCollectionFilterFromUUID,
   getHighestRankedHighlight,
-  getTitleWithHighlights,
   replaceEmWithMark,
+  highlightTitleWords,
 } from "./utils";
 import { AvailableFilterOption } from "../types/AvailableFilterType";
 
@@ -361,17 +361,24 @@ describe("replaceEmWithMark", () => {
   });
 });
 
-describe("getTitleWithHighlights", () => {
+describe("highlightTitleWords", () => {
   it("returns marked-up highlight if title field exists", () => {
     const highlights = [{ field: "Title", text: "The <em>Great</em> Gatsby" }];
     const title = "The Great Gatsby";
-    const result = getTitleWithHighlights(highlights, title);
+    const result = highlightTitleWords(title, highlights);
     expect(result).toBe("The <mark>Great</mark> Gatsby");
   });
 
   it("returns original title if no title highlight exists", () => {
     const highlights = [{ field: "Topic", text: "Not a title" }];
     const title = "Original Title";
-    expect(getTitleWithHighlights(highlights, title)).toBe(title);
+    expect(highlightTitleWords(title, highlights)).toBe(title);
+  });
+
+  it("uses full title string, not only words from the highlight field", () => {
+    const highlights = [{ field: "Title", text: "The <em>Great</em> Gatsby" }];
+    const title = "The Great Gatsby, 1800, 1900";
+    const result = highlightTitleWords(title, highlights);
+    expect(result).toBe("The <mark>Great</mark> Gatsby, 1800, 1900");
   });
 });
