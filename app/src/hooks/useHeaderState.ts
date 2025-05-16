@@ -4,7 +4,7 @@ function useHeaderState() {
   const [scrollDirection, setScrollDirection] = useState<"up" | "down" | null>(
     "up"
   );
-  const [headerHeight, setHeaderHeight] = useState<number>(150);
+  const [headerHeight, setHeaderHeight] = useState<number>(151);
   const [isFocused, setIsFocused] = useState<boolean>(false);
   const headerRef = useRef<HTMLDivElement | null>(null);
 
