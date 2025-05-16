@@ -11,10 +11,22 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Added collection structure component (DR-3545)
 
+## [0.4.1] 2025-05-16
+
+### Updated
+
+- HOT FIX: updated search results to use full title instead of just highlights
+
+## [0.4.0] 2025-05-15
+
 ### Fixed
 
 - Fixed filters to be encoded as URI components (DR-3564)
 - Fixed dropdown filters to only display selection (DR-3598)
+
+### Added
+
+- Logged 404 path to New Relic (DR-3550)
 
 ## [0.3.6] 2025-04-21
 
@@ -29,7 +41,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Added search query redirects (DR-3529)
 - Added collection slug to uuid redirects (DR-3538)
 - Connected search page to API (DR-3416)
-- Log path in notFoundPage.tsx to New Relic. (DR-3550)
 
 ## [0.3.5] 2025-03-27
 
