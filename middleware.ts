@@ -1,4 +1,5 @@
 import collectionSlugToUuidMapping from "@/src/data/collectionSlugUuidMapping";
+import { divisionSlugMapping } from "@/src/data/divisionSlugMapping";
 import { deSlugify } from "@/src/utils/utils";
 import { NextRequest, NextResponse } from "next/server";
 
@@ -64,6 +65,20 @@ export async function middleware(req: NextRequest) {
     }
 
     return NextResponse.redirect(newUrl.toString(), 301);
+  }
+
+  const divisionMatch = pathname.match(/^\/divisions\/([^\/?#]+)/);
+  if (divisionMatch) {
+    const slug = divisionMatch[1];
+    const correctSlug = divisionSlugMapping[slug];
+
+    if (correctSlug && slug !== correctSlug) {
+      const newUrl = new URL(req.nextUrl);
+      newUrl.pathname = `/divisions/${correctSlug}`;
+      return NextResponse.redirect(newUrl.toString(), 301);
+    }
+
+    return NextResponse.next();
   }
 
   const searchParams = url.searchParams;
