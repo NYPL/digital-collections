@@ -22,6 +22,7 @@ import NoResultsFound from "../../results/noResultsFound";
 import SearchCardGridLoading from "../../grids/searchCardGridLoading";
 import BackToTopLink from "../../backToTopLink/backToTopLink";
 import { SearchResultsType } from "@/src/types/SearchResultsType";
+import { useSubcollectionRedirect } from "@/src/hooks/useSubcollectionRedirect";
 
 const SearchPage = ({
   searchResults,
@@ -76,6 +77,8 @@ const SearchPage = ({
     isFirstLoad.current = true;
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [searchResults]);
+
+  useSubcollectionRedirect();
 
   return (
     <Box id="mainContent">

@@ -153,29 +153,15 @@ const SelectFilterComponent = ({
           accordionButtonRef.current?.focus();
           searchManager.setLastFilter(`accordion-button-select-${filter.name}`);
           // Push the current filter selection to URL.
-          if (filter.name === "collection") {
-            const [collectionTitle, collectionUuid] =
-              current?.name!.split("||") ?? [];
-            updateURL(
-              searchManager.handleAddFilter([
-                {
-                  filter: filter.name,
-                  value: `${encodeURIComponent(
-                    collectionTitle
-                  )}||${encodeURIComponent(collectionUuid)}`,
-                },
-              ])
-            );
-          } else {
-            updateURL(
-              searchManager.handleAddFilter([
-                {
-                  filter: filter.name,
-                  value: current?.name!,
-                },
-              ])
-            );
-          }
+          updateURL(
+            searchManager.handleAddFilter([
+              {
+                filter: filter.name,
+                value: current?.name!,
+              },
+            ])
+          );
+
           setUserClickedOutside(true);
         }}
       >
