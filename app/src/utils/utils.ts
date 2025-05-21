@@ -178,9 +178,8 @@ export const filterStringToCollectionApiFilterString = (filters: string) => {
         }
         if (name === "subcollection" || name === "collection") {
           return `${name}=${value}`;
-        } else {
-          return `${encodeURIComponent(name)}=${encodeURIComponent(value)}`;
         }
+        return `${encodeURIComponent(name)}=${encodeURIComponent(value)}`;
       })
       .filter(Boolean);
 
@@ -223,12 +222,48 @@ export const getHighestRankedHighlight = (highlights: Highlight[]) => {
   return null;
 };
 
+export function highlightTitleWords(title: string, highlights): string {
+  const titleHighlight = highlights.find(
+    (highlight) => highlight.field === "Title"
+  )?.text;
+
+  if (!titleHighlight || titleHighlight.length === 0) {
+    return title;
+  }
+
+  const emWords = new Set<string>();
+  const matches = [...titleHighlight.matchAll(/<em>(.*?)<\/em>/g)];
+  matches.forEach(([, word]) => {
+    word
+      .split(/\s+/)
+      .map((w) => w.replace(/[.,!?;:'"()[\]{}]/g, "").toLowerCase())
+      .forEach((w) => {
+        if (w) emWords.add(w);
+      });
+  });
+
+  return title
+    .split(/\b/)
+    .map((word) => {
+      const clean = word.replace(/[.,!?;:'"()]/g, "").toLowerCase();
+      if (emWords.has(clean)) {
+        return `<mark>${word}</mark>`;
+      }
+      return word;
+    })
+    .join("");
+}
+
+/* Helper for highlighting search result title given that
+   full title appears in the highlight field. 
+   
 export const getTitleWithHighlights = (highlights, title) => {
   const titleHighlight = highlights.find(
     (highlight) => highlight.field === "Title"
   );
   return titleHighlight ? replaceEmWithMark(titleHighlight.text) : title;
 };
+*/
 
 export const deSlugify = (slug: string): string => {
   return slug.replace(/-/g, " ").replace(/\b\w/g, (c) => c.toUpperCase());

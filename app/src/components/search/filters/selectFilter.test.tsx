@@ -1,4 +1,4 @@
-import { render, screen, fireEvent, waitFor } from "@testing-library/react";
+import { render, screen, fireEvent } from "@testing-library/react";
 import SelectFilter from "./selectFilter";
 import { GeneralSearchManager } from "@/src/utils/searchManager";
 import {
@@ -35,6 +35,7 @@ jest.mock("next/navigation", () => ({
 let mockManager = new GeneralSearchManager({
   initialPage: 1,
   initialSort: DEFAULT_SEARCH_SORT,
+  defaultSort: DEFAULT_SEARCH_SORT,
   initialFilters: [],
   initialKeywords: DEFAULT_SEARCH_TERM,
   lastFilterRef: { current: null },
