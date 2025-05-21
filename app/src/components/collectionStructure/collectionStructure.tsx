@@ -200,6 +200,7 @@ const CollectionStructure = ({
     (filter) => filter.filter === "subcollection"
   );
   const targetUuid = subCollectionFilter?.value?.split("||")[1];
+  const [toggledUuid, setToggledUuid] = useState<string | null>(null);
 
   const buildTreeWithPathToUuid = async (
     parentUuid: string,
@@ -362,14 +363,23 @@ const CollectionStructure = ({
     );
   }
 
-  const handleToggle = (uuid: string) => {
-    toggleItemAndChildren({
-      uuid,
-      tree,
-      setTree,
-      searchManager,
-      updateURL,
-    });
+  const handleToggle = async (uuid: string) => {
+    setToggledUuid(uuid);
+    try {
+      await toggleItemAndChildren({
+        uuid,
+        tree,
+        setTree,
+        searchManager,
+        updateURL,
+      });
+    } catch (error) {
+      console.error("Toggle failed:", error);
+    } finally {
+      setTimeout(() => {
+        setToggledUuid(null);
+      }, 300);
+    }
   };
 
   // If no subcontainers, don't display collection structure
@@ -400,6 +410,7 @@ const CollectionStructure = ({
             items={tree}
             toggle={handleToggle}
             targetUuid={targetUuid!}
+            toggledUuid={toggledUuid!}
           />
         </ul>
       </Box>
