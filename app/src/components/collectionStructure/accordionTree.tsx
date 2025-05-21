@@ -53,16 +53,25 @@ const AccordionTree = ({
   items,
   toggle,
   targetUuid,
+  toggledUuid,
 }: {
   items: OpenStateItem[];
   toggle: (uuid: string) => void;
   targetUuid: string;
+  toggledUuid: string;
 }) => {
   return (
     <>
       {items.map((item) => (
         <li key={item.uuid}>
-          <Box>
+          <Box
+            style={{
+              opacity: toggledUuid && toggledUuid !== item.uuid ? 0.5 : 1,
+              pointerEvents:
+                toggledUuid && toggledUuid !== item.uuid ? "none" : "unset",
+              transition: "opacity 0.4s ease, pointer-events 0.4s ease",
+            }}
+          >
             <Button
               _focus={{
                 outline: "none !important",
@@ -121,6 +130,7 @@ const AccordionTree = ({
                     targetUuid={targetUuid}
                     items={item.children}
                     toggle={toggle}
+                    toggledUuid={toggledUuid}
                   />
                 </ul>
               </Collapse>
