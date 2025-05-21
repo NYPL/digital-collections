@@ -176,9 +176,6 @@ export const filterStringToCollectionApiFilterString = (filters: string) => {
         if (!isValidFilter(name)) {
           return null;
         }
-        if (name === "subcollection" || name === "collection") {
-          return `${name}=${value}`;
-        }
         return `${encodeURIComponent(name)}=${encodeURIComponent(value)}`;
       })
       .filter(Boolean);

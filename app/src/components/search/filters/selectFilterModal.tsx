@@ -25,7 +25,6 @@ import {
   AvailableFilterOption,
 } from "@/src/types/AvailableFilterType";
 import { capitalize } from "@/src/utils/utils";
-import { useSearchContext } from "@/src/context/SearchProvider";
 
 type SelectFilterModalProps = {
   filter: AvailableFilter;
@@ -290,29 +289,14 @@ const SelectFilterModal = forwardRef<HTMLButtonElement, SelectFilterModalProps>(
                     searchManager.setLastFilter(
                       `accordion-button-select-${filter.name}`
                     );
-                    if (filter.name === "collection") {
-                      const [collectionTitle, collectionUuid] =
-                        modalCurrent?.name!.split("||") ?? [];
-                      updateURL(
-                        searchManager.handleAddFilter([
-                          {
-                            filter: filter.name,
-                            value: `${encodeURIComponent(
-                              collectionTitle
-                            )}||${encodeURIComponent(collectionUuid)}`,
-                          },
-                        ])
-                      );
-                    } else {
-                      updateURL(
-                        searchManager.handleAddFilter([
-                          {
-                            filter: filter.name,
-                            value: modalCurrent?.name!,
-                          },
-                        ])
-                      );
-                    }
+                    updateURL(
+                      searchManager.handleAddFilter([
+                        {
+                          filter: filter.name,
+                          value: modalCurrent?.name!,
+                        },
+                      ])
+                    );
                     setModalCurrent(current);
                   }}
                 >

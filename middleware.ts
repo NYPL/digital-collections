@@ -16,27 +16,7 @@ const filterMap = {
   divisionFullname_mtxt_s: "division",
 };
 
-async function getCollectionTitle(uuid): Promise<string> {
-  try {
-    const response = await fetch(
-      `${process.env.COLLECTIONS_API_URL}/collections/${uuid}}`,
-      {
-        method: "GET",
-        headers: {
-          "x-nypl-collections-api-key": `${process.env.COLLECTIONS_API_AUTH_TOKEN}`,
-          "Cache-Control": "no-cache",
-        },
-      }
-    );
-    const collectionData = await response.json();
-    return `${collectionData.title}||${uuid}`;
-  } catch (error) {
-    console.error("Error fetching root collection:", error);
-    return "";
-  }
-}
-
-export async function middleware(req: NextRequest) {
+export function middleware(req: NextRequest) {
   const url = req.nextUrl;
   const pathname = url.pathname;
 
@@ -149,7 +129,6 @@ export async function middleware(req: NextRequest) {
         filterValue = "publicDomain";
       } else if (filterKey === "root-collection") {
         filterKey = "collection";
-        filterValue = await getCollectionTitle(filterValue);
       } else if (filterMap[filterKey]) {
         filterKey = filterMap[filterKey];
       }
