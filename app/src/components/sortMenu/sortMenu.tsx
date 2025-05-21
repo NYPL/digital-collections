@@ -6,6 +6,7 @@ type SortMenuProps = {
   searchManager: SearchManager;
   options: Record<string, string>;
   setFiltersExpanded?: React.Dispatch<React.SetStateAction<boolean>>;
+  sort: string;
 };
 
 const SortMenu = ({
@@ -13,13 +14,15 @@ const SortMenu = ({
   setFiltersExpanded,
   searchManager,
   options,
+  sort,
 }: SortMenuProps) => {
   return (
     <Menu
+      key={sort}
       id="sort-menu"
       showLabel
-      selectedItem={searchManager.sort}
-      labelText={`Sort by: ${options[searchManager.sort]}`}
+      selectedItem={sort}
+      labelText={`Sort by: ${options[sort]}`}
       listItemsData={Object.entries(options).map(([id, label]) => ({
         id,
         label,

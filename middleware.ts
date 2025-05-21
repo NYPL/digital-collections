@@ -1,4 +1,5 @@
 import collectionSlugToUuidMapping from "@/src/data/collectionSlugUuidMapping";
+import { divisionSlugMapping } from "@/src/data/divisionSlugMapping";
 import { deSlugify } from "@/src/utils/utils";
 import { NextRequest, NextResponse } from "next/server";
 
@@ -9,8 +10,10 @@ const filterMap = {
   publisher_mtxt_s: "publisher",
   namePart_mtxt_s: "name",
   topic_mtxt_s: "topic",
+  geographic_mtxt_s: "topic",
   languageTerm_mtxt_s: "language",
   form_mtxt_s: "form",
+  divisionFullname_mtxt_s: "division",
 };
 
 async function getCollectionTitle(uuid): Promise<string> {
@@ -62,6 +65,20 @@ export async function middleware(req: NextRequest) {
     }
 
     return NextResponse.redirect(newUrl.toString(), 301);
+  }
+
+  const divisionMatch = pathname.match(/^\/divisions\/([^\/?#]+)/);
+  if (divisionMatch) {
+    const slug = divisionMatch[1];
+    const correctSlug = divisionSlugMapping[slug];
+
+    if (correctSlug && slug !== correctSlug) {
+      const newUrl = new URL(req.nextUrl);
+      newUrl.pathname = `/divisions/${correctSlug}`;
+      return NextResponse.redirect(newUrl.toString(), 301);
+    }
+
+    return NextResponse.next();
   }
 
   const searchParams = url.searchParams;

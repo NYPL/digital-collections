@@ -15,10 +15,9 @@ import { MobileSearchBanner } from "../../mobileSearchBanner/mobileSearchBanner"
 import { displayResults, totalNumPages } from "@/src/utils/utils";
 import {
   CARDS_PER_PAGE,
+  COLLECTION_LANDING_SORT_LABELS,
   DEFAULT_PAGE_NUM,
-  DEFAULT_SEARCH_SORT,
   DEFAULT_SEARCH_TERM,
-  SEARCH_SORT_LABELS,
 } from "@/src/config/constants";
 import SearchCardsGrid from "../../grids/searchCardsGrid";
 import {
@@ -31,6 +30,7 @@ import ActiveFilters from "../../search/filters/activeFilters";
 import NoResultsFound from "../../results/noResultsFound";
 import SearchCardGridLoading from "../../grids/searchCardGridLoading";
 import CollectionStructure from "../../collectionStructure/collectionStructure";
+import BackToTopLink from "../../backToTopLink/backToTopLink";
 import CollectionMetadata, {
   CollectionMetadataProps,
 } from "../../collectionMetadata/collectionMetadata";
@@ -57,7 +57,8 @@ const CollectionPage = ({
 
   const collectionSearchManager = new GeneralSearchManager({
     initialPage: Number(searchParams?.page) || DEFAULT_PAGE_NUM,
-    initialSort: searchParams?.sort || DEFAULT_SEARCH_SORT,
+    initialSort: searchParams.sort || "sequence",
+    defaultSort: "sequence",
     initialFilters: stringToFilter(searchParams?.filters),
     initialKeywords: searchParams?.q || DEFAULT_SEARCH_TERM,
     initialAvailableFilters: searchParams?.availableFilters,
@@ -192,6 +193,7 @@ const CollectionPage = ({
                     size="heading5"
                     ref={headingRef}
                     aria-live="polite"
+                    aria-atomic="true"
                     // @ts-ignore
                     tabIndex="-1"
                     margin="0"
@@ -201,8 +203,9 @@ const CollectionPage = ({
                     collectionSearchManager.page
                   )} results`}</Heading>
                   <SortMenu
-                    options={SEARCH_SORT_LABELS}
+                    options={COLLECTION_LANDING_SORT_LABELS}
                     searchManager={collectionSearchManager}
+                    sort={searchResults.sort}
                     updateURL={updateURL}
                     setFiltersExpanded={setFiltersExpanded}
                   />
@@ -246,23 +249,7 @@ const CollectionPage = ({
                     flexDir: "column-reverse",
                   }}
                 >
-                  {searchResults.results?.length > 0 && (
-                    <Link
-                      minWidth="100px"
-                      isUnderlined={false}
-                      hasVisitedState={false}
-                      gap="xxs"
-                      type="action"
-                      href="#"
-                    >
-                      Back to top{"  "}
-                      <Icon
-                        name="arrow"
-                        iconRotation="rotate180"
-                        size="xsmall"
-                      />
-                    </Link>
-                  )}
+                  {searchResults.results?.length > 0 && <BackToTopLink />}
                   <Pagination
                     id="pagination-id"
                     initialPage={1}
