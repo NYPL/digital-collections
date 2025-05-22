@@ -12,10 +12,7 @@ import React, { useEffect, useRef, useState } from "react";
 import SelectFilterModal from "./selectFilterModal";
 import FilterAccordion from "./filterAccordion";
 import { usePathname, useRouter } from "next/navigation";
-import {
-  availableFilterDisplayName,
-  SearchManager,
-} from "@/src/utils/searchManager";
+import { filterDisplayName, SearchManager } from "@/src/utils/searchManager";
 import {
   AvailableFilter,
   AvailableFilterOption,
@@ -34,7 +31,7 @@ export const availableFilterOptions = (
   const truncationLimit = 80;
 
   return options.map((option, index) => {
-    const displayName = availableFilterDisplayName(option.name, filterName);
+    const displayName = filterDisplayName(option.name, filterName);
     const isTruncated = option.name.length > truncationLimit;
 
     const label = (
@@ -69,6 +66,7 @@ const SelectFilterComponent = ({
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   // Sets selected to filter's current URL value on mount.
+  //EMMA
   let selected = filter
     ? filter.options.find((option) => !!option.selected) || null
     : null;
@@ -153,14 +151,27 @@ const SelectFilterComponent = ({
           accordionButtonRef.current?.focus();
           searchManager.setLastFilter(`accordion-button-select-${filter.name}`);
           // Push the current filter selection to URL.
-          updateURL(
-            searchManager.handleAddFilter([
-              {
-                filter: filter.name,
-                value: current?.name!,
-              },
-            ])
-          );
+          if (filter.name === "collection") {
+            const [collectionTitle, collectionUuid] =
+              current?.name!.split("||") ?? [];
+            updateURL(
+              searchManager.handleAddFilter([
+                {
+                  filter: filter.name,
+                  value: collectionUuid,
+                },
+              ])
+            );
+          } else {
+            updateURL(
+              searchManager.handleAddFilter([
+                {
+                  filter: filter.name,
+                  value: current?.name!,
+                },
+              ])
+            );
+          }
 
           setUserClickedOutside(true);
         }}

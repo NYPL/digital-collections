@@ -153,7 +153,10 @@ const CollectionPage = ({
           paddingRight: { base: "m", xl: "s" },
         }}
       >
-        <ActiveFilters searchManager={collectionSearchManager} />
+        <ActiveFilters
+          searchManager={collectionSearchManager}
+          allFilters={searchResults.availableFilters}
+        />
         <CollectionMetadata data={new CollectionModel(collectionData)} />
         <Flex
           gap="xxl"

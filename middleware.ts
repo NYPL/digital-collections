@@ -14,6 +14,7 @@ const filterMap = {
   languageTerm_mtxt_s: "language",
   form_mtxt_s: "form",
   divisionFullname_mtxt_s: "division",
+  "root-collection": "collection",
 };
 
 export function middleware(req: NextRequest) {
@@ -127,8 +128,9 @@ export function middleware(req: NextRequest) {
       let filterValue = decodeURIComponent(value);
       if (filterKey === "rights" && filterValue === "pd") {
         filterValue = "publicDomain";
-      } else if (filterKey === "root-collection") {
-        filterKey = "collection";
+      } else if (filterKey === "title_uuid_s") {
+        filterKey = "subcollection";
+        filterValue = filterValue.split("||")[1];
       } else if (filterMap[filterKey]) {
         filterKey = filterMap[filterKey];
       }
