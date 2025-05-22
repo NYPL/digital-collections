@@ -37,7 +37,7 @@ export type CollectionMetadataProps = {
     },
   ];
   place?: string;
-  shelfLocator?: string;
+  shelfLocators?: string[];
   tableOfContents?: string[];
   topics?: string[];
   typeOfResource?: string[];
@@ -217,7 +217,7 @@ const CollectionMetadata = ({ data }: { data: CollectionMetadataProps }) => {
     languages,
     names,
     place,
-    shelfLocator,
+    shelfLocators,
     tableOfContents,
     topics,
     typeOfResource,
@@ -316,9 +316,24 @@ const CollectionMetadata = ({ data }: { data: CollectionMetadataProps }) => {
               {divisionTitle}
             </Link>
           </Text>
-          {shelfLocator && (
-            <Text marginBottom="0">Shelf locator: {shelfLocator}</Text>
-          )}
+          {shelfLocators &&
+            shelfLocators.length > 0 &&
+            (shelfLocators.length > 1 ? (
+              <>
+                <Text as="span" marginBottom="0">
+                  Shelf locators:{" "}
+                </Text>
+                {shelfLocators.map((locator, index) => (
+                  <Text key={index} marginBottom="0">
+                    {locator}
+                  </Text>
+                ))}
+              </>
+            ) : (
+              <Text marginBottom="0">
+                {`Shelf locator: ${shelfLocators[0]}`}
+              </Text>
+            ))}
         </Box>
       )}
 
