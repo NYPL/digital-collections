@@ -15,12 +15,14 @@ export function useSubcollectionRedirect() {
     if (!rootsParamMatch) return;
 
     const rootsPath = decodeURIComponent(rootsParamMatch[1]);
-    const uuidMatches = [...rootsPath.matchAll(/:\s*([0-9a-fA-F-]{36})/g)];
 
+    // Match both plain or prefixed UUIDs (e.g. 5:uuid)
+    const uuidMatches = [
+      ...rootsPath.matchAll(/(?:^|\/)(?:[^:/]+:)?([0-9a-fA-F-]{36})/g),
+    ];
     const uuids = uuidMatches.map((m) => m[1]);
 
     const lastUuid = uuids[uuids.length - 1];
-
     if (!lastUuid) return;
 
     const fetchAndRedirect = async () => {
