@@ -61,7 +61,7 @@ abstract class BaseSearchManager implements SearchManager {
       (config.initialFilters || []).map((filter) => JSON.stringify(filter))
     );
     this.currentKeywords = config.initialKeywords;
-    this.currentAvailableFilters = transformToAvailableFilters(
+    this.currentAvailableFilters = transformToDisplayAvailableFilters(
       config.initialAvailableFilters ?? {}
     );
     this.lastFilterRef = config.lastFilterRef!;
@@ -274,7 +274,9 @@ export const filterToString = (filters: Filter[]): string => {
     .join("");
 };
 
-export const transformToAvailableFilters = (
+/** Removing filters that search supports, but does not display as a `SelectFilter`.
+ * Also formats the options into a displayable object. */
+export const transformToDisplayAvailableFilters = (
   availableFilters: Record<string, AvailableFilterOption[]>
 ): AvailableFilter[] => {
   return Object.entries(availableFilters)
@@ -287,13 +289,10 @@ export const transformToAvailableFilters = (
     }));
 };
 
-export const availableFilterDisplayName = (
-  name: string,
-  filterName: string
-) => {
+export const filterDisplayName = (filterValue: string, filterName: string) => {
   return filterName === "collection" || filterName === "subcollection"
-    ? decodeURIComponent(name.split("||")[0])
-    : capitalize(name);
+    ? decodeURIComponent(filterValue.split("||")[0])
+    : capitalize(filterValue);
 };
 
 export const isValidFilter = (param: string) => {

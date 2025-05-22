@@ -12,10 +12,7 @@ import React, { useEffect, useRef, useState } from "react";
 import SelectFilterModal from "./selectFilterModal";
 import FilterAccordion from "./filterAccordion";
 import { usePathname, useRouter } from "next/navigation";
-import {
-  availableFilterDisplayName,
-  SearchManager,
-} from "@/src/utils/searchManager";
+import { filterDisplayName, SearchManager } from "@/src/utils/searchManager";
 import {
   AvailableFilter,
   AvailableFilterOption,
@@ -34,7 +31,7 @@ export const availableFilterOptions = (
   const truncationLimit = 80;
 
   return options.map((option, index) => {
-    const displayName = availableFilterDisplayName(option.name, filterName);
+    const displayName = filterDisplayName(option.name, filterName);
     const isTruncated = option.name.length > truncationLimit;
 
     const label = (
@@ -160,9 +157,7 @@ const SelectFilterComponent = ({
               searchManager.handleAddFilter([
                 {
                   filter: filter.name,
-                  value: `${encodeURIComponent(
-                    collectionTitle
-                  )}||${encodeURIComponent(collectionUuid)}`,
+                  value: collectionUuid,
                 },
               ])
             );
@@ -176,6 +171,7 @@ const SelectFilterComponent = ({
               ])
             );
           }
+
           setUserClickedOutside(true);
         }}
       >
