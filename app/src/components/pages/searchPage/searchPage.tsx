@@ -160,7 +160,10 @@ const SearchPage = ({
           marginTop: searchResults.results?.length > 0 ? "0" : "m",
         }}
       >
-        <ActiveFilters searchManager={searchManager} />
+        <ActiveFilters
+          searchManager={searchManager}
+          allFilters={searchResults.availableFilters}
+        />
         <Flex
           sx={{
             [`@media screen and (min-width: ${headerBreakpoints.lgMobile}px)`]:

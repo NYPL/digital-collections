@@ -287,6 +287,21 @@ it("transforms root-collection", () => {
   expect(response).toBe("redirect response");
 });
 
+it("transforms title_uuid_s to subcollection uuid only format", () => {
+  const requestWithSubCollection = {
+    nextUrl: new URL(
+      "http://localhost/search/index?filters%5Btitle_uuid_s%5D%5B%5D=Atlas%2052.%20Vol.%2014,%201901.%7C%7C0d11d7c0-c5fc-012f-82dd-58d385a7bc34&keywords=&layout=false#/?scroll=0"
+    ),
+  } as NextRequest;
+  const response = middleware(requestWithSubCollection);
+
+  expect(NextResponse.redirect).toHaveBeenCalledWith(
+    "http://localhost/search/index?filters=%5Bsubcollection%3D0d11d7c0-c5fc-012f-82dd-58d385a7bc34%5D",
+    301
+  );
+  expect(response).toBe("redirect response");
+});
+
 it("transforms many params", () => {
   const request = {
     nextUrl: new URL(

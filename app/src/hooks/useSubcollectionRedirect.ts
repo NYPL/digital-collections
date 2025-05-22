@@ -16,7 +16,6 @@ export function useSubcollectionRedirect() {
 
     const rootsPath = decodeURIComponent(rootsParamMatch[1]);
     const uuidMatches = [...rootsPath.matchAll(/:\s*([0-9a-fA-F-]{36})/g)];
-    console.log(uuidMatches);
 
     const uuids = uuidMatches.map((m) => m[1]);
 
