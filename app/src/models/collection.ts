@@ -25,7 +25,7 @@ export class CollectionModel {
     },
   ];
   place?: string;
-  shelfLocator?: string;
+  shelfLocators?: string[];
   tableOfContents?: string[];
   topics?: string[];
   typeOfResource?: string[];
@@ -54,7 +54,7 @@ export class CollectionModel {
     this.languages = data.languages;
     this.names = data.names;
     this.place = data.place;
-    this.shelfLocator = data.shelfLocator;
+    this.shelfLocators = data.shelfLocators;
     this.tableOfContents = data.tableOfContents;
     this.topics = data.topics;
     this.typeOfResource = data.typeOfResource;
