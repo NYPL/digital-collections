@@ -74,11 +74,8 @@ const applyNodeFilter = async (
 ) => {
   const filter = {
     filter: "subcollection",
-    value: `${encodeURIComponent(node.title)}||${encodeURIComponent(
-      node.uuid
-    )}`,
+    value: node.uuid,
   };
-
   // Clear search query
   searchManager.handleKeywordChange("");
   searchManager.handleSearchSubmit();
@@ -95,9 +92,7 @@ const applyNodeFilter = async (
       ? searchManager.handleAddFilter([
           {
             filter: "subcollection",
-            value: `${encodeURIComponent(
-              parentNode.title
-            )}||${encodeURIComponent(parentNode.uuid)}`,
+            value: parentNode.uuid,
           },
         ])
       : searchManager.handleRemoveFilter([filter])
@@ -199,8 +194,8 @@ const CollectionStructure = ({
   const subCollectionFilter = searchManager.filters.find(
     (filter) => filter.filter === "subcollection"
   );
-  const targetUuid = subCollectionFilter?.value?.split("||")[1];
   const [toggledUuid, setToggledUuid] = useState<string | null>(null);
+  const targetUuid = subCollectionFilter?.value;
 
   const buildTreeWithPathToUuid = async (
     parentUuid: string,

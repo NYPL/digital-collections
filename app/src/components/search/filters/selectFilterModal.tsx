@@ -25,7 +25,6 @@ import {
   AvailableFilterOption,
 } from "@/src/types/AvailableFilterType";
 import { capitalize } from "@/src/utils/utils";
-import { useSearchContext } from "@/src/context/SearchProvider";
 
 type SelectFilterModalProps = {
   filter: AvailableFilter;
@@ -297,9 +296,7 @@ const SelectFilterModal = forwardRef<HTMLButtonElement, SelectFilterModalProps>(
                         searchManager.handleAddFilter([
                           {
                             filter: filter.name,
-                            value: `${encodeURIComponent(
-                              collectionTitle
-                            )}||${encodeURIComponent(collectionUuid)}`,
+                            value: collectionUuid,
                           },
                         ])
                       );
