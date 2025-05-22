@@ -262,6 +262,12 @@ export const getTitleWithHighlights = (highlights, title) => {
 };
 */
 
+// DC uuids are not uuid v1-5 compliant– they're v0 (kind of?), which this regex tests
+const dcUuidRegex = /^[\da-f]{8}-([\da-f]{4}-){3}[\da-f]{12}$/i;
+export const isDCUuid = (identifier) => {
+  return dcUuidRegex.test(identifier);
+};
+
 export const deSlugify = (slug: string): string => {
   return slug.replace(/-/g, " ").replace(/\b\w/g, (c) => c.toUpperCase());
 };

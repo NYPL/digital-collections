@@ -1,6 +1,6 @@
 import collectionSlugToUuidMapping from "@/src/data/collectionSlugUuidMapping";
 import { divisionSlugMapping } from "@/src/data/divisionSlugMapping";
-import { deSlugify } from "@/src/utils/utils";
+import { deSlugify, isDCUuid } from "@/src/utils/utils";
 import { NextRequest, NextResponse } from "next/server";
 
 const filterMap = {
@@ -27,10 +27,7 @@ export function middleware(req: NextRequest) {
     if (identifier === "lane") {
       return NextResponse.next();
     }
-    // DC uuids are not uuid v1-5 compliant– they're v0 (kind of?), which this regex tests
-    const dcUuidRegex = /^[\da-f]{8}-([\da-f]{4}-){3}[\da-f]{12}$/i;
-    const isDCUuid = dcUuidRegex.test(identifier);
-    if (isDCUuid) {
+    if (isDCUuid(identifier)) {
       return NextResponse.next();
     }
 

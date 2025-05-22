@@ -66,7 +66,6 @@ const SelectFilterComponent = ({
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   // Sets selected to filter's current URL value on mount.
-  //EMMA
   let selected = filter
     ? filter.options.find((option) => !!option.selected) || null
     : null;
