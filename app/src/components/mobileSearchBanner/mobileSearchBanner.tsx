@@ -7,7 +7,7 @@ export const MobileSearchBanner = () => {
       sx={{
         marginBottom: "xs",
         display: "flex",
-        [`@media (min-width: ${headerBreakpoints.lgMobile}px)`]: {
+        [`@media (min-width: ${headerBreakpoints.smTablet}px)`]: {
           display: "none",
         },
       }}

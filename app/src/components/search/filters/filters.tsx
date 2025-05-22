@@ -16,6 +16,7 @@ type FiltersProps = {
   headingText: string;
   searchManager: SearchManager;
   filtersExpanded: boolean;
+  refineHeadingRef;
   setFiltersExpanded: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
@@ -23,6 +24,7 @@ const Filters = ({
   headingText,
   searchManager,
   filtersExpanded,
+  refineHeadingRef,
   setFiltersExpanded,
 }: FiltersProps) => {
   const dateFilterRef = useRef<TextInputRefType | null>(null);
@@ -87,7 +89,16 @@ const Filters = ({
           },
         }}
       >
-        <Heading size="heading4">{headingText}</Heading>
+        <Heading
+          ref={refineHeadingRef}
+          width="fit-content"
+          //@ts-ignore
+          tabIndex="-1"
+          id="refine-search-heading"
+          size="heading4"
+        >
+          {headingText}
+        </Heading>
         {filterContent}
       </Box>
 

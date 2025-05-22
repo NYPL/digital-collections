@@ -6,15 +6,13 @@ import {
   Flex,
   Button,
   Tooltip,
+  Icon,
 } from "@nypl/design-system-react-components";
 import React, { useEffect, useRef, useState } from "react";
 import SelectFilterModal from "./selectFilterModal";
 import FilterAccordion from "./filterAccordion";
 import { usePathname, useRouter } from "next/navigation";
-import {
-  availableFilterDisplayName,
-  SearchManager,
-} from "@/src/utils/searchManager";
+import { filterDisplayName, SearchManager } from "@/src/utils/searchManager";
 import {
   AvailableFilter,
   AvailableFilterOption,
@@ -33,7 +31,7 @@ export const availableFilterOptions = (
   const truncationLimit = 80;
 
   return options.map((option, index) => {
-    const displayName = availableFilterDisplayName(option.name, filterName);
+    const displayName = filterDisplayName(option.name, filterName);
     const isTruncated = option.name.length > truncationLimit;
 
     const label = (
@@ -152,19 +150,60 @@ const SelectFilterComponent = ({
           accordionButtonRef.current?.focus();
           searchManager.setLastFilter(`accordion-button-select-${filter.name}`);
           // Push the current filter selection to URL.
-          updateURL(
-            searchManager.handleAddFilter([
-              {
-                filter: filter.name,
-                value: current?.name!,
-              },
-            ])
-          );
+          if (filter.name === "collection") {
+            const [collectionTitle, collectionUuid] =
+              current?.name!.split("||") ?? [];
+            updateURL(
+              searchManager.handleAddFilter([
+                {
+                  filter: filter.name,
+                  value: collectionUuid,
+                },
+              ])
+            );
+          } else {
+            updateURL(
+              searchManager.handleAddFilter([
+                {
+                  filter: filter.name,
+                  value: current?.name!,
+                },
+              ])
+            );
+          }
+
           setUserClickedOutside(true);
         }}
       >
         Apply
       </Button>
+      {selected && (
+        <Button
+          id="clear-filter"
+          buttonType="secondary"
+          width="100%"
+          marginBottom={sortedOptions.length > 10 ? "xs" : "0"}
+          marginTop="xs"
+          onClick={() => {
+            accordionButtonRef.current?.focus();
+            searchManager.setLastFilter(
+              `accordion-button-select-${filter.name}`
+            );
+            updateURL(
+              searchManager.handleRemoveFilter([
+                {
+                  filter: filter.name,
+                  value: "any",
+                },
+              ])
+            );
+
+            setUserClickedOutside(true);
+          }}
+        >
+          Clear filter
+        </Button>
+      )}
       {sortedOptions.length > 10 && (
         <SelectFilterModal
           filter={filter}
@@ -201,9 +240,11 @@ const SelectFilterComponent = ({
         accordionItem={{
           buttonInteractionRef: accordionButtonRef,
           label: (
-            <Box noOfLines={1}>{`${capitalize(filter.name)}${
-              selected ? `: ${capitalize(selected.name)}` : ``
-            }`}</Box>
+            <Box noOfLines={1}>
+              {`${capitalize(filter.name)}${
+                selected ? `: ${capitalize(selected.name)}` : ``
+              }`}
+            </Box>
           ),
           panel: accordionPanel,
           ariaLabel: `Select ${filter.name}`,

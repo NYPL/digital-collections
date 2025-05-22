@@ -1,5 +1,6 @@
 import collectionSlugToUuidMapping from "@/src/data/collectionSlugUuidMapping";
-import { deSlugify } from "@/src/utils/utils";
+import { divisionSlugMapping } from "@/src/data/divisionSlugMapping";
+import { deSlugify, isDCUuid } from "@/src/utils/utils";
 import { NextRequest, NextResponse } from "next/server";
 
 const filterMap = {
@@ -12,29 +13,11 @@ const filterMap = {
   geographic_mtxt_s: "topic",
   languageTerm_mtxt_s: "language",
   form_mtxt_s: "form",
+  divisionFullname_mtxt_s: "division",
+  "root-collection": "collection",
 };
 
-async function getCollectionTitle(uuid): Promise<string> {
-  try {
-    const response = await fetch(
-      `${process.env.COLLECTIONS_API_URL}/collections/${uuid}}`,
-      {
-        method: "GET",
-        headers: {
-          "x-nypl-collections-api-key": `${process.env.COLLECTIONS_API_AUTH_TOKEN}`,
-          "Cache-Control": "no-cache",
-        },
-      }
-    );
-    const collectionData = await response.json();
-    return `${collectionData.title}||${uuid}`;
-  } catch (error) {
-    console.error("Error fetching root collection:", error);
-    return "";
-  }
-}
-
-export async function middleware(req: NextRequest) {
+export function middleware(req: NextRequest) {
   const url = req.nextUrl;
   const pathname = url.pathname;
 
@@ -44,10 +27,7 @@ export async function middleware(req: NextRequest) {
     if (identifier === "lane") {
       return NextResponse.next();
     }
-    // DC uuids are not uuid v1-5 compliant– they're v0 (kind of?), which this regex tests
-    const dcUuidRegex = /^[\da-f]{8}-([\da-f]{4}-){3}[\da-f]{12}$/i;
-    const isDCUuid = dcUuidRegex.test(identifier);
-    if (isDCUuid) {
+    if (isDCUuid(identifier)) {
       return NextResponse.next();
     }
 
@@ -63,6 +43,20 @@ export async function middleware(req: NextRequest) {
     }
 
     return NextResponse.redirect(newUrl.toString(), 301);
+  }
+
+  const divisionMatch = pathname.match(/^\/divisions\/([^\/?#]+)/);
+  if (divisionMatch) {
+    const slug = divisionMatch[1];
+    const correctSlug = divisionSlugMapping[slug];
+
+    if (correctSlug && slug !== correctSlug) {
+      const newUrl = new URL(req.nextUrl);
+      newUrl.pathname = `/divisions/${correctSlug}`;
+      return NextResponse.redirect(newUrl.toString(), 301);
+    }
+
+    return NextResponse.next();
   }
 
   const searchParams = url.searchParams;
@@ -131,9 +125,9 @@ export async function middleware(req: NextRequest) {
       let filterValue = decodeURIComponent(value);
       if (filterKey === "rights" && filterValue === "pd") {
         filterValue = "publicDomain";
-      } else if (filterKey === "root-collection") {
-        filterKey = "collection";
-        filterValue = await getCollectionTitle(filterValue);
+      } else if (filterKey === "title_uuid_s") {
+        filterKey = "subcollection";
+        filterValue = filterValue.split("||")[1];
       } else if (filterMap[filterKey]) {
         filterKey = filterMap[filterKey];
       }
