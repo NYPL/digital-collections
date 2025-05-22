@@ -2,12 +2,7 @@ import { render } from "@testing-library/react";
 import { axe } from "jest-axe";
 import React from "react";
 import { mockDivisionResponse } from "__tests__/__mocks__/data/repoApi/mockDivisionResponse";
-import {
-  useRouter,
-  useParams,
-  useSearchParams,
-  usePathname,
-} from "next/navigation";
+import { useRouter, useParams, useSearchParams } from "next/navigation";
 import DivisionPage from "@/src/components/pages/divisionPage/divisionPage";
 
 jest.mock("next/navigation", () => ({
