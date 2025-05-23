@@ -237,7 +237,11 @@ export class CollectionsApi {
     );
     let filterURL = filters.length > 0 ? `&${filterString}` : "";
 
-    let apiUrl = `${process.env.COLLECTIONS_API_URL}/search/?q=${keyword}${filterURL}&sort=${sort}&page=${page}&perPage=${perPage}`;
+    let apiUrl = `${
+      process.env.COLLECTIONS_API_URL
+    }/search/?q=${encodeURIComponent(
+      keyword
+    )}${filterURL}&sort=${sort}&page=${page}&perPage=${perPage}`;
 
     const response = await fetchApi({
       apiUrl: apiUrl,

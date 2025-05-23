@@ -5,11 +5,18 @@ type SortMenuProps = {
   updateURL: (queryString: string) => Promise<void>;
   searchManager: SearchManager;
   options: Record<string, string>;
+  setFiltersExpanded?: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
-const SortMenu = ({ updateURL, searchManager, options }: SortMenuProps) => {
+const SortMenu = ({
+  updateURL,
+  setFiltersExpanded,
+  searchManager,
+  options,
+}: SortMenuProps) => {
   return (
     <Menu
+      id="sort-menu"
       showLabel
       selectedItem={searchManager.sort}
       labelText={`Sort by: ${options[searchManager.sort]}`}
@@ -17,6 +24,10 @@ const SortMenu = ({ updateURL, searchManager, options }: SortMenuProps) => {
         id,
         label,
         onClick: () => {
+          if (setFiltersExpanded) {
+            setFiltersExpanded(false);
+          }
+          searchManager.setLastFilter("menu-button-sort-menu");
           updateURL(searchManager.handleSortChange(id));
         },
         type: "action",
