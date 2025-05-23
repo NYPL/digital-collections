@@ -1,4 +1,5 @@
-import { SearchManager } from "@/src/utils/searchManager";
+"use client";
+
 import {
   Heading,
   RadioGroup,
@@ -6,81 +7,96 @@ import {
   Box,
 } from "@nypl/design-system-react-components";
 import { useRouter, usePathname } from "next/navigation";
-import { forwardRef, useState } from "react";
+import { useState } from "react";
 import { ToggleTip } from "../../toggleTip/toggleTip";
+import { useSearchContext } from "@/src/context/SearchProvider";
+import { SearchManager } from "@/src/utils/searchManager";
+
 type RightsFilterProps = {
   searchManager: SearchManager;
 };
 
-const RadioOption = ({ id, text, tooltip }) => (
-  <Box display="flex" alignItems="center">
-    <Radio id={id} value={id} labelText={text} />
-    <ToggleTip toggleTipContent={tooltip} labelText={text} />
-  </Box>
-);
+const RightsFilter = ({ searchManager }: RightsFilterProps) => {
+  const selected =
+    searchManager.filters.find((f) => f.filter === "rights")?.value || null;
+  const [selectedFilter, setSelectedFilter] = useState<string | null>(selected);
 
-const RightsFilter = forwardRef<HTMLHeadingElement, RightsFilterProps>(
-  ({ searchManager }, ref) => {
-    let selected = searchManager.filters.find((f) => f.filter === "rights")
-      ? searchManager.filters.find((f) => f.filter === "rights")?.value || null
-      : null;
-    const [selectedFilter, setSelectedFilter] = useState<string | null>(
-      selected
-    );
+  const { push } = useRouter();
+  const pathname = usePathname();
 
-    const { push } = useRouter();
-    const pathname = usePathname();
-    const updateURL = async (queryString) => {
-      push(`${pathname}?${queryString}`);
-    };
+  const updateURL = async (queryString: string, selectedValue: string) => {
+    searchManager.setLastFilter(selectedValue);
+    push(`${pathname}?${queryString}`);
+  };
 
-    const handleRadioChange = (value: string) => {
-      setSelectedFilter(value);
-      updateURL(searchManager.handleAddFilter([{ filter: "rights", value }]));
-    };
+  const handleRadioChange = (value: string) => {
+    setSelectedFilter(value);
+    const queryString = searchManager.handleAddFilter([
+      { filter: "rights", value },
+    ]);
+    updateURL(queryString, value);
+  };
 
-    return (
-      <>
-        <Heading size="heading6" level="h3">
-          Show only:
-        </Heading>
-        <RadioGroup
-          name="show-only-filters"
-          id="show-only-filters"
-          labelText="Show Only"
-          showLabel={false}
-          marginBottom="s"
-          defaultValue={selectedFilter || ""}
-          onChange={(e) => handleRadioChange(e)}
-          sx={{
-            "> div > div": {
-              [`@media screen and (min-width: 600px)`]: {
-                flexDirection: "row",
-              },
-              flexDirection: "column",
+  return (
+    <>
+      <Heading size="heading6" level="h3">
+        Show only:
+      </Heading>
+      <RadioGroup
+        name="show-only-filters"
+        id="show-only-filters"
+        labelText="Show Only"
+        showLabel={false}
+        marginBottom="s"
+        defaultValue={selectedFilter || ""}
+        onChange={(e) => handleRadioChange(e)}
+        sx={{
+          "> div > div": {
+            [`@media screen and (min-width: 600px)`]: {
+              flexDirection: "row",
             },
-          }}
-        >
-          <RadioOption
+            flexDirection: "column",
+          },
+        }}
+      >
+        <Box display="flex" alignItems="center">
+          <Radio
             id="publicDomain"
-            text="Public domain"
-            tooltip="View materials that are free to download, reuse, and share."
+            value="publicDomain"
+            labelText="Public domain"
           />
-          <RadioOption
-            id="availableOnline"
-            text="Available online"
-            tooltip="View digital materials from anywhere, any time."
+          <ToggleTip
+            toggleTipContent="View materials that are free to download, reuse, and share."
+            labelText="Public domain"
           />
-          <RadioOption
-            id="onSiteMaterial"
-            text="Contains on-site materials"
-            tooltip="View materials accessible only at an NYPL location."
-          />
-        </RadioGroup>
-      </>
-    );
-  }
-);
+        </Box>
 
-RightsFilter.displayName = "RightsFilter";
+        <Box display="flex" alignItems="center">
+          <Radio
+            id="availableOnline"
+            value="availableOnline"
+            labelText="Available online"
+          />
+          <ToggleTip
+            toggleTipContent="View digital materials from anywhere, any time."
+            labelText="Available online"
+          />
+        </Box>
+
+        <Box display="flex" alignItems="center">
+          <Radio
+            id="onSiteMaterial"
+            value="onSiteMaterial"
+            labelText="Contains on-site materials"
+          />
+          <ToggleTip
+            toggleTipContent="View materials accessible only at an NYPL location."
+            labelText="Contains on-site materials"
+          />
+        </Box>
+      </RadioGroup>
+    </>
+  );
+};
+
 export default RightsFilter;

@@ -41,7 +41,7 @@ export const fetchApi = async ({
     apiUrl += queryString;
   }
 
-  console.log("Api url is: ", apiUrl);
+  console.log("apiUrl is: ", apiUrl);
 
   const timeout = 10000;
   console.log("apiUrl is: ", apiUrl);

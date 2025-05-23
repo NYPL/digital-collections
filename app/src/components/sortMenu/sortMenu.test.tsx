@@ -1,7 +1,6 @@
 import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import SortMenu from "./sortMenu";
 import {
-  DEFAULT_FILTERS,
   DEFAULT_SEARCH_SORT,
   DEFAULT_SEARCH_TERM,
 } from "@/src/config/constants";
@@ -22,7 +21,7 @@ describe("SortMenu", () => {
       initialSort: DEFAULT_SEARCH_SORT,
       initialFilters: [],
       initialKeywords: DEFAULT_SEARCH_TERM,
-      initialAvailableFilters: DEFAULT_FILTERS,
+      lastFilterRef: { current: null },
     });
   });
 
@@ -32,6 +31,9 @@ describe("SortMenu", () => {
         updateURL={updateURL}
         searchManager={manager}
         options={options}
+        setFiltersExpanded={() => {
+          console.log("expanded");
+        }}
       />
     );
     expect(screen.getByText("Sort by: Relevance")).toBeInTheDocument();
@@ -43,6 +45,9 @@ describe("SortMenu", () => {
         updateURL={updateURL}
         searchManager={manager}
         options={options}
+        setFiltersExpanded={() => {
+          console.log("expanded");
+        }}
       />
     );
     expect(screen.getByText("Date")).not.toBeVisible();
@@ -59,6 +64,9 @@ describe("SortMenu", () => {
         updateURL={updateURL}
         searchManager={manager}
         options={options}
+        setFiltersExpanded={() => {
+          console.log("expanded");
+        }}
       />
     );
 
