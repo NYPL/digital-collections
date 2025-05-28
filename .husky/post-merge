@@ -1,0 +1,7 @@
+#!/usr/bin/env sh
+. "$(dirname -- "$0")/_/husky.sh"
+
+branch=$(git symbolic-ref --short HEAD)
+if [ "$branch" = "qa" ]; then
+  npm run update-changelog
+fi
