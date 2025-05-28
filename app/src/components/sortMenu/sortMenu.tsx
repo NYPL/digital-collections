@@ -1,4 +1,4 @@
-import { SearchManager } from "@/src/utils/searchManager";
+import { SearchManager } from "@/src/utils/searchManager/searchManager";
 import { Menu } from "@nypl/design-system-react-components";
 
 type SortMenuProps = {

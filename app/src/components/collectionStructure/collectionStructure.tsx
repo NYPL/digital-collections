@@ -5,7 +5,7 @@ import {
   Heading,
   SkeletonLoader,
 } from "@nypl/design-system-react-components";
-import { SearchManager } from "@/src/utils/searchManager";
+import { SearchManager } from "@/src/utils/searchManager/searchManager";
 import { headerBreakpoints } from "@/src/utils/breakpoints";
 import AccordionTree from "./accordionTree";
 import { CARDS_PER_PAGE } from "@/src/config/constants";

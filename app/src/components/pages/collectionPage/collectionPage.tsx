@@ -23,7 +23,7 @@ import SearchCardsGrid from "../../grids/searchCardsGrid";
 import {
   GeneralSearchManager,
   stringToFilter,
-} from "@/src/utils/searchManager";
+} from "@/src/utils/searchManager/searchManager";
 import { usePathname, useRouter } from "next/navigation";
 import SortMenu from "../../sortMenu/sortMenu";
 import ActiveFilters from "../../search/filters/activeFilters";
@@ -34,7 +34,7 @@ import BackToTopLink from "../../backToTopLink/backToTopLink";
 import CollectionMetadata, {
   CollectionMetadataProps,
 } from "../../collectionMetadata/collectionMetadata";
-import CollectionSearchParamsType from "@/src/types/CollectionSearchParams";
+import CollectionSearchParamsType from "@/src/types/CollectionSearchParamsType";
 import { SearchResultsType } from "@/src/types/SearchResultsType";
 import { CollectionModel } from "@/src/models/collection";
 import { useSubcollectionRedirect } from "@/src/hooks/useSubcollectionRedirect";

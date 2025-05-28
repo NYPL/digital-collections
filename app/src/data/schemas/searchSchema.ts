@@ -40,10 +40,9 @@ const searchSchema = {
       imageID: "string | null",
       numberOfDigitizedItems: "number",
       containsOnSiteMaterial: "boolean",
-      containsAVMaterial: "boolean", // keeping bc the logic exists and it's already there
-      containsMultipleCaptures: "boolean", // used to determine whether or not an item should display the "multiple images" tag,
-      // ^^ will only be returned on item
-      contentType: "(image | audio | video) [] | null", // null
+      containsAVMaterial: "boolean",
+      containsMultipleCaptures: "boolean",
+      contentType: "(image | audio | video) [] | null",
       highlights: { highlighted_field_name: ["string"] },
       firstIndexed_dt: "date",
       score: "number",

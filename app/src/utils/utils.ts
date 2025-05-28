@@ -10,7 +10,7 @@ import {
   AvailableFilterOption,
 } from "../types/AvailableFilterType";
 import type { Highlight } from "../types/HighlightType";
-import { isValidFilter } from "./searchManager";
+import { isValidFilter } from "./searchManager/searchManager";
 
 /**
  * Represents a IIIF Image API URL, which will be used globally throughout the application.

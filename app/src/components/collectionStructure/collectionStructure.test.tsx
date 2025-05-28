@@ -11,7 +11,7 @@ import {
   DEFAULT_SEARCH_SORT,
   DEFAULT_SEARCH_TERM,
 } from "@/src/config/constants";
-import { GeneralSearchManager } from "@/src/utils/searchManager";
+import { GeneralSearchManager } from "@/src/utils/searchManager/searchManager";
 
 const mockSearchManager = new GeneralSearchManager({
   initialPage: 1,

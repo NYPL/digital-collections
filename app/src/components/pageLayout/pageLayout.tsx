@@ -13,15 +13,15 @@ import { BreadcrumbsDataProps } from "@nypl/design-system-react-components/dist/
 import { ADOBE_EMBED_URL } from "../../config/constants";
 import { trackVirtualPageView } from "../../utils/utils";
 import { FeedbackProvider } from "@/src/context/FeedbackProvider";
-import { SearchParams } from "@/search/index/page";
-import CollectionSearchParams from "@/src/types/CollectionSearchParams";
+import { SearchParamsType } from "@/search/index/page";
 import { SearchProvider } from "@/src/context/SearchProvider";
+import { CollectionSearchParamsType } from "@/collections/[uuid]/page";
 
 interface PageLayoutProps {
   activePage: string;
   breadcrumbs?: BreadcrumbsDataProps[];
   adobeAnalyticsPageName?: string;
-  searchParams?: SearchParams | CollectionSearchParams;
+  searchParams?: SearchParamsType | CollectionSearchParamsType;
 }
 
 const PageLayout = ({

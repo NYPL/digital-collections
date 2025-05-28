@@ -1,22 +1,21 @@
-import data from "../data/lanes";
-import type { LaneDataType } from "../types/Lane";
+import data from "../../data/lanesData";
+import type { LaneDataType } from "../../types/LaneDataType";
 import {
   imageURL,
   addCommas,
   filterStringToCollectionApiFilterString,
-} from "./utils";
-import defaultFeaturedItems from "../data/defaultFeaturedItemData";
+} from "../utils";
+import defaultFeaturedItems from "../../data/defaultFeaturedItemData";
 import {
   CARDS_PER_PAGE,
   DEFAULT_COLLECTION_SORT,
   DEFAULT_PAGE_NUM,
   DEFAULT_SEARCH_TERM,
-  COLLECTION_SORT_OPTIONS,
   DEFAULT_FILTERS,
   DEFAULT_SEARCH_SORT,
-} from "../config/constants";
-import { fetchApi } from "./fetchApi";
-import { Filter } from "../types/FilterType";
+} from "../../config/constants";
+import { fetchApi } from "../fetchApi/fetchApi";
+import { Filter } from "../../types/FilterType";
 
 export class RepoApi {
   static async getFeaturedItemData() {
