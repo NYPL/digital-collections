@@ -1,16 +1,16 @@
 import React from "react";
 import { Metadata } from "next";
 import { CollectionsPage } from "../src/components/pages/collectionsPage/collectionsPage";
-import { CollectionsApi } from "@/src/utils/apiClients";
+import { CollectionsApi } from "@/src/utils/apiClients/apiClients";
 import { redirect } from "next/navigation";
-import CollectionSearchParams from "@/src/types/CollectionSearchParams";
 import PageLayout from "@/src/components/pageLayout/pageLayout";
 import { createAdobeAnalyticsPageName } from "@/src/utils/utils";
 import { revalidatePath } from "next/cache";
+import { CollectionSearchParamsType } from "./[uuid]/page";
 
 export type CollectionsProps = {
   params: { slug: string };
-  searchParams: CollectionSearchParams;
+  searchParams: CollectionSearchParamsType;
 };
 
 export const metadata: Metadata = {

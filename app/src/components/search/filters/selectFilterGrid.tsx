@@ -1,7 +1,7 @@
 import { Grid } from "@chakra-ui/react";
 import SelectFilter from "./selectFilter";
 import { headerBreakpoints } from "@/src/utils/breakpoints";
-import { SearchManager } from "@/src/utils/searchManager";
+import { SearchManager } from "@/src/utils/searchManager/searchManager";
 
 type SelectFilterGridProps = {
   isExpanded: boolean;

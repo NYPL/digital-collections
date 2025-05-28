@@ -1,14 +1,12 @@
-import { fetchApi } from "./fetchApi";
-import defaultFeaturedItem from "../data/defaultFeaturedItemData";
 import {
   mockFeaturedItemResponse,
   mockItemResponse,
 } from "__tests__/__mocks__/data/repoApi/mockApiResponses";
-
-import { mockCollectionsResponse } from "__tests__/__mocks__/data/repoApi/mockCollectionsResponse";
+import { fetchApi } from "../fetchApi/fetchApi";
 import { RepoApi } from "./apiClients";
+import defaultFeaturedItem from "@/src/data/defaultFeaturedItemData";
 
-jest.mock("./fetchApi");
+jest.mock("../fetchApi/fetchApi");
 
 beforeEach(() => {
   jest.clearAllMocks();

@@ -1,5 +1,5 @@
 import { NextResponse, NextRequest } from "next/server";
-import { RepoApi } from "@/src/utils/apiClients";
+import { RepoApi } from "@/src/utils/apiClients/apiClients";
 export const fetchCache = "force-no-store";
 
 export const GET = async (request: NextRequest, response: NextResponse) => {

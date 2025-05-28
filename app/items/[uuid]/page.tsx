@@ -2,7 +2,7 @@ import React from "react";
 import { Metadata } from "next";
 import PageLayout from "../../src/components/pageLayout/pageLayout";
 import Item from "../../src/components/items/item";
-import { RepoApi } from "../../src/utils/apiClients";
+import { RepoApi } from "../../src/utils/apiClients/apiClients";
 import { createAdobeAnalyticsPageName } from "../../src/utils/utils";
 import { ItemModel } from "../../src/models/item";
 

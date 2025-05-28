@@ -3,8 +3,16 @@ import { Metadata } from "next";
 import PageLayout from "../../src/components/pageLayout/pageLayout";
 import { createAdobeAnalyticsPageName, imageURL } from "@/src/utils/utils";
 import CollectionPage from "@/src/components/pages/collectionPage/collectionPage";
-import { CollectionsApi } from "@/src/utils/apiClients";
-import CollectionSearchParamsType from "@/src/types/CollectionSearchParams";
+import { CollectionsApi } from "@/src/utils/apiClients/apiClients";
+import { AvailableFilterOption } from "@/src/types/AvailableFilterType";
+
+export type CollectionSearchParamsType = {
+  q: string;
+  sort: string;
+  filters: string;
+  page: number;
+  availableFilters?: Record<string, AvailableFilterOption[]>;
+};
 
 type CollectionProps = {
   params: { uuid: string };

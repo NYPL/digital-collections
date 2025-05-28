@@ -1,6 +1,6 @@
 import { render, screen, fireEvent } from "@testing-library/react";
 import SelectFilter from "./selectFilter";
-import { GeneralSearchManager } from "@/src/utils/searchManager";
+import { GeneralSearchManager } from "@/src/utils/searchManager/searchManager";
 import {
   DEFAULT_SEARCH_SORT,
   DEFAULT_SEARCH_TERM,

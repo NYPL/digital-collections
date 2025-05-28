@@ -1,17 +1,16 @@
 import {
-  DEFAULT_SEARCH_SORT,
   DEFAULT_COLLECTION_SORT,
   DEFAULT_PAGE_NUM,
   DEFAULT_SEARCH_TERM,
   DEFAULT_FILTERS,
   ALLOWED_FILTERS,
-} from "../config/constants";
-import { Filter } from "../types/FilterType";
+} from "../../config/constants";
+import { Filter } from "../../types/FilterType";
 import {
   AvailableFilter,
   AvailableFilterOption,
-} from "../types/AvailableFilterType";
-import { capitalize } from "./utils";
+} from "../../types/AvailableFilterType";
+import { capitalize } from "../utils";
 import { MutableRefObject } from "react";
 
 export interface SearchManager {

@@ -1,7 +1,7 @@
 import { CollectionsApi } from "./apiClients";
 import { mockCollectionsResponse } from "__tests__/__mocks__/data/collectionsApi/mockCollectionsResponse";
-import { fetchApi } from "./fetchApi";
-jest.mock("./fetchApi");
+import { fetchApi } from "../fetchApi/fetchApi";
+jest.mock("../fetchApi/fetchApi");
 
 beforeEach(() => {
   jest.clearAllMocks();
