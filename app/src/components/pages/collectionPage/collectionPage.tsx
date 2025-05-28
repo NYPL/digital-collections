@@ -34,10 +34,10 @@ import BackToTopLink from "../../backToTopLink/backToTopLink";
 import CollectionMetadata, {
   CollectionMetadataProps,
 } from "../../collectionMetadata/collectionMetadata";
-import CollectionSearchParamsType from "@/src/types/CollectionSearchParamsType";
 import { SearchResultsType } from "@/src/types/SearchResultsType";
 import { CollectionModel } from "@/src/models/collection";
 import { useSubcollectionRedirect } from "@/src/hooks/useSubcollectionRedirect";
+import { CollectionSearchParamsType } from "@/collections/[uuid]/page";
 
 type CollectionPageProps = {
   searchResults: SearchResultsType;
