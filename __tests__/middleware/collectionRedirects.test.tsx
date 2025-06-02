@@ -80,6 +80,49 @@ it("redirects non-existent collection slug to title search", () => {
   expect(response).toBe("redirect response");
 });
 
+it("redirects a deprecated division slug to correct slug", () => {
+  request = {
+    nextUrl: new URL(
+      "http://localhost/divisions/schomburg-center-for-research-in-black-culture-jean-blackwell-hutson-research-and-reference-division"
+    ),
+  } as NextRequest;
+
+  const response = middleware(request);
+
+  expect(NextResponse.redirect).toHaveBeenCalledWith(
+    "http://localhost/divisions/schomburg-center-for-research-in-black-culture-jean-blackwell-hutson-research",
+    301
+  );
+  expect(response).toBe("redirect response");
+});
+
+it("redirects another deprecated division slug to correct slug", () => {
+  request = {
+    nextUrl: new URL(
+      "http://localhost/divisions/the-miriam-and-ira-d-wallach-division-of-art-prints-and-photographs-picture-collection"
+    ),
+  } as NextRequest;
+
+  const response = middleware(request);
+
+  expect(NextResponse.redirect).toHaveBeenCalledWith(
+    "http://localhost/divisions/the-miriam-and-ira-d-wallach-division-of-art-prints-and-photographs-picture",
+    301
+  );
+  expect(response).toBe("redirect response");
+});
+
+it("does not redirect a current division slug", () => {
+  request = {
+    nextUrl: new URL("http://localhost/divisions/billy-rose-theatre-division"),
+  } as NextRequest;
+
+  const response = middleware(request);
+
+  expect(NextResponse.next).toHaveBeenCalled();
+  expect(response).toBe("next response");
+});
+
 it("passes a collection uuid through", () => {
   request = {
     nextUrl: new URL(

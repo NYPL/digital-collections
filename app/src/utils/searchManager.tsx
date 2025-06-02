@@ -15,7 +15,7 @@ import { capitalize } from "./utils";
 import { MutableRefObject } from "react";
 
 export interface SearchManager {
-  handleSearchSubmit(): string;
+  handleSearchSubmit(enforceSort?: string): string;
   handleKeywordChange(value: string): void;
   handlePageChange(pageNumber: number): string;
   handleSortChange(id: string): string;
@@ -34,6 +34,7 @@ export interface SearchManager {
 abstract class BaseSearchManager implements SearchManager {
   protected currentPage: number;
   protected currentSort: string;
+  protected defaultSort: string;
   protected currentKeywords: string;
   protected currentFilters: Set<string>;
   protected currentAvailableFilters: AvailableFilter[];
@@ -41,12 +42,13 @@ abstract class BaseSearchManager implements SearchManager {
 
   abstract handlePageChange(pageNumber: number): string;
   abstract handleSortChange(id: string): string;
-  abstract handleSearchSubmit(): string;
+  abstract handleSearchSubmit(enforceSort?: string): string;
   abstract getQueryString(paramsObject: Record<string, any>): string;
 
   constructor(config: {
     initialPage: number;
     initialSort: string;
+    defaultSort: string;
     initialFilters?: Filter[];
     initialKeywords: string;
     initialAvailableFilters?: Record<string, AvailableFilterOption[]>;
@@ -54,11 +56,12 @@ abstract class BaseSearchManager implements SearchManager {
   }) {
     this.currentPage = config.initialPage;
     this.currentSort = config.initialSort;
+    this.defaultSort = config.defaultSort;
     this.currentFilters = new Set(
       (config.initialFilters || []).map((filter) => JSON.stringify(filter))
     );
     this.currentKeywords = config.initialKeywords;
-    this.currentAvailableFilters = transformToAvailableFilters(
+    this.currentAvailableFilters = transformToDisplayAvailableFilters(
       config.initialAvailableFilters ?? {}
     );
     this.lastFilterRef = config.lastFilterRef!;
@@ -149,10 +152,10 @@ abstract class BaseSearchManager implements SearchManager {
 }
 
 export class GeneralSearchManager extends BaseSearchManager {
-  handleSearchSubmit() {
+  handleSearchSubmit(enforceSort?: string) {
     this.currentPage = DEFAULT_PAGE_NUM;
     this.currentFilters.clear();
-    this.currentSort = DEFAULT_SEARCH_SORT;
+    this.currentSort = enforceSort ? enforceSort : this.defaultSort;
     return this.getQueryString({
       q: this.currentKeywords,
       sort: this.currentSort,
@@ -186,7 +189,7 @@ export class GeneralSearchManager extends BaseSearchManager {
     const defaultValues = [
       DEFAULT_SEARCH_TERM,
       DEFAULT_PAGE_NUM,
-      DEFAULT_SEARCH_SORT,
+      this.defaultSort,
       DEFAULT_FILTERS,
     ];
 
@@ -271,7 +274,9 @@ export const filterToString = (filters: Filter[]): string => {
     .join("");
 };
 
-export const transformToAvailableFilters = (
+/** Removing filters that search supports, but does not display as a `SelectFilter`.
+ * Also formats the options into a displayable object. */
+export const transformToDisplayAvailableFilters = (
   availableFilters: Record<string, AvailableFilterOption[]>
 ): AvailableFilter[] => {
   return Object.entries(availableFilters)
@@ -284,11 +289,10 @@ export const transformToAvailableFilters = (
     }));
 };
 
-export const availableFilterDisplayName = (
-  name: string,
-  filterName: string
-) => {
-  return filterName === "collection" ? name.split("||")[0] : capitalize(name);
+export const filterDisplayName = (filterValue: string, filterName: string) => {
+  return filterName === "collection" || filterName === "subcollection"
+    ? decodeURIComponent(filterValue.split("||")[0])
+    : capitalize(filterValue);
 };
 
 export const isValidFilter = (param: string) => {

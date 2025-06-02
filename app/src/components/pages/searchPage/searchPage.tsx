@@ -19,22 +19,10 @@ import { MobileSearchBanner } from "../../mobileSearchBanner/mobileSearchBanner"
 import SortMenu from "../../sortMenu/sortMenu";
 import ActiveFilters from "../../search/filters/activeFilters";
 import NoResultsFound from "../../results/noResultsFound";
-import SearchCardType from "@/src/types/SearchCardType";
-import { AvailableFilterOption } from "@/src/types/AvailableFilterType";
 import SearchCardGridLoading from "../../grids/searchCardGridLoading";
-
-export type SearchResultsType = {
-  keyword: string;
-  numResults: number;
-  page: number;
-  perPage: number;
-  rightsFilter: string;
-  dateStart: string;
-  dateEnd: string;
-  availableFilters: Record<string, AvailableFilterOption[]>;
-  sort: string;
-  results: SearchCardType[];
-};
+import BackToTopLink from "../../backToTopLink/backToTopLink";
+import { SearchResultsType } from "@/src/types/SearchResultsType";
+import { useSubcollectionRedirect } from "@/src/hooks/useSubcollectionRedirect";
 
 const SearchPage = ({
   searchResults,
@@ -49,11 +37,13 @@ const SearchPage = ({
   const { push } = useRouter();
   const pathname = usePathname();
   const headingRef = useRef<HTMLHeadingElement>(null);
+  const refineHeadingRef = useRef<HTMLHeadingElement>(null);
   const isFirstLoad = useRef<boolean>(false);
   const [isLoaded, setIsLoaded] = useState(false);
   const [filtersExpanded, setFiltersExpanded] = useState(false);
 
   const updateURL = async (queryString: string) => {
+    setIsLoaded(false);
     const newUrl = `${pathname}?${queryString}`;
     push(newUrl);
   };
@@ -61,11 +51,12 @@ const SearchPage = ({
     setIsLoaded(true);
     let didFocusElement = false;
     if (
-      searchManager.lastFilterRef?.current &&
-      (searchManager.filters.length > 0 || searchManager.sort !== "relevance")
+      (searchManager.lastFilterRef?.current &&
+        searchManager.filters.length > 0) ||
+      searchManager.sort
     ) {
       // Search for the button, input, or text element associated with the last used filter/sort
-      const selectors = ["button", "input", "p"];
+      const selectors = ["button", "input", "p", "h2"];
 
       for (const selector of selectors) {
         const el = document.querySelector(
@@ -78,7 +69,6 @@ const SearchPage = ({
         }
       }
     }
-
     if (!didFocusElement && isFirstLoad.current) {
       setFiltersExpanded(false);
       headingRef.current?.focus();
@@ -87,6 +77,8 @@ const SearchPage = ({
     isFirstLoad.current = true;
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [searchResults]);
+
+  useSubcollectionRedirect();
 
   return (
     <Box id="mainContent">
@@ -149,6 +141,7 @@ const SearchPage = ({
           <Filters
             searchManager={searchManager}
             headingText="Refine your search"
+            refineHeadingRef={refineHeadingRef}
             filtersExpanded={filtersExpanded}
             setFiltersExpanded={setFiltersExpanded}
           />
@@ -167,7 +160,10 @@ const SearchPage = ({
           marginTop: searchResults.results?.length > 0 ? "0" : "m",
         }}
       >
-        <ActiveFilters searchManager={searchManager} />
+        <ActiveFilters
+          searchManager={searchManager}
+          allFilters={searchResults.availableFilters}
+        />
         <Flex
           sx={{
             [`@media screen and (min-width: ${headerBreakpoints.lgMobile}px)`]:
@@ -188,8 +184,9 @@ const SearchPage = ({
             <>
               <Heading
                 size="heading5"
-                ref={headingRef}
                 aria-live="polite"
+                ref={headingRef}
+                aria-atomic="true"
                 // @ts-ignore
                 tabIndex="-1"
                 margin="0"
@@ -200,6 +197,7 @@ const SearchPage = ({
               )} results`}</Heading>
               <SortMenu
                 options={SEARCH_SORT_LABELS}
+                sort={searchResults.sort}
                 searchManager={searchManager}
                 setFiltersExpanded={setFiltersExpanded}
                 updateURL={updateURL}
@@ -249,19 +247,7 @@ const SearchPage = ({
                 flexDir: "column-reverse",
               }}
             >
-              {searchResults.results?.length > 0 && (
-                <Link
-                  minWidth="100px"
-                  isUnderlined={false}
-                  hasVisitedState={false}
-                  gap="xxs"
-                  type="action"
-                  href="#"
-                >
-                  Back to top{"  "}
-                  <Icon name="arrow" iconRotation="rotate180" size="xsmall" />
-                </Link>
-              )}{" "}
+              {searchResults.results?.length > 0 && <BackToTopLink />}{" "}
               <Pagination
                 id="pagination-id"
                 initialPage={searchManager.page}

@@ -1,14 +1,15 @@
 import logger from "logger";
 
 /**
- * Makes a GET or POST request to the Repo API and returns the response.
+ * Makes a GET or POST request to Repo/Collections API and returns the response.
  * Times out at 10 seconds to prevent 504 crash.
  * @param {string} apiUrl - The URL for the API request.
  * @param {object} options - Options for the request:
  *   - method: "GET" or "POST" (default is "GET").
  *   - params: URL parameters for GET requests.
  *   - body: Body data for POST requests.
- *   - isRepoApi: Boolean flag to determine if Repo API authorization should be included.
+ *   - isRepoApi: Boolean flag to determine if Repo API or Collections API authorization should be included.
+ *   - next: Next.js-specific options (revalidate, tags)
  * @returns {Promise<any>} - The API response.
  */
 export const fetchApi = async ({
@@ -21,9 +22,10 @@ export const fetchApi = async ({
     params?: { [key: string]: any };
     body?: any;
     isRepoApi?: boolean;
+    next?;
   };
 }) => {
-  const { method = "GET", params, body, isRepoApi = true } = options;
+  const { method = "GET", params, body, isRepoApi = true, next } = options;
 
   const headers: Record<string, string> = {};
 
@@ -44,7 +46,7 @@ export const fetchApi = async ({
   console.log("apiUrl is: ", apiUrl);
 
   const timeout = 10000;
-  console.log("apiUrl is: ", apiUrl);
+
   const fetchWithTimeout = (url: string, opts: RequestInit) => {
     return Promise.race([
       fetch(url, opts),
@@ -62,6 +64,7 @@ export const fetchApi = async ({
       method,
       headers,
       body: method === "POST" ? JSON.stringify(body) : undefined,
+      next,
     })) as Response;
 
     if (response.status === 422) {

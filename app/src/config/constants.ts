@@ -45,11 +45,19 @@ export const SEARCH_SORT_LABELS = {
   "items-first": "Items first",
 };
 
+export const COLLECTION_LANDING_SORT_LABELS = {
+  sequence: "Sequence",
+  relevance: "Relevance",
+  "date-desc": "Newest to oldest",
+  "date-asc": "Oldest to newest",
+  "title-desc": "Title Z to A",
+  "title-asc": "Title A to Z",
+};
+
 export const ALLOWED_FILTERS = [
   "topic",
   "name",
   "collection",
-  // To do: subcollection?
   "place",
   "format",
   "name",
@@ -61,6 +69,9 @@ export const ALLOWED_FILTERS = [
   "dateEnd",
   "rightsFilter",
   "rights",
+  "form",
+  "language",
+  "subcollection",
   "materialType",
 ];
 
