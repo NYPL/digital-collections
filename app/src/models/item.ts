@@ -88,13 +88,13 @@ export class ItemModel {
         ? manifestMetadataHash["Title"].toString()
         : "",
       collection: manifestMetadataHash["Collection"]
-        ? manifestMetadataHash["Collection"].toString()
+        ? manifestMetadataHash["Collection"].join("<br>") //TODO: add arrows
         : "",
       names: manifestMetadataHash["Names"]
-        ? manifestMetadataHash["Names"].toString()
+        ? manifestMetadataHash["Names"].join("<br>")
         : "",
       origin: manifestMetadataHash["Dates / origin"]
-        ? manifestMetadataHash["Dates / origin"].toString()
+        ? manifestMetadataHash["Dates / origin"].join("<br>")
         : "",
       dateIssued: manifestMetadataHash["Date Issued"]
         ? manifestMetadataHash["Date Issued"].toString()
@@ -103,22 +103,22 @@ export class ItemModel {
         ? manifestMetadataHash["Table of Contents"].toString()
         : "",
       locations: manifestMetadataHash["Library Location"]
-        ? manifestMetadataHash["Library Location"].toString()
+        ? manifestMetadataHash["Library Location"].join("<br>")
         : "",
       subjects: manifestMetadataHash["Subjects"]
         ? manifestMetadataHash["Subjects"].toString()
         : "",
       genres: manifestMetadataHash["Genres"]
-        ? manifestMetadataHash["Genres"].toString()
+        ? manifestMetadataHash["Genres"].join("<br>")
         : "",
       notes: manifestMetadataHash["Notes"]
-        ? manifestMetadataHash["Notes"]?.toString().toString()
+        ? manifestMetadataHash["Notes"]?.toString()
         : "",
       physicalDescription: manifestMetadataHash["Physical Description"]
         ? manifestMetadataHash["Physical Description"].toString()
         : "",
       typeOfResource: manifestMetadataHash["Resource Type"]
-        ? manifestMetadataHash["Resource Type"].toString()
+        ? manifestMetadataHash["Resource Type"].join("<br>")
         : "",
       abstract: manifestMetadataHash["Abstract"]
         ? manifestMetadataHash["Abstract"].toString()
@@ -130,7 +130,7 @@ export class ItemModel {
         ? manifestMetadataHash["Link"].toString()
         : "",
       identifiers: manifestMetadataHash["Identifiers"]
-        ? manifestMetadataHash["Identifiers"].toString()
+        ? manifestMetadataHash["Identifiers"].join("<br>")
         : "",
       access: manifestMetadataHash["Access"]
         ? manifestMetadataHash["Access"].toString()

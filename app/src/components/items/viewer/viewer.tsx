@@ -14,52 +14,27 @@ import {
 
 interface ItemProps {
   item: ItemModel;
-  type: string;
 }
 
-const ItemMediaViewer = ({ item, type }: ItemProps) => {
+const ItemMediaViewer = ({ item }: ItemProps) => {
   let viewer;
   viewer = (
     <>
       <UniversalViewer
         manifestId={item.manifestURL}
-        // {`${process.env.COLLECTIONS_API_URL}/manifests/${item.uuid}`} //{"https://wellcomelibrary.org/iiif/b18035723/manifest"} //{`https://be73-100-37-199-113.ngrok-free.app/items/${item.uuid}`} //{"https://wellcomelibrary.org/iiif/b18035723/manifest"}
         canvasIndex={0}
         config={{}}
+        onChangeCanvas={(canvasIndex) => {
+          // why is this not printing in the console
+          console.log("canvas index changed", canvasIndex);
+        }}
+        onChangeManifest={(manifest) => {
+          console.log("manfest changed", manifest);
+        }}
       />
     </>
   );
   return viewer;
-  // switch (type) {
-  //   case "image":
-  //     viewer = (
-  //       <>
-  //         <UniversalViewer
-  //           manifestId={item.manifestURL}
-  //           // {`${process.env.COLLECTIONS_API_URL}/manifests/${item.uuid}`} //{"https://wellcomelibrary.org/iiif/b18035723/manifest"} //{`https://be73-100-37-199-113.ngrok-free.app/items/${item.uuid}`} //{"https://wellcomelibrary.org/iiif/b18035723/manifest"}
-  //           canvasIndex={0}
-  //           config={{}}
-  //         />
-  //       </>
-  //     );
-  //     return viewer;
-  //   case "video":
-  //     viewer = (
-  //       <>
-  //         <VideoViewer manifestId={item.manifestURL} />
-  //       </>
-  //     );
-  //     return viewer;
-  //   case "audio":
-  //     viewer = (
-  //       <>
-  //         <AudioViewer manifestId={item.manifestURL} />
-  //       </>
-  //     );
-  //     return viewer;
-  //   default:
-  //     return <h2>No type of resource match</h2>;
-  // }
 };
 
 export default ItemMediaViewer;

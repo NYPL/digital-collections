@@ -33,6 +33,11 @@ const metadataFieldToDisplay = {
   dateIssued: "Date Issued",
 };
 
+const metadataFieldRender = (field, value) => {
+  if (field === "name") {
+  }
+};
+
 const MetadataOverview = ({ metadata }) => {
   console.log("metadata is: ", metadata);
   return (
@@ -63,7 +68,6 @@ const MetadataOverview = ({ metadata }) => {
             );
           }
         })}
-        {/* </Flex> */}
       </Box>
     </>
   );

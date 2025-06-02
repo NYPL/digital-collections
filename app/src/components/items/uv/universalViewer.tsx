@@ -15,8 +15,10 @@ export type UniversalViewerProps = {
   onChangeManifest?: (manifest: string) => void;
 };
 
+// https://codesandbox.io/p/sandbox/uv-nextjs-example-239ff5?file=%2Fcomponents%2FUniversalViewer.tsx%3A39%2C1-49%2C8
 const UniversalViewer: React.FC<UniversalViewerProps> = React.memo(
   ({ manifestId, canvasIndex, onChangeCanvas, config }) => {
+    console.log("canvasIndex in UniversalViewer component is: ", canvasIndex);
     const ref = useRef<HTMLDivElement>(null);
     const lastIndex = useRef<number>();
     const options = useMemo(
@@ -43,39 +45,110 @@ const UniversalViewer: React.FC<UniversalViewerProps> = React.memo(
     const uv = useUniversalViewer(ref, options);
 
     useEffect(() => {
+      console.log("canvasIndex in useEffect is: ", canvasIndex);
+
       if (uv) {
         // override config using an inline json object
         uv.on("configure", function ({ config, cb }) {
-          cb({
-            options: UVConfig.options, //{ footerPanelEnabled: true }
-          });
+          cb(
+            {
+              options: {
+                footerPanelEnabled: true,
+                pagingEnabled: true,
+                pagingHeaderPanel: true,
+                pagingOptionEnabled: true,
+                modules: {
+                  headerPanel: {
+                    options: {
+                      centerOptionsEnabled: true,
+                      localeToggleEnabled: false,
+                      settingsButtonEnabled: false,
+                    },
+                  },
+                  pagingHeaderPanel: {
+                    options: {
+                      autoCompleteBoxEnabled: true,
+                      autocompleteAllowWords: false,
+                      galleryButtonEnabled: false,
+                      imageSelectionBoxEnabled: false,
+                      pageModeEnabled: false,
+                      pagingToggleEnabled: true,
+                    },
+                    content: {
+                      close: "Close",
+                      emptyValue: "Please enter a value",
+                      first: "First",
+                      firstImage: "First Image",
+                      firstPage: "First Page",
+                      folio: "Folio",
+                      gallery: "Gallery",
+                      go: "Go",
+                      help: "Help",
+                      image: "Image",
+                      last: "Last",
+                      lastImage: "Last Image",
+                      lastPage: "Last Page",
+                      next: "Next",
+                      nextImage: "Next Image",
+                      nextPage: "Next Page",
+                      of: "of {0}",
+                      oneUp: "Single page view",
+                      page: "Page",
+                      pageSearchLabel: "Search by Page Number",
+                      previous: "Previous",
+                      previousImage: "Previous Image",
+                      previousPage: "Previous Page",
+                      settings: "Settings",
+                      twoUp: "Two page view",
+                    },
+                  },
+                  shareDialogue: {
+                    options: {
+                      embedTemplate:
+                        '<iframe src="{0}" width="{1}" height="{2}" allowfullscreen frameborder="0"></iframe>',
+                      instructionsEnabled: false,
+                      shareFrameEnabled: true,
+                      shareManifestsEnabled: true,
+                    },
+                    content: {
+                      customSize: "custom",
+                      embed: "Embed",
+                      embedInstructions:
+                        "To embed this item in your own website, copy and paste the code below.",
+                      height: "Height",
+                      iiif: "IIIF Manifest",
+                      share: "Share",
+                      shareInstructions:
+                        "To share this item, copy the URL below.",
+                      size: "Size:",
+                      width: "Width",
+                    },
+                  },
+                },
+              },
+            },
+            [uv]
+          );
         });
       }
-    }, [uv]);
+    });
 
-    // useEffect(() => {
-    //   if (uv && (canvasIndex || canvasIndex === 0)) {
-    //     if (lastIndex.current !== canvasIndex) {
-    //       uv._assignedContentHandler?.publish(
-    //         BaseEvents.CANVAS_INDEX_CHANGE,
-    //         canvasIndex
-    //       );
-    //       lastIndex.current = canvasIndex;
-    //     }
-    //   }
-    // }, [canvasIndex, uv]);
+    useEvent(uv, BaseEvents.CANVAS_INDEX_CHANGE, (i) => {
+      console.log("canvasIndex in useEvent is: ", canvasIndex);
 
-    // useEvent(uv, BaseEvents.CANVAS_INDEX_CHANGE, (i) => {
-    //   if (onChangeCanvas) {
-    //     if (lastIndex.current !== i) {
-    //       const canvas = (uv as any)?.extension?.helper.getCanvasByIndex(i);
-    //       if (canvas) {
-    //         lastIndex.current = i;
-    //         onChangeCanvas(manifestId, canvas.id);
-    //       }
-    //     }
-    //   }
-    // });
+      if (onChangeCanvas) {
+        console.log("canvasIndex in useEvent onChangeCanvas is: ", canvasIndex);
+
+        if (lastIndex.current !== i) {
+          console.log("lastIndex is", lastIndex);
+          const canvas = uv?.extension?.helper.getCanvasByIndex(i);
+          if (canvas) {
+            lastIndex.current = i;
+            onChangeCanvas(manifestId, canvas.id);
+          }
+        }
+      }
+    });
 
     return (
       <>
