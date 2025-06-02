@@ -7,8 +7,8 @@ import {
   filterStringToCollectionApiFilterString,
   getCollectionFilterFromUUID,
   getHighestRankedHighlight,
-  getTitleWithHighlights,
   replaceEmWithMark,
+  highlightTitleWords,
 } from "./utils";
 import { AvailableFilterOption } from "../types/AvailableFilterType";
 
@@ -298,23 +298,16 @@ describe("filterStringToCollectionApiFilterString", () => {
   test("generates the correct filter syntax for a single filter", () => {
     expect(
       filterStringToCollectionApiFilterString("[Name=Swope, Martha]")
-    ).toBe("name=Swope, Martha");
-    expect(
-      filterStringToCollectionApiFilterString(
-        "[Collection=Print Collection portrait file||16ad5350-c52e-012f-aecf-58d385a7bc34]"
-      )
-    ).toBe(
-      "collection=Print Collection portrait file||16ad5350-c52e-012f-aecf-58d385a7bc34"
-    );
+    ).toBe("name=Swope%2C%20Martha");
   });
 
   test("generates the correct filter syntax for multiple filter", () => {
     expect(
       filterStringToCollectionApiFilterString(
-        "[name=Swope, Martha][collection=Print Collection portrait file||16ad5350-c52e-012f-aecf-58d385a7bc34]"
+        "[name=Swope, Martha][collection=16ad5350-c52e-012f-aecf-58d385a7bc34]"
       )
     ).toBe(
-      "name=Swope, Martha&collection=Print Collection portrait file||16ad5350-c52e-012f-aecf-58d385a7bc34"
+      "name=Swope%2C%20Martha&collection=16ad5350-c52e-012f-aecf-58d385a7bc34"
     );
   });
 
@@ -361,17 +354,24 @@ describe("replaceEmWithMark", () => {
   });
 });
 
-describe("getTitleWithHighlights", () => {
+describe("highlightTitleWords", () => {
   it("returns marked-up highlight if title field exists", () => {
     const highlights = [{ field: "Title", text: "The <em>Great</em> Gatsby" }];
     const title = "The Great Gatsby";
-    const result = getTitleWithHighlights(highlights, title);
+    const result = highlightTitleWords(title, highlights);
     expect(result).toBe("The <mark>Great</mark> Gatsby");
   });
 
   it("returns original title if no title highlight exists", () => {
     const highlights = [{ field: "Topic", text: "Not a title" }];
     const title = "Original Title";
-    expect(getTitleWithHighlights(highlights, title)).toBe(title);
+    expect(highlightTitleWords(title, highlights)).toBe(title);
+  });
+
+  it("uses full title string, not only words from the highlight field", () => {
+    const highlights = [{ field: "Title", text: "The <em>Great</em> Gatsby" }];
+    const title = "The Great Gatsby, 1800, 1900";
+    const result = highlightTitleWords(title, highlights);
+    expect(result).toBe("The <mark>Great</mark> Gatsby, 1800, 1900");
   });
 });

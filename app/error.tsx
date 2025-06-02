@@ -11,11 +11,12 @@ export default function Error({
   error: Error & { digest?: string };
 }) {
   useEffect(() => {
-    console.error(error);
+    const errorMessage = `DCF error page: ${error}`;
+    console.error(errorMessage);
 
     // Send error to New Relic
     if ((window as any).newrelic) {
-      (window as any).newrelic.noticeError(error);
+      (window as any).newrelic.noticeError(errorMessage);
     }
   }, [error]);
 

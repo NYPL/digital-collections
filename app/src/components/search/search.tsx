@@ -6,14 +6,17 @@ import { useRouter } from "next/navigation";
 import PublicDomainFilter from "../publicDomainFilter/publicDomainFilter";
 import { headerBreakpoints } from "../../utils/breakpoints";
 import DCSearchBar from "./dcSearchBar";
+import { useSearchContext } from "@/src/context/SearchProvider";
 
 const Search = () => {
+  const { searchManager } = useSearchContext();
   const router = useRouter();
   const [keywords, setKeywords] = useState("");
   const [publicDomainOnly, setPublicDomainOnly] = useState(false);
 
   const handleSubmit = (event) => {
     event.preventDefault();
+    searchManager.setLastFilter(null);
     const searchUrl =
       `/search/index?` +
       (keywords.length > 0 ? `q=${encodeURIComponent(keywords)}` : "") +

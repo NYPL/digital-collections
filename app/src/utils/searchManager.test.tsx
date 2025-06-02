@@ -19,6 +19,7 @@ describe("SearchManager", () => {
       manager = new GeneralSearchManager({
         initialPage: 1,
         initialSort: DEFAULT_SEARCH_SORT,
+        defaultSort: DEFAULT_SEARCH_SORT,
         initialFilters: [],
         initialKeywords: DEFAULT_SEARCH_TERM,
       });
@@ -58,6 +59,7 @@ describe("SearchManager", () => {
     manager = new GeneralSearchManager({
       initialPage: 1,
       initialSort: DEFAULT_SEARCH_SORT,
+      defaultSort: DEFAULT_SEARCH_SORT,
       initialFilters: [],
       initialKeywords: "test",
     });
@@ -120,6 +122,7 @@ describe("SearchManager", () => {
       manager = new CollectionSearchManager({
         initialPage: 1,
         initialSort: DEFAULT_COLLECTION_SORT,
+        defaultSort: "relevance",
         initialFilters: [],
         initialKeywords: DEFAULT_SEARCH_TERM,
       });
@@ -147,6 +150,7 @@ describe("SearchManager", () => {
     manager = new CollectionSearchManager({
       initialPage: 1,
       initialSort: DEFAULT_COLLECTION_SORT,
+      defaultSort: "relevance",
       initialFilters: [],
       initialKeywords: "test",
     });
