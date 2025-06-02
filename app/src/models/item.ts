@@ -3,7 +3,6 @@ import { Maniiifest } from "maniiifest";
 // other resources:
 // https://www.npmjs.com/package/@iiif/manifold
 // https://github.com/iiif-commons/manifold
-import { CONTENT_TYPES } from "../config/constants";
 
 import { getContentType } from "../utils/utils";
 export class ItemModel {

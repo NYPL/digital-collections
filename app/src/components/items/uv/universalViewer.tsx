@@ -141,11 +141,11 @@ const UniversalViewer: React.FC<UniversalViewerProps> = React.memo(
 
         if (lastIndex.current !== i) {
           console.log("lastIndex is", lastIndex);
-          const canvas = uv?.extension?.helper.getCanvasByIndex(i);
-          if (canvas) {
-            lastIndex.current = i;
-            onChangeCanvas(manifestId, canvas.id);
-          }
+          // const canvas = uv?.extension?.helper.getCanvasByIndex(i);
+          // if (canvas) {
+          //   lastIndex.current = i;
+          //   onChangeCanvas(manifestId, canvas.id);
+          // }
         }
       }
     });
