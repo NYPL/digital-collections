@@ -20,13 +20,12 @@ interface ItemProps {
 }
 
 const Item = ({ item, type }: ItemProps) => {
-  const itemType = type ? type : item.contentType; //TO DO: do we want to keep this?
   return (
     <>
       <Box marginTop="-3em">
         <Heading level="h2">{item.title}</Heading>
         {item.hasItems ? (
-          <ItemMediaViewer item={item} type={itemType} />
+          <ItemMediaViewer item={item} />
         ) : (
           <Banner
             marginTop="m"
