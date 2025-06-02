@@ -7,7 +7,7 @@ export const mockCollections: CollectionDataType[] = [
     url: "https://digitalcollections.nypl.org/collections/posada-collection#/?tab=navigation",
     imageID: "58270299",
     numberOfDigitizedItems: 34,
-    containsOnSiteMaterials: true,
+    containsOnSiteMaterials: "true",
     containsAVMaterial: false,
   },
   {
