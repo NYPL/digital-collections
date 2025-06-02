@@ -17,7 +17,7 @@ import { TRUNCATED_SEARCH_CARD_LENGTH } from "@/src/config/constants";
 import {
   capitalize,
   getHighestRankedHighlight,
-  getTitleWithHighlights,
+  highlightTitleWords,
   replaceEmWithMark,
 } from "@/src/utils/utils";
 import parse from "html-react-parser";
@@ -108,10 +108,7 @@ export const SearchCard = ({
 }: SearchCardProps) => {
   const truncatedTitle = result.title.length > TRUNCATED_SEARCH_CARD_LENGTH;
 
-  const highlightedTitle = getTitleWithHighlights(
-    result.highlights,
-    result.title
-  );
+  const highlightedTitle = highlightTitleWords(result.title, result.highlights);
 
   const card = (
     <Card

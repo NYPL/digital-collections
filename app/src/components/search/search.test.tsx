@@ -3,6 +3,7 @@ import { render, fireEvent, screen } from "@testing-library/react";
 import "@testing-library/jest-dom";
 import Search from "./search";
 import { useRouter } from "next/navigation";
+import { SearchProvider } from "@/src/context/SearchProvider";
 
 jest.mock("next/navigation", () => ({
   useRouter: jest.fn(),
@@ -12,9 +13,14 @@ const mockRouter = {
 };
 (useRouter as jest.Mock).mockReturnValue(mockRouter);
 
+const component = (
+  <SearchProvider>
+    <Search />
+  </SearchProvider>
+);
 describe("Search component", () => {
   it("renders Search component", () => {
-    const { getAllByLabelText, getByPlaceholderText } = render(<Search />);
+    const { getAllByLabelText, getByPlaceholderText } = render(component);
     expect(
       getAllByLabelText("Search Digital Collections")[0]
     ).toBeInTheDocument();
@@ -22,7 +28,7 @@ describe("Search component", () => {
   });
 
   it("handles form submission correctly", () => {
-    const { getByPlaceholderText } = render(<Search />);
+    const { getByPlaceholderText } = render(component);
     fireEvent.change(getByPlaceholderText("Search keyword(s)"), {
       target: { value: "test word" },
     });
@@ -35,7 +41,7 @@ describe("Search component", () => {
   });
 
   it("applies filter correctly", () => {
-    render(<Search />);
+    render(component);
 
     fireEvent.change(screen.getByPlaceholderText("Search keyword(s)"), {
       target: { value: "test words" },

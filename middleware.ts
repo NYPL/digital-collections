@@ -1,6 +1,21 @@
 import collectionSlugToUuidMapping from "@/src/data/collectionSlugUuidMapping";
-import { deSlugify } from "@/src/utils/utils";
+import { divisionSlugMapping } from "@/src/data/divisionSlugMapping";
+import { deSlugify, isDCUuid } from "@/src/utils/utils";
 import { NextRequest, NextResponse } from "next/server";
+
+const filterMap = {
+  placeTerm_mtxt_s: "place",
+  genre_mtxt_s: "genre",
+  typeOfResource_mtxt_s: "type",
+  publisher_mtxt_s: "publisher",
+  namePart_mtxt_s: "name",
+  topic_mtxt_s: "topic",
+  geographic_mtxt_s: "topic",
+  languageTerm_mtxt_s: "language",
+  form_mtxt_s: "form",
+  divisionFullname_mtxt_s: "division",
+  "root-collection": "collection",
+};
 
 export function middleware(req: NextRequest) {
   const url = req.nextUrl;
@@ -12,10 +27,7 @@ export function middleware(req: NextRequest) {
     if (identifier === "lane") {
       return NextResponse.next();
     }
-    // DC uuids are not uuid v1-5 compliant– they're v0 (kind of?), which this regex tests
-    const dcUuidRegex = /^[\da-f]{8}-([\da-f]{4}-){3}[\da-f]{12}$/i;
-    const isDCUuid = dcUuidRegex.test(identifier);
-    if (isDCUuid) {
+    if (isDCUuid(identifier)) {
       return NextResponse.next();
     }
 
@@ -31,6 +43,20 @@ export function middleware(req: NextRequest) {
     }
 
     return NextResponse.redirect(newUrl.toString(), 301);
+  }
+
+  const divisionMatch = pathname.match(/^\/divisions\/([^\/?#]+)/);
+  if (divisionMatch) {
+    const slug = divisionMatch[1];
+    const correctSlug = divisionSlugMapping[slug];
+
+    if (correctSlug && slug !== correctSlug) {
+      const newUrl = new URL(req.nextUrl);
+      newUrl.pathname = `/divisions/${correctSlug}`;
+      return NextResponse.redirect(newUrl.toString(), 301);
+    }
+
+    return NextResponse.next();
   }
 
   const searchParams = url.searchParams;
@@ -92,13 +118,18 @@ export function middleware(req: NextRequest) {
   // Transform filters into an object
   const filtersObj: Record<string, string[]> = {};
 
-  searchParams.forEach((value, key) => {
+  for (const [key, value] of searchParams.entries()) {
     const match = key.match(/^filters\[(.*?)\](?:\[\])?$/);
     if (match) {
       let filterKey = match[1];
       let filterValue = decodeURIComponent(value);
       if (filterKey === "rights" && filterValue === "pd") {
         filterValue = "publicDomain";
+      } else if (filterKey === "title_uuid_s") {
+        filterKey = "subcollection";
+        filterValue = filterValue.split("||")[1];
+      } else if (filterMap[filterKey]) {
+        filterKey = filterMap[filterKey];
       }
       if (filterKey === "date") {
         // Regular expression to match end date x-9999, start date -9999-x, or x-x (both)
@@ -128,7 +159,7 @@ export function middleware(req: NextRequest) {
       filtersObj[filterKey] = [filterValue];
       modified = true;
     }
-  });
+  }
 
   // Remove old filter keys
   Object.keys(filtersObj).forEach((key) =>

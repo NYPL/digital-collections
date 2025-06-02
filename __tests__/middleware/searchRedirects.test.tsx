@@ -227,16 +227,76 @@ it("transforms date and one year filter", () => {
   expect(response).toBe("redirect response");
 });
 
-it("transforms date and both year filters", () => {
+it("transforms date and both year filters", async () => {
   const requestWithDateAndYears = {
     nextUrl: new URL(
       "http://localhost/search/index?filters%5Bdate%5D%5B%5D=1900-1905&keywords=hello&year_begin=1901&year_end=1905&"
     ),
   } as NextRequest;
-  const response = middleware(requestWithDateAndYears);
+  const response = await middleware(requestWithDateAndYears);
 
   expect(NextResponse.redirect).toHaveBeenCalledWith(
     "http://localhost/search/index?q=hello&filters=%5BdateStart%3D1901%5D%5BdateEnd%3D1905%5D",
+    301
+  );
+  expect(response).toBe("redirect response");
+});
+
+it("transforms filter titles where necessary (form)", () => {
+  const requestWithDateAndYears = {
+    nextUrl: new URL(
+      "http://localhost/search/index?filters%5Bform_mtxt_s%5D%5B%5D=Photocopies&filters%5Bpublisher%5D=The+Division&keywords="
+    ),
+  } as NextRequest;
+  const response = middleware(requestWithDateAndYears);
+
+  expect(NextResponse.redirect).toHaveBeenCalledWith(
+    "http://localhost/search/index?filters=%5Bform%3DPhotocopies%5D%5Bpublisher%3DThe+Division%5D",
+    301
+  );
+  expect(response).toBe("redirect response");
+});
+
+it("transforms filter titles (place)", () => {
+  const requestWithDateAndYears = {
+    nextUrl: new URL(
+      "http://localhost/search/index?filters%5BplaceTerm_mtxt_s%5D%5B%5D=Photocopies&filters%5Bpublisher%5D=The+Division&keywords="
+    ),
+  } as NextRequest;
+  const response = middleware(requestWithDateAndYears);
+
+  expect(NextResponse.redirect).toHaveBeenCalledWith(
+    "http://localhost/search/index?filters=%5Bplace%3DPhotocopies%5D%5Bpublisher%3DThe+Division%5D",
+    301
+  );
+  expect(response).toBe("redirect response");
+});
+
+it("transforms root-collection", () => {
+  const requestWithRootCollection = {
+    nextUrl: new URL(
+      "http://localhost/search/index?filters%5Broot-collection%5D=16ad5350-c52e-012f-aecf-58d385a7bc34&keywords="
+    ),
+  } as NextRequest;
+  const response = middleware(requestWithRootCollection);
+
+  expect(NextResponse.redirect).toHaveBeenCalledWith(
+    "http://localhost/search/index?filters=%5Bcollection%3D16ad5350-c52e-012f-aecf-58d385a7bc34%5D",
+    301
+  );
+  expect(response).toBe("redirect response");
+});
+
+it("transforms title_uuid_s to subcollection uuid only format", () => {
+  const requestWithSubCollection = {
+    nextUrl: new URL(
+      "http://localhost/search/index?filters%5Btitle_uuid_s%5D%5B%5D=Atlas%2052.%20Vol.%2014,%201901.%7C%7C0d11d7c0-c5fc-012f-82dd-58d385a7bc34&keywords=&layout=false#/?scroll=0"
+    ),
+  } as NextRequest;
+  const response = middleware(requestWithSubCollection);
+
+  expect(NextResponse.redirect).toHaveBeenCalledWith(
+    "http://localhost/search/index?filters=%5Bsubcollection%3D0d11d7c0-c5fc-012f-82dd-58d385a7bc34%5D",
     301
   );
   expect(response).toBe("redirect response");

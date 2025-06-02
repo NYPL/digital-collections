@@ -16,27 +16,58 @@ jest.mock("next/navigation", () => ({
 describe("ActiveFilters", () => {
   let mockManager;
   let component;
+  let allFilters;
 
   beforeEach(() => {
     jest.clearAllMocks();
     mockManager = new GeneralSearchManager({
       initialPage: 1,
       initialSort: DEFAULT_SEARCH_SORT,
+      defaultSort: DEFAULT_SEARCH_SORT,
       initialFilters: [
         { filter: "topic", value: "art" },
-        { filter: "format", value: "book" },
+        { filter: "form", value: "book" },
+        { filter: "rights", value: "onSiteMaterial" },
+        { filter: "collection", value: "f08b1ce0-c6bf-012f-d3f7-58d385a7bc34" },
       ],
       initialKeywords: DEFAULT_SEARCH_TERM,
       lastFilterRef: { current: null },
     });
-    component = <ActiveFilters searchManager={mockManager} />;
+    allFilters = {
+      topic: [
+        { name: "art", count: 647, selected: true },
+        { name: "english", count: 647, selected: false },
+      ],
+      format: [
+        { name: "book", count: 11, selected: true },
+        { name: "letter", count: 6, selected: false },
+        { name: "telegram", count: 6, selected: false },
+      ],
+      collection: [
+        {
+          name: "Correspondence||f08b1ce0-c6bf-012f-d3f7-58d385a7bc34",
+          count: 647,
+          selected: true,
+        },
+        {
+          name: "Outgoing Correspondence||9b8967b0-f449-012f-60fa-58d385a7b928",
+          count: 647,
+          selected: false,
+        },
+      ],
+    };
+    component = (
+      <ActiveFilters searchManager={mockManager} allFilters={allFilters} />
+    );
   });
 
-  it("renders the applied filters", () => {
+  it("renders the applied filters with expected labels", () => {
     render(component);
     expect(screen.getByText("Filters applied:")).toBeInTheDocument();
     expect(screen.getByText("Art")).toBeInTheDocument();
     expect(screen.getByText("Book")).toBeInTheDocument();
+    expect(screen.getByText("Contains on-site materials")).toBeInTheDocument();
+    expect(screen.getByText("Correspondence")).toBeInTheDocument();
   });
 
   it("removes a filter when a tag is clicked", () => {
@@ -61,11 +92,12 @@ describe("ActiveFilters", () => {
     const mockEmptyManager = new GeneralSearchManager({
       initialPage: 1,
       initialSort: DEFAULT_SEARCH_SORT,
+      defaultSort: DEFAULT_SEARCH_SORT,
       initialFilters: [],
       initialKeywords: DEFAULT_SEARCH_TERM,
       lastFilterRef: { current: null },
     });
-    render(<ActiveFilters searchManager={mockEmptyManager} />);
+    render(<ActiveFilters searchManager={mockEmptyManager} allFilters={{}} />);
     expect(screen.queryByText("Filters applied:")).not.toBeInTheDocument();
   });
 });
