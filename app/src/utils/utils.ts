@@ -91,10 +91,6 @@ export const stringToSlug = (string: string = ""): string => {
     .replace(/-+/g, "-"); // remove consecutive hyphens
 };
 
-export const parseBoolean = (value: string): boolean => {
-  return value === "true" ? true : false;
-};
-
 export const titleToDCParam = (string: string = ""): string => {
   return string?.replace(/\s+/g, "+"); // replace spaces with +
 };
