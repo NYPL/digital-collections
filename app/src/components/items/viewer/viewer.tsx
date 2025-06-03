@@ -1,16 +1,9 @@
 "use client";
 
-import AudioViewer from "../clover/audio/viewer";
-import VideoViewer from "../clover/video/viewer";
 import { ItemModel } from "../../../models/item";
 import React from "react";
 import { UniversalViewer } from "../uv/universalViewerLazy";
 import "universalviewer/dist/esm/index.css";
-import {
-  IMAGE_CONTENT_TYPE_NAMES,
-  AUDIO_CONTENT_TYPE_NAMES,
-  VIDEO_CONTENT_TYPE_NAMES,
-} from "../../../config/constants";
 
 interface ItemProps {
   item: ItemModel;

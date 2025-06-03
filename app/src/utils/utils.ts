@@ -1,21 +1,12 @@
 import {
   ADOBE_ANALYTICS_SITE_SECTION,
   ADOBE_ANALYTICS_DC_PREFIX,
-  IMAGE_CONTENT_TYPE_NAMES,
-  AUDIO_CONTENT_TYPE_NAMES,
-  VIDEO_CONTENT_TYPE_NAMES,
-  ALLOWED_FILTERS,
 } from "../config/constants";
 import CollectionDataType from "@/src/types/CollectionDataType";
 import ItemDataType from "@/src/types/ItemDataType";
-import {
-  AvailableFilter,
-  AvailableFilterOption,
-} from "../types/AvailableFilterType";
+import { AvailableFilterOption } from "../types/AvailableFilterType";
 import type { SearchResultRecordType } from "../types/SearchCardType";
 import type { Highlight } from "../types/HighlightType";
-import { constants } from "crypto";
-import { type } from "os";
 import { isValidFilter } from "./searchManager";
 
 /**
@@ -153,38 +144,6 @@ export const getRecordType = (type: any): SearchResultRecordType => {
   // capitalize first character in strin
   //  capitalize(type)  // returns type error
   return type.charAt(0).toUpperCase() + type.slice(1);
-};
-
-export const getContentType = (type: any) => {
-  console.log("type is: ", type);
-  if (IMAGE_CONTENT_TYPE_NAMES.includes(type)) {
-    console.log("image");
-    return "image";
-  } else if (AUDIO_CONTENT_TYPE_NAMES.includes(type)) {
-    console.log("audio");
-    return "audio";
-  } else if (VIDEO_CONTENT_TYPE_NAMES.includes(type)) {
-    console.log("video");
-    return "video";
-  } else {
-    return "no type of resource match";
-  }
-
-  // TO DO: would perfer to use a switch here, IDK why this didn't work
-  // switch (type) {
-  //   case (IMAGE_CONTENT_TYPE_NAMES.includes(type)):
-  //     console.log("image")
-  //     return "image"
-  //   case (AUDIO_CONTENT_TYPE_NAMES.includes(type)):
-  //     console.log("audio")
-  //     return "audio"
-  //   case (VIDEO_CONTENT_TYPE_NAMES.includes(type)):
-  //     console.log("video")
-  //     return "video"
-  //   default:
-  //     console.log("no type of resource match")
-  //     return "no type of resource match"
-  // }
 };
 
 export const getCollectionFilterFromUUID = (

@@ -6,8 +6,7 @@ import parse from "html-react-parser";
 
 const CitationsOverview = ({ item }) => {
   const metadata = item.metadata;
-  const shareUrl = `https://digitalcollections.nypl.org/items/` + item.uuid;
-  console.log("metadata is: ", metadata);
+  const shareUrl = item.link;
 
   const today = new Date().toLocaleDateString("en-us", {
     day: "numeric",
