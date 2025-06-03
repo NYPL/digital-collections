@@ -4,7 +4,7 @@ import { Maniiifest } from "maniiifest";
 // https://www.npmjs.com/package/@iiif/manifold
 // https://github.com/iiif-commons/manifold
 
-import { getContentType } from "../utils/utils";
+// import { getContentType } from "../utils/utils";
 export class ItemModel {
   uuid: string;
   mods: any;
@@ -18,6 +18,7 @@ export class ItemModel {
   hasItems?: boolean;
   hasRightsRestritions?: boolean;
   manifestURL: string;
+  link: string;
   metadata?: {
     title: string;
     names?: string;
@@ -42,11 +43,9 @@ export class ItemModel {
 
   constructor(uuid: string, manifest: any) {
     // get custom label from manifest
-
     const parser = new Maniiifest(manifest);
-    console.log("manifest.items.length is: ", manifest.items.length);
     this.hasItems = manifest.items.length > 0 ? true : false;
-    console.log("hasItems is: ", this.hasItems);
+
     // const label = parser?.getManifestLabelByLanguage("en");
     const metadata = Array.from(parser.iterateManifestMetadata());
     const manifestMetadataHash = {};
@@ -61,20 +60,23 @@ export class ItemModel {
 
     // console.log("manifestMetadataHash is: ", manifestMetadataHash);
     this.uuid = uuid;
-
-    (this.typeOfResource = manifestMetadataHash["Resource Type"]
-      ? manifestMetadataHash["Resource Type"].toString()
-      : ""),
+    (this.link =
+      process.env.APP_ENV === "development" || process.env.APP_ENV === "qa"
+        ? `https://qa-digitalcollections.nypl.org/items/${this.uuid}`
+        : `https://digitalcollections.nypl.org/items/${this.uuid}`),
+      (this.typeOfResource = manifestMetadataHash["Resource Type"]
+        ? manifestMetadataHash["Resource Type"].toString()
+        : ""),
       (this.title = manifestMetadataHash["Title"]
         ? manifestMetadataHash["Title"].toString()
         : ""),
-      (this.contentType = getContentType(
-        manifestMetadataHash["Content Type"].length > 0
-          ? manifestMetadataHash["Content Type"][0]
-          : manifestMetadataHash["Content Type"]
-      ));
-    // TO DO: change this to QA
-    this.manifestURL = `${process.env.COLLECTIONS_API_URL}/manifests/${uuid}`;
+      // (this.contentType = getContentType(
+      //   manifestMetadataHash["Content Type"].length > 0
+      //     ? manifestMetadataHash["Content Type"][0]
+      //     : manifestMetadataHash["Content Type"]
+      // ));
+      // TO DO: change this to QA
+      (this.manifestURL = `${process.env.COLLECTIONS_API_URL}/manifests/${uuid}`);
     // `http://localhost:8000/manifests/${uuid}`;
 
     // `${process.env.collectionS_API_URL}/manifests/${uuid}`

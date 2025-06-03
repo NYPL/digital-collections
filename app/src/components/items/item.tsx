@@ -8,7 +8,6 @@ import {
   Heading,
   Banner,
   Box,
-  Text,
   Link,
   Icon,
 } from "@nypl/design-system-react-components";

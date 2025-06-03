@@ -5,7 +5,6 @@ import {
 } from "../../../hooks/useUniversalViewer";
 import React, { useEffect, useMemo, useRef } from "react";
 import { IIIFEvents as BaseEvents, IIIFURLAdapter } from "universalviewer";
-import { UVConfig } from "./uv-config";
 
 export type UniversalViewerProps = {
   config?: any;
@@ -141,11 +140,11 @@ const UniversalViewer: React.FC<UniversalViewerProps> = React.memo(
 
         if (lastIndex.current !== i) {
           console.log("lastIndex is", lastIndex);
-          // const canvas = uv?.extension?.helper.getCanvasByIndex(i);
-          // if (canvas) {
-          //   lastIndex.current = i;
-          //   onChangeCanvas(manifestId, canvas.id);
-          // }
+          const canvas = (uv as any)?.extension?.helper.getCanvasByIndex(i);
+          if (canvas) {
+            lastIndex.current = i;
+            onChangeCanvas(manifestId, canvas.id);
+          }
         }
       }
     });
