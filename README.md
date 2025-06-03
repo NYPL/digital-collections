@@ -312,9 +312,9 @@ npm run homepageImageLoadingTestProd
 
 The test waits for the 24 swim lane images to load, including the 12 that load after scrolling, and has succeeded if it does not time out. It simulates a single user loading the homepage one time.  
 
-## Playwright test automation  
+Playwright test automation  
 
-### Install Playwright  
+Install Playwright  
 ``` 
 npm init playwright@latest
 ```  
