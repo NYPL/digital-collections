@@ -317,34 +317,34 @@ The test waits for the 24 swim lane images to load, including the 12 that load a
 ### Install Playwright  
 ``` 
 npm init playwright@latest
-```
+```  
 
-### Run Playwright tests  
+Run Playwright tests  
 ``` 
 npm run playwright or npx playwright test  
 ```
 
-### HTML Test reports  
+HTML Test reports  
 ```  
 npx playwright show-report  
 ```
 
-### Run tests in UI mode  
+Run tests in UI mode  
 ```
 npx playwright test --ui  
 ```  
 
-### Run tests in headed Chrome browser  
+Run tests in headed Chrome browser  
 ``` 
 npx playwright test --project=chromium --headed  
 ```  
 
-### Run single test file  
+Run a single test file  
 ```  
 npx playwright test **example.spec.ts** --project=chromium  
 ```  
 
-### Run specific test function  
+Run a specific test function  
 ``` 
 npx playwright test -g **"has title"** --project=chromium  
 ```
