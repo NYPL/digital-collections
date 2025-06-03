@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+ -Added playwright installation to repo and updated readme for playwright setup (DR-3680)
+
 ## [0.4.2] 2025-05-22
 
 ### Added

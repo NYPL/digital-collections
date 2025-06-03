@@ -310,7 +310,45 @@ To run the same test script against the production environment, run
 npm run homepageImageLoadingTestProd
 ```
 
-The test waits for the 24 swim lane images to load, including the 12 that load after scrolling, and has succeeded if it does not time out. It simulates a single user loading the homepage one time.
+The test waits for the 24 swim lane images to load, including the 12 that load after scrolling, and has succeeded if it does not time out. It simulates a single user loading the homepage one time.  
+
+## Playwright test automation  
+
+### Install Playwright  
+``` 
+npm init playwright@latest
+```
+
+### Run Playwright tests  
+``` 
+npm run playwright or npx playwright test  
+```
+
+### HTML Test reports  
+```  
+npx playwright show-report  
+```
+
+### Run tests in UI mode  
+```
+npx playwright test --ui  
+```  
+
+### Run tests in headed Chrome browser  
+``` 
+npx playwright test --project=chromium --headed  
+```  
+
+### Run single test file  
+```  
+npx playwright test **example.spec.ts** --project=chromium  
+```  
+
+### Run specific test function  
+``` 
+npx playwright test -g **"has title"** --project=chromium  
+```
+
 
 ## Linting and formatting
 
@@ -472,26 +510,5 @@ These page types are:
 
 ##### 5. About Page
 
-# Playwright test automation
-### Install Playwright  
-npm init playwright@latest
-
-### Run Playwright tests  
-npm run playwright or npx playwright test 
-
-### HTML Test reports  
-npx playwright show-report  
-
-### Run tests in UI mode
-npx playwright test --ui  
-
-### Run tests in headed Chrome browser  
-npx playwright test --project=chromium --headed  
-
-### Run single test file  
-npx playwright test **example.spec.ts** --project=chromium  
-
-### Run specific test function  
-npx playwright test -g **"has title"** --project=chromium
 
 
