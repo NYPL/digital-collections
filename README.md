@@ -471,3 +471,27 @@ These page types are:
 ##### 4d. PDFs
 
 ##### 5. About Page
+
+# Playwright test automation
+### Install Playwright  
+npm init playwright@latest
+
+### Run Playwright tests  
+npm run playwright or npx playwright test 
+
+### HTML Test reports  
+npx playwright show-report  
+
+### Run tests in UI mode
+npx playwright test --ui  
+
+### Run tests in headed Chrome browser  
+npx playwright test --project=chromium --headed  
+
+### Run single test file  
+npx playwright test **example.spec.ts** --project=chromium  
+
+### Run specific test function  
+npx playwright test -g **"has title"** --project=chromium
+
+
