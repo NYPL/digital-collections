@@ -1,8 +1,8 @@
-// from code came from https://codesandbox.io/p/sandbox/uv-nextjs-example-239ff5?file=%2Flib%2Fuse-universalviewer.ts%3A9%2C26
 import React, { useLayoutEffect, useEffect, useState } from "react";
 import { init, Viewer } from "universalviewer";
 
 export function useEvent(
+  // from code came from https://codesandbox.io/p/sandbox/uv-nextjs-example-239ff5?file=%2Flib%2Fuse-universalviewer.ts%3A9%2C26
   viewer: Viewer | undefined,
   name: string,
   cb: (...args: any[]) => void
