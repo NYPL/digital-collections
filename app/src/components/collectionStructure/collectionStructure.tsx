@@ -86,6 +86,11 @@ const applyNodeFilter = async (
   searchManager.handleSearchSubmit();
   searchManager.setLastFilter(null);
 
+  /**
+   * If opening the item, add the subcollection filter. If closing, remove
+   * the subcollection filter or replace it with its parent subcollection filter.
+   */
+
   await updateURL(
     isOpening
       ? searchManager.handleAddFilter([filter])
@@ -378,6 +383,7 @@ const CollectionStructure = ({
     }
   };
 
+  // If no subcontainers, don't display collection structure
   if (tree.length === 0) {
     return null;
   }
