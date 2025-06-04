@@ -3,7 +3,14 @@ import type {
   SearchResultHighlightType,
   SearchResultRecordType,
 } from "../types/SearchCardType";
-import { imageURL, formatHighlightText, capitalize } from "../utils/utils";
+import type { AvailableFilterOption } from "../types/AvailableFilterType";
+import {
+  imageURL,
+  formatHighlightText,
+  capitalize,
+  getRecordType,
+  getCollectionFilterFromUUID,
+} from "../utils/utils";
 
 export class SearchCardModel {
   title: string;

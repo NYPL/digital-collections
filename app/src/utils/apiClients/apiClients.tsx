@@ -249,6 +249,16 @@ export class CollectionsApi {
     return response;
   }
 
+  static async getManifestForItemUUID(uuid: string) {
+    let apiUrl = `${process.env.COLLECTIONS_API_URL}/manifests/${uuid}`;
+    console.log("manifest url is: ", apiUrl);
+    const response = await fetchApi({
+      apiUrl: apiUrl,
+      options: { isRepoApi: false },
+    });
+    return response;
+  }
+
   /**
    * Returns mapping of given collection UUIDs to their item counts.
    * @param {string[]} uuids - Array of collection UUIDs
