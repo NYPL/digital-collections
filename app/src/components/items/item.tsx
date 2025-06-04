@@ -18,12 +18,17 @@ interface ItemProps {
   type: string;
 }
 
+const renderViewer = (item) => {
+  console.log("item.isRestricted is: ", item.isRestricted);
+  return item.hasItems && !item.isRestricted;
+};
+
 const Item = ({ item, type }: ItemProps) => {
   return (
     <>
       <Box marginTop="-3em">
         <Heading level="h2">{item.title}</Heading>
-        {item.hasItems ? (
+        {renderViewer(item) ? (
           <ItemMediaViewer item={item} />
         ) : (
           <Banner
