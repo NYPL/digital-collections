@@ -20,11 +20,13 @@ export interface OpenStateItem {
   children?: OpenStateItem[];
   parentUuid?: string | null;
 }
+
 interface CollectionStructureProps {
   uuid: string;
   updateURL: (queryString: string) => Promise<void>;
   searchManager: SearchManager;
 }
+
 interface ToggleItemAndChildrenParams {
   uuid: string;
   tree: OpenStateItem[];
@@ -88,6 +90,7 @@ const applyNodeFilter = async (
    * If opening the item, add the subcollection filter. If closing, remove
    * the subcollection filter or replace it with its parent subcollection filter.
    */
+
   await updateURL(
     isOpening
       ? searchManager.handleAddFilter([filter])
@@ -362,13 +365,22 @@ const CollectionStructure = ({
   }
 
   const handleToggle = async (uuid: string) => {
-    await toggleItemAndChildren({
-      uuid,
-      tree,
-      setTree,
-      searchManager,
-      updateURL,
-    });
+    setToggledUuid(uuid);
+    try {
+      await toggleItemAndChildren({
+        uuid,
+        tree,
+        setTree,
+        searchManager,
+        updateURL,
+      });
+    } catch (error) {
+      console.error("Toggle failed:", error);
+    } finally {
+      setTimeout(() => {
+        setToggledUuid(null);
+      }, 300);
+    }
   };
 
   // If no subcontainers, don't display collection structure
@@ -399,6 +411,7 @@ const CollectionStructure = ({
             items={tree}
             toggle={handleToggle}
             targetUuid={targetUuid!}
+            toggledUuid={toggledUuid!}
           />
         </ul>
       </Box>
