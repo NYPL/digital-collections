@@ -40,10 +40,11 @@ const ButtonText = ({
   );
 };
 
+// Get path to currently toggled item, to blur all others on load.
 const findAncestorUuids = (
   nodes: OpenStateItem[],
   targetUuid: string
-): string[] | null => {
+): string[] => {
   for (const node of nodes) {
     if (node.uuid === targetUuid) return [node.uuid];
     if (node.children) {
@@ -51,7 +52,7 @@ const findAncestorUuids = (
       if (childPath) return [node.uuid, ...childPath];
     }
   }
-  return null;
+  return [];
 };
 
 /**
@@ -61,6 +62,8 @@ const findAncestorUuids = (
  *
  * @param {OpenStateItem[]} items - List of tree nodes to render
  * @param {(uuid: string) => void} toggle - Callback to toggle a node's open/closed state
+ * @param {string} targetUuid - Uuid of deepest open item
+ * @param {string} toggledUuid - Uuid of item that was just clicked, used to blur other items
  * @returns {JSX.Element} The rendered accordion tree
  */
 const AccordionTree = ({
@@ -74,9 +77,8 @@ const AccordionTree = ({
   targetUuid: string;
   toggledUuid: string;
 }) => {
-  const ancestorUuids = targetUuid
-    ? findAncestorUuids(items, targetUuid) ?? []
-    : [];
+  const ancestorUuids = targetUuid ? findAncestorUuids(items, targetUuid) : [];
+  console.log("ancestors", ancestorUuids);
   return (
     <>
       {items.map((item) => {
