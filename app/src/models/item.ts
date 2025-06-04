@@ -103,20 +103,20 @@ export class ItemModel {
       tableOfContents: manifestMetadataHash["Table of Contents"]
         ? manifestMetadataHash["Table of Contents"].toString()
         : "",
-      locations: manifestMetadataHash["Library Location"]
-        ? manifestMetadataHash["Library Location"].join("<br>")
+      locations: manifestMetadataHash["Library Locations"]
+        ? manifestMetadataHash["Library Locations"].join("<br>")
         : "",
       subjects: manifestMetadataHash["Subjects"]
-        ? manifestMetadataHash["Subjects"].toString()
+        ? manifestMetadataHash["Subjects"].join("<br>")
         : "",
       genres: manifestMetadataHash["Genres"]
         ? manifestMetadataHash["Genres"].join("<br>")
         : "",
       notes: manifestMetadataHash["Notes"]
-        ? manifestMetadataHash["Notes"]?.toString()
+        ? manifestMetadataHash["Notes"].join("<br>")
         : "",
       physicalDescription: manifestMetadataHash["Physical Description"]
-        ? manifestMetadataHash["Physical Description"].toString()
+        ? manifestMetadataHash["Physical Description"].join("<br>")
         : "",
       typeOfResource: manifestMetadataHash["Resource Type"]
         ? manifestMetadataHash["Resource Type"].join("<br>")
