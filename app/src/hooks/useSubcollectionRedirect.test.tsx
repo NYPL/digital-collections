@@ -12,7 +12,7 @@ describe("useSubcollectionRedirect", () => {
     jest.restoreAllMocks();
   });
 
-  it("should redirect to new URL with subcollection filter", async () => {
+  it("should redirect prefixed subcollection uuids", async () => {
     const replaceMock = jest.fn();
 
     jest.spyOn(window, "location", "get").mockReturnValue({
@@ -29,6 +29,27 @@ describe("useSubcollectionRedirect", () => {
     await waitFor(() => {
       expect(replaceMock).toHaveBeenCalledWith(
         "http://localhost/collections/123e4567-e89b-12d3-a456-426614174000?filters=%5Bsubcollection%3Dfb72bd20-c5aa-012f-5141-58d385a7bc34%5D"
+      );
+    });
+  });
+
+  it("should redirect plain subcollection uuids", async () => {
+    const replaceMock = jest.fn();
+
+    jest.spyOn(window, "location", "get").mockReturnValue({
+      ...window.location,
+      pathname: "/collections/de1dcfb0-c5f6-012f-1dfc-58d385a7bc34",
+      hash: "#/?tab=navigation&roots=30593990-bc6a-0132-4f30-58d385a7bbd0/721227b0-c5f7-012f-c979-58d385a7bc34",
+      origin: "http://localhost",
+      search: "",
+      replace: replaceMock,
+    } as unknown as Location);
+
+    render(<TestPageComponent />);
+
+    await waitFor(() => {
+      expect(replaceMock).toHaveBeenCalledWith(
+        "http://localhost/collections/de1dcfb0-c5f6-012f-1dfc-58d385a7bc34?filters=%5Bsubcollection%3D721227b0-c5f7-012f-c979-58d385a7bc34%5D"
       );
     });
   });
