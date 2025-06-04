@@ -19,7 +19,6 @@ interface ItemProps {
 }
 
 const renderViewer = (item) => {
-  console.log("item.isRestricted is: ", item.isRestricted);
   return item.hasItems && !item.isRestricted;
 };
 
@@ -35,8 +34,8 @@ const Item = ({ item, type }: ItemProps) => {
             marginTop="m"
             content={
               <>
-                This item has no media to return. Help us resolve this by
-                submitting feedback with the feedback form.
+                This item either has no media to return or is restricted. Help
+                us resolve this by submitting feedback with the feedback form.
               </>
             }
             icon={
