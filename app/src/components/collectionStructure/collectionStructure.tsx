@@ -20,13 +20,11 @@ export interface OpenStateItem {
   children?: OpenStateItem[];
   parentUuid?: string | null;
 }
-
 interface CollectionStructureProps {
   uuid: string;
   updateURL: (queryString: string) => Promise<void>;
   searchManager: SearchManager;
 }
-
 interface ToggleItemAndChildrenParams {
   uuid: string;
   tree: OpenStateItem[];
@@ -90,7 +88,6 @@ const applyNodeFilter = async (
    * If opening the item, add the subcollection filter. If closing, remove
    * the subcollection filter or replace it with its parent subcollection filter.
    */
-
   await updateURL(
     isOpening
       ? searchManager.handleAddFilter([filter])
