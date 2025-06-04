@@ -1,30 +1,19 @@
 import { test, expect } from "@playwright/test";
+import SearchPage from "../pages/search.page";
 
-const searchKeyword = "maps";
-test("searches for a keyword", async ({ page }) => {
-  await page.goto("/");
-  await page.waitForLoadState("load");
+test("searches for a keyword from homepage", async ({ page }) => {
+  // from homepage
+  const searchPage = await SearchPage.loadPage("/", page); // rename when homepage class is created
 
-  const searchBox = page.getByLabel("Search keyword(s)");
-  await expect(searchBox).toBeVisible();
-  await searchBox.fill(searchKeyword);
-  const searchButton = page.getByRole("button", { name: "Search" });
-  await expect(searchButton).toBeVisible();
-  await searchButton.click();
+  await expect(searchPage.searchBox).toBeVisible(); // create function to search
+  await searchPage.searchBox.fill(searchPage.searchKeyword);
+  await expect(searchPage.searchButton).toBeVisible();
+  await searchPage.searchButton.click();
 
-  await page.waitForURL("**/search/**");
+  await page.waitForURL("**/search/**"); // gets flaky at this point waiting for search results
   await expect(page).toHaveTitle("Search results - NYPL Digital Collections");
 
-  const refineHeading = page.getByRole("heading", {
-    name: "Refine your search",
-  });
-  await expect(refineHeading).toBeVisible();
-  const resultsHeading = page.getByRole("heading", {
-    name: new RegExp(
-      `^Displaying \\d+-\\d+ of \\d+ results for "${searchKeyword}"$`
-    ),
-  });
-  await expect(resultsHeading).toBeVisible();
-  const firstResult = page.getByRole("link", { name: searchKeyword }).first();
-  await expect(firstResult).toBeVisible();
+  await expect(searchPage.refineHeading).toBeVisible(); // split into new test - displays search results
+  await expect(searchPage.resultsHeading).toBeVisible();
+  await expect(searchPage.firstResult).toBeVisible();
 });
