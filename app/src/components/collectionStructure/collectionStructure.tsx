@@ -362,22 +362,13 @@ const CollectionStructure = ({
   }
 
   const handleToggle = async (uuid: string) => {
-    setToggledUuid(uuid);
-    try {
-      await toggleItemAndChildren({
-        uuid,
-        tree,
-        setTree,
-        searchManager,
-        updateURL,
-      });
-    } catch (error) {
-      console.error("Toggle failed:", error);
-    } finally {
-      setTimeout(() => {
-        setToggledUuid(null);
-      }, 300);
-    }
+    await toggleItemAndChildren({
+      uuid,
+      tree,
+      setTree,
+      searchManager,
+      updateURL,
+    });
   };
 
   // If no subcontainers, don't display collection structure
@@ -408,7 +399,6 @@ const CollectionStructure = ({
             items={tree}
             toggle={handleToggle}
             targetUuid={targetUuid!}
-            toggledUuid={toggledUuid!}
           />
         </ul>
       </Box>
