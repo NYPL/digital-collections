@@ -19,6 +19,7 @@ export class ItemModel {
   hasRightsRestritions?: boolean;
   manifestURL: string;
   link: string;
+  isRestricted: boolean;
   metadata?: {
     title: string;
     names?: string;
@@ -58,7 +59,6 @@ export class ItemModel {
       }
     }
 
-    // console.log("manifestMetadataHash is: ", manifestMetadataHash);
     this.uuid = uuid;
     (this.link =
       process.env.APP_ENV === "development" || process.env.APP_ENV === "qa"
@@ -70,6 +70,10 @@ export class ItemModel {
       (this.title = manifestMetadataHash["Title"]
         ? manifestMetadataHash["Title"].toString()
         : ""),
+      (this.isRestricted = manifestMetadataHash["Is Restricted"]
+        ? manifestMetadataHash["Is Restricted"].toString().toLowerCase() ===
+          "true"
+        : true),
       // (this.contentType = getContentType(
       //   manifestMetadataHash["Content Type"].length > 0
       //     ? manifestMetadataHash["Content Type"][0]
