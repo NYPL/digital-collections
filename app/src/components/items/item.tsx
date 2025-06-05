@@ -18,20 +18,24 @@ interface ItemProps {
   type: string;
 }
 
+const renderViewer = (item) => {
+  return item.hasItems && !item.isRestricted;
+};
+
 const Item = ({ item, type }: ItemProps) => {
   return (
     <>
       <Box marginTop="-3em">
         <Heading level="h2">{item.title}</Heading>
-        {item.hasItems ? (
+        {renderViewer(item) ? (
           <ItemMediaViewer item={item} />
         ) : (
           <Banner
             marginTop="m"
             content={
               <>
-                This item has no media to return. Help us resolve this by
-                submitting feedback with the feedback form.
+                This item either has no media to return or is restricted. Help
+                us resolve this by submitting feedback with the feedback form.
               </>
             }
             icon={
