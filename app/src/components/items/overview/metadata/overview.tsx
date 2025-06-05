@@ -60,6 +60,7 @@ const StructuredCollectionsList = (rawCollections) => {
               <Icon name="navigationSubdirectoryArrowRight" size="large" />
             )}
             {parse(htmlString)}
+            {/* TODO: keeping this in here if we need to use the DS Link component */}
             {/* <Link href={href}>
               {text}
             </Link> */}
