@@ -50,7 +50,6 @@ export class ItemModel {
 
     // const label = parser?.getManifestLabelByLanguage("en");
     const metadata = Array.from(parser.iterateManifestMetadata());
-    // console.log("metadata is: ", manifest.metadata)
     const manifestMetadataHash = {};
 
     if (metadata) {
