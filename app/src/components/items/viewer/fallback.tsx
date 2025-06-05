@@ -5,6 +5,7 @@ import React from "react";
 import {
   Heading,
   Banner,
+  Notification,
   Box,
   Link,
   Icon,
@@ -19,12 +20,13 @@ const ItemMediaViewerFallback = ({ item }: ItemProps) => {
   return (
     <>
       {item.isRestricted ? (
-        <Banner
+        <Notification
           marginTop="m"
-          heading={
-            <Heading level="h5">Available to view on-site at NYPL</Heading>
-          }
-          content={
+          marginBottom="m"
+          marginLeft="0"
+          marginRight="0"
+          notificationHeading="Available to view on-site at NYPL"
+          notificationContent={
             <>
               We invite you to visit one of our reading rooms at {divisionLink}{" "}
               to view this item. Due to copyright restrictions, it is available
@@ -33,7 +35,6 @@ const ItemMediaViewerFallback = ({ item }: ItemProps) => {
               the {divisionLink} page on <Link href="nypl.org">nypl.org</Link>.
             </>
           }
-          type="warning"
         />
       ) : (
         <Banner

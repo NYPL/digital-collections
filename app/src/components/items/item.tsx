@@ -12,6 +12,7 @@ import {
   Box,
   Link,
   Icon,
+  Text,
 } from "@nypl/design-system-react-components";
 
 interface ItemProps {
@@ -28,25 +29,24 @@ const Item = ({ item, type }: ItemProps) => {
   return (
     <>
       <Box marginTop="-3em">
-        <Heading level="h2">{item.title}</Heading>
         {renderViewer(item) ? (
-          <ItemMediaViewer item={item} />
+          <>
+            <Heading level="h2">{item.title}</Heading>
+            <ItemMediaViewer item={item} />
+          </>
         ) : (
-          <ItemMediaViewerFallback item={item} />
+          <>
+            <ItemMediaViewerFallback item={item} />
+            <Heading level="h2">{item.title}</Heading>
+          </>
         )}
-        <Banner
-          marginTop="m"
-          content={
-            <>
-              Our collections include some content that may be harmful or
-              dificult to view.{" "}
-              <Link href="https://digitalcollections.nypl.org/about#nypl_harmful_content_statement">
-                Learn more.
-              </Link>{" "}
-            </>
-          }
-          type="neutral"
-        ></Banner>
+        <Text marginTop="m">
+          <Icon name="errorOutline" size="medium" /> Our collections include
+          some content that may be harmful or dificult to view.{" "}
+          <Link href="https://digitalcollections.nypl.org/about#nypl_harmful_content_statement">
+            Learn more.
+          </Link>{" "}
+        </Text>
         <ItemOverview item={item} />
       </Box>
     </>
