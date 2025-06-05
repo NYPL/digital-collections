@@ -39,7 +39,6 @@ const metadataFieldRender = (field, value) => {
 };
 
 const MetadataOverview = ({ metadata }) => {
-  console.log("metadata is: ", metadata);
   return (
     <>
       <Box>
@@ -49,11 +48,6 @@ const MetadataOverview = ({ metadata }) => {
         </Heading>
 
         {Object.keys(metadata)?.map((field, index) => {
-          console.log(
-            " metadataFieldToDisplay[field] is: ",
-            metadataFieldToDisplay[field]
-          );
-
           const value = metadata[field];
           if (value !== "" && metadataFieldToDisplay[field] !== "") {
             return (

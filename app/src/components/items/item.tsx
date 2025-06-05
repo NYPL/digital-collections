@@ -3,7 +3,9 @@
 import { ItemModel } from "../../models/item";
 import React from "react";
 import ItemMediaViewer from "./viewer/viewer";
+import ItemMediaViewerFallback from "./viewer/fallback";
 import ItemOverview from "./overview/overview";
+
 import {
   Heading,
   Banner,
@@ -30,24 +32,7 @@ const Item = ({ item, type }: ItemProps) => {
         {renderViewer(item) ? (
           <ItemMediaViewer item={item} />
         ) : (
-          <Banner
-            marginTop="m"
-            content={
-              <>
-                This item either has no media to return or is restricted. Help
-                us resolve this by submitting feedback with the feedback form.
-              </>
-            }
-            icon={
-              <Icon
-                name="alertWarningOutline"
-                title="Banner with custom icon"
-                size="large"
-                marginTop="xxxs"
-              />
-            }
-            type="negative"
-          />
+          <ItemMediaViewerFallback item={item} />
         )}
         <Banner
           marginTop="m"
