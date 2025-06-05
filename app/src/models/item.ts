@@ -20,7 +20,6 @@ export class ItemModel {
   manifestURL: string;
   link: string;
   isRestricted: boolean;
-  location: string;
   metadata?: {
     title: string;
     names?: string;
