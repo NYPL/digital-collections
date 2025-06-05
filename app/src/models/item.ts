@@ -20,6 +20,7 @@ export class ItemModel {
   manifestURL: string;
   link: string;
   isRestricted: boolean;
+  location: string;
   metadata?: {
     title: string;
     names?: string;
@@ -49,6 +50,7 @@ export class ItemModel {
 
     // const label = parser?.getManifestLabelByLanguage("en");
     const metadata = Array.from(parser.iterateManifestMetadata());
+    // console.log("metadata is: ", manifest.metadata)
     const manifestMetadataHash = {};
 
     if (metadata) {
@@ -74,19 +76,8 @@ export class ItemModel {
         ? manifestMetadataHash["Is Restricted"].toString().toLowerCase() ===
           "true"
         : true),
-      // (this.contentType = getContentType(
-      //   manifestMetadataHash["Content Type"].length > 0
-      //     ? manifestMetadataHash["Content Type"][0]
-      //     : manifestMetadataHash["Content Type"]
-      // ));
-      // TO DO: change this to QA
       (this.manifestURL = `${process.env.COLLECTIONS_API_URL}/manifests/${uuid}`);
-    // `http://localhost:8000/manifests/${uuid}`;
 
-    // `${process.env.collectionS_API_URL}/manifests/${uuid}`
-    // `http://localhost:8000/manifests/${uuid}`;
-    // //`https://qa-api-collections.nypl.org/manifests/${uuid}`;
-    // TO DO: use ENV var ie. `${process.env.collectionS_API_URL}/manifests/${uuid}`
     // TO DO: add _isCartographic for map stuff
     this.metadata = {
       title: manifestMetadataHash["Title"]
