@@ -11,7 +11,7 @@ export default class SearchPage {
 
   constructor(page: Page) {
     this.page = page;
-    this.searchKeyword = "maps";
+    this.searchKeyword = "map of scandinavia";
     this.searchBox = this.page.getByLabel("Search keyword(s)");
     this.searchButton = this.page.getByRole("button", { name: "Search" });
     this.refineHeading = this.page.getByRole("heading", {

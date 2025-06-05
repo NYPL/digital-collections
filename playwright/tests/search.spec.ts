@@ -6,6 +6,8 @@ test("searches for a keyword from homepage", async ({ page }) => {
 
   await expect(searchPage.searchBox).toBeVisible();
   await searchPage.searchBox.fill(searchPage.searchKeyword);
+  await page.waitForTimeout(1000); // webkit is clearing the search box after filling it
+  await expect(searchPage.searchBox).toHaveValue(searchPage.searchKeyword);
   await expect(searchPage.searchButton).toBeVisible();
   await searchPage.searchButton.click();
 
