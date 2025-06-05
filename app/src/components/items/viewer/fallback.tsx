@@ -18,6 +18,7 @@ interface ItemProps {
 const ItemMediaViewerFallback = ({ item }: ItemProps) => {
   // hacky way to generate the link
   // this assumes that the first location in the array is the Division link
+  // TODO: map DCFL Division link to nypl.org Division link
   const divisionLink = item?.metadata?.locations?.split("<br>")[0];
   return (
     <>
