@@ -15,7 +15,7 @@ interface ItemProps {
 }
 
 const ItemMediaViewerFallback = ({ item }: ItemProps) => {
-  const divisionLink = item.metadata.locations.split("<br>")[0];
+  const divisionLink = item?.metadata?.locations?.split("<br>")[0];
   return (
     <>
       {item.isRestricted ? (
