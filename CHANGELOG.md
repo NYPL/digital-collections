@@ -10,6 +10,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 
 - Added Playwright testing library (DR-3680)
+- Added Playwright test to search for a keyword (DR-3659)
 
 ## [0.4.2] 2025-05-22
 
