@@ -3,13 +3,16 @@
 import { ItemModel } from "../../models/item";
 import React from "react";
 import ItemMediaViewer from "./viewer/viewer";
+import ItemMediaViewerFallback from "./viewer/fallback";
 import ItemOverview from "./overview/overview";
+
 import {
   Heading,
   Banner,
   Box,
   Link,
   Icon,
+  Text,
 } from "@nypl/design-system-react-components";
 
 interface ItemProps {
@@ -26,42 +29,24 @@ const Item = ({ item, type }: ItemProps) => {
   return (
     <>
       <Box marginTop="-3em">
-        <Heading level="h2">{item.title}</Heading>
         {renderViewer(item) ? (
-          <ItemMediaViewer item={item} />
+          <>
+            <Heading level="h2">{item.title}</Heading>
+            <ItemMediaViewer item={item} />
+          </>
         ) : (
-          <Banner
-            marginTop="m"
-            content={
-              <>
-                This item either has no media to return or is restricted. Help
-                us resolve this by submitting feedback with the feedback form.
-              </>
-            }
-            icon={
-              <Icon
-                name="alertWarningOutline"
-                title="Banner with custom icon"
-                size="large"
-                marginTop="xxxs"
-              />
-            }
-            type="negative"
-          />
+          <>
+            <ItemMediaViewerFallback item={item} />
+            <Heading level="h2">{item.title}</Heading>
+          </>
         )}
-        <Banner
-          marginTop="m"
-          content={
-            <>
-              Our collections include some content that may be harmful or
-              dificult to view.{" "}
-              <Link href="https://digitalcollections.nypl.org/about#nypl_harmful_content_statement">
-                Learn more.
-              </Link>{" "}
-            </>
-          }
-          type="neutral"
-        ></Banner>
+        <Text marginTop="m">
+          <Icon name="errorOutline" size="medium" /> Our collections include
+          some content that may be harmful or dificult to view.{" "}
+          <Link href="https://digitalcollections.nypl.org/about#nypl_harmful_content_statement">
+            Learn more.
+          </Link>{" "}
+        </Text>
         <ItemOverview item={item} />
       </Box>
     </>
