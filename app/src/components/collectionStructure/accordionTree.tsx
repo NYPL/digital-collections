@@ -40,6 +40,21 @@ const ButtonText = ({
   );
 };
 
+// Get path to currently toggled item, to blur all others on load.
+const findAncestorUuids = (
+  nodes: OpenStateItem[],
+  targetUuid: string
+): string[] => {
+  for (const node of nodes) {
+    if (node.uuid === targetUuid) return [node.uuid];
+    if (node.children) {
+      const childPath = findAncestorUuids(node.children, targetUuid);
+      if (childPath) return [node.uuid, ...childPath];
+    }
+  }
+  return [];
+};
+
 /**
  * Recursively renders a collapsible accordion, where each node is a <li> element
  * (so component must be rendered inside a <ol> or <ul>). Each node in the tree can be expanded or collapsed.
@@ -48,23 +63,38 @@ const ButtonText = ({
  * @param {OpenStateItem[]} items - List of tree nodes to render
  * @param {(uuid: string) => void} toggle - Callback to toggle a node's open/closed state
  * @param {string} targetUuid - Uuid of deepest open item
+ * @param {string} toggledUuid - Uuid of item that was just clicked, used to blur other items
  * @returns {JSX.Element} The rendered accordion tree
  */
 const AccordionTree = ({
   items,
   toggle,
   targetUuid,
+  toggledUuid,
 }: {
   items: OpenStateItem[];
   toggle: (uuid: string) => void;
   targetUuid: string;
+  toggledUuid: string;
 }) => {
+  const ancestorUuids = targetUuid ? findAncestorUuids(items, targetUuid) : [];
+  console.log("ancestors", ancestorUuids);
   return (
     <>
       {items.map((item) => {
+        const isDimmed =
+          toggledUuid &&
+          toggledUuid !== item.uuid &&
+          !ancestorUuids.includes(item.uuid);
         return (
           <li key={item.uuid}>
-            <Box>
+            <Box
+              style={{
+                opacity: isDimmed ? 0.5 : 1,
+                pointerEvents: isDimmed ? "none" : "auto",
+                transition: "opacity 0.4s ease, pointer-events 0.4s ease",
+              }}
+            >
               <Button
                 _focus={{
                   outline: "none !important",
@@ -123,6 +153,7 @@ const AccordionTree = ({
                       targetUuid={targetUuid}
                       items={item.children}
                       toggle={toggle}
+                      toggledUuid={toggledUuid}
                     />
                   </ul>
                 </Collapse>
