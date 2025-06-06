@@ -9,22 +9,22 @@ export class DCHomepage {
   readonly about: Locator;
 
   // search box
-  readonly searchbox: Locator;
-  readonly searchbutton: Locator;
-  readonly publicdomaincheckbox: Locator;
-  readonly whatispublicdomainlink: Locator;
+  readonly searchBox: Locator;
+  readonly searchButton: Locator;
+  readonly publicDomaincheckbox: Locator;
+  readonly whatIsPublicDomainLink: Locator;
 
   // hero component
   readonly learnmore: Locator;
 
   //swimlane
-  readonly recently_digitized_see_more_link: Locator;
-  readonly maps_see_more_link: Locator;
-  readonly photographs_see_more_link: Locator;
-  readonly prints_and_drawings_see_more_link: Locator;
-  readonly manuscripts_correspondence_see_more_link: Locator;
-  readonly books_and_periodicals_see_more_link: Locator;
-  readonly fliers_and_ephemera_see_more_link: Locator;
+  readonly recentlyDigitizedSeeMoreLink: Locator;
+  readonly mapsSeeMoreLink: Locator;
+  readonly photographsSeeMoreLink: Locator;
+  readonly printsAndDrawingsSeeMoreLink: Locator;
+  readonly manuscriptsCorrespondenceSeeMoreLink: Locator;
+  readonly booksAndPeriodicalsSeeMoreLink: Locator;
+  readonly fliersAndEphemeraSeeMoreLink: Locator;
 
   constructor(page: Page) {
     //navigation menu
@@ -38,11 +38,13 @@ export class DCHomepage {
     this.about = this.page.getByRole("link", { name: "About", exact: true });
 
     //search box and button
-    this.searchbox = this.page.getByPlaceholder("Search keyword(s)");
-    this.searchbutton = this.page.getByRole("button", { name: "Search" });
+    this.searchBox = this.page.getByPlaceholder("Search keyword(s)");
+    this.searchButton = this.page.getByRole("button", { name: "Search" });
 
     // public domain
 
-    this.whatispublicdomainlink = this.page.getByText("What is public domain?");
+    this.whatIsPublicDomainLink = this.page.getByRole("link", {
+      name: "What is public domain?",
+    });
   }
 }

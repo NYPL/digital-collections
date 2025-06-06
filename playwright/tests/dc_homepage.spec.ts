@@ -5,7 +5,7 @@ test.beforeEach(async ({ page }) => {
   await page.goto("http://localhost:3000");
 });
 
-test("navigation menu is displayed (items, collections, divisions, about", async ({
+test("verify navigation menu is displayed (items, collections, divisions, about", async ({
   page,
 }) => {
   const dchomepage = new DCHomepage(page);
@@ -15,13 +15,13 @@ test("navigation menu is displayed (items, collections, divisions, about", async
   await expect(dchomepage.about).toBeVisible();
 });
 
-test("search box, search button are visible", async ({ page }) => {
+test("verify search box, search button are visible", async ({ page }) => {
   const dchomepage = new DCHomepage(page);
-  await expect(dchomepage.searchbox).toBeVisible();
-  await expect(dchomepage.searchbutton).toBeVisible();
+  await expect(dchomepage.searchBox).toBeVisible();
+  await expect(dchomepage.searchButton).toBeVisible();
 });
 
-test("public domain link is visible", async ({ page }) => {
+test("verify public domain link is visible", async ({ page }) => {
   const dchomepage = new DCHomepage(page);
-  await expect(dchomepage.whatispublicdomainlink).toBeVisible();
+  await expect(dchomepage.whatIsPublicDomainLink).toBeVisible();
 });
