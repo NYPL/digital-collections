@@ -13,6 +13,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Added Playwright testing library (DR-3680)
 - Added Playwright tests for navigation menu, what is public domain and search bar for the home page (DR-3658)
 - Added Playwright test to search for a keyword (DR-3659)
+- Added Playwright test to confirm visibility of search result filters (DR-3659)
 
 ## [0.4.2] 2025-05-22
 
