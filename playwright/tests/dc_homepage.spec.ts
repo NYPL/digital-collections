@@ -25,3 +25,13 @@ test("verify public domain link is visible", async ({ page }) => {
   const dchomepage = new DCHomepage(page);
   await expect(dchomepage.whatIsPublicDomainLink).toBeVisible();
 });
+
+test("verify explore further section is visible", async ({ page }) => {
+  const dchomepage = new DCHomepage(page);
+  await expect(dchomepage.exporeFurtherHeading).toBeVisible();
+  await expect(dchomepage.digitalCollectionPrintStore).toBeVisible();
+  await expect(dchomepage.nyplArchivesAndManuscripts).toBeVisible();
+  await expect(dchomepage.nyplResearchCatalog).toBeVisible();
+  await expect(dchomepage.nyplDigitalCollectionsApi).toBeVisible();
+  await expect(dchomepage.digitalPublicLibraryOfAmerica).toBeVisible();
+});
