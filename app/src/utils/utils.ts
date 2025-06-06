@@ -1,14 +1,11 @@
 import {
   ADOBE_ANALYTICS_SITE_SECTION,
   ADOBE_ANALYTICS_DC_PREFIX,
-  ALLOWED_FILTERS,
 } from "../config/constants";
 import CollectionDataType from "@/src/types/CollectionDataType";
 import ItemDataType from "@/src/types/ItemDataType";
-import {
-  AvailableFilter,
-  AvailableFilterOption,
-} from "../types/AvailableFilterType";
+import { AvailableFilterOption } from "../types/AvailableFilterType";
+import type { SearchResultRecordType } from "../types/SearchCardType";
 import type { Highlight } from "../types/HighlightType";
 import { isValidFilter } from "./searchManager";
 
@@ -141,6 +138,12 @@ export function formatHighlightText(highlights): Highlight[] {
 
 export const capitalize = (text: string): string => {
   return text?.charAt(0) ? text.charAt(0).toUpperCase() + text.slice(1) : text;
+};
+
+export const getRecordType = (type: any): SearchResultRecordType => {
+  // capitalize first character in strin
+  //  capitalize(type)  // returns type error
+  return type.charAt(0).toUpperCase() + type.slice(1);
 };
 
 export const getCollectionFilterFromUUID = (

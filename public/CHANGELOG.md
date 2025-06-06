@@ -8,8 +8,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## Unreleased
 
 ### Added
-
+- Added Universal Viewer support and metadata fields
+- Conditionally render viewer with rights logic (DR-3645)
 - Added Playwright testing library (DR-3680)
+- Added Playwright tests for navigation menu, what is public domain and search bar for the home page (DR-3658)
 
 ## [0.4.2] 2025-05-22
 
