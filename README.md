@@ -200,14 +200,14 @@ project/
 
 Folders define routes, and paths of nested folders should end in a single "leaf": a `page.tsx` file. Dynamic routes are wrapped in brackets. For example, the route `app/blog/[slug]/page.js` would map to url `/blog/c` where the slug is `c`.
 
-### Learn More
+### Learn more
 
 To learn more about Next.js, take a look at the following resources:
 
 - [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
 - [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+You can also check out [the Next.js GitHub repository](https://github.com/vercel/next.js/).
 
 ## Environment variables
 
@@ -221,7 +221,7 @@ All variables should be declared in `.env.local` for local development. For loca
 
 If a variable is required ONLY on the SERVER side (ie. in an API endpoint), then the variable can be declared in the AWS Task Definition.
 
-SERVER side methods in Next.js read environments at RUN TIME, which means they have access to environment variables on the server - these can be found by running `env` in the bash terminal or referenced within the app as `process.env.ENV`. These variables can/should be managed in `qa` and `production` environments by updating the Task Definition and/or Cloud Formation Templates.
+SERVER side methods in Next.js read environments at RUN TIME, which means they have access to environment variables on the server - these can be found by running `env` in the bash terminal or referenced within the app as `process.env.ENV`. These variables can/should be managed in `qa` and `production` environments by updating the AWS task definition and/or Terraform templates.
 
 SERVER side references of environment variables can use `process.env.ENV`
 
@@ -282,6 +282,12 @@ To run all `jsdom` tests once:
 $ npm test
 ```
 
+To run tests on `watch` mode:
+
+```sh
+$ npm run test:watch
+```
+
 To run all `node` (API endpoints) tests once:
 
 ```sh
@@ -310,45 +316,51 @@ To run the same test script against the production environment, run
 npm run homepageImageLoadingTestProd
 ```
 
-The test waits for the 24 swim lane images to load, including the 12 that load after scrolling, and has succeeded if it does not time out. It simulates a single user loading the homepage one time.  
+The test waits for the 24 swim lane images to load, including the 12 that load after scrolling, and has succeeded if it does not time out. It simulates a single user loading the homepage one time.
 
-Playwright test automation  
+Playwright test automation
 
-Install Playwright  
-``` 
+Install Playwright
+
+```
 npm init playwright@latest
-```  
-
-Run Playwright tests  
-``` 
-npm run playwright or npx playwright test  
 ```
 
-HTML Test reports  
-```  
-npx playwright show-report  
+Run Playwright tests
+
+```
+npm run playwright or npx playwright test
 ```
 
-Run tests in UI mode  
+HTML Test reports
+
 ```
-npx playwright test --ui  
-```  
-
-Run tests in headed Chrome browser  
-``` 
-npx playwright test --project=chromium --headed  
-```  
-
-Run a single test file  
-```  
-npx playwright test **example.spec.ts** --project=chromium  
-```  
-
-Run a specific test function  
-``` 
-npx playwright test -g **"has title"** --project=chromium  
+npx playwright show-report
 ```
 
+Run tests in UI mode
+
+```
+npx playwright test --ui
+```
+
+Run tests in headed Chrome browser
+
+```
+npx playwright test --project=chromium --headed
+```
+
+Run a single test file
+
+```
+npx playwright test **example.spec.ts** --project=chromium
+```
+
+Run a specific test function
+
+```
+npx playwright test -g **"has title"** --project=chromium
+```
 
 ## Linting and formatting
 
@@ -478,37 +490,34 @@ Production deployments for this repo require a PR to the `production` branch. On
 
 ### Summary of project phases
 
-#### 1. Home Page
+#### 1. Homepage (complete)
 
 [TAD](https://docs.google.com/document/d/1qw9qTM-6AB-I9XQR7CH3vBa5ZmtqNxtmDhixej_7H8U/edit#heading=h.kutc298lyner)
 [Designs](https://www.figma.com/file/NpjG47HqZG9GknfijGqJri/DC-Facelift-Homepage?type=design&node-id=3966-5868&mode=design&t=qHZ2TudJ2NDw13ux-0)
 
-#### 2. Top Level Category Pages
+#### 2. Top level category pages (complete)
 
 These page types are:
 
-- [All Divisions](https://digitalcollections.nypl.org/divisions)
-- [All Collections](https://digitalcollections.nypl.org/collections)
-- [Swim Lane Landing Pages](https://digitalcollections.nypl.org/collections/lane/gay-lesbian-history)
+- [All divisions](https://digitalcollections.nypl.org/divisions)
+- [All collections](https://digitalcollections.nypl.org/collections)
+- [Swimlane landing pages](https://digitalcollections.nypl.org/collections/lane/gay-lesbian-history)
 
-#### 3. Search-Based Pages
+#### 3. Search-based pages (complete)
 
-- Search Landing
+- Search landing
   - [Basic with no search keywords](https://digitalcollections.nypl.org/search/index?utf8=%E2%9C%93&keywords=#) (This view is also used as the “All Items” page in site navigation)
   - [With keyword](https://digitalcollections.nypl.org/search/index?utf8=%E2%9C%93&keywords=puppy)
   - [With suggested collections](https://digitalcollections.nypl.org/search/index?utf8=%E2%9C%93&keywords=maps)
   - [No results](https://digitalcollections.nypl.org/search/index?utf8=%E2%9C%93&keywords=puppy&year_begin=1995&year_end=2020&)
-- [Collection Landing Page](https://digitalcollections.nypl.org/collections/the-green-book#/?tab=navigation)
+- [Collection landing page](https://digitalcollections.nypl.org/collections/the-green-book#/?tab=navigation)
 
-#### 4. Item Page
+#### 4. Item page
 
-##### 4a. Video and Audio Page
+##### 4a. Video and audio
 
 ##### 4b. Images
 
 ##### 4d. PDFs
 
 ##### 5. About Page
-
-
-

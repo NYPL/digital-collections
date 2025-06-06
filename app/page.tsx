@@ -1,5 +1,5 @@
 import HomePage from "./src/components/pages/homePage/homePage";
-import { RepoApi, CollectionsApi } from "@/src/utils/apiClients";
+import { RepoApi, CollectionsApi } from "@/src/utils/apiClients/apiClients";
 import { FeaturedItemDataType } from "../app/src/types/FeaturedItemDataType";
 import { revalidatePath } from "next/cache";
 

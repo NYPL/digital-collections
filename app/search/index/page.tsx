@@ -1,14 +1,14 @@
 import React from "react";
 import PageLayout from "../../src/components/pageLayout/pageLayout";
 import { createAdobeAnalyticsPageName } from "@/src/utils/utils";
-import { CollectionsApi } from "@/src/utils/apiClients";
+import { CollectionsApi } from "@/src/utils/apiClients/apiClients";
 import { Metadata } from "next";
 import SearchPage from "@/src/components/pages/searchPage/searchPage";
 import { Filter } from "@/src/types/FilterType";
 import { AvailableFilter } from "@/src/types/AvailableFilterType";
 import { revalidatePath } from "next/cache";
 
-export interface SearchParams {
+export interface SearchParamsType {
   q: string;
   sort: string;
   filters: Filter[];
@@ -24,7 +24,7 @@ export const metadata: Metadata = {
 };
 
 export type SearchProps = {
-  searchParams: SearchParams;
+  searchParams: SearchParamsType;
 };
 
 export default async function Search({ searchParams }: SearchProps) {

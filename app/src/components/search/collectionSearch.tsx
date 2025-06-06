@@ -2,7 +2,7 @@ import { headerBreakpoints } from "@/src/utils/breakpoints";
 import { Flex, Heading } from "@nypl/design-system-react-components";
 import DCSearchBar from "./dcSearchBar";
 
-import type { SearchManager } from "@/src/utils/searchManager";
+import type { SearchManager } from "@/src/utils/searchManager/searchManager";
 import { usePathname, useRouter } from "next/navigation";
 
 type CollectionSearchProps = {

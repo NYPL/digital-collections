@@ -19,7 +19,7 @@ import {
 import DCSearchBar from "../dcSearchBar";
 import { headerBreakpoints } from "@/src/utils/breakpoints";
 import { usePathname, useRouter } from "next/navigation";
-import { SearchManager } from "@/src/utils/searchManager";
+import { SearchManager } from "@/src/utils/searchManager/searchManager";
 import {
   AvailableFilter,
   AvailableFilterOption,

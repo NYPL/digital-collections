@@ -20,7 +20,7 @@ import {
   COLLECTION_SORT_LABELS,
   DEFAULT_SEARCH_SORT,
 } from "@/src/config/constants";
-import { CollectionSearchManager } from "@/src/utils/searchManager";
+import { CollectionSearchManager } from "@/src/utils/searchManager/searchManager";
 import { headerBreakpoints } from "@/src/utils/breakpoints";
 import DCSearchBar from "../../search/dcSearchBar";
 import SortMenu from "../../sortMenu/sortMenu";

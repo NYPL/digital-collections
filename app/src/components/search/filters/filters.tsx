@@ -10,7 +10,7 @@ import SelectFilterGrid from "./selectFilterGrid";
 import RightsFilter from "./rightsFilter";
 import DateFilter from "./dateFilter";
 import { headerBreakpoints } from "@/src/utils/breakpoints";
-import { SearchManager } from "@/src/utils/searchManager";
+import { SearchManager } from "@/src/utils/searchManager/searchManager";
 
 type FiltersProps = {
   headingText: string;

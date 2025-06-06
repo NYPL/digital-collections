@@ -9,7 +9,7 @@ import PageLayout from "../../pageLayout/pageLayout";
 import React, { useEffect, useState } from "react";
 import { Lane as DCLane } from "../../lane/lane";
 import LaneLoading from "../../lane/laneLoading";
-import LaneDataType from "@/src/types/Lane";
+import LaneDataType from "@/src/types/LaneDataType";
 import { createAdobeAnalyticsPageName } from "@/src/utils/utils";
 
 interface DivisionsProps {
