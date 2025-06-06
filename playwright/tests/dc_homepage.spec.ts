@@ -15,9 +15,9 @@ test("verify navigation menu is displayed (items, collections, divisions, about"
   await expect(dchomepage.about).toBeVisible();
 });
 
-test("verify search box, search button are visible", async ({ page }) => {
+test("verify search bar, search button are visible", async ({ page }) => {
   const dchomepage = new DCHomepage(page);
-  await expect(dchomepage.searchBox).toBeVisible();
+  await expect(dchomepage.searchBar).toBeVisible();
   await expect(dchomepage.searchButton).toBeVisible();
 });
 

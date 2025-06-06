@@ -9,7 +9,7 @@ export class DCHomepage {
   readonly about: Locator;
 
   // search box
-  readonly searchBox: Locator;
+  readonly searchBar: Locator;
   readonly searchButton: Locator;
   readonly publicDomaincheckbox: Locator;
   readonly whatIsPublicDomainLink: Locator;
@@ -38,7 +38,7 @@ export class DCHomepage {
     this.about = this.page.getByRole("link", { name: "About", exact: true });
 
     //search box and button
-    this.searchBox = this.page.getByPlaceholder("Search keyword(s)");
+    this.searchBar = this.page.getByPlaceholder("Search keyword(s)");
     this.searchButton = this.page.getByRole("button", { name: "Search" });
 
     // public domain
