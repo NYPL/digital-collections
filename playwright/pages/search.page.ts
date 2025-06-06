@@ -2,7 +2,7 @@ import { Locator, Page } from "@playwright/test";
 
 export default class SearchPage {
   readonly page: Page;
-  static searchResultsUrl: string = "/search/index?q=maps%20of%20scandinavia";
+  static searchResultsUrl: string = "/search/index?q=map%20of%20scandinavia";
   readonly searchKeyword: string;
   readonly searchBox: Locator;
   readonly searchButton: Locator;

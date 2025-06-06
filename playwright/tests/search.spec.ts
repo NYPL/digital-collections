@@ -2,7 +2,7 @@ import { test, expect } from "@playwright/test";
 import SearchPage from "../pages/search.page";
 
 test("searches for a keyword from homepage", async ({ page }) => {
-  test.setTimeout(60000);
+  test.setTimeout(60000); // added extra time to navigate to homepage and load search page
   const searchPage = await SearchPage.loadPage("/", page);
 
   await expect(searchPage.searchBox).toBeVisible();
@@ -13,7 +13,7 @@ test("searches for a keyword from homepage", async ({ page }) => {
   await expect(searchPage.searchButton).toBeVisible();
   await searchPage.searchButton.click();
 
-  await page.waitForURL("**/search/**"); // attempted to use SearchPage.searchResultsUrl
+  await page.waitForURL(`**${SearchPage.searchResultsUrl}**`);
   await expect(page).toHaveTitle("Search results - NYPL Digital Collections");
 
   await expect(searchPage.refineHeading).toBeVisible();
