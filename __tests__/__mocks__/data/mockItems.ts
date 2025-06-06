@@ -1,7 +1,5 @@
 import { ItemModel } from "../../../app/src/models/item";
 
-// TODO: Add data that makes more sense.
-
 export const mockItems: ItemModel[] = [
   {
     uuid: "50370c90-cabb-013c-da64-0242ac110002",

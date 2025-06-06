@@ -47,6 +47,7 @@ const ButtonText = ({
  *
  * @param {OpenStateItem[]} items - List of tree nodes to render
  * @param {(uuid: string) => void} toggle - Callback to toggle a node's open/closed state
+ * @param {string} targetUuid - Uuid of deepest open item
  * @returns {JSX.Element} The rendered accordion tree
  */
 const AccordionTree = ({
@@ -60,74 +61,76 @@ const AccordionTree = ({
 }) => {
   return (
     <>
-      {items.map((item) => (
-        <li key={item.uuid}>
-          <Box>
-            <Button
-              _focus={{
-                outline: "none !important",
-                boxShadow:
-                  "inset 0 0 0 2px var(--nypl-colors-ui-focus) !important",
-              }}
-              w="100%"
-              color="black"
-              borderRadius="0"
-              textAlign="left"
-              fontWeight="semibold"
-              border="1px solid var(--ui-gray-medium, #BDBDBD)"
-              borderTop="unset"
-              bg={item.isOpen ? "ui.gray.light-cool" : "ui.white"}
-              _hover={{ bg: "ui.hover.default" }}
-              paddingLeft={
-                item.level > 0
-                  ? item.level < 12
-                    ? item.level * 8
-                    : "96px"
-                  : "s"
-              }
-              paddingTop="m"
-              paddingRight="s"
-              paddingBottom="m"
-              onClick={() => toggle(item.uuid)}
-              {...(item.hasSubContainers
-                ? { "aria-expanded": item.isOpen }
-                : {})}
-              sx={{ zIndex: "0 !important" }}
-              id={item.uuid}
-              aria-current={item.uuid === targetUuid ? "true" : undefined}
-            >
-              <Flex alignItems="center" width="100%">
-                {item.hasSubContainers && (
-                  <Icon
-                    size="small"
-                    name={item.isOpen ? "minus" : "plus"}
-                    visibility="visible"
+      {items.map((item) => {
+        return (
+          <li key={item.uuid}>
+            <Box>
+              <Button
+                _focus={{
+                  outline: "none !important",
+                  boxShadow:
+                    "inset 0 0 0 2px var(--nypl-colors-ui-focus) !important",
+                }}
+                w="100%"
+                color="black"
+                borderRadius="0"
+                textAlign="left"
+                fontWeight="semibold"
+                border="1px solid var(--ui-gray-medium, #BDBDBD)"
+                borderTop="unset"
+                bg={item.isOpen ? "ui.gray.light-cool" : "ui.white"}
+                _hover={{ bg: "ui.hover.default" }}
+                paddingLeft={
+                  item.level > 0
+                    ? item.level < 12
+                      ? item.level * 8
+                      : "96px"
+                    : "s"
+                }
+                paddingTop="m"
+                paddingRight="s"
+                paddingBottom="m"
+                onClick={() => toggle(item.uuid)}
+                {...(item.hasSubContainers
+                  ? { "aria-expanded": item.isOpen }
+                  : {})}
+                sx={{ zIndex: "0 !important" }}
+                id={item.uuid}
+                aria-current={item.uuid === targetUuid ? "true" : undefined}
+              >
+                <Flex alignItems="center" width="100%">
+                  {item.hasSubContainers && (
+                    <Icon
+                      size="small"
+                      name={item.isOpen ? "minus" : "plus"}
+                      visibility="visible"
+                    />
+                  )}
+                  <ButtonText
+                    title={item.title}
+                    hasSubContainers={item.hasSubContainers}
+                    level={item.level}
                   />
-                )}
-                <ButtonText
-                  title={item.title}
-                  hasSubContainers={item.hasSubContainers}
-                  level={item.level}
-                />
-                <Box as="span" marginLeft="s" fontWeight="400">
-                  {item.itemCount}
-                </Box>
-              </Flex>
-            </Button>
-            {item.hasSubContainers && item.children && (
-              <Collapse in={item.isOpen}>
-                <ul style={{ margin: 0 }}>
-                  <AccordionTree
-                    targetUuid={targetUuid}
-                    items={item.children}
-                    toggle={toggle}
-                  />
-                </ul>
-              </Collapse>
-            )}
-          </Box>
-        </li>
-      ))}
+                  <Box as="span" marginLeft="s" fontWeight="400">
+                    {item.itemCount}
+                  </Box>
+                </Flex>
+              </Button>
+              {item.hasSubContainers && item.children && (
+                <Collapse in={item.isOpen}>
+                  <ul style={{ margin: 0 }}>
+                    <AccordionTree
+                      targetUuid={targetUuid}
+                      items={item.children}
+                      toggle={toggle}
+                    />
+                  </ul>
+                </Collapse>
+              )}
+            </Box>
+          </li>
+        );
+      })}
     </>
   );
 };

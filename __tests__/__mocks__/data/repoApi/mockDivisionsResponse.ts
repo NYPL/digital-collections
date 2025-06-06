@@ -1,4 +1,4 @@
-import LaneDataType from "@/src/types/Lane";
+import LaneDataType from "@/src/types/LaneDataType";
 
 export const mockDivisionsResponse = {
   headers: { status: "success", code: "200", message: "ok" },

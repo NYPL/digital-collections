@@ -1,8 +1,9 @@
 import { render, screen } from "@testing-library/react";
-import { mockCollectionCards } from "__tests__/__mocks__/data/mockCollectionCards";
+import { mockCollections } from "__tests__/__mocks__/data/mockCollections";
 import { Card as DCCard } from "./card";
 import { ItemCardModel } from "@/src/models/itemCard";
 import { mockItems } from "__tests__/__mocks__/data/mockItems";
+import { CollectionCardModel } from "@/src/models/collectionCard";
 
 describe("Collection DCCard component", () => {
   const mockCollectionProps = {
@@ -11,7 +12,7 @@ describe("Collection DCCard component", () => {
     slug: "test-slug",
     id: "1",
     isLargerThanLargeTablet: true,
-    record: mockCollectionCards[0],
+    record: new CollectionCardModel(mockCollections[0]),
   };
 
   const mockCollectionPropsNoOnSite = {
@@ -20,7 +21,7 @@ describe("Collection DCCard component", () => {
     slug: "test-slug",
     id: "1",
     isLargerThanLargeTablet: true,
-    record: mockCollectionCards[4],
+    record: new CollectionCardModel(mockCollections[4]),
   };
 
   it("renders the correct heading with the provided title", () => {
@@ -33,6 +34,7 @@ describe("Collection DCCard component", () => {
 
   it("renders the badge when containsOnSiteMaterials is true", () => {
     render(<DCCard {...mockCollectionProps} />);
+    const card = new CollectionCardModel(mockCollections[0]);
     const badgeElement = screen.getByText(/Contains on-site materials/i);
     expect(badgeElement).toBeInTheDocument();
   });
@@ -54,7 +56,9 @@ describe("Collection DCCard component", () => {
     const link = screen.getByRole("link");
     expect(link).toHaveAttribute(
       "href",
-      expect.stringContaining("/collections/posada-collection#/?tab=navigation")
+      expect.stringContaining(
+        "/collections/60932400-20f2-0138-8583-05c43d44877"
+      )
     );
   });
 });

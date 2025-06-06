@@ -1,7 +1,7 @@
 import { render, screen, fireEvent } from "@testing-library/react";
 import DateFilter from "./dateFilter";
 import { useRouter, usePathname } from "next/navigation";
-import { SearchManager } from "@/src/utils/searchManager";
+import { SearchManager } from "@/src/utils/searchManager/searchManager";
 
 jest.mock("next/navigation", () => ({
   useRouter: jest.fn(),
