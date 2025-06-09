@@ -61,6 +61,7 @@ export class DCHomepage {
     });
     this.digitalCollectionPrintStore = this.page.getByRole("link", {
       name: "Digital Collections Print Store",
+      exact: true,
     });
     this.nyplArchivesAndManuscripts = this.page.getByRole("link", {
       name: "NYPL Archives and Manuscripts",
