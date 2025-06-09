@@ -26,6 +26,14 @@ export class DCHomepage {
   readonly booksAndPeriodicalsSeeMoreLink: Locator;
   readonly fliersAndEphemeraSeeMoreLink: Locator;
 
+  //explore further
+  readonly exporeFurtherHeading: Locator;
+  readonly digitalCollectionPrintStore: Locator;
+  readonly nyplArchivesAndManuscripts: Locator;
+  readonly nyplResearchCatalog: Locator;
+  readonly nyplDigitalCollectionsApi: Locator;
+  readonly digitalPublicLibraryOfAmerica: Locator;
+
   constructor(page: Page) {
     //navigation menu
     this.page = page;
@@ -45,6 +53,27 @@ export class DCHomepage {
 
     this.whatIsPublicDomainLink = this.page.getByRole("link", {
       name: "What is public domain?",
+    });
+
+    // explore further
+    this.exporeFurtherHeading = this.page.getByRole("heading", {
+      name: "Explore further",
+    });
+    this.digitalCollectionPrintStore = this.page.getByRole("link", {
+      name: "Digital Collections Print Store",
+      exact: true,
+    });
+    this.nyplArchivesAndManuscripts = this.page.getByRole("link", {
+      name: "NYPL Archives and Manuscripts",
+    });
+    this.nyplResearchCatalog = this.page.getByRole("link", {
+      name: "NYPL Research Catalog",
+    });
+    this.nyplDigitalCollectionsApi = this.page.getByRole("link", {
+      name: "NYPL Digital Collections API",
+    });
+    this.digitalPublicLibraryOfAmerica = this.page.getByRole("link", {
+      name: "Digital Public Library of America",
     });
   }
 }

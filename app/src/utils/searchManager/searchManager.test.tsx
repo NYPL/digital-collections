@@ -1,15 +1,15 @@
 import {
   DEFAULT_COLLECTION_SORT,
-  DEFAULT_SEARCH_TERM,
   DEFAULT_SEARCH_SORT,
-} from "../config/constants";
-import { Filter } from "../types/FilterType";
+  DEFAULT_SEARCH_TERM,
+} from "@/src/config/constants";
 import {
   GeneralSearchManager,
   CollectionSearchManager,
   filterToString,
   stringToFilter,
 } from "./searchManager";
+import { Filter } from "@/src/types/FilterType";
 
 describe("SearchManager", () => {
   describe("GeneralSearchManager individual params", () => {

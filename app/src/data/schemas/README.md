@@ -38,6 +38,8 @@ DCFL pages using it:
 
 schema route: /api/schema/collections/:uuid/children
 
-DCFL pages using it:
+DCFL pages\* using it:
 
 - /collections/:uuid
+
+\*Hit clientside from /api/collectionchildren/:uuid

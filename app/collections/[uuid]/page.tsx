@@ -3,8 +3,16 @@ import { Metadata } from "next";
 import PageLayout from "../../src/components/pageLayout/pageLayout";
 import { createAdobeAnalyticsPageName, imageURL } from "@/src/utils/utils";
 import CollectionPage from "@/src/components/pages/collectionPage/collectionPage";
-import { CollectionsApi } from "@/src/utils/apiClients";
-import CollectionSearchParamsType from "@/src/types/CollectionSearchParams";
+import { CollectionsApi } from "@/src/utils/apiClients/apiClients";
+import { AvailableFilterOption } from "@/src/types/AvailableFilterType";
+
+export type CollectionSearchParamsType = {
+  q: string;
+  sort: string;
+  filters: string;
+  page: number;
+  availableFilters?: Record<string, AvailableFilterOption[]>;
+};
 
 type CollectionProps = {
   params: { uuid: string };
@@ -61,16 +69,6 @@ export default async function Collection({
   const { collection, division, ...filteredAvailableFilters } =
     searchResults.availableFilters || {};
 
-  // Remove the collection if it's returned in the search results.
-  const updatedResults = searchResults.results.filter(
-    (item) => item.uuid !== collectionData.uuid
-  );
-
-  const updatedSearchResults = {
-    ...searchResults,
-    results: updatedResults,
-  };
-
   const updatedSearchParams = {
     ...searchParams,
     availableFilters: filteredAvailableFilters,
@@ -94,7 +92,7 @@ export default async function Collection({
     >
       <CollectionPage
         searchParams={updatedSearchParams}
-        searchResults={updatedSearchResults}
+        searchResults={searchResults}
         collectionData={collectionData}
       />
     </PageLayout>
