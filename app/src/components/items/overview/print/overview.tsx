@@ -11,7 +11,7 @@ import {
 } from "@nypl/design-system-react-components";
 import parse from "html-react-parser";
 
-const PrintOverview = ({ item }) => {
+const PrintOverview = ({ item, canvasID }) => {
   return (
     <>
       <Box
