@@ -1,11 +1,11 @@
 import React from "react";
 import { Metadata } from "next";
 import PageLayout from "../../src/components/pageLayout/pageLayout";
-import { CollectionsApi } from "../../src/utils/apiClients";
 import { createAdobeAnalyticsPageName } from "../../src/utils/utils";
 import { ItemModel } from "../../src/models/item";
 import { ItemPage } from "@/src/components/pages/itemPage/itemPage";
 import { revalidatePath } from "next/cache";
+import { CollectionsApi } from "@/src/utils/apiClients/apiClients";
 
 type ItemProps = {
   params: {

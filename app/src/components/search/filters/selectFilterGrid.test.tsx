@@ -1,7 +1,7 @@
 import { render, screen, fireEvent } from "@testing-library/react";
 import SelectFilterGrid from "./selectFilterGrid";
 import { MutableRefObject } from "react";
-import { GeneralSearchManager } from "@/src/utils/searchManager";
+import { GeneralSearchManager } from "@/src/utils/searchManager/searchManager";
 import {
   DEFAULT_SEARCH_SORT,
   DEFAULT_SEARCH_TERM,
