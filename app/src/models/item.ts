@@ -12,7 +12,7 @@ export class ItemModel {
   typeOfResource: string;
   title: string;
   isSingleCapture: boolean;
-  imageID: string;
+  imageIDs?: string[];
   href: string;
   contentType: string;
   hasItems?: boolean;
@@ -20,6 +20,7 @@ export class ItemModel {
   manifestURL: string;
   link: string;
   isRestricted: boolean;
+  isImage: boolean;
   metadata?: {
     title: string;
     names?: string;
@@ -46,6 +47,16 @@ export class ItemModel {
     // get custom label from manifest
     const parser = new Maniiifest(manifest);
     this.hasItems = manifest.items.length > 0 ? true : false;
+    const canvases = Array.from(parser.iterateManifestCanvas());
+    this.isImage =
+      Array.from(parser.iterateManifestCanvasAnnotation())[0].body.type ===
+      "Image";
+
+    this.imageIDs = this.hasItems
+      ? canvases.map((canvas) => {
+          return canvas.id.split("/")[5];
+        })
+      : [];
 
     // const label = parser?.getManifestLabelByLanguage("en");
     const metadata = Array.from(parser.iterateManifestMetadata());

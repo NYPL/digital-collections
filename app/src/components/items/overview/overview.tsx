@@ -12,7 +12,7 @@ import ExternalLinksOverview from "./external/overview";
 import PrintOverview from "./print/overview";
 import CitationsOverview from "./citations/overview";
 
-const ItemOverview = ({ item }) => {
+const ItemOverview = ({ item, canvasID }) => {
   return (
     <>
       <ChakraSimpleGrid

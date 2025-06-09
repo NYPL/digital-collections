@@ -16,16 +16,17 @@ import {
 } from "@nypl/design-system-react-components";
 
 interface ItemProps {
-  manifest: any;
+  // manifest: any;
   item: ItemModel;
   type: string;
+  canvasID: string;
 }
 
 const renderViewer = (item) => {
   return item.hasItems && !item.isRestricted;
 };
 
-const Item = ({ item, type }: ItemProps) => {
+const Item = ({ item, type, canvasID }: ItemProps) => {
   return (
     <>
       <Box marginTop="-3em">
@@ -47,7 +48,7 @@ const Item = ({ item, type }: ItemProps) => {
             Learn more.
           </Link>{" "}
         </Text>
-        <ItemOverview item={item} />
+        <ItemOverview item={item} canvasID={0} />
       </Box>
     </>
   );
