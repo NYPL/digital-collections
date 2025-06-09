@@ -1,34 +1,13 @@
-import {
-  Box,
-  Flex,
-  Heading,
-  Text,
-  Link,
-  Button,
-  ButtonGroup,
-  TagSet,
-  HorizontalRule,
-} from "@nypl/design-system-react-components";
-import parse from "html-react-parser";
+import { Box, Heading, Link, Text } from "@nypl/design-system-react-components";
 
-const metadataFieldToDisplay = {
-  title: "Title",
-  collection: "Collection",
-  names: "Names",
-  origin: "Date / Origin",
-  tableOfContents: "Table Of Contents",
-  locations: "Library Location",
-  subjects: "Subjects",
-  genres: "Genres",
-  notes: "Notes",
-  physicalDescription: "Physical Description",
-  abstract: "Abstract",
-  languages: "Languages",
-  link: "Link",
-  identifiers: "Identifiers",
-  access: "Access",
-  rights: "Rights",
-  typeOfResource: "Type Of Resource",
+export const parseHtmlString = (html) => {
+  const parser = new DOMParser();
+  const doc = parser.parseFromString(html, "text/html");
+  const anchor = doc.querySelector("a");
+  return {
+    href: anchor?.getAttribute("href"),
+    text: anchor?.textContent,
+  };
 };
 
 const ExternalLinksOverview = ({ item }) => {
@@ -41,27 +20,34 @@ const ExternalLinksOverview = ({ item }) => {
         <Heading size="heading6" marginBottom="xs">
           View this item elsewhere
         </Heading>
-        <Link
-          href={"/"}
-          id={"finding-aid-btn"}
-          isUnderlined={false}
-          target="_blank"
-          aria-label={`view finding aid`}
-          type="buttonSecondary"
-          marginRight="xs"
-        >
-          View Finding Aid
-        </Link>
-        <Link
-          href={"/"}
-          id={"catalog-btn"}
-          isUnderlined={false}
-          target="_blank"
-          aria-label={`view in catalog`}
-          type="buttonSecondary"
-        >
-          View Catalog
-        </Link>
+        {!item.catalogLink && !item.archivesLink && (
+          <Text>This item does not have any external references yet</Text>
+        )}
+        {item.archivesLink && (
+          <Link
+            href={parseHtmlString(item.archivesLink).href}
+            id={"finding-aid-btn"}
+            isUnderlined={false}
+            target="_blank"
+            aria-label={`view finding aid`}
+            type="buttonSecondary"
+            marginRight="xs"
+          >
+            View Finding Aid
+          </Link>
+        )}
+        {item.catalogLink && (
+          <Link
+            href={parseHtmlString(item.catalogLink).href}
+            id={"catalog-btn"}
+            isUnderlined={false}
+            target="_blank"
+            aria-label={`view in catalog`}
+            type="buttonSecondary"
+          >
+            View Catalog
+          </Link>
+        )}
       </Box>
     </>
   );

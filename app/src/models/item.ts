@@ -1,4 +1,5 @@
 import { Maniiifest } from "maniiifest";
+
 // https://github.com/jptmoore/maniiifest
 // other resources:
 // https://www.npmjs.com/package/@iiif/manifold
@@ -21,6 +22,8 @@ export class ItemModel {
   link: string;
   isRestricted: boolean;
   isImage: boolean;
+  archivesLink?: string;
+  catalogLink?: string;
   metadata?: {
     title: string;
     names?: string;
@@ -144,5 +147,18 @@ export class ItemModel {
         ? manifestMetadataHash["Rights"].toString()
         : "",
     };
+    const identifiers = manifestMetadataHash["Identifiers"];
+    console.log("this.metadata.identifiers is: ", identifiers);
+    const catalogLink = identifiers.find((identifier) =>
+      identifier.includes("NYPL catalog ID (B-number)")
+    );
+    console.log("catalogLink is: ", catalogLink);
+    this.catalogLink = catalogLink ? catalogLink : "";
+    const archivesLink = identifiers.find((identifier) => {
+      identifiers.includes("Archives ID");
+    }); //indentifiers.includes("Archives ID")?
+    console.log("archivesLink is: ", archivesLink);
+
+    this.archivesLink = archivesLink ? archivesLink : "";
   }
 }
