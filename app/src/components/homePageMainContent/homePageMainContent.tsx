@@ -2,7 +2,7 @@ import React from "react";
 import FeaturedContentComponent from "../featuredContent/featuredContent";
 import { useEffect, useState } from "react";
 import { Lane as DCLane } from "../lane/lane";
-import LaneDataType from "@/src/types/Lane";
+import LaneDataType from "@/src/types/LaneDataType";
 import LaneLoading from "../lane/laneLoading";
 
 interface HomePageMainContentProps {

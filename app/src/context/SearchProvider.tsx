@@ -10,7 +10,7 @@ import {
   GeneralSearchManager,
   SearchManager,
   stringToFilter,
-} from "../utils/searchManager";
+} from "../utils/searchManager/searchManager";
 
 interface SearchContextType {
   searchManager: SearchManager;

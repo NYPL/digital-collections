@@ -7,7 +7,7 @@ import ItemDataType from "@/src/types/ItemDataType";
 import { AvailableFilterOption } from "../types/AvailableFilterType";
 import type { SearchResultRecordType } from "../types/SearchCardType";
 import type { Highlight } from "../types/HighlightType";
-import { isValidFilter } from "./searchManager";
+import { isValidFilter } from "./searchManager/searchManager";
 
 /**
  * Represents a IIIF Image API URL, which will be used globally throughout the application.
@@ -86,10 +86,6 @@ export const stringToSlug = (string: string = ""): string => {
     .replace(/[^a-z0-9 -]/g, "") // remove any non-alphanumeric characters
     .replace(/\s+/g, "-") // replace spaces with hyphens
     .replace(/-+/g, "-"); // remove consecutive hyphens
-};
-
-export const parseBoolean = (value: string): boolean => {
-  return value == "true" ? true : false;
 };
 
 export const titleToDCParam = (string: string = ""): string => {

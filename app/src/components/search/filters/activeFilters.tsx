@@ -8,7 +8,7 @@ import {
 import {
   filterDisplayName,
   type SearchManager,
-} from "@/src/utils/searchManager";
+} from "@/src/utils/searchManager/searchManager";
 import { usePathname, useRouter } from "next/navigation";
 import { capitalize } from "@/src/utils/utils";
 import { AvailableFilterOption } from "@/src/types/AvailableFilterType";
