@@ -1,19 +1,22 @@
 import { test, expect } from "@playwright/test";
 import SearchPage from "../pages/search.page";
-
 test("searches for a keyword from homepage", async ({ page }) => {
   test.setTimeout(60000); // added extra time to navigate to homepage and load search page
   const searchPage = await SearchPage.loadPage("/", page);
 
-  await expect(searchPage.searchBox).toBeVisible();
-  await searchPage.searchBox.fill(searchPage.searchKeyword);
-  await expect(searchPage.searchBox).toHaveValue(searchPage.searchKeyword, {
+  await expect(searchPage.searchBar).toBeVisible();
+  await searchPage.searchBar.fill(searchPage.searchKeyword);
+  await expect(searchPage.searchBar).toHaveValue(searchPage.searchKeyword, {
     timeout: 1000,
   }); // webkit is clearing the search box after filling it
+  const value = await searchPage.searchBar.inputValue();
+  console.log("Search box value before submit:", value);
   await expect(searchPage.searchButton).toBeVisible();
   await searchPage.searchButton.click();
 
-  await page.waitForURL(`**${SearchPage.searchResultsUrl}**`);
+  await page.waitForURL(`**${SearchPage.searchResultsUrl}**`, {
+    waitUntil: "load",
+  });
   await expect(page).toHaveTitle("Search results - NYPL Digital Collections");
 
   await expect(searchPage.refineHeading).toBeVisible();
