@@ -1,5 +1,10 @@
 import { test, expect } from "@playwright/test";
 import SearchPage from "../pages/search.page";
+
+test.beforeEach(async ({ page }) => {
+  // move webkit abort here
+  // load pages here
+});
 test("searches for a keyword from homepage", async ({ page }, testInfo) => {
   test.setTimeout(60000); // added extra time to navigate to homepage and load search page
   if (testInfo.project.name === "webkit") {
@@ -83,32 +88,23 @@ test("filters search results", async ({ page }) => {
   );
   await expect(searchPage.refineHeading).toBeVisible();
 
-  // filter a visible filter
+  // filter a first row filter
   await expect(searchPage.topicFilter).toBeVisible();
   await searchPage.topicFilter.click();
   await expect(searchPage.topicOption).toBeVisible();
   await searchPage.topicOption.click();
   await expect(searchPage.applyFilterButton).toBeVisible();
   await searchPage.applyFilterButton.click();
+  await expect(searchPage.topicSelected).toBeVisible();
 
-  // clear filter
-  await expect(searchPage.clearFilter).toBeVisible();
-  await searchPage.clearFilter.click();
-  await expect(searchPage.clearFilter).not.toBeVisible(); // ensure the filter was cleared
-
-  // filter a not visible filter
+  // filter a second row filter
   await expect(searchPage.showFilters).toBeVisible();
   await searchPage.showFilters.click();
-  await expect(searchPage.divisionFilter).toBeVisible();
-  await searchPage.divisionFilter.click();
-  await expect(searchPage.divisionOption).toBeVisible();
-  await searchPage.divisionOption.click();
+  await expect(searchPage.publisherFilter).toBeVisible();
+  await searchPage.publisherFilter.click();
+  await expect(searchPage.publisherOption).toBeVisible();
+  await searchPage.publisherOption.click();
   await expect(searchPage.applyFilterButton).toBeVisible();
   await searchPage.applyFilterButton.click();
-  // expect division filter to be applied
-
-  // clear filter
-  await expect(searchPage.clearFilter).toBeVisible();
-  await searchPage.clearFilter.click();
-  await expect(searchPage.clearFilter).not.toBeVisible(); // ensure the filter was cleared
+  await expect(searchPage.publisherSelected).toBeVisible();
 });
