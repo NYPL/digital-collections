@@ -56,7 +56,9 @@ export class ItemModel {
     );
     console.log("canvasAnnotations is: ", canvasAnnotations);
     // only used for order print button
-    this.isImage = canvasAnnotations[0].body.type === "Image";
+    this.isImage = this.hasItems
+      ? canvasAnnotations[0].body.type === "Image"
+      : false;
     // this.isImage = !!canvasAnnotations[0] && canvasAnnotations[0].body.type === "Image";
 
     this.imageIDs = this.hasItems
@@ -124,7 +126,7 @@ export class ItemModel {
         ? manifestMetadataHash["Genres"].join("<br>")
         : "",
       notes: manifestMetadataHash["Notes"]
-        ? manifestMetadataHash["Notes"].join("<br>")
+        ? manifestMetadataHash["Notes"].toString()
         : "",
       physicalDescription: manifestMetadataHash["Physical Description"]
         ? manifestMetadataHash["Physical Description"].join("<br>")
@@ -152,16 +154,13 @@ export class ItemModel {
         : "",
     };
     const identifiers = manifestMetadataHash["Identifiers"];
-    console.log("this.metadata.identifiers is: ", identifiers);
     const catalogLink = identifiers.find((identifier) =>
       identifier.includes("NYPL catalog ID (B-number)")
     );
-    console.log("catalogLink is: ", catalogLink);
     this.catalogLink = catalogLink ? catalogLink : "";
     const archivesLink = identifiers.find((identifier) => {
       identifiers.includes("Archives ID");
-    }); //indentifiers.includes("Archives ID")?
-    console.log("archivesLink is: ", archivesLink);
+    });
 
     this.archivesLink = archivesLink ? archivesLink : "";
   }
