@@ -8,6 +8,9 @@ const CitationsOverview = ({ item }) => {
   const metadata = item.metadata;
   const shareUrl = item.link;
 
+  const location = metadata?.locations?.split("<br>")[0];
+  const resource = metadata?.typeOfResource?.split("<br>")[0];
+
   const today = new Date().toLocaleDateString("en-us", {
     day: "numeric",
     month: "long",
@@ -16,7 +19,7 @@ const CitationsOverview = ({ item }) => {
 
   // TO DO: metadata.origin should be metadata.date_created
   const MLA = `<p>
-    ${metadata.locations ? metadata.locations : ""}
+    ${location ? location : ""}
     The New York Public Library. "${metadata.title}"
     <em>The New York Public Library Digital Collections</em>.
     ${metadata.origin ? metadata.origin + "." : ""}
@@ -25,7 +28,7 @@ const CitationsOverview = ({ item }) => {
   </p>`;
 
   const CHICAGO = `<p>
-  ${metadata.locations ? metadata.locations : ""}
+  ${location ? location : ""}
   The New York Public Library. "${metadata.title}"
     New York Public Library Digital Collections.
     Accessed ${today}.
@@ -35,7 +38,7 @@ const CitationsOverview = ({ item }) => {
   // TO DO: metadata.origin should be metadata.date_created
   const APA = `
       <p>
-      ${metadata.locations ? metadata.locations : ""}
+      ${location ? location : ""}
       The New York Public Library.
           ${metadata.origin ? metadata.origin + "." : ""}
           ${metadata.dateIssued ? metadata.dateIssued + "." : ""}
@@ -48,7 +51,7 @@ const CitationsOverview = ({ item }) => {
   const WIKI = `
           <p>
 <p>&lt;ref name=NYPL&gt;{{cite web | url=${shareUrl} | title=
-${metadata.typeOfResource ? "(" + metadata.typeOfResource + ")" : ""}
+${resource ? "(" + resource + ")" : ""}
 ${metadata.title}
 ${metadata.origin ? "(" + metadata.origin + ")" : ""}${
     metadata.dateIssued ? "(" + metadata.dateIssued + ")" : ""
