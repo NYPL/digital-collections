@@ -136,7 +136,7 @@ export class ItemModel {
         ? manifestMetadataHash["Genres"].join("<br>")
         : "",
       notes: manifestMetadataHash["Notes"]
-        ? manifestMetadataHash["Notes"].toString()
+        ? manifestMetadataHash["Notes"].join("")
         : "",
       physicalDescription: manifestMetadataHash["Physical Description"]
         ? manifestMetadataHash["Physical Description"].join("<br>")
