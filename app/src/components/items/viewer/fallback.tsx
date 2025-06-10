@@ -42,6 +42,7 @@ const ItemMediaViewerFallback = ({ item }: ItemProps) => {
       ) : (
         <Banner
           marginTop="m"
+          marginBottom="m"
           content={
             <>
               This item has no media to return. Help us resolve this by
