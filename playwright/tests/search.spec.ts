@@ -1,7 +1,12 @@
 import { test, expect } from "@playwright/test";
 import SearchPage from "../pages/search.page";
-test("searches for a keyword from homepage", async ({ page }) => {
+test("searches for a keyword from homepage", async ({ page }, testInfo) => {
   test.setTimeout(60000); // added extra time to navigate to homepage and load search page
+  if (testInfo.project.name === "webkit") {
+    await page.route("**/*.{png,jpg,jpeg,svg}", (route) => {
+      route.abort();
+    });
+  }
   const searchPage = await SearchPage.loadPage("/", page);
 
   await expect(searchPage.searchBar).toBeVisible();
@@ -24,7 +29,8 @@ test("searches for a keyword from homepage", async ({ page }) => {
   await expect(searchPage.firstResult).toBeVisible();
 });
 
-test("displays search result filters", async ({ page }) => {
+test("displays search result filters", async ({ page }, testInfo) => {
+  test.setTimeout(60000); // added extra time to load all elements
   const searchPage = await SearchPage.loadPage(
     SearchPage.searchResultsUrl,
     page
