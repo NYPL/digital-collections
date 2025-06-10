@@ -75,3 +75,34 @@ test("displays search result filters", async ({ page }, testInfo) => {
   await expect(searchPage.divisionFilter).not.toBeVisible();
   await expect(searchPage.typeFilter).not.toBeVisible();
 });
+
+test("filters search results", async ({ page }) => {
+  const searchPage = await SearchPage.loadPage(
+    SearchPage.searchResultsUrl,
+    page
+  );
+  await expect(searchPage.refineHeading).toBeVisible();
+
+  // filter a visible filter
+  await expect(searchPage.topicFilter).toBeVisible();
+  await searchPage.topicFilter.click();
+  const firstTopicOption = page
+    .locator("#select-topic")
+    .getByText("Maps in education");
+  await expect(firstTopicOption).toBeVisible();
+  await firstTopicOption.click();
+  const applyFilterButton = searchPage.page.getByRole("button", {
+    name: "Apply",
+  });
+  await expect(applyFilterButton).toBeVisible();
+  await applyFilterButton.click();
+
+  // filter a not visible filter
+  await expect(searchPage.showFilters).toBeVisible();
+  await searchPage.showFilters.click();
+  await expect(searchPage.divisionFilter).toBeVisible();
+  await searchPage.divisionFilter.click();
+
+  // date range
+  // availability
+});
