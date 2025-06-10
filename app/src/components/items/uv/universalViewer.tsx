@@ -61,80 +61,80 @@ const UniversalViewer: React.FC<UniversalViewerProps> = React.memo(
         uv.on("configure", function ({ config, cb }) {
           cb(
             {
-              // options: {
-              //   footerPanelEnabled: true,
-              //   pagingEnabled: true,
-              //   pagingHeaderPanel: true,
-              //   pagingOptionEnabled: true,
-              //   modules: {
-              //     headerPanel: {
-              //       options: {
-              //         centerOptionsEnabled: true,
-              //         localeToggleEnabled: false,
-              //         settingsButtonEnabled: false,
-              //       },
-              //     },
-              //     pagingHeaderPanel: {
-              //       options: {
-              //         autoCompleteBoxEnabled: true,
-              //         autocompleteAllowWords: false,
-              //         galleryButtonEnabled: false,
-              //         imageSelectionBoxEnabled: false,
-              //         pageModeEnabled: false,
-              //         pagingToggleEnabled: true,
-              //       },
-              //       content: {
-              //         close: "Close",
-              //         emptyValue: "Please enter a value",
-              //         first: "First",
-              //         firstImage: "First Image",
-              //         firstPage: "First Page",
-              //         folio: "Folio",
-              //         gallery: "Gallery",
-              //         go: "Go",
-              //         help: "Help",
-              //         image: "Image",
-              //         last: "Last",
-              //         lastImage: "Last Image",
-              //         lastPage: "Last Page",
-              //         next: "Next",
-              //         nextImage: "Next Image",
-              //         nextPage: "Next Page",
-              //         of: "of {0}",
-              //         oneUp: "Single page view",
-              //         page: "Page",
-              //         pageSearchLabel: "Search by Page Number",
-              //         previous: "Previous",
-              //         previousImage: "Previous Image",
-              //         previousPage: "Previous Page",
-              //         settings: "Settings",
-              //         twoUp: "Two page view",
-              //       },
-              //     },
-              //     shareDialogue: {
-              //       options: {
-              //         embedTemplate:
-              //           '<iframe src="{0}" width="{1}" height="{2}" allowfullscreen frameborder="0"></iframe>',
-              //         instructionsEnabled: false,
-              //         shareFrameEnabled: true,
-              //         shareManifestsEnabled: true,
-              //       },
-              //       content: {
-              //         customSize: "custom",
-              //         embed: "Embed",
-              //         embedInstructions:
-              //           "To embed this item in your own website, copy and paste the code below.",
-              //         height: "Height",
-              //         iiif: "IIIF Manifest",
-              //         share: "Share",
-              //         shareInstructions:
-              //           "To share this item, copy the URL below.",
-              //         size: "Size:",
-              //         width: "Width",
-              //       },
-              //     },
-              //   },
-              // },
+              options: {
+                footerPanelEnabled: true,
+                pagingEnabled: true,
+                pagingHeaderPanel: true,
+                pagingOptionEnabled: true,
+                modules: {
+                  headerPanel: {
+                    options: {
+                      centerOptionsEnabled: true,
+                      localeToggleEnabled: false,
+                      settingsButtonEnabled: false,
+                    },
+                  },
+                  pagingHeaderPanel: {
+                    options: {
+                      autoCompleteBoxEnabled: true,
+                      autocompleteAllowWords: false,
+                      galleryButtonEnabled: false,
+                      imageSelectionBoxEnabled: false,
+                      pageModeEnabled: false,
+                      pagingToggleEnabled: true,
+                    },
+                    content: {
+                      close: "Close",
+                      emptyValue: "Please enter a value",
+                      first: "First",
+                      firstImage: "First Image",
+                      firstPage: "First Page",
+                      folio: "Folio",
+                      gallery: "Gallery",
+                      go: "Go",
+                      help: "Help",
+                      image: "Image",
+                      last: "Last",
+                      lastImage: "Last Image",
+                      lastPage: "Last Page",
+                      next: "Next",
+                      nextImage: "Next Image",
+                      nextPage: "Next Page",
+                      of: "of {0}",
+                      oneUp: "Single page view",
+                      page: "Page",
+                      pageSearchLabel: "Search by Page Number",
+                      previous: "Previous",
+                      previousImage: "Previous Image",
+                      previousPage: "Previous Page",
+                      settings: "Settings",
+                      twoUp: "Two page view",
+                    },
+                  },
+                  shareDialogue: {
+                    options: {
+                      embedTemplate:
+                        '<iframe src="{0}" width="{1}" height="{2}" allowfullscreen frameborder="0"></iframe>',
+                      instructionsEnabled: false,
+                      shareFrameEnabled: true,
+                      shareManifestsEnabled: true,
+                    },
+                    content: {
+                      customSize: "custom",
+                      embed: "Embed",
+                      embedInstructions:
+                        "To embed this item in your own website, copy and paste the code below.",
+                      height: "Height",
+                      iiif: "IIIF Manifest",
+                      share: "Share",
+                      shareInstructions:
+                        "To share this item, copy the URL below.",
+                      size: "Size:",
+                      width: "Width",
+                    },
+                  },
+                },
+              },
             },
             [uv]
           );
