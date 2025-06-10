@@ -18,9 +18,9 @@ const ItemMediaViewer = ({ item, canvasID }: ItemProps) => {
         manifestId={item.manifestURL}
         canvasIndex={canvasID}
         config={{}}
-        onChangeCanvas={(canvasIndex) => {
+        onChangeCanvas={(manifest, canvas) => {
           // why is this not printing in the console
-          console.log("canvas index changed", canvasIndex);
+          console.log("canvas index changed", manifest, canvas);
         }}
         onChangeManifest={(manifest) => {
           console.log("manfest changed", manifest);
