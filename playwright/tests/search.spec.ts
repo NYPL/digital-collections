@@ -1,26 +1,28 @@
 import { test, expect } from "@playwright/test";
 import SearchPage from "../pages/search.page";
 
-test.beforeEach(async ({ page }) => {
-  // move webkit abort here
-  // load pages here
-});
-test("searches for a keyword from homepage", async ({ page }, testInfo) => {
-  test.setTimeout(60000); // added extra time to navigate to homepage and load search page
+let searchPage: SearchPage;
+
+test.beforeEach(async ({ page }, testInfo) => {
   if (testInfo.project.name === "webkit") {
     await page.route("**/*.{png,jpg,jpeg,svg}", (route) => {
       route.abort();
     });
   }
-  const searchPage = await SearchPage.loadPage("/", page);
+
+  if (testInfo.title !== "searches for a keyword from homepage") {
+    searchPage = await SearchPage.loadPage(SearchPage.searchResultsUrl, page);
+  }
+});
+test("searches for a keyword from homepage", async ({ page }) => {
+  test.setTimeout(60000); // adds extra time to navigate to homepage and load search page
+  searchPage = await SearchPage.loadPage("/", page);
 
   await expect(searchPage.searchBar).toBeVisible();
   await searchPage.searchBar.fill(searchPage.searchKeyword);
   await expect(searchPage.searchBar).toHaveValue(searchPage.searchKeyword, {
-    timeout: 1000,
-  }); // webkit is clearing the search box after filling it
-  const value = await searchPage.searchBar.inputValue();
-  console.log("Search box value before submit:", value);
+    timeout: 10000,
+  }); // ensures webkit does not clear the search box after filling it
   await expect(searchPage.searchButton).toBeVisible();
   await searchPage.searchButton.click();
 
@@ -34,12 +36,8 @@ test("searches for a keyword from homepage", async ({ page }, testInfo) => {
   await expect(searchPage.firstResult).toBeVisible();
 });
 
-test("displays search result filters", async ({ page }, testInfo) => {
-  test.setTimeout(60000); // added extra time to load all elements
-  const searchPage = await SearchPage.loadPage(
-    SearchPage.searchResultsUrl,
-    page
-  );
+test("displays search result filters", async ({ page }) => {
+  test.setTimeout(60000); // adds extra time to load all elements
 
   // displays first row of filters
   await expect(searchPage.refineHeading).toBeVisible();
@@ -82,13 +80,9 @@ test("displays search result filters", async ({ page }, testInfo) => {
 });
 
 test("filters search results", async ({ page }) => {
-  const searchPage = await SearchPage.loadPage(
-    SearchPage.searchResultsUrl,
-    page
-  );
   await expect(searchPage.refineHeading).toBeVisible();
 
-  // filter a first row filter
+  // filters a drop-down in the first row
   await expect(searchPage.topicFilter).toBeVisible();
   await searchPage.topicFilter.click();
   await expect(searchPage.topicOption).toBeVisible();
@@ -97,7 +91,7 @@ test("filters search results", async ({ page }) => {
   await searchPage.applyFilterButton.click();
   await expect(searchPage.topicSelected).toBeVisible();
 
-  // filter a second row filter
+  // filters a drop-down in the second row
   await expect(searchPage.showFilters).toBeVisible();
   await searchPage.showFilters.click();
   await expect(searchPage.publisherFilter).toBeVisible();
