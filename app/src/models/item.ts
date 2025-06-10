@@ -57,7 +57,7 @@ export class ItemModel {
     console.log("canvasAnnotations is: ", canvasAnnotations);
     // only used for order print button
     this.isImage = this.hasItems
-      ? canvasAnnotations[0].body.type === "Image"
+      ? canvasAnnotations[0]?.body.type === "Image"
       : false;
     // this.isImage = !!canvasAnnotations[0] && canvasAnnotations[0].body.type === "Image";
 
@@ -155,7 +155,7 @@ export class ItemModel {
     };
     const identifiers = manifestMetadataHash["Identifiers"];
     const catalogLink = identifiers.find((identifier) =>
-      identifier.includes("NYPL catalog ID (B-number)")
+      identifier.includes("NYPL Catalog ID (bNumber)")
     );
     this.catalogLink = catalogLink ? catalogLink : "";
     const archivesLink = identifiers.find((identifier) => {

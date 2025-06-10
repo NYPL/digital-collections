@@ -21,6 +21,8 @@ export function middleware(req: NextRequest) {
   const url = req.nextUrl;
   const pathname = url.pathname;
 
+  const itemsMatch = pathname.match(/^\/items\/([^\/?#]+)/);
+
   const collectionMatch = pathname.match(/^\/collections\/([^\/?#]+)/);
   if (collectionMatch) {
     const identifier = collectionMatch[1];
@@ -61,8 +63,7 @@ export function middleware(req: NextRequest) {
 
   const searchParams = url.searchParams;
   let modified = false;
-
-  const allowedParams = new Set(["q", "sort", "page", "filters"]);
+  let allowedParams;
 
   // Transform collection_keywords to q
   if (searchParams.has("collection_keywords")) {
@@ -175,6 +176,12 @@ export function middleware(req: NextRequest) {
     searchParams.set("filters", filtersString);
   }
 
+  if (itemsMatch) {
+    allowedParams = new Set(["type", "canvasID", "uuid", "cv"]);
+  } else {
+    allowedParams = new Set(["q", "sort", "page", "filters"]);
+  }
+
   // Remove all other params except allowed ones
   const keys = Array.from(searchParams.keys());
   keys.forEach((key) => {
@@ -183,7 +190,6 @@ export function middleware(req: NextRequest) {
       modified = true;
     }
   });
-
   // Redirect if changes were made
   if (modified) {
     const newUrl = `${url.origin}${url.pathname}?${searchParams.toString()}`;
