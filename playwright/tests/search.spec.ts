@@ -91,6 +91,11 @@ test("filters search results", async ({ page }) => {
   await expect(searchPage.applyFilterButton).toBeVisible();
   await searchPage.applyFilterButton.click();
 
+  // clear filter
+  await expect(searchPage.clearFilter).toBeVisible();
+  await searchPage.clearFilter.click();
+  await expect(searchPage.clearFilter).not.toBeVisible(); // ensure the filter was cleared
+
   // filter a not visible filter
   await expect(searchPage.showFilters).toBeVisible();
   await searchPage.showFilters.click();
@@ -100,4 +105,10 @@ test("filters search results", async ({ page }) => {
   await searchPage.divisionOption.click();
   await expect(searchPage.applyFilterButton).toBeVisible();
   await searchPage.applyFilterButton.click();
+  // expect division filter to be applied
+
+  // clear filter
+  await expect(searchPage.clearFilter).toBeVisible();
+  await searchPage.clearFilter.click();
+  await expect(searchPage.clearFilter).not.toBeVisible(); // ensure the filter was cleared
 });

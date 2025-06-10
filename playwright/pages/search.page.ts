@@ -30,6 +30,7 @@ export default class SearchPage {
   readonly showFilters: Locator;
   readonly hideFilters: Locator;
   readonly applyFilterButton: Locator;
+  readonly clearFilter: Locator;
 
   constructor(page: Page) {
     this.page = page;
@@ -87,6 +88,7 @@ export default class SearchPage {
       name: "Apply",
       exact: true,
     });
+    this.clearFilter = this.page.getByTestId("filter-close-icon");
   }
 
   static async loadPage(gotoPage: string, page: Page): Promise<SearchPage> {
