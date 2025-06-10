@@ -12,12 +12,14 @@ export default class SearchPage {
 
   // search result filters
   readonly topicFilter: Locator;
+  readonly topicOption: Locator;
   readonly nameFilter: Locator;
   readonly collectionFilter: Locator;
   readonly placeFilter: Locator;
   readonly genreFilter: Locator;
   readonly publisherFilter: Locator;
   readonly divisionFilter: Locator;
+  readonly divisionOption: Locator;
   readonly typeFilter: Locator;
   readonly startYear: Locator;
   readonly endYear: Locator;
@@ -27,6 +29,7 @@ export default class SearchPage {
   readonly availableOnsite: Locator;
   readonly showFilters: Locator;
   readonly hideFilters: Locator;
+  readonly applyFilterButton: Locator;
 
   constructor(page: Page) {
     this.page = page;
@@ -47,6 +50,9 @@ export default class SearchPage {
 
     // search result filters
     this.topicFilter = this.page.getByRole("button", { name: "Topic" });
+    this.topicOption = this.page
+      .locator("#select-topic")
+      .getByText("Maps in education");
     this.nameFilter = this.page.getByRole("button", { name: "Name" });
     this.collectionFilter = this.page.getByRole("button", {
       name: "Collection",
@@ -55,6 +61,9 @@ export default class SearchPage {
     this.genreFilter = this.page.getByRole("button", { name: "Genre" });
     this.publisherFilter = this.page.getByRole("button", { name: "Publisher" });
     this.divisionFilter = this.page.getByRole("button", { name: "Division" });
+    this.divisionOption = this.page
+      .locator("#select-division")
+      .getByText("Spencer Collection");
     this.typeFilter = this.page.getByRole("button", { name: "Type" });
     this.startYear = this.page.getByRole("textbox", { name: "Start year" });
     this.endYear = this.page.getByRole("textbox", { name: "End year" });
@@ -73,6 +82,10 @@ export default class SearchPage {
     });
     this.hideFilters = this.page.getByRole("button", {
       name: "Less filter options",
+    });
+    this.applyFilterButton = this.page.getByRole("button", {
+      name: "Apply",
+      exact: true,
     });
   }
 

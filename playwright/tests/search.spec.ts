@@ -86,23 +86,18 @@ test("filters search results", async ({ page }) => {
   // filter a visible filter
   await expect(searchPage.topicFilter).toBeVisible();
   await searchPage.topicFilter.click();
-  const firstTopicOption = page
-    .locator("#select-topic")
-    .getByText("Maps in education");
-  await expect(firstTopicOption).toBeVisible();
-  await firstTopicOption.click();
-  const applyFilterButton = searchPage.page.getByRole("button", {
-    name: "Apply",
-  });
-  await expect(applyFilterButton).toBeVisible();
-  await applyFilterButton.click();
+  await expect(searchPage.topicOption).toBeVisible();
+  await searchPage.topicOption.click();
+  await expect(searchPage.applyFilterButton).toBeVisible();
+  await searchPage.applyFilterButton.click();
 
   // filter a not visible filter
   await expect(searchPage.showFilters).toBeVisible();
   await searchPage.showFilters.click();
   await expect(searchPage.divisionFilter).toBeVisible();
   await searchPage.divisionFilter.click();
-
-  // date range
-  // availability
+  await expect(searchPage.divisionOption).toBeVisible();
+  await searchPage.divisionOption.click();
+  await expect(searchPage.applyFilterButton).toBeVisible();
+  await searchPage.applyFilterButton.click();
 });
