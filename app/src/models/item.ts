@@ -23,7 +23,7 @@ export class ItemModel {
   isImage: boolean;
   archivesLink?: string | null | undefined;
   catalogLink?: string | null | undefined;
-  divisionLink?: string | undefined;
+  divisionLink: string;
   metadata?: {
     title: string;
     names?: string;
@@ -99,7 +99,7 @@ export class ItemModel {
     this.divisionLink =
       this.isRestricted && manifestMetadataHash["Division"]
         ? manifestMetadataHash["Division"].toString()
-        : "";
+        : manifestMetadataHash["Library Locations"][0];
 
     this.manifestURL = `${process.env.COLLECTIONS_API_URL}/manifests/${uuid}`;
 
