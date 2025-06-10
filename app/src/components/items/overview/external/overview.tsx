@@ -5,8 +5,8 @@ export const parseHtmlString = (html) => {
   const doc = parser.parseFromString(html, "text/html");
   const anchor = doc.querySelector("a");
   return {
-    href: anchor?.getAttribute("href"),
-    text: anchor?.textContent,
+    href: anchor?.getAttribute("href") || undefined,
+    text: anchor?.textContent || undefined,
   };
 };
 

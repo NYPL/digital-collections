@@ -22,8 +22,8 @@ export class ItemModel {
   link: string;
   isRestricted: boolean;
   isImage: boolean;
-  archivesLink?: string;
-  catalogLink?: string;
+  archivesLink?: string | null | undefined;
+  catalogLink?: string | null | undefined;
   metadata?: {
     title: string;
     names?: string;
@@ -51,9 +51,13 @@ export class ItemModel {
     const parser = new Maniiifest(manifest);
     this.hasItems = manifest.items.length > 0 ? true : false;
     const canvases = Array.from(parser.iterateManifestCanvas());
-    this.isImage =
-      Array.from(parser.iterateManifestCanvasAnnotation())[0].body.type ===
-      "Image";
+    const canvasAnnotations = Array.from(
+      parser.iterateManifestCanvasAnnotation()
+    );
+    console.log("canvasAnnotations is: ", canvasAnnotations);
+    // only used for order print button
+    this.isImage = canvasAnnotations[0].body.type === "Image";
+    // this.isImage = !!canvasAnnotations[0] && canvasAnnotations[0].body.type === "Image";
 
     this.imageIDs = this.hasItems
       ? canvases.map((canvas) => {

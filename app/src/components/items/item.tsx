@@ -16,17 +16,17 @@ import {
 } from "@nypl/design-system-react-components";
 
 interface ItemProps {
-  // manifest: any;
+  manifest: any;
   item: ItemModel;
   type: string;
-  canvasID: string;
+  canvasID?: string; //for when/if this is a query param
 }
 
 const renderViewer = (item) => {
   return item.hasItems && !item.isRestricted;
 };
 
-const Item = ({ item, type, canvasID }: ItemProps) => {
+const Item = ({ manifest, item, type }: ItemProps) => {
   return (
     <>
       <Box marginTop="-3em">
