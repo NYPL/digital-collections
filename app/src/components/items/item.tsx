@@ -36,7 +36,7 @@ const Item = ({ manifest, item, canvasID }: ItemProps) => {
           </>
         ) : (
           <>
-            <ItemMediaViewerFallback item={item} canvasID={canvasID} />
+            <ItemMediaViewerFallback item={item} />
             <Heading level="h2">{item.title}</Heading>
           </>
         )}

@@ -5,7 +5,7 @@ import { Maniiifest } from "maniiifest";
 // https://www.npmjs.com/package/@iiif/manifold
 // https://github.com/iiif-commons/manifold
 
-// import { getContentType } from "../utils/utils";
+// TO DO: add isCartographic for map stuff
 export class ItemModel {
   uuid: string;
   mods: any;
@@ -56,9 +56,10 @@ export class ItemModel {
     );
     console.log("canvasAnnotations is: ", canvasAnnotations);
     // only used for order print button
-    this.isImage = this.hasItems
-      ? canvasAnnotations[0]?.body.type === "Image"
-      : false;
+    this.isImage =
+      this.hasItems &&
+      (this.contentType === "singe image" ||
+        this.contentType === "multiple images");
     // this.isImage = !!canvasAnnotations[0] && canvasAnnotations[0].body.type === "Image";
 
     this.imageIDs = this.hasItems
@@ -96,63 +97,65 @@ export class ItemModel {
         : true),
       (this.manifestURL = `${process.env.COLLECTIONS_API_URL}/manifests/${uuid}`);
 
-    // TO DO: add _isCartographic for map stuff
-    this.metadata = {
-      title: manifestMetadataHash["Title"]
-        ? manifestMetadataHash["Title"].toString()
-        : "",
-      collection: manifestMetadataHash["Collection"]
-        ? manifestMetadataHash["Collection"].join("<br>") //TODO: add arrows
-        : "",
-      names: manifestMetadataHash["Names"]
-        ? manifestMetadataHash["Names"].join("<br>")
-        : "",
-      origin: manifestMetadataHash["Dates / origin"]
-        ? manifestMetadataHash["Dates / origin"].join("<br>")
-        : "",
-      dateIssued: manifestMetadataHash["Date Issued"]
-        ? manifestMetadataHash["Date Issued"].toString()
-        : "",
-      tableOfContents: manifestMetadataHash["Table of Contents"]
-        ? manifestMetadataHash["Table of Contents"].toString()
-        : "",
-      locations: manifestMetadataHash["Library Locations"]
-        ? manifestMetadataHash["Library Locations"].join("<br>")
-        : "",
-      subjects: manifestMetadataHash["Subjects"]
-        ? manifestMetadataHash["Subjects"].join("<br>")
-        : "",
-      genres: manifestMetadataHash["Genres"]
-        ? manifestMetadataHash["Genres"].join("<br>")
-        : "",
-      notes: manifestMetadataHash["Notes"]
-        ? manifestMetadataHash["Notes"].toString()
-        : "",
-      physicalDescription: manifestMetadataHash["Physical Description"]
-        ? manifestMetadataHash["Physical Description"].join("<br>")
-        : "",
-      typeOfResource: manifestMetadataHash["Resource Type"]
-        ? manifestMetadataHash["Resource Type"].join("<br>")
-        : "",
-      abstract: manifestMetadataHash["Abstract"]
-        ? manifestMetadataHash["Abstract"].toString()
-        : "",
-      languages: manifestMetadataHash["Languages"]
-        ? manifestMetadataHash["Lanugages"].toString()
-        : "",
-      link: manifestMetadataHash["Link"]
-        ? manifestMetadataHash["Link"].toString()
-        : "",
-      identifiers: manifestMetadataHash["Identifiers"]
-        ? manifestMetadataHash["Identifiers"].join("<br>")
-        : "",
-      access: manifestMetadataHash["Access"]
-        ? manifestMetadataHash["Access"].toString()
-        : "",
-      rights: manifestMetadataHash["Rights"]
-        ? manifestMetadataHash["Rights"].toString()
-        : "",
-    };
+    (this.contentType = manifestMetadataHash["Content Type"]
+      ? manifestMetadataHash["Content Type"].toString()
+      : ""),
+      (this.metadata = {
+        title: manifestMetadataHash["Title"]
+          ? manifestMetadataHash["Title"].toString()
+          : "",
+        collection: manifestMetadataHash["Collection"]
+          ? manifestMetadataHash["Collection"].join("<br>") //TODO: add arrows
+          : "",
+        names: manifestMetadataHash["Names"]
+          ? manifestMetadataHash["Names"].join("<br>")
+          : "",
+        origin: manifestMetadataHash["Dates / origin"]
+          ? manifestMetadataHash["Dates / origin"].join("<br>")
+          : "",
+        dateIssued: manifestMetadataHash["Date Issued"]
+          ? manifestMetadataHash["Date Issued"].toString()
+          : "",
+        tableOfContents: manifestMetadataHash["Table of Contents"]
+          ? manifestMetadataHash["Table of Contents"].toString()
+          : "",
+        locations: manifestMetadataHash["Library Locations"]
+          ? manifestMetadataHash["Library Locations"].join("<br>")
+          : "",
+        subjects: manifestMetadataHash["Subjects"]
+          ? manifestMetadataHash["Subjects"].join("<br>")
+          : "",
+        genres: manifestMetadataHash["Genres"]
+          ? manifestMetadataHash["Genres"].join("<br>")
+          : "",
+        notes: manifestMetadataHash["Notes"]
+          ? manifestMetadataHash["Notes"].toString()
+          : "",
+        physicalDescription: manifestMetadataHash["Physical Description"]
+          ? manifestMetadataHash["Physical Description"].join("<br>")
+          : "",
+        typeOfResource: manifestMetadataHash["Resource Type"]
+          ? manifestMetadataHash["Resource Type"].join("<br>")
+          : "",
+        abstract: manifestMetadataHash["Abstract"]
+          ? manifestMetadataHash["Abstract"].toString()
+          : "",
+        languages: manifestMetadataHash["Languages"]
+          ? manifestMetadataHash["Lanugages"].toString()
+          : "",
+        link: manifestMetadataHash["Link"]
+          ? manifestMetadataHash["Link"].toString()
+          : "",
+        identifiers: manifestMetadataHash["Identifiers"]
+          ? manifestMetadataHash["Identifiers"].join("<br>")
+          : "",
+        access: manifestMetadataHash["Access"]
+          ? manifestMetadataHash["Access"].toString()
+          : "",
+        rights: manifestMetadataHash["Rights"]
+          ? manifestMetadataHash["Rights"].toString()
+          : "",
+      });
     const identifiers = manifestMetadataHash["Identifiers"];
     const catalogLink = identifiers.find((identifier) =>
       identifier.includes("NYPL Catalog ID (bNumber)")
