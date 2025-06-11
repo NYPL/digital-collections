@@ -10,20 +10,35 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+
       - name: Use Node.js 18.x
         uses: actions/setup-node@v3
         with:
           node-version: 18
+
       - name: Cache and install node modules
         uses: bahmutov/npm-install@v1
         with:
           useLockFile: false
+
       - name: Install dependencies
-        run: npm install # prev ci
+        run: npm install
+
       - name: Install Playwright Browsers
         run: npx playwright install --with-deps
+
+      - name: Build app
+        run: NODE_ENV=test npm run build
+
+      - name: Start the app
+        run: |
+          NODE_ENV=test npm run start &
+          sleep 5
+        shell: bash
+
       - name: Run Playwright tests
         run: npx playwright test
+
       - uses: actions/upload-artifact@v4
         if: ${{ !cancelled() }}
         with:
