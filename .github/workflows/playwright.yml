@@ -28,16 +28,25 @@ jobs:
         run: npx playwright install --with-deps
 
       - name: Build app
-        run: NODE_ENV=test npm run build
+        run: NODE_ENV=test DISABLE_NEW_RELIC_IN_TESTS=true npm run build
+        env:
+          NEW_RELIC_LICENSE_KEY: "" # Unset or empty to disable the agent itself
+          NEW_RELIC_APP_NAME: ""
 
       - name: Start the app
         run: |
-          NODE_ENV=test npm run start &
+          NODE_ENV=test DISABLE_NEW_RELIC_IN_TESTS=true npm run start &
           sleep 5
         shell: bash
+        env:
+          NEW_RELIC_LICENSE_KEY: "" # Unset or empty to disable the agent itself
+          NEW_RELIC_APP_NAME: ""
 
       - name: Run Playwright tests
         run: npx playwright test
+        env:
+          NEW_RELIC_LICENSE_KEY: "" # Unset or empty to disable the agent itself
+          NEW_RELIC_APP_NAME: ""
 
       - uses: actions/upload-artifact@v4
         if: ${{ !cancelled() }}
