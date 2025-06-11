@@ -54,10 +54,16 @@ test("searches for a keyword from homepage", async ({ page }, testInfo) => {
   }
 
   await expect(page).toHaveTitle("Search results - NYPL Digital Collections");
+});
 
-  // await expect(searchPage.refineHeading).toBeVisible(); // move to different test "displays search results"
-  // await expect(searchPage.resultsHeading).toBeVisible();
-  // await expect(searchPage.firstResult).toBeVisible();
+test("displays search results", async ({ page }) => {
+  test.setTimeout(60000); // adds extra time to load all elements
+  await expect(searchPage.refineHeading).toBeVisible();
+  await expect(searchPage.resultsHeading).toBeVisible();
+  await expect(searchPage.firstResult).toBeVisible();
+  await expect(searchPage.firstResult).toContainText(searchPage.searchKeyword, {
+    ignoreCase: true,
+  });
 });
 
 test("displays search result filters", async ({ page }) => {
@@ -104,6 +110,7 @@ test("displays search result filters", async ({ page }) => {
 });
 
 test("filters search results", async ({ page }) => {
+  test.setTimeout(60000); // adds extra time to load all elements
   await expect(searchPage.refineHeading).toBeVisible();
 
   // filters a drop-down in the first row
