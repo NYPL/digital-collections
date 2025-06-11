@@ -7,16 +7,16 @@ import "universalviewer/dist/esm/index.css";
 
 interface ItemProps {
   item: ItemModel;
-  canvasID: number;
+  canvasIndex: number;
 }
 
-const ItemMediaViewer = ({ item, canvasID }: ItemProps) => {
+const ItemMediaViewer = ({ item, canvasIndex }: ItemProps) => {
   let viewer;
   viewer = (
     <>
       <UniversalViewer
         manifestId={item.manifestURL}
-        canvasIndex={canvasID}
+        canvasIndex={canvasIndex}
         config={{}}
         onChangeCanvas={(manifest, canvas) => {
           // why is this not printing in the console

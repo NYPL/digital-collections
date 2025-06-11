@@ -129,9 +129,10 @@ export class ItemModel {
       locations: manifestMetadataHash["Library Locations"]
         ? manifestMetadataHash["Library Locations"].join("<br>")
         : "",
-      subjects: manifestMetadataHash["Subjects"]
-        ? manifestMetadataHash["Subjects"].join("<br>")
-        : "",
+      subjects:
+        manifestMetadataHash["Subjects"].length > 2
+          ? manifestMetadataHash["Subjects"].join("<br>")
+          : "",
       genres: manifestMetadataHash["Genres"]
         ? manifestMetadataHash["Genres"].join("<br>")
         : "",
@@ -168,6 +169,7 @@ export class ItemModel {
     const catalogLink = identifiers.find((identifier) =>
       identifier.includes("NYPL Catalog ID (bNumber)")
     );
+
     this.catalogLink = catalogLink ? catalogLink : "";
     const archivesLink = identifiers.find((identifier) => {
       identifiers.includes("Archives ID");
