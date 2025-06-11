@@ -20,7 +20,7 @@ const config = {
     "__tests__/data/*",
     "__tests__/__mocks__/*",
     "__tests__/api/*",
-    "\\.spec\\.ts$", // ignores playwright tests
+    // "\\.spec\\.ts$", // ignores playwright tests
   ],
   moduleNameMapper: {
     "^appConfig$": "<rootDir>/__tests__/data/appConfig.ts", // Adjust the path as needed
