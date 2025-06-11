@@ -278,10 +278,9 @@ export const filterToString = (filters: Filter[]): string => {
 export const transformToDisplayAvailableFilters = (
   availableFilters: Record<string, AvailableFilterOption[]>
 ): AvailableFilter[] => {
+  const nonSelectableFilters = ["form", "language", "subcollection", "title"];
   return Object.entries(availableFilters)
-    .filter(
-      ([key]) => key !== "subcollection" && key !== "language" && key !== "form"
-    )
+    .filter(([key]) => !nonSelectableFilters.includes(key))
     .map(([key, options]) => ({
       name: key,
       options,

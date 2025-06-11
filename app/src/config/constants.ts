@@ -73,6 +73,7 @@ export const ALLOWED_FILTERS = [
   "language",
   "subcollection",
   "materialType",
+  "title",
 ];
 
 export const METADATA_FIELDS = [
