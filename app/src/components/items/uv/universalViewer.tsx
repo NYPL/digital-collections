@@ -17,13 +17,15 @@ export type UniversalViewerProps = {
 // https://codesandbox.io/p/sandbox/uv-nextjs-example-239ff5?file=%2Fcomponents%2FUniversalViewer.tsx%3A39%2C1-49%2C8
 const UniversalViewer: React.FC<UniversalViewerProps> = React.memo(
   ({ manifestId, canvasIndex, onChangeCanvas, config }) => {
+    // console.log("canvasID is: ", canvasID)
+
     console.log("canvasIndex in UniversalViewer component is: ", canvasIndex);
     const ref = useRef<HTMLDivElement>(null);
     const lastIndex = useRef<number>();
     const options = useMemo(
       () => ({
         manifest: manifestId,
-        canvasIndex: canvasIndex || 0,
+        canvasIndex: 4, //canvasIndex || 0,
         embedded: true,
         // footerPanelEnabled: false,
         // options: {
@@ -162,10 +164,10 @@ const UniversalViewer: React.FC<UniversalViewerProps> = React.memo(
 
     return (
       <>
-        <link
+        {/* <link
           rel="stylesheet"
           href="https://cdn.jsdelivr.net/npm/universalviewer@4.0.0-pre.66/dist/esm/index.css"
-        />
+        /> */}
         <div className="uv" style={{ height: 800 }} ref={ref} />
       </>
     );
