@@ -12,7 +12,7 @@ type ItemProps = {
     uuid: string;
     item: ItemModel;
   };
-  searchParams: { canvasID: number };
+  searchParams: { canvasIndex: number };
 };
 
 let item;
@@ -58,7 +58,7 @@ export default async function ItemViewer({ params, searchParams }: ItemProps) {
       <ItemPage
         manifest={manifest}
         uuid={params.uuid}
-        canvasID={searchParams.canvasID}
+        canvasIndex={searchParams.canvasIndex}
       />
     </PageLayout>
   );
