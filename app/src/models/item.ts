@@ -1,10 +1,11 @@
 import { Maniiifest } from "maniiifest";
+
 // https://github.com/jptmoore/maniiifest
 // other resources:
 // https://www.npmjs.com/package/@iiif/manifold
 // https://github.com/iiif-commons/manifold
 
-// import { getContentType } from "../utils/utils";
+// TO DO: add isCartographic for map stuff
 export class ItemModel {
   uuid: string;
   mods: any;
@@ -12,14 +13,17 @@ export class ItemModel {
   typeOfResource: string;
   title: string;
   isSingleCapture: boolean;
-  imageID: string;
+  imageIDs?: string[];
   href: string;
   contentType: string;
   hasItems?: boolean;
-  hasRightsRestritions?: boolean;
   manifestURL: string;
   link: string;
   isRestricted: boolean;
+  isImage: boolean;
+  archivesLink?: string | null | undefined;
+  catalogLink?: string | null | undefined;
+  divisionLink: string;
   metadata?: {
     title: string;
     names?: string;
@@ -46,6 +50,24 @@ export class ItemModel {
     // get custom label from manifest
     const parser = new Maniiifest(manifest);
     this.hasItems = manifest.items.length > 0 ? true : false;
+    const canvases = Array.from(parser.iterateManifestCanvas());
+    const canvasAnnotations = Array.from(
+      parser.iterateManifestCanvasAnnotation()
+    );
+    console.log("canvasAnnotations is: ", canvasAnnotations);
+
+    // only used for order print button
+    this.isImage =
+      this.hasItems &&
+      (this.contentType === "singe image" ||
+        this.contentType === "multiple images");
+
+    // example canvas.id is: "https://iiif.nypl.org/iiif/3/TH-38454/full/!700,700/0/default.jpg"
+    this.imageIDs = this.hasItems
+      ? canvases.map((canvas) => {
+          return canvas.id.split("/")[5];
+        })
+      : [];
 
     // const label = parser?.getManifestLabelByLanguage("en");
     const metadata = Array.from(parser.iterateManifestMetadata());
@@ -60,23 +82,32 @@ export class ItemModel {
     }
 
     this.uuid = uuid;
-    (this.link =
+    this.link =
       process.env.APP_ENV === "development" || process.env.APP_ENV === "qa"
         ? `https://qa-digitalcollections.nypl.org/items/${this.uuid}`
-        : `https://digitalcollections.nypl.org/items/${this.uuid}`),
-      (this.typeOfResource = manifestMetadataHash["Resource Type"]
-        ? manifestMetadataHash["Resource Type"].toString()
-        : ""),
-      (this.title = manifestMetadataHash["Title"]
-        ? manifestMetadataHash["Title"].toString()
-        : ""),
-      (this.isRestricted = manifestMetadataHash["Is Restricted"]
-        ? manifestMetadataHash["Is Restricted"].toString().toLowerCase() ===
-          "true"
-        : true),
-      (this.manifestURL = `${process.env.COLLECTIONS_API_URL}/manifests/${uuid}`);
+        : `https://digitalcollections.nypl.org/items/${this.uuid}`;
+    this.typeOfResource = manifestMetadataHash["Resource Type"]
+      ? manifestMetadataHash["Resource Type"].toString()
+      : "";
+    this.title = manifestMetadataHash["Title"]
+      ? manifestMetadataHash["Title"].toString()
+      : "";
+    this.isRestricted = manifestMetadataHash["Is Restricted"]
+      ? manifestMetadataHash["Is Restricted"].toString().toLowerCase() ===
+        "true"
+      : true;
 
-    // TO DO: add _isCartographic for map stuff
+    this.divisionLink =
+      this.isRestricted && manifestMetadataHash["Division"]
+        ? manifestMetadataHash["Division"].toString()
+        : manifestMetadataHash["Library Locations"][0];
+
+    this.manifestURL = `${process.env.COLLECTIONS_API_URL}/manifests/${uuid}`;
+
+    this.contentType = manifestMetadataHash["Content Type"]
+      ? manifestMetadataHash["Content Type"].toString()
+      : "";
+
     this.metadata = {
       title: manifestMetadataHash["Title"]
         ? manifestMetadataHash["Title"].toString()
@@ -106,7 +137,7 @@ export class ItemModel {
         ? manifestMetadataHash["Genres"].join("<br>")
         : "",
       notes: manifestMetadataHash["Notes"]
-        ? manifestMetadataHash["Notes"].join("<br>")
+        ? manifestMetadataHash["Notes"].join("")
         : "",
       physicalDescription: manifestMetadataHash["Physical Description"]
         ? manifestMetadataHash["Physical Description"].join("<br>")
@@ -133,5 +164,17 @@ export class ItemModel {
         ? manifestMetadataHash["Rights"].toString()
         : "",
     };
+
+    const identifiers = manifestMetadataHash["Identifiers"];
+    const catalogLink = identifiers.find((identifier) =>
+      identifier.includes("NYPL Catalog ID (bNumber)")
+    );
+
+    this.catalogLink = catalogLink ? catalogLink : "";
+    const archivesLink = identifiers.find((identifier) => {
+      identifiers.includes("Archives ID");
+    });
+
+    this.archivesLink = archivesLink ? archivesLink : "";
   }
 }
