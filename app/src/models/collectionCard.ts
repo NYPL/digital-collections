@@ -1,4 +1,5 @@
 import { imageURL } from "../utils/utils";
+import { parseBoolean } from "../utils/utils";
 
 export class CollectionCardModel {
   uuid: string;
@@ -17,6 +18,7 @@ export class CollectionCardModel {
     this.imageURL = imageURL(data.imageID, "square", "!288,288", "0");
     this.numberOfDigitizedItems =
       data.numberOfDigitizedItems || data.numItems || 0;
-    this.containsOnSiteMaterials = data.containsOnSiteMaterials;
+    this.containsOnSiteMaterials =
+      parseBoolean(data.containsOnSiteMaterials) || false;
   }
 }

@@ -251,8 +251,8 @@ export function highlightTitleWords(title: string, highlights): string {
 }
 
 /* Helper for highlighting search result title given that
-   full title appears in the highlight field. 
-   
+   full title appears in the highlight field.
+
 export const getTitleWithHighlights = (highlights, title) => {
   const titleHighlight = highlights.find(
     (highlight) => highlight.field === "Title"
@@ -269,4 +269,11 @@ export const isDCUuid = (identifier) => {
 
 export const deSlugify = (slug: string): string => {
   return slug.replace(/-/g, " ").replace(/\b\w/g, (c) => c.toUpperCase());
+};
+
+export const parseBoolean = (value: any): boolean => {
+  if (typeof value === "boolean") {
+    return value;
+  }
+  return value == "true" ? true : false;
 };
