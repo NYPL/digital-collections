@@ -94,9 +94,9 @@ const MetadataOverview = ({ metadata }) => {
                   <Text size="overline1" marginBottom="xs">
                     {metadataFieldToDisplay[field]}
                   </Text>
-                  <Text marginBottom="m">
+                  <Box marginBottom="m ">
                     {StructuredCollectionsList(collections)}
-                  </Text>
+                  </Box>
                 </Fragment>
               );
             } else {
@@ -105,7 +105,7 @@ const MetadataOverview = ({ metadata }) => {
                   <Text size="overline1" marginBottom="xs">
                     {metadataFieldToDisplay[field]}
                   </Text>
-                  <Text marginBottom="m">{parse(value)}</Text>
+                  <Box marginBottom="m">{parse(value)}</Box>
                 </Fragment>
               );
             }

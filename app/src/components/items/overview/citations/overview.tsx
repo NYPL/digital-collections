@@ -95,7 +95,7 @@ ${metadata.origin ? "(" + metadata.origin + ")" : ""}${
                 <Text size="overline1" marginBottom="xs">
                   {field}
                 </Text>
-                <Text marginBottom="m">{parse(value)}</Text>
+                <Box marginBottom="m">{parse(value)}</Box>
               </Fragment>
             );
           }
