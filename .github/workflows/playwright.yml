@@ -43,7 +43,7 @@ jobs:
       #     NEW_RELIC_APP_NAME: ""
 
       - name: Run build
-        run: npm run dev
+        run: npm run dev & sleep 5
 
       - name: Run Playwright tests
         run: npx playwright test
