@@ -71,7 +71,7 @@ const UniversalViewer: React.FC<UniversalViewerProps> = React.memo(
 
     return (
       <>
-        <div className="uv" style={{ height: 800 }} ref={ref} />
+        <div className="uv" style={{ height: 650 }} ref={ref} />
       </>
     );
   }

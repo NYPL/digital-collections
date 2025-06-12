@@ -37,7 +37,7 @@ const ItemOverview = ({ item, canvasIndex }) => {
           <PrintOverview item={item} imageID={item.imageIDs[canvasIndex - 1]} />
         )}
       </ChakraSimpleGrid>
-      <HorizontalRule marginTop="l" marginBottom="l" />
+      <HorizontalRule marginTop="m" marginBottom="m" />
       <ChakraSimpleGrid
         sx={{
           [`@media screen and (min-width: ${headerBreakpoints.lgMobile}px)`]: {

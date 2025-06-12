@@ -13,6 +13,7 @@ import {
   Link,
   Icon,
   Text,
+  HorizontalRule,
 } from "@nypl/design-system-react-components";
 
 interface ItemProps {
@@ -47,6 +48,7 @@ const Item = ({ manifest, item, canvasIndex }: ItemProps) => {
             Learn more.
           </Link>{" "}
         </Text>
+        <HorizontalRule marginTop="m" marginBottom="m" />
         <ItemOverview item={item} canvasIndex={canvasIndex} />
       </Box>
     </>
