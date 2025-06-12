@@ -55,13 +55,14 @@ export class ItemModel {
       parser.iterateManifestCanvasAnnotation()
     );
     console.log("canvasAnnotations is: ", canvasAnnotations);
+
     // only used for order print button
     this.isImage =
       this.hasItems &&
       (this.contentType === "singe image" ||
         this.contentType === "multiple images");
-    // this.isImage = !!canvasAnnotations[0] && canvasAnnotations[0].body.type === "Image";
 
+    // example canvas.id is: "https://iiif.nypl.org/iiif/3/TH-38454/full/!700,700/0/default.jpg"
     this.imageIDs = this.hasItems
       ? canvases.map((canvas) => {
           return canvas.id.split("/")[5];
@@ -129,10 +130,9 @@ export class ItemModel {
       locations: manifestMetadataHash["Library Locations"]
         ? manifestMetadataHash["Library Locations"].join("<br>")
         : "",
-      subjects:
-        manifestMetadataHash["Subjects"].length > 2
-          ? manifestMetadataHash["Subjects"].join("<br>")
-          : "",
+      subjects: manifestMetadataHash["Subjects"]
+        ? manifestMetadataHash["Subjects"].join("<br>")
+        : "",
       genres: manifestMetadataHash["Genres"]
         ? manifestMetadataHash["Genres"].join("<br>")
         : "",
