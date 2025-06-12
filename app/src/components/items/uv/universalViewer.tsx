@@ -20,7 +20,7 @@ const UniversalViewer: React.FC<UniversalViewerProps> = React.memo(
   ({ manifestId, canvasIndex, onChangeCanvas, config }) => {
     const searchParams = useSearchParams();
 
-    function updateCanvasIndex(newCanvasIndex: number) {
+    function updateCanvasIndex(newCanvasIndex: any) {
       const urlSearchParams = new URLSearchParams(searchParams.toString());
       console.log("newCanvasIndex is: ", newCanvasIndex);
       urlSearchParams.set("canvasIndex", newCanvasIndex);
