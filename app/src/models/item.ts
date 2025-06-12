@@ -54,7 +54,6 @@ export class ItemModel {
     const canvasAnnotations = Array.from(
       parser.iterateManifestCanvasAnnotation()
     );
-    // console.log("canvasAnnotations is: ", canvasAnnotations);
 
     // example canvas.id is: "https://iiif.nypl.org/iiif/3/TH-38454/full/!700,700/0/default.jpg"
     this.imageIDs = this.hasItems
@@ -62,9 +61,7 @@ export class ItemModel {
           return canvas.id.split("/")[5];
         })
       : [];
-    console.log("imageIDs are: ", this.imageIDs);
 
-    // const label = parser?.getManifestLabelByLanguage("en");
     const metadata = Array.from(parser.iterateManifestMetadata());
     const manifestMetadataHash = {};
 
