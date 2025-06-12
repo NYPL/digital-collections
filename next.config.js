@@ -35,17 +35,17 @@ const nextConfig = {
   // In order for newrelic to effectively instrument a Next.js application,
   // the modules that newrelic supports should not be mangled by webpack. Thus,
   // we need to "externalize" all of the modules that newrelic supports.
-  // webpack: (config) => {
-  //   nrExternals(config);
-  //   return config;
-  // },
-
   webpack: (config) => {
-    if (NEW_RELIC_APP_NAME) {
-      nrExternals(config);
-    }
+    nrExternals(config);
     return config;
   },
+
+  // webpack: (config) => {
+  //   if (NEW_RELIC_APP_NAME) {
+  //     nrExternals(config);
+  //   }
+  //   return config;
+  // },
 };
 
 module.exports = nextConfig;
