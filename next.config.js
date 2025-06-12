@@ -35,17 +35,8 @@ const nextConfig = {
   // In order for newrelic to effectively instrument a Next.js application,
   // the modules that newrelic supports should not be mangled by webpack. Thus,
   // we need to "externalize" all of the modules that newrelic supports.
-  // webpack: (config) => {
-  //   nrExternals(config);
-  //   return config;
-  // },
-
-  webpack: (config, { isServer }) => {
-    // Add isServer to check if it's the server build
-    // Only apply New Relic externals if not in test environment
-    if (process.env.DISABLE_NEW_RELIC_IN_TESTS !== "true") {
-      nrExternals(config);
-    }
+  webpack: (config) => {
+    nrExternals(config);
     return config;
   },
 };
