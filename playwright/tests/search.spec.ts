@@ -4,6 +4,7 @@ import SearchPage from "../pages/search.page";
 let searchPage: SearchPage;
 
 test.beforeEach(async ({ page }, testInfo) => {
+  // handles 404 errors for restricted images
   if (testInfo.project.name === "webkit") {
     await page.route("**/*.{png,jpg,jpeg,svg}", (route) => {
       route.abort();
