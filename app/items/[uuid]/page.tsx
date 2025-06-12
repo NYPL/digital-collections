@@ -12,7 +12,7 @@ type ItemProps = {
     uuid: string;
     item: ItemModel;
   };
-  searchParams: { type: string };
+  searchParams: { canvasIndex: number };
 };
 
 let item;
@@ -41,7 +41,7 @@ export default async function ItemViewer({ params, searchParams }: ItemProps) {
   revalidatePath("/");
   const manifest = await getItemManifest(params.uuid);
   const item = new ItemModel(params.uuid, manifest);
-
+  console.log("search params are: ", searchParams);
   return (
     <PageLayout
       activePage="item"
@@ -57,8 +57,8 @@ export default async function ItemViewer({ params, searchParams }: ItemProps) {
     >
       <ItemPage
         manifest={manifest}
-        type={searchParams.type}
         uuid={params.uuid}
+        canvasIndex={searchParams.canvasIndex}
       />
     </PageLayout>
   );

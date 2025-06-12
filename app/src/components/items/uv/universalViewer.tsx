@@ -17,13 +17,15 @@ export type UniversalViewerProps = {
 // https://codesandbox.io/p/sandbox/uv-nextjs-example-239ff5?file=%2Fcomponents%2FUniversalViewer.tsx%3A39%2C1-49%2C8
 const UniversalViewer: React.FC<UniversalViewerProps> = React.memo(
   ({ manifestId, canvasIndex, onChangeCanvas, config }) => {
+    // console.log("canvasIndex is: ", canvasIndex)
+
     console.log("canvasIndex in UniversalViewer component is: ", canvasIndex);
     const ref = useRef<HTMLDivElement>(null);
     const lastIndex = useRef<number>();
     const options = useMemo(
       () => ({
         manifest: manifestId,
-        canvasIndex: canvasIndex || 0,
+        canvasIndex: canvasIndex || 0, //TODO: look into why adding the query param adds "1" to the string or value. it's very weird.
         embedded: true,
         // footerPanelEnabled: false,
         // options: {
@@ -45,6 +47,16 @@ const UniversalViewer: React.FC<UniversalViewerProps> = React.memo(
 
     useEffect(() => {
       console.log("canvasIndex in useEffect is: ", canvasIndex);
+
+      // if (uv && (canvasIndex || canvasIndex === 0)) {
+      //   if (lastIndex.current !== canvasIndex) {
+      //     uv._assignedContentHandler?.publish(
+      //       BaseEvents.CANVAS_INDEX_CHANGE,
+      //       canvasIndex
+      //     );
+      //     lastIndex.current = canvasIndex;
+      //   }
+      // }
 
       if (uv) {
         // override config using an inline json object
@@ -137,6 +149,7 @@ const UniversalViewer: React.FC<UniversalViewerProps> = React.memo(
 
       if (onChangeCanvas) {
         console.log("canvasIndex in useEvent onChangeCanvas is: ", canvasIndex);
+        console.log("i in useEvent onChangeCanvas is: ", i);
 
         if (lastIndex.current !== i) {
           console.log("lastIndex is", lastIndex);
@@ -151,10 +164,6 @@ const UniversalViewer: React.FC<UniversalViewerProps> = React.memo(
 
     return (
       <>
-        <link
-          rel="stylesheet"
-          href="https://cdn.jsdelivr.net/npm/universalviewer@4.0.0-pre.66/dist/esm/index.css"
-        />
         <div className="uv" style={{ height: 800 }} ref={ref} />
       </>
     );

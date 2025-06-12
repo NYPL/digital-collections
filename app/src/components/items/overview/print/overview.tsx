@@ -11,7 +11,8 @@ import {
 } from "@nypl/design-system-react-components";
 import parse from "html-react-parser";
 
-const PrintOverview = ({ item }) => {
+const PrintOverview = ({ item, imageID }) => {
+  console.log("imageID is: ", imageID);
   return (
     <>
       <Box
@@ -22,7 +23,7 @@ const PrintOverview = ({ item }) => {
           Purchase this print
         </Heading>
         <Link
-          href={"/"}
+          href={`https://archivea.studio/?id=${imageID}`}
           id={"print-btn"}
           isUnderlined={false}
           target="_blank"
