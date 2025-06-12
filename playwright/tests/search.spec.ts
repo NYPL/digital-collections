@@ -14,6 +14,7 @@ test.beforeEach(async ({ page }, testInfo) => {
     searchPage = await SearchPage.loadPage(SearchPage.searchResultsUrl, page);
   }
 });
+
 test("searches for a keyword from homepage", async ({ page }, testInfo) => {
   test.setTimeout(60000); // adds extra time to navigate to homepage and load search page
   searchPage = await SearchPage.loadPage("/", page);
@@ -23,35 +24,10 @@ test("searches for a keyword from homepage", async ({ page }, testInfo) => {
   await expect(searchPage.searchBar).toHaveValue(searchPage.searchKeyword);
   await expect(searchPage.searchButton).toBeVisible();
 
-  // option 1
-  // if (testInfo.project.name === "webkit" || testInfo.project.name === "firefox") {
-  //   // Force navigation in WebKit because the button click fails
-  //   console.log("Forcing navigation to:", SearchPage.searchResultsUrl);
-  //   await SearchPage.loadPage(SearchPage.searchResultsUrl, page);
-  // } else {
-  //     // Wait for navigation triggered by the button click
-  //     await Promise.all([
-  //       page.waitForURL(`**${SearchPage.searchResultsUrl}**`, { waitUntil: "load" }),
-  //       searchPage.searchButton.click(),
-  //     ]);
-  // }
-
-  // option 2
-  try {
-    await Promise.all([
-      searchPage.searchButton.click(),
-      page.waitForURL(`**${SearchPage.searchResultsUrl}**`, {
-        waitUntil: "load",
-      }),
-    ]);
-  } catch (error) {
-    // if navigation did not happen and button click failed, then force navigation
-    console.log(
-      "Search button click and navigation failed, forcing navigation to:",
-      SearchPage.searchResultsUrl
-    );
-    await SearchPage.loadPage(SearchPage.searchResultsUrl, page);
-  }
+  await searchPage.searchButton.click();
+  await page.waitForURL("/search/**", {
+    waitUntil: "load",
+  });
 
   await expect(page).toHaveTitle("Search results - NYPL Digital Collections");
 });
