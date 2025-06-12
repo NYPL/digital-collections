@@ -167,7 +167,7 @@ export class ItemModel {
 
     const identifiers = manifestMetadataHash["Identifiers"];
     const catalogLink = identifiers.find((identifier) =>
-      identifier.includes("NYPL Catalog ID (bNumber)")
+      identifier.includes("NYPL Catalog ID (bnumber)")
     );
 
     this.catalogLink = catalogLink ? catalogLink : "";
