@@ -1,9 +1,8 @@
 name: Playwright Tests
 on:
-  push:
-    branches: [main, master]
   pull_request:
-    branches: [main, master]
+    branches:
+      - main
 jobs:
   test:
     timeout-minutes: 60
@@ -32,9 +31,6 @@ jobs:
 
       - name: Run Playwright tests
         run: npx playwright test
-        # env:
-        #   NEW_RELIC_LICENSE_KEY: "" # Unset or empty to disable the agent itself
-        #   NEW_RELIC_APP_NAME: ""
 
       - uses: actions/upload-artifact@v4
         if: ${{ !cancelled() }}
