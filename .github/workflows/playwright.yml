@@ -15,10 +15,10 @@ jobs:
         with:
           node-version: 18
 
-      - name: Cache and install node modules
-        uses: bahmutov/npm-install@v1
-        with:
-          useLockFile: false
+      # - name: Cache and install node modules
+      #   uses: bahmutov/npm-install@v1
+      #   with:
+      #     useLockFile: false
 
       - name: Install dependencies
         run: npm install
