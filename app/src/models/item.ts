@@ -56,12 +56,6 @@ export class ItemModel {
     );
     console.log("canvasAnnotations is: ", canvasAnnotations);
 
-    // only used for order print button
-    this.isImage =
-      this.hasItems &&
-      (this.contentType === "singe image" ||
-        this.contentType === "multiple images");
-
     // example canvas.id is: "https://iiif.nypl.org/iiif/3/TH-38454/full/!700,700/0/default.jpg"
     this.imageIDs = this.hasItems
       ? canvases.map((canvas) => {
@@ -97,16 +91,24 @@ export class ItemModel {
         "true"
       : true;
 
+    // for viewer configs and order print button
+    this.contentType = manifestMetadataHash["Content Type"]
+      ? manifestMetadataHash["Content Type"][0].toString()
+      : "";
+
+    // only used for order print button
+    this.isImage =
+      this.hasItems &&
+      (this.contentType === "image" ||
+        this.contentType === "single image" ||
+        this.contentType === "multiple images");
+
     this.divisionLink =
       this.isRestricted && manifestMetadataHash["Division"]
         ? manifestMetadataHash["Division"].toString()
         : manifestMetadataHash["Library Locations"][0];
 
     this.manifestURL = `${process.env.COLLECTIONS_API_URL}/manifests/${uuid}`;
-
-    this.contentType = manifestMetadataHash["Content Type"]
-      ? manifestMetadataHash["Content Type"].toString()
-      : "";
 
     this.metadata = {
       title: manifestMetadataHash["Title"]
