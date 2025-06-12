@@ -41,6 +41,12 @@ export const Card = forwardRef<HTMLDivElement, DCCardProps>(
       ? `${slug}-${id}`
       : `${stringToSlug(record.title)}-${id}`; // should probably truncate
 
+    if (isCollection) {
+      console.log(record.title);
+      console.log(record.containsOnSiteMaterials);
+      console.log(typeof record.containsOnSiteMaterials);
+    }
+
     const card = (
       <ChakraCard
         ref={ref}
