@@ -26,10 +26,10 @@ const ItemOverview = ({ item, canvasIndex }) => {
         }}
       >
         <ExternalLinksOverview item={item} />
-        {/* TODO: fix the order print button */}
-        {/* {item.isImage && (
+        {/* TODO: fix the order print button*/}
+        {item.isImage && (
           <PrintOverview item={item} imageID={item.imageIDs[canvasIndex]} />
-        )} */}
+        )}
       </ChakraSimpleGrid>
       <HorizontalRule marginTop="l" marginBottom="l" />
       <ChakraSimpleGrid
