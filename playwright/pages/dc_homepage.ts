@@ -34,6 +34,24 @@ export class DCHomepage {
   readonly nyplDigitalCollectionsApi: Locator;
   readonly digitalPublicLibraryOfAmerica: Locator;
 
+  //footer
+
+  readonly footerAccessibilityLink: Locator;
+  readonly footerPressLink: Locator;
+  readonly footerCareersLink: Locator;
+  readonly footerAboutNyplLink: Locator;
+  readonly footerSpaceRentalLink: Locator;
+  readonly footerPrivacyPolicyLink: Locator;
+  readonly footerOtherPoliciesLink: Locator;
+  readonly footerTermsAndConditionsLink: Locator;
+  readonly footerGovernanceLink: Locator;
+  readonly footerRulesAndRegulationsLink: Locator;
+  readonly footerLanguage: Locator;
+  readonly footerSocialFacebook: Locator;
+  readonly footerSocialTwitter: Locator;
+  readonly footerSocialInstagram: Locator;
+  readonly footerSocialYouTube: Locator;
+
   constructor(page: Page) {
     //navigation menu
     this.page = page;
@@ -75,5 +93,43 @@ export class DCHomepage {
     this.digitalPublicLibraryOfAmerica = this.page.getByRole("link", {
       name: "Digital Public Library of America",
     });
+
+    //footer
+
+    this.footerAccessibilityLink = this.page.getByRole("link", {
+      name: "Accessibility",
+    });
+    this.footerPressLink = this.page.getByRole("link", { name: "Press" });
+    this.footerCareersLink = this.page.getByRole("link", { name: "Careers" });
+    this.footerAboutNyplLink = this.page.getByRole("link", {
+      name: "About NYPL",
+    });
+    this.footerSpaceRentalLink = this.page.getByRole("link", {
+      name: "Space Rental",
+    });
+    this.footerPrivacyPolicyLink = this.page.getByRole("link", {
+      name: "Privacy Policy",
+    });
+    this.footerOtherPoliciesLink = this.page.getByRole("link", {
+      name: "Other Policies",
+    });
+    this.footerTermsAndConditionsLink = this.page.getByRole("link", {
+      name: "Terms & Conditions",
+    });
+    this.footerGovernanceLink = this.page.getByRole("link", {
+      name: "Governance",
+    });
+    this.footerRulesAndRegulationsLink = this.page.getByRole("link", {
+      name: "Rules & Regulations",
+    });
+    this.footerLanguage = this.page.getByRole("link", { name: "Language" });
+    this.footerSocialFacebook = this.page.getByRole("link", {
+      name: "Facebook",
+    });
+    this.footerSocialTwitter = this.page.getByRole("link", { name: "Twitter" });
+    this.footerSocialInstagram = this.page.getByRole("link", {
+      name: "Instagram",
+    });
+    this.footerSocialYouTube = this.page.getByRole("link", { name: "YouTube" });
   }
 }
