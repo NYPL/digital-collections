@@ -272,7 +272,7 @@ export const deSlugify = (slug: string): string => {
 };
 
 export const parseBoolean = (value: any): boolean => {
-  if (typeof value == "boolean") {
+  if (typeof value === "boolean") {
     return value;
   }
   return value == "true" ? true : false;
