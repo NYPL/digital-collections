@@ -1,5 +1,6 @@
 import { Box, Heading, Link, Text } from "@nypl/design-system-react-components";
 
+// TODO: make this a shared method
 export const parseHtmlString = (html) => {
   const parser = new DOMParser();
   const doc = parser.parseFromString(html, "text/html");
