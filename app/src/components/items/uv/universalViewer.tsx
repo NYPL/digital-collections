@@ -22,7 +22,8 @@ const UniversalViewer: React.FC<UniversalViewerProps> = React.memo(
 
     function updateCanvasIndex(newCanvasIndex: number) {
       const urlSearchParams = new URLSearchParams(searchParams.toString());
-      urlSearchParams.set("newCanvasIndex", newCanvasIndex);
+      console.log("newCanvasIndex is: ", newCanvasIndex);
+      urlSearchParams.set("canvasIndex", newCanvasIndex);
       window.history.pushState(null, "", `?${urlSearchParams.toString()}`);
     }
 
@@ -54,8 +55,10 @@ const UniversalViewer: React.FC<UniversalViewerProps> = React.memo(
 
     useEvent(uv, BaseEvents.CANVAS_INDEX_CHANGE, (i) => {
       if (onChangeCanvas) {
-        const newCanvasIndex = Integer.parseInt(i) + 1;
+        const newCanvasIndex: Number = Number(i) + 1;
         updateCanvasIndex(newCanvasIndex);
+        // updateCanvasIndex(i);// this works better for some reason
+
         if (lastIndex.current !== i) {
           const canvas = (uv as any)?.extension?.helper.getCanvasByIndex(i);
           if (canvas) {
