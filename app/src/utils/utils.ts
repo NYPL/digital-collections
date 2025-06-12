@@ -270,3 +270,7 @@ export const isDCUuid = (identifier) => {
 export const deSlugify = (slug: string): string => {
   return slug.replace(/-/g, " ").replace(/\b\w/g, (c) => c.toUpperCase());
 };
+
+export const parseBoolean = (value: string): boolean => {
+  return value == "true" ? true : false;
+};
