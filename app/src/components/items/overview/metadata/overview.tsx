@@ -10,6 +10,7 @@ import {
   HorizontalRule,
   Icon,
 } from "@nypl/design-system-react-components";
+import { Fragment } from "react";
 import parse from "html-react-parser";
 
 const metadataFieldToDisplay = {
@@ -54,8 +55,9 @@ const StructuredCollectionsList = (rawCollections) => {
       {rawCollections.map((htmlString, index) => {
         console.log("htmlString is: ", htmlString);
         const { href, text } = parseHtmlString(htmlString);
+        const key = `metadata-collection-${index}`;
         return (
-          <span key={index} style={{ paddingLeft: `${(index - 1) * 1.5}rem` }}>
+          <span key={key} style={{ paddingLeft: `${(index - 1) * 1.5}rem` }}>
             {index !== 0 && (
               <Icon name="navigationSubdirectoryArrowRight" size="large" />
             )}
@@ -88,25 +90,23 @@ const MetadataOverview = ({ metadata }) => {
               const collections = value.split("<br>");
               console.log("collections are: ", collections);
               return (
-                <>
-                  <Text key={index} size="overline1" marginBottom="xs">
+                <Fragment key="metadata-collection">
+                  <Text size="overline1" marginBottom="xs">
                     {metadataFieldToDisplay[field]}
                   </Text>
-                  <Text key={index} marginBottom="m">
+                  <Text marginBottom="m">
                     {StructuredCollectionsList(collections)}
                   </Text>
-                </>
+                </Fragment>
               );
             } else {
               return (
-                <>
-                  <Text key={index} size="overline1" marginBottom="xs">
+                <Fragment key={`"metadata-${field}`}>
+                  <Text size="overline1" marginBottom="xs">
                     {metadataFieldToDisplay[field]}
                   </Text>
-                  <Text key={index} marginBottom="m">
-                    {parse(value)}
-                  </Text>
-                </>
+                  <Text marginBottom="m">{parse(value)}</Text>
+                </Fragment>
               );
             }
           }

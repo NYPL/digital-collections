@@ -18,21 +18,21 @@ import {
 interface ItemProps {
   manifest: any;
   item: ItemModel;
-  type: string;
+  canvasIndex: number; //for when/if this is a query param
 }
 
 const renderViewer = (item) => {
   return item.hasItems && !item.isRestricted;
 };
 
-const Item = ({ item, type }: ItemProps) => {
+const Item = ({ manifest, item, canvasIndex }: ItemProps) => {
   return (
     <>
       <Box marginTop="-3em">
         {renderViewer(item) ? (
           <>
             <Heading level="h2">{item.title}</Heading>
-            <ItemMediaViewer item={item} />
+            <ItemMediaViewer item={item} canvasIndex={canvasIndex} />
           </>
         ) : (
           <>
@@ -47,7 +47,7 @@ const Item = ({ item, type }: ItemProps) => {
             Learn more.
           </Link>{" "}
         </Text>
-        <ItemOverview item={item} />
+        <ItemOverview item={item} canvasIndex={canvasIndex} />
       </Box>
     </>
   );
