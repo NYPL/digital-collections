@@ -39,8 +39,8 @@ const PageLayout = ({
     trackVirtualPageView(adobeAnalyticsPageName);
     if (ga4Data) {
       trackGa4PageView(
-        ga4Data.collection,
         ga4Data.division,
+        ga4Data.collection,
         ga4Data.subcollection
       );
     }

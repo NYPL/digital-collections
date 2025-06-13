@@ -41,6 +41,7 @@ export default function DivisionPage({ data }: any) {
   const { push } = useRouter();
 
   const totalPages = totalNumPages(data.numFound, CARDS_PER_PAGE);
+  console.log("data", data);
 
   const updatePageURL = async (pageNumber: number) => {
     const params = new URLSearchParams();
@@ -68,6 +69,7 @@ export default function DivisionPage({ data }: any) {
         { text: `${data.name}`, url: `/divisions/${data.slug}` },
       ]}
       adobeAnalyticsPageName={createAdobeAnalyticsPageName("divisions", slug)}
+      ga4Data={{ division: data.name }}
     >
       <Box
         sx={{

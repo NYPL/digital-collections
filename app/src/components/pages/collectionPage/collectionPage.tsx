@@ -65,6 +65,7 @@ const CollectionPage = ({
     lastFilterRef: useRef<string | null>(null),
   });
 
+  console.log("collectionSearchManager", collectionSearchManager);
   const totalPages = totalNumPages(
     searchResults.numResults.toString(),
     CARDS_PER_PAGE
