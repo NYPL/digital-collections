@@ -22,11 +22,12 @@ const UniversalViewer: React.FC<UniversalViewerProps> = React.memo(
     const searchParams = useSearchParams();
     const { setCurrentCanvasIndex } = useCanvasContext();
 
-    function updateCanvasIndex(newCanvasIndex: any) {
-      const urlSearchParams = new URLSearchParams(searchParams.toString());
+    function updateCanvasIndex(newCanvasIndex: number) {
       console.log("newCanvasIndex is: ", newCanvasIndex);
-      urlSearchParams.set("canvasIndex", newCanvasIndex);
-      window.history.pushState(null, "", `?${urlSearchParams.toString()}`);
+      const stringifiedParams = searchParams.toString();
+      const urlSearchParams = new URLSearchParams(stringifiedParams);
+      urlSearchParams.set("canvasIndex", stringifiedParams);
+      window.history.pushState(null, "", `?${stringifiedParams}`);
     }
 
     console.log("canvasIndex in UniversalViewer component is: ", canvasIndex);
