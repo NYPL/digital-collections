@@ -41,7 +41,6 @@ export default function DivisionPage({ data }: any) {
   const { push } = useRouter();
 
   const totalPages = totalNumPages(data.numFound, CARDS_PER_PAGE);
-  console.log("data", data);
 
   const updatePageURL = async (pageNumber: number) => {
     const params = new URLSearchParams();
