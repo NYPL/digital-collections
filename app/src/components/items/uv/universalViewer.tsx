@@ -162,6 +162,10 @@ const UniversalViewer: React.FC<UniversalViewerProps> = React.memo(
       }
     });
 
+    useEvent(uv, BaseEvents.DOWNLOAD, (i) => {
+      console.log("blah i ", i);
+    });
+
     return (
       <>
         <div className="uv" style={{ height: 800 }} ref={ref} />
