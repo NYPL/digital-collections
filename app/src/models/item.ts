@@ -106,7 +106,8 @@ export class ItemModel {
     this.divisionLink =
       this.isRestricted && manifestMetadataHash["Division"]
         ? manifestMetadataHash["Division"].toString()
-        : manifestMetadataHash["Library Locations"][0];
+        : manifestMetadataHash["Libray Locations"] &&
+          manifestMetadataHash["Library Locations"][0];
 
     this.manifestURL = `${process.env.COLLECTIONS_API_URL}/manifests/${uuid}`;
 

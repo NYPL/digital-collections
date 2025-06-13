@@ -19,6 +19,7 @@ interface ItemProps {
 const ItemMediaViewerFallback = ({ item }: ItemProps) => {
   // hacky way to generate the link
   // this assumes that the first Library Location in the array is the Division link
+  const divisionLink = item.divisionLink || "";
   return (
     <>
       {item.isRestricted ? (
@@ -31,11 +32,11 @@ const ItemMediaViewerFallback = ({ item }: ItemProps) => {
           notificationContent={
             <>
               We invite you to visit one of our reading rooms at{" "}
-              {parse(item.divisionLink)} to view this item. Due to copyright
+              {parse(divisionLink)} to view this item. Due to copyright
               restrictions, it is available for on-site access only. For
               directions, opening hours, and additional information about the
-              research libraries, please visit the {parse(item.divisionLink)}{" "}
-              page on <Link href="nypl.org">nypl.org</Link>.
+              research libraries, please visit the {parse(divisionLink)} page on{" "}
+              <Link href="nypl.org">nypl.org</Link>.
             </>
           }
         />
