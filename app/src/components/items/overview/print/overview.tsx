@@ -17,9 +17,13 @@ import {
 import parse from "html-react-parser";
 import { headerBreakpoints } from "@/src/utils/breakpoints";
 import React, { forwardRef } from "react";
+import { useCanvasContext } from "../../../../context/CanvasProvider";
 
-const PrintOverview = ({ item, imageID }) => {
-  console.log("imageID is: ", imageID);
+const PrintOverview = ({ imageIDs }) => {
+  console.log("imageIDs is: ", imageIDs);
+  const { currentCanvasIndex } = useCanvasContext();
+  const imageID = imageIDs[currentCanvasIndex];
+
   return (
     <>
       <Flex

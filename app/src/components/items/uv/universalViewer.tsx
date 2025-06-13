@@ -57,9 +57,8 @@ const UniversalViewer: React.FC<UniversalViewerProps> = React.memo(
 
     useEvent(uv, BaseEvents.CANVAS_INDEX_CHANGE, (i) => {
       if (onChangeCanvas) {
-        const newCanvasIndex: Number = Number(i) + 1;
-        updateCanvasIndex(newCanvasIndex);
-        setCurrentCanvasIndex(newCanvasIndex);
+        updateCanvasIndex(i);
+        setCurrentCanvasIndex(i);
 
         if (lastIndex.current !== i) {
           const canvas = (uv as any)?.extension?.helper.getCanvasByIndex(i);
