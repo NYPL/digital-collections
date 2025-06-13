@@ -65,7 +65,6 @@ const CollectionPage = ({
     lastFilterRef: useRef<string | null>(null),
   });
 
-  console.log("collectionSearchManager", collectionSearchManager);
   const totalPages = totalNumPages(
     searchResults.numResults.toString(),
     CARDS_PER_PAGE
@@ -84,6 +83,8 @@ const CollectionPage = ({
   useEffect(() => {
     setIsLoaded(true);
     let didFocusElement = false;
+    console.log("collectionSearchManager", collectionSearchManager);
+
     if (
       (collectionSearchManager.lastFilterRef?.current &&
         collectionSearchManager.filters.length > 0) ||
