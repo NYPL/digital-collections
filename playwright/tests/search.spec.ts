@@ -35,6 +35,7 @@ test("searches for a keyword from homepage", async ({ page }, testInfo) => {
 
 test("displays search results", async ({ page }) => {
   test.setTimeout(60000); // adds extra time to load all elements
+  await page.screenshot({ path: "debug-display-results.png" });
   await expect(searchPage.refineHeading).toBeVisible();
   await expect(searchPage.resultsHeading).toBeVisible();
   await expect(searchPage.firstResult).toBeVisible();
@@ -47,6 +48,7 @@ test("displays search result filters", async ({ page }) => {
   test.setTimeout(60000); // adds extra time to load all elements
 
   // displays first row of filters
+  await page.screenshot({ path: "debug-display-filters.png" });
   await expect(searchPage.refineHeading).toBeVisible();
   await expect(searchPage.topicFilter).toBeVisible();
   await expect(searchPage.nameFilter).toBeVisible();
@@ -109,4 +111,40 @@ test("filters search results", async ({ page }) => {
   await expect(searchPage.applyFilterButton).toBeVisible();
   await searchPage.applyFilterButton.click();
   await expect(searchPage.publisherSelected).toBeVisible();
+});
+
+test("clears search results filters - approach 1", async ({ page }) => {
+  // clear filters link
+  await expect(searchPage.refineHeading).toBeVisible();
+
+  await searchPage.filterSearchResults(); // reset filters to topic and publisher
+
+  await expect(searchPage.clearAllFilters).toBeVisible();
+  await searchPage.clearAllFilters.click();
+  await expect(searchPage.topicSelected).not.toBeVisible();
+  await expect(searchPage.publisherSelected).not.toBeVisible();
+});
+
+test("clears search results filters - approach 2", async ({ page }) => {
+  // clear dropdown filter
+  await expect(searchPage.refineHeading).toBeVisible();
+
+  await searchPage.filterSearchResults(); // reset filters to topic and publisher
+
+  await expect(searchPage.topicFilter).toBeVisible();
+  await searchPage.topicFilter.click();
+  await expect(searchPage.clearFilterButton).toBeVisible();
+  await searchPage.clearFilterButton.click();
+  await expect(searchPage.topicSelected).not.toBeVisible();
+});
+
+test("clears search results filters - approach 3", async ({ page }) => {
+  // clear in filters applied
+  await expect(searchPage.refineHeading).toBeVisible();
+
+  await searchPage.filterSearchResults(); // reset filters to topic and publisher
+
+  await expect(searchPage.clearFilterApplied).toBeVisible();
+  await searchPage.clearFilterApplied.click();
+  await expect(searchPage.topicSelected).not.toBeVisible();
 });

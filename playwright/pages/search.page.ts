@@ -1,4 +1,4 @@
-import { Locator, Page } from "@playwright/test";
+import { Locator, Page, expect } from "@playwright/test";
 
 export default class SearchPage {
   readonly page: Page;
@@ -32,6 +32,9 @@ export default class SearchPage {
   readonly showFilters: Locator;
   readonly hideFilters: Locator;
   readonly applyFilterButton: Locator;
+  readonly clearFilterButton: Locator;
+  readonly clearFilterApplied: Locator;
+  readonly clearAllFilters: Locator;
 
   constructor(page: Page) {
     this.page = page;
@@ -95,10 +98,41 @@ export default class SearchPage {
       name: "Apply",
       exact: true,
     });
+    this.clearFilterButton = this.page.getByRole("button", {
+      name: "Clear filter",
+      exact: true,
+    });
+    this.clearFilterApplied = this.page.getByTestId("filter-tags").first(); //or filter-close-icon
+    this.clearAllFilters = this.page.getByTestId("filter-clear-all");
   }
 
   static async loadPage(gotoPage: string, page: Page): Promise<SearchPage> {
     await page.goto(gotoPage, { waitUntil: "load" });
     return new SearchPage(page);
+  }
+
+  async filterSearchResults(): Promise<void> {
+    // filters a drop-down in the first row
+    await expect(this.topicFilter).toBeVisible();
+    await this.topicFilter.click();
+    await expect(this.topicOption).toBeVisible();
+    await this.topicOption.click();
+    await expect(this.applyFilterButton).toBeVisible();
+    await this.applyFilterButton.click();
+    await expect(this.topicSelected).toBeVisible();
+
+    // filters a drop-down in the second row
+    if (await this.showFilters.isVisible()) {
+      await expect(this.showFilters).toBeVisible();
+      await this.showFilters.click();
+    }
+
+    await expect(this.publisherFilter).toBeVisible();
+    await this.publisherFilter.click();
+    await expect(this.publisherOption).toBeVisible();
+    await this.publisherOption.click();
+    await expect(this.applyFilterButton).toBeVisible();
+    await this.applyFilterButton.click();
+    await expect(this.publisherSelected).toBeVisible();
   }
 }
