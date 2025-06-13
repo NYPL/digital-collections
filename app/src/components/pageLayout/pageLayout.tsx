@@ -16,11 +16,13 @@ import { FeedbackProvider } from "@/src/context/FeedbackProvider";
 import { SearchParamsType } from "@/search/index/page";
 import { SearchProvider } from "@/src/context/SearchProvider";
 import { CollectionSearchParamsType } from "@/collections/[uuid]/page";
+import { trackGa4PageView } from "@/src/utils/ga4Utils";
 
 interface PageLayoutProps {
   activePage: string;
   breadcrumbs?: BreadcrumbsDataProps[];
   adobeAnalyticsPageName?: string;
+  ga4Data?: { collection?: string; division?: string; subcollection?: string };
   searchParams?: SearchParamsType | CollectionSearchParamsType;
 }
 
@@ -29,11 +31,19 @@ const PageLayout = ({
   activePage,
   breadcrumbs,
   adobeAnalyticsPageName,
+  ga4Data,
   searchParams,
 }: PropsWithChildren<PageLayoutProps>) => {
   // Track page view events to Adobe Analytics
   useEffect(() => {
     trackVirtualPageView(adobeAnalyticsPageName);
+    if (ga4Data) {
+      trackGa4PageView(
+        ga4Data.collection,
+        ga4Data.division,
+        ga4Data.subcollection
+      );
+    }
   });
 
   return (
