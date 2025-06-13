@@ -73,10 +73,6 @@ export default async function Collection({
     ...searchParams,
     availableFilters: filteredAvailableFilters,
   };
-  const ga4Data = {
-    collection: collectionData.title,
-    division: collectionData.divisionTitle,
-  };
   return (
     <PageLayout
       activePage="collection"
@@ -92,7 +88,10 @@ export default async function Collection({
         "collections",
         params.uuid
       )}
-      ga4Data={ga4Data}
+      ga4Data={{
+        collection: collectionData.title,
+        division: collectionData.divisionTitle,
+      }}
     >
       <CollectionPage
         searchParams={updatedSearchParams}
