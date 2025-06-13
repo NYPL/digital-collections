@@ -5,6 +5,7 @@ import React from "react";
 import ItemMediaViewer from "./viewer/viewer";
 import ItemMediaViewerFallback from "./viewer/fallback";
 import ItemOverview from "./overview/overview";
+import { CanvasProvider } from "../../context/CanvasProvider";
 
 import {
   Heading,
@@ -28,7 +29,7 @@ const renderViewer = (item) => {
 
 const Item = ({ manifest, item, canvasIndex }: ItemProps) => {
   return (
-    <>
+    <CanvasProvider>
       <Box marginTop="-3em">
         {renderViewer(item) ? (
           <>
@@ -51,7 +52,7 @@ const Item = ({ manifest, item, canvasIndex }: ItemProps) => {
         <HorizontalRule marginTop="m" marginBottom="m" />
         <ItemOverview item={item} canvasIndex={canvasIndex} />
       </Box>
-    </>
+    </CanvasProvider>
   );
 };
 

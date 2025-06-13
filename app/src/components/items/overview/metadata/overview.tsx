@@ -38,13 +38,15 @@ const metadataFieldToDisplay = {
 // Helper function to parse anchor tag from HTML string
 // annoyingly redundant
 const parseHtmlString = (html) => {
-  const parser = new DOMParser();
-  const doc = parser.parseFromString(html, "text/html");
-  const anchor = doc.querySelector("a");
-  return {
-    href: anchor?.getAttribute("href"),
-    text: anchor?.textContent,
-  };
+  if (typeof window !== "undefined") {
+    const parser = new DOMParser();
+    const doc = parser.parseFromString(html, "text/html");
+    const anchor = doc.querySelector("a");
+    return {
+      href: anchor?.getAttribute("href"),
+      text: anchor?.textContent,
+    };
+  }
 };
 
 // Designs use DS Link component but I wonder if we can get away with not using them for the
@@ -54,7 +56,7 @@ const StructuredCollectionsList = (rawCollections) => {
     <>
       {rawCollections.map((htmlString, index) => {
         console.log("htmlString is: ", htmlString);
-        const { href, text } = parseHtmlString(htmlString);
+        // const { href, text } = parseHtmlString(htmlString);
         const key = `metadata-collection-${index}`;
         return (
           <span key={key} style={{ paddingLeft: `${(index - 1) * 1.5}rem` }}>
