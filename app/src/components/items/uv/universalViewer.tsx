@@ -6,6 +6,7 @@ import {
 import React, { useEffect, useMemo, useRef } from "react";
 import { IIIFEvents as BaseEvents, IIIFURLAdapter } from "universalviewer";
 import { useRouter, usePathname, useSearchParams } from "next/navigation";
+import { useCanvasContext } from "../../../context/CanvasProvider";
 
 export type UniversalViewerProps = {
   config?: any;
@@ -19,6 +20,7 @@ export type UniversalViewerProps = {
 const UniversalViewer: React.FC<UniversalViewerProps> = React.memo(
   ({ manifestId, canvasIndex, onChangeCanvas, config }) => {
     const searchParams = useSearchParams();
+    const { setCurrentCanvasIndex } = useCanvasContext();
 
     function updateCanvasIndex(newCanvasIndex: any) {
       const urlSearchParams = new URLSearchParams(searchParams.toString());
@@ -57,7 +59,7 @@ const UniversalViewer: React.FC<UniversalViewerProps> = React.memo(
       if (onChangeCanvas) {
         const newCanvasIndex: Number = Number(i) + 1;
         updateCanvasIndex(newCanvasIndex);
-        // updateCanvasIndex(i);// this works better for some reason
+        setCurrentCanvasIndex(newCanvasIndex);
 
         if (lastIndex.current !== i) {
           const canvas = (uv as any)?.extension?.helper.getCanvasByIndex(i);
