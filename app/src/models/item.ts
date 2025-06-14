@@ -1,4 +1,7 @@
 import { Maniiifest } from "maniiifest";
+import { parseManifestMetadata } from "../utils/metadata/parseManifestMetadata";
+import { normalizeItemMetadataFromManifest } from "../utils/normalizeItemMetadata";
+import { NormalizedItemMetadata } from "../types/NormalizedItemMetadata";
 
 // https://github.com/jptmoore/maniiifest
 // other resources:
@@ -16,7 +19,7 @@ export class ItemModel {
   imageIDs?: string[];
   href: string;
   contentType: string;
-  hasItems?: boolean;
+  hasItems: boolean;
   manifestURL: string;
   link: string;
   isRestricted: boolean;
@@ -24,27 +27,7 @@ export class ItemModel {
   archivesLink?: string | null | undefined;
   catalogLink?: string | null | undefined;
   divisionLink: string;
-  metadata?: {
-    title: string;
-    names?: string;
-    collection?: string;
-    origin: string;
-    dateCreated?: string;
-    dateIssued: string;
-    tableOfContents?: string;
-    locations: string;
-    subjects?: string;
-    genres: string;
-    notes?: string;
-    physicalDescription?: string;
-    abstract?: string;
-    languages: string;
-    link?: string;
-    identifiers: string;
-    access: string;
-    rights: string;
-    typeOfResource: string;
-  };
+  metadata: NormalizedItemMetadata;
 
   constructor(uuid: string, manifest: any) {
     // get custom label from manifest
@@ -62,36 +45,31 @@ export class ItemModel {
         })
       : [];
 
-    const metadata = Array.from(parser.iterateManifestMetadata());
-    const manifestMetadataHash = {};
-
-    if (metadata) {
-      for (const field of metadata) {
-        const label = field.label["en"][0];
-        const value = field.value["en"];
-        manifestMetadataHash[label] = value;
-      }
-    }
+    const manifestMetadataArray = Array.from(parser.iterateManifestMetadata());
+    const rawManifestMetadata = parseManifestMetadata(manifestMetadataArray);
+    const normalizedManifestMetadata =
+      normalizeItemMetadata(rawManifestMetadata);
+    this.metadata = normalizedManifestMetadata;
 
     this.uuid = uuid;
     this.link =
       process.env.APP_ENV === "development" || process.env.APP_ENV === "qa"
         ? `https://qa-digitalcollections.nypl.org/items/${this.uuid}`
         : `https://digitalcollections.nypl.org/items/${this.uuid}`;
-    this.typeOfResource = manifestMetadataHash["Resource Type"]
-      ? manifestMetadataHash["Resource Type"].toString()
+    this.typeOfResource = normalizedManifestMetadata["Resource Type"]
+      ? normalizedManifestMetadata["Resource Type"].toString()
       : "";
-    this.title = manifestMetadataHash["Title"]
-      ? manifestMetadataHash["Title"].toString()
+    this.title = normalizedManifestMetadata["Title"]
+      ? normalizedManifestMetadata["Title"].toString()
       : "";
-    this.isRestricted = manifestMetadataHash["Is Restricted"]
-      ? manifestMetadataHash["Is Restricted"].toString().toLowerCase() ===
+    this.isRestricted = normalizedManifestMetadata["Is Restricted"]
+      ? normalizedManifestMetadata["Is Restricted"].toString().toLowerCase() ===
         "true"
       : true;
 
     // for viewer configs and order print button
-    this.contentType = manifestMetadataHash["Content Type"]
-      ? manifestMetadataHash["Content Type"][0].toString()
+    this.contentType = normalizedManifestMetadata["Content Type"]
+      ? normalizedManifestMetadata["Content Type"][0].toString()
       : "";
 
     // only used for order print button
@@ -102,70 +80,13 @@ export class ItemModel {
         this.contentType === "multiple images");
 
     this.divisionLink =
-      this.isRestricted && manifestMetadataHash["Division"]
-        ? manifestMetadataHash["Division"].toString()
-        : manifestMetadataHash["Library Locations"][0];
+      this.isRestricted && normalizedManifestMetadata["Division"]
+        ? normalizedManifestMetadata["Division"].toString()
+        : normalizedManifestMetadata["Library Locations"][0];
 
     this.manifestURL = `${process.env.COLLECTIONS_API_URL}/manifests/${uuid}`;
 
-    this.metadata = {
-      title: manifestMetadataHash["Title"]
-        ? manifestMetadataHash["Title"].toString()
-        : "",
-      collection: manifestMetadataHash["Collection"]
-        ? manifestMetadataHash["Collection"].join("<br>") //TODO: add arrows
-        : "",
-      names: manifestMetadataHash["Names"]
-        ? manifestMetadataHash["Names"].join("<br>")
-        : "",
-      origin: manifestMetadataHash["Dates / origin"]
-        ? manifestMetadataHash["Dates / origin"].join("<br>")
-        : "",
-      dateIssued: manifestMetadataHash["Date Issued"]
-        ? manifestMetadataHash["Date Issued"].toString()
-        : "",
-      tableOfContents: manifestMetadataHash["Table of Contents"]
-        ? manifestMetadataHash["Table of Contents"].toString()
-        : "",
-      locations: manifestMetadataHash["Library Locations"]
-        ? manifestMetadataHash["Library Locations"].join("<br>")
-        : "",
-      subjects: manifestMetadataHash["Subjects"]
-        ? manifestMetadataHash["Subjects"].join("<br>")
-        : "",
-      genres: manifestMetadataHash["Genres"]
-        ? manifestMetadataHash["Genres"].join("<br>")
-        : "",
-      notes: manifestMetadataHash["Notes"]
-        ? manifestMetadataHash["Notes"].join("")
-        : "",
-      physicalDescription: manifestMetadataHash["Physical Description"]
-        ? manifestMetadataHash["Physical Description"].join("<br>")
-        : "",
-      typeOfResource: manifestMetadataHash["Resource Type"]
-        ? manifestMetadataHash["Resource Type"].join("<br>")
-        : "",
-      abstract: manifestMetadataHash["Abstract"]
-        ? manifestMetadataHash["Abstract"].toString()
-        : "",
-      languages: manifestMetadataHash["Languages"]
-        ? manifestMetadataHash["Lanugages"].toString()
-        : "",
-      link: manifestMetadataHash["Link"]
-        ? manifestMetadataHash["Link"].toString()
-        : "",
-      identifiers: manifestMetadataHash["Identifiers"]
-        ? manifestMetadataHash["Identifiers"].join("<br>")
-        : "",
-      access: manifestMetadataHash["Access"]
-        ? manifestMetadataHash["Access"].toString()
-        : "",
-      rights: manifestMetadataHash["Rights"]
-        ? manifestMetadataHash["Rights"].toString()
-        : "",
-    };
-
-    const identifiers = manifestMetadataHash["Identifiers"];
+    const identifiers = normalizedManifestMetadata["Identifiers"];
     const catalogLink = identifiers.find((identifier) =>
       identifier.includes("NYPL Catalog ID (bnumber)")
     );
