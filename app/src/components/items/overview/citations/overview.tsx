@@ -5,8 +5,6 @@ import parse from "html-react-parser";
 // TO DO: generate on the fly: https://github.com/NYPL/digitalreadingroom/blob/qa/app/views/partials/_item_metadata.html.erb
 // TO DO: add tests for citations, use https://digitalcollections.nypl.org/items/a3fff740-395b-0138-983a-7f56d1f9ecb7#/?uuid=9cf949b0-d298-0139-4999-0242ac110003 as example
 const CitationsOverview = ({ citationData }) => {
-  console.log("citationData is: ", citationData);
-
   return (
     <>
       <Box>

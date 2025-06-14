@@ -14,7 +14,7 @@ import {
   generateCitations,
   CitationOutput,
 } from "../utils/metadata/generateCitations";
-
+import { stripBaseUrl } from "../utils/utils";
 // https://github.com/jptmoore/maniiifest
 // other resources:
 // https://www.npmjs.com/package/@iiif/manifold
@@ -144,6 +144,22 @@ export class ItemModel {
       dateIssued: this.metadata?.dateIssued,
     });
 
-    this.breadcrumbData = null;
+    const breadcrumbDivisionObj = extractAllAnchorsFromHTML(
+      this.metadata?.locations?.split("<br>")[0] ?? ""
+    )[0];
+
+    const breadcrumbCollectionObj = extractAllAnchorsFromHTML(
+      this.metadata?.collection?.split("<br>")[0] ?? ""
+    )[0];
+
+    // TODO: fix these links so they are a slug and not an external link
+    this.breadcrumbData = {
+      division: extractAllAnchorsFromHTML(
+        this.metadata?.locations?.split("<br>")[0] ?? ""
+      )[0],
+      collection: extractAllAnchorsFromHTML(
+        this.metadata?.collection?.split("<br>")[0] ?? ""
+      )[0],
+    };
   }
 }
