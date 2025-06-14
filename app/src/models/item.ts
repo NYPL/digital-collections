@@ -6,6 +6,14 @@ import {
 import { normalizeItemMetadataFromManifest } from "../utils/metadata/normalizeItemMetdata";
 import { NormalizedItemMetadata } from "../types/NormalizedItemMetadata";
 import { getRenderableMetadata } from "../utils/metadata/filterRenderableMetadata";
+import {
+  extractFirstHrefFromHTML,
+  extractAllAnchorsFromHTML,
+} from "../utils/metadata/extractAnchorHrefs";
+import {
+  generateCitations,
+  CitationOutput,
+} from "../utils/metadata/generateCitations";
 
 // https://github.com/jptmoore/maniiifest
 // other resources:
@@ -15,24 +23,23 @@ import { getRenderableMetadata } from "../utils/metadata/filterRenderableMetadat
 // TO DO: add isCartographic for map stuff
 export class ItemModel {
   uuid: string;
-  mods: any;
-  capture: any;
-  typeOfResource: string;
-  title: string;
-  isSingleCapture: boolean;
-  imageIDs?: string[];
-  href: string;
-  contentType: string;
-  hasItems: boolean;
-  manifestURL: string;
   link: string;
-  isRestricted: boolean;
-  isImage: boolean;
-  archivesLink?: string | null | undefined;
-  catalogLink?: string | null | undefined;
-  divisionLink: string;
+  isSingleCapture: boolean;
+  imageIDs: string[] | null;
+  manifestURL: string;
   metadata: NormalizedItemMetadata;
   renderableMetadata: Record<string, string>;
+  title: string;
+  typeOfResource: string;
+  contentType: string;
+  hasItems: boolean;
+  isRestricted: boolean;
+  isImage: boolean;
+  archivesLink: string | null;
+  catalogLink: string | null;
+  divisionLink: string;
+  citationData: CitationOutput;
+  breadcrumbData: any;
 
   constructor(uuid: string, manifest: any) {
     // get custom label from manifest
@@ -107,11 +114,36 @@ export class ItemModel {
       identifier.includes("NYPL Catalog ID (bnumber)")
     );
 
-    this.catalogLink = catalogLink ? catalogLink : "";
+    this.catalogLink = catalogLink
+      ? extractFirstHrefFromHTML(catalogLink)
+      : null;
+
     const archivesLink = identifiers.find((identifier) => {
-      identifiers.includes("Archives ID");
+      identifier.includes("Archives ID");
     });
 
-    this.archivesLink = archivesLink ? archivesLink : "";
+    this.archivesLink = archivesLink
+      ? extractFirstHrefFromHTML(archivesLink)
+      : null;
+    const location =
+      extractAllAnchorsFromHTML(
+        this.metadata?.locations?.split("<br>")[0] ?? ""
+      )[0].text ?? "";
+    this.citationData = generateCitations({
+      title: this.title,
+      link: this.link,
+      location:
+        extractAllAnchorsFromHTML(
+          this.metadata?.locations?.split("<br>")[0] ?? ""
+        )[0].text ?? "",
+      resource:
+        extractAllAnchorsFromHTML(
+          this.metadata?.typeOfResource?.split("<br>")[0] ?? ""
+        )[0].text ?? "",
+      origin: this.metadata?.origin,
+      dateIssued: this.metadata?.dateIssued,
+    });
+
+    this.breadcrumbData = null;
   }
 }
