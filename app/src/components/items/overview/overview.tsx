@@ -48,7 +48,7 @@ const ItemOverview = ({ item, canvasIndex }) => {
           },
         }}
       >
-        <MetadataOverview metadata={item.metadata} />
+        <MetadataOverview metadata={item.renderableMetadata} />
         <CitationsOverview item={item} />
       </ChakraSimpleGrid>
     </>
