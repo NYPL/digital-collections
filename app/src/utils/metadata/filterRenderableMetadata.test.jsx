@@ -1,7 +1,7 @@
 import {
   getRenderableMetadata,
   metadataFieldToDisplay,
-} from "../utils/filterRenderableMetadata";
+} from "./filterRenderableMetadata";
 
 describe("getRenderableMetadata", () => {
   it("filters and returns only the fields defined in metadataFieldToDisplay", () => {
