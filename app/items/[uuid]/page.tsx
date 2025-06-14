@@ -42,6 +42,13 @@ export default async function ItemViewer({ params, searchParams }: ItemProps) {
   const manifest = await getItemManifest(params.uuid);
   const item = new ItemModel(params.uuid, manifest);
   console.log("search params are: ", searchParams);
+
+  // only allow canvasIndex to be in the range of 0...item.imageIds.length (number of canvases)
+  const imageIDs = item.imageIDs || [];
+  const maxIndex = imageIDs.length - 1;
+  const rawIndex = searchParams.canvasIndex || 0;
+  const clampedCanvasIndex = Math.max(0, Math.min(rawIndex, maxIndex));
+
   return (
     <PageLayout
       activePage="item"
@@ -58,7 +65,7 @@ export default async function ItemViewer({ params, searchParams }: ItemProps) {
       <ItemPage
         manifest={manifest}
         uuid={params.uuid}
-        canvasIndex={searchParams.canvasIndex}
+        canvasIndex={clampedCanvasIndex} //TODO: figure out why this does not work with the query param added by the viewer
       />
     </PageLayout>
   );
