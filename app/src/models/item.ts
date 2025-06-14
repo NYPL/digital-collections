@@ -1,5 +1,8 @@
 import { Maniiifest } from "maniiifest";
-import { parseManifestMetadata } from "../utils/metadata/parseManifestMetadata";
+import {
+  convertManiiifestMetadata,
+  parseManifestMetadata,
+} from "../utils/metadata/parseManifestMetadata";
 import { normalizeItemMetadataFromManifest } from "../utils/metadata/normalizeItemMetdata";
 import { NormalizedItemMetadata } from "../types/NormalizedItemMetadata";
 import { getRenderableMetadata } from "../utils/metadata/filterRenderableMetadata";
@@ -29,7 +32,7 @@ export class ItemModel {
   catalogLink?: string | null | undefined;
   divisionLink: string;
   metadata: NormalizedItemMetadata;
-  renderableMetadata: any;
+  renderableMetadata: Record<string, string>;
 
   constructor(uuid: string, manifest: any) {
     // get custom label from manifest
@@ -50,8 +53,13 @@ export class ItemModel {
     // console.log("manifest.metadata is: ", manifest.metadata)
     const manifestMetadataArray = Array.from(parser.iterateManifestMetadata());
     // console.log("manifestMetadataArray is: ", manifestMetadataArray)
-
-    const rawManifestMetadata = parseManifestMetadata(manifestMetadataArray);
+    const convertedManifestMetadata = convertManiiifestMetadata(
+      manifestMetadataArray
+    ); // convert types
+    // console.log("convertedManifestMetadata is: ", convertedManifestMetadata)
+    const rawManifestMetadata = parseManifestMetadata(
+      convertedManifestMetadata
+    );
     // console.log("rawManifestMetadata is: ", rawManifestMetadata)
     const normalizedManifestMetadata =
       normalizeItemMetadataFromManifest(rawManifestMetadata);

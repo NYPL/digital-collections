@@ -36,14 +36,15 @@ const StructuredCollectionsList = (rawCollections) => {
 };
 
 const MetadataOverview = ({ metadata }) => {
+  const typedMetadata = metadata as Record<string, string>;
+
   return (
     <>
       <Box>
-        {/* <Flex marginTop="m" marginBottom="m" flexDir="column"> */}
         <Heading size="heading6" marginBottom="xs">
           Item data
         </Heading>
-        {Object.entries(metadata).map(([field, value]) => {
+        {Object.entries(typedMetadata).map(([field, value]) => {
           if (field === "collection") {
             const collections = value.split("<br>");
             return (
@@ -57,7 +58,6 @@ const MetadataOverview = ({ metadata }) => {
               </Fragment>
             );
           }
-
           return (
             <Fragment key={`metadata-${field}`}>
               <Text size="overline1" marginBottom="xs">
