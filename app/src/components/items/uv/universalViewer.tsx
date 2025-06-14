@@ -6,6 +6,7 @@ import {
 import React, { useEffect, useMemo, useRef } from "react";
 import { IIIFEvents as BaseEvents, IIIFURLAdapter } from "universalviewer";
 import { useRouter, usePathname, useSearchParams } from "next/navigation";
+import { useCanvasContext } from "../../../context/CanvasProvider";
 
 export type UniversalViewerProps = {
   config?: any;
@@ -19,12 +20,15 @@ export type UniversalViewerProps = {
 const UniversalViewer: React.FC<UniversalViewerProps> = React.memo(
   ({ manifestId, canvasIndex, onChangeCanvas, config }) => {
     const searchParams = useSearchParams();
+    const { setCurrentCanvasIndex } = useCanvasContext();
 
-    function updateCanvasIndex(newCanvasIndex: any) {
-      const urlSearchParams = new URLSearchParams(searchParams.toString());
+    // TODO: why this no worky with the clamped index
+    function updateCanvasIndex(newCanvasIndex: number) {
       console.log("newCanvasIndex is: ", newCanvasIndex);
-      urlSearchParams.set("canvasIndex", newCanvasIndex);
-      window.history.pushState(null, "", `?${urlSearchParams.toString()}`);
+      const stringifiedParams = searchParams.toString();
+      const urlSearchParams = new URLSearchParams(stringifiedParams);
+      urlSearchParams.set("canvasIndex", stringifiedParams);
+      window.history.pushState(null, "", `?${stringifiedParams}`);
     }
 
     console.log("canvasIndex in UniversalViewer component is: ", canvasIndex);
@@ -55,9 +59,8 @@ const UniversalViewer: React.FC<UniversalViewerProps> = React.memo(
 
     useEvent(uv, BaseEvents.CANVAS_INDEX_CHANGE, (i) => {
       if (onChangeCanvas) {
-        const newCanvasIndex: Number = Number(i) + 1;
-        updateCanvasIndex(newCanvasIndex);
-        // updateCanvasIndex(i);// this works better for some reason
+        updateCanvasIndex(i);
+        setCurrentCanvasIndex(i);
 
         if (lastIndex.current !== i) {
           const canvas = (uv as any)?.extension?.helper.getCanvasByIndex(i);
@@ -71,7 +74,7 @@ const UniversalViewer: React.FC<UniversalViewerProps> = React.memo(
 
     return (
       <>
-        <div className="uv" style={{ height: 800 }} ref={ref} />
+        <div className="uv" style={{ height: 650 }} ref={ref} />
       </>
     );
   }

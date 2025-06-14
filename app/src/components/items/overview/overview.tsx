@@ -11,14 +11,8 @@ import { headerBreakpoints } from "@/src/utils/breakpoints";
 import ExternalLinksOverview from "./external/overview";
 import PrintOverview from "./print/overview";
 import CitationsOverview from "./citations/overview";
-import { useSearchParams } from "next/navigation";
 
-const ItemOverview = ({ item, canvasIndex }) => {
-  console.log("canvasIndex as prop is is: ", canvasIndex);
-  const searchParams = useSearchParams();
-  const canvasIndexParam = searchParams.get("canvasIndex");
-  console.log("canvasIndexParam is: ", canvasIndexParam);
-
+const ItemOverview = ({ item }) => {
   return (
     <>
       <ChakraSimpleGrid
@@ -33,11 +27,9 @@ const ItemOverview = ({ item, canvasIndex }) => {
       >
         <ExternalLinksOverview item={item} />
         {/* TODO: fix the order print button*/}
-        {item.isImage && (
-          <PrintOverview item={item} imageID={item.imageIDs[canvasIndex - 1]} />
-        )}
+        {item.isImage && <PrintOverview imageIDs={item.imageIDs} />}
       </ChakraSimpleGrid>
-      <HorizontalRule marginTop="l" marginBottom="l" />
+      <HorizontalRule marginTop="m" marginBottom="m" />
       <ChakraSimpleGrid
         sx={{
           [`@media screen and (min-width: ${headerBreakpoints.lgMobile}px)`]: {
