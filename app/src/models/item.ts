@@ -14,7 +14,7 @@ import {
   generateCitations,
   CitationOutput,
 } from "../utils/metadata/generateCitations";
-import { stripBaseUrl } from "../utils/utils";
+
 // https://github.com/jptmoore/maniiifest
 // other resources:
 // https://www.npmjs.com/package/@iiif/manifold
