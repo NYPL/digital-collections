@@ -14,9 +14,18 @@ export function convertManiiifestMetadata(raw: MetadataT[]): MetadataField[] {
   }));
 }
 
-function toLanguageMap(langArray: [string, string[]][]): { en: string[] } {
-  const map = Object.fromEntries(langArray);
-  // fallback to `en` or empty array
+function toLanguageMap(lang: [string, string[]][] | { en: string[] }): {
+  en: string[];
+} {
+  // If it's already in object format, return as-is
+  if (!Array.isArray(lang)) {
+    return {
+      en: lang.en ?? [],
+    };
+  }
+
+  // Otherwise, convert from [string, string[]][] to { en: string[] }
+  const map = Object.fromEntries(lang);
   return {
     en: map.en ?? [],
   };

@@ -1,32 +1,18 @@
 import { Box, Heading, Link, Text } from "@nypl/design-system-react-components";
 
-// TODO: make this a shared method
-export const parseHtmlString = (html) => {
-  const parser = new DOMParser();
-  const doc = parser.parseFromString(html, "text/html");
-  const anchor = doc.querySelector("a");
-  return {
-    href: anchor?.getAttribute("href") || undefined,
-    text: anchor?.textContent || undefined,
-  };
-};
-
-const ExternalLinksOverview = ({ item }) => {
+const ExternalLinksOverview = ({ catalogLink, archivesLink }) => {
   return (
     <>
-      <Box
-        marginTop="sm"
-        // marginBottom="m"
-      >
+      <Box marginTop="sm">
         <Heading size="heading6" marginBottom="xs">
           View this item elsewhere
         </Heading>
-        {!item.catalogLink && !item.archivesLink && (
+        {!catalogLink && !archivesLink && (
           <Text>This item does not have any external references yet</Text>
         )}
-        {item.archivesLink && (
+        {archivesLink && (
           <Link
-            href={parseHtmlString(item.archivesLink).href}
+            href={archivesLink}
             id={"finding-aid-btn"}
             isUnderlined={false}
             target="_blank"
@@ -37,9 +23,9 @@ const ExternalLinksOverview = ({ item }) => {
             View Finding Aid
           </Link>
         )}
-        {item.catalogLink && (
+        {catalogLink && (
           <Link
-            href={parseHtmlString(item.catalogLink).href}
+            href={catalogLink}
             id={"catalog-btn"}
             isUnderlined={false}
             target="_blank"
