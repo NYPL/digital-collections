@@ -152,7 +152,7 @@ export class ItemModel {
       this.metadata?.collection?.split("<br>")[0] ?? ""
     )[0];
 
-    // TODO: fix these links so they are a slug and not an external link
+    // TODO: these won't work in Vercel - fix these links so they are a slug and not an external link
     this.breadcrumbData = {
       division: extractAllAnchorsFromHTML(
         this.metadata?.locations?.split("<br>")[0] ?? ""
