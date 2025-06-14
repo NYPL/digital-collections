@@ -1,0 +1,146 @@
+{
+  "id": "http://qa-api-collections.nypl.org/manifests/7d3b7450-f194-013d-8934-0242ac110002",
+  "type": "Manifest",
+  "label": {
+    "en": [
+      "Item 2"
+    ]
+  },
+  "@context": "http://iiif.io/api/presentation/3/context.json",
+  "metadata": [
+    {
+      "label": {
+        "en": [
+          "Collection"
+        ]
+      },
+      "value": {
+        "en": [
+          "\u003Cspan\u003E\u003Ca href='http://qa-digitalcollections.nypl.org/collections/40b4a050-f194-013d-6deb-0242ac110002'\u003ETest collection with Special Audio Types\u003C/a\u003E\u003C/span\u003E"
+        ]
+      }
+    },
+    {
+      "label": {
+        "en": [
+          "Identifiers"
+        ]
+      },
+      "value": {
+        "en": [
+          "\u003Cspan\u003E\u003Cb\u003ENYPL Catalog ID (bnumber):\u003C/b\u003E \u003Ca href='https://www.nypl.org/research/research-catalog/bib/b12345678'\u003Eb12345678\u003C/a\u003E\u003C/span\u003E",
+          "\u003Cspan\u003E\u003Cb\u003EUniversal Unique Identifier (UUID):\u003C/b\u003E 7d3b7450-f194-013d-8934-0242ac110002\u003C/span\u003E"
+        ]
+      }
+    },
+    {
+      "label": {
+        "en": [
+          "Dates / Origin"
+        ]
+      },
+      "value": {
+        "en": [
+          "\u003Cspan\u003EDate Created \u003Ca href='http://qa-digitalcollections.nypl.org/search/index?filters=%5ByearBegin%3D1999%5D%5ByearEnd%3D1999%5D'\u003E1999\u003C/a\u003E\u003C/span\u003E"
+        ]
+      }
+    },
+    {
+      "label": {
+        "en": [
+          "Library Locations"
+        ]
+      },
+      "value": {
+        "en": [
+          "\u003Cspan\u003E\u003Ca href='http://qa-digitalcollections.nypl.org/divisions/henry-w-and-albert-a-berg-collection-of-english-and-american-literature'\u003EHenry W. and Albert A. Berg Collection of English and American Literature\u003C/a\u003E\u003C/span\u003E"
+        ]
+      }
+    },
+    {
+      "label": {
+        "en": [
+          "Title"
+        ]
+      },
+      "value": {
+        "en": [
+          "Item 2"
+        ]
+      }
+    },
+    {
+      "label": {
+        "en": [
+          "Resource Type"
+        ]
+      },
+      "value": {
+        "en": [
+          "\u003Cspan\u003E\u003Ca href='http://qa-digitalcollections.nypl.org/search/index?filters=%5Btype%3Dsound+recording%5D'\u003ESound Recording\u003C/a\u003E\u003C/span\u003E"
+        ]
+      }
+    },
+    {
+      "label": {
+        "en": [
+          "Rights"
+        ]
+      },
+      "value": {
+        "en": [
+          "The New York Public Library believes that this item is in the public domain under the laws of the United States, but did not make a determination as to its copyright status under the copyright laws of other countries. This item may not be in the public domain under the laws of other countries. Though not required, if you want to credit us as the source, please use the following statement, \"From The New York Public Library,\" and provide a link back to the item on our Digital Collections site. Doing so helps us track how our collection is used and helps justify freely releasing even more content in the future."
+        ]
+      }
+    },
+    {
+      "label": {
+        "en": [
+          "Is Restricted"
+        ]
+      },
+      "value": {
+        "en": [
+          "False"
+        ]
+      }
+    },
+    {
+      "label": {
+        "en": [
+          "Content Type"
+        ]
+      },
+      "value": {
+        "en": [
+          "audio"
+        ]
+      }
+    }
+  ],
+  "summary": {
+    "en": [
+      "Test collection with Special Audio Types||40b4a050-f194-013d-6deb-0242ac110002"
+    ]
+  },
+  "requiredStatement": null,
+  "rendering": null,
+  "service": null,
+  "services": null,
+  "viewingDirection": null,
+  "placeholderCanvas": null,
+  "accompanyingCanvas": null,
+  "rights": null,
+  "start": null,
+  "navDate": null,
+  "navPlace": null,
+  "provider": null,
+  "seeAlso": null,
+  "thumbnail": null,
+  "homepage": null,
+  "behavior": null,
+  "partOf": null,
+  "items": [],
+  "structures": null,
+  "annotations": null
+}
