@@ -12,7 +12,7 @@ import ExternalLinksOverview from "./external/overview";
 import PrintOverview from "./print/overview";
 import CitationsOverview from "./citations/overview";
 
-const ItemOverview = ({ item, canvasIndex }) => {
+const ItemOverview = ({ item }) => {
   return (
     <>
       <ChakraSimpleGrid
@@ -27,11 +27,9 @@ const ItemOverview = ({ item, canvasIndex }) => {
       >
         <ExternalLinksOverview item={item} />
         {/* TODO: fix the order print button*/}
-        {item.isImage && (
-          <PrintOverview item={item} imageID={item.imageIDs[canvasIndex]} />
-        )}
+        {item.isImage && <PrintOverview imageIDs={item.imageIDs} />}
       </ChakraSimpleGrid>
-      <HorizontalRule marginTop="l" marginBottom="l" />
+      <HorizontalRule marginTop="m" marginBottom="m" />
       <ChakraSimpleGrid
         sx={{
           [`@media screen and (min-width: ${headerBreakpoints.lgMobile}px)`]: {

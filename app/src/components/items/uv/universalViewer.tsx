@@ -5,6 +5,8 @@ import {
 } from "../../../hooks/useUniversalViewer";
 import React, { useEffect, useMemo, useRef } from "react";
 import { IIIFEvents as BaseEvents, IIIFURLAdapter } from "universalviewer";
+import { useRouter, usePathname, useSearchParams } from "next/navigation";
+import { useCanvasContext } from "../../../context/CanvasProvider";
 
 export type UniversalViewerProps = {
   config?: any;
@@ -14,10 +16,20 @@ export type UniversalViewerProps = {
   onChangeManifest?: (manifest: string) => void;
 };
 
-// https://codesandbox.io/p/sandbox/uv-nextjs-example-239ff5?file=%2Fcomponents%2FUniversalViewer.tsx%3A39%2C1-49%2C8
+// pulled most of this code from: https://codesandbox.io/p/sandbox/uv-nextjs-example-239ff5?file=%2Fcomponents%2FUniversalViewer.tsx%3A39%2C1-49%2C8
 const UniversalViewer: React.FC<UniversalViewerProps> = React.memo(
   ({ manifestId, canvasIndex, onChangeCanvas, config }) => {
-    // console.log("canvasIndex is: ", canvasIndex)
+    const searchParams = useSearchParams();
+    const { setCurrentCanvasIndex } = useCanvasContext();
+
+    // TODO: why this no worky with the clamped index
+    function updateCanvasIndex(newCanvasIndex: number) {
+      console.log("newCanvasIndex is: ", newCanvasIndex);
+      const stringifiedParams = searchParams.toString();
+      const urlSearchParams = new URLSearchParams(stringifiedParams);
+      urlSearchParams.set("canvasIndex", stringifiedParams);
+      window.history.pushState(null, "", `?${stringifiedParams}`);
+    }
 
     console.log("canvasIndex in UniversalViewer component is: ", canvasIndex);
     const ref = useRef<HTMLDivElement>(null);
@@ -25,20 +37,8 @@ const UniversalViewer: React.FC<UniversalViewerProps> = React.memo(
     const options = useMemo(
       () => ({
         manifest: manifestId,
-        canvasIndex: canvasIndex || 0, //TODO: look into why adding the query param adds "1" to the string or value. it's very weird.
+        canvasIndex: canvasIndex, //TODO: look into why adding the query param adds "1" to the string or value. it's very weird.
         embedded: true,
-        // footerPanelEnabled: false,
-        // options: {
-        //   "headerPanel": {
-        //     "options": {
-        //       "centerOptionsEnabled": true,
-        //       "localeToggleEnabled": false,
-        //       "settingsButtonEnabled": false
-        //     }
-        //   },
-        // }
-        //UVConfig.options
-        // config: config || UVConfig, //{},
       }),
       []
     );
@@ -46,113 +46,23 @@ const UniversalViewer: React.FC<UniversalViewerProps> = React.memo(
     const uv = useUniversalViewer(ref, options);
 
     useEffect(() => {
-      console.log("canvasIndex in useEffect is: ", canvasIndex);
-
-      // if (uv && (canvasIndex || canvasIndex === 0)) {
-      //   if (lastIndex.current !== canvasIndex) {
-      //     uv._assignedContentHandler?.publish(
-      //       BaseEvents.CANVAS_INDEX_CHANGE,
-      //       canvasIndex
-      //     );
-      //     lastIndex.current = canvasIndex;
-      //   }
-      // }
-
-      if (uv) {
-        // override config using an inline json object
-        uv.on("configure", function ({ config, cb }) {
-          cb(
-            {
-              options: {
-                footerPanelEnabled: true,
-                pagingEnabled: true,
-                pagingHeaderPanel: true,
-                pagingOptionEnabled: true,
-                modules: {
-                  headerPanel: {
-                    options: {
-                      centerOptionsEnabled: true,
-                      localeToggleEnabled: false,
-                      settingsButtonEnabled: false,
-                    },
-                  },
-                  pagingHeaderPanel: {
-                    options: {
-                      autoCompleteBoxEnabled: true,
-                      autocompleteAllowWords: false,
-                      galleryButtonEnabled: false,
-                      imageSelectionBoxEnabled: false,
-                      pageModeEnabled: false,
-                      pagingToggleEnabled: true,
-                    },
-                    content: {
-                      close: "Close",
-                      emptyValue: "Please enter a value",
-                      first: "First",
-                      firstImage: "First Image",
-                      firstPage: "First Page",
-                      folio: "Folio",
-                      gallery: "Gallery",
-                      go: "Go",
-                      help: "Help",
-                      image: "Image",
-                      last: "Last",
-                      lastImage: "Last Image",
-                      lastPage: "Last Page",
-                      next: "Next",
-                      nextImage: "Next Image",
-                      nextPage: "Next Page",
-                      of: "of {0}",
-                      oneUp: "Single page view",
-                      page: "Page",
-                      pageSearchLabel: "Search by Page Number",
-                      previous: "Previous",
-                      previousImage: "Previous Image",
-                      previousPage: "Previous Page",
-                      settings: "Settings",
-                      twoUp: "Two page view",
-                    },
-                  },
-                  shareDialogue: {
-                    options: {
-                      embedTemplate:
-                        '<iframe src="{0}" width="{1}" height="{2}" allowfullscreen frameborder="0"></iframe>',
-                      instructionsEnabled: false,
-                      shareFrameEnabled: true,
-                      shareManifestsEnabled: true,
-                    },
-                    content: {
-                      customSize: "custom",
-                      embed: "Embed",
-                      embedInstructions:
-                        "To embed this item in your own website, copy and paste the code below.",
-                      height: "Height",
-                      iiif: "IIIF Manifest",
-                      share: "Share",
-                      shareInstructions:
-                        "To share this item, copy the URL below.",
-                      size: "Size:",
-                      width: "Width",
-                    },
-                  },
-                },
-              },
-            },
-            [uv]
+      if (uv && (canvasIndex || canvasIndex === 0)) {
+        if (lastIndex.current !== canvasIndex) {
+          uv._assignedContentHandler?.publish(
+            BaseEvents.CANVAS_INDEX_CHANGE,
+            canvasIndex
           );
-        });
+          lastIndex.current = canvasIndex;
+        }
       }
-    });
+    }, [canvasIndex, uv]);
 
     useEvent(uv, BaseEvents.CANVAS_INDEX_CHANGE, (i) => {
-      console.log("canvasIndex in useEvent is: ", canvasIndex);
-
       if (onChangeCanvas) {
-        console.log("canvasIndex in useEvent onChangeCanvas is: ", canvasIndex);
-        console.log("i in useEvent onChangeCanvas is: ", i);
+        updateCanvasIndex(i);
+        setCurrentCanvasIndex(i);
 
         if (lastIndex.current !== i) {
-          console.log("lastIndex is", lastIndex);
           const canvas = (uv as any)?.extension?.helper.getCanvasByIndex(i);
           if (canvas) {
             lastIndex.current = i;
@@ -164,7 +74,7 @@ const UniversalViewer: React.FC<UniversalViewerProps> = React.memo(
 
     return (
       <>
-        <div className="uv" style={{ height: 800 }} ref={ref} />
+        <div className="uv" style={{ height: 650 }} ref={ref} />
       </>
     );
   }

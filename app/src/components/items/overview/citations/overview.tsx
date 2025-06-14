@@ -5,13 +5,15 @@ import parse from "html-react-parser";
 // Helper function to parse anchor tag from HTML string
 // annoyingly redundant
 const parseHtmlString = (html) => {
-  const parser = new DOMParser();
-  const doc = parser.parseFromString(html, "text/html");
-  const anchor = doc.querySelector("a");
-  return {
-    href: anchor?.getAttribute("href"),
-    text: anchor?.textContent,
-  };
+  if (typeof window !== "undefined") {
+    const parser = new DOMParser();
+    const doc = parser.parseFromString(html, "text/html");
+    const anchor = doc.querySelector("a");
+    return {
+      href: anchor?.getAttribute("href"),
+      text: anchor?.textContent,
+    };
+  }
 };
 
 // TO DO: generate on the fly: https://github.com/NYPL/digitalreadingroom/blob/qa/app/views/partials/_item_metadata.html.erb
@@ -20,10 +22,9 @@ const CitationsOverview = ({ item }) => {
   const metadata = item.metadata;
   const shareUrl = item.link;
 
-  const location = parseHtmlString(metadata?.locations?.split("<br>")[0]).text;
-  const resource = parseHtmlString(
-    metadata?.typeOfResource?.split("<br>")[0]
-  ).text;
+  const location = parseHtmlString(metadata?.locations?.split("<br>")[0])?.text;
+  const resource = parseHtmlString(metadata?.typeOfResource?.split("<br>")[0])
+    ?.text;
 
   const today = new Date().toLocaleDateString("en-us", {
     day: "numeric",
@@ -95,7 +96,7 @@ ${metadata.origin ? "(" + metadata.origin + ")" : ""}${
                 <Text size="overline1" marginBottom="xs">
                   {field}
                 </Text>
-                <Text marginBottom="m">{parse(value)}</Text>
+                <Box marginBottom="m">{parse(value)}</Box>
               </Fragment>
             );
           }

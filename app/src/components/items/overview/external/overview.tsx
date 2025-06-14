@@ -15,7 +15,7 @@ const ExternalLinksOverview = ({ item }) => {
   return (
     <>
       <Box
-        marginTop="m"
+        marginTop="sm"
         // marginBottom="m"
       >
         <Heading size="heading6" marginBottom="xs">
