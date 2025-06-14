@@ -19,23 +19,7 @@ describe("ItemModel - Single Image Capture", () => {
   const uuid = "a9c43f00-c600-012f-59c3-58d385a7bc34";
 
   let item: ItemModel;
-  //   uuid: string;
-  // mods: any;
-  // capture: any;
-  // typeOfResource: string;
-  // title: string;
-  // isSingleCapture: boolean;
-  // imageIDs?: string[];
-  // href: string;
-  // contentType: string;
-  // hasItems?: boolean;
-  // manifestURL: string;
-  // link: string;
-  // isRestricted: boolean;
-  // isImage: boolean;
-  // archivesLink?: string | null | undefined;
-  // catalogLink?: string | null | undefined;
-  // divisionLink: string;
+
   beforeEach(() => {
     item = new ItemModel(uuid, singleImageCaptureManifest);
   });
@@ -61,25 +45,6 @@ describe("ItemModel - Single Image Capture", () => {
   });
 
   describe("sets the correct metadata fields", () => {
-    // title: string;
-    // names?: string;
-    // collection?: string;
-    // origin: string;
-    // dateCreated?: string;
-    // dateIssued: string;
-    // tableOfContents?: string;
-    // locations: string;
-    // subjects?: string;
-    // genres: string;
-    // notes?: string;
-    // physicalDescription?: string;
-    // abstract?: string;
-    // languages: string;
-    // link?: string;
-    // identifiers: string;
-    // access: string;
-    // rights: string;
-    // typeOfResource: string;
     it("sets the correct Title", () => {
       expect(item.metadata.title).toBe("A smoking club");
     });
