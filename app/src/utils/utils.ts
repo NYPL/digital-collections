@@ -8,8 +8,6 @@ import { AvailableFilterOption } from "../types/AvailableFilterType";
 import type { SearchResultRecordType } from "../types/SearchCardType";
 import type { Highlight } from "../types/HighlightType";
 import { isValidFilter } from "./searchManager/searchManager";
-import ManifestMetadataFieldType from "@/src/types/ManifestMetadataFieldType";
-import ManifestMetadataType from "@/src/types/ManifestMetadataType";
 
 /**
  * Represents a IIIF Image API URL, which will be used globally throughout the application.

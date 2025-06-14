@@ -1,5 +1,5 @@
 import { MetadataField, ManifestMetadata } from "./parseManifestMetadata";
-import { NormalizedItemMetadata } from "../types/NormalizedItemMetadata";
+import { NormalizedItemMetadata } from "../../types/NormalizedItemMetadata";
 
 function joinWithBr(val?: string[]): string {
   return val?.join("<br>") || "";
