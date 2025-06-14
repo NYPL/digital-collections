@@ -1,7 +1,8 @@
 import { Maniiifest } from "maniiifest";
 import { parseManifestMetadata } from "../utils/metadata/parseManifestMetadata";
-import { normalizeItemMetadataFromManifest } from "../utils/normalizeItemMetadata";
+import { normalizeItemMetadataFromManifest } from "../utils/metadata/normalizeItemMetdata";
 import { NormalizedItemMetadata } from "../types/NormalizedItemMetadata";
+import { getRenderableMetadata } from "../utils/metadata/filterRenderableMetadata";
 
 // https://github.com/jptmoore/maniiifest
 // other resources:
@@ -28,6 +29,7 @@ export class ItemModel {
   catalogLink?: string | null | undefined;
   divisionLink: string;
   metadata: NormalizedItemMetadata;
+  renderableMetadata: any;
 
   constructor(uuid: string, manifest: any) {
     // get custom label from manifest
@@ -45,31 +47,37 @@ export class ItemModel {
         })
       : [];
 
+    // console.log("manifest.metadata is: ", manifest.metadata)
     const manifestMetadataArray = Array.from(parser.iterateManifestMetadata());
+    // console.log("manifestMetadataArray is: ", manifestMetadataArray)
+
     const rawManifestMetadata = parseManifestMetadata(manifestMetadataArray);
+    // console.log("rawManifestMetadata is: ", rawManifestMetadata)
     const normalizedManifestMetadata =
-      normalizeItemMetadata(rawManifestMetadata);
+      normalizeItemMetadataFromManifest(rawManifestMetadata);
+    // console.log("normalizedManifestMetadata is: ", normalizedManifestMetadata)
     this.metadata = normalizedManifestMetadata;
+    this.renderableMetadata = getRenderableMetadata(this.metadata);
+    // console.log("renderableMetadata is: ", this.renderableMetadata)
 
     this.uuid = uuid;
     this.link =
       process.env.APP_ENV === "development" || process.env.APP_ENV === "qa"
         ? `https://qa-digitalcollections.nypl.org/items/${this.uuid}`
         : `https://digitalcollections.nypl.org/items/${this.uuid}`;
-    this.typeOfResource = normalizedManifestMetadata["Resource Type"]
-      ? normalizedManifestMetadata["Resource Type"].toString()
+    this.typeOfResource = rawManifestMetadata["Resource Type"]
+      ? rawManifestMetadata["Resource Type"].toString()
       : "";
-    this.title = normalizedManifestMetadata["Title"]
-      ? normalizedManifestMetadata["Title"].toString()
+    this.title = rawManifestMetadata["Title"]
+      ? rawManifestMetadata["Title"].toString()
       : "";
-    this.isRestricted = normalizedManifestMetadata["Is Restricted"]
-      ? normalizedManifestMetadata["Is Restricted"].toString().toLowerCase() ===
-        "true"
+    this.isRestricted = rawManifestMetadata["Is Restricted"]
+      ? rawManifestMetadata["Is Restricted"].toString().toLowerCase() === "true"
       : true;
 
     // for viewer configs and order print button
-    this.contentType = normalizedManifestMetadata["Content Type"]
-      ? normalizedManifestMetadata["Content Type"][0].toString()
+    this.contentType = rawManifestMetadata["Content Type"]
+      ? rawManifestMetadata["Content Type"][0].toString()
       : "";
 
     // only used for order print button
@@ -80,13 +88,13 @@ export class ItemModel {
         this.contentType === "multiple images");
 
     this.divisionLink =
-      this.isRestricted && normalizedManifestMetadata["Division"]
-        ? normalizedManifestMetadata["Division"].toString()
-        : normalizedManifestMetadata["Library Locations"][0];
+      this.isRestricted && rawManifestMetadata["Division"]
+        ? rawManifestMetadata["Division"].toString()
+        : rawManifestMetadata["Library Locations"][0] || "";
 
     this.manifestURL = `${process.env.COLLECTIONS_API_URL}/manifests/${uuid}`;
 
-    const identifiers = normalizedManifestMetadata["Identifiers"];
+    const identifiers = rawManifestMetadata["Identifiers"];
     const catalogLink = identifiers.find((identifier) =>
       identifier.includes("NYPL Catalog ID (bnumber)")
     );

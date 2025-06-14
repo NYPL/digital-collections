@@ -36,6 +36,7 @@ describe("normalizeItemMetadataFromManifest", () => {
 
     const result = normalizeItemMetadataFromManifest(raw);
 
+    expect(result.title).toBe("Untitled");
     expect(result.collection).toBe("");
     expect(result.subjects).toBe("");
     expect(result.notes).toBe("");
