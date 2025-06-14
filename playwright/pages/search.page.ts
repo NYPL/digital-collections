@@ -12,11 +12,15 @@ export default class SearchPage {
 
   // search result filters
   readonly topicFilter: Locator;
+  readonly topicOption: Locator;
+  readonly topicSelected: Locator;
   readonly nameFilter: Locator;
   readonly collectionFilter: Locator;
   readonly placeFilter: Locator;
   readonly genreFilter: Locator;
   readonly publisherFilter: Locator;
+  readonly publisherOption: Locator;
+  readonly publisherSelected: Locator;
   readonly divisionFilter: Locator;
   readonly typeFilter: Locator;
   readonly startYear: Locator;
@@ -27,6 +31,7 @@ export default class SearchPage {
   readonly availableOnsite: Locator;
   readonly showFilters: Locator;
   readonly hideFilters: Locator;
+  readonly applyFilterButton: Locator;
 
   constructor(page: Page) {
     this.page = page;
@@ -47,6 +52,12 @@ export default class SearchPage {
 
     // search result filters
     this.topicFilter = this.page.getByRole("button", { name: "Topic" });
+    this.topicOption = this.page
+      .locator("#select-topic")
+      .getByText("Maps in education", { exact: true });
+    this.topicSelected = this.page
+      .locator("#select-topic")
+      .getByText("Topic: Maps in education", { exact: true });
     this.nameFilter = this.page.getByRole("button", { name: "Name" });
     this.collectionFilter = this.page.getByRole("button", {
       name: "Collection",
@@ -54,6 +65,12 @@ export default class SearchPage {
     this.placeFilter = this.page.getByRole("button", { name: "Place" });
     this.genreFilter = this.page.getByRole("button", { name: "Genre" });
     this.publisherFilter = this.page.getByRole("button", { name: "Publisher" });
+    this.publisherOption = this.page
+      .locator("#select-publisher")
+      .getByText("Printed at the Theater,", { exact: true });
+    this.publisherSelected = this.page
+      .locator("#select-publisher")
+      .getByText("Publisher: Printed at the Theater,", { exact: true });
     this.divisionFilter = this.page.getByRole("button", { name: "Division" });
     this.typeFilter = this.page.getByRole("button", { name: "Type" });
     this.startYear = this.page.getByRole("textbox", { name: "Start year" });
@@ -73,6 +90,10 @@ export default class SearchPage {
     });
     this.hideFilters = this.page.getByRole("button", {
       name: "Less filter options",
+    });
+    this.applyFilterButton = this.page.getByRole("button", {
+      name: "Apply",
+      exact: true,
     });
   }
 

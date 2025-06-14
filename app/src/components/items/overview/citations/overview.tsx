@@ -1,4 +1,5 @@
 import { Box, Flex, Heading, Text } from "@nypl/design-system-react-components";
+import { Fragment } from "react";
 import parse from "html-react-parser";
 
 // Helper function to parse anchor tag from HTML string
@@ -90,14 +91,12 @@ ${metadata.origin ? "(" + metadata.origin + ")" : ""}${
           const value = citationFormatDummyData[field];
           if (value !== "") {
             return (
-              <>
-                <Text key={index} size="overline1" marginBottom="xs">
+              <Fragment key={`citation-${field}`}>
+                <Text size="overline1" marginBottom="xs">
                   {field}
                 </Text>
-                <Text key={index} marginBottom="m">
-                  {parse(value)}
-                </Text>
-              </>
+                <Text marginBottom="m">{parse(value)}</Text>
+              </Fragment>
             );
           }
         })}
