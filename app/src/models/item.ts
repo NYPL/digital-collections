@@ -55,14 +55,6 @@ export class ItemModel {
     this.hasItems = manifest.items.length > 0 ? true : false;
     const canvases = Array.from(parser.iterateManifestCanvas());
 
-    // get list of imageIDs for order print button
-    // example canvas.id is: "https://iiif.nypl.org/iiif/3/TH-38454/full/!700,700/0/default.jpg"
-    this.imageIDs = this.hasItems
-      ? canvases.map((canvas) => {
-          return canvas.id.split("/")[5];
-        })
-      : [];
-
     // Metadata assignment
     const manifestMetadataArray = Array.from(parser.iterateManifestMetadata());
     // convert Maniifest MetadataT to custom type
@@ -98,6 +90,7 @@ export class ItemModel {
       ? rawManifestMetadata["Is Restricted"].toString().toLowerCase() === "true"
       : true;
 
+    //this will break in Prod if we don't deploy API first bc the name of the field is "Library Location"
     this.divisionLink =
       this.isRestricted && rawManifestMetadata["Division"]
         ? rawManifestMetadata["Division"].toString()
@@ -114,6 +107,15 @@ export class ItemModel {
       (this.contentType === "image" ||
         this.contentType === "single image" ||
         this.contentType === "multiple images");
+
+    // get list of imageIDs for order print button
+    // example canvas.id is: "https://iiif.nypl.org/iiif/3/TH-38454/full/!700,700/0/default.jpg"
+    this.imageIDs =
+      this.hasItems && this.isImage
+        ? canvases.map((canvas) => {
+            return canvas.id.split("/")[5];
+          })
+        : null;
 
     // Special NYPL Identifiers for external links
     const identifiers = rawManifestMetadata["Identifiers"];
