@@ -24,32 +24,38 @@ import {
 export class ItemModel {
   uuid: string;
   link: string;
-  isSingleCapture: boolean;
-  imageIDs: string[] | null;
   manifestURL: string;
+  hasItems: boolean;
+  imageIDs: string[] | null;
   metadata: NormalizedItemMetadata;
   renderableMetadata: Record<string, string>;
   title: string;
   typeOfResource: string;
-  contentType: string;
-  hasItems: boolean;
   isRestricted: boolean;
+  divisionLink: string;
+  contentType: string;
   isImage: boolean;
   archivesLink: string | null;
   catalogLink: string | null;
-  divisionLink: string;
   citationData: CitationOutput;
   breadcrumbData: any;
 
   constructor(uuid: string, manifest: any) {
-    // get custom label from manifest
     const parser = new Maniiifest(manifest);
+
+    // Non-Manifest/Metadata related fields
+    this.uuid = uuid;
+    this.link =
+      process.env.APP_ENV === "development" || process.env.APP_ENV === "qa"
+        ? `https://qa-digitalcollections.nypl.org/items/${this.uuid}`
+        : `https://digitalcollections.nypl.org/items/${this.uuid}`;
+    this.manifestURL = `${process.env.COLLECTIONS_API_URL}/manifests/${uuid}`;
+
+    // Manifest related fields
     this.hasItems = manifest.items.length > 0 ? true : false;
     const canvases = Array.from(parser.iterateManifestCanvas());
-    const canvasAnnotations = Array.from(
-      parser.iterateManifestCanvasAnnotation()
-    );
 
+    // get list of imageIDs for order print button
     // example canvas.id is: "https://iiif.nypl.org/iiif/3/TH-38454/full/!700,700/0/default.jpg"
     this.imageIDs = this.hasItems
       ? canvases.map((canvas) => {
@@ -57,38 +63,45 @@ export class ItemModel {
         })
       : [];
 
-    // console.log("manifest.metadata is: ", manifest.metadata)
+    // Metadata assignment
     const manifestMetadataArray = Array.from(parser.iterateManifestMetadata());
-    // console.log("manifestMetadataArray is: ", manifestMetadataArray)
+    // convert Maniifest MetadataT to custom type
     const convertedManifestMetadata = convertManiiifestMetadata(
       manifestMetadataArray
-    ); // convert types
-    // console.log("convertedManifestMetadata is: ", convertedManifestMetadata)
+    );
     const rawManifestMetadata = parseManifestMetadata(
       convertedManifestMetadata
     );
-    // console.log("rawManifestMetadata is: ", rawManifestMetadata)
     const normalizedManifestMetadata =
       normalizeItemMetadataFromManifest(rawManifestMetadata);
-    // console.log("normalizedManifestMetadata is: ", normalizedManifestMetadata)
+
     this.metadata = normalizedManifestMetadata;
     this.renderableMetadata = getRenderableMetadata(this.metadata);
+
+    // console.log("manifest.metadata is: ", manifest.metadata)
+    // console.log("manifestMetadataArray is: ", manifestMetadataArray)
+    // console.log("convertedManifestMetadata is: ", convertedManifestMetadata)
+    // console.log("rawManifestMetadata is: ", rawManifestMetadata)
+    // console.log("normalizedManifestMetadata is: ", normalizedManifestMetadata)
     // console.log("renderableMetadata is: ", this.renderableMetadata)
 
-    this.uuid = uuid;
-    this.link =
-      process.env.APP_ENV === "development" || process.env.APP_ENV === "qa"
-        ? `https://qa-digitalcollections.nypl.org/items/${this.uuid}`
-        : `https://digitalcollections.nypl.org/items/${this.uuid}`;
-    this.typeOfResource = rawManifestMetadata["Resource Type"]
-      ? rawManifestMetadata["Resource Type"].toString()
-      : "";
+    // Manifest Metadata related fields
     this.title = rawManifestMetadata["Title"]
       ? rawManifestMetadata["Title"].toString()
       : "";
+
+    this.typeOfResource = rawManifestMetadata["Resource Type"]
+      ? rawManifestMetadata["Resource Type"].toString()
+      : "";
+
     this.isRestricted = rawManifestMetadata["Is Restricted"]
       ? rawManifestMetadata["Is Restricted"].toString().toLowerCase() === "true"
       : true;
+
+    this.divisionLink =
+      this.isRestricted && rawManifestMetadata["Division"]
+        ? rawManifestMetadata["Division"].toString()
+        : rawManifestMetadata["Library Locations"][0] || "";
 
     // for viewer configs and order print button
     this.contentType = rawManifestMetadata["Content Type"]
@@ -102,33 +115,26 @@ export class ItemModel {
         this.contentType === "single image" ||
         this.contentType === "multiple images");
 
-    this.divisionLink =
-      this.isRestricted && rawManifestMetadata["Division"]
-        ? rawManifestMetadata["Division"].toString()
-        : rawManifestMetadata["Library Locations"][0] || "";
-
-    this.manifestURL = `${process.env.COLLECTIONS_API_URL}/manifests/${uuid}`;
-
+    // Special NYPL Identifiers for external links
     const identifiers = rawManifestMetadata["Identifiers"];
-    const catalogLink = identifiers.find((identifier) =>
-      identifier.includes("NYPL Catalog ID (bnumber)")
-    );
-
-    this.catalogLink = catalogLink
-      ? extractFirstHrefFromHTML(catalogLink)
-      : null;
 
     const archivesLink = identifiers.find((identifier) => {
       identifier.includes("Archives ID");
     });
 
+    const catalogLink = identifiers.find((identifier) =>
+      identifier.includes("NYPL Catalog ID (bnumber)")
+    );
+
     this.archivesLink = archivesLink
       ? extractFirstHrefFromHTML(archivesLink)
       : null;
-    const location =
-      extractAllAnchorsFromHTML(
-        this.metadata?.locations?.split("<br>")[0] ?? ""
-      )[0].text ?? "";
+
+    this.catalogLink = catalogLink
+      ? extractFirstHrefFromHTML(catalogLink)
+      : null;
+
+    // Citation Data
     this.citationData = generateCitations({
       title: this.title,
       link: this.link,
@@ -144,14 +150,7 @@ export class ItemModel {
       dateIssued: this.metadata?.dateIssued,
     });
 
-    const breadcrumbDivisionObj = extractAllAnchorsFromHTML(
-      this.metadata?.locations?.split("<br>")[0] ?? ""
-    )[0];
-
-    const breadcrumbCollectionObj = extractAllAnchorsFromHTML(
-      this.metadata?.collection?.split("<br>")[0] ?? ""
-    )[0];
-
+    // Breadcrumb Data
     // TODO: these won't work in Vercel - fix these links so they are a slug and not an external link
     this.breadcrumbData = {
       division: extractAllAnchorsFromHTML(
