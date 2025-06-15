@@ -14,9 +14,25 @@ export type UniversalViewerProps = {
   onChangeManifest?: (manifest: string) => void;
 };
 
+const handleOnClick = (e) => {
+  console.log("e is: ", e);
+  if (e.target === "div.openseadragon-canvas") {
+    console.log("target is image viewer");
+
+    // this doesn't work. think we need to select the great-grandparent? div
+    const viewPortButtons =
+      document.getElementsByClassName("viewportNavButton");
+
+    Array.from(viewPortButtons).forEach((button) => {
+      button.style.position = "absolute";
+      button.style.zIndex = "10000";
+    });
+  }
+};
 // https://codesandbox.io/p/sandbox/uv-nextjs-example-239ff5?file=%2Fcomponents%2FUniversalViewer.tsx%3A39%2C1-49%2C8
 const UniversalViewer: React.FC<UniversalViewerProps> = React.memo(
   ({ manifestId, canvasIndex, onChangeCanvas, config }) => {
+    console.log("config as component prop is: ", config);
     // console.log("canvasIndex is: ", canvasIndex)
 
     console.log("canvasIndex in UniversalViewer component is: ", canvasIndex);
@@ -28,17 +44,7 @@ const UniversalViewer: React.FC<UniversalViewerProps> = React.memo(
         canvasIndex: canvasIndex || 0, //TODO: look into why adding the query param adds "1" to the string or value. it's very weird.
         embedded: true,
         // footerPanelEnabled: false,
-        // options: {
-        //   "headerPanel": {
-        //     "options": {
-        //       "centerOptionsEnabled": true,
-        //       "localeToggleEnabled": false,
-        //       "settingsButtonEnabled": false
-        //     }
-        //   },
-        // }
         //UVConfig.options
-        // config: config || UVConfig, //{},
       }),
       []
     );
@@ -61,79 +67,112 @@ const UniversalViewer: React.FC<UniversalViewerProps> = React.memo(
       if (uv) {
         // override config using an inline json object
         uv.on("configure", function ({ config, cb }) {
+          console.log("config on uv.on(configure) is : ", config);
+          console.log("cb is: ", cb);
           cb(
             {
               options: {
-                footerPanelEnabled: true,
+                footerPanelEnabled: false,
                 pagingEnabled: true,
                 pagingHeaderPanel: true,
                 pagingOptionEnabled: true,
-                modules: {
-                  headerPanel: {
-                    options: {
-                      centerOptionsEnabled: true,
-                      localeToggleEnabled: false,
-                      settingsButtonEnabled: false,
-                    },
+                clickToZoomEnabled: false,
+              },
+              modules: {
+                headerPanel: {
+                  options: {
+                    centerOptionsEnabled: true,
+                    localeToggleEnabled: false,
+                    settingsButtonEnabled: false,
                   },
-                  pagingHeaderPanel: {
-                    options: {
-                      autoCompleteBoxEnabled: true,
-                      autocompleteAllowWords: false,
-                      galleryButtonEnabled: false,
-                      imageSelectionBoxEnabled: false,
-                      pageModeEnabled: false,
-                      pagingToggleEnabled: true,
-                    },
-                    content: {
-                      close: "Close",
-                      emptyValue: "Please enter a value",
-                      first: "First",
-                      firstImage: "First Image",
-                      firstPage: "First Page",
-                      folio: "Folio",
-                      gallery: "Gallery",
-                      go: "Go",
-                      help: "Help",
-                      image: "Image",
-                      last: "Last",
-                      lastImage: "Last Image",
-                      lastPage: "Last Page",
-                      next: "Next",
-                      nextImage: "Next Image",
-                      nextPage: "Next Page",
-                      of: "of {0}",
-                      oneUp: "Single page view",
-                      page: "Page",
-                      pageSearchLabel: "Search by Page Number",
-                      previous: "Previous",
-                      previousImage: "Previous Image",
-                      previousPage: "Previous Page",
-                      settings: "Settings",
-                      twoUp: "Two page view",
-                    },
+                },
+                pagingHeaderPanel: {
+                  options: {
+                    autoCompleteBoxEnabled: true,
+                    autocompleteAllowWords: false,
+                    galleryButtonEnabled: false,
+                    imageSelectionBoxEnabled: false,
+                    pageModeEnabled: false,
+                    pagingToggleEnabled: true,
                   },
-                  shareDialogue: {
-                    options: {
-                      embedTemplate:
-                        '<iframe src="{0}" width="{1}" height="{2}" allowfullscreen frameborder="0"></iframe>',
-                      instructionsEnabled: false,
-                      shareFrameEnabled: true,
-                      shareManifestsEnabled: true,
-                    },
-                    content: {
-                      customSize: "custom",
-                      embed: "Embed",
-                      embedInstructions:
-                        "To embed this item in your own website, copy and paste the code below.",
-                      height: "Height",
-                      iiif: "IIIF Manifest",
-                      share: "Share",
-                      shareInstructions:
-                        "To share this item, copy the URL below.",
-                      size: "Size:",
-                      width: "Width",
-                    },
+                  content: {
+                    close: "Close",
+                    emptyValue: "Please enter a value",
+                    first: "First",
+                    firstImage: "First Image",
+                    firstPage: "First Page",
+                    folio: "Folio",
+                    gallery: "Gallery",
+                    go: "Go",
+                    help: "Help",
+                    image: "Image",
+                    last: "Last",
+                    lastImage: "Last Image",
+                    lastPage: "Last Page",
+                    next: "Next",
+                    nextImage: "Next Image",
+                    nextPage: "Next Page",
+                    of: "of {0}",
+                    oneUp: "Single page view",
+                    page: "Page",
+                    pageSearchLabel: "Search by Page Number",
+                    previous: "Previous",
+                    previousImage: "Previous Image",
+                    previousPage: "Previous Page",
+                    settings: "Settings",
+                    twoUp: "Two page view",
+                  },
+                },
+                shareDialogue: {
+                  options: {
+                    embedTemplate:
+                      '<iframe src="{0}" width="{1}" height="{2}" allowfullscreen frameborder="0"></iframe>',
+                    instructionsEnabled: false,
+                    shareFrameEnabled: true,
+                    shareManifestsEnabled: true,
+                  },
+                  content: {
+                    customSize: "custom",
+                    embed: "Embed",
+                    embedInstructions:
+                      "To embed this item in your own website, copy and paste the code below.",
+                    height: "Height",
+                    iiif: "IIIF Manifest",
+                    share: "Share",
+                    shareInstructions:
+                      "To share this item, copy the URL below.",
+                    size: "Size:",
+                    width: "Width",
+                  },
+                },
+                openSeadragonCenterPanel: {
+                  options: {
+                    animationTime: 0.15,
+                    autoHideControls: false,
+                    requiredStatementEnabled: true,
+                    blendTime: 0,
+                    constrainDuringPan: true,
+                    controlsFadeAfterInactive: 3000,
+                    controlsFadeDelay: 250,
+                    controlsFadeLength: 250,
+                    defaultZoomLevel: 0,
+                    immediateRender: false,
+                    maxZoomPixelRatio: 1.25,
+                    navigatorPosition: "BOTTOM_RIGHT",
+                    pageGap: 50,
+                    showHomeControl: true,
+                    trimAttributionCount: 150,
+                    visibilityRatio: 0.5,
+                  },
+                  content: {
+                    attribution: "Attribution",
+                    goHome: "Go Home",
+                    imageUnavailable: "Image Unavailable",
+                    next: "Next",
+                    previous: "Previous",
+                    rotateRight: "Rotate Right",
+                    zoomIn: "Zoom In",
+                    zoomOut: "Zoom Out",
                   },
                 },
               },
@@ -164,7 +203,12 @@ const UniversalViewer: React.FC<UniversalViewerProps> = React.memo(
 
     return (
       <>
-        <div className="uv" style={{ height: 800 }} ref={ref} />
+        <div
+          className="uv"
+          onClick={(e) => handleOnClick(e)}
+          style={{ height: 800 }}
+          ref={ref}
+        />
       </>
     );
   }
