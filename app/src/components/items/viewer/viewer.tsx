@@ -16,8 +16,7 @@ const uv_config = {
       options: {
         centerOptionsEnabled: true,
         localeToggleEnabled: false,
-        settingsButtonEnabled: false,
-        clickToZoomEnabled: false,
+        settingsButtonEnabled: true,
       },
     },
     openSeadragonCenterPanel: {
@@ -27,9 +26,9 @@ const uv_config = {
         requiredStatementEnabled: true,
         blendTime: 0,
         constrainDuringPan: false,
-        controlsFadeAfterInactive: 3000,
-        controlsFadeDelay: 250,
-        controlsFadeLength: 250,
+        controlsFadeAfterInactive: 10000,
+        controlsFadeDelay: 20050,
+        controlsFadeLength: 20050,
         defaultZoomLevel: 0,
         immediateRender: false,
         maxZoomPixelRatio: 1.25,
@@ -52,6 +51,7 @@ const uv_config = {
     },
   },
 };
+
 const ItemMediaViewer = ({ item, canvasIndex }: ItemProps) => {
   let viewer;
   viewer = (
