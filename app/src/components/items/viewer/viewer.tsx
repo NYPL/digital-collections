@@ -10,6 +10,48 @@ interface ItemProps {
   canvasIndex: number;
 }
 
+const uv_config = {
+  modules: {
+    headerPanel: {
+      options: {
+        centerOptionsEnabled: true,
+        localeToggleEnabled: false,
+        settingsButtonEnabled: false,
+        clickToZoomEnabled: false,
+      },
+    },
+    openSeadragonCenterPanel: {
+      options: {
+        animationTime: 0.15,
+        autoHideControls: true,
+        requiredStatementEnabled: true,
+        blendTime: 0,
+        constrainDuringPan: false,
+        controlsFadeAfterInactive: 3000,
+        controlsFadeDelay: 250,
+        controlsFadeLength: 250,
+        defaultZoomLevel: 0,
+        immediateRender: false,
+        maxZoomPixelRatio: 1.25,
+        navigatorPosition: "BOTTOM_RIGHT",
+        pageGap: 50,
+        showHomeControl: true,
+        trimAttributionCount: 150,
+        visibilityRatio: 0.5,
+      },
+      content: {
+        attribution: "Attribution",
+        goHome: "Go Home",
+        imageUnavailable: "Image Unavailable",
+        next: "Next",
+        previous: "Previous",
+        rotateRight: "Rotate Right",
+        zoomIn: "Zoom In",
+        zoomOut: "Zoom Out",
+      },
+    },
+  },
+};
 const ItemMediaViewer = ({ item, canvasIndex }: ItemProps) => {
   let viewer;
   viewer = (
@@ -17,7 +59,7 @@ const ItemMediaViewer = ({ item, canvasIndex }: ItemProps) => {
       <UniversalViewer
         manifestId={item.manifestURL}
         canvasIndex={canvasIndex}
-        config={{}}
+        config={uv_config}
         onChangeCanvas={(manifest, canvas) => {
           // why is this not printing in the console
           console.log("canvas index changed", manifest, canvas);
