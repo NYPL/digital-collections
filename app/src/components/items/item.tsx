@@ -15,6 +15,7 @@ import {
   Icon,
   Text,
   HorizontalRule,
+  HStack,
 } from "@nypl/design-system-react-components";
 
 interface ItemProps {
@@ -42,13 +43,17 @@ const Item = ({ manifest, item, canvasIndex }: ItemProps) => {
             <Heading level="h2">{item.title}</Heading>
           </>
         )}
-        <Text marginTop="m">
-          <Icon name="errorOutline" size="medium" /> Our collections include
-          some content that may be harmful or dificult to view.{" "}
-          <Link href="https://digitalcollections.nypl.org/about#nypl_harmful_content_statement">
-            Learn more.
-          </Link>{" "}
-        </Text>
+        {/* TODO: horizontally align Icon with Text with breakpoints */}
+        <HStack marginTop="xs" direction="row">
+          <Icon name="actionInfo" size="large" />
+          <Text marginTop="1em">
+            Our collections include some content that may be harmful or dificult
+            to view.{" "}
+            <Link href="https://digitalcollections.nypl.org/about#nypl_harmful_content_statement">
+              Learn more.
+            </Link>{" "}
+          </Text>
+        </HStack>
         <HorizontalRule marginTop="m" marginBottom="m" />
         <ItemOverview item={item} />
       </Box>
