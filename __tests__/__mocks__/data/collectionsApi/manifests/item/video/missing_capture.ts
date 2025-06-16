@@ -662,5 +662,3 @@ export const renderableMetadata = {
   typeOfResource:
     "<span><a href='http://qa-digitalcollections.nypl.org/search/index?filters=%5Btype%3Dmoving+image%5D'>Moving Image</a></span>",
 };
-
-export const iiifManifestObject = {};
