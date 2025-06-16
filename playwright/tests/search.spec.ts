@@ -129,6 +129,7 @@ test("clears search results filters - approach 1", async ({ page }) => {
 
 test("clears search results filters - approach 2", async ({ page }) => {
   // clear dropdown filter
+  await expect(page).toHaveTitle("Search results - NYPL Digital Collections");
   await expect(searchPage.refineHeading).toBeVisible();
 
   await searchPage.filterSearchResults(); // reset filters to topic and publisher
@@ -142,6 +143,7 @@ test("clears search results filters - approach 2", async ({ page }) => {
 
 test("clears search results filters - approach 3", async ({ page }) => {
   // clear in filters applied
+  await expect(page).toHaveTitle("Search results - NYPL Digital Collections");
   await expect(searchPage.refineHeading).toBeVisible();
 
   await searchPage.filterSearchResults(); // reset filters to topic and publisher
