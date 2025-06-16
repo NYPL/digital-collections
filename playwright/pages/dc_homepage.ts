@@ -28,13 +28,13 @@ export class DCHomepage {
 
   //featured section
   readonly featuredSectionHeading: Locator;
-  readonly featuredDigitialCollectionsPrintStore: Locator;
+  readonly featuredDigitalCollectionsPrintStore: Locator;
   readonly featuredVisitStore: Locator;
   readonly featuredSpotlightOnPublicDomain: Locator;
   readonly featuredLearnMore: Locator;
 
   //explore further
-  readonly exporeFurtherHeading: Locator;
+  readonly exploreFurtherHeading: Locator;
   readonly digitalCollectionPrintStore: Locator;
   readonly nyplArchivesAndManuscripts: Locator;
   readonly nyplResearchCatalog: Locator;
@@ -86,10 +86,10 @@ export class DCHomepage {
       name: "Featured",
     });
 
-    this.featuredDigitialCollectionsPrintStore = this.page.getByRole(
-      "heading",
-      { name: "Digital Collections print store", exact: true }
-    );
+    this.featuredDigitalCollectionsPrintStore = this.page.getByRole("heading", {
+      name: "Digital Collections print store",
+      exact: true,
+    });
     this.featuredVisitStore = this.page.getByLabel(
       "Visit Store, Digital Collections print store",
       { exact: true }
@@ -105,7 +105,7 @@ export class DCHomepage {
     );
 
     // explore further
-    this.exporeFurtherHeading = this.page.getByRole("heading", {
+    this.exploreFurtherHeading = this.page.getByRole("heading", {
       name: "Explore further",
     });
     this.digitalCollectionPrintStore = this.page.getByRole("link", {

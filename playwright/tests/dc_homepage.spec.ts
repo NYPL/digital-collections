@@ -34,19 +34,17 @@ test("verify featured section is visible", async ({ page }) => {
     await expect(dchomepage.featuredSpotlightOnPublicDomain).toBeVisible();
     await expect(dchomepage.featuredLearnMore).toBeVisible();
   } else if (
-    await dchomepage.featuredDigitialCollectionsPrintStore.isVisible()
+    await dchomepage.featuredDigitalCollectionsPrintStore.isVisible()
   ) {
     // Assert for the "Digital Collections Print Store" section
 
-    await expect(
-      dchomepage.featuredDigitialCollectionsPrintStore
-    ).toBeVisible();
+    await expect(dchomepage.featuredDigitalCollectionsPrintStore).toBeVisible();
     await expect(dchomepage.featuredVisitStore).toBeVisible();
   }
 });
 test("verify explore further section is visible", async ({ page }) => {
   const dchomepage = new DCHomepage(page);
-  await expect(dchomepage.exporeFurtherHeading).toBeVisible();
+  await expect(dchomepage.exploreFurtherHeading).toBeVisible();
   await expect(dchomepage.digitalCollectionPrintStore).toBeVisible();
   await expect(dchomepage.nyplArchivesAndManuscripts).toBeVisible();
   await expect(dchomepage.nyplResearchCatalog).toBeVisible();
