@@ -5,11 +5,11 @@ let searchPage: SearchPage;
 
 test.beforeEach(async ({ page }, testInfo) => {
   // handles 404 errors for restricted images
-  if (testInfo.project.name === "webkit") {
-    await page.route("**/*.{png,jpg,jpeg,svg}", (route) => {
-      route.abort();
-    });
-  }
+  // if (testInfo.project.name === "webkit") {
+  await page.route("**/*.{png,jpg,jpeg,svg}", (route) => {
+    route.abort();
+  });
+  // }
 
   if (testInfo.title !== "searches for a keyword from homepage") {
     searchPage = await SearchPage.loadPage(SearchPage.searchResultsUrl, page);
@@ -122,6 +122,7 @@ test("clears search results filters - approach 1", async ({ page }) => {
   await page.screenshot({
     path: "debug-clear-filters2.png",
   });
+  console.log("Immediately before looking for heading: ", await page.content());
   await expect(searchPage.refineHeading).toBeVisible();
 
   await searchPage.filterSearchResults(); // reset filters to topic and publisher
