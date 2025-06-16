@@ -16,6 +16,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Added Playwright test to confirm visibility of search result filters (DR-3659)
 - Added Playwright test to filter search results with dropdowns (DR-3659)
 
+### Updated
+- Updated breadcrumb to include Division and Collection information (DR-3701)
+
 ## [0.4.2] 2025-05-22
 
 ### Added
