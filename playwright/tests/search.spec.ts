@@ -115,8 +115,13 @@ test("filters search results", async ({ page }) => {
 
 test("clears search results filters - approach 1", async ({ page }) => {
   // clear filters link
-  // await page.screenshot({ path: "playwright/tests/screenshots/debug-clear-filters.png" });
+  await page.screenshot({
+    path: "playwright/tests/screenshots/debug-clear-filters1.png",
+  });
   await expect(page).toHaveTitle("Search results - NYPL Digital Collections");
+  await page.screenshot({
+    path: "playwright/tests/screenshots/debug-clear-filters2.png",
+  });
   await expect(searchPage.refineHeading).toBeVisible();
 
   await searchPage.filterSearchResults(); // reset filters to topic and publisher
