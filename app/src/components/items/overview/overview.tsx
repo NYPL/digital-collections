@@ -25,7 +25,10 @@ const ItemOverview = ({ item }) => {
           },
         }}
       >
-        <ExternalLinksOverview item={item} />
+        <ExternalLinksOverview
+          catalogLink={item.catalogLink}
+          archivesLink={item.archivesLink}
+        />
         {/* TODO: fix the order print button*/}
         {item.isImage && <PrintOverview imageIDs={item.imageIDs} />}
       </ChakraSimpleGrid>
@@ -40,8 +43,8 @@ const ItemOverview = ({ item }) => {
           },
         }}
       >
-        <MetadataOverview metadata={item.metadata} />
-        <CitationsOverview item={item} />
+        <MetadataOverview metadata={item.renderableMetadata} />
+        <CitationsOverview citationData={item.citationData} />
       </ChakraSimpleGrid>
     </>
   );
