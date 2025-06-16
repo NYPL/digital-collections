@@ -3,6 +3,7 @@ import { fetchApi } from "@/src/utils/fetchApi/fetchApi";
 import { CARDS_PER_PAGE } from "@/src/config/constants";
 
 const oneMonth = 60 * 60 * 24 * 30;
+export const revalidate = oneMonth;
 
 const PAGESIZE = 50;
 
