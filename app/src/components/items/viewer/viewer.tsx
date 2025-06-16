@@ -25,6 +25,12 @@ const ItemMediaViewer = ({ item, canvasIndex }: ItemProps) => {
         onChangeManifest={(manifest) => {
           console.log("manfest changed", manifest);
         }}
+        //TODO: Length is hardcoded as 20s, but should be extracted from the metadata
+        analyticsMetadata={{
+          fileType: item.contentType,
+          media_name: item.title,
+          length: 20,
+        }}
       />
     </>
   );
