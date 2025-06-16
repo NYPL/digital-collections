@@ -20,8 +20,11 @@ const handleOnClick = (e) => {
     console.log("target is image viewer");
 
     // this doesn't work. think we need to select the great-grandparent? div
-    const viewPortButtons =
-      document.getElementsByClassName("viewportNavButton");
+    const viewPortButtons = Array.from(
+      document.getElementsByClassName(
+        "viewportNavButton"
+      ) as HTMLCollectionOf<HTMLElement>
+    );
 
     Array.from(viewPortButtons).forEach((button) => {
       button.style.position = "absolute";
