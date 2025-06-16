@@ -47,7 +47,7 @@ test("searches for a keyword from homepage", async ({ page }, testInfo) => {
 
 test("displays search results", async ({ page }) => {
   test.setTimeout(60000); // adds extra time to load all elements
-  // await expect(searchPage.refineHeading).toBeVisible();
+  await expect(searchPage.refineHeading).toBeVisible({ timeout: 60000 });
   await expect(searchPage.resultsHeading).toBeVisible();
   await expect(searchPage.firstResult).toBeVisible();
   await expect(searchPage.firstResult).toContainText(searchPage.searchKeyword, {
