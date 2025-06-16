@@ -15,6 +15,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Added Playwright test to search for a keyword (DR-3659)
 - Added Playwright test to confirm visibility of search result filters (DR-3659)
 - Added Playwright test to filter search results with dropdowns (DR-3659)
+- Added Image ID to Items page (DR-3695)
+
+### Fixed
+- Fixed Order Print button (DR-3486)
 
 ## [0.4.2] 2025-05-22
 
