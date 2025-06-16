@@ -21,6 +21,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Fixed
 - Fixed Order Print button (DR-3486)
 
+### Updated
+- Updated breadcrumb to include Division and Collection information (DR-3701)
+
 ## [0.4.2] 2025-05-22
 
 ### Added

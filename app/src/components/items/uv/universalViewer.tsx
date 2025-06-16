@@ -24,14 +24,12 @@ const UniversalViewer: React.FC<UniversalViewerProps> = React.memo(
 
     // TODO: why this no worky with the clamped index
     function updateCanvasIndex(newCanvasIndex: number) {
-      console.log("newCanvasIndex is: ", newCanvasIndex);
       const stringifiedParams = searchParams.toString();
       const urlSearchParams = new URLSearchParams(stringifiedParams);
       urlSearchParams.set("canvasIndex", stringifiedParams);
       window.history.pushState(null, "", `?${stringifiedParams}`);
     }
 
-    console.log("canvasIndex in UniversalViewer component is: ", canvasIndex);
     const ref = useRef<HTMLDivElement>(null);
     const lastIndex = useRef<number>();
     const options = useMemo(

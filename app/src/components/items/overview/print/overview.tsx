@@ -20,10 +20,8 @@ import React, { forwardRef } from "react";
 import { useCanvasContext } from "../../../../context/CanvasProvider";
 
 const PrintOverview = ({ imageIDs }) => {
-  console.log("imageIDs is: ", imageIDs);
   const { currentCanvasIndex } = useCanvasContext();
   const imageID = imageIDs[currentCanvasIndex];
-
   return (
     <>
       <Flex
