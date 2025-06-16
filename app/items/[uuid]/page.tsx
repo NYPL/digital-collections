@@ -42,6 +42,8 @@ export default async function ItemViewer({ params, searchParams }: ItemProps) {
   const manifest = await getItemManifest(params.uuid);
   const item = new ItemModel(params.uuid, manifest);
   console.log("search params are: ", searchParams);
+  console.log("manifest is", manifest.items);
+  console.log("item is", item);
   return (
     <PageLayout
       activePage="item"
@@ -54,6 +56,7 @@ export default async function ItemViewer({ params, searchParams }: ItemProps) {
         },
       ]}
       adobeAnalyticsPageName={createAdobeAnalyticsPageName("items", item.title)}
+      ga4Data={{ division: "", collection: "" }}
     >
       <ItemPage
         manifest={manifest}

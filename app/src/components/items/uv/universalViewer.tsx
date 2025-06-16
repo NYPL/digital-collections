@@ -3,25 +3,35 @@ import {
   useUniversalViewer,
   useEvent,
 } from "../../../hooks/useUniversalViewer";
-import React, { useEffect, useMemo, useRef } from "react";
+import React, { useEffect, useMemo, useRef, useState } from "react";
 import { IIIFEvents as BaseEvents, IIIFURLAdapter } from "universalviewer";
+import { MediaElementExtensionEvents } from "node_modules/universalviewer/dist/cjs/content-handlers/iiif/extensions/uv-mediaelement-extension/Events";
+import {
+  nearestPercentageMilestone,
+  sendAudioPlayEvent,
+  sendDownloadEvent,
+  sendVideoPlayEvent,
+} from "@/src/utils/ga4Utils";
 
 export type UniversalViewerProps = {
   config?: any;
   manifestId: string;
   canvasIndex?: number;
+  analyticsMetadata?: { fileType: string; media_name: string; length: number };
   onChangeCanvas?: (manifest: string, canvas: string) => void;
   onChangeManifest?: (manifest: string) => void;
 };
 
 // https://codesandbox.io/p/sandbox/uv-nextjs-example-239ff5?file=%2Fcomponents%2FUniversalViewer.tsx%3A39%2C1-49%2C8
 const UniversalViewer: React.FC<UniversalViewerProps> = React.memo(
-  ({ manifestId, canvasIndex, onChangeCanvas, config }) => {
+  ({ manifestId, canvasIndex, analyticsMetadata, onChangeCanvas, config }) => {
     // console.log("canvasIndex is: ", canvasIndex)
 
     console.log("canvasIndex in UniversalViewer component is: ", canvasIndex);
     const ref = useRef<HTMLDivElement>(null);
     const lastIndex = useRef<number>();
+    const lastPlayPercentage = useRef<number>();
+    const playPercentage = useState(0);
     const options = useMemo(
       () => ({
         manifest: manifestId,
@@ -162,8 +172,19 @@ const UniversalViewer: React.FC<UniversalViewerProps> = React.memo(
       }
     });
 
-    useEvent(uv, BaseEvents.DOWNLOAD, (i) => {
-      console.log("blah i ", i);
+    useEvent(uv, MediaElementExtensionEvents.MEDIA_TIME_UPDATE, (i) => {
+      const playPercentage = nearestPercentageMilestone(
+        i,
+        analyticsMetadata!.length
+      );
+      if (lastPlayPercentage.current !== playPercentage) {
+        lastPlayPercentage.current = playPercentage;
+        if (analyticsMetadata?.fileType === "video") {
+          sendVideoPlayEvent(analyticsMetadata.media_name, playPercentage);
+        } else if (analyticsMetadata?.fileType === "audio") {
+          sendAudioPlayEvent(analyticsMetadata.media_name, playPercentage);
+        }
+      }
     });
 
     return (
