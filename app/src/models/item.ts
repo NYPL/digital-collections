@@ -52,7 +52,7 @@ export class ItemModel {
     this.manifestURL = `${process.env.COLLECTIONS_API_URL}/manifests/${uuid}`;
 
     // Manifest related fields
-    this.hasItems = manifest.items.length > 0 ? true : false;
+    this.hasItems = manifest.items.length > 0;
     const canvases = Array.from(parser.iterateManifestCanvas());
 
     // Metadata assignment
@@ -69,13 +69,6 @@ export class ItemModel {
 
     this.metadata = normalizedManifestMetadata;
     this.renderableMetadata = getRenderableMetadata(this.metadata);
-
-    // console.log("manifest.metadata is: ", manifest.metadata)
-    // console.log("manifestMetadataArray is: ", manifestMetadataArray)
-    // console.log("convertedManifestMetadata is: ", convertedManifestMetadata)
-    // console.log("rawManifestMetadata is: ", rawManifestMetadata)
-    // console.log("normalizedManifestMetadata is: ", normalizedManifestMetadata)
-    // console.log("renderableMetadata is: ", this.renderableMetadata)
 
     // Manifest Metadata related fields
     this.title = rawManifestMetadata["Title"]
