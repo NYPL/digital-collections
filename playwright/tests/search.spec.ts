@@ -6,8 +6,20 @@ let searchPage: SearchPage;
 test.beforeEach(async ({ page }, testInfo) => {
   // handles 404 errors for restricted images
   // if (testInfo.project.name === "webkit") {
-  await page.route("**/*.{png,jpg,jpeg,svg,gif,webp}", (route) => {
-    route.abort();
+  // await page.route("**/*.{png,jpg,jpeg,svg,gif,webp}", (route) => {
+  //   // route.abort();
+  //   route.fulfill({
+  //     status: 200,
+  //     contentType: 'image/png',
+  //     body: '', // or a tiny base64-encoded image
+  //   });
+  // });
+  await page.route("**/*", (route) => {
+    const request = route.request();
+    if (request.resourceType() === "image") {
+      return route.abort();
+    }
+    return route.continue();
   });
   // }
 
