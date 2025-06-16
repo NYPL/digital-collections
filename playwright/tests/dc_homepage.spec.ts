@@ -26,6 +26,24 @@ test("verify public domain link is visible", async ({ page }) => {
   await expect(dchomepage.whatIsPublicDomainLink).toBeVisible();
 });
 
+test("verify featured section is visible", async ({ page }) => {
+  const dchomepage = new DCHomepage(page);
+
+  if (await dchomepage.featuredSpotlightOnPublicDomain.isVisible()) {
+    // Assert for the "Spotlight on Public Domain" section
+    await expect(dchomepage.featuredSpotlightOnPublicDomain).toBeVisible();
+    await expect(dchomepage.featuredLearnMore).toBeVisible();
+  } else if (
+    await dchomepage.featuredDigitialCollectionsPrintStore.isVisible()
+  ) {
+    // Assert for the "Digital Collections Print Store" section
+
+    await expect(
+      dchomepage.featuredDigitialCollectionsPrintStore
+    ).toBeVisible();
+    await expect(dchomepage.featuredVisitStore).toBeVisible();
+  }
+});
 test("verify explore further section is visible", async ({ page }) => {
   const dchomepage = new DCHomepage(page);
   await expect(dchomepage.exporeFurtherHeading).toBeVisible();

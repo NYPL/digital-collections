@@ -26,6 +26,13 @@ export class DCHomepage {
   readonly booksAndPeriodicalsSeeMoreLink: Locator;
   readonly fliersAndEphemeraSeeMoreLink: Locator;
 
+  //featured section
+  readonly featuredSectionHeading: Locator;
+  readonly featuredDigitialCollectionsPrintStore: Locator;
+  readonly featuredVisitStore: Locator;
+  readonly featuredSpotlightOnPublicDomain: Locator;
+  readonly featuredLearnMore: Locator;
+
   //explore further
   readonly exporeFurtherHeading: Locator;
   readonly digitalCollectionPrintStore: Locator;
@@ -72,6 +79,30 @@ export class DCHomepage {
     this.whatIsPublicDomainLink = this.page.getByRole("link", {
       name: "What is public domain?",
     });
+
+    //featured section
+
+    this.featuredSectionHeading = this.page.getByRole("link", {
+      name: "Featured",
+    });
+
+    this.featuredDigitialCollectionsPrintStore = this.page.getByRole(
+      "heading",
+      { name: "Digital Collections print store", exact: true }
+    );
+    this.featuredVisitStore = this.page.getByLabel(
+      "Visit Store, Digital Collections print store",
+      { exact: true }
+    );
+
+    this.featuredSpotlightOnPublicDomain = this.page.getByRole("heading", {
+      name: "Spotlight on the public domain",
+    });
+
+    this.featuredLearnMore = this.page.getByLabel(
+      "Learn more, Spotlight on the public domain",
+      { exact: true }
+    );
 
     // explore further
     this.exporeFurtherHeading = this.page.getByRole("heading", {
