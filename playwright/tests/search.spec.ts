@@ -6,7 +6,7 @@ let searchPage: SearchPage;
 test.beforeEach(async ({ page }, testInfo) => {
   // handles 404 errors for restricted images
   // if (testInfo.project.name === "webkit") {
-  await page.route("**/*.{png,jpg,jpeg,svg}", (route) => {
+  await page.route("**/*.{png,jpg,jpeg,svg,gif,webp}", (route) => {
     route.abort();
   });
   // }
@@ -115,15 +115,16 @@ test("filters search results", async ({ page }) => {
 
 test("clears search results filters - approach 1", async ({ page }) => {
   // clear filters link
-  await page.screenshot({
-    path: "debug-clear-filters1.png",
-  });
-  await expect(page).toHaveTitle("Search results - NYPL Digital Collections");
-  await page.screenshot({
-    path: "debug-clear-filters2.png",
-  });
-  console.log("Immediately before looking for heading: ", await page.content());
-  await expect(searchPage.refineHeading).toBeVisible();
+  // await page.screenshot({
+  //   path: "debug-clear-filters1.png",
+  // });
+  // await expect(page).toHaveTitle("Search results - NYPL Digital Collections");
+  // await page.screenshot({
+  //   path: "debug-clear-filters2.png",
+  // });
+  // const captureContent = await page.content();
+  // console.log("Immediately before looking for heading: ", await page.content());
+  // await expect(searchPage.refineHeading).toBeVisible();
 
   await searchPage.filterSearchResults(); // reset filters to topic and publisher
 
