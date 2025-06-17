@@ -5,9 +5,7 @@ export class Divisions {
 
   readonly divisionsHeading: Locator;
   readonly divisionsHeadingList: Locator;
-  readonly divisionsListItems: Locator;
-  readonly divisionName: Locator;
-  readonly divisionDescription: Locator;
+  readonly divisionSeeMore: Locator;
 
   constructor(page: Page) {
     this.page = page;
@@ -15,5 +13,6 @@ export class Divisions {
       name: "Divisions",
     });
     this.divisionsHeadingList = this.page.locator(".chakra-heading.css-8aiqvu");
+    this.divisionSeeMore = this.page.getByRole("link", { name: "See more" });
   }
 }
