@@ -42,13 +42,8 @@ export class ItemModel {
 
   constructor(uuid: string, manifest: any) {
     const parser = new Maniiifest(manifest);
-
     // Non-Manifest/Metadata related fields
     this.uuid = uuid;
-    this.link =
-      process.env.APP_ENV === "development" || process.env.APP_ENV === "qa"
-        ? `https://qa-digitalcollections.nypl.org/items/${this.uuid}`
-        : `https://digitalcollections.nypl.org/items/${this.uuid}`;
     this.manifestURL = `${process.env.COLLECTIONS_API_URL}/manifests/${uuid}`;
 
     // Manifest related fields

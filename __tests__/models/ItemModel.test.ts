@@ -29,16 +29,6 @@ describe("ItemModel - Image - Single Capture", () => {
     it("sets the correct UUID", () => {
       expect(item.uuid).toBe(uuid);
     });
-    it("generates the correct link and manifestURL", () => {
-      const env = process.env.APP_ENV || "";
-      const baseLink =
-        env === "development" || env === "qa"
-          ? `https://qa-digitalcollections.nypl.org/items/${uuid}`
-          : `https://digitalcollections.nypl.org/items/${uuid}`;
-
-      expect(item.link).toBe(baseLink);
-      expect(item.manifestURL).toContain(`/manifests/${uuid}`);
-    });
   });
 
   describe("sets the correct Manifest-related fields", () => {
@@ -110,16 +100,6 @@ describe("ItemModel - Image - Multiple Capture", () => {
   describe("Non-Manifest/Metadata related fields", () => {
     it("sets the correct UUID", () => {
       expect(item.uuid).toBe(uuid);
-    });
-    it("generates the correct link and manifestURL", () => {
-      const env = process.env.APP_ENV || "";
-      const baseLink =
-        env === "development" || env === "qa"
-          ? `https://qa-digitalcollections.nypl.org/items/${uuid}`
-          : `https://digitalcollections.nypl.org/items/${uuid}`;
-
-      expect(item.link).toBe(baseLink);
-      expect(item.manifestURL).toContain(`/manifests/${uuid}`);
     });
   });
 
