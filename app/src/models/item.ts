@@ -146,14 +146,21 @@ export class ItemModel {
     });
 
     // Breadcrumb Data
+    const divisionLinkObj = extractAllAnchorsFromHTML(
+      this.metadata?.locations?.split("<br>")[0] ?? ""
+    )[0];
+    divisionLinkObj["path"] = new URL(divisionLinkObj.href).pathname;
+
+    // note: this points to the top level collection, not the immediate parent collection or subcollection
+    const collectionLinkObj = extractAllAnchorsFromHTML(
+      this.metadata?.collection?.split("<br>")[0] ?? ""
+    )[0];
+    collectionLinkObj["path"] = new URL(collectionLinkObj.href).pathname;
+
     // TODO: these won't work in Vercel - fix these links so they are a slug and not an external link
     this.breadcrumbData = {
-      division: extractAllAnchorsFromHTML(
-        this.metadata?.locations?.split("<br>")[0] ?? ""
-      )[0],
-      collection: extractAllAnchorsFromHTML(
-        this.metadata?.collection?.split("<br>")[0] ?? ""
-      )[0],
+      division: divisionLinkObj,
+      collection: collectionLinkObj,
     };
   }
 }
