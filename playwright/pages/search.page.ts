@@ -1,16 +1,18 @@
-import { Locator, Page } from "@playwright/test";
+import { Locator, Page, expect } from "@playwright/test";
 
 export default class SearchPage {
   readonly page: Page;
-  static searchResultsUrl: string = "/search/index?q=map%20of%20scandinavia";
   readonly searchKeyword: string;
   readonly searchBar: Locator;
   readonly searchButton: Locator;
-  readonly refineHeading: Locator;
+
+  // search results
+  static searchResultsUrl: string = "/search/index?q=map%20of%20scandinavia";
   readonly resultsHeading: Locator;
   readonly firstResult: Locator;
 
   // search result filters
+  readonly refineHeading: Locator;
   readonly topicFilter: Locator;
   readonly topicOption: Locator;
   readonly topicSelected: Locator;
@@ -32,15 +34,19 @@ export default class SearchPage {
   readonly showFilters: Locator;
   readonly hideFilters: Locator;
   readonly applyFilterButton: Locator;
+  readonly clearFilterButton: Locator;
+  readonly clearTopicFilterApplied: Locator;
+  readonly clearAllFilters: Locator;
 
   constructor(page: Page) {
     this.page = page;
+
+    // replace with homepage locators
     this.searchKeyword = "map of scandinavia";
     this.searchBar = this.page.getByLabel("Search keyword(s)");
     this.searchButton = this.page.getByRole("button", { name: "Search" });
-    this.refineHeading = this.page.getByRole("heading", {
-      name: "Refine your search",
-    });
+
+    // search results
     this.resultsHeading = this.page.getByRole("heading", {
       name: new RegExp(
         `^Displaying \\d+-\\d+ of \\d+ results for "${this.searchKeyword}"$`
@@ -51,6 +57,9 @@ export default class SearchPage {
       .first();
 
     // search result filters
+    this.refineHeading = this.page.getByRole("heading", {
+      name: "Refine your search",
+    });
     this.topicFilter = this.page.getByRole("button", { name: "Topic" });
     this.topicOption = this.page
       .locator("#select-topic")
@@ -95,10 +104,45 @@ export default class SearchPage {
       name: "Apply",
       exact: true,
     });
+    this.clearFilterButton = this.page.getByRole("button", {
+      name: "Clear filter",
+      exact: true,
+    });
+    this.clearTopicFilterApplied = this.page.getByRole("button", {
+      name: "Maps in education, click to remove filter",
+    });
+    this.clearAllFilters = this.page
+      .locator("#search-filter-tags")
+      .getByRole("button", { name: "Clear filters" });
   }
 
   static async loadPage(gotoPage: string, page: Page): Promise<SearchPage> {
     await page.goto(gotoPage, { waitUntil: "load" });
     return new SearchPage(page);
+  }
+
+  async filterSearchResults(): Promise<void> {
+    // filters a drop-down in the first row
+    await expect(this.topicFilter).toBeVisible();
+    await this.topicFilter.click();
+    await expect(this.topicOption).toBeVisible();
+    await this.topicOption.click();
+    await expect(this.applyFilterButton).toBeVisible();
+    await this.applyFilterButton.click();
+    await expect(this.topicSelected).toBeVisible();
+
+    // filters a drop-down in the second row
+    if (await this.showFilters.isVisible()) {
+      await expect(this.showFilters).toBeVisible();
+      await this.showFilters.click();
+    }
+
+    await expect(this.publisherFilter).toBeVisible();
+    await this.publisherFilter.click();
+    await expect(this.publisherOption).toBeVisible();
+    await this.publisherOption.click();
+    await expect(this.applyFilterButton).toBeVisible();
+    await this.applyFilterButton.click();
+    await expect(this.publisherSelected).toBeVisible();
   }
 }
