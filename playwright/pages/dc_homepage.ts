@@ -108,6 +108,7 @@ export class DCHomepage {
     // explore further
     this.exploreFurtherHeading = this.page.getByRole("heading", {
       name: "Explore further",
+      exact: true,
     });
     this.digitalCollectionPrintStore = this.page.getByRole("link", {
       name: "Digital Collections Print Store",
