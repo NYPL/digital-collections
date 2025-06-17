@@ -54,11 +54,11 @@ export default async function ItemViewer({ params, searchParams }: ItemProps) {
         { text: "Home", url: "/" },
         {
           text: `${item.breadcrumbData.division.text}`,
-          url: `${item.breadcrumbData.division.href}`,
+          url: `${item.breadcrumbData.division.path}`,
         },
         {
           text: `${item.breadcrumbData.collection.text}`,
-          url: `${item.breadcrumbData.collection.href}`,
+          url: `${item.breadcrumbData.collection.path}`,
         },
         {
           text: `${item.title}`,
