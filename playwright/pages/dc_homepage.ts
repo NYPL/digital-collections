@@ -84,6 +84,7 @@ export class DCHomepage {
 
     this.featuredSectionHeading = this.page.getByRole("link", {
       name: "Featured",
+      exact: true,
     });
 
     this.featuredDigitalCollectionsPrintStore = this.page.getByRole("heading", {

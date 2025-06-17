@@ -30,14 +30,11 @@ test("verify featured section is visible", async ({ page }) => {
   const dchomepage = new DCHomepage(page);
 
   if (await dchomepage.featuredSpotlightOnPublicDomain.isVisible()) {
-    // Assert for the "Spotlight on Public Domain" section
     await expect(dchomepage.featuredSpotlightOnPublicDomain).toBeVisible();
     await expect(dchomepage.featuredLearnMore).toBeVisible();
   } else if (
     await dchomepage.featuredDigitalCollectionsPrintStore.isVisible()
   ) {
-    // Assert for the "Digital Collections Print Store" section
-
     await expect(dchomepage.featuredDigitalCollectionsPrintStore).toBeVisible();
     await expect(dchomepage.featuredVisitStore).toBeVisible();
   }
