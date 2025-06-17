@@ -75,7 +75,7 @@ test("displays search result filters", async ({}) => {
   await expect(searchPage.typeFilter).not.toBeVisible();
 });
 
-test("filters search results", async ({ page }) => {
+test("filters search results", async ({}) => {
   await expect(searchPage.refineHeading).toBeVisible();
 
   // filters a drop-down in the first row
