@@ -25,7 +25,7 @@ test("searches for a keyword from homepage", async ({ page }) => {
   await expect(page).toHaveTitle("Search results - NYPL Digital Collections");
 });
 
-test("displays search results", async ({}) => {
+test("displays search results", async () => {
   await expect(searchPage.resultsHeading).toBeVisible();
   await expect(searchPage.firstResult).toBeVisible();
   await expect(searchPage.firstResult).toContainText(searchPage.searchKeyword, {
@@ -33,7 +33,7 @@ test("displays search results", async ({}) => {
   });
 });
 
-test("displays search result filters", async ({}) => {
+test("displays search result filters", async () => {
   await expect(searchPage.refineHeading).toBeVisible();
 
   // displays first row of filters
@@ -75,7 +75,7 @@ test("displays search result filters", async ({}) => {
   await expect(searchPage.typeFilter).not.toBeVisible();
 });
 
-test("filters search results", async ({}) => {
+test("filters search results", async () => {
   await expect(searchPage.refineHeading).toBeVisible();
 
   // filters a drop-down in the first row
@@ -100,7 +100,7 @@ test("filters search results", async ({}) => {
 });
 
 test.describe("clears search results filters", () => {
-  test("clears all filters in Filters Applied", async ({}) => {
+  test("clears all filters in Filters Applied", async () => {
     await expect(searchPage.refineHeading).toBeVisible();
 
     await searchPage.filterSearchResults(); // reset filters to topic and publisher
@@ -111,7 +111,7 @@ test.describe("clears search results filters", () => {
     await expect(searchPage.publisherSelected).not.toBeVisible();
   });
 
-  test("clears dropdown filter", async ({}) => {
+  test("clears dropdown filter", async () => {
     await expect(searchPage.refineHeading).toBeVisible();
 
     await searchPage.filterSearchResults(); // reset filters to topic and publisher
@@ -123,7 +123,7 @@ test.describe("clears search results filters", () => {
     await expect(searchPage.topicSelected).not.toBeVisible();
   });
 
-  test("clears first filter in Filters Applied", async ({}) => {
+  test("clears first filter in Filters Applied", async () => {
     await expect(searchPage.refineHeading).toBeVisible();
 
     await searchPage.filterSearchResults(); // reset filters to topic and publisher
