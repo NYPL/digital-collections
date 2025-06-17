@@ -26,8 +26,8 @@ const UniversalViewer: React.FC<UniversalViewerProps> = React.memo(
     function updateCanvasIndex(newCanvasIndex: number) {
       const stringifiedParams = searchParams.toString();
       const urlSearchParams = new URLSearchParams(stringifiedParams);
-      urlSearchParams.set("canvasIndex", stringifiedParams);
-      window.history.pushState(null, "", `?${stringifiedParams}`);
+      urlSearchParams.set("canvasIndex", newCanvasIndex.toString());
+      window.history.pushState(null, "", `?${urlSearchParams}`);
     }
 
     const ref = useRef<HTMLDivElement>(null);
