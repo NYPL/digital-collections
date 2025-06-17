@@ -35,7 +35,7 @@ export default class SearchPage {
   readonly hideFilters: Locator;
   readonly applyFilterButton: Locator;
   readonly clearFilterButton: Locator;
-  readonly clearFilterApplied: Locator;
+  readonly clearTopicFilterApplied: Locator;
   readonly clearAllFilters: Locator;
 
   constructor(page: Page) {
@@ -108,8 +108,12 @@ export default class SearchPage {
       name: "Clear filter",
       exact: true,
     });
-    this.clearFilterApplied = this.page.getByTestId("filter-tags").first();
-    this.clearAllFilters = this.page.getByTestId("filter-clear-all");
+    this.clearTopicFilterApplied = this.page.getByRole("button", {
+      name: "Maps in education, click to remove filter",
+    });
+    this.clearAllFilters = this.page
+      .locator("#search-filter-tags")
+      .getByRole("button", { name: "Clear filters" });
   }
 
   static async loadPage(gotoPage: string, page: Page): Promise<SearchPage> {

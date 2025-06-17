@@ -123,13 +123,13 @@ test.describe("clears search results filters", () => {
     await expect(searchPage.topicSelected).not.toBeVisible();
   });
 
-  test("clears first filter in Filters Applied", async () => {
+  test("clears one filter in Filters Applied", async () => {
     await expect(searchPage.refineHeading).toBeVisible();
 
     await searchPage.filterSearchResults(); // reset filters to topic and publisher
 
-    await expect(searchPage.clearFilterApplied).toBeVisible();
-    await searchPage.clearFilterApplied.click();
+    await expect(searchPage.clearTopicFilterApplied).toBeVisible();
+    await searchPage.clearTopicFilterApplied.click();
     await expect(searchPage.topicSelected).not.toBeVisible();
   });
 });
