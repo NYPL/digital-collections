@@ -74,6 +74,9 @@ export const ALLOWED_FILTERS = [
   "subcollection",
   "materialType",
   "title",
+  "occupation",
+  "note",
+  "temporal",
 ];
 
 export const METADATA_FIELDS = [
