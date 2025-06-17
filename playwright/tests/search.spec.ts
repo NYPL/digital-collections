@@ -14,13 +14,13 @@ test.beforeEach(async ({ page }, testInfo) => {
   //     body: '', // or a tiny base64-encoded image
   //   });
   // });
-  await page.route("**/*", (route) => {
-    const request = route.request();
-    if (request.resourceType() === "image") {
-      return route.abort();
-    }
-    return route.continue();
-  });
+  // await page.route("**/*", (route) => {
+  //   const request = route.request();
+  //   if (request.resourceType() === "image") {
+  //     return route.abort();
+  //   }
+  //   return route.continue();
+  // });
   // }
 
   if (testInfo.title !== "searches for a keyword from homepage") {
@@ -29,7 +29,7 @@ test.beforeEach(async ({ page }, testInfo) => {
 });
 
 test("searches for a keyword from homepage", async ({ page }, testInfo) => {
-  test.setTimeout(60000); // adds extra time to navigate to homepage and load search page
+  // test.setTimeout(60000); // adds extra time to navigate to homepage and load search page
   searchPage = await SearchPage.loadPage("/", page);
 
   await expect(searchPage.searchBar).toBeVisible();
@@ -46,7 +46,7 @@ test("searches for a keyword from homepage", async ({ page }, testInfo) => {
 });
 
 test("displays search results", async ({ page }) => {
-  test.setTimeout(60000); // adds extra time to load all elements
+  // test.setTimeout(60000); // adds extra time to load all elements
   await expect(searchPage.refineHeading).toBeVisible();
   await expect(searchPage.resultsHeading).toBeVisible();
   await expect(searchPage.firstResult).toBeVisible();
@@ -56,7 +56,7 @@ test("displays search results", async ({ page }) => {
 });
 
 test("displays search result filters", async ({ page }) => {
-  test.setTimeout(60000); // adds extra time to load all elements
+  // test.setTimeout(60000); // adds extra time to load all elements
   await expect(searchPage.refineHeading).toBeVisible();
 
   // displays first row of filters
@@ -99,7 +99,7 @@ test("displays search result filters", async ({ page }) => {
 });
 
 test("filters search results", async ({ page }) => {
-  test.setTimeout(60000); // adds extra time to load all elements
+  // test.setTimeout(60000); // adds extra time to load all elements
   await expect(searchPage.refineHeading).toBeVisible();
 
   // filters a drop-down in the first row
