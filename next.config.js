@@ -16,6 +16,7 @@ const nextConfig = {
     APP_ENV: process.env.APP_ENV,
     NEW_RELIC_LICENSE_KEY: process.env.NEW_RELIC_LICENSE_KEY,
     NEW_RELIC_APP_NAME: `${process.env.NEW_RELIC_APP_NAME}`,
+    COLLECTIONS_API_URL: process.env.COLLECTIONS_API_URL,
   },
   images: {
     remotePatterns: [
@@ -34,8 +35,11 @@ const nextConfig = {
   // In order for newrelic to effectively instrument a Next.js application,
   // the modules that newrelic supports should not be mangled by webpack. Thus,
   // we need to "externalize" all of the modules that newrelic supports.
+
   webpack: (config) => {
-    nrExternals(config);
+    if (process.env.NEW_RELIC_APP_NAME) {
+      nrExternals(config);
+    }
     return config;
   },
 };

@@ -4,7 +4,7 @@ import {
   DEFAULT_SEARCH_SORT,
   DEFAULT_SEARCH_TERM,
 } from "@/src/config/constants";
-import { GeneralSearchManager } from "@/src/utils/searchManager";
+import { GeneralSearchManager } from "@/src/utils/searchManager/searchManager";
 
 describe("SortMenu", () => {
   const updateURL = jest.fn();

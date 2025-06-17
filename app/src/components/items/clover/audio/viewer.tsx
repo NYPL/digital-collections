@@ -18,11 +18,12 @@ const options = {
   },
 };
 
-const AudioViewer = () => {
+const AudioViewer = (manifestId: any) => {
   const iiifContent =
     "https://iiif.io/api/cookbook/recipe/0002-mvm-audio/manifest.json";
 
-  return <Viewer iiifContent={iiifContent} options={options} />;
+  // return <Viewer iiifContent={iiifContent} options={options} />;
+  return <Viewer iiifContent={manifestId} options={options} />;
 };
 
 export default AudioViewer;

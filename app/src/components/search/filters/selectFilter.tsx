@@ -12,7 +12,10 @@ import React, { useEffect, useRef, useState } from "react";
 import SelectFilterModal from "./selectFilterModal";
 import FilterAccordion from "./filterAccordion";
 import { usePathname, useRouter } from "next/navigation";
-import { filterDisplayName, SearchManager } from "@/src/utils/searchManager";
+import {
+  filterDisplayName,
+  SearchManager,
+} from "@/src/utils/searchManager/searchManager";
 import {
   AvailableFilter,
   AvailableFilterOption,
