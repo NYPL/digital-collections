@@ -2,15 +2,17 @@ import { Locator, Page, expect } from "@playwright/test";
 
 export default class SearchPage {
   readonly page: Page;
-  static searchResultsUrl: string = "/search/index?q=map%20of%20scandinavia";
   readonly searchKeyword: string;
   readonly searchBar: Locator;
   readonly searchButton: Locator;
-  readonly refineHeading: Locator;
+
+  // search results
+  static searchResultsUrl: string = "/search/index?q=map%20of%20scandinavia";
   readonly resultsHeading: Locator;
   readonly firstResult: Locator;
 
   // search result filters
+  readonly refineHeading: Locator;
   readonly topicFilter: Locator;
   readonly topicOption: Locator;
   readonly topicSelected: Locator;
@@ -38,12 +40,13 @@ export default class SearchPage {
 
   constructor(page: Page) {
     this.page = page;
+
+    // replace with homepage locators
     this.searchKeyword = "map of scandinavia";
     this.searchBar = this.page.getByLabel("Search keyword(s)");
     this.searchButton = this.page.getByRole("button", { name: "Search" });
-    this.refineHeading = this.page.getByRole("heading", {
-      name: "Refine your search",
-    });
+
+    // search results
     this.resultsHeading = this.page.getByRole("heading", {
       name: new RegExp(
         `^Displaying \\d+-\\d+ of \\d+ results for "${this.searchKeyword}"$`
@@ -54,6 +57,9 @@ export default class SearchPage {
       .first();
 
     // search result filters
+    this.refineHeading = this.page.getByRole("heading", {
+      name: "Refine your search",
+    });
     this.topicFilter = this.page.getByRole("button", { name: "Topic" });
     this.topicOption = this.page
       .locator("#select-topic")
@@ -102,7 +108,7 @@ export default class SearchPage {
       name: "Clear filter",
       exact: true,
     });
-    this.clearFilterApplied = this.page.getByTestId("filter-tags").first(); //or filter-close-icon
+    this.clearFilterApplied = this.page.getByTestId("filter-tags").first();
     this.clearAllFilters = this.page.getByTestId("filter-clear-all");
   }
 

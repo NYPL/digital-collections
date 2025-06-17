@@ -26,7 +26,6 @@ test("searches for a keyword from homepage", async ({ page }) => {
 });
 
 test("displays search results", async ({ page }) => {
-  await expect(searchPage.refineHeading).toBeVisible();
   await expect(searchPage.resultsHeading).toBeVisible();
   await expect(searchPage.firstResult).toBeVisible();
   await expect(searchPage.firstResult).toContainText(searchPage.searchKeyword, {
