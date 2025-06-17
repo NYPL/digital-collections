@@ -7,11 +7,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+## [0.4.3] 2025-06-17
 ### Added
 - Added Universal Viewer support and metadata fields
 - Conditionally render viewer with rights logic (DR-3645)
 - Added Playwright testing library (DR-3680)
 - Added Playwright tests for navigation menu, what is public domain and search bar, explore further for the home page (DR-3658)
+- Added tests for featured section on the homepage(DR-3658)
 - Added Playwright test to search for a keyword (DR-3659)
 - Added Playwright test to confirm visibility of search result filters (DR-3659)
 - Added Playwright test to filter search results with dropdowns (DR-3659)
