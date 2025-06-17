@@ -1,64 +1,61 @@
-import ImageViewer from "./clover/image/image";
-import CloverImageViewer from "./clover/image/viewer";
-import AudioViewer from "./clover/audio/viewer";
-import VideoViewer from "./clover/video/viewer";
-import BookViewer from "./clover/book/viewer";
-import PDFViewer from "./clover/pdf/viewer";
+"use client";
+
 import { ItemModel } from "../../models/item";
 import React from "react";
+import ItemMediaViewer from "./viewer/viewer";
+import ItemMediaViewerFallback from "./viewer/fallback";
+import ItemOverview from "./overview/overview";
+
+import {
+  Heading,
+  Banner,
+  Box,
+  Link,
+  Icon,
+  Text,
+  HStack,
+} from "@nypl/design-system-react-components";
 
 interface ItemProps {
+  manifest: any;
   item: ItemModel;
+  canvasIndex: number; //for when/if this is a query param
 }
 
-const Item = ({ item }: ItemProps) => {
-  let viewer;
-  switch (item.typeOfResource) {
-    case "still image":
-      if (item.isSingleCapture) {
-        viewer = (
+const renderViewer = (item) => {
+  return item.hasItems && !item.isRestricted;
+};
+
+const Item = ({ manifest, item, canvasIndex }: ItemProps) => {
+  return (
+    <>
+      <Box marginTop="-3em">
+        {renderViewer(item) ? (
           <>
-            <h2> Image: {item.title} </h2>
-            <ImageViewer imageID={item.capture.imageID.$} />
+            <Heading level="h2">{item.title}</Heading>
+            <ItemMediaViewer item={item} canvasIndex={canvasIndex} />
           </>
-        );
-      } else {
-        viewer = (
+        ) : (
           <>
-            <h2> Image: {item.title} </h2>
-            <CloverImageViewer />
+            <ItemMediaViewerFallback item={item} />
+            <Heading level="h2">{item.title}</Heading>
           </>
-        );
-      }
-      return viewer;
-    case "moving image":
-      viewer = (
-        <>
-          <h2> Video: {item.title} </h2>
-          <VideoViewer />
-        </>
-      );
-      return viewer;
-    case "sound recording":
-      viewer = (
-        <>
-          <h2> Audio: {item.title} </h2>
-          <AudioViewer />
-        </>
-      );
-      return viewer;
-    case "text":
-      //also PDF
-      viewer = (
-        <>
-          <h2> Book: {item.title} </h2>
-          <BookViewer />
-        </>
-      );
-      return viewer;
-    default:
-      return <h2>No type of resource match</h2>;
-  }
+        )}
+        {/* TODO: horizontally align Icon with Text with breakpoints */}
+        <HStack marginTop="xs" direction="row">
+          <Icon name="actionInfo" size="large" />
+          <Text marginTop="1em">
+            Our collections include some content that may be harmful or dificult
+            to view.{" "}
+            <Link href="https://digitalcollections.nypl.org/about#nypl_harmful_content_statement">
+              Learn more.
+            </Link>{" "}
+          </Text>
+        </HStack>
+        <ItemOverview item={item} canvasIndex={canvasIndex} />
+      </Box>
+    </>
+  );
 };
 
 export default Item;

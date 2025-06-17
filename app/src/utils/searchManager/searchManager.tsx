@@ -1,17 +1,16 @@
 import {
-  DEFAULT_SEARCH_SORT,
   DEFAULT_COLLECTION_SORT,
   DEFAULT_PAGE_NUM,
   DEFAULT_SEARCH_TERM,
   DEFAULT_FILTERS,
   ALLOWED_FILTERS,
-} from "../config/constants";
-import { Filter } from "../types/FilterType";
+} from "../../config/constants";
+import { Filter } from "../../types/FilterType";
 import {
   AvailableFilter,
   AvailableFilterOption,
-} from "../types/AvailableFilterType";
-import { capitalize } from "./utils";
+} from "../../types/AvailableFilterType";
+import { capitalize } from "../utils";
 import { MutableRefObject } from "react";
 
 export interface SearchManager {
@@ -279,10 +278,17 @@ export const filterToString = (filters: Filter[]): string => {
 export const transformToDisplayAvailableFilters = (
   availableFilters: Record<string, AvailableFilterOption[]>
 ): AvailableFilter[] => {
+  const nonSelectableFilters = [
+    "form",
+    "language",
+    "note",
+    "occupation",
+    "subcollection",
+    "temporal",
+    "title",
+  ];
   return Object.entries(availableFilters)
-    .filter(
-      ([key]) => key !== "subcollection" && key !== "language" && key !== "form"
-    )
+    .filter(([key]) => !nonSelectableFilters.includes(key))
     .map(([key, options]) => ({
       name: key,
       options,

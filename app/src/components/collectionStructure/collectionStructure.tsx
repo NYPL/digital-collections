@@ -5,7 +5,7 @@ import {
   Heading,
   SkeletonLoader,
 } from "@nypl/design-system-react-components";
-import { SearchManager } from "@/src/utils/searchManager";
+import { SearchManager } from "@/src/utils/searchManager/searchManager";
 import { headerBreakpoints } from "@/src/utils/breakpoints";
 import AccordionTree from "./accordionTree";
 import { CARDS_PER_PAGE } from "@/src/config/constants";
@@ -18,6 +18,7 @@ export interface OpenStateItem {
   isOpen: boolean;
   hasSubContainers: boolean;
   children?: OpenStateItem[];
+  parentUuid?: string | null;
 }
 
 interface CollectionStructureProps {
@@ -34,7 +35,10 @@ interface ToggleItemAndChildrenParams {
   updateURL: (query: string) => Promise<void>;
 }
 
-const fetchChildren = async (uuid: string): Promise<OpenStateItem[]> => {
+const fetchChildren = async (
+  uuid: string,
+  parentUuid?: string | null
+): Promise<OpenStateItem[]> => {
   const allChildren: OpenStateItem[] = [];
   let page = 1;
   while (true) {
@@ -49,6 +53,7 @@ const fetchChildren = async (uuid: string): Promise<OpenStateItem[]> => {
       level: 0,
       isOpen: false,
       children: [],
+      parentUuid: parentUuid ?? null,
     }));
     allChildren.push(...mappedChildren);
 
@@ -76,15 +81,16 @@ const applyNodeFilter = async (
     filter: "subcollection",
     value: node.uuid,
   };
-  // Clear search query
+
   searchManager.handleKeywordChange("");
   searchManager.handleSearchSubmit();
   searchManager.setLastFilter(null);
 
-  /* 
-  If opening the item, add the subcollection filter. If closing, remove 
-  the subcollection filter or replace it with its parent subcollection filter.
-  */
+  /**
+   * If opening the item, add the subcollection filter. If closing, remove
+   * the subcollection filter or replace it with its parent subcollection filter.
+   */
+
   await updateURL(
     isOpening
       ? searchManager.handleAddFilter([filter])
@@ -138,12 +144,13 @@ const toggleItemAndChildren = async ({
 
         if (isOpening && (!children || children.length === 0)) {
           try {
-            children = await fetchChildren(uuid);
+            children = await fetchChildren(uuid, node.uuid);
             children = children.map((c) => ({
               ...c,
               level: node.level + 1,
               isOpen: false,
               children: [],
+              parentUuid: node.uuid,
             }));
           } catch (e) {
             console.error("Fetch error in toggleItemAndChildren:", e);
@@ -194,6 +201,7 @@ const CollectionStructure = ({
   const subCollectionFilter = searchManager.filters.find(
     (filter) => filter.filter === "subcollection"
   );
+  const [toggledUuid, setToggledUuid] = useState<string | null>(null);
   const targetUuid = subCollectionFilter?.value;
 
   const buildTreeWithPathToUuid = async (
@@ -201,10 +209,10 @@ const CollectionStructure = ({
     targetUuid: string,
     level: number
   ): Promise<OpenStateItem[] | null> => {
-    const siblings = await fetchChildren(parentUuid);
+    const siblings = await fetchChildren(parentUuid, parentUuid);
     for (const sibling of siblings) {
       if (sibling.uuid === targetUuid) {
-        const targetChildren = await fetchChildren(targetUuid);
+        const targetChildren = await fetchChildren(targetUuid, sibling.uuid);
         return siblings.map((s) =>
           s.uuid === targetUuid
             ? {
@@ -216,6 +224,7 @@ const CollectionStructure = ({
                   level: level + 1,
                   isOpen: false,
                   children: [],
+                  parentUuid: s.uuid,
                 })),
               }
             : {
@@ -258,12 +267,11 @@ const CollectionStructure = ({
   useEffect(() => {
     const loadTree = async () => {
       try {
-        const topLevelChildren = await fetchChildren(uuid);
-        // If already filtering on a subcollection, build tree to that uuid
+        const topLevelChildren = await fetchChildren(uuid, null);
         if (targetUuid) {
           for (const child of topLevelChildren) {
             if (child.uuid === targetUuid) {
-              const children = await fetchChildren(child.uuid);
+              const children = await fetchChildren(child.uuid, child.uuid);
               setTree(
                 topLevelChildren.map((node) =>
                   node.uuid === child.uuid
@@ -271,11 +279,12 @@ const CollectionStructure = ({
                         ...child,
                         level: 0,
                         isOpen: true,
-                        children: children.map((child) => ({
-                          ...child,
+                        children: children.map((childNode) => ({
+                          ...childNode,
                           level: 1,
                           isOpen: false,
                           children: [],
+                          parentUuid: child.uuid,
                         })),
                       }
                     : {
@@ -321,7 +330,6 @@ const CollectionStructure = ({
             }
           }
         } else {
-          // Otherwise, just show the first level of children
           setTree(
             topLevelChildren.map((c) => ({
               ...c,
@@ -338,7 +346,6 @@ const CollectionStructure = ({
       }
     };
     loadTree();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [searchManager.keywords, targetUuid]);
 
   if (!isLoaded) {
@@ -357,8 +364,8 @@ const CollectionStructure = ({
     );
   }
 
-  const handleToggle = (uuid: string) => {
-    toggleItemAndChildren({
+  const handleToggle = async (uuid: string) => {
+    await toggleItemAndChildren({
       uuid,
       tree,
       setTree,

@@ -1,6 +1,6 @@
 import { Filter } from "@/src/types/FilterType";
 import { headerBreakpoints } from "@/src/utils/breakpoints";
-import { SearchManager } from "@/src/utils/searchManager";
+import { SearchManager } from "@/src/utils/searchManager/searchManager";
 import {
   Button,
   Flex,

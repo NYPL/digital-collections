@@ -10,7 +10,7 @@ import { useRouter, usePathname } from "next/navigation";
 import { useState } from "react";
 import { ToggleTip } from "../../toggleTip/toggleTip";
 import { useSearchContext } from "@/src/context/SearchProvider";
-import { SearchManager } from "@/src/utils/searchManager";
+import { SearchManager } from "@/src/utils/searchManager/searchManager";
 
 type RightsFilterProps = {
   searchManager: SearchManager;
