@@ -25,7 +25,7 @@ test("searches for a keyword from homepage", async ({ page }) => {
   await expect(page).toHaveTitle("Search results - NYPL Digital Collections");
 });
 
-test("displays search results", async ({ page }) => {
+test("displays search results", async ({}) => {
   await expect(searchPage.resultsHeading).toBeVisible();
   await expect(searchPage.firstResult).toBeVisible();
   await expect(searchPage.firstResult).toContainText(searchPage.searchKeyword, {
@@ -33,7 +33,7 @@ test("displays search results", async ({ page }) => {
   });
 });
 
-test("displays search result filters", async ({ page }) => {
+test("displays search result filters", async ({}) => {
   await expect(searchPage.refineHeading).toBeVisible();
 
   // displays first row of filters
@@ -99,7 +99,7 @@ test("filters search results", async ({ page }) => {
   await expect(searchPage.publisherSelected).toBeVisible();
 });
 
-test("clears search results filters - approach 1", async ({ page }) => {
+test("clears search results filters - approach 1", async ({}) => {
   await expect(searchPage.refineHeading).toBeVisible();
 
   await searchPage.filterSearchResults(); // reset filters to topic and publisher
@@ -111,7 +111,7 @@ test("clears search results filters - approach 1", async ({ page }) => {
   await expect(searchPage.publisherSelected).not.toBeVisible();
 });
 
-test("clears search results filters - approach 2", async ({ page }) => {
+test("clears search results filters - approach 2", async ({}) => {
   await expect(searchPage.refineHeading).toBeVisible();
 
   await searchPage.filterSearchResults(); // reset filters to topic and publisher
@@ -124,7 +124,7 @@ test("clears search results filters - approach 2", async ({ page }) => {
   await expect(searchPage.topicSelected).not.toBeVisible();
 });
 
-test("clears search results filters - approach 3", async ({ page }) => {
+test("clears search results filters - approach 3", async ({}) => {
   await expect(searchPage.refineHeading).toBeVisible();
 
   await searchPage.filterSearchResults(); // reset filters to topic and publisher
