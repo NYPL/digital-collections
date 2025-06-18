@@ -5,6 +5,7 @@ import React from "react";
 import ItemMediaViewer from "./viewer/viewer";
 import ItemMediaViewerFallback from "./viewer/fallback";
 import ItemOverview from "./overview/overview";
+import { CanvasProvider } from "../../context/CanvasProvider";
 
 import {
   Heading,
@@ -13,6 +14,7 @@ import {
   Link,
   Icon,
   Text,
+  HorizontalRule,
   HStack,
 } from "@nypl/design-system-react-components";
 
@@ -28,17 +30,17 @@ const renderViewer = (item) => {
 
 const Item = ({ manifest, item, canvasIndex }: ItemProps) => {
   return (
-    <>
+    <CanvasProvider>
       <Box marginTop="-3em">
         {renderViewer(item) ? (
           <>
-            <Heading level="h2">{item.title}</Heading>
+            <Heading level="h1">{item.title}</Heading>
             <ItemMediaViewer item={item} canvasIndex={canvasIndex} />
           </>
         ) : (
           <>
             <ItemMediaViewerFallback item={item} />
-            <Heading level="h2">{item.title}</Heading>
+            <Heading level="h1">{item.title}</Heading>
           </>
         )}
         {/* TODO: horizontally align Icon with Text with breakpoints */}
@@ -52,9 +54,10 @@ const Item = ({ manifest, item, canvasIndex }: ItemProps) => {
             </Link>{" "}
           </Text>
         </HStack>
-        <ItemOverview item={item} canvasIndex={canvasIndex} />
+        <HorizontalRule marginTop="m" marginBottom="m" />
+        <ItemOverview item={item} />
       </Box>
-    </>
+    </CanvasProvider>
   );
 };
 
