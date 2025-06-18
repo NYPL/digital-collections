@@ -6,7 +6,7 @@ describe("normalizeItemMetadataFromManifest", () => {
       Title: ["A smoking club"],
       Collection: ["Tobacco History"],
       Genres: ["Prints", "Satirical art"],
-      "Dates / origin": ["1792"],
+      "Dates / Origin": ["1792"],
       "Date Issued": ["1792"],
       "Library Locations": ["George Arents Collection", "Shelf A"],
       Languages: ["English"],
