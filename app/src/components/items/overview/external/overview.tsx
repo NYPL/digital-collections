@@ -3,7 +3,7 @@ import { Box, Heading, Link, Text } from "@nypl/design-system-react-components";
 const ExternalLinksOverview = ({ catalogLink, archivesLink }) => {
   return (
     <>
-      <Box marginTop="sm">
+      <Box marginBottom="m">
         <Heading size="heading6" marginBottom="xs">
           View this item elsewhere
         </Heading>
