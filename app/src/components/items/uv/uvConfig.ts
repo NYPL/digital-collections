@@ -1,13 +1,30 @@
+// all comments come from https://github.com/UniversalViewer/universalviewer/blob/dev/src/content-handlers/iiif/BaseConfig.ts#L160
+// if it doesn't have a comment, then it's not documented in the github
+// TO DO: document optional params
 export const uvConfigOptions = {
+  /** A default animation duration */
+  animationDuration: 1000,
+  /** Determines if the focus can be stolen */
   allowStealFocus: true,
+  /** Version of the authentication API */
   authAPIVersion: 1,
+  /** Height of the bookmark thumbnail */
   bookmarkThumbHeight: 150,
+  /** Width of the bookmark thumbnail */
   bookmarkThumbWidth: 90,
+  /** Determines if double click annotation is enabled */
+  doubleClickAnnotationEnabled: false,
+  /** Determines if drop is enabled */
   dropEnabled: true,
+  /** Determines if the footer panel is enabled */
   footerPanelEnabled: true,
+  /** Determines if the header panel is enabled */
   headerPanelEnabled: true,
+  /** Determines if the left panel is enabled */
   leftPanelEnabled: true,
+  /** Determines if locales are limited */
   limitLocales: true,
+  /** Metrics array */
   metrics: [
     {
       type: "sm",
@@ -26,25 +43,45 @@ export const uvConfigOptions = {
       minWidth: 1280,
     },
   ],
+  /** MIME type for multi selection */
   multiSelectionMimeType: "application/zip",
+  /** Determines if the navigator is enabled */
   navigatorEnabled: true,
+  /** Template for opening */
   openTemplate: "http://universalviewer.io?manifest={0}",
+  /** Determines if full screen is overridden */
   overrideFullScreen: true,
+  /** Determines if paging is enabled */
   pagingEnabled: true,
   pagingOptionEnabled: true,
   pessimisticAccessControl: true,
+  /** Determines if the mediaelement extension should be preferred */
+  preferMediaElementExtension: false,
+  /** Determines if viewport is preserved */
   preserveViewport: true,
+  /** Controls whether to have animations or not */
+  reducedAnimation: false,
+  /** Determines if the right panel is enabled */
   rightPanelEnabled: true,
+  /** Determines if user settings are saved */
   saveUserSettings: true,
+  /** Determines if click to zoom is enabled */
   clickToZoomEnabled: true,
+  /** Determines if search within is enabled */
   searchWithinEnabled: true,
+  /** Determines if terms of use are enabled */
   termsOfUseEnabled: true,
   theme: "uv-en-GB-theme",
+  /** Storage for tokens */
   tokenStorage: "session",
+  /** Determines if arrow keys can be used to navigate */
   useArrowKeysToNavigate: true,
+  /** Determines if zoom to search result is enabled */
   zoomToSearchResultEnabled: true,
+  /** Determines if zoom to bounds is enabled */
   zoomToBoundsEnabled: true,
 };
+
 export const uvConfigModules = {
   avCenterPanel: {
     options: {
@@ -63,7 +100,6 @@ export const uvConfigModules = {
       limitToRange: true,
       autoAdvanceRanges: true,
     },
-
     content: {
       attribution: "$attribution",
       currentTime: "$currentTime",
@@ -75,6 +111,10 @@ export const uvConfigModules = {
       play: "$play",
       previous: "$previous",
     },
+  },
+  centerPanel: {
+    options: {},
+    content: {},
   },
   contentLeftPanel: {
     options: {
@@ -201,9 +241,20 @@ export const uvConfigModules = {
   },
   headerPanel: {
     options: {
+      /** Determines if center options are enabled */
       centerOptionsEnabled: true,
+      /** Determines if locale toggle is enabled */
       localeToggleEnabled: true,
-      settingsButtonEnabled: true,
+      /** Determines if settings button is enabled */
+      settingsButtonEnabled: false,
+      /** Optional: Determines if help is enabled */
+      // helpEnabled: boolean;
+      // helpUrl?: string;
+    },
+    content: {
+      close: "close",
+      settings: "settings",
+      help: "help",
     },
   },
   helpDialogue: {
@@ -374,13 +425,31 @@ export const uvConfigModules = {
   },
   shareDialogue: {
     options: {
+      /** Determines if copy buttons are enabled */
+      copyToClipboardEnabled: true,
+      /** Determines if embed is enabled */
+      embedEnabled: false,
+      /** Set host for embed code (default: window.location.hostname) */
+      embedHost: "",
+      /** Set port for embed code (default: window.location.protocol) */
+      embedPort: 3000,
+      /** Set path to uv.html on embed host (default: /uv.html) */
+      embedPath: "",
+      /** Template for embedding */
       embedTemplate:
         '<iframe src="{0}" width="{1}" height="{2}" allowfullscreen frameborder="0"></iframe>',
+      /** Determines if instructions are enabled */
       instructionsEnabled: false,
+      /** Determines if sharing is enabled */
+      shareEnabled: true,
+      /** Determines if sharing frame is enabled */
       shareFrameEnabled: true,
+      /** Determines if sharing manifests is enabled */
       shareManifestsEnabled: true,
     },
     content: {
+      copyBtn: "copyBtn",
+      copyToClipboard: "copyToClipboard",
       customSize: "custom",
       embed: "Embed",
       embedInstructions:
@@ -388,9 +457,11 @@ export const uvConfigModules = {
       height: "Height",
       iiif: "IIIF Manifest",
       share: "Share",
+      shareLink: "shareLink",
       shareInstructions: "To share this item, copy the URL below.",
       size: "Size:",
       width: "Width",
+      shareUrl: "shareUrl",
     },
   },
   authDialogue: {
