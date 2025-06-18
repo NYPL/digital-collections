@@ -34,7 +34,7 @@ const UniversalViewer: React.FC<UniversalViewerProps> = React.memo(
     const options = useMemo(
       () => ({
         manifest: manifestId,
-        canvasIndex: canvasIndex, //TODO: look into why adding the query param adds "1" to the string or value. it's very weird.
+        canvasIndex: canvasIndex,
         embedded: true,
       }),
       []
