@@ -2,8 +2,7 @@ import { test, expect } from "@playwright/test";
 import { Divisions } from "../pages/divisions.page";
 
 test.beforeEach(async ({ page }) => {
-  await page.goto("http://localhost:3000");
-  await page.getByRole("link", { name: "Divisions" }).click();
+  await page.goto("/divisions");
 });
 
 test("verify divisions headings on division's page", async ({ page }) => {
@@ -11,7 +10,7 @@ test("verify divisions headings on division's page", async ({ page }) => {
 
   for (const divisionName of divisionsPage.expectedDivisionNames) {
     await expect(
-      page.getByRole("heading", { name: divisionName })
+      page.getByRole("heading", { name: divisionName, exact: true })
     ).toBeVisible();
   }
 });

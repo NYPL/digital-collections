@@ -19,6 +19,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Added Playwright test to filter search results with dropdowns (DR-3659)
 - Added GitHub Actions workflow to run Playwright tests on PRs (DR-3721)
 - Added Playwright tests to clear search results filters (DR-3659)
+- Added Playwright test for the division page (DR-3655)
 
 ## [0.4.2] 2025-05-22
 
