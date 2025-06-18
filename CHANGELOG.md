@@ -6,6 +6,15 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## Unreleased
+### Added
+- Added Image ID to Items page (DR-3695)
+
+### Fixed
+- Fixed Order Print button (DR-3486)
+
+### Updated
+- Updated breadcrumb to include Division and Collection information (DR-3701)
+- Updated Collections page to bolden the Polonsky note (DR-3705)
 
 ## [0.4.3] 2025-06-17
 ### Added
@@ -17,14 +26,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Added Playwright test to search for a keyword (DR-3659)
 - Added Playwright test to confirm visibility of search result filters (DR-3659)
 - Added Playwright test to filter search results with dropdowns (DR-3659)
-- Added Image ID to Items page (DR-3695)
 - Added GitHub Actions workflow to run Playwright tests on PRs (DR-3721)
-
-### Fixed
-- Fixed Order Print button (DR-3486)
-
-### Updated
-- Updated breadcrumb to include Division and Collection information (DR-3701)
 
 ## [0.4.2] 2025-05-22
 
