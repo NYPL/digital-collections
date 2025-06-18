@@ -4,20 +4,12 @@ import SearchPage from "../pages/search.page";
 let searchPage: SearchPage;
 
 test.beforeEach(async ({ page }, testInfo) => {
-  // handles 404 errors for restricted images
-  if (testInfo.project.name === "webkit") {
-    await page.route("**/*.{png,jpg,jpeg,svg}", (route) => {
-      route.abort();
-    });
-  }
-
   if (testInfo.title !== "searches for a keyword from homepage") {
     searchPage = await SearchPage.loadPage(SearchPage.searchResultsUrl, page);
   }
 });
 
-test("searches for a keyword from homepage", async ({ page }, testInfo) => {
-  test.setTimeout(60000); // adds extra time to navigate to homepage and load search page
+test("searches for a keyword from homepage", async ({ page }) => {
   searchPage = await SearchPage.loadPage("/", page);
 
   await expect(searchPage.searchBar).toBeVisible();
@@ -33,9 +25,7 @@ test("searches for a keyword from homepage", async ({ page }, testInfo) => {
   await expect(page).toHaveTitle("Search results - NYPL Digital Collections");
 });
 
-test("displays search results", async ({ page }) => {
-  test.setTimeout(60000); // adds extra time to load all elements
-  await expect(searchPage.refineHeading).toBeVisible();
+test("displays search results", async () => {
   await expect(searchPage.resultsHeading).toBeVisible();
   await expect(searchPage.firstResult).toBeVisible();
   await expect(searchPage.firstResult).toContainText(searchPage.searchKeyword, {
@@ -43,11 +33,10 @@ test("displays search results", async ({ page }) => {
   });
 });
 
-test("displays search result filters", async ({ page }) => {
-  test.setTimeout(60000); // adds extra time to load all elements
+test("displays search result filters", async () => {
+  await expect(searchPage.refineHeading).toBeVisible();
 
   // displays first row of filters
-  await expect(searchPage.refineHeading).toBeVisible();
   await expect(searchPage.topicFilter).toBeVisible();
   await expect(searchPage.nameFilter).toBeVisible();
   await expect(searchPage.collectionFilter).toBeVisible();
@@ -86,8 +75,7 @@ test("displays search result filters", async ({ page }) => {
   await expect(searchPage.typeFilter).not.toBeVisible();
 });
 
-test("filters search results", async ({ page }) => {
-  test.setTimeout(60000); // adds extra time to load all elements
+test("filters search results", async () => {
   await expect(searchPage.refineHeading).toBeVisible();
 
   // filters a drop-down in the first row
@@ -109,4 +97,39 @@ test("filters search results", async ({ page }) => {
   await expect(searchPage.applyFilterButton).toBeVisible();
   await searchPage.applyFilterButton.click();
   await expect(searchPage.publisherSelected).toBeVisible();
+});
+
+test.describe("clears search results filters", () => {
+  test("clears all filters in Filters Applied", async () => {
+    await expect(searchPage.refineHeading).toBeVisible();
+
+    await searchPage.filterSearchResults(); // reset filters to topic and publisher
+
+    await expect(searchPage.clearAllFilters).toBeVisible();
+    await searchPage.clearAllFilters.click();
+    await expect(searchPage.topicSelected).not.toBeVisible();
+    await expect(searchPage.publisherSelected).not.toBeVisible();
+  });
+
+  test("clears dropdown filter", async () => {
+    await expect(searchPage.refineHeading).toBeVisible();
+
+    await searchPage.filterSearchResults(); // reset filters to topic and publisher
+
+    await expect(searchPage.topicFilter).toBeVisible();
+    await searchPage.topicFilter.click();
+    await expect(searchPage.clearFilterButton).toBeVisible();
+    await searchPage.clearFilterButton.click();
+    await expect(searchPage.topicSelected).not.toBeVisible();
+  });
+
+  test("clears one filter in Filters Applied", async () => {
+    await expect(searchPage.refineHeading).toBeVisible();
+
+    await searchPage.filterSearchResults(); // reset filters to topic and publisher
+
+    await expect(searchPage.clearTopicFilterApplied).toBeVisible();
+    await searchPage.clearTopicFilterApplied.click();
+    await expect(searchPage.topicSelected).not.toBeVisible();
+  });
 });
