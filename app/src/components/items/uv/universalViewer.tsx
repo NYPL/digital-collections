@@ -17,7 +17,6 @@ export type UniversalViewerProps = {
 const handleOnClick = (e) => {
   if (e.target.className === "openseadragon-canvas") {
     console.log("target is image viewer");
-    // this doesn't work. think we need to select the great-grandparent? div
     const viewPortButtons = Array.from(
       document.getElementsByClassName(
         "viewportNavButton"
