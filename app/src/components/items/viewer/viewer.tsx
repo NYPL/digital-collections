@@ -58,7 +58,7 @@ const ItemMediaViewer = ({ item, canvasIndex }: ItemProps) => {
     <>
       <UniversalViewer
         manifestId={item.manifestURL}
-        canvasIndex={canvasIndex}
+        canvasIndex={canvasIndex || 0}
         config={uvConfig}
         onChangeCanvas={(manifest, canvas) => {
           // why is this not printing in the console
