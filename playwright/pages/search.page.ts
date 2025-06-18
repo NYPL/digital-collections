@@ -133,7 +133,7 @@ export default class SearchPage {
       .getByRole("button", { name: "Clear filters" });
 
     // sort search results
-    this.sortButton = this.page.locator("#menu-button-sort-menu"); // or getByRole("button", { name: "Sort by:" });
+    this.sortButton = this.page.locator("#menu-button-sort-menu");
     this.sortByRelevance = this.page.getByRole("menuitem", {
       name: "Relevance",
     });
