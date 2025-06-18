@@ -34,6 +34,7 @@ const UniversalViewer: React.FC<UniversalViewerProps> = React.memo(
       urlSearchParams.set("canvasIndex", newCanvasIndex.toString());
       window.history.pushState(null, "", `?${urlSearchParams}`);
     }
+
     const handleOnClick = (e) => {
       if (e.target.className === "openseadragon-canvas") {
         const viewPortButtons = Array.from(
