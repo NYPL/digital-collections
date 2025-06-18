@@ -29,7 +29,6 @@ const ItemOverview = ({ item }) => {
           catalogLink={item.catalogLink}
           archivesLink={item.archivesLink}
         />
-        {/* TODO: fix the order print button*/}
         {item.isImage && <PrintOverview imageIDs={item.imageIDs} />}
       </ChakraSimpleGrid>
       <HorizontalRule marginTop="m" marginBottom="m" />

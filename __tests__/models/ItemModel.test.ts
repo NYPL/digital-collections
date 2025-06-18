@@ -253,8 +253,3 @@ describe("ItemModel - Restricted", () => {
     });
   });
 });
-
-/* TODO: 
-find example with Archives (bnumber) link
-possibly refine DivsionLink logic
-*/

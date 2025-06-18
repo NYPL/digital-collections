@@ -152,7 +152,6 @@ export class ItemModel {
     )[0];
     collectionLinkObj["path"] = new URL(collectionLinkObj.href).pathname;
 
-    // TODO: these won't work in Vercel - fix these links so they are a slug and not an external link
     this.breadcrumbData = {
       division: divisionLinkObj,
       collection: collectionLinkObj,

@@ -22,7 +22,6 @@ const UniversalViewer: React.FC<UniversalViewerProps> = React.memo(
     const searchParams = useSearchParams();
     const { setCurrentCanvasIndex } = useCanvasContext();
 
-    // TODO: why this no worky with the clamped index
     function updateCanvasIndex(newCanvasIndex: number) {
       const stringifiedParams = searchParams.toString();
       const urlSearchParams = new URLSearchParams(stringifiedParams);
