@@ -142,6 +142,7 @@ test.describe("sorts search results", () => {
     await expect(searchPage.sortByNewest).toBeVisible();
     await searchPage.sortByNewest.click();
     await expect(searchPage.sortByNewestSelected).toBeVisible();
+    await expect(searchPage.sortButton).toBeVisible();
     await searchPage.sortButton.click();
     await expect(searchPage.sortByOldest).toBeVisible();
     await searchPage.sortByOldest.click();
@@ -155,6 +156,7 @@ test.describe("sorts search results", () => {
     await expect(searchPage.sortByAlpha).toBeVisible();
     await searchPage.sortByAlpha.click();
     await expect(searchPage.sortByAlphaSelected).toBeVisible();
+    await expect(searchPage.sortButton).toBeVisible();
     await searchPage.sortButton.click();
     await expect(searchPage.sortByReverseAlpha).toBeVisible();
     await searchPage.sortByReverseAlpha.click();
@@ -168,6 +170,7 @@ test.describe("sorts search results", () => {
     await expect(searchPage.sortByCollections).toBeVisible();
     await searchPage.sortByCollections.click();
     await expect(searchPage.sortByCollectionsSelected).toBeVisible();
+    await expect(searchPage.sortButton).toBeVisible();
     await searchPage.sortButton.click();
     await expect(searchPage.sortByItems).toBeVisible();
     await searchPage.sortByItems.click();
