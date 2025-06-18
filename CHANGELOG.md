@@ -10,9 +10,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Added Playwright tests to confirm featured section on the homepage (DR-3658)
 - Added Playwright tests to clear search results filters (DR-3659)
 - Added Playwright tests to sort search results (DR-3659)
+- Added Image ID to Items page (DR-3695)
 
 ### Fixed
+- Fixed Order Print button (DR-3486)
 - Fixed bug with UniversalViewer where image controls are hidden after clicking an image (DR-3692)
+
+### Updated
+- Updated breadcrumb to include Division and Collection information (DR-3701)
+- Updated Collections page to bolden the Polonsky note (DR-3705)
 
 ## [0.4.3] 2025-06-17
 ### Added

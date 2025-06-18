@@ -1,0 +1,21 @@
+export type NormalizedItemMetadata = {
+  title: string;
+  names?: string;
+  collection?: string;
+  origin: string;
+  dateCreated?: string;
+  dateIssued: string;
+  tableOfContents?: string;
+  locations: string;
+  subjects?: string;
+  genres: string;
+  notes?: string;
+  physicalDescription?: string;
+  abstract?: string;
+  languages: string;
+  link?: string;
+  identifiers: string;
+  access: string;
+  rights: string;
+  typeOfResource: string;
+};

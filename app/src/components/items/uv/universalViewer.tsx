@@ -5,6 +5,8 @@ import {
 } from "../../../hooks/useUniversalViewer";
 import React, { useEffect, useMemo, useRef } from "react";
 import { IIIFEvents as BaseEvents, IIIFURLAdapter } from "universalviewer";
+import { useRouter, usePathname, useSearchParams } from "next/navigation";
+import { useCanvasContext } from "../../../context/CanvasProvider";
 
 export type UniversalViewerProps = {
   config?: any;
@@ -14,35 +16,42 @@ export type UniversalViewerProps = {
   onChangeManifest?: (manifest: string) => void;
 };
 
-const handleOnClick = (e) => {
-  if (e.target.className === "openseadragon-canvas") {
-    const viewPortButtons = Array.from(
-      document.getElementsByClassName(
-        "viewportNavButton"
-      ) as HTMLCollectionOf<HTMLElement>
-    );
-    Array.from(viewPortButtons).forEach((button) => {
-      button.style.position = "relative";
-      button.style.zIndex = "10000";
-    });
-  }
-};
-// https://codesandbox.io/p/sandbox/uv-nextjs-example-239ff5?file=%2Fcomponents%2FUniversalViewer.tsx%3A39%2C1-49%2C8
+// pulled most of this code from: https://codesandbox.io/p/sandbox/uv-nextjs-example-239ff5?file=%2Fcomponents%2FUniversalViewer.tsx%3A39%2C1-49%2C8
 const UniversalViewer: React.FC<UniversalViewerProps> = React.memo(
   ({ manifestId, canvasIndex, onChangeCanvas, config }) => {
+    const searchParams = useSearchParams();
+    const { setCurrentCanvasIndex } = useCanvasContext();
+
+    function updateCanvasIndex(newCanvasIndex: number) {
+      const stringifiedParams = searchParams.toString();
+      const urlSearchParams = new URLSearchParams(stringifiedParams);
+      urlSearchParams.set("canvasIndex", newCanvasIndex.toString());
+      window.history.pushState(null, "", `?${urlSearchParams}`);
+    }
+    const handleOnClick = (e) => {
+      if (e.target.className === "openseadragon-canvas") {
+        const viewPortButtons = Array.from(
+          document.getElementsByClassName(
+            "viewportNavButton"
+          ) as HTMLCollectionOf<HTMLElement>
+        );
+        Array.from(viewPortButtons).forEach((button) => {
+          button.style.position = "relative";
+          button.style.zIndex = "10000";
+        });
+      }
+    };
+
     console.log("config as component prop is: ", config);
     // console.log("canvasIndex is: ", canvasIndex)
 
-    console.log("canvasIndex in UniversalViewer component is: ", canvasIndex);
     const ref = useRef<HTMLDivElement>(null);
     const lastIndex = useRef<number>();
     const options = useMemo(
       () => ({
         manifest: manifestId,
-        canvasIndex: canvasIndex || 0, //TODO: look into why adding the query param adds "1" to the string or value. it's very weird.
+        canvasIndex: canvasIndex,
         embedded: true,
-        // footerPanelEnabled: false,
-        //UVConfig.options
       }),
       []
     );
@@ -50,17 +59,15 @@ const UniversalViewer: React.FC<UniversalViewerProps> = React.memo(
     const uv = useUniversalViewer(ref, options);
 
     useEffect(() => {
-      console.log("canvasIndex in useEffect is: ", canvasIndex);
-
-      // if (uv && (canvasIndex || canvasIndex === 0)) {
-      //   if (lastIndex.current !== canvasIndex) {
-      //     uv._assignedContentHandler?.publish(
-      //       BaseEvents.CANVAS_INDEX_CHANGE,
-      //       canvasIndex
-      //     );
-      //     lastIndex.current = canvasIndex;
-      //   }
-      // }
+      if (uv && (canvasIndex || canvasIndex === 0)) {
+        if (lastIndex.current !== canvasIndex) {
+          uv._assignedContentHandler?.publish(
+            BaseEvents.CANVAS_INDEX_CHANGE,
+            canvasIndex
+          );
+          lastIndex.current = canvasIndex;
+        }
+      }
 
       if (uv) {
         // override config using an inline json object
@@ -176,19 +183,17 @@ const UniversalViewer: React.FC<UniversalViewerProps> = React.memo(
             },
             [uv]
           );
+          lastIndex.current = canvasIndex;
         });
       }
-    });
+    }, [canvasIndex, uv]);
 
     useEvent(uv, BaseEvents.CANVAS_INDEX_CHANGE, (i) => {
-      console.log("canvasIndex in useEvent is: ", canvasIndex);
-
       if (onChangeCanvas) {
-        console.log("canvasIndex in useEvent onChangeCanvas is: ", canvasIndex);
-        console.log("i in useEvent onChangeCanvas is: ", i);
+        updateCanvasIndex(i);
+        setCurrentCanvasIndex(i);
 
         if (lastIndex.current !== i) {
-          console.log("lastIndex is", lastIndex);
           const canvas = (uv as any)?.extension?.helper.getCanvasByIndex(i);
           if (canvas) {
             lastIndex.current = i;
@@ -203,7 +208,7 @@ const UniversalViewer: React.FC<UniversalViewerProps> = React.memo(
         <div
           className="uv"
           onClick={(e) => handleOnClick(e)}
-          style={{ height: 800 }}
+          style={{ height: 650 }}
           ref={ref}
         />
       </>
