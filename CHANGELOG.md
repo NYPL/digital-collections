@@ -11,6 +11,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Fixed
 - Fixed Order Print button (DR-3486)
+- Fixed bug with UniversalViewer where image controls are hidden after clicking an image (DR-3692)
 
 ### Updated
 - Updated breadcrumb to include Division and Collection information (DR-3701)
@@ -27,6 +28,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Added Playwright test to confirm visibility of search result filters (DR-3659)
 - Added Playwright test to filter search results with dropdowns (DR-3659)
 - Added GitHub Actions workflow to run Playwright tests on PRs (DR-3721)
+- Added Playwright tests to clear search results filters (DR-3659)
 
 ## [0.4.2] 2025-05-22
 
