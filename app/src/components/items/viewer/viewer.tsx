@@ -22,7 +22,7 @@ const uvConfig = {
     openSeadragonCenterPanel: {
       options: {
         animationTime: 0.15,
-        autoHideControls: true,
+        autoHideControls: false,
         requiredStatementEnabled: true,
         blendTime: 0,
         constrainDuringPan: false,

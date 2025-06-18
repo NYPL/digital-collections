@@ -35,6 +35,18 @@ const UniversalViewer: React.FC<UniversalViewerProps> = React.memo(
             "viewportNavButton"
           ) as HTMLCollectionOf<HTMLElement>
         );
+        const uvPaginationViewer = Array.from(
+          document.getElementsByClassName(
+            "btn btn-default paging"
+          ) as HTMLCollectionOf<HTMLElement>
+        );
+        // const uvPaginationNext = Array.from(
+        //   document.getElementsByClassName(
+        //     "uv-icon-next"
+        //   ) as HTMLCollectionOf<HTMLElement>
+        // );
+        console.log("uvPaginationViewer", uvPaginationViewer);
+        // console.log("uvPaginationNext",uvPaginationNext)
         Array.from(viewPortButtons).forEach((button) => {
           button.style.position = "relative";
           button.style.zIndex = "10000";
