@@ -11,6 +11,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Added Playwright tests to clear search results filters (DR-3659)
 - Added Playwright tests to sort search results (DR-3659)
 
+### Fixed
+- Fixed bug with UniversalViewer where image controls are hidden after clicking an image (DR-3692)
+
 ## [0.4.3] 2025-06-17
 ### Added
 - Added Universal Viewer support and metadata fields
