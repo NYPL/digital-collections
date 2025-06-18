@@ -26,9 +26,22 @@ test("verify public domain link is visible", async ({ page }) => {
   await expect(dchomepage.whatIsPublicDomainLink).toBeVisible();
 });
 
+test("verify featured section is visible", async ({ page }) => {
+  const dchomepage = new DCHomepage(page);
+
+  if (await dchomepage.featuredSpotlightOnPublicDomain.isVisible()) {
+    await expect(dchomepage.featuredSpotlightOnPublicDomain).toBeVisible();
+    await expect(dchomepage.featuredLearnMore).toBeVisible();
+  } else if (
+    await dchomepage.featuredDigitalCollectionsPrintStore.isVisible()
+  ) {
+    await expect(dchomepage.featuredDigitalCollectionsPrintStore).toBeVisible();
+    await expect(dchomepage.featuredVisitStore).toBeVisible();
+  }
+});
 test("verify explore further section is visible", async ({ page }) => {
   const dchomepage = new DCHomepage(page);
-  await expect(dchomepage.exporeFurtherHeading).toBeVisible();
+  await expect(dchomepage.exploreFurtherHeading).toBeVisible();
   await expect(dchomepage.digitalCollectionPrintStore).toBeVisible();
   await expect(dchomepage.nyplArchivesAndManuscripts).toBeVisible();
   await expect(dchomepage.nyplResearchCatalog).toBeVisible();
