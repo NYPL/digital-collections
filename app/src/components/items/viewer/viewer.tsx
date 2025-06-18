@@ -11,9 +11,6 @@ interface ItemProps {
 }
 
 const uvConfig = {
-  options: {
-    clickToZoomEnabled: false,
-  },
   modules: {
     headerPanel: {
       options: {
