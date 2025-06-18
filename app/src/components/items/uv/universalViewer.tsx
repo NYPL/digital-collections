@@ -16,7 +16,6 @@ export type UniversalViewerProps = {
 
 const handleOnClick = (e) => {
   if (e.target.className === "openseadragon-canvas") {
-    console.log("target is image viewer");
     const viewPortButtons = Array.from(
       document.getElementsByClassName(
         "viewportNavButton"
