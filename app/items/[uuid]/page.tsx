@@ -70,7 +70,7 @@ export default async function ItemViewer({ params, searchParams }: ItemProps) {
       <ItemPage
         manifest={manifest}
         uuid={params.uuid}
-        canvasIndex={clampedCanvasIndex} //TODO: figure out why clampedCanvasIndex does not work with the query param added by the viewer
+        canvasIndex={clampedCanvasIndex}
       />
     </PageLayout>
   );
