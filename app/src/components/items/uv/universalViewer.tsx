@@ -15,19 +15,16 @@ export type UniversalViewerProps = {
 };
 
 const handleOnClick = (e) => {
-  console.log("e is: ", e);
-  if (e.target === "div.openseadragon-canvas") {
+  if (e.target.className === "openseadragon-canvas") {
     console.log("target is image viewer");
-
     // this doesn't work. think we need to select the great-grandparent? div
     const viewPortButtons = Array.from(
       document.getElementsByClassName(
         "viewportNavButton"
       ) as HTMLCollectionOf<HTMLElement>
     );
-
     Array.from(viewPortButtons).forEach((button) => {
-      button.style.position = "absolute";
+      button.style.position = "relative";
       button.style.zIndex = "10000";
     });
   }

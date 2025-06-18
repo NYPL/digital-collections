@@ -10,7 +10,10 @@ interface ItemProps {
   canvasIndex: number;
 }
 
-const uv_config = {
+const uvConfig = {
+  options: {
+    clickToZoomEnabled: false,
+  },
   modules: {
     headerPanel: {
       options: {
@@ -59,7 +62,7 @@ const ItemMediaViewer = ({ item, canvasIndex }: ItemProps) => {
       <UniversalViewer
         manifestId={item.manifestURL}
         canvasIndex={canvasIndex}
-        config={uv_config}
+        config={uvConfig}
         onChangeCanvas={(manifest, canvas) => {
           // why is this not printing in the console
           console.log("canvas index changed", manifest, canvas);
