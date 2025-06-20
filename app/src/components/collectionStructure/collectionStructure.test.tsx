@@ -121,9 +121,7 @@ describe("Collection structure", () => {
     });
 
     await waitFor(() => {
-      expect(fetchSpy).toHaveBeenCalledWith(
-        "/api/collectionchildren/uuid-1?page=1"
-      );
+      expect(fetchSpy).toHaveBeenCalledWith("/api/collectionchildren/uuid-1");
     });
   });
 });
