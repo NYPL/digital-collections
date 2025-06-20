@@ -12,7 +12,7 @@ type ItemProps = {
     uuid: string;
     item: ItemModel;
   };
-  searchParams: { canvasIndex: number };
+  searchParams: { canvasIndex: number }; //TODO: possibly remove this, since we are using state
 };
 
 let item;
@@ -41,13 +41,25 @@ export default async function ItemViewer({ params, searchParams }: ItemProps) {
   revalidatePath("/");
   const manifest = await getItemManifest(params.uuid);
   const item = new ItemModel(params.uuid, manifest);
-  console.log("search params are: ", searchParams);
+
+  // only allow canvasIndex to be in the range of 0...item.imageIds.length (number of canvases)
+  const imageIDs = item.imageIDs || [];
+  const maxIndex = imageIDs.length - 1;
+  const rawIndex = searchParams.canvasIndex || 0;
+  const clampedCanvasIndex = Math.max(0, Math.min(rawIndex, maxIndex));
   return (
     <PageLayout
       activePage="item"
       breadcrumbs={[
         { text: "Home", url: "/" },
-        { text: "All Items", url: "/search/index" },
+        {
+          text: `${item.breadcrumbData.division.text}`,
+          url: `${item.breadcrumbData.division.path}`,
+        },
+        {
+          text: `${item.breadcrumbData.collection.text}`,
+          url: `${item.breadcrumbData.collection.path}`,
+        },
         {
           text: `${item.title}`,
           url: `/items/${params.uuid}`,
@@ -58,7 +70,7 @@ export default async function ItemViewer({ params, searchParams }: ItemProps) {
       <ItemPage
         manifest={manifest}
         uuid={params.uuid}
-        canvasIndex={searchParams.canvasIndex}
+        canvasIndex={clampedCanvasIndex}
       />
     </PageLayout>
   );

@@ -1,0 +1,214 @@
+{
+  "id": "http://localhost:8000/manifests/794fcf20-b822-0133-7afc-60f81dd2b63c",
+  "type": "Manifest",
+  "label": {
+    "en": [
+      "Through the looking glass one+two"
+    ]
+  },
+  "@context": "http://iiif.io/api/presentation/3/context.json",
+  "metadata": [
+    {
+      "label": {
+        "en": [
+          "Collection"
+        ]
+      },
+      "value": {
+        "en": [
+          "\u003Cspan\u003E\u003Ca href='http://qa-digitalcollections.nypl.org/collections/0ed4e240-509c-0136-8e2a-79e0a253f893'\u003EMerce Cunningham Dance Foundation Collection. Audio materials\u003C/a\u003E\u003C/span\u003E"
+        ]
+      }
+    },
+    {
+      "label": {
+        "en": [
+          "Names"
+        ]
+      },
+      "value": {
+        "en": [
+          "\u003Cspan\u003E\u003Ca href='http://qa-digitalcollections.nypl.org/search/index?filters=[name=Merce Cunningham Dance Company]'\u003EMerce Cunningham Dance Company\u003C/a\u003E (Associated name)\u003C/span\u003E",
+          "\u003Cspan\u003E\u003Ca href='http://qa-digitalcollections.nypl.org/search/index?filters=[name=Pimenta, Emanuel Dimas de Melo]'\u003EPimenta, Emanuel Dimas de Melo\u003C/a\u003E (Composer)\u003C/span\u003E"
+        ]
+      }
+    },
+    {
+      "label": {
+        "en": [
+          "Identifiers"
+        ]
+      },
+      "value": {
+        "en": [
+          "\u003Cspan\u003E\u003Cb\u003ERLIN/OCLC:\u003C/b\u003E 897514075\u003C/span\u003E",
+          "\u003Cspan\u003E\u003Cb\u003ENYPL Catalog ID (bnumber):\u003C/b\u003E \u003Ca href='https://www.nypl.org/research/research-catalog/bib/b20492036'\u003Eb20492036\u003C/a\u003E\u003C/span\u003E",
+          "\u003Cspan\u003E\u003Cb\u003EUniversal Unique Identifier (UUID):\u003C/b\u003E 74ef0290-b822-0133-41e4-60f81dd2b63c\u003C/span\u003E"
+        ]
+      }
+    },
+    {
+      "label": {
+        "en": [
+          "Dates / Origin"
+        ]
+      },
+      "value": {
+        "en": [
+          "\u003Cspan\u003EDate Created \u003Ca href='http://qa-digitalcollections.nypl.org/search/index?filters=[yearBegin=1993][yearEnd=1993]'\u003E1993\u003C/a\u003E\u003C/span\u003E"
+        ]
+      }
+    },
+    {
+      "label": {
+        "en": [
+          "Notes"
+        ]
+      },
+      "value": {
+        "en": [
+          "\u003Cp\u003E\u003Cb\u003EContent:\u003C/b\u003E Title provided by cataloger based on handwritten notes on original DAT containers.\u003C/p\u003E",
+          "\u003Cp\u003E\u003Cb\u003EContent:\u003C/b\u003E Handwritten note on original DAT cassette no. 1: \"Emanuel Pimenta ; Through the looking glass 1993-1994 ; Tape 1 (1993)\". Handwritten note on original DAT cassette no. 2: \"Emanuel Pimenta ; Through the looking glass 1993-1994 ; Tape 2 (1993)\".\u003C/p\u003E",
+          "\u003Cp\u003E\u003Cb\u003EContent:\u003C/b\u003E \"Created inside virtual reality. After Lewis's story 'Through the Looking Glass'. Dedicated to Merce Cunningham, John Archibald Wheeler and René Berger.\" -- Information obtained from Emanuel Dimas de Melo Pimenta's website, http://www.emanuelpimenta.net/bio/Emanuel_Pimenta_complete_CV_2010.pdf, pages 158-159, accessed on Nov. 7, 2014.\u003C/p\u003E",
+          "\u003Cp\u003E\u003Cb\u003ENumbering:\u003C/b\u003E Donor's inventory number: D327, and, D328.\u003C/p\u003E",
+          "\u003Cp\u003E\u003Cb\u003EVenue:\u003C/b\u003E Recorded in an unidentified location.\u003C/p\u003E",
+          "\u003Cp\u003E\u003Cb\u003EAcquisition:\u003C/b\u003E Gift; Merce Cunningham Dance Foundation, 2011-2012.\u003C/p\u003E"
+        ]
+      }
+    },
+    {
+      "label": {
+        "en": [
+          "Physical Description"
+        ]
+      },
+      "value": {
+        "en": [
+          "2 audiocassettes  (DAT) (122 minutes total) : digital, .3209 ips, 44.1 kHz, 16 bit, two track, stereo"
+        ]
+      }
+    },
+    {
+      "label": {
+        "en": [
+          "Library Locations"
+        ]
+      },
+      "value": {
+        "en": [
+          "\u003Cspan\u003E\u003Ca href='http://qa-digitalcollections.nypl.org/divisions/rodgers-and-hammerstein-archives-of-recorded-sound'\u003ERodgers and Hammerstein Archives of Recorded Sound\u003C/a\u003E\u003C/span\u003E",
+          "Shelf locator: *LTD-A 880"
+        ]
+      }
+    },
+    {
+      "label": {
+        "en": [
+          "Subjects"
+        ]
+      },
+      "value": {
+        "en": [
+          "\u003Cspan\u003E\u003Ca href='http://qa-digitalcollections.nypl.org/search/index?filters=%5Btopic%3DComputer+music%5D'\u003EComputer music\u003C/a\u003E\u003C/span\u003E"
+        ]
+      }
+    },
+    {
+      "label": {
+        "en": [
+          "Title"
+        ]
+      },
+      "value": {
+        "en": [
+          "Through the looking glass one+two"
+        ]
+      }
+    },
+    {
+      "label": {
+        "en": [
+          "Genres"
+        ]
+      },
+      "value": {
+        "en": [
+          "\u003Cspan\u003E\u003Ca href='http://qa-digitalcollections.nypl.org/search/index?filters=%5Bgenre%3DMusic%5D'\u003EMusic\u003C/a\u003E\u003C/span\u003E"
+        ]
+      }
+    },
+    {
+      "label": {
+        "en": [
+          "Resource Type"
+        ]
+      },
+      "value": {
+        "en": [
+          "\u003Cspan\u003E\u003Ca href='http://qa-digitalcollections.nypl.org/search/index?filters=%5Btype%3Dsound+recording%5D'\u003ESound Recording\u003C/a\u003E\u003C/span\u003E"
+        ]
+      }
+    },
+    {
+      "label": {
+        "en": [
+          "Rights"
+        ]
+      },
+      "value": {
+        "en": [
+          "This item is protected by copyright and/or related rights. You are free to use this Item in any way that is permitted by the copyright and related rights legislation that applies to your use. For other uses you need to obtain permission from the rights-holder(s)."
+        ]
+      }
+    },
+    {
+      "label": {
+        "en": [
+          "Is Restricted"
+        ]
+      },
+      "value": {
+        "en": [
+          "True"
+        ]
+      }
+    },
+    {
+      "label": {
+        "en": [
+          "Content Type"
+        ]
+      },
+      "value": {
+        "en": [
+          "audio"
+        ]
+      }
+    }
+  ],
+  "summary": {
+    "en": [
+      "Merce Cunningham Dance Foundation Collection. Audio materials||0ed4e240-509c-0136-8e2a-79e0a253f893"
+    ]
+  },
+  "requiredStatement": null,
+  "rendering": null,
+  "service": null,
+  "services": null,
+  "viewingDirection": null,
+  "placeholderCanvas": null,
+  "accompanyingCanvas": null,
+  "rights": null,
+  "start": null,
+  "navDate": null,
+  "navPlace": null,
+  "provider": null,
+  "seeAlso": null,
+  "thumbnail": null,
+  "homepage": null,
+  "behavior": null,
+  "partOf": null,
+  "items": [],
+  "structures": null,
+  "annotations": null
+}
