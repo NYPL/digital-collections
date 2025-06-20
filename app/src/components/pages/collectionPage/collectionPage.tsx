@@ -83,6 +83,7 @@ const CollectionPage = ({
   useEffect(() => {
     setIsLoaded(true);
     let didFocusElement = false;
+
     if (
       (collectionSearchManager.lastFilterRef?.current &&
         collectionSearchManager.filters.length > 0) ||
