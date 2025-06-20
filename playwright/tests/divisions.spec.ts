@@ -7,9 +7,7 @@ test.beforeEach(async ({ page }, testInfo) => {
   }
 });
 
-test("from the home page, the user selects Divisions in the navigation menu", async ({
-  page,
-}) => {
+test("user clicks Divisions from home page", async ({ page }) => {
   await page.goto("/");
   await page.getByRole("link", { name: "Divisions" }).click();
 });
