@@ -1,0 +1,296 @@
+{
+  "id": "http://qa-api-collections.nypl.org/manifests/a9c43f00-c600-012f-59c3-58d385a7bc34",
+  "type": "Manifest",
+  "label": {
+    "en": [
+      "A smoking club"
+    ]
+  },
+  "@context": "http://iiif.io/api/presentation/3/context.json",
+  "metadata": [
+    {
+      "label": {
+        "en": [
+          "Collection"
+        ]
+      },
+      "value": {
+        "en": [
+          "\u003Cspan\u003E\u003Ca href='http://qa-digitalcollections.nypl.org/collections/a945bb70-c600-012f-7ed6-58d385a7bc34'\u003ETobacco, its history and associations: including an account of the plant and its manufacture; with its modes of use in all ages and countries\u003C/a\u003E\u003C/span\u003E"
+        ]
+      }
+    },
+    {
+      "label": {
+        "en": [
+          "Names"
+        ]
+      },
+      "value": {
+        "en": [
+          "\u003Cspan\u003E\u003Ca href='http://qa-digitalcollections.nypl.org/search/index?filters=%5Bname%3DBunbury%2C+Henry+William%2C+1750-1811%5D'\u003EBunbury, Henry William, 1750-1811\u003C/a\u003E  (Artist)\u003C/span\u003E"
+        ]
+      }
+    },
+    {
+      "label": {
+        "en": [
+          "Identifiers"
+        ]
+      },
+      "value": {
+        "en": [
+          "\u003Cspan\u003E\u003Cb\u003EUniversal Unique Identifier (UUID):\u003C/b\u003E a9c43f00-c600-012f-59c3-58d385a7bc34\u003C/span\u003E"
+        ]
+      }
+    },
+    {
+      "label": {
+        "en": [
+          "Dates / Origin"
+        ]
+      },
+      "value": {
+        "en": [
+          "\u003Cspan\u003EDate Created \u003Ca href='http://qa-digitalcollections.nypl.org/search/index?filters=%5ByearBegin%3D1792%5D%5ByearEnd%3D1792%5D'\u003E1792\u003C/a\u003E\u003C/span\u003E",
+          "\u003Cspan\u003EPublisher: \u003Ca href='http://qa-digitalcollections.nypl.org/search/index?filters=%5Bpublisher%3DDickinson%2C+W.%5D'\u003EDickinson, W.\u003C/a\u003E\u003C/span\u003E"
+        ]
+      }
+    },
+    {
+      "label": {
+        "en": [
+          "Physical Description"
+        ]
+      },
+      "value": {
+        "en": [
+          "\u003Cspan\u003E\u003Ca href='http://qa-digitalcollections.nypl.org/search/index?filters=%5Bform%3DEngravings%5D'\u003EEngravings\u003C/a\u003E\u003C/span\u003E",
+          "39 x 50 cm."
+        ]
+      }
+    },
+    {
+      "label": {
+        "en": [
+          "Library Locations"
+        ]
+      },
+      "value": {
+        "en": [
+          "\u003Cspan\u003E\u003Ca href='http://qa-digitalcollections.nypl.org/divisions/george-arents-collection'\u003EGeorge Arents Collection\u003C/a\u003E\u003C/span\u003E",
+          "Shelf locator: Arents 3248"
+        ]
+      }
+    },
+    {
+      "label": {
+        "en": [
+          "Subjects"
+        ]
+      },
+      "value": {
+        "en": [
+          "\u003Cspan\u003E\u003Ca href='http://qa-digitalcollections.nypl.org/search/index?filters=%5Btopic%3DTobacco%5D'\u003ETobacco\u003C/a\u003E\u003C/span\u003E",
+          "\u003Cspan\u003E\u003Ca href='http://qa-digitalcollections.nypl.org/search/index?filters=%5Btopic%3DSmoking%5D'\u003ESmoking\u003C/a\u003E\u003C/span\u003E",
+          "\u003Cspan\u003E\u003Ca href='http://qa-digitalcollections.nypl.org/search/index?filters=%5Btopic%3DPoliticians%5D'\u003EPoliticians\u003C/a\u003E\u003C/span\u003E"
+        ]
+      }
+    },
+    {
+      "label": {
+        "en": [
+          "Title"
+        ]
+      },
+      "value": {
+        "en": [
+          "A smoking club"
+        ]
+      }
+    },
+    {
+      "label": {
+        "en": [
+          "Division"
+        ]
+      },
+      "value": {
+        "en": [
+          "\u003Cspan\u003E\u003Ca href='https://www.nypl.org/locations/schwarzman/rare-books-division/arents-collection'\u003EGeorge Arents Collection\u003C/a\u003E\u003C/span\u003E"
+        ]
+      }
+    },
+    {
+      "label": {
+        "en": [
+          "Genres"
+        ]
+      },
+      "value": {
+        "en": [
+          "\u003Cspan\u003E\u003Ca href='http://qa-digitalcollections.nypl.org/search/index?filters=%5Bgenre%3DPrints%5D'\u003EPrints\u003C/a\u003E\u003C/span\u003E"
+        ]
+      }
+    },
+    {
+      "label": {
+        "en": [
+          "Resource Type"
+        ]
+      },
+      "value": {
+        "en": [
+          "\u003Cspan\u003E\u003Ca href='http://qa-digitalcollections.nypl.org/search/index?filters=%5Btype%3Dstill+image%5D'\u003EStill Image\u003C/a\u003E\u003C/span\u003E"
+        ]
+      }
+    },
+    {
+      "label": {
+        "en": [
+          "Rights"
+        ]
+      },
+      "value": {
+        "en": [
+          "The New York Public Library believes that this item is in the public domain under the laws of the United States, but did not make a determination as to its copyright status under the copyright laws of other countries. This item may not be in the public domain under the laws of other countries. Though not required, if you want to credit us as the source, please use the following statement, \"From The New York Public Library,\" and provide a link back to the item on our Digital Collections site. Doing so helps us track how our collection is used and helps justify freely releasing even more content in the future."
+        ]
+      }
+    },
+    {
+      "label": {
+        "en": [
+          "Is Restricted"
+        ]
+      },
+      "value": {
+        "en": [
+          "False"
+        ]
+      }
+    },
+    {
+      "label": {
+        "en": [
+          "Content Type"
+        ]
+      },
+      "value": {
+        "en": [
+          "image"
+        ]
+      }
+    }
+  ],
+  "summary": {
+    "en": [
+      "Tobacco, its history and associations: including an account of the plant and its manufacture; with its modes of use in all ages and countries||a945bb70-c600-012f-7ed6-58d385a7bc34"
+    ]
+  },
+  "requiredStatement": null,
+  "rendering": null,
+  "service": null,
+  "services": null,
+  "viewingDirection": null,
+  "placeholderCanvas": null,
+  "accompanyingCanvas": null,
+  "rights": null,
+  "start": null,
+  "navDate": null,
+  "navPlace": null,
+  "provider": null,
+  "seeAlso": null,
+  "thumbnail": null,
+  "homepage": null,
+  "behavior": null,
+  "partOf": null,
+  "items": [
+    {
+      "id": "https://iiif.nypl.org/iiif/3/1107651/full/!700,700/0/default.jpg",
+      "type": "Canvas",
+      "label": null,
+      "height": null,
+      "width": null,
+      "duration": null,
+      "metadata": null,
+      "summary": null,
+      "requiredStatement": null,
+      "rendering": null,
+      "rights": null,
+      "navDate": null,
+      "navPlace": null,
+      "provider": null,
+      "seeAlso": null,
+      "service": null,
+      "placeholderCanvas": null,
+      "accompanyingCanvas": null,
+      "thumbnail": [
+        {
+          "id": "https://iiif.nypl.org/iiif/3/1107651/full/!300,300/0/default.jpg",
+          "type": "Image",
+          "height": 300,
+          "width": 300,
+          "duration": null,
+          "language": null,
+          "rendering": null,
+          "service": null,
+          "format": "image/jpeg",
+          "label": null,
+          "thumbnail": null,
+          "annotations": null
+        }
+      ],
+      "homepage": null,
+      "behavior": null,
+      "partOf": null,
+      "items": [
+        {
+          "id": "https://iiif.nypl.org/iiif/3/1107651/full/!700,700/0/default.jpg",
+          "type": "AnnotationPage",
+          "label": null,
+          "@context": null,
+          "rendering": null,
+          "service": null,
+          "thumbnail": null,
+          "items": [
+            {
+              "id": "https://iiif.nypl.org/iiif/3/1107651/full/!700,700/0/default.jpg",
+              "type": "Annotation",
+              "label": null,
+              "service": null,
+              "rendering": null,
+              "thumbnail": null,
+              "motivation": null,
+              "body": {
+                "id": "https://iiif.nypl.org/iiif/3/1107651/full/!700,700/0/default.jpg",
+                "type": "Image",
+                "height": null,
+                "width": null,
+                "duration": null,
+                "language": null,
+                "rendering": null,
+                "service": [
+                  {
+                    "id": "https://iiif.nypl.org/iiif/3/1107651",
+                    "type": "ImageService3",
+                    "label": null,
+                    "profile": "level2",
+                    "service": null
+                  }
+                ],
+                "format": null,
+                "label": null,
+                "thumbnail": null,
+                "annotations": null
+              },
+              "target": "https://iiif.nypl.org/iiif/3/1107651/full/!700,700/0/default.jpg"
+            }
+          ]
+        }
+      ],
+      "annotations": null
+    }
+  ],
+  "structures": null,
+  "annotations": null
+}

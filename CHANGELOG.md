@@ -6,6 +6,16 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## Unreleased
+### Added
+- Added Image ID to Items page (DR-3695)
+
+### Fixed
+- Fixed Order Print button (DR-3486)
+- Fixed bug with UniversalViewer where image controls are hidden after clicking an image (DR-3692)
+
+### Updated
+- Updated breadcrumb to include Division and Collection information (DR-3701)
+- Updated Collections page to bolden the Polonsky note (DR-3705)
 
 ## [0.4.3] 2025-06-17
 ### Added
