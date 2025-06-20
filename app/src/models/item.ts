@@ -108,9 +108,9 @@ export class ItemModel {
     // Special NYPL Identifiers for external links
     const identifiers = rawManifestMetadata["Identifiers"];
 
-    const archivesLink = identifiers.find((identifier) => {
-      identifier.includes("Archives ID");
-    });
+    const archivesLink = identifiers.find((identifier) =>
+      identifier.includes("Archives ID")
+    );
 
     const catalogLink = identifiers.find((identifier) =>
       identifier.includes("NYPL Catalog ID (bnumber)")
