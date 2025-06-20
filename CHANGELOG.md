@@ -30,7 +30,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Added GitHub Actions workflow to run Playwright tests on PRs (DR-3721)
 - Added Playwright tests to clear search results filters (DR-3659)
 - Added Playwright  test where a user clicks Divisions from home page navigation menu (DR-3655)
-- Added Playwright test to verify navigation menu on Divisons page (DR-3655)
+- Added Playwright updated test to verify navigation menu on Divisons page (DR-3655)
 - Added Playwright test to verify Division's name headings and the see more links for each division (DR-3655)
 
 ## [0.4.2] 2025-05-22

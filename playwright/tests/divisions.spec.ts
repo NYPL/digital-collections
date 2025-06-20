@@ -15,22 +15,11 @@ test("from the home page, the user selects Divisions in the navigation menu", as
 });
 
 test("verify navigation menu on division page", async ({ page }) => {
-  await expect(
-    page.getByRole("navigation", { name: "Header links" }).getByLabel("Items")
-  ).toBeVisible();
-  await expect(
-    page
-      .getByRole("navigation", { name: "Header links" })
-      .getByLabel("Collections")
-  ).toBeVisible();
-  await expect(
-    page
-      .getByRole("navigation", { name: "Header links" })
-      .getByLabel("Divisions")
-  ).toBeVisible();
-  await expect(
-    page.getByRole("navigation", { name: "Header links" }).getByLabel("About")
-  ).toBeVisible();
+  const divisionsPage = new Divisions(page);
+  await expect(divisionsPage.items).toBeVisible();
+  await expect(divisionsPage.collections).toBeVisible();
+  await expect(divisionsPage.divisions).toBeVisible();
+  await expect(divisionsPage.about).toBeVisible();
 });
 test("verify divisions headings on division's page", async ({ page }) => {
   const divisionsPage = new Divisions(page);

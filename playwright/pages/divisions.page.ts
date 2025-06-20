@@ -3,6 +3,10 @@ import { Locator, Page } from "@playwright/test";
 export class Divisions {
   private readonly page: Page;
   readonly seeMore: Locator;
+  readonly items: Locator;
+  readonly collections: Locator;
+  readonly divisions: Locator;
+  readonly about: Locator;
 
   static divisionsUrl: string = "/divisions";
 
@@ -39,5 +43,18 @@ export class Divisions {
       "The Miriam and Ira D. Wallach Division of Art, Prints and Photographs: Print Collection",
     ];
     this.seeMore = this.page.getByRole("link", { name: "See more" });
+
+    this.items = this.page
+      .getByRole("navigation", { name: "Header links" })
+      .getByLabel("Items");
+    this.collections = this.page
+      .getByRole("navigation", { name: "Header links" })
+      .getByLabel("Collections");
+    this.divisions = this.page
+      .getByRole("navigation", { name: "Header links" })
+      .getByLabel("Divisions");
+    this.about = page
+      .getByRole("navigation", { name: "Header links" })
+      .getByLabel("About");
   }
 }
