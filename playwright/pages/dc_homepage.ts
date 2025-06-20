@@ -26,8 +26,15 @@ export class DCHomepage {
   readonly booksAndPeriodicalsSeeMoreLink: Locator;
   readonly fliersAndEphemeraSeeMoreLink: Locator;
 
+  //featured section
+  readonly featuredSectionHeading: Locator;
+  readonly featuredDigitalCollectionsPrintStore: Locator;
+  readonly featuredVisitStore: Locator;
+  readonly featuredSpotlightOnPublicDomain: Locator;
+  readonly featuredLearnMore: Locator;
+
   //explore further
-  readonly exporeFurtherHeading: Locator;
+  readonly exploreFurtherHeading: Locator;
   readonly digitalCollectionPrintStore: Locator;
   readonly nyplArchivesAndManuscripts: Locator;
   readonly nyplResearchCatalog: Locator;
@@ -73,9 +80,35 @@ export class DCHomepage {
       name: "What is public domain?",
     });
 
+    //featured section
+
+    this.featuredSectionHeading = this.page.getByRole("link", {
+      name: "Featured",
+      exact: true,
+    });
+
+    this.featuredDigitalCollectionsPrintStore = this.page.getByRole("heading", {
+      name: "Digital Collections print store",
+      exact: true,
+    });
+    this.featuredVisitStore = this.page.getByLabel(
+      "Visit Store, Digital Collections print store",
+      { exact: true }
+    );
+
+    this.featuredSpotlightOnPublicDomain = this.page.getByRole("heading", {
+      name: "Spotlight on the public domain",
+    });
+
+    this.featuredLearnMore = this.page.getByLabel(
+      "Learn more, Spotlight on the public domain",
+      { exact: true }
+    );
+
     // explore further
-    this.exporeFurtherHeading = this.page.getByRole("heading", {
+    this.exploreFurtherHeading = this.page.getByRole("heading", {
       name: "Explore further",
+      exact: true,
     });
     this.digitalCollectionPrintStore = this.page.getByRole("link", {
       name: "Digital Collections Print Store",

@@ -251,7 +251,6 @@ export class CollectionsApi {
 
   static async getManifestForItemUUID(uuid: string) {
     let apiUrl = `${process.env.COLLECTIONS_API_URL}/manifests/${uuid}`;
-    console.log("manifest url is: ", apiUrl);
     const response = await fetchApi({
       apiUrl: apiUrl,
       options: { isRepoApi: false },
