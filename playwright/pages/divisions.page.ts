@@ -2,6 +2,9 @@ import { Locator, Page } from "@playwright/test";
 
 export class Divisions {
   private readonly page: Page;
+  readonly seeMore: Locator;
+
+  static divisionsUrl: string = "/divisions";
 
   readonly expectedDivisionNames: string[];
 
@@ -35,5 +38,6 @@ export class Divisions {
       "The Miriam and Ira D. Wallach Division of Art, Prints and Photographs: Picture Collection",
       "The Miriam and Ira D. Wallach Division of Art, Prints and Photographs: Print Collection",
     ];
+    this.seeMore = this.page.getByRole("link", { name: "See more" });
   }
 }
