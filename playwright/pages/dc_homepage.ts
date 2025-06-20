@@ -59,6 +59,16 @@ export class DCHomepage {
   readonly footerSocialInstagram: Locator;
   readonly footerSocialYouTube: Locator;
 
+  //feedback button
+  readonly feedbackButton: Locator;
+  readonly feedbackCommentRadioButton: Locator;
+  readonly feedbackBugRadioButton: Locator;
+  readonly feedbackCorrectionRadioButton: Locator;
+  readonly feedbackSubmitButton: Locator;
+  readonly feedbackCancelButton: Locator;
+  readonly feedbackTextArea: Locator;
+  readonly feedbackPrivacyPolicy: Locator;
+
   constructor(page: Page) {
     //navigation menu
     this.page = page;
@@ -164,5 +174,34 @@ export class DCHomepage {
       name: "Instagram",
     });
     this.footerSocialYouTube = this.page.getByRole("link", { name: "YouTube" });
+
+    //feedback button
+    this.feedbackButton = this.page.getByRole("button", { name: "Feedback" });
+    this.feedbackCommentRadioButton = this.page.getByRole("radio", {
+      name: "Comment",
+    });
+
+    this.feedbackBugRadioButton = this.page.getByRole("radio", {
+      name: "Bug",
+    });
+
+    this.feedbackCorrectionRadioButton = this.page.getByRole("radio", {
+      name: "Correction",
+    });
+
+    this.feedbackSubmitButton = this.page.getByRole("button", {
+      name: "Submit",
+    });
+
+    this.feedbackCancelButton = this.page.getByRole("button", {
+      name: "Cancel",
+    });
+
+    this.feedbackTextArea = this.page.getByPlaceholder(
+      "Enter your question or feedback here"
+    );
+    this.feedbackPrivacyPolicy = this.page.getByRole("link", {
+      name: "Privacy Policy",
+    });
   }
 }
