@@ -38,6 +38,23 @@ export default class SearchPage {
   readonly clearTopicFilterApplied: Locator;
   readonly clearAllFilters: Locator;
 
+  // sort search results
+  readonly sortButton: Locator;
+  readonly sortByRelevance: Locator;
+  readonly sortByRelevanceSelected: Locator;
+  readonly sortByNewest: Locator;
+  readonly sortByNewestSelected: Locator;
+  readonly sortByOldest: Locator;
+  readonly sortByOldestSelected: Locator;
+  readonly sortByAlpha: Locator;
+  readonly sortByAlphaSelected: Locator;
+  readonly sortByReverseAlpha: Locator;
+  readonly sortByReverseAlphaSelected: Locator;
+  readonly sortByCollections: Locator;
+  readonly sortByCollectionsSelected: Locator;
+  readonly sortByItems: Locator;
+  readonly sortByItemsSelected: Locator;
+
   constructor(page: Page) {
     this.page = page;
 
@@ -114,6 +131,49 @@ export default class SearchPage {
     this.clearAllFilters = this.page
       .locator("#search-filter-tags")
       .getByRole("button", { name: "Clear filters" });
+
+    // sort search results
+    this.sortButton = this.page.locator("#menu-button-sort-menu");
+    this.sortByRelevance = this.page.getByRole("menuitem", {
+      name: "Relevance",
+    });
+    this.sortByRelevanceSelected = this.page.getByRole("button", {
+      name: "Sort by: Relevance",
+    });
+    this.sortByNewest = this.page.getByRole("menuitem", {
+      name: "Newest to oldest",
+    });
+    this.sortByNewestSelected = this.page.getByRole("button", {
+      name: "Sort by: Newest to oldest",
+    });
+    this.sortByOldest = this.page.getByRole("menuitem", {
+      name: "Oldest to newest",
+    });
+    this.sortByOldestSelected = this.page.getByRole("button", {
+      name: "Sort by: Oldest to newest",
+    });
+    this.sortByAlpha = this.page.getByRole("menuitem", {
+      name: "Title A to Z",
+    });
+    this.sortByAlphaSelected = this.page.getByRole("button", {
+      name: "Sort by: Title A to Z",
+    });
+    this.sortByReverseAlpha = this.page.getByRole("menuitem", {
+      name: "Title Z to A",
+    });
+    this.sortByReverseAlphaSelected = this.page.getByRole("button", {
+      name: "Sort by: Title Z to A",
+    });
+    this.sortByCollections = this.page.getByRole("menuitem", {
+      name: "Collections first",
+    });
+    this.sortByCollectionsSelected = this.page.getByRole("button", {
+      name: "Sort by: Collections first",
+    });
+    this.sortByItems = this.page.getByRole("menuitem", { name: "Items first" });
+    this.sortByItemsSelected = this.page.getByRole("button", {
+      name: "Sort by: Items first",
+    });
   }
 
   static async loadPage(gotoPage: string, page: Page): Promise<SearchPage> {
