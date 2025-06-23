@@ -28,9 +28,12 @@ test("searches for a keyword from homepage", async ({ page }) => {
 test("displays search results", async () => {
   await expect(searchPage.resultsHeading).toBeVisible();
   await expect(searchPage.firstResult).toBeVisible();
-  await expect(searchPage.firstResult).toContainText(searchPage.searchKeyword, {
-    ignoreCase: true,
-  });
+  await expect(searchPage.firstKeywordResult).toContainText(
+    searchPage.searchKeyword,
+    {
+      ignoreCase: true,
+    }
+  );
 });
 
 test("displays search result filters", async () => {
@@ -183,6 +186,6 @@ test.describe("clicks on an item in search results", () => {
 
     await expect(searchPage.firstResult).toBeVisible();
     await searchPage.firstResult.click();
-    await expect(searchPage.page).toHaveURL(/\/items\/.*/);
+    await expect(searchPage.page).toHaveURL("/items/");
   });
 });

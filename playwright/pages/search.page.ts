@@ -10,6 +10,7 @@ export default class SearchPage {
   static searchResultsUrl: string = "/search/index?q=map%20of%20scandinavia";
   readonly resultsHeading: Locator;
   readonly firstResult: Locator;
+  readonly firstKeywordResult: Locator;
 
   // search result filters
   readonly refineHeading: Locator;
@@ -70,6 +71,9 @@ export default class SearchPage {
       ),
     });
     this.firstResult = page
+      .locator("a[href*='/items/'], a[href*='/collections/']")
+      .first();
+    this.firstKeywordResult = page
       .getByRole("link", { name: this.searchKeyword })
       .first();
 
