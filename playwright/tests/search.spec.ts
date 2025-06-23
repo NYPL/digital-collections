@@ -186,6 +186,6 @@ test.describe("clicks on an item in search results", () => {
 
     await expect(searchPage.firstResult).toBeVisible();
     await searchPage.firstResult.click();
-    await expect(searchPage.page).toHaveURL("/items/");
+    await expect(searchPage.page).toHaveURL("/items/**");
   });
 });
