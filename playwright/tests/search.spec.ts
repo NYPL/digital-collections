@@ -174,3 +174,15 @@ test.describe("sorts search results", () => {
     await expect(searchPage.sortByRelevanceSelected).toBeVisible();
   });
 });
+
+test.describe("clicks on an item in search results", () => {
+  test("clicks on an item in filtered search results", async () => {
+    await expect(searchPage.refineHeading).toBeVisible();
+
+    await searchPage.filterSearchResults();
+
+    await expect(searchPage.firstResult).toBeVisible();
+    await searchPage.firstResult.click();
+    await expect(searchPage.page).toHaveURL(/\/items\/.*/);
+  });
+});
