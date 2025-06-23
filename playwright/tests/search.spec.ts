@@ -179,6 +179,14 @@ test.describe("sorts search results", () => {
 });
 
 test.describe("clicks on an item in search results", () => {
+  test("clicks on an item in unfiltered search results", async () => {
+    await expect(searchPage.refineHeading).toBeVisible();
+
+    await expect(searchPage.firstResult).toBeVisible();
+    await searchPage.firstResult.click();
+    await expect(searchPage.page).toHaveURL(/\/(items)\//);
+  });
+
   test("clicks on an item in filtered search results", async () => {
     await expect(searchPage.refineHeading).toBeVisible();
 
@@ -186,6 +194,6 @@ test.describe("clicks on an item in search results", () => {
 
     await expect(searchPage.firstResult).toBeVisible();
     await searchPage.firstResult.click();
-    await expect(searchPage.page).toHaveURL("/items/**");
+    await expect(searchPage.page).toHaveURL(/\/(items)\//);
   });
 });
