@@ -4,9 +4,15 @@ import ItemPage from "../pages/item.page";
 let itemPage: ItemPage;
 
 test.beforeEach(async ({ page }, testInfo) => {
-  if (testInfo.title !== "searches for a keyword from homepage") {
-    itemPage = await ItemPage.loadPage(ItemPage.itemUrl, page);
-  }
+  itemPage = await ItemPage.loadPage(ItemPage.itemUrl, page);
+});
+
+test.describe("confirms search results were filtered correctly", () => {
+  test("displays filter selections", async () => {
+    await expect(itemPage.itemHeading).toBeVisible();
+    await expect(itemPage.itemTopic).toBeVisible();
+    await expect(itemPage.itemPublisher).toBeVisible();
+  });
 });
 
 test.describe("displays item page", () => {
@@ -19,5 +25,16 @@ test.describe("displays item page", () => {
   // displays cite this item
   test("displays item summary", async () => {
     await expect(itemPage.itemHeading).toBeVisible();
+    await expect(itemPage.itemDate).toBeVisible();
+    await expect(itemPage.itemRights).toBeVisible();
+  });
+
+  test("displays item division and collections", async () => {
+    await expect(itemPage.itemDivision).toBeVisible();
+    await expect(itemPage.itemCollection).toBeVisible();
+  });
+
+  test("displays item data", async () => {
+    await expect(itemPage.itemTopic).toBeVisible();
   });
 });
