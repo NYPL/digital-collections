@@ -28,12 +28,10 @@ export default class ItemPage {
       name: "Lawrence H. Slaughter Collection of English maps, charts, globes, books and atlases",
     });
     this.itemTopic = this.page.getByRole("link", { name: "Maps in education" });
-    this.itemRights = this.page
-      .getByRole("paragraph")
-      .filter({
-        hasText:
-          "The New York Public Library believes that this item is in the public domain",
-      }); // rename availability filters to rights filters
+    this.itemRights = this.page.getByRole("paragraph").filter({
+      hasText:
+        "The New York Public Library believes that this item is in the public domain",
+    });
     this.itemDate = this.page.getByRole("link", { name: "1700" }).first();
     this.itemPublisher = this.page
       .getByRole("link", {
