@@ -39,6 +39,7 @@ export class ItemModel {
   catalogLink: string | null;
   citationData: CitationOutput;
   breadcrumbData: any;
+  subcollectionName: string | null;
 
   constructor(uuid: string, manifest: any) {
     const parser = new Maniiifest(manifest);
@@ -146,9 +147,10 @@ export class ItemModel {
     )[0];
     divisionLinkObj["path"] = new URL(divisionLinkObj.href).pathname;
 
+    const orderedCollections = this.metadata?.collection?.split("<br>") ?? [];
     // note: this points to the top level collection, not the immediate parent collection or subcollection
     const collectionLinkObj = extractAllAnchorsFromHTML(
-      this.metadata?.collection?.split("<br>")[0] ?? ""
+      orderedCollections[0] ?? ""
     )[0];
     collectionLinkObj["path"] = new URL(collectionLinkObj.href).pathname;
 
@@ -156,5 +158,11 @@ export class ItemModel {
       division: divisionLinkObj,
       collection: collectionLinkObj,
     };
+    this.subcollectionName = null;
+    if (orderedCollections.length > 1) {
+      const subcollection = orderedCollections[orderedCollections.length - 1];
+      this.subcollectionName =
+        extractAllAnchorsFromHTML(subcollection)[0]?.text;
+    }
   }
 }
