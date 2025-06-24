@@ -5,6 +5,7 @@ export default class ItemPage {
   static itemUrl: string = "/items/d5542750-c5d3-012f-377b-58d385a7bc34";
 
   readonly itemHeading: Locator;
+  readonly itemDataHeading: Locator;
   readonly itemDivision: Locator;
   readonly itemCollection: Locator;
   readonly itemTopic: Locator;
@@ -14,33 +15,31 @@ export default class ItemPage {
 
   constructor(page: Page) {
     this.page = page;
-    this.itemHeading = this.page.locator("#item-summary").getByRole("heading", {
+    this.itemHeading = this.page.getByRole("heading", {
       name: "A new map of ancient Scandinavia, together with as much more of ye northern part of ancient Europe as answers to present Denmark & Moscovia.",
     });
-    this.itemDivision = this.page
-      .locator(".item-collections")
-      .getByRole("link", {
-        name: "Lionel Pincus and Princess Firyal Map Division",
-      }); // division is displayed in a few places but chose accordion
-    this.itemCollection = this.page
-      .locator(".item-collections")
-      .getByRole("link", {
-        name: "Lawrence H. Slaughter Collection of English maps, charts, globes, books and atlases",
-      });
-    this.itemTopic = this.page
-      .locator("#item-content-data")
-      .getByRole("link", { name: "Maps in education" });
+    this.itemDataHeading = this.page.getByRole("heading", {
+      name: "Item data",
+    });
+    this.itemDivision = this.page.getByRole("link", {
+      name: "Lionel Pincus and Princess Firyal Map Division",
+    });
+    this.itemCollection = this.page.getByRole("link", {
+      name: "Lawrence H. Slaughter Collection of English maps, charts, globes, books and atlases",
+    });
+    this.itemTopic = this.page.getByRole("link", { name: "Maps in education" });
     this.itemRights = this.page
-      .locator(".rights-message-container")
-      .getByRole("link", { name: "Free to use without restriction" }); // rename availability filters to rights filters
-    this.itemDate = this.page
-      .locator("#item-summary")
-      .getByRole("link", { name: "1700" });
+      .getByRole("paragraph")
+      .filter({
+        hasText:
+          "The New York Public Library believes that this item is in the public domain",
+      }); // rename availability filters to rights filters
+    this.itemDate = this.page.getByRole("link", { name: "1700" }).first();
     this.itemPublisher = this.page
-      .locator("#item-content-data")
       .getByRole("link", {
         name: "Printed at the Theater,",
-      });
+      })
+      .first();
   }
 
   static async loadPage(gotoPage: string, page: Page): Promise<ItemPage> {
