@@ -68,6 +68,7 @@ export class DCHomepage {
   readonly feedbackCancelButton: Locator;
   readonly feedbackTextArea: Locator;
   readonly feedbackPrivacyPolicy: Locator;
+  readonly feedbackForm: Locator;
 
   constructor(page: Page) {
     //navigation menu
@@ -203,5 +204,7 @@ export class DCHomepage {
     this.feedbackPrivacyPolicy = this.page.getByRole("link", {
       name: "Privacy Policy",
     });
+
+    this.feedbackForm = this.page.getByTestId("ds-form");
   }
 }

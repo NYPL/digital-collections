@@ -72,6 +72,7 @@ test("verify feedback button is visible", async ({ page }) => {
   const dchomepage = new DCHomepage(page);
   await expect(dchomepage.feedbackButton).toBeVisible();
   await dchomepage.feedbackButton.click();
+  await expect(dchomepage.feedbackForm).toBeVisible();
   await expect(dchomepage.feedbackCommentRadioButton).toBeVisible();
   await expect(dchomepage.feedbackCorrectionRadioButton).toBeVisible();
   await expect(dchomepage.feedbackBugRadioButton).toBeVisible();
@@ -80,4 +81,5 @@ test("verify feedback button is visible", async ({ page }) => {
   await expect(dchomepage.feedbackCancelButton).toBeVisible();
   await expect(dchomepage.feedbackPrivacyPolicy).toBeVisible();
   await dchomepage.feedbackCancelButton.click();
+  await expect(dchomepage.feedbackForm).not.toBeVisible();
 });
