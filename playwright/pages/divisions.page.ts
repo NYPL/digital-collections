@@ -1,12 +1,13 @@
 import { Locator, Page } from "@playwright/test";
 
-export class Divisions {
+export class DivisionsPage {
   private readonly page: Page;
   readonly seeMore: Locator;
   readonly items: Locator;
   readonly collections: Locator;
   readonly divisions: Locator;
   readonly about: Locator;
+  readonly headings: Locator;
 
   static divisionsUrl: string = "/divisions";
 
@@ -56,5 +57,16 @@ export class Divisions {
     this.about = page
       .getByRole("navigation", { name: "Header links" })
       .getByLabel("About");
+
+    for (const divisionName of this.expectedDivisionNames) {
+      this.headings = page.getByRole("heading", {
+        name: divisionName,
+        exact: true,
+      });
+      this.seeMore = page.getByRole("link", {
+        name: `See more  ${divisionName}`,
+        exact: true,
+      });
+    }
   }
 }
