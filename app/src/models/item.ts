@@ -110,7 +110,7 @@ export class ItemModel {
     const identifiers = rawManifestMetadata["Identifiers"];
 
     const archivesLink = identifiers.find((identifier) =>
-      identifier.includes("Archives ID")
+      identifier.includes("Archives EAD ID")
     );
 
     const catalogLink = identifiers.find((identifier) =>
