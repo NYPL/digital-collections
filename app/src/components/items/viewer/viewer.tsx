@@ -11,6 +11,9 @@ interface ItemProps {
 }
 
 const uvConfig = {
+  options: {
+    footerPanelEnabled: true,
+  },
   modules: {
     headerPanel: {
       options: {
