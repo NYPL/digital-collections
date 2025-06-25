@@ -153,12 +153,17 @@ export class ItemModel {
     const collectionLinkObj = extractAllAnchorsFromHTML(
       orderedCollections[0] ?? ""
     )[0];
-    collectionLinkObj["path"] = new URL(collectionLinkObj.href).pathname;
-
-    this.breadcrumbData = {
-      division: divisionLinkObj,
-      collection: collectionLinkObj,
-    };
+    if (collectionLinkObj) {
+      collectionLinkObj["path"] = new URL(collectionLinkObj.href).pathname;
+      this.breadcrumbData = {
+        division: divisionLinkObj,
+        collection: collectionLinkObj,
+      };
+    } else {
+      this.breadcrumbData = {
+        division: divisionLinkObj,
+      };
+    }
 
     this.subcollectionName = null;
     if (orderedCollections.length > 1) {
