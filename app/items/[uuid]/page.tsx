@@ -66,6 +66,11 @@ export default async function ItemViewer({ params, searchParams }: ItemProps) {
         },
       ]}
       adobeAnalyticsPageName={createAdobeAnalyticsPageName("items", item.title)}
+      ga4Data={{
+        collection: item.breadcrumbData.collection.title,
+        subcollection: item.subcollectionName ?? undefined,
+        division: item.breadcrumbData.division,
+      }}
     >
       <ItemPage
         manifest={manifest}
