@@ -110,17 +110,25 @@ export class ItemModel {
     // Special NYPL Identifiers for external links
     const identifiers = rawManifestMetadata["Identifiers"];
 
-    const archivesLink = identifiers.find((identifier) =>
+    const archivesComponentLink = identifiers.find((identifier) =>
       identifier.includes("Archives EAD ID")
     );
+    this.archivesLink = archivesComponentLink
+      ? extractFirstHrefFromHTML(archivesComponentLink)
+      : null;
+
+    if (!this.archivesLink) {
+      const archivesFindingAidLink = identifiers.find((identifier) =>
+        identifier.includes("Archives ID")
+      );
+      this.archivesLink = archivesFindingAidLink
+        ? extractFirstHrefFromHTML(archivesFindingAidLink)
+        : null;
+    }
 
     const catalogLink = identifiers.find((identifier) =>
       identifier.includes("NYPL Catalog ID (bnumber)")
     );
-
-    this.archivesLink = archivesLink
-      ? extractFirstHrefFromHTML(archivesLink)
-      : null;
 
     this.catalogLink = catalogLink
       ? extractFirstHrefFromHTML(catalogLink)
