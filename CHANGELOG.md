@@ -20,6 +20,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Updated
 - Updated breadcrumb to include Division and Collection information (DR-3701)
 - Updated Collections page to bolden the Polonsky note (DR-3705)
+- Updated `fetch` calls to include original client IP (DR-3754)
 
 ## [0.4.3] 2025-06-17
 ### Added
