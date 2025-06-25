@@ -4,6 +4,8 @@ import { ItemModel } from "../../../models/item";
 import React from "react";
 import { UniversalViewer } from "../uv/universalViewerLazy";
 import "universalviewer/dist/esm/index.css";
+// import ReactPlayer from 'react-player'
+import ReactPlayer from "../react/player";
 
 interface ItemProps {
   item: ItemModel;
@@ -58,22 +60,34 @@ const uvConfig = {
 
 const ItemMediaViewer = ({ item, canvasIndex }: ItemProps) => {
   let viewer;
-  viewer = (
-    <>
-      <UniversalViewer
-        manifestId={item.manifestURL}
-        canvasIndex={canvasIndex || 0}
-        config={uvConfig}
-        onChangeCanvas={(manifest, canvas) => {
-          // why is this not printing in the console
-          console.log("canvas index changed", manifest, canvas);
-        }}
-        onChangeManifest={(manifest) => {
-          console.log("manfest changed", manifest);
-        }}
-      />
-    </>
-  );
+  let contentType = item.contentType;
+
+  if (item.isImage) {
+    viewer = (
+      <>
+        <UniversalViewer
+          manifestId={item.manifestURL}
+          canvasIndex={canvasIndex || 0}
+          config={uvConfig}
+          onChangeCanvas={(manifest, canvas) => {
+            // why is this not printing in the console
+            console.log("canvas index changed", manifest, canvas);
+          }}
+          onChangeManifest={(manifest) => {
+            console.log("manfest changed", manifest);
+          }}
+        />
+      </>
+    );
+  } else {
+    viewer = (
+      <>
+        {/* TODO: multi-capture support. I only built support to view the first file since AV is typically only one file. there are Items with multiple audio files */}
+        <ReactPlayer src={item.mediaFiles[0]} />
+      </>
+    );
+  }
+
   return viewer;
 };
 
