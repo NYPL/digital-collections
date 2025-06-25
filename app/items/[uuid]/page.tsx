@@ -1,5 +1,6 @@
 import React from "react";
 import { Metadata } from "next";
+import { headers } from "next/headers";
 import PageLayout from "../../src/components/pageLayout/pageLayout";
 import { createAdobeAnalyticsPageName } from "../../src/utils/utils";
 import { ItemModel } from "../../src/models/item";
@@ -18,8 +19,18 @@ type ItemProps = {
 let item;
 
 const getItemManifest = async (uuid: string) => {
-  const data = await CollectionsApi.getManifestForItemUUID(uuid);
+  const clientIP = await getClientIP();
+  const data = await CollectionsApi.getManifestForItemUUID(uuid, clientIP);
   return data;
+};
+
+const getClientIP = async () => {
+  const clientHeaders = await headers();
+  const forwardedFor = clientHeaders.get("x-forwarded-for");
+  if (forwardedFor) {
+    return forwardedFor.split(",")[0];
+  }
+  return clientHeaders.get("x-real-ip");
 };
 
 export async function generateMetadata({
