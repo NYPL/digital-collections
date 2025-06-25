@@ -105,6 +105,8 @@ test.describe("filters search results", () => {
   test("filters search results by dates", async () => {
     await expect(searchPage.refineHeading).toBeVisible();
 
+    await expect(searchPage.showFilters).toBeVisible();
+    await searchPage.showFilters.click();
     await expect(searchPage.startYear).toBeVisible();
     await expect(searchPage.endYear).toBeVisible();
     await searchPage.startYear.fill("1700");
@@ -118,6 +120,8 @@ test.describe("filters search results", () => {
   test("filters search results by availability", async () => {
     await expect(searchPage.refineHeading).toBeVisible();
 
+    await expect(searchPage.showFilters).toBeVisible();
+    await searchPage.showFilters.click();
     await expect(searchPage.availablePublicDomain).toBeVisible();
     await searchPage.availablePublicDomain.click();
     await expect(searchPage.availablePublicDomain).toBeChecked();
