@@ -86,6 +86,8 @@ test.describe("displays search results filters", () => {
   test("hides second row of drop-down filters", async () => {
     await expect(searchPage.refineHeading).toBeVisible();
 
+    await expect(searchPage.showFilters).toBeVisible();
+    await searchPage.showFilters.click();
     await expect(searchPage.hideFilters).toBeVisible();
     await searchPage.hideFilters.click();
     await expect(searchPage.genreFilter).not.toBeVisible();
