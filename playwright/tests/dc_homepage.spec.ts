@@ -26,6 +26,18 @@ test("verify public domain link is visible", async ({ page }) => {
   await expect(dchomepage.whatIsPublicDomainLink).toBeVisible();
 });
 
+test("verify collections and item count", async ({ page }) => {
+  const dchomepage = new DCHomepage(page);
+  await expect(dchomepage.posadaCollection).toBeVisible();
+  await expect(dchomepage.posadaCollectionItems).not.toHaveText("0");
+  await expect(
+    dchomepage.farmSecurityAdministrationPhotographsCollection
+  ).toBeVisible();
+  await expect(
+    dchomepage.farmSecurityAdministrationPhotographsCollectionItems
+  ).not.toHaveText("0");
+});
+
 test("verify featured section is visible", async ({ page }) => {
   const dchomepage = new DCHomepage(page);
 

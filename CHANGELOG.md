@@ -12,6 +12,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Added Playwright tests to sort search results (DR-3659)
 - Added Image ID to Items page (DR-3695)
 - Added Playwright test feedback button to the home page (DR-3658)
+- Added Playwright test to verify two collections on the home page(DR-3658)
 
 ### Fixed
 - Fixed Order Print button (DR-3486)
