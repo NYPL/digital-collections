@@ -77,7 +77,7 @@ const UniversalViewer: React.FC<UniversalViewerProps> = React.memo(
           cb(
             {
               options: {
-                footerPanelEnabled: false,
+                footerPanelEnabled: true,
                 pagingEnabled: true,
                 pagingHeaderPanel: true,
                 pagingOptionEnabled: true,
