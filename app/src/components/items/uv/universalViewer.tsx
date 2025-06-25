@@ -81,6 +81,7 @@ const UniversalViewer: React.FC<UniversalViewerProps> = React.memo(
                 pagingEnabled: true,
                 pagingHeaderPanel: true,
                 pagingOptionEnabled: true,
+                clickToZoomEnabled: false,
               },
               modules: {
                 headerPanel: {
