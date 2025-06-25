@@ -1,7 +1,7 @@
 import { test, expect } from "@playwright/test";
 import { DivisionsPage } from "../pages/divisions.page";
 
-test.beforeEach(async ({ page }, testInfo) => {
+test.beforeEach(async ({ page }) => {
   {
     await page.goto(DivisionsPage.divisionsUrl);
   }
