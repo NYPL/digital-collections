@@ -39,6 +39,7 @@ export class ItemModel {
   catalogLink: string | null;
   citationData: CitationOutput;
   breadcrumbData: any;
+  mediaFiles: string[];
   subcollectionName: string | null;
 
   constructor(uuid: string, manifest: any) {
@@ -50,7 +51,7 @@ export class ItemModel {
     // Manifest related fields
     this.hasItems = manifest.items.length > 0;
     const canvases = Array.from(parser.iterateManifestCanvas());
-
+    const annotations = Array.from(parser.iterateManifestCanvasAnnotation());
     // Metadata assignment
     const manifestMetadataArray = Array.from(parser.iterateManifestMetadata());
     // convert Maniifest MetadataT to custom type
@@ -158,11 +159,16 @@ export class ItemModel {
       division: divisionLinkObj,
       collection: collectionLinkObj,
     };
+
     this.subcollectionName = null;
     if (orderedCollections.length > 1) {
       const subcollection = orderedCollections[orderedCollections.length - 1];
       this.subcollectionName =
         extractAllAnchorsFromHTML(subcollection)[0]?.text;
     }
+
+    // get a list of signed urls
+    this.mediaFiles = annotations.map((annotation) => annotation.id);
+    console.log("item.mediaFiles is", this.mediaFiles[0]);
   }
 }
