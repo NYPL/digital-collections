@@ -133,3 +133,44 @@ test.describe("clears search results filters", () => {
     await expect(searchPage.topicSelected).not.toBeVisible();
   });
 });
+
+test.describe("sorts search results", () => {
+  test("sorts search results by age", async () => {
+    await expect(searchPage.resultsHeading).toBeVisible();
+    await expect(searchPage.sortButton).toBeVisible();
+    await searchPage.sortButton.click();
+    await expect(searchPage.sortByNewest).toBeVisible();
+    await expect(searchPage.sortByOldest).toBeVisible();
+    await searchPage.sortByNewest.click();
+    await expect(searchPage.sortByNewestSelected).toBeVisible();
+  });
+
+  test("sorts search results alphabetically", async () => {
+    await expect(searchPage.resultsHeading).toBeVisible();
+    await expect(searchPage.sortButton).toBeVisible();
+    await searchPage.sortButton.click();
+    await expect(searchPage.sortByAlpha).toBeVisible();
+    await expect(searchPage.sortByReverseAlpha).toBeVisible();
+    await searchPage.sortByAlpha.click();
+    await expect(searchPage.sortByAlphaSelected).toBeVisible();
+  });
+
+  test("sorts search results by type", async () => {
+    await expect(searchPage.resultsHeading).toBeVisible();
+    await expect(searchPage.sortButton).toBeVisible();
+    await searchPage.sortButton.click();
+    await expect(searchPage.sortByCollections).toBeVisible();
+    await expect(searchPage.sortByItems).toBeVisible();
+    await searchPage.sortByCollections.click();
+    await expect(searchPage.sortByCollectionsSelected).toBeVisible();
+  });
+
+  test("sorts search results by relevance", async () => {
+    await expect(searchPage.resultsHeading).toBeVisible();
+    await expect(searchPage.sortButton).toBeVisible();
+    await searchPage.sortButton.click();
+    await expect(searchPage.sortByRelevance).toBeVisible();
+    await searchPage.sortByRelevance.click();
+    await expect(searchPage.sortByRelevanceSelected).toBeVisible();
+  });
+});
