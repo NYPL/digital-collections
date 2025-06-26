@@ -41,6 +41,7 @@ export class ItemModel {
   breadcrumbData: any;
   mediaFiles: string[];
   subcollectionName: string | null;
+  permittedLocationText: string;
 
   constructor(uuid: string, manifest: any) {
     const parser = new Maniiifest(manifest);
@@ -85,6 +86,11 @@ export class ItemModel {
       this.isRestricted && rawManifestMetadata["Division"]
         ? rawManifestMetadata["Division"].toString()
         : rawManifestMetadata["Library Locations"][0] || "";
+
+    this.permittedLocationText =
+      this.isRestricted && rawManifestMetadata["Permitted Locations"]
+        ? rawManifestMetadata["Permitted Locations"][0]?.toString()
+        : "";
 
     // for viewer configs and order print button
     this.contentType = rawManifestMetadata["Content Type"]
@@ -182,6 +188,5 @@ export class ItemModel {
 
     // get a list of signed urls
     this.mediaFiles = annotations.map((annotation) => annotation.id);
-    console.log("item.mediaFiles is", this.mediaFiles[0]);
   }
 }
