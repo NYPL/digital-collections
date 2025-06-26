@@ -5,7 +5,12 @@ import dynamic from "next/dynamic";
 const Player = dynamic(() => import("react-player/lazy"), { ssr: false });
 
 export default function ReactPlayer({ src, type }) {
-  useEffect(() => {});
+  useEffect(() => {
+    // disable download
+    const player = document.querySelector("video");
+    player?.controls; // true
+    player?.controlsList == "nodownload";
+  });
 
   return (
     <div>
