@@ -41,6 +41,7 @@ export class ItemModel {
   breadcrumbData: any;
   mediaFiles: string[];
   subcollectionName: string | null;
+  permittedLocationText: string | null;
 
   constructor(uuid: string, manifest: any) {
     const parser = new Maniiifest(manifest);
@@ -85,6 +86,11 @@ export class ItemModel {
       this.isRestricted && rawManifestMetadata["Division"]
         ? rawManifestMetadata["Division"].toString()
         : rawManifestMetadata["Library Locations"][0] || "";
+
+    this.permittedLocationText =
+      this.isRestricted && rawManifestMetadata["Permitted Locations"]
+        ? rawManifestMetadata["Permitted Locations"][0].toString()
+        : null;
 
     // for viewer configs and order print button
     this.contentType = rawManifestMetadata["Content Type"]
