@@ -20,6 +20,7 @@ const uvConfig = {
   modules: {
     headerPanel: {
       options: {
+        allowStealFocus: false,
         centerOptionsEnabled: true,
         localeToggleEnabled: false,
         settingsButtonEnabled: true,
@@ -28,7 +29,7 @@ const uvConfig = {
     openSeadragonCenterPanel: {
       options: {
         animationTime: 0.15,
-        autoHideControls: true,
+        autoHideControls: false,
         requiredStatementEnabled: true,
         blendTime: 0,
         constrainDuringPan: false,
