@@ -40,28 +40,19 @@ const fetchChildren = async (
   parentUuid?: string | null
 ): Promise<OpenStateItem[]> => {
   const allChildren: OpenStateItem[] = [];
-  let page = 1;
-  while (true) {
-    const res = await fetch(`/api/collectionchildren/${uuid}?page=${page}`);
-    if (!res.ok) throw new Error("Failed to fetch children");
-    const data = await res.json();
-    const mappedChildren = data.children.map((child) => ({
-      title: child.title,
-      uuid: child.uuid,
-      itemCount: child.itemCount,
-      hasSubContainers: child.hasSubContainers,
-      level: 0,
-      isOpen: false,
-      children: [],
-      parentUuid: parentUuid ?? null,
-    }));
-    allChildren.push(...mappedChildren);
-
-    if (data.children.length < CARDS_PER_PAGE) break;
-    page++;
-  }
-
-  return allChildren;
+  const res = await fetch(`/api/collectionchildren/${uuid}`);
+  if (!res.ok) throw new Error("Failed to fetch children");
+  const data = await res.json();
+  return data.children.map((child) => ({
+    title: child.title,
+    uuid: child.uuid,
+    itemCount: child.itemCount,
+    hasSubContainers: child.hasSubContainers,
+    level: 0,
+    isOpen: false,
+    children: [],
+    parentUuid: parentUuid ?? null,
+  }));
 };
 
 const closeAllChildren = (node: OpenStateItem): OpenStateItem => ({
