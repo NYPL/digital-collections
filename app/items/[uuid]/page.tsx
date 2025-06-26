@@ -48,6 +48,28 @@ export async function generateMetadata({
   };
 }
 
+function formatItemBreadcrumbs(item: ItemModel) {
+  const breadcrumbData = item.breadcrumbData;
+  let breadcrumbs = [
+    { text: "Home", url: "/" },
+    {
+      text: `${breadcrumbData.division.text}`,
+      url: `${breadcrumbData.division.path}`,
+    },
+  ];
+  if (breadcrumbData.collection) {
+    breadcrumbs.push({
+      text: breadcrumbData.collection.text,
+      url: breadcrumbData.collection.url,
+    });
+  }
+  breadcrumbs.push({
+    text: `${item.title}`,
+    url: `/items/${item.uuid}`,
+  });
+  return breadcrumbs;
+}
+
 export default async function ItemViewer({ params, searchParams }: ItemProps) {
   revalidatePath("/");
   const manifest = await getItemManifest(params.uuid);
@@ -61,24 +83,10 @@ export default async function ItemViewer({ params, searchParams }: ItemProps) {
   return (
     <PageLayout
       activePage="item"
-      breadcrumbs={[
-        { text: "Home", url: "/" },
-        {
-          text: `${item.breadcrumbData.division.text}`,
-          url: `${item.breadcrumbData.division.path}`,
-        },
-        {
-          text: `${item.breadcrumbData.collection.text}`,
-          url: `${item.breadcrumbData.collection.path}`,
-        },
-        {
-          text: `${item.title}`,
-          url: `/items/${params.uuid}`,
-        },
-      ]}
+      breadcrumbs={formatItemBreadcrumbs(item)}
       adobeAnalyticsPageName={createAdobeAnalyticsPageName("items", item.title)}
       ga4Data={{
-        collection: item.breadcrumbData.collection.title,
+        collection: item.breadcrumbData.collection?.title ?? undefined,
         subcollection: item.subcollectionName ?? undefined,
         division: item.breadcrumbData.division,
       }}
