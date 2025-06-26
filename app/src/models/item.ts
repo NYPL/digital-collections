@@ -89,7 +89,7 @@ export class ItemModel {
 
     this.permittedLocationText =
       this.isRestricted && rawManifestMetadata["Permitted Locations"]
-        ? rawManifestMetadata["Permitted Locations"][0].toString()
+        ? rawManifestMetadata["Permitted Locations"][0]?.toString()
         : "";
 
     // for viewer configs and order print button
