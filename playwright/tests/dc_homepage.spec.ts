@@ -29,13 +29,17 @@ test("verify public domain link is visible", async ({ page }) => {
 test("verify collections and item count", async ({ page }) => {
   const dchomepage = new DCHomepage(page);
   await expect(dchomepage.posadaCollection).toBeVisible();
-  await expect(dchomepage.posadaCollectionItems).not.toHaveText("0");
+  await expect(dchomepage.posadaCollectionItems).not.toHaveText("0 items");
   await expect(
     dchomepage.farmSecurityAdministrationPhotographsCollection
   ).toBeVisible();
   await expect(
     dchomepage.farmSecurityAdministrationPhotographsCollectionItems
-  ).not.toHaveText("0");
+  ).not.toHaveText("0 items");
+  await expect(dchomepage.posadaCollectionItems).not.toHaveText("NaN items");
+  await expect(
+    dchomepage.farmSecurityAdministrationPhotographsCollectionItems
+  ).not.toHaveText("NaN items");
 });
 
 test("verify featured section is visible", async ({ page }) => {
