@@ -188,6 +188,5 @@ export class ItemModel {
 
     // get a list of signed urls
     this.mediaFiles = annotations.map((annotation) => annotation.id);
-    console.log("item.mediaFiles is", this.mediaFiles[0]);
   }
 }
