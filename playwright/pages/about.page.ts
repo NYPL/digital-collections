@@ -23,12 +23,16 @@ export class AboutPage {
   constructor(page: Page) {
     this.page = page;
     // navigation menu
-    this.items = page.getByRole("link", { name: "Items" });
+    this.items = page.getByRole("link", {
+      name: "Items",
+      exact: true,
+    });
+
     this.collections = page.getByRole("link", {
       name: "Collections",
       exact: true,
     });
-    this.divisions = page.getByRole("link", { name: "Divisions" });
+    this.divisions = page.getByRole("link", { name: "Divisions", exact: true });
     this.about = page.getByRole("link", { name: "About", exact: true });
 
     // search box
