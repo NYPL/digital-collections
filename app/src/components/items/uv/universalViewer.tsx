@@ -38,6 +38,7 @@ const UniversalViewer: React.FC<UniversalViewerProps> = React.memo(
         Array.from(viewPortButtons).forEach((button) => {
           button.style.position = "relative";
           button.style.zIndex = "10000";
+          button.style.pointerEvents = "auto";
         });
 
         const paginationButtons = Array.from(
@@ -53,6 +54,9 @@ const UniversalViewer: React.FC<UniversalViewerProps> = React.memo(
           const div = button.parentNode as HTMLElement;
           console.log("parentNode before: ", div);
           div.style.opacity = "100";
+          div.style.position = "initial";
+          div.style.zIndex = "10000";
+          div.style.pointerEvents = "auto";
           div.focus();
           console.log("paginationButton after: ", button);
           console.log("parentNode after: ", div);
