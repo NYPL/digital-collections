@@ -249,11 +249,11 @@ export class CollectionsApi {
     return response;
   }
 
-  static async getManifestForItemUUID(uuid: string) {
+  static async getManifestForItemUUID(uuid: string, clientIP: string | null) {
     let apiUrl = `${process.env.COLLECTIONS_API_URL}/manifests/${uuid}`;
     const response = await fetchApi({
       apiUrl: apiUrl,
-      options: { isRepoApi: false },
+      options: { isRepoApi: false, clientIP: clientIP },
     });
     return response;
   }
