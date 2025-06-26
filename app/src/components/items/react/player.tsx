@@ -1,8 +1,12 @@
+import { useEffect } from "react";
+
 import dynamic from "next/dynamic";
 
 const Player = dynamic(() => import("react-player/lazy"), { ssr: false });
 
 export default function ReactPlayer({ src, type }) {
+  useEffect(() => {});
+
   return (
     <div>
       <Player
