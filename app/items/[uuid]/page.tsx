@@ -60,7 +60,7 @@ function formatItemBreadcrumbs(item: ItemModel) {
   if (breadcrumbData.collection) {
     breadcrumbs.push({
       text: breadcrumbData.collection.text,
-      url: breadcrumbData.collection.url,
+      url: breadcrumbData.collection.path,
     });
   }
   breadcrumbs.push({
@@ -80,15 +80,16 @@ export default async function ItemViewer({ params, searchParams }: ItemProps) {
   const maxIndex = imageIDs.length - 1;
   const rawIndex = searchParams.canvasIndex || 0;
   const clampedCanvasIndex = Math.max(0, Math.min(rawIndex, maxIndex));
+  const breadcrumbData = formatItemBreadcrumbs(item);
   return (
     <PageLayout
       activePage="item"
-      breadcrumbs={formatItemBreadcrumbs(item)}
+      breadcrumbs={breadcrumbData}
       adobeAnalyticsPageName={createAdobeAnalyticsPageName("items", item.title)}
       ga4Data={{
-        collection: item.breadcrumbData.collection?.title ?? undefined,
-        subcollection: item.subcollectionName ?? undefined,
-        division: item.breadcrumbData.division,
+        division: breadcrumbData[1]?.text,
+        collection: breadcrumbData[2]?.text ?? "No detail",
+        subcollection: item.subcollectionName ?? "No detail",
       }}
     >
       <ItemPage
