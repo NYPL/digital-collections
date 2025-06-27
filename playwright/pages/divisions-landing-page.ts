@@ -38,7 +38,9 @@ export class DivisionsLandingPage extends DivisionsPage {
     ];
 
     this.pageDescriptionGeneric = page.locator("p").first();
-    this.pageContactGeneric = page.getByText("Contact info and more ");
+    this.pageContactGeneric = page.getByRole("link", {
+      name: "Contact info and more",
+    });
     this.pageHeadingGeneric = page.getByRole("heading", { level: 1 });
   }
 }
