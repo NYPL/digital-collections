@@ -7,11 +7,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 ### Added
-- Added Playwright tests to verify featured section on the homepage, test feedback button to the home page,test to verify two collections on the home page  (DR-3658)
+- Added Playwright tests to verify featured section,feedback button, verify two collections(DR-3658)
 - Added Playwright tests to clear search results filters (DR-3659)
 - Added Playwright tests to sort search results (DR-3659)
 - Added Image ID to Items page (DR-3695)
-- Added Playwright test where a user clicks Divisions from home page navigation menu,test to verify navigation menu on Divisons page,test to verify Division's name headings and the see more links for each division  (DR-3655)
+- Added Playwright test for navigation menu,verify Division's name headings and the see more links for each division  (DR-3655)
 
 
 ### Fixed
