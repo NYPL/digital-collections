@@ -15,7 +15,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Added Playwright  test where a user clicks Divisions from home page navigation menu (DR-3655)
 - Added Playwright updated test to verify navigation menu on Divisons page (DR-3655)
 - Added Playwright test to verify Division's name headings and the see more links for each division (DR-3655)
-
+- Added Playwright test for the division's landing page (DR-3716)
 ### Fixed
 - Fixed Order Print button (DR-3486)
 - Fixed bug with UniversalViewer where image controls are hidden after clicking an image (DR-3692)
