@@ -1,5 +1,5 @@
 import { Locator, Page } from "@playwright/test";
-import { DivisionsPage } from "./divisions.page"; // Make sure the path is correct
+import { DivisionsPage } from "./divisions.page";
 
 export class DivisionsLandingPage extends DivisionsPage {
   divisionsLandingPageSlugs: string[];
@@ -8,7 +8,7 @@ export class DivisionsLandingPage extends DivisionsPage {
   readonly pageHeadingGeneric: Locator;
 
   constructor(page: Page) {
-    super(page); // Call the parent constructor
+    super(page);
 
     this.divisionsLandingPageSlugs = [
       "billy-rose-theatre-division",
@@ -39,6 +39,6 @@ export class DivisionsLandingPage extends DivisionsPage {
 
     this.pageDescriptionGeneric = page.locator("p").first();
     this.pageContactGeneric = page.getByText("Contact info and more ");
-    this.pageHeadingGeneric = page.locator("h1");
+    this.pageHeadingGeneric = page.getByRole("heading", { level: 1 });
   }
 }

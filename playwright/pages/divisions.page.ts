@@ -2,7 +2,7 @@ import { Locator, Page } from "@playwright/test";
 
 export class DivisionsPage {
   private readonly page: Page;
-  readonly seeMore: Locator; // for the array of divisions
+  readonly seeMore: Locator;
   readonly seeMoreLink: Locator;
   readonly items: Locator;
   readonly collections: Locator;

@@ -1,5 +1,5 @@
 import { test, expect } from "@playwright/test";
-import { DivisionsLandingPage } from "../pages/divisions-landing";
+import { DivisionsLandingPage } from "../pages/divisions-landing-page";
 import { DivisionsPage } from "../pages/divisions.page";
 
 test.describe("Divisions Page Navigation", () => {
@@ -25,6 +25,7 @@ test.describe("Divisions Page Navigation", () => {
     const divisionsPage = new DivisionsPage(page);
     const divisionsLandingPage = new DivisionsLandingPage(page);
 
+    await expect(divisionsPage.seeMoreLink.nth[4]).toBeVisible();
     await divisionsPage.seeMoreLink.nth(4).click();
     const expectedUrl = `${DivisionsPage.divisionsUrl}/${divisionsLandingPage.divisionsLandingPageSlugs[4]}`;
     const expectedHeadingText = "George Arents Collection";
