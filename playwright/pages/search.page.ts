@@ -115,7 +115,7 @@ export default class SearchPage {
       name: "See all filter options",
     });
     this.hideFilters = this.page.getByRole("button", {
-      name: "Less filter options",
+      name: "Fewer filter options",
     });
     this.applyFilterButton = this.page.getByRole("button", {
       name: "Apply",
