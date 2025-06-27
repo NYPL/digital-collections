@@ -11,7 +11,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Added Playwright tests to clear search results filters (DR-3659)
 - Added Playwright tests to sort search results (DR-3659)
 - Added Image ID to Items page (DR-3695)
-- Added Playwright test for navigation menu,verify Division's name headings and the see more links for each division  (DR-3655)
+- Added Playwright test for navigation menu,verify Division's name headings and the see more links for each division (DR-3655)
 
 
 ### Fixed
