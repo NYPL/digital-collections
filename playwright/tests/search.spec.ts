@@ -27,10 +27,13 @@ test("searches for a keyword from homepage", async ({ page }) => {
 
 test("displays search results", async () => {
   await expect(searchPage.resultsHeading).toBeVisible();
-  await expect(searchPage.firstResult).toBeVisible();
-  await expect(searchPage.firstResult).toContainText(searchPage.searchKeyword, {
-    ignoreCase: true,
-  });
+  await expect(searchPage.firstItemResult).toBeVisible();
+  await expect(searchPage.firstKeywordResult).toContainText(
+    searchPage.searchKeyword,
+    {
+      ignoreCase: true,
+    }
+  );
 });
 
 test("displays search result filters", async () => {
@@ -172,5 +175,27 @@ test.describe("sorts search results", () => {
     await expect(searchPage.sortByRelevance).toBeVisible();
     await searchPage.sortByRelevance.click();
     await expect(searchPage.sortByRelevanceSelected).toBeVisible();
+  });
+});
+
+test.describe("clicks on an item in search results", () => {
+  test("clicks on an item in unfiltered search results", async () => {
+    await expect(searchPage.refineHeading).toBeVisible();
+
+    await expect(searchPage.firstItemResult).toBeVisible();
+    await searchPage.firstItemResult.click();
+    await expect(searchPage.page).toHaveURL(/\/(items)\//);
+    await expect(searchPage.refineHeading).not.toBeVisible();
+  });
+
+  test("clicks on an item in filtered search results", async () => {
+    await expect(searchPage.refineHeading).toBeVisible();
+
+    await searchPage.filterSearchResults();
+
+    await expect(searchPage.firstItemResult).toBeVisible();
+    await searchPage.firstItemResult.click();
+    await expect(searchPage.page).toHaveURL(/\/(items)\//);
+    await expect(searchPage.refineHeading).not.toBeVisible();
   });
 });
