@@ -23,3 +23,19 @@ test("verify divisions headings on division's page", async ({ page }) => {
     await expect(divisionsPage.seeMore).toBeVisible();
   }
 });
+
+test("verify collections on division's page", async ({ page }) => {
+  const divisionsPage = new DivisionsPage(page);
+
+  await expect(divisionsPage.marthaSwopePhotographicCollection).toBeVisible();
+  await expect(divisionsPage.marthaSwopeCard).toContainText(
+    "Contains on-site materials"
+  );
+  await expect(divisionsPage.wallaceDivisionPictureCollection).toBeVisible();
+  await expect(divisionsPage.marthaSwopePhotographicCollectionItems).not.toBe(
+    "0 items"
+  );
+  await expect(divisionsPage.wallaceDivisionPictureCollectionItems).not.toBe(
+    "0 items"
+  );
+});
