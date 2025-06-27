@@ -26,6 +26,14 @@ export class DCHomepage {
   readonly booksAndPeriodicalsSeeMoreLink: Locator;
   readonly fliersAndEphemeraSeeMoreLink: Locator;
 
+  //collections on homepage
+  readonly posadaCollection: Locator;
+  readonly farmSecurityAdministrationPhotographsCollection: Locator;
+
+  //collections' items count
+  readonly posadaCollectionItems: Locator;
+  readonly farmSecurityAdministrationPhotographsCollectionItems: Locator;
+
   //featured section
   readonly featuredSectionHeading: Locator;
   readonly featuredDigitalCollectionsPrintStore: Locator;
@@ -90,6 +98,25 @@ export class DCHomepage {
     this.whatIsPublicDomainLink = this.page.getByRole("link", {
       name: "What is public domain?",
     });
+
+    //collections
+    this.posadaCollection = this.page.getByRole("link", {
+      name: "Posada Collection",
+      exact: true,
+    });
+    this.farmSecurityAdministrationPhotographsCollection = this.page.locator(
+      "#row-card-heading-farm-security-administration-photographs-1"
+    );
+
+    //collections' items total count
+    //these locators are used to verify that the collections have items
+    this.posadaCollectionItems = this.page.locator(
+      "#item-count-posada-collection-0"
+    );
+    this.farmSecurityAdministrationPhotographsCollectionItems =
+      this.page.locator(
+        "#item-count-farm-security-administration-photographs-1"
+      );
 
     //featured section
 
