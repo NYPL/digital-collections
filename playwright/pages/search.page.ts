@@ -104,9 +104,9 @@ export default class SearchPage {
     this.startYear = this.page.getByRole("textbox", { name: "Start year" });
     this.endYear = this.page.getByRole("textbox", { name: "End year" });
     this.applyDates = this.page.getByRole("button", { name: "Apply dates" });
-    this.availablePublicDomain = this.page.getByRole("radio", {
-      name: "Public domain",
-    });
+    this.availablePublicDomain = this.page
+      .locator("label")
+      .filter({ hasText: "Public domain" });
     this.availableOnline = this.page.getByRole("radio", {
       name: "Available online",
     });

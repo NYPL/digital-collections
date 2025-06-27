@@ -16,6 +16,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Added Playwright updated test to verify navigation menu on Divisons page (DR-3655)
 - Added Playwright test to verify Division's name headings and the see more links for each division (DR-3655)
 - Added Playwright tests to click on items in search results (DR-3659)
+- Added Playwright tests to filter by date and availability (DR-3659)
 
 ### Fixed
 - Fixed Order Print button (DR-3486)
