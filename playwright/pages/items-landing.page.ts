@@ -7,6 +7,11 @@ export default class ItemsLandingPage {
   readonly items: Locator;
   readonly resultsHeading: Locator;
   readonly firstResult: Locator;
+  readonly searchBar: Locator;
+  readonly searchButton: Locator;
+  readonly refineHeading: Locator;
+  readonly topicFilter: Locator;
+  readonly sortButton: Locator;
 
   constructor(page: Page) {
     this.page = page;
@@ -19,6 +24,13 @@ export default class ItemsLandingPage {
     this.firstResult = this.page
       .locator("a[href*='/items/'], a[href*='/collections/']")
       .first();
+    this.searchBar = this.page.getByPlaceholder("Search keyword(s)");
+    this.searchButton = this.page.getByRole("button", { name: "Search" });
+    this.refineHeading = this.page.getByRole("heading", {
+      name: "Refine your search",
+    });
+    this.topicFilter = this.page.getByRole("button", { name: "Topic" });
+    this.sortButton = this.page.locator("#menu-button-sort-menu");
   }
 
   static async loadPage(
