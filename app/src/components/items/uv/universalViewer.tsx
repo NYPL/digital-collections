@@ -39,7 +39,31 @@ const UniversalViewer: React.FC<UniversalViewerProps> = React.memo(
           button.style.position = "relative";
           button.style.zIndex = "10000";
         });
+
+        const paginationButtons = Array.from(
+          document.getElementsByClassName(
+            "btn btn-default paging"
+          ) as HTMLCollectionOf<HTMLElement>
+        );
+        console.log("paginationButtons: ", paginationButtons);
+
+        paginationButtons.forEach((button) => {
+          console.log("paginationButton before: ", button);
+
+          const div = button.parentNode as HTMLElement;
+          console.log("parentNode before: ", div);
+          div.style.opacity = "100";
+          div.focus();
+          console.log("paginationButton after: ", button);
+          console.log("parentNode after: ", div);
+        });
+
+        console.log("button: ", paginationButtons[0]);
+        console.log("parent node: ", paginationButtons[0].parentNode);
       }
+
+      //btn btn-default paging prev
+      //btn btn-default paging next
     };
 
     console.log("config as component prop is: ", config);
@@ -82,6 +106,7 @@ const UniversalViewer: React.FC<UniversalViewerProps> = React.memo(
                 pagingHeaderPanel: true,
                 pagingOptionEnabled: true,
                 clickToZoomEnabled: false,
+                allowStealFocus: false,
               },
               modules: {
                 headerPanel: {
