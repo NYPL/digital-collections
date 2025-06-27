@@ -1,12 +1,14 @@
 import { Locator, Page } from "@playwright/test";
+import { DivisionsPage } from "./divisions.page"; // Make sure the path is correct
 
-export class DivisionsLandingPage {
-  readonly page: Page;
-
+export class DivisionsLandingPage extends DivisionsPage {
   divisionsLandingPageSlugs: string[];
+  readonly pageDescriptionGeneric: Locator;
+  readonly pageContactGeneric: Locator;
+  readonly pageHeadingGeneric: Locator;
 
   constructor(page: Page) {
-    this.page = page;
+    super(page); // Call the parent constructor
 
     this.divisionsLandingPageSlugs = [
       "billy-rose-theatre-division",
@@ -34,5 +36,9 @@ export class DivisionsLandingPage {
       "the-miriam-and-ira-d-wallach-division-of-art-prints-and-photographs-picture",
       "the-miriam-and-ira-d-wallach-division-of-art-prints-and-photographs-print",
     ];
+
+    this.pageDescriptionGeneric = page.locator("p").first();
+    this.pageContactGeneric = page.getByText("Contact info and more ");
+    this.pageHeadingGeneric = page.locator("h1");
   }
 }

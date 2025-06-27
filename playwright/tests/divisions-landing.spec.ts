@@ -1,18 +1,40 @@
 import { test, expect } from "@playwright/test";
 import { DivisionsLandingPage } from "../pages/divisions-landing";
+import { DivisionsPage } from "../pages/divisions.page";
 
-test.beforeEach(async ({ page }) => {
-  await page.goto("http://localhost:3000/divisions");
-});
+test.describe("Divisions Page Navigation", () => {
+  test.setTimeout(60000);
 
-test("verify divisions landing page and each slug URL", async ({ page }) => {
-  const divisionsLandingPage = new DivisionsLandingPage(page);
+  test.beforeEach(async ({ page }) => {
+    await page.goto(DivisionsPage.divisionsUrl);
+  });
 
-  for (const slug of divisionsLandingPage.divisionsLandingPageSlugs) {
-    const fullUrl = `http://localhost:3000/divisions/${slug}`;
+  test("verify divisions landing page and each slug URL", async ({ page }) => {
+    const divisionsLandingPage = new DivisionsLandingPage(page);
 
-    await page.goto(fullUrl);
+    for (const slug of divisionsLandingPage.divisionsLandingPageSlugs) {
+      const fullUrl = `${DivisionsPage.divisionsUrl}/${slug}`;
+      await page.goto(fullUrl);
+      await expect(page).toHaveURL(fullUrl);
+    }
+  });
 
-    await expect(page).toHaveURL(`http://localhost:3000/divisions/${slug}`);
-  }
+  test("from divisions page click see more link and verify divisions landing page", async ({
+    page,
+  }) => {
+    const divisionsPage = new DivisionsPage(page);
+    const divisionsLandingPage = new DivisionsLandingPage(page);
+
+    await divisionsPage.seeMoreLink.nth(4).click();
+    const expectedUrl = `${DivisionsPage.divisionsUrl}/${divisionsLandingPage.divisionsLandingPageSlugs[4]}`;
+    const expectedHeadingText = "George Arents Collection";
+
+    await expect(page).toHaveURL(expectedUrl);
+    await expect(divisionsLandingPage.pageHeadingGeneric).toBeVisible();
+    await expect(divisionsLandingPage.pageHeadingGeneric).toHaveText(
+      expectedHeadingText
+    );
+    await expect(divisionsLandingPage.pageDescriptionGeneric).toBeVisible();
+    await expect(divisionsLandingPage.pageContactGeneric).toBeVisible();
+  });
 });
