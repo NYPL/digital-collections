@@ -41,6 +41,7 @@ export class ItemModel {
   breadcrumbData: any;
   mediaFiles: string[];
   subcollectionName: string | null;
+  permittedLocationText: string;
 
   constructor(uuid: string, manifest: any) {
     const parser = new Maniiifest(manifest);
@@ -86,6 +87,11 @@ export class ItemModel {
         ? rawManifestMetadata["Division"].toString()
         : rawManifestMetadata["Library Locations"][0] || "";
 
+    this.permittedLocationText =
+      this.isRestricted && rawManifestMetadata["Permitted Locations"]
+        ? rawManifestMetadata["Permitted Locations"][0]?.toString()
+        : "";
+
     // for viewer configs and order print button
     this.contentType = rawManifestMetadata["Content Type"]
       ? rawManifestMetadata["Content Type"][0].toString()
@@ -110,17 +116,25 @@ export class ItemModel {
     // Special NYPL Identifiers for external links
     const identifiers = rawManifestMetadata["Identifiers"];
 
-    const archivesLink = identifiers.find((identifier) =>
+    const archivesComponentLink = identifiers.find((identifier) =>
       identifier.includes("Archives EAD ID")
     );
+    this.archivesLink = archivesComponentLink
+      ? extractFirstHrefFromHTML(archivesComponentLink)
+      : null;
+
+    if (!this.archivesLink) {
+      const archivesFindingAidLink = identifiers.find((identifier) =>
+        identifier.includes("Archives ID")
+      );
+      this.archivesLink = archivesFindingAidLink
+        ? extractFirstHrefFromHTML(archivesFindingAidLink)
+        : null;
+    }
 
     const catalogLink = identifiers.find((identifier) =>
       identifier.includes("NYPL Catalog ID (bnumber)")
     );
-
-    this.archivesLink = archivesLink
-      ? extractFirstHrefFromHTML(archivesLink)
-      : null;
 
     this.catalogLink = catalogLink
       ? extractFirstHrefFromHTML(catalogLink)
@@ -153,12 +167,17 @@ export class ItemModel {
     const collectionLinkObj = extractAllAnchorsFromHTML(
       orderedCollections[0] ?? ""
     )[0];
-    collectionLinkObj["path"] = new URL(collectionLinkObj.href).pathname;
-
-    this.breadcrumbData = {
-      division: divisionLinkObj,
-      collection: collectionLinkObj,
-    };
+    if (collectionLinkObj) {
+      collectionLinkObj["path"] = new URL(collectionLinkObj.href).pathname;
+      this.breadcrumbData = {
+        division: divisionLinkObj,
+        collection: collectionLinkObj,
+      };
+    } else {
+      this.breadcrumbData = {
+        division: divisionLinkObj,
+      };
+    }
 
     this.subcollectionName = null;
     if (orderedCollections.length > 1) {
@@ -169,6 +188,5 @@ export class ItemModel {
 
     // get a list of signed urls
     this.mediaFiles = annotations.map((annotation) => annotation.id);
-    console.log("item.mediaFiles is", this.mediaFiles[0]);
   }
 }
