@@ -9,12 +9,39 @@ export class DivisionsPage {
   readonly about: Locator;
   readonly headings: Locator;
 
+  // collections
+
+  readonly marthaSwopePhotographicCollection: Locator;
+  readonly marthaSwopeCard: Locator;
+  readonly wallaceDivisionPictureCollection: Locator;
+
+  //collections items
+  readonly marthaSwopePhotographicCollectionItems: Locator;
+  readonly wallaceDivisionPictureCollectionItems: Locator;
   static divisionsUrl: string = "/divisions";
 
   readonly expectedDivisionNames: string[];
 
   constructor(page: Page) {
     this.page = page;
+
+    this.marthaSwopePhotographicCollection = page.getByRole("link", {
+      name: "Martha Swope photographs",
+      exact: true,
+    });
+
+    this.marthaSwopeCard = page.locator("#card-martha-swope-photographs-1");
+
+    this.marthaSwopePhotographicCollectionItems = page.locator(
+      "#item-count-martha-swope-photographs-1"
+    );
+    this.wallaceDivisionPictureCollection = page.getByRole("link", {
+      name: "Wallach Division Picture Collection",
+      exact: true,
+    });
+    this.wallaceDivisionPictureCollectionItems = page.locator(
+      "#item-count-wallach-division-picture-collection-0"
+    );
 
     // Expected division names
     this.expectedDivisionNames = [
