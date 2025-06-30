@@ -7,7 +7,7 @@ const Player = dynamic(() => import("react-player/lazy"), { ssr: false });
 export default function ReactPlayer({ src, type }) {
   useEffect(() => {
     // disable download
-    const player = document.querySelector("video");
+    const player = document.querySelector("video") as any;
     player?.controls; // true
     player?.controlsList == "nodownload";
   });
