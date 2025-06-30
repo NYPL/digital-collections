@@ -61,6 +61,9 @@ const uvConfig = {
 const ItemMediaViewer = ({ item, canvasIndex }: ItemProps) => {
   let viewer;
   let contentType = item.contentType;
+  const captureUuidToIdx = Object.fromEntries(
+    item.captures.map((capture) => [capture.uuid, capture.orderInSequence - 1])
+  );
 
   if (item.isImage) {
     viewer = (
@@ -68,6 +71,7 @@ const ItemMediaViewer = ({ item, canvasIndex }: ItemProps) => {
         <UniversalViewer
           manifestId={item.manifestURL}
           canvasIndex={canvasIndex || 0}
+          captureUuidToIdx={captureUuidToIdx}
           config={uvConfig}
           onChangeCanvas={(manifest, canvas) => {
             // why is this not printing in the console

@@ -12,13 +12,25 @@ export type UniversalViewerProps = {
   config?: any;
   manifestId: string;
   canvasIndex?: number;
+  captureUuidToIdx: { [uuid: string]: number };
   onChangeCanvas?: (manifest: string, canvas: string) => void;
   onChangeManifest?: (manifest: string) => void;
 };
 
 // pulled most of this code from: https://codesandbox.io/p/sandbox/uv-nextjs-example-239ff5?file=%2Fcomponents%2FUniversalViewer.tsx%3A39%2C1-49%2C8
 const UniversalViewer: React.FC<UniversalViewerProps> = React.memo(
-  ({ manifestId, canvasIndex, onChangeCanvas, config }) => {
+  ({ manifestId, captureUuidToIdx, canvasIndex, onChangeCanvas, config }) => {
+    const hash = window.location.hash.slice(3);
+    const captureUuid = new URLSearchParams(hash).get("uuid");
+    if (captureUuid) {
+      const captureIdx = captureUuidToIdx[captureUuid];
+      if (captureIdx) {
+        window.location.replace(
+          window.location.pathname + `?canvasIndex=${captureIdx}`
+        );
+      }
+    }
+
     const searchParams = useSearchParams();
     const { setCurrentCanvasIndex } = useCanvasContext();
 
