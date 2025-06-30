@@ -20,6 +20,12 @@ import {
 // https://www.npmjs.com/package/@iiif/manifold
 // https://github.com/iiif-commons/manifold
 
+export class CaptureModel {
+  uuid: string;
+  imageId: string | null;
+  orderInSequence: number;
+}
+
 // TO DO: add isCartographic for map stuff
 export class ItemModel {
   uuid: string;
@@ -42,12 +48,14 @@ export class ItemModel {
   mediaFiles: string[];
   subcollectionName: string | null;
   permittedLocationText: string;
+  captures: CaptureModel[];
 
-  constructor(uuid: string, manifest: any) {
+  constructor(uuid: string, manifest: any, captures?: CaptureModel[]) {
     const parser = new Maniiifest(manifest);
     // Non-Manifest/Metadata related fields
     this.uuid = uuid;
     this.manifestURL = `${process.env.COLLECTIONS_API_URL}/manifests/${uuid}`;
+    this.captures = captures ?? [];
 
     // Manifest related fields
     this.hasItems = manifest.items.length > 0;
