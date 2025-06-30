@@ -6,6 +6,7 @@ import { createAdobeAnalyticsPageName } from "../../src/utils/utils";
 import { ItemModel } from "../../src/models/item";
 import { ItemPage } from "@/src/components/pages/itemPage/itemPage";
 import { revalidatePath } from "next/cache";
+import { redirect } from "next/navigation";
 import { CollectionsApi } from "@/src/utils/apiClients/apiClients";
 
 type ItemProps = {
@@ -22,6 +23,14 @@ const getItemManifest = async (uuid: string) => {
   const clientIP = await getClientIP();
   const data = await CollectionsApi.getManifestForItemUUID(uuid, clientIP);
   return data;
+};
+
+const getCaptureMetadata = async (captureUuid: string) => {
+  try {
+    return await CollectionsApi.getCaptureMetadata(captureUuid);
+  } catch (error: any) {
+    return null;
+  }
 };
 
 const getClientIP = async () => {
@@ -72,7 +81,15 @@ function formatItemBreadcrumbs(item: ItemModel) {
 
 export default async function ItemViewer({ params, searchParams }: ItemProps) {
   revalidatePath("/");
-  const manifest = await getItemManifest(params.uuid);
+  const [manifest, capture] = await Promise.all([
+    getItemManifest(params.uuid),
+    getCaptureMetadata(params.uuid),
+  ]);
+  if (capture) {
+    redirect(
+      `/items/${capture.item_uuid}?canvasIndex=${capture.orderInSequence - 1}`
+    );
+  }
   const item = new ItemModel(params.uuid, manifest);
 
   // only allow canvasIndex to be in the range of 0...item.imageIds.length (number of canvases)
