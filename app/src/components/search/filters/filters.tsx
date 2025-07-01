@@ -74,7 +74,7 @@ const Filters = ({
           setFiltersExpanded((prev) => !prev);
         }}
       >
-        {filtersExpanded ? "Less filter options" : "See all filter options"}
+        {filtersExpanded ? "Fewer filter options" : "See all filter options"}
       </Button>
     </>
   );

@@ -8,6 +8,7 @@ import logger from "logger";
  *   - method: "GET" or "POST" (default is "GET").
  *   - params: URL parameters for GET requests.
  *   - body: Body data for POST requests.
+ *   - clientIP: IP address of the requester
  *   - isRepoApi: Boolean flag to determine if Repo API or Collections API authorization should be included.
  *   - next: Next.js-specific options (revalidate, tags)
  * @returns {Promise<any>} - The API response.
@@ -21,11 +22,19 @@ export const fetchApi = async ({
     method?: "GET" | "POST";
     params?: { [key: string]: any };
     body?: any;
+    clientIP?: string | null;
     isRepoApi?: boolean;
     next?;
   };
 }) => {
-  const { method = "GET", params, body, isRepoApi = true, next } = options;
+  const {
+    method = "GET",
+    params,
+    body,
+    clientIP = null,
+    isRepoApi = true,
+    next,
+  } = options;
 
   const headers: Record<string, string> = {};
 
@@ -41,6 +50,9 @@ export const fetchApi = async ({
   if (method === "GET" && params) {
     const queryString = "?" + new URLSearchParams(params).toString();
     apiUrl += queryString;
+  }
+  if (clientIP) {
+    headers["X-Forwarded-For"] = clientIP;
   }
 
   console.log("apiUrl is: ", apiUrl);
@@ -62,7 +74,7 @@ export const fetchApi = async ({
   try {
     const response = (await fetchWithTimeout(apiUrl, {
       method,
-      headers,
+      headers: headers,
       body: method === "POST" ? JSON.stringify(body) : undefined,
       next,
     })) as Response;
