@@ -41,7 +41,7 @@ const uvConfig = {
         maxZoomPixelRatio: 1.25,
         navigatorPosition: "BOTTOM_RIGHT",
         pageGap: 50,
-        showHomeControl: true,
+        showHomeControl: false,
         trimAttributionCount: 150,
         visibilityRatio: 0.5,
       },

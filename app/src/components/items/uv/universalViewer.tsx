@@ -53,13 +53,13 @@ const UniversalViewer: React.FC<UniversalViewerProps> = React.memo(
 
           const div = button.parentNode as HTMLElement;
           console.log("parentNode before: ", div);
-          div.style.opacity = "100";
-          div.style.position = "initial";
-          div.style.zIndex = "10000";
-          div.style.pointerEvents = "auto";
-          div.focus();
-          console.log("paginationButton after: ", button);
-          console.log("parentNode after: ", div);
+          // div.style.opacity = "100";
+          // div.style.position = "initial";
+          // div.style.zIndex = "10000";
+          // div.style.pointerEvents = "auto";
+          // div.focus();
+          // console.log("paginationButton after: ", button);
+          // console.log("parentNode after: ", div);
         });
 
         console.log("button: ", paginationButtons[0]);
@@ -194,7 +194,7 @@ const UniversalViewer: React.FC<UniversalViewerProps> = React.memo(
                     maxZoomPixelRatio: 1.25,
                     navigatorPosition: "BOTTOM_RIGHT",
                     pageGap: 50,
-                    showHomeControl: true,
+                    showHomeControl: false,
                     trimAttributionCount: 150,
                     visibilityRatio: 0.5,
                   },
