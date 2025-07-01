@@ -27,76 +27,129 @@ test("searches for a keyword from homepage", async ({ page }) => {
 
 test("displays search results", async () => {
   await expect(searchPage.resultsHeading).toBeVisible();
-  await expect(searchPage.firstResult).toBeVisible();
-  await expect(searchPage.firstResult).toContainText(searchPage.searchKeyword, {
-    ignoreCase: true,
+  await expect(searchPage.firstItemResult).toBeVisible();
+  await expect(searchPage.firstKeywordResult).toContainText(
+    searchPage.searchKeyword,
+    {
+      ignoreCase: true,
+    }
+  );
+});
+
+test.describe("displays search results filters", () => {
+  test("displays first row of drop-down filters", async () => {
+    await expect(searchPage.refineHeading).toBeVisible();
+
+    await expect(searchPage.topicFilter).toBeVisible();
+    await expect(searchPage.nameFilter).toBeVisible();
+    await expect(searchPage.collectionFilter).toBeVisible();
+    await expect(searchPage.placeFilter).toBeVisible();
+  });
+
+  test("does not yet display second row of drop-down filters", async () => {
+    await expect(searchPage.refineHeading).toBeVisible();
+
+    await expect(searchPage.genreFilter).not.toBeVisible();
+    await expect(searchPage.publisherFilter).not.toBeVisible();
+    await expect(searchPage.divisionFilter).not.toBeVisible();
+    await expect(searchPage.typeFilter).not.toBeVisible();
+  });
+
+  test("displays second row of drop-down filters", async () => {
+    await expect(searchPage.refineHeading).toBeVisible();
+
+    await expect(searchPage.showFilters).toBeVisible();
+    await searchPage.showFilters.click();
+    await expect(searchPage.genreFilter).toBeVisible();
+    await expect(searchPage.publisherFilter).toBeVisible();
+    await expect(searchPage.divisionFilter).toBeVisible();
+    await expect(searchPage.typeFilter).toBeVisible();
+  });
+
+  test("displays date range filters", async () => {
+    await expect(searchPage.refineHeading).toBeVisible();
+
+    await expect(searchPage.showFilters).toBeVisible();
+    await searchPage.showFilters.click();
+    await expect(searchPage.startYear).toBeVisible();
+    await expect(searchPage.endYear).toBeVisible();
+    await expect(searchPage.applyDates).toBeVisible();
+  });
+
+  test("displays availability filters", async () => {
+    await expect(searchPage.refineHeading).toBeVisible();
+
+    await expect(searchPage.showFilters).toBeVisible();
+    await searchPage.showFilters.click();
+    await expect(searchPage.availablePublicDomain).toBeVisible();
+    await expect(searchPage.availableOnline).toBeVisible();
+    await expect(searchPage.availableOnsite).toBeVisible();
+  });
+
+  test("hides second row of drop-down filters", async () => {
+    await expect(searchPage.refineHeading).toBeVisible();
+
+    await expect(searchPage.showFilters).toBeVisible();
+    await searchPage.showFilters.click();
+    await expect(searchPage.hideFilters).toBeVisible();
+    await searchPage.hideFilters.click();
+    await expect(searchPage.genreFilter).not.toBeVisible();
+    await expect(searchPage.publisherFilter).not.toBeVisible();
+    await expect(searchPage.divisionFilter).not.toBeVisible();
+    await expect(searchPage.typeFilter).not.toBeVisible();
   });
 });
 
-test("displays search result filters", async () => {
-  await expect(searchPage.refineHeading).toBeVisible();
+test.describe("filters search results", () => {
+  test("filters drop-downs in first row", async () => {
+    await expect(searchPage.refineHeading).toBeVisible();
 
-  // displays first row of filters
-  await expect(searchPage.topicFilter).toBeVisible();
-  await expect(searchPage.nameFilter).toBeVisible();
-  await expect(searchPage.collectionFilter).toBeVisible();
-  await expect(searchPage.placeFilter).toBeVisible();
+    await expect(searchPage.topicFilter).toBeVisible();
+    await searchPage.topicFilter.click();
+    await expect(searchPage.topicOption).toBeVisible();
+    await searchPage.topicOption.click();
+    await expect(searchPage.applyFilterButton).toBeVisible();
+    await searchPage.applyFilterButton.click();
+    await expect(searchPage.topicSelected).toBeVisible();
+  });
+  test("filters drop-downs in second row", async () => {
+    await expect(searchPage.refineHeading).toBeVisible();
 
-  // does not yet display second row of filters
-  await expect(searchPage.genreFilter).not.toBeVisible();
-  await expect(searchPage.publisherFilter).not.toBeVisible();
-  await expect(searchPage.divisionFilter).not.toBeVisible();
-  await expect(searchPage.typeFilter).not.toBeVisible();
+    await expect(searchPage.showFilters).toBeVisible();
+    await searchPage.showFilters.click();
+    await expect(searchPage.publisherFilter).toBeVisible();
+    await searchPage.publisherFilter.click();
+    await expect(searchPage.publisherOption).toBeVisible();
+    await searchPage.publisherOption.click();
+    await expect(searchPage.applyFilterButton).toBeVisible();
+    await searchPage.applyFilterButton.click();
+    await expect(searchPage.publisherSelected).toBeVisible();
+  });
 
-  // displays second row of filters
-  await expect(searchPage.showFilters).toBeVisible();
-  await searchPage.showFilters.click();
-  await expect(searchPage.genreFilter).toBeVisible();
-  await expect(searchPage.publisherFilter).toBeVisible();
-  await expect(searchPage.divisionFilter).toBeVisible();
-  await expect(searchPage.typeFilter).toBeVisible();
+  test("filters search results by dates", async () => {
+    await expect(searchPage.refineHeading).toBeVisible();
 
-  // displays date range filters
-  await expect(searchPage.startYear).toBeVisible();
-  await expect(searchPage.endYear).toBeVisible();
-  await expect(searchPage.applyDates).toBeVisible();
+    await expect(searchPage.showFilters).toBeVisible();
+    await searchPage.showFilters.click();
+    await expect(searchPage.startYear).toBeVisible();
+    await expect(searchPage.endYear).toBeVisible();
+    await searchPage.startYear.fill("1700");
+    await searchPage.endYear.fill("1800");
+    await expect(searchPage.applyDates).toBeVisible();
+    await searchPage.applyDates.click();
+    await expect(searchPage.startYear).toHaveValue("1700");
+    await expect(searchPage.endYear).toHaveValue("1800");
+  });
 
-  // displays availability filters
-  await expect(searchPage.availablePublicDomain).toBeVisible();
-  await expect(searchPage.availableOnline).toBeVisible();
-  await expect(searchPage.availableOnsite).toBeVisible();
+  test("filters search results by availability", async () => {
+    await expect(searchPage.refineHeading).toBeVisible();
 
-  // hides second row of filters
-  await expect(searchPage.hideFilters).toBeVisible();
-  await searchPage.hideFilters.click();
-  await expect(searchPage.genreFilter).not.toBeVisible();
-  await expect(searchPage.publisherFilter).not.toBeVisible();
-  await expect(searchPage.divisionFilter).not.toBeVisible();
-  await expect(searchPage.typeFilter).not.toBeVisible();
-});
-
-test("filters search results", async () => {
-  await expect(searchPage.refineHeading).toBeVisible();
-
-  // filters a drop-down in the first row
-  await expect(searchPage.topicFilter).toBeVisible();
-  await searchPage.topicFilter.click();
-  await expect(searchPage.topicOption).toBeVisible();
-  await searchPage.topicOption.click();
-  await expect(searchPage.applyFilterButton).toBeVisible();
-  await searchPage.applyFilterButton.click();
-  await expect(searchPage.topicSelected).toBeVisible();
-
-  // filters a drop-down in the second row
-  await expect(searchPage.showFilters).toBeVisible();
-  await searchPage.showFilters.click();
-  await expect(searchPage.publisherFilter).toBeVisible();
-  await searchPage.publisherFilter.click();
-  await expect(searchPage.publisherOption).toBeVisible();
-  await searchPage.publisherOption.click();
-  await expect(searchPage.applyFilterButton).toBeVisible();
-  await searchPage.applyFilterButton.click();
-  await expect(searchPage.publisherSelected).toBeVisible();
+    await expect(searchPage.showFilters).toBeVisible();
+    await searchPage.showFilters.click();
+    await expect(searchPage.availablePublicDomain).toBeVisible();
+    await searchPage.availablePublicDomain.click();
+    await expect(searchPage.availablePublicDomain).toBeChecked();
+  });
 });
 
 test.describe("clears search results filters", () => {
@@ -111,7 +164,7 @@ test.describe("clears search results filters", () => {
     await expect(searchPage.publisherSelected).not.toBeVisible();
   });
 
-  test("clears dropdown filter", async () => {
+  test("clears drop-down filter", async () => {
     await expect(searchPage.refineHeading).toBeVisible();
 
     await searchPage.filterSearchResults(); // reset filters to topic and publisher
@@ -172,5 +225,27 @@ test.describe("sorts search results", () => {
     await expect(searchPage.sortByRelevance).toBeVisible();
     await searchPage.sortByRelevance.click();
     await expect(searchPage.sortByRelevanceSelected).toBeVisible();
+  });
+});
+
+test.describe("clicks on an item in search results", () => {
+  test("clicks on an item in unfiltered search results", async () => {
+    await expect(searchPage.refineHeading).toBeVisible();
+
+    await expect(searchPage.firstItemResult).toBeVisible();
+    await searchPage.firstItemResult.click();
+    await expect(searchPage.page).toHaveURL(/\/(items)\//);
+    await expect(searchPage.refineHeading).not.toBeVisible();
+  });
+
+  test("clicks on an item in filtered search results", async () => {
+    await expect(searchPage.refineHeading).toBeVisible();
+
+    await searchPage.filterSearchResults();
+
+    await expect(searchPage.firstItemResult).toBeVisible();
+    await searchPage.firstItemResult.click();
+    await expect(searchPage.page).toHaveURL(/\/(items)\//);
+    await expect(searchPage.refineHeading).not.toBeVisible();
   });
 });
