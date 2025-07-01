@@ -24,6 +24,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Fixed
 - Fixed Order Print button (DR-3486)
 - Fixed bug with UniversalViewer where image controls are hidden after clicking an image (DR-3692)
+- Fixed grammatical mistake on filter options. (NO-REF)
 
 ### Updated
 - Updated breadcrumb to include Division and Collection information (DR-3701)
