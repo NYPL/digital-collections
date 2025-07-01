@@ -26,8 +26,15 @@ export class DCHomepage {
   readonly booksAndPeriodicalsSeeMoreLink: Locator;
   readonly fliersAndEphemeraSeeMoreLink: Locator;
 
+  //featured section
+  readonly featuredSectionHeading: Locator;
+  readonly featuredDigitalCollectionsPrintStore: Locator;
+  readonly featuredVisitStore: Locator;
+  readonly featuredSpotlightOnPublicDomain: Locator;
+  readonly featuredLearnMore: Locator;
+
   //explore further
-  readonly exporeFurtherHeading: Locator;
+  readonly exploreFurtherHeading: Locator;
   readonly digitalCollectionPrintStore: Locator;
   readonly nyplArchivesAndManuscripts: Locator;
   readonly nyplResearchCatalog: Locator;
@@ -52,6 +59,17 @@ export class DCHomepage {
   readonly footerSocialInstagram: Locator;
   readonly footerSocialYouTube: Locator;
 
+  //feedback button
+  readonly feedbackButton: Locator;
+  readonly feedbackCommentRadioButton: Locator;
+  readonly feedbackBugRadioButton: Locator;
+  readonly feedbackCorrectionRadioButton: Locator;
+  readonly feedbackSubmitButton: Locator;
+  readonly feedbackCancelButton: Locator;
+  readonly feedbackTextArea: Locator;
+  readonly feedbackPrivacyPolicy: Locator;
+  readonly feedbackForm: Locator;
+
   constructor(page: Page) {
     //navigation menu
     this.page = page;
@@ -73,9 +91,35 @@ export class DCHomepage {
       name: "What is public domain?",
     });
 
+    //featured section
+
+    this.featuredSectionHeading = this.page.getByRole("link", {
+      name: "Featured",
+      exact: true,
+    });
+
+    this.featuredDigitalCollectionsPrintStore = this.page.getByRole("heading", {
+      name: "Digital Collections print store",
+      exact: true,
+    });
+    this.featuredVisitStore = this.page.getByLabel(
+      "Visit Store, Digital Collections print store",
+      { exact: true }
+    );
+
+    this.featuredSpotlightOnPublicDomain = this.page.getByRole("heading", {
+      name: "Spotlight on the public domain",
+    });
+
+    this.featuredLearnMore = this.page.getByLabel(
+      "Learn more, Spotlight on the public domain",
+      { exact: true }
+    );
+
     // explore further
-    this.exporeFurtherHeading = this.page.getByRole("heading", {
+    this.exploreFurtherHeading = this.page.getByRole("heading", {
       name: "Explore further",
+      exact: true,
     });
     this.digitalCollectionPrintStore = this.page.getByRole("link", {
       name: "Digital Collections Print Store",
@@ -131,5 +175,36 @@ export class DCHomepage {
       name: "Instagram",
     });
     this.footerSocialYouTube = this.page.getByRole("link", { name: "YouTube" });
+
+    //feedback button
+    this.feedbackButton = this.page.getByRole("button", { name: "Feedback" });
+    this.feedbackCommentRadioButton = this.page.getByRole("radio", {
+      name: "Comment",
+    });
+
+    this.feedbackBugRadioButton = this.page.getByRole("radio", {
+      name: "Bug",
+    });
+
+    this.feedbackCorrectionRadioButton = this.page.getByRole("radio", {
+      name: "Correction",
+    });
+
+    this.feedbackSubmitButton = this.page.getByRole("button", {
+      name: "Submit",
+    });
+
+    this.feedbackCancelButton = this.page.getByRole("button", {
+      name: "Cancel",
+    });
+
+    this.feedbackTextArea = this.page.getByPlaceholder(
+      "Enter your question or feedback here"
+    );
+    this.feedbackPrivacyPolicy = this.page.getByRole("link", {
+      name: "Privacy Policy",
+    });
+
+    this.feedbackForm = this.page.getByTestId("ds-form");
   }
 }

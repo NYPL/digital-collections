@@ -9,6 +9,7 @@ import {
   Box,
 } from "@nypl/design-system-react-components";
 import { useState } from "react";
+import parse from "html-react-parser";
 
 export type CollectionMetadataProps = {
   title: string;
@@ -358,7 +359,7 @@ const CollectionMetadata = ({ data }: { data: CollectionMetadataProps }) => {
               </Text>
               {contentNote.map((note, index) => (
                 <Text marginBottom="xs" key={index}>
-                  {note}
+                  {parse(note)}
                 </Text>
               ))}
             </Box>

@@ -1,0 +1,320 @@
+{
+  "id": "http://qa-api-collections.nypl.org/manifests/fd2f5090-0381-0131-a95f-3c075448cc4b",
+  "type": "Manifest",
+  "label": {
+    "en": [
+      "Atsara Cham, Korphu Drup: Day Two [Wide shot]"
+    ]
+  },
+  "@context": "http://iiif.io/api/presentation/3/context.json",
+  "metadata": [
+    {
+      "label": {
+        "en": [
+          "Collection"
+        ]
+      },
+      "value": {
+        "en": [
+          "\u003Cspan\u003E\u003Ca href='http://qa-digitalcollections.nypl.org/collections/6e78bb70-0d19-0131-2cea-3c075448cc4b'\u003EBhutan Dance Project, Core of Culture\u003C/a\u003E\u003C/span\u003E"
+        ]
+      }
+    },
+    {
+      "label": {
+        "en": [
+          "Names"
+        ]
+      },
+      "value": {
+        "en": [
+          "\u003Cspan\u003E\u003Ca href='http://qa-digitalcollections.nypl.org/search/index?filters=%5Bname%3DCore+of+Culture+%28Organization%29%5D'\u003ECore of Culture (Organization)\u003C/a\u003E  (Producer)\u003C/span\u003E",
+          "\u003Cspan\u003E\u003Ca href='http://qa-digitalcollections.nypl.org/search/index?filters=%5Bname%3DCore+of+Culture+%28Organization%29%5D'\u003ECore of Culture (Organization)\u003C/a\u003E  (Donor)\u003C/span\u003E"
+        ]
+      }
+    },
+    {
+      "label": {
+        "en": [
+          "Identifiers"
+        ]
+      },
+      "value": {
+        "en": [
+          "\u003Cspan\u003E\u003Cb\u003ENYPL Catalog ID (bnumber):\u003C/b\u003E \u003Ca href='https://www.nypl.org/research/research-catalog/bib/b19942863'\u003Eb19942863\u003C/a\u003E\u003C/span\u003E",
+          "\u003Cspan\u003E\u003Cb\u003EUniversal Unique Identifier (UUID):\u003C/b\u003E b7bbc6a0-0821-0131-e59c-3c075448cc4b\u003C/span\u003E"
+        ]
+      }
+    },
+    {
+      "label": {
+        "en": [
+          "Dates / Origin"
+        ]
+      },
+      "value": {
+        "en": [
+          "\u003Cspan\u003EDate Created \u003Ca href='http://qa-digitalcollections.nypl.org/search/index?filters=%5ByearBegin%3D2007%5D%5ByearEnd%3D2007%5D'\u003E2007\u003C/a\u003E\u003C/span\u003E"
+        ]
+      }
+    },
+    {
+      "label": {
+        "en": [
+          "Notes"
+        ]
+      },
+      "value": {
+        "en": [
+          "\u003Cp\u003E\u003Cb\u003EAdditional Physical Form:\u003C/b\u003E For close shot version, see: *MGZIDF 989B.\u003C/p\u003E",
+          "\u003Cp\u003E\u003Cb\u003EContent:\u003C/b\u003E Program of the Korphu Drup: Day Two (Jan. 4, 2007): Atsara Cham - Dance of the Atsaras ; Zheng Zhi Pem - Ritual for Longevity ; Shinjey Yab Yum - Dance of the Lord of Death and his Consort ; Sangay Lingpai Nga Cham - The Drum Dance of Sangay Lingpa ; Nyulemai Cham - The Dance of the Evil Spirit ; Chungzhi (Chung Zam) - Dance of the Four Garudas ; Nyulemai Cham (Part II) - The Dance of the Evil Spirit ; Peling Chagtshel - The Line Dance of the Peling Tradition ; Zhanag Nga Cham - Dance of the Black Hats with Drums.\u003C/p\u003E",
+          "\u003Cp\u003E\u003Cb\u003EVenue:\u003C/b\u003E Videotaped in performance at the Korphu Lakhang, in Trongsa, Bhutan (overlooking the courtyard from the top right of the Lakhang), on Jan. 4, 2007.\u003C/p\u003E",
+          "\u003Cp\u003E\u003Cb\u003EAcquisition:\u003C/b\u003E Gift; Core of Culture. NN-PD\u003C/p\u003E"
+        ]
+      }
+    },
+    {
+      "label": {
+        "en": [
+          "Physical Description"
+        ]
+      },
+      "value": {
+        "en": [
+          "1 video file (ca. 6 min.) : sound, color"
+        ]
+      }
+    },
+    {
+      "label": {
+        "en": [
+          "Library Locations"
+        ]
+      },
+      "value": {
+        "en": [
+          "\u003Cspan\u003E\u003Ca href='http://qa-digitalcollections.nypl.org/divisions/jerome-robbins-dance-division'\u003EJerome Robbins Dance Division\u003C/a\u003E\u003C/span\u003E",
+          "Shelf locator: *MGZIDF 989A"
+        ]
+      }
+    },
+    {
+      "label": {
+        "en": [
+          "Subjects"
+        ]
+      },
+      "value": {
+        "en": [
+          "\u003Cspan\u003E\u003Ca href='http://qa-digitalcollections.nypl.org/search/index?filters=%5Btopic%3DDance%5D'\u003EDance\u003C/a\u003E\u003C/span\u003E -- \u003Cspan\u003E\u003Ca href='http://qa-digitalcollections.nypl.org/search/index?filters=%5Bplace%3DBhutan%5D'\u003EBhutan\u003C/a\u003E\u003C/span\u003E",
+          "\u003Cspan\u003E\u003Ca href='http://qa-digitalcollections.nypl.org/search/index?filters=%5Btopic%3DFolk+dancing%5D'\u003EFolk dancing\u003C/a\u003E\u003C/span\u003E -- \u003Cspan\u003E\u003Ca href='http://qa-digitalcollections.nypl.org/search/index?filters=%5Bplace%3DBhutan%5D'\u003EBhutan\u003C/a\u003E\u003C/span\u003E",
+          "\u003Cspan\u003E\u003Ca href='http://qa-digitalcollections.nypl.org/search/index?filters=%5Btopic%3DDance%5D'\u003EDance\u003C/a\u003E\u003C/span\u003E -- \u003Cspan\u003E\u003Ca href='http://qa-digitalcollections.nypl.org/search/index?filters=%5Btopic%3DReligious+aspects%5D'\u003EReligious aspects\u003C/a\u003E\u003C/span\u003E -- \u003Cspan\u003E\u003Ca href='http://qa-digitalcollections.nypl.org/search/index?filters=%5Btopic%3DBuddhism%5D'\u003EBuddhism\u003C/a\u003E\u003C/span\u003E",
+          "\u003Cspan\u003E\u003Ca href='http://qa-digitalcollections.nypl.org/search/index?filters=%5Btopic%3DRites+%26+ceremonies%5D'\u003ERites & ceremonies\u003C/a\u003E\u003C/span\u003E -- \u003Cspan\u003E\u003Ca href='http://qa-digitalcollections.nypl.org/search/index?filters=%5Bplace%3DBhutan%5D'\u003EBhutan\u003C/a\u003E\u003C/span\u003E",
+          "\u003Cspan\u003E\u003Ca href='http://qa-digitalcollections.nypl.org/search/index?filters=%5Btopic%3DMasks%5D'\u003EMasks\u003C/a\u003E\u003C/span\u003E -- \u003Cspan\u003E\u003Ca href='http://qa-digitalcollections.nypl.org/search/index?filters=%5Bplace%3DBhutan%5D'\u003EBhutan\u003C/a\u003E\u003C/span\u003E",
+          "\u003Cspan\u003E\u003Ca href='http://qa-digitalcollections.nypl.org/search/index?filters=%5Btopic%3DDzongs%5D'\u003EDzongs\u003C/a\u003E\u003C/span\u003E -- \u003Cspan\u003E\u003Ca href='http://qa-digitalcollections.nypl.org/search/index?filters=%5Bplace%3DBhutan%5D'\u003EBhutan\u003C/a\u003E\u003C/span\u003E -- \u003Cspan\u003E\u003Ca href='http://qa-digitalcollections.nypl.org/search/index?filters=%5Bplace%3DTrongsa+%28District%29%5D'\u003ETrongsa (District)\u003C/a\u003E\u003C/span\u003E",
+          "\u003Cspan\u003E\u003Ca href='http://qa-digitalcollections.nypl.org/search/index?filters=%5Bplace%3DTrongsa+%28Bhutan+%3A+District%29%5D'\u003ETrongsa (Bhutan : District)\u003C/a\u003E\u003C/span\u003E",
+          "\u003Cspan\u003E\u003Ca href='http://qa-digitalcollections.nypl.org/search/index?filters=%5Btopic%3DFestivals%5D'\u003EFestivals\u003C/a\u003E\u003C/span\u003E -- \u003Cspan\u003E\u003Ca href='http://qa-digitalcollections.nypl.org/search/index?filters=%5Bplace%3DBhutan%5D'\u003EBhutan\u003C/a\u003E\u003C/span\u003E",
+          "\u003Cspan\u003E\u003Ca href='http://qa-digitalcollections.nypl.org/search/index?filters=%5Btopic%3DRitual+and+ceremonial+dancing%5D'\u003ERitual and ceremonial dancing\u003C/a\u003E\u003C/span\u003E -- \u003Cspan\u003E\u003Ca href='http://qa-digitalcollections.nypl.org/search/index?filters=%5Bplace%3DBhutan%5D'\u003EBhutan\u003C/a\u003E\u003C/span\u003E",
+          "\u003Cspan\u003E\u003Ca href='http://qa-digitalcollections.nypl.org/search/index?filters=%5Btopic%3DMask+dances%5D'\u003EMask dances\u003C/a\u003E\u003C/span\u003E -- \u003Cspan\u003E\u003Ca href='http://qa-digitalcollections.nypl.org/search/index?filters=%5Bplace%3DBhutan%5D'\u003EBhutan\u003C/a\u003E\u003C/span\u003E"
+        ]
+      }
+    },
+    {
+      "label": {
+        "en": [
+          "Title"
+        ]
+      },
+      "value": {
+        "en": [
+          "Atsara Cham, Korphu Drup: Day Two [Wide shot]"
+        ]
+      }
+    },
+    {
+      "label": {
+        "en": [
+          "Division"
+        ]
+      },
+      "value": {
+        "en": [
+          "\u003Cspan\u003E\u003Ca href='https://www.nypl.org/locations/lpa/jerome-robbins-dance-division'\u003EJerome Robbins Dance Division\u003C/a\u003E\u003C/span\u003E"
+        ]
+      }
+    },
+    {
+      "label": {
+        "en": [
+          "Genres"
+        ]
+      },
+      "value": {
+        "en": [
+          "\u003Cspan\u003E\u003Ca href='http://qa-digitalcollections.nypl.org/search/index?filters=%5Bgenre%3DFilmed+dance%5D'\u003EFilmed Dance\u003C/a\u003E\u003C/span\u003E",
+          "\u003Cspan\u003E\u003Ca href='http://qa-digitalcollections.nypl.org/search/index?filters=%5Bgenre%3DFilmed+performances%5D'\u003EFilmed Performances\u003C/a\u003E\u003C/span\u003E"
+        ]
+      }
+    },
+    {
+      "label": {
+        "en": [
+          "Resource Type"
+        ]
+      },
+      "value": {
+        "en": [
+          "\u003Cspan\u003E\u003Ca href='http://qa-digitalcollections.nypl.org/search/index?filters=%5Btype%3Dmoving+image%5D'\u003EMoving Image\u003C/a\u003E\u003C/span\u003E"
+        ]
+      }
+    },
+    {
+      "label": {
+        "en": [
+          "Abstract"
+        ]
+      },
+      "value": {
+        "en": [
+          "Korphu Drup begins the evening of Jan. 3, 2007 with a religious ceremony held in front of the Lhakhang followed by a Mewang, the burning of a large gate that everyone is invited to pass beneath whilst it's still burning. Various ging dances are also performed during the mewang."
+        ]
+      }
+    },
+    {
+      "label": {
+        "en": [
+          "Rights"
+        ]
+      },
+      "value": {
+        "en": [
+          "This item is protected by copyright and/or related rights. You are free to use this Item in any way that is permitted by the copyright and related rights legislation that applies to your use. For other uses you need to obtain permission from the rights-holder(s)."
+        ]
+      }
+    },
+    {
+      "label": {
+        "en": [
+          "Access"
+        ]
+      },
+      "value": {
+        "en": [
+          "Core of Culture"
+        ]
+      }
+    },
+    {
+      "label": {
+        "en": [
+          "Is Restricted"
+        ]
+      },
+      "value": {
+        "en": [
+          "False"
+        ]
+      }
+    },
+    {
+      "label": {
+        "en": [
+          "Content Type"
+        ]
+      },
+      "value": {
+        "en": [
+          "video"
+        ]
+      }
+    }
+  ],
+  "summary": {
+    "en": [
+      "Bhutan Dance Project, Core of Culture||6e78bb70-0d19-0131-2cea-3c075448cc4b"
+    ]
+  },
+  "requiredStatement": null,
+  "rendering": null,
+  "service": null,
+  "services": null,
+  "viewingDirection": null,
+  "placeholderCanvas": null,
+  "accompanyingCanvas": null,
+  "rights": null,
+  "start": null,
+  "navDate": null,
+  "navPlace": null,
+  "provider": null,
+  "seeAlso": null,
+  "thumbnail": null,
+  "homepage": null,
+  "behavior": null,
+  "partOf": null,
+  "items": [
+    {
+      "id": "http://qa-api-collections.nypl.org/manifests/fd2f5090-0381-0131-a95f-3c075448cc4b/canvas",
+      "type": "Canvas",
+      "label": null,
+      "height": 1800,
+      "width": 1200,
+      "duration": null,
+      "metadata": null,
+      "summary": null,
+      "requiredStatement": null,
+      "rendering": null,
+      "rights": null,
+      "navDate": null,
+      "navPlace": null,
+      "provider": null,
+      "seeAlso": null,
+      "service": null,
+      "placeholderCanvas": null,
+      "accompanyingCanvas": null,
+      "thumbnail": null,
+      "homepage": null,
+      "behavior": null,
+      "partOf": null,
+      "items": [
+        {
+          "id": "http://qa-api-collections.nypl.org/manifests/fd2f5090-0381-0131-a95f-3c075448cc4b/canvas/page",
+          "type": "AnnotationPage",
+          "label": null,
+          "@context": null,
+          "rendering": null,
+          "service": null,
+          "thumbnail": null,
+          "items": [
+            {
+              "id": "https://cdn-repo-media-qa.nypl.org/fd2f5090-0381-0131-a95f-3c075448cc4b/fd2f5090-0381-0131-a95f-3c075448cc4b-low.mp4?Expires=1749941405&Signature=sTFlvT5Cbt74yRMKnXYvoAvvzEYZrn3rmHaI63pza0VQLcrwWv2nhFEDlKEFnAY8VybI4b5qKEydzlL5JEfvGSlTlRKjCTkEIXocinStzIPRuWcl8B6AV-IAjCnsf18z14UT8rjmcUN-V3uXHE6RZjLoVZm2ru3P5ONl2rrCF1JCWgLfJj9VwgdSGuT49Lqff~HYffmi0GUJzrnyRcWEWxr0OkdJTefUoReoPlgXFxa~1XlWGQ--PT8rBFJ~kkkfGMPQrxtvFCHzk8Z0We1YWGWyLOItwvbvi7gq9gcL5DrNQq6BgJTfnLc5XW2Pg4BbCrLrjvUwb1DBS-Rrro7Mwg__&Key-Pair-Id=APKAIEC6YDR3EUOTB3IQ",
+              "type": "Annotation",
+              "label": null,
+              "service": null,
+              "rendering": null,
+              "thumbnail": null,
+              "motivation": null,
+              "body": {
+                "id": "https://cdn-repo-media-qa.nypl.org/fd2f5090-0381-0131-a95f-3c075448cc4b/fd2f5090-0381-0131-a95f-3c075448cc4b-low.mp4?Expires=1749941405&Signature=sTFlvT5Cbt74yRMKnXYvoAvvzEYZrn3rmHaI63pza0VQLcrwWv2nhFEDlKEFnAY8VybI4b5qKEydzlL5JEfvGSlTlRKjCTkEIXocinStzIPRuWcl8B6AV-IAjCnsf18z14UT8rjmcUN-V3uXHE6RZjLoVZm2ru3P5ONl2rrCF1JCWgLfJj9VwgdSGuT49Lqff~HYffmi0GUJzrnyRcWEWxr0OkdJTefUoReoPlgXFxa~1XlWGQ--PT8rBFJ~kkkfGMPQrxtvFCHzk8Z0We1YWGWyLOItwvbvi7gq9gcL5DrNQq6BgJTfnLc5XW2Pg4BbCrLrjvUwb1DBS-Rrro7Mwg__&Key-Pair-Id=APKAIEC6YDR3EUOTB3IQ",
+                "type": "Video",
+                "height": null,
+                "width": null,
+                "duration": null,
+                "language": null,
+                "rendering": null,
+                "service": null,
+                "format": "video/mp4",
+                "label": null,
+                "thumbnail": null,
+                "annotations": null
+              },
+              "target": "https://cdn-repo-media-qa.nypl.org/fd2f5090-0381-0131-a95f-3c075448cc4b/fd2f5090-0381-0131-a95f-3c075448cc4b-low.mp4?Expires=1749941405&Signature=sTFlvT5Cbt74yRMKnXYvoAvvzEYZrn3rmHaI63pza0VQLcrwWv2nhFEDlKEFnAY8VybI4b5qKEydzlL5JEfvGSlTlRKjCTkEIXocinStzIPRuWcl8B6AV-IAjCnsf18z14UT8rjmcUN-V3uXHE6RZjLoVZm2ru3P5ONl2rrCF1JCWgLfJj9VwgdSGuT49Lqff~HYffmi0GUJzrnyRcWEWxr0OkdJTefUoReoPlgXFxa~1XlWGQ--PT8rBFJ~kkkfGMPQrxtvFCHzk8Z0We1YWGWyLOItwvbvi7gq9gcL5DrNQq6BgJTfnLc5XW2Pg4BbCrLrjvUwb1DBS-Rrro7Mwg__&Key-Pair-Id=APKAIEC6YDR3EUOTB3IQ"
+            }
+          ]
+        }
+      ],
+      "annotations": null
+    }
+  ],
+  "structures": null,
+  "annotations": null
+}

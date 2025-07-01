@@ -2,7 +2,7 @@ import { test, expect } from "@playwright/test";
 import { DCHomepage } from "../pages/dc_homepage";
 
 test.beforeEach(async ({ page }) => {
-  await page.goto("http://localhost:3000");
+  await page.goto("/");
 });
 
 test("verify navigation menu is displayed (items, collections, divisions, about", async ({
@@ -26,9 +26,22 @@ test("verify public domain link is visible", async ({ page }) => {
   await expect(dchomepage.whatIsPublicDomainLink).toBeVisible();
 });
 
+test("verify featured section is visible", async ({ page }) => {
+  const dchomepage = new DCHomepage(page);
+
+  if (await dchomepage.featuredSpotlightOnPublicDomain.isVisible()) {
+    await expect(dchomepage.featuredSpotlightOnPublicDomain).toBeVisible();
+    await expect(dchomepage.featuredLearnMore).toBeVisible();
+  } else if (
+    await dchomepage.featuredDigitalCollectionsPrintStore.isVisible()
+  ) {
+    await expect(dchomepage.featuredDigitalCollectionsPrintStore).toBeVisible();
+    await expect(dchomepage.featuredVisitStore).toBeVisible();
+  }
+});
 test("verify explore further section is visible", async ({ page }) => {
   const dchomepage = new DCHomepage(page);
-  await expect(dchomepage.exporeFurtherHeading).toBeVisible();
+  await expect(dchomepage.exploreFurtherHeading).toBeVisible();
   await expect(dchomepage.digitalCollectionPrintStore).toBeVisible();
   await expect(dchomepage.nyplArchivesAndManuscripts).toBeVisible();
   await expect(dchomepage.nyplResearchCatalog).toBeVisible();
@@ -53,4 +66,20 @@ test("verify footer links are visible", async ({ page }) => {
   await expect(dchomepage.footerSocialTwitter).toBeVisible();
   await expect(dchomepage.footerSocialInstagram).toBeVisible();
   await expect(dchomepage.footerSocialYouTube).toBeVisible();
+});
+
+test("verify feedback button is visible", async ({ page }) => {
+  const dchomepage = new DCHomepage(page);
+  await expect(dchomepage.feedbackButton).toBeVisible();
+  await dchomepage.feedbackButton.click();
+  await expect(dchomepage.feedbackForm).toBeVisible();
+  await expect(dchomepage.feedbackCommentRadioButton).toBeVisible();
+  await expect(dchomepage.feedbackCorrectionRadioButton).toBeVisible();
+  await expect(dchomepage.feedbackBugRadioButton).toBeVisible();
+  await expect(dchomepage.feedbackTextArea).toBeVisible();
+  await expect(dchomepage.feedbackSubmitButton).toBeVisible();
+  await expect(dchomepage.feedbackCancelButton).toBeVisible();
+  await expect(dchomepage.feedbackPrivacyPolicy).toBeVisible();
+  await dchomepage.feedbackCancelButton.click();
+  await expect(dchomepage.feedbackForm).not.toBeVisible();
 });
