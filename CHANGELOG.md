@@ -6,6 +6,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## Unreleased
+## [0.4.4] 2025-07-01
 ### Added
 - Added Playwright tests to confirm featured section on the homepage (DR-3658)
 - Added Playwright tests to clear search results filters (DR-3659)
@@ -23,6 +24,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Fixed
 - Fixed Order Print button (DR-3486)
 - Fixed bug with UniversalViewer where image controls are hidden after clicking an image (DR-3692)
+- Fixed grammatical mistake on filter options. (NO-REF)
 
 ### Updated
 - Updated breadcrumb to include Division and Collection information (DR-3701)
