@@ -86,9 +86,12 @@ const ItemMediaViewer = ({ item, canvasIndex }: ItemProps) => {
         {/* TODO: multi-capture support. I only built support to view the first file since AV is typically only one file. there are Items with multiple audio files */}
         {/* <ReactPlayer src={item.mediaFiles[0]} type={item.contentType} /> */}
         <PlyrPlayer
+          uuid={item.uuid}
           title={item.title}
           src={item.mediaFiles[0]}
+          srcs={item.mediaFiles}
           type={item.contentType}
+          canvasIndex={canvasIndex}
         />
       </>
     );
