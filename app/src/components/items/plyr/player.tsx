@@ -1,5 +1,4 @@
 import dynamic from "next/dynamic";
-// import Plyr from 'plyr';
 import Plyr from "plyr-react";
 import "plyr-react/plyr.css";
 import { useSearchParams } from "next/navigation";
@@ -8,8 +7,6 @@ import { Button } from "@nypl/design-system-react-components";
 import React from "react";
 import { SimpleGrid as DCSimpleGrid } from "../../simpleGrid/simpleGrid";
 
-const Player = dynamic(() => import("react-player/lazy"), { ssr: false });
-
 function truncateString(str, num) {
   if (str.length > num) {
     return str.slice(0, num) + "..."; // Truncate and add ellipsis
@@ -17,16 +14,15 @@ function truncateString(str, num) {
     return str; // Return original string if not longer than num
   }
 }
-// example from https://www.npmjs.com/package/plyr-react
-export default function PlyrPlayer({
-  uuid,
-  title,
-  src,
-  srcs,
-  type,
-  canvasIndex,
-}) {
-  console.log("srcs are: ", srcs);
+
+interface PlyrProps {
+  title: string;
+  sources: string[];
+  type: string; // TODO: only accept 'video' | 'audio'... this requires some refactoring
+}
+
+const PlyrPlayer = ({ title, sources, type }: PlyrProps) => {
+  console.log("sources are: ", sources);
   const searchParams = useSearchParams();
   const { currentCanvasIndex, setCurrentCanvasIndex } = useCanvasContext();
 
@@ -38,7 +34,6 @@ export default function PlyrPlayer({
     window.history.pushState(null, "", `?${urlSearchParams}`);
   }
 
-  // https://github.com/sampotts/plyr#the-source-setter
   let playerHeight = type === "video" ? "500px" : "55px";
   let source;
 
@@ -49,7 +44,7 @@ export default function PlyrPlayer({
       title: title,
       sources: [
         {
-          src: srcs[currentCanvasIndex],
+          src: sources[currentCanvasIndex],
           type: "video/mp4",
         },
       ],
@@ -60,21 +55,19 @@ export default function PlyrPlayer({
       title: title,
       sources: [
         {
-          src: srcs[currentCanvasIndex],
+          src: sources[currentCanvasIndex],
           type: "audio/mp3",
         },
       ],
     };
   }
 
-  // docs: https://github.com/sampotts/plyr#options
-  const options = undefined;
   return (
     <div>
-      {srcs.length === 1 ? (
+      {sources.length === 1 ? (
         <Plyr
           source={source}
-          options={options}
+          options={undefined}
           height={playerHeight}
           width="100%"
         />
@@ -82,12 +75,12 @@ export default function PlyrPlayer({
         <>
           <Plyr
             source={source}
-            options={options}
+            options={undefined}
             height={playerHeight}
             width="100%"
           />
           <DCSimpleGrid marginTop="s" marginBottom="xs">
-            {srcs.map((src, index) => {
+            {sources.map((src, index) => {
               return (
                 <Button
                   key={`item-canvas-${index + 1}-button`}
@@ -105,4 +98,6 @@ export default function PlyrPlayer({
       )}
     </div>
   );
-}
+};
+
+export default PlyrPlayer;

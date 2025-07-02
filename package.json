@@ -37,7 +37,6 @@
     "trailingComma": "es5"
   },
   "dependencies": {
-    "@samvera/clover-iiif": "^2.9.0",
     "@types/node": "20.5.9",
     "@types/react": "18.2.21",
     "@types/react-dom": "18.2.7",
@@ -45,19 +44,17 @@
     "eslint": "8.48.0",
     "googleapis": "129.0.0",
     "html-react-parser": "5.2.2",
-    "i": "^0.3.7",
+    "i": "0.3.7",
     "newrelic": "12.5.1",
     "next": "14.2.25",
-    "npm": "^11.4.2",
-    "plyr": "^3.7.8",
-    "plyr-react": "^5.3.0",
+    "npm": "11.4.2",
+    "plyr-react": "5.3.0",
     "react": "18.2.0",
     "react-dom": "18.2.0",
-    "react-player": "^2.16.0",
     "sharp": "0.33.5",
     "ts-node": "10.9.1",
     "typescript": "4.9.5",
-    "ua-parser-js": "^1.0.38",
+    "ua-parser-js": "1.0.38",
     "universalviewer": "4.1.0",
     "vite": "4.5.2",
     "winston": "3.9.0"
@@ -69,8 +66,8 @@
     "@testing-library/react": "14.0.0",
     "@types/jest": "29.5.5",
     "@types/jest-axe": "3.5.6",
-    "@types/newrelic": "^9.14.3",
-    "@types/ua-parser-js": "^0.7.39",
+    "@types/newrelic": "9.14.3",
+    "@types/ua-parser-js": "0.7.39",
     "eslint-config-next": "14.2.3",
     "eslint-config-prettier": "9.0.0",
     "husky": "8.0.0",
@@ -81,6 +78,6 @@
     "lint-staged": "15.0.1",
     "maniiifest": "1.4.1",
     "prettier": "3.0.3",
-    "puppeteer": "^22.6.2"
+    "puppeteer": "22.6.2"
   }
 }
