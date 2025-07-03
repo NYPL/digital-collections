@@ -85,7 +85,7 @@ export class ItemModel {
     this.divisionLink =
       this.isRestricted && rawManifestMetadata["Division"]
         ? rawManifestMetadata["Division"].toString()
-        : rawManifestMetadata["Library Locations"][0] || "";
+        : rawManifestMetadata["Library Locations"]?.[0] || "";
 
     this.permittedLocationText =
       this.isRestricted && rawManifestMetadata["Permitted Locations"]
@@ -147,11 +147,11 @@ export class ItemModel {
       location:
         extractAllAnchorsFromHTML(
           this.metadata?.locations?.split("<br>")[0] ?? ""
-        )[0].text ?? "",
+        )[0]?.text ?? "",
       resource:
         extractAllAnchorsFromHTML(
           this.metadata?.typeOfResource?.split("<br>")[0] ?? ""
-        )[0].text ?? "",
+        )[0]?.text ?? "",
       origin: this.metadata?.origin,
       dateIssued: this.metadata?.dateIssued,
     });
@@ -160,20 +160,27 @@ export class ItemModel {
     const divisionLinkObj = extractAllAnchorsFromHTML(
       this.metadata?.locations?.split("<br>")[0] ?? ""
     )[0];
-    divisionLinkObj["path"] = new URL(divisionLinkObj.href).pathname;
+    if (divisionLinkObj) {
+      divisionLinkObj["path"] = new URL(divisionLinkObj.href).pathname;
+    }
 
     const orderedCollections = this.metadata?.collection?.split("<br>") ?? [];
     // note: this points to the top level collection, not the immediate parent collection or subcollection
     const collectionLinkObj = extractAllAnchorsFromHTML(
       orderedCollections[0] ?? ""
     )[0];
-    if (collectionLinkObj) {
+    if (collectionLinkObj && divisionLinkObj) {
       collectionLinkObj["path"] = new URL(collectionLinkObj.href).pathname;
       this.breadcrumbData = {
         division: divisionLinkObj,
         collection: collectionLinkObj,
       };
-    } else {
+    } else if (collectionLinkObj) {
+      collectionLinkObj["path"] = new URL(collectionLinkObj.href).pathname;
+      this.breadcrumbData = {
+        collection: collectionLinkObj,
+      };
+    } else if (divisionLinkObj) {
       this.breadcrumbData = {
         division: divisionLinkObj,
       };
