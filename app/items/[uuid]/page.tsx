@@ -72,7 +72,6 @@ function formatItemBreadcrumbs(item: ItemModel) {
 }
 
 export default async function ItemViewer({ params, searchParams }: ItemProps) {
-  revalidatePath("/");
   const manifest = await getItemManifest(params.uuid);
   const item = new ItemModel(params.uuid, manifest);
 
