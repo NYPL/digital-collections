@@ -59,7 +59,6 @@ const uvConfig = {
 
 const ItemMediaViewer = ({ item, canvasIndex }: ItemProps) => {
   let viewer;
-  // let contentType = item.contentType;
 
   if (item.isImage) {
     viewer = (
