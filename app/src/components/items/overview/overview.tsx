@@ -32,11 +32,7 @@ const ItemOverview = ({ item }) => {
           archivesLink={item.archivesLink}
           manifestLink={item.manifestURL}
         />
-        {item.isImage ? (
-          <PrintOverview imageIDs={item.imageIDs} />
-        ) : (
-          <ManifestOverview manifestURL={item.manifestURL} />
-        )}
+        {item.isImage && <PrintOverview imageIDs={item.imageIDs} />}
       </ChakraSimpleGrid>
       <HorizontalRule marginTop="xs" marginBottom="m" />
       <ChakraSimpleGrid
