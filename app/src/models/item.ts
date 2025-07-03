@@ -32,6 +32,7 @@ export class ItemModel {
   title: string;
   typeOfResource: string;
   isRestricted: boolean;
+  buyable: boolean;
   divisionLink: string;
   contentType: string;
   isImage: boolean;
@@ -80,6 +81,10 @@ export class ItemModel {
     this.isRestricted = rawManifestMetadata["Is Restricted"]
       ? rawManifestMetadata["Is Restricted"].toString().toLowerCase() === "true"
       : true;
+
+    this.buyable = rawManifestMetadata["Buyable"]
+      ? rawManifestMetadata["Buyable"].toString().toLowerCase() === "true"
+      : false;
 
     //this will break in Prod if we don't deploy API first bc the name of the field is "Library Location"
     this.divisionLink =
