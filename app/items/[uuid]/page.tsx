@@ -1,5 +1,6 @@
 import React from "react";
 import { Metadata } from "next";
+import { headers } from "next/headers";
 import PageLayout from "../../src/components/pageLayout/pageLayout";
 import { createAdobeAnalyticsPageName } from "../../src/utils/utils";
 import { ItemModel } from "../../src/models/item";
@@ -18,8 +19,18 @@ type ItemProps = {
 let item;
 
 const getItemManifest = async (uuid: string) => {
-  const data = await CollectionsApi.getManifestForItemUUID(uuid);
+  const clientIP = await getClientIP();
+  const data = await CollectionsApi.getManifestForItemUUID(uuid, clientIP);
   return data;
+};
+
+const getClientIP = async () => {
+  const clientHeaders = await headers();
+  const forwardedFor = clientHeaders.get("x-forwarded-for");
+  if (forwardedFor) {
+    return forwardedFor.split(",")[0];
+  }
+  return clientHeaders.get("x-real-ip");
 };
 
 export async function generateMetadata({
@@ -37,6 +48,29 @@ export async function generateMetadata({
   };
 }
 
+function formatItemBreadcrumbs(item: ItemModel) {
+  const breadcrumbData = item.breadcrumbData;
+  let breadcrumbs = [{ text: "Home", url: "/" }];
+  if (breadcrumbData?.division) {
+    breadcrumbs.push({
+      text: breadcrumbData?.division.text,
+      url: breadcrumbData?.division.path,
+    });
+  }
+  if (breadcrumbData?.collection) {
+    console.log(breadcrumbData.collection);
+    breadcrumbs.push({
+      text: breadcrumbData.collection.text,
+      url: breadcrumbData.collection.path,
+    });
+  }
+  breadcrumbs.push({
+    text: `${item.title}`,
+    url: `/items/${item.uuid}`,
+  });
+  return breadcrumbs;
+}
+
 export default async function ItemViewer({ params, searchParams }: ItemProps) {
   revalidatePath("/");
   const manifest = await getItemManifest(params.uuid);
@@ -47,25 +81,17 @@ export default async function ItemViewer({ params, searchParams }: ItemProps) {
   const maxIndex = imageIDs.length - 1;
   const rawIndex = searchParams.canvasIndex || 0;
   const clampedCanvasIndex = Math.max(0, Math.min(rawIndex, maxIndex));
+  const breadcrumbData = formatItemBreadcrumbs(item);
   return (
     <PageLayout
       activePage="item"
-      breadcrumbs={[
-        { text: "Home", url: "/" },
-        {
-          text: `${item.breadcrumbData.division.text}`,
-          url: `${item.breadcrumbData.division.path}`,
-        },
-        {
-          text: `${item.breadcrumbData.collection.text}`,
-          url: `${item.breadcrumbData.collection.path}`,
-        },
-        {
-          text: `${item.title}`,
-          url: `/items/${params.uuid}`,
-        },
-      ]}
+      breadcrumbs={breadcrumbData}
       adobeAnalyticsPageName={createAdobeAnalyticsPageName("items", item.title)}
+      ga4Data={{
+        division: breadcrumbData[1]?.text,
+        collection: breadcrumbData[2]?.text ?? "No detail",
+        subcollection: item.subcollectionName ?? "No detail",
+      }}
     >
       <ItemPage
         manifest={manifest}

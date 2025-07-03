@@ -16,6 +16,7 @@ const ItemOverview = ({ item }) => {
   return (
     <>
       <ChakraSimpleGrid
+        marginTop="m"
         sx={{
           [`@media screen and (min-width: ${headerBreakpoints.lgMobile}px)`]: {
             gridTemplateColumns: `repeat(1, minmax(0, 1fr))`,
@@ -29,9 +30,11 @@ const ItemOverview = ({ item }) => {
           catalogLink={item.catalogLink}
           archivesLink={item.archivesLink}
         />
-        {item.isImage && <PrintOverview imageIDs={item.imageIDs} />}
+        {item.isImage && (
+          <PrintOverview buyable={item.buyable} imageIDs={item.imageIDs} />
+        )}
       </ChakraSimpleGrid>
-      <HorizontalRule marginBottom="m" />
+      <HorizontalRule marginTop="xs" marginBottom="m" />
       <ChakraSimpleGrid
         sx={{
           [`@media screen and (min-width: ${headerBreakpoints.lgMobile}px)`]: {

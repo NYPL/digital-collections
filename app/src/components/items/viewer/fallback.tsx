@@ -28,16 +28,7 @@ const ItemMediaViewerFallback = ({ item }: ItemProps) => {
           marginLeft="0"
           marginRight="0"
           notificationHeading="Available to view on-site at NYPL"
-          notificationContent={
-            <>
-              We invite you to visit one of our reading rooms at{" "}
-              {parse(item.divisionLink)} to view this item. Due to copyright
-              restrictions, it is available for on-site access only. For
-              directions, opening hours, and additional information about the
-              research libraries, please visit the {parse(item.divisionLink)}{" "}
-              page on <Link href="nypl.org">nypl.org</Link>.
-            </>
-          }
+          notificationContent={<>{parse(item.permittedLocationText)}</>}
         />
       ) : (
         <Banner

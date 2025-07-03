@@ -32,6 +32,7 @@ export class ItemModel {
   title: string;
   typeOfResource: string;
   isRestricted: boolean;
+  buyable: boolean;
   divisionLink: string;
   contentType: string;
   isImage: boolean;
@@ -39,6 +40,9 @@ export class ItemModel {
   catalogLink: string | null;
   citationData: CitationOutput;
   breadcrumbData: any;
+  mediaFiles: string[];
+  subcollectionName: string | null;
+  permittedLocationText: string;
 
   constructor(uuid: string, manifest: any) {
     const parser = new Maniiifest(manifest);
@@ -49,7 +53,7 @@ export class ItemModel {
     // Manifest related fields
     this.hasItems = manifest.items.length > 0;
     const canvases = Array.from(parser.iterateManifestCanvas());
-
+    const annotations = Array.from(parser.iterateManifestCanvasAnnotation());
     // Metadata assignment
     const manifestMetadataArray = Array.from(parser.iterateManifestMetadata());
     // convert Maniifest MetadataT to custom type
@@ -78,11 +82,20 @@ export class ItemModel {
       ? rawManifestMetadata["Is Restricted"].toString().toLowerCase() === "true"
       : true;
 
+    this.buyable = rawManifestMetadata["Buyable"]
+      ? rawManifestMetadata["Buyable"].toString().toLowerCase() === "true"
+      : false;
+
     //this will break in Prod if we don't deploy API first bc the name of the field is "Library Location"
     this.divisionLink =
       this.isRestricted && rawManifestMetadata["Division"]
         ? rawManifestMetadata["Division"].toString()
-        : rawManifestMetadata["Library Locations"][0] || "";
+        : rawManifestMetadata["Library Locations"]?.[0] || "";
+
+    this.permittedLocationText =
+      this.isRestricted && rawManifestMetadata["Permitted Locations"]
+        ? rawManifestMetadata["Permitted Locations"][0]?.toString()
+        : "";
 
     // for viewer configs and order print button
     this.contentType = rawManifestMetadata["Content Type"]
@@ -108,17 +121,25 @@ export class ItemModel {
     // Special NYPL Identifiers for external links
     const identifiers = rawManifestMetadata["Identifiers"];
 
-    const archivesLink = identifiers.find((identifier) => {
-      identifier.includes("Archives ID");
-    });
+    const archivesComponentLink = identifiers.find((identifier) =>
+      identifier.includes("Archives EAD ID")
+    );
+    this.archivesLink = archivesComponentLink
+      ? extractFirstHrefFromHTML(archivesComponentLink)
+      : null;
+
+    if (!this.archivesLink) {
+      const archivesFindingAidLink = identifiers.find((identifier) =>
+        identifier.includes("Archives ID")
+      );
+      this.archivesLink = archivesFindingAidLink
+        ? extractFirstHrefFromHTML(archivesFindingAidLink)
+        : null;
+    }
 
     const catalogLink = identifiers.find((identifier) =>
       identifier.includes("NYPL Catalog ID (bnumber)")
     );
-
-    this.archivesLink = archivesLink
-      ? extractFirstHrefFromHTML(archivesLink)
-      : null;
 
     this.catalogLink = catalogLink
       ? extractFirstHrefFromHTML(catalogLink)
@@ -131,11 +152,11 @@ export class ItemModel {
       location:
         extractAllAnchorsFromHTML(
           this.metadata?.locations?.split("<br>")[0] ?? ""
-        )[0].text ?? "",
+        )[0]?.text ?? "",
       resource:
         extractAllAnchorsFromHTML(
           this.metadata?.typeOfResource?.split("<br>")[0] ?? ""
-        )[0].text ?? "",
+        )[0]?.text ?? "",
       origin: this.metadata?.origin,
       dateIssued: this.metadata?.dateIssued,
     });
@@ -144,17 +165,40 @@ export class ItemModel {
     const divisionLinkObj = extractAllAnchorsFromHTML(
       this.metadata?.locations?.split("<br>")[0] ?? ""
     )[0];
-    divisionLinkObj["path"] = new URL(divisionLinkObj.href).pathname;
+    if (divisionLinkObj) {
+      divisionLinkObj["path"] = new URL(divisionLinkObj.href).pathname;
+    }
 
+    const orderedCollections = this.metadata?.collection?.split("<br>") ?? [];
     // note: this points to the top level collection, not the immediate parent collection or subcollection
     const collectionLinkObj = extractAllAnchorsFromHTML(
-      this.metadata?.collection?.split("<br>")[0] ?? ""
+      orderedCollections[0] ?? ""
     )[0];
-    collectionLinkObj["path"] = new URL(collectionLinkObj.href).pathname;
+    if (collectionLinkObj && divisionLinkObj) {
+      collectionLinkObj["path"] = new URL(collectionLinkObj.href).pathname;
+      this.breadcrumbData = {
+        division: divisionLinkObj,
+        collection: collectionLinkObj,
+      };
+    } else if (collectionLinkObj) {
+      collectionLinkObj["path"] = new URL(collectionLinkObj.href).pathname;
+      this.breadcrumbData = {
+        collection: collectionLinkObj,
+      };
+    } else if (divisionLinkObj) {
+      this.breadcrumbData = {
+        division: divisionLinkObj,
+      };
+    }
 
-    this.breadcrumbData = {
-      division: divisionLinkObj,
-      collection: collectionLinkObj,
-    };
+    this.subcollectionName = null;
+    if (orderedCollections.length > 1) {
+      const subcollection = orderedCollections[orderedCollections.length - 1];
+      this.subcollectionName =
+        extractAllAnchorsFromHTML(subcollection)[0]?.text;
+    }
+
+    // get a list of signed urls
+    this.mediaFiles = annotations.map((annotation) => annotation.id);
   }
 }
