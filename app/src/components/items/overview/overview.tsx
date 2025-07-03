@@ -6,9 +6,9 @@ import {
   ChakraComponent,
 } from "@chakra-ui/react";
 import { HorizontalRule } from "@nypl/design-system-react-components";
-import React, { forwardRef } from "react";
+import React from "react";
 import { headerBreakpoints } from "@/src/utils/breakpoints";
-import ExternalLinksOverview from "./external/overview";
+import DataSourcesOverview from "./sources/overview";
 import PrintOverview from "./print/overview";
 import CitationsOverview from "./citations/overview";
 import ManifestOverview from "./manifest/overview";
@@ -27,9 +27,10 @@ const ItemOverview = ({ item }) => {
           },
         }}
       >
-        <ExternalLinksOverview
+        <DataSourcesOverview
           catalogLink={item.catalogLink}
           archivesLink={item.archivesLink}
+          manifestLink={item.manifestURL}
         />
         {item.isImage ? (
           <PrintOverview imageIDs={item.imageIDs} />

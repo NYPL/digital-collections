@@ -1,6 +1,6 @@
 import { Box, Heading, Link, Text } from "@nypl/design-system-react-components";
 
-const ExternalLinksOverview = ({ catalogLink, archivesLink }) => {
+const DataSourcesOverview = ({ catalogLink, archivesLink, manifestLink }) => {
   return (
     <>
       <Box marginBottom="m">
@@ -31,8 +31,21 @@ const ExternalLinksOverview = ({ catalogLink, archivesLink }) => {
             target="_blank"
             aria-label={`view in catalog`}
             type="buttonSecondary"
+            marginRight="xs"
           >
             View Catalog
+          </Link>
+        )}
+        {manifestLink && (
+          <Link
+            href={manifestLink}
+            id={"iiif-manifest-btn"}
+            isUnderlined={false}
+            target="_blank"
+            aria-label={`view IIIF manifest`}
+            type="buttonSecondary"
+          >
+            View IIIF Manifest
           </Link>
         )}
       </Box>
@@ -40,4 +53,4 @@ const ExternalLinksOverview = ({ catalogLink, archivesLink }) => {
   );
 };
 
-export default ExternalLinksOverview;
+export default DataSourcesOverview;
