@@ -4,7 +4,7 @@ import "plyr-react/plyr.css";
 import { useSearchParams } from "next/navigation";
 import { useCanvasContext } from "../../../context/CanvasProvider";
 import { Button } from "@nypl/design-system-react-components";
-import React from "react";
+import React, { useRef, useEffect } from "react";
 import { SimpleGrid as DCSimpleGrid } from "../../simpleGrid/simpleGrid";
 
 function truncateString(str, num) {
@@ -25,6 +25,7 @@ const PlyrPlayer = ({ title, sources, type }: PlyrProps) => {
   console.log("sources are: ", sources);
   const searchParams = useSearchParams();
   const { currentCanvasIndex, setCurrentCanvasIndex } = useCanvasContext();
+  const buttonRefs = useRef<(HTMLButtonElement | null)[]>([]);
 
   function updateCanvasIndex(newCanvasIndex: number) {
     setCurrentCanvasIndex(newCanvasIndex);
@@ -37,6 +38,21 @@ const PlyrPlayer = ({ title, sources, type }: PlyrProps) => {
   let playerHeight = type === "video" ? "500px" : "55px";
   let source;
 
+  // if query param is present
+  useEffect(() => {
+    const canvasIndexParam = searchParams.get("canvasIndex");
+    if (canvasIndexParam) {
+      const index = parseInt(canvasIndexParam);
+      if (!isNaN(index)) {
+        setCurrentCanvasIndex(index);
+
+        // Focus the button after render
+        setTimeout(() => {
+          buttonRefs.current[index]?.focus();
+        }, 0);
+      }
+    }
+  }, []);
   // this assumes that the only types returned to the component are 'audio' and 'video,' which should be the case
   if (type === "video") {
     source = {
@@ -83,8 +99,10 @@ const PlyrPlayer = ({ title, sources, type }: PlyrProps) => {
             {sources.map((src, index) => {
               return (
                 <Button
+                  aria-label={`${truncateString(title, 20)} (${index + 1})`}
                   key={`item-canvas-${index + 1}-button`}
                   id={`item-canvas-${index + 1}-button`}
+                  ref={(el) => (buttonRefs.current[index] = el)}
                   onClick={() => {
                     updateCanvasIndex(index);
                   }}
