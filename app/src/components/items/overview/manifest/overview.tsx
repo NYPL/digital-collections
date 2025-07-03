@@ -22,10 +22,10 @@ const ManifestOverview = ({ manifestURL }) => {
           </Heading>
           <Link
             href={manifestURL}
-            id={"print-btn"}
+            id={"iiif-manifest-btn"}
             isUnderlined={false}
             target="_blank"
-            aria-label={`order print`}
+            aria-label={`view IIIF manifest`}
             type="buttonSecondary"
           >
             Link to Item Manifest

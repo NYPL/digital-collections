@@ -10,7 +10,6 @@ export class ItemCardModel {
 
   constructor(data: any) {
     this.uuid = data.uuid;
-    // this.canvasIndex = data.canvasIndex;
     this.title = data.title;
     this.url = data.canvasIndex
       ? `/items/${data.uuid}?canvasIndex=${data.canvasIndex}`
