@@ -4,7 +4,7 @@ import Item from "../../items/item";
 
 import { ItemModel } from "@/src/models/item";
 
-export function ItemPage({ manifest, uuid, canvasIndex }) {
-  const item = new ItemModel(uuid, manifest);
+export function ItemPage({ manifest, uuid, captures, canvasIndex }) {
+  const item = new ItemModel(uuid, manifest, captures);
   return <Item manifest={manifest} item={item} canvasIndex={canvasIndex} />;
 }
