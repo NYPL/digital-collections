@@ -4,8 +4,7 @@ import { ItemModel } from "../../../models/item";
 import React from "react";
 import { UniversalViewer } from "../uv/universalViewerLazy";
 import "universalviewer/dist/esm/index.css";
-// import ReactPlayer from 'react-player'
-import ReactPlayer from "../react/player";
+import PlyrPlayer from "../plyr/player";
 
 interface ItemProps {
   item: ItemModel;
@@ -60,7 +59,6 @@ const uvConfig = {
 
 const ItemMediaViewer = ({ item, canvasIndex }: ItemProps) => {
   let viewer;
-  let contentType = item.contentType;
 
   if (item.isImage) {
     viewer = (
@@ -82,8 +80,11 @@ const ItemMediaViewer = ({ item, canvasIndex }: ItemProps) => {
   } else {
     viewer = (
       <>
-        {/* TODO: multi-capture support. I only built support to view the first file since AV is typically only one file. there are Items with multiple audio files */}
-        <ReactPlayer src={item.mediaFiles[0]} type={item.contentType} />
+        <PlyrPlayer
+          title={item.title}
+          sources={item.mediaFiles}
+          type={item.contentType}
+        />
       </>
     );
   }

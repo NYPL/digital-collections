@@ -25,3 +25,7 @@ mark {
 .openseadragon-container button.next {
     z-index: 10000 !important;
 }
+
+.plyr__video-wrapper{
+  height: 500px !important;
+}
