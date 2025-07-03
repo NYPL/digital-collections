@@ -32,7 +32,7 @@ const ItemOverview = ({ item }) => {
           archivesLink={item.archivesLink}
         />
         {item.isImage ? (
-          <PrintOverview imageIDs={item.imageIDs} />
+          <PrintOverview buyable={item.buyable} imageIDs={item.imageIDs} />
         ) : (
           <ManifestOverview manifestURL={item.manifestURL} />
         )}
