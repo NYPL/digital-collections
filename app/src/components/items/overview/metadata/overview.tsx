@@ -35,7 +35,7 @@ const StructuredCollectionsList = (rawCollections) => {
   );
 };
 
-const AVMaterialManifest = ({ metadata }) => {
+const MetadataOverview = ({ metadata }) => {
   const typedMetadata = metadata as Record<string, string>;
 
   return (
@@ -72,4 +72,4 @@ const AVMaterialManifest = ({ metadata }) => {
   );
 };
 
-export default AVMaterialManifest;
+export default MetadataOverview;
