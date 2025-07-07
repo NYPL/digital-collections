@@ -54,7 +54,7 @@ const Item = ({ manifest, item, canvasIndex }: ItemProps) => {
             </Link>{" "}
           </Text>
         </HStack>
-        <HorizontalRule marginTop="m" marginBottom="m" />
+        <HorizontalRule marginTop="xs" marginBottom="m" />
         <ItemOverview item={item} />
       </Box>
     </CanvasProvider>
