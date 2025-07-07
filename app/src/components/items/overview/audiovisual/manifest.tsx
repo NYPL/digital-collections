@@ -3,7 +3,7 @@ import { Box, Heading, Link } from "@nypl/design-system-react-components";
 import { headerBreakpoints } from "@/src/utils/breakpoints";
 import React from "react";
 
-const ManifestOverview = ({ manifestURL }) => {
+const AVMaterialManifest = ({ manifestURL }) => {
   return (
     <>
       <ChakraSimpleGrid
@@ -36,4 +36,4 @@ const ManifestOverview = ({ manifestURL }) => {
   );
 };
 
-export default ManifestOverview;
+export default AVMaterialManifest;
