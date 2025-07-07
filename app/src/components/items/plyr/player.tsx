@@ -90,9 +90,7 @@ const PlyrPlayer = ({ title, sources, type }: PlyrProps) => {
           />
           <DCSimpleGrid marginTop="s" marginBottom="xs">
             {sources.map((src, index) => {
-              console.log("index is: ", index);
-              console.log("currentIndex is: ", currentCanvasIndex);
-              if (currentCanvasIndex && index === currentCanvasIndex) {
+              if (index === currentCanvasIndex) {
                 return (
                   <Button
                     aria-label={`${truncateString(title, 20)} (${index + 1})`}
@@ -111,6 +109,7 @@ const PlyrPlayer = ({ title, sources, type }: PlyrProps) => {
                 return (
                   <Button
                     aria-label={`${truncateString(title, 20)} (${index + 1})`}
+                    buttonType="secondary"
                     aria-pressed="false"
                     key={`item-canvas-${index + 1}-button`}
                     id={`item-canvas-${index + 1}-button`}
