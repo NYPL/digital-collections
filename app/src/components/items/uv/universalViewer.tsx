@@ -228,7 +228,7 @@ const UniversalViewer: React.FC<UniversalViewerProps> = React.memo(
         <div
           className="uv"
           onClick={(e) => handleOnClick(e)}
-          style={{ height: 650 }}
+          style={{ height: 500 }}
           ref={ref}
         />
       </>

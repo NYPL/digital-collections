@@ -277,3 +277,11 @@ export const parseBoolean = (value: any): boolean => {
   }
   return value == "true" ? true : false;
 };
+
+export function truncateString(str, num) {
+  if (str.length > num) {
+    return str.slice(0, num) + "...";
+  } else {
+    return str;
+  }
+}

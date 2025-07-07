@@ -59,14 +59,15 @@ export async function generateMetadata({
 
 function formatItemBreadcrumbs(item: ItemModel) {
   const breadcrumbData = item.breadcrumbData;
-  let breadcrumbs = [
-    { text: "Home", url: "/" },
-    {
-      text: `${breadcrumbData.division.text}`,
-      url: `${breadcrumbData.division.path}`,
-    },
-  ];
-  if (breadcrumbData.collection) {
+  let breadcrumbs = [{ text: "Home", url: "/" }];
+  if (breadcrumbData?.division) {
+    breadcrumbs.push({
+      text: breadcrumbData?.division.text,
+      url: breadcrumbData?.division.path,
+    });
+  }
+  if (breadcrumbData?.collection) {
+    console.log(breadcrumbData.collection);
     breadcrumbs.push({
       text: breadcrumbData.collection.text,
       url: breadcrumbData.collection.path,

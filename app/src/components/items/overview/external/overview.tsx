@@ -5,7 +5,7 @@ const ExternalLinksOverview = ({ catalogLink, archivesLink }) => {
     <>
       <Box marginBottom="m">
         <Heading size="heading6" marginBottom="xs">
-          View this item elsewhere
+          {catalogLink && archivesLink ? "Data sources:" : "Data source:"}
         </Heading>
         {!catalogLink && !archivesLink && (
           <Text>This item does not have any external references yet</Text>
