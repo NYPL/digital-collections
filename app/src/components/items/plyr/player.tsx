@@ -90,19 +90,39 @@ const PlyrPlayer = ({ title, sources, type }: PlyrProps) => {
           />
           <DCSimpleGrid marginTop="s" marginBottom="xs">
             {sources.map((src, index) => {
-              return (
-                <Button
-                  aria-label={`${truncateString(title, 20)} (${index + 1})`}
-                  key={`item-canvas-${index + 1}-button`}
-                  id={`item-canvas-${index + 1}-button`}
-                  ref={(el) => (buttonRefs.current[index] = el)}
-                  onClick={() => {
-                    updateCanvasIndex(index);
-                  }}
-                >
-                  {truncateString(title, 20)} ({index + 1})
-                </Button>
-              );
+              console.log("index is: ", index);
+              console.log("currentIndex is: ", currentCanvasIndex);
+              if (currentCanvasIndex && index === currentCanvasIndex) {
+                return (
+                  <Button
+                    aria-label={`${truncateString(title, 20)} (${index + 1})`}
+                    aria-pressed="true"
+                    key={`item-canvas-${index + 1}-button`}
+                    id={`item-canvas-${index + 1}-button`}
+                    ref={(el) => (buttonRefs.current[index] = el)}
+                    onClick={() => {
+                      updateCanvasIndex(index);
+                    }}
+                  >
+                    {truncateString(title, 20)} ({index + 1})
+                  </Button>
+                );
+              } else {
+                return (
+                  <Button
+                    aria-label={`${truncateString(title, 20)} (${index + 1})`}
+                    aria-pressed="false"
+                    key={`item-canvas-${index + 1}-button`}
+                    id={`item-canvas-${index + 1}-button`}
+                    ref={(el) => (buttonRefs.current[index] = el)}
+                    onClick={() => {
+                      updateCanvasIndex(index);
+                    }}
+                  >
+                    {truncateString(title, 20)} ({index + 1})
+                  </Button>
+                );
+              }
             })}
           </DCSimpleGrid>
         </>
