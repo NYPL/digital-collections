@@ -6,19 +6,12 @@ import { useCanvasContext } from "../../../context/CanvasProvider";
 import { Button } from "@nypl/design-system-react-components";
 import React, { useRef, useEffect } from "react";
 import { SimpleGrid as DCSimpleGrid } from "../../simpleGrid/simpleGrid";
-
-function truncateString(str, num) {
-  if (str.length > num) {
-    return str.slice(0, num) + "..."; // Truncate and add ellipsis
-  } else {
-    return str; // Return original string if not longer than num
-  }
-}
+import { truncateString } from "@/src/utils/utils";
 
 interface PlyrProps {
   title: string;
   sources: string[];
-  type: string; // TODO: only accept 'video' | 'audio'... this requires some refactoring
+  type: string; // TODO: only accept 'video' | 'audio'... this requires updating Item model to either have a new typed field for content type that only expects these two options, or update the existing contentType field. I'm in favor of the former because the latter would need to be inclusive of images.
 }
 
 const PlyrPlayer = ({ title, sources, type }: PlyrProps) => {
@@ -53,7 +46,7 @@ const PlyrPlayer = ({ title, sources, type }: PlyrProps) => {
       }
     }
   }, []);
-  // this assumes that the only types returned to the component are 'audio' and 'video,' which should be the case
+
   if (type === "video") {
     source = {
       type: "video",
