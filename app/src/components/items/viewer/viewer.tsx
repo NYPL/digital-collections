@@ -4,7 +4,7 @@ import { ItemModel } from "../../../models/item";
 import React from "react";
 import { UniversalViewer } from "../uv/universalViewerLazy";
 import "universalviewer/dist/esm/index.css";
-import PlyrPlayer from "../plyr/player";
+import { PlyrPlayer } from "../plyr/dynamic";
 
 interface ItemProps {
   item: ItemModel;
