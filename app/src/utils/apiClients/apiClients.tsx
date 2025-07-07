@@ -168,6 +168,14 @@ export class RepoApi {
 }
 
 export class CollectionsApi {
+  static async getCaptureMetadata(uuid: string) {
+    const apiUrl = `${process.env.COLLECTIONS_API_URL}/captures/${uuid}/metadata`;
+    return await fetchApi({
+      apiUrl: apiUrl,
+      options: { isRepoApi: false },
+    });
+  }
+
   static async getCollectionsData({
     keyword = DEFAULT_SEARCH_TERM,
     sort = DEFAULT_COLLECTION_SORT,
@@ -203,6 +211,13 @@ export class CollectionsApi {
       options: { isRepoApi: false },
     });
     return response;
+  }
+
+  static async getItemData(uuid: string) {
+    return await fetchApi({
+      apiUrl: `${process.env.COLLECTIONS_API_URL}/items/${uuid}`,
+      options: { isRepoApi: false },
+    });
   }
 
   /**
