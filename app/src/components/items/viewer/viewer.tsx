@@ -11,8 +11,7 @@ import {
   uvConfigLocalisation,
   uvConfigContent,
 } from "../uv/uvConfig";
-// import ReactPlayer from 'react-player'
-import ReactPlayer from "../react/player";
+import { PlyrPlayer } from "../plyr/dynamic";
 
 interface ItemProps {
   item: ItemModel;
@@ -214,6 +213,9 @@ const uvConfig = {
 const ItemMediaViewer = ({ item, canvasIndex }: ItemProps) => {
   let viewer;
   let contentType = item.contentType;
+  const captureUuidToIdx = Object.fromEntries(
+    item.captures.map((capture) => [capture.uuid, capture.orderInSequence - 1])
+  );
 
   if (item.isImage) {
     viewer = (
@@ -221,6 +223,7 @@ const ItemMediaViewer = ({ item, canvasIndex }: ItemProps) => {
         <UniversalViewer
           manifestId={item.manifestURL}
           canvasIndex={canvasIndex || 0}
+          captureUuidToIdx={captureUuidToIdx}
           config={uvConfig}
           onChangeCanvas={(manifest, canvas) => {
             // why is this not printing in the console
@@ -235,8 +238,11 @@ const ItemMediaViewer = ({ item, canvasIndex }: ItemProps) => {
   } else {
     viewer = (
       <>
-        {/* TODO: multi-capture support. I only built support to view the first file since AV is typically only one file. there are Items with multiple audio files */}
-        <ReactPlayer src={item.mediaFiles[0]} type={item.contentType} />
+        <PlyrPlayer
+          title={item.title}
+          sources={item.mediaFiles}
+          type={item.contentType}
+        />
       </>
     );
   }
