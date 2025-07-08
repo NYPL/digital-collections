@@ -6,6 +6,7 @@ import { createAdobeAnalyticsPageName } from "../../src/utils/utils";
 import { ItemModel } from "../../src/models/item";
 import { ItemPage } from "@/src/components/pages/itemPage/itemPage";
 import { revalidatePath } from "next/cache";
+import { redirect } from "next/navigation";
 import { CollectionsApi } from "@/src/utils/apiClients/apiClients";
 
 type ItemProps = {
@@ -22,6 +23,14 @@ const getItemManifest = async (uuid: string) => {
   const clientIP = await getClientIP();
   const data = await CollectionsApi.getManifestForItemUUID(uuid, clientIP);
   return data;
+};
+
+const getItemData = async (uuid: string) => {
+  try {
+    return await CollectionsApi.getItemData(uuid);
+  } catch (error: any) {
+    return null;
+  }
 };
 
 const getClientIP = async () => {
@@ -50,17 +59,18 @@ export async function generateMetadata({
 
 function formatItemBreadcrumbs(item: ItemModel) {
   const breadcrumbData = item.breadcrumbData;
-  let breadcrumbs = [
-    { text: "Home", url: "/" },
-    {
-      text: `${breadcrumbData.division.text}`,
-      url: `${breadcrumbData.division.path}`,
-    },
-  ];
-  if (breadcrumbData.collection) {
+  let breadcrumbs = [{ text: "Home", url: "/" }];
+  if (breadcrumbData?.division) {
+    breadcrumbs.push({
+      text: breadcrumbData?.division.text,
+      url: breadcrumbData?.division.path,
+    });
+  }
+  if (breadcrumbData?.collection) {
+    console.log(breadcrumbData.collection);
     breadcrumbs.push({
       text: breadcrumbData.collection.text,
-      url: breadcrumbData.collection.url,
+      url: breadcrumbData.collection.path,
     });
   }
   breadcrumbs.push({
@@ -72,28 +82,39 @@ function formatItemBreadcrumbs(item: ItemModel) {
 
 export default async function ItemViewer({ params, searchParams }: ItemProps) {
   revalidatePath("/");
-  const manifest = await getItemManifest(params.uuid);
-  const item = new ItemModel(params.uuid, manifest);
+  const [itemData, manifest] = await Promise.all([
+    getItemData(params.uuid),
+    getItemManifest(params.uuid),
+  ]);
+  if (!itemData) {
+    const capture = await CollectionsApi.getCaptureMetadata(params.uuid);
+    redirect(
+      `/items/${capture.itemUuid}?canvasIndex=${capture.orderInSequence - 1}`
+    );
+  }
+  const item = new ItemModel(params.uuid, manifest, itemData.captures);
 
   // only allow canvasIndex to be in the range of 0...item.imageIds.length (number of canvases)
   const imageIDs = item.imageIDs || [];
   const maxIndex = imageIDs.length - 1;
   const rawIndex = searchParams.canvasIndex || 0;
   const clampedCanvasIndex = Math.max(0, Math.min(rawIndex, maxIndex));
+  const breadcrumbData = formatItemBreadcrumbs(item);
   return (
     <PageLayout
       activePage="item"
-      breadcrumbs={formatItemBreadcrumbs(item)}
+      breadcrumbs={breadcrumbData}
       adobeAnalyticsPageName={createAdobeAnalyticsPageName("items", item.title)}
       ga4Data={{
-        collection: item.breadcrumbData.collection?.title ?? undefined,
-        subcollection: item.subcollectionName ?? undefined,
-        division: item.breadcrumbData.division,
+        division: breadcrumbData[1]?.text,
+        collection: breadcrumbData[2]?.text ?? "No detail",
+        subcollection: item.subcollectionName ?? "No detail",
       }}
     >
       <ItemPage
         manifest={manifest}
         uuid={params.uuid}
+        captures={itemData.captures}
         canvasIndex={clampedCanvasIndex}
       />
     </PageLayout>
