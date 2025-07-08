@@ -8,6 +8,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## Unreleased
 ### Added
 - Added redirects for OG direct capture links
+- Added Playwright test to verify two collection's on home page(DR-3658)
 
 ## [0.4.4] 2025-07-01
 ### Added
