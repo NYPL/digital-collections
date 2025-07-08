@@ -176,6 +176,14 @@ export class CollectionsApi {
     });
   }
 
+  static async getCitationsData(uuid: string) {
+    const apiUrl = `${process.env.COLLECTIONS_API_URL}/items/${uuid}/citations`;
+    return await fetchApi({
+      apiUrl: apiUrl,
+      options: { isRepoApi: false },
+    });
+  }
+
   static async getCollectionsData({
     keyword = DEFAULT_SEARCH_TERM,
     sort = DEFAULT_COLLECTION_SORT,
