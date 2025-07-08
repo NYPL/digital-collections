@@ -94,7 +94,7 @@ const UniversalViewer: React.FC<UniversalViewerProps> = React.memo(
         // override config using an inline json object
         uv.on("configure", function ({ config, cb }) {
           console.log("config on uv.on(configure) is : ", config);
-          console.log("cb is: ", cb);
+          console.log("cb before is: ", cb);
           cb(
             {
               options: uvConfigOptions,
@@ -209,7 +209,7 @@ const UniversalViewer: React.FC<UniversalViewerProps> = React.memo(
             },
             [uv]
           );
-          lastIndex.current = canvasIndex;
+          // lastIndex.current = canvasIndex;
         });
       }
     }, [canvasIndex, uv]);

@@ -1,17 +1,21 @@
 // all comments come from https://github.com/UniversalViewer/universalviewer/blob/dev/src/content-handlers/iiif/BaseConfig.ts#L160
 // if it doesn't have a comment, then it's not documented in the github
-// TO DO: document optional params
+
+// TO DO: document any additional or optional params
+// For more options, look at: https://docs.universalviewer.io/types/_internal_.Options.html
 export const uvConfigOptions = {
   /** A default animation duration */
   animationDuration: 1000,
   /** Determines if the focus can be stolen */
-  allowStealFocus: true,
+  allowStealFocus: false,
   /** Version of the authentication API */
   authAPIVersion: 1,
   /** Height of the bookmark thumbnail */
   bookmarkThumbHeight: 150,
   /** Width of the bookmark thumbnail */
   bookmarkThumbWidth: 90,
+  /** Determines if click to zoom is enabled */
+  clickToZoomEnabled: false,
   /** Determines if double click annotation is enabled */
   doubleClickAnnotationEnabled: false,
   /** Determines if drop is enabled */
@@ -64,9 +68,7 @@ export const uvConfigOptions = {
   /** Determines if the right panel is enabled */
   rightPanelEnabled: true,
   /** Determines if user settings are saved */
-  saveUserSettings: true,
-  /** Determines if click to zoom is enabled */
-  clickToZoomEnabled: true,
+  saveUserSettings: false,
   /** Determines if search within is enabled */
   searchWithinEnabled: true,
   /** Determines if terms of use are enabled */
@@ -174,14 +176,21 @@ export const uvConfigModules = {
   },
   downloadDialogue: {
     options: {
+      /** Size of the confined image */
       confinedImageSize: 1000,
+      /** Determines if download of current view is enabled */
+      downloadCurrentViewEnabled: false,
+      /** Determines if download of whole image in high resolution is enabled */
+      downloadWholeImageHighResEnabled: false,
+      /** Determines if download of whole image in low resolution is enabled */
+      downloadWholeImageLowResEnabled: false,
       currentViewDisabledPercentage: 90,
       maxImageWidth: 5000,
       optionsExplanatoryTextEnabled: false,
       selectionEnabled: true,
     },
     content: {
-      currentViewAsJpg: "Current view {0} x {1}px (jpg)",
+      currentViewAsJpg: "Current view", //"Current view {0} x {1}px (jpg)",
       currentViewAsJpgExplanation: "Opens in a new window",
       download: "Download",
       downloadSelection: "Download Selection",
@@ -194,11 +203,11 @@ export const uvConfigModules = {
       pagingNote: "Please turn off Two Page View for additional options.",
       preview: "Preview",
       title: "Download",
-      wholeImageHighRes: "Whole image {0} x {1}px ({2})",
+      wholeImageHighRes: "Whole image high res {0} x {1}px (jpg)",
       wholeImageHighResExplanation: "Opens in a new window.",
-      wholeImagesHighRes: "Whole images ({0})",
+      wholeImagesHighRes: "Whole images high res ({0})",
       wholeImagesHighResExplanation: "Opens in two new windows.",
-      wholeImageLowResAsJpg: "Whole image {0} x {1}px (jpg)",
+      wholeImageLowResAsJpg: "Whole image low res {0} x {1}px (jpg)",
       wholeImageLowResAsJpgExplanation: "Opens in a new window.",
     },
   },
@@ -355,24 +364,47 @@ export const uvConfigModules = {
   },
   openSeadragonCenterPanel: {
     options: {
+      /** Duration of the animation */
       animationTime: 0.15,
-      autoHideControls: true,
-      requiredStatementEnabled: true,
+      /** Determines if controls are hidden automatically */
+      autoHideControls: false,
+      /** Time taken to blend images */
       blendTime: 0,
+      /** Determines if panning is constrained */
       constrainDuringPan: false,
+      /** Time after which controls fade after inactivity */
       controlsFadeAfterInactive: 15000,
+      /** Delay before controls start to fade */
       controlsFadeDelay: 25000,
+      /** Duration of controls fade */
       controlsFadeLength: 25000,
+      /** Default zoom level */
       defaultZoomLevel: 0,
+      /** Determines if annotation is enabled */
+      // doubleClickAnnotationEnabled: false,
+      /** Determines if rendering is immediate */
       immediateRender: false,
+      /** Maximum pixel ratio for zoom */
       maxZoomPixelRatio: 1.25,
+      /** Position of the navigator */
       navigatorPosition: "BOTTOM_RIGHT",
+      /** Gap between pages */
       pageGap: 50,
+      /** Determines if required statement is enabled */
+      requiredStatementEnabled: true,
+      /** Determines if adjust image control is shown */
+      // showAdjustImageControl: true,
+      /** Determines if home control is shown */
       showHomeControl: true,
+      /** Number of attributions to trim */
       trimAttributionCount: 150,
+      /** Ratio of visibility */
       visibilityRatio: 1,
+      /** Whether to zoom in to first annotation on load */
+      // zoomToInitialAnnotation: true,
     },
     content: {
+      adjustImage: "Adjust Image",
       attribution: "Attribution",
       goHome: "Go Home",
       imageUnavailable: "Image Unavailable",
@@ -383,6 +415,52 @@ export const uvConfigModules = {
       zoomOut: "Zoom Out",
     },
   },
+  OSDDownloadDialogue: {
+    options: {
+      /** Size of the confined image */
+      confinedImageSize: 5000,
+      /** Determines if download of current view is enabled */
+      downloadCurrentViewEnabled: true,
+      /** Determines if download of whole image in high resolution is enabled */
+      downloadWholeImageHighResEnabled: true,
+      /** Determines if download of whole image in low resolution is enabled */
+      downloadWholeImageLowResEnabled: true,
+      /** Maximum width of the image */
+      maxImageWidth: 5000,
+      /** Determines if selection is enabled */
+      selectionEnabled: true,
+    },
+    content: {
+      // allPages: "",
+      currentViewAsJpg: "Current view {0} x {1}px (jpg)",
+      currentViewAsJpgExplanation: "Opens in a new window",
+      download: "Download",
+      downloadSelection: "Download Selection",
+      downloadSelectionExplanation:
+        "Opens a dialogue to select which pages to download.",
+      editSettings: "Edit Settings",
+      entireDocument: "Entire document ({0})",
+      entireFileAsOriginal: "Entire file",
+      // entireFileAsOriginalWithFormat: "",
+      // individualPages: "",
+      noneAvailable: "No download options are available.",
+      pagingNote: "Please turn off Two Page View for additional options.",
+      preview: "Preview",
+      selection: "Selection",
+      // termsOfUse: "",
+      title: "Download",
+      wholeImageHighRes: "Whole image {0} x {1}px ({2})",
+      wholeImageHighResExplanation: "Opens in a new window.",
+      wholeImagesHighRes: "Whole images ({0})",
+      wholeImagesHighResExplanation: "Opens in two new windows.",
+      wholeImageLowResAsJpg: "Whole image {0} x {1}px (jpg)",
+      wholeImageLowResAsJpgExplanation: "Opens in a new window.",
+    },
+  },
+  // OSDSettingsDialogue: {
+  //   // options:{},
+  //   // content:{}
+  // },
   searchFooterPanel: {
     options: {
       elideDetailsTermsCount: 20,
