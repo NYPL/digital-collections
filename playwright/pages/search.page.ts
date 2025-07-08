@@ -9,7 +9,8 @@ export default class SearchPage {
   // search results
   static searchResultsUrl: string = "/search/index?q=map%20of%20scandinavia";
   readonly resultsHeading: Locator;
-  readonly firstResult: Locator;
+  readonly firstItemResult: Locator;
+  readonly firstKeywordResult: Locator;
 
   // search result filters
   readonly refineHeading: Locator;
@@ -69,7 +70,8 @@ export default class SearchPage {
         `^Displaying \\d+-\\d+ of \\d+ results for "${this.searchKeyword}"$`
       ),
     });
-    this.firstResult = page
+    this.firstItemResult = page.locator("a[href*='/items/']").first();
+    this.firstKeywordResult = page
       .getByRole("link", { name: this.searchKeyword })
       .first();
 
@@ -102,9 +104,9 @@ export default class SearchPage {
     this.startYear = this.page.getByRole("textbox", { name: "Start year" });
     this.endYear = this.page.getByRole("textbox", { name: "End year" });
     this.applyDates = this.page.getByRole("button", { name: "Apply dates" });
-    this.availablePublicDomain = this.page.getByRole("radio", {
-      name: "Public domain",
-    });
+    this.availablePublicDomain = this.page
+      .locator("label")
+      .filter({ hasText: "Public domain" });
     this.availableOnline = this.page.getByRole("radio", {
       name: "Available online",
     });
@@ -115,7 +117,7 @@ export default class SearchPage {
       name: "See all filter options",
     });
     this.hideFilters = this.page.getByRole("button", {
-      name: "Less filter options",
+      name: "Fewer filter options",
     });
     this.applyFilterButton = this.page.getByRole("button", {
       name: "Apply",
