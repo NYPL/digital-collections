@@ -10,6 +10,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Added redirects for OG direct capture links
 - Added Playwright test to verify two collection's on home page(DR-3658)
 
+### Updated
+- updated middleware to strip /book from item urls
+
 ## [0.4.4] 2025-07-01
 ### Added
 - Added Playwright tests to confirm featured section on the homepage (DR-3658)
