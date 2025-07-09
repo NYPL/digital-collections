@@ -21,10 +21,8 @@ export function middleware(req: NextRequest) {
   const url = req.nextUrl;
   const pathname = url.pathname;
   const itemsMatch = pathname.match(/^\/items\/([^\/?#]+)/);
-  console.log("pathname: ", pathname);
 
   if (itemsMatch) {
-    console.log("itemsMatch: ", itemsMatch);
     const uuid = itemsMatch[1];
     const cleanPath = `/items/${uuid}`;
 
