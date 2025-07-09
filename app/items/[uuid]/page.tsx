@@ -6,6 +6,7 @@ import { createAdobeAnalyticsPageName } from "../../src/utils/utils";
 import { ItemModel } from "../../src/models/item";
 import { ItemPage } from "@/src/components/pages/itemPage/itemPage";
 import { revalidatePath } from "next/cache";
+import { redirect } from "next/navigation";
 import { CollectionsApi } from "@/src/utils/apiClients/apiClients";
 
 type ItemProps = {
@@ -22,6 +23,14 @@ const getItemManifest = async (uuid: string) => {
   const clientIP = await getClientIP();
   const data = await CollectionsApi.getManifestForItemUUID(uuid, clientIP);
   return data;
+};
+
+const getItemData = async (uuid: string) => {
+  try {
+    return await CollectionsApi.getItemData(uuid);
+  } catch (error: any) {
+    return null;
+  }
 };
 
 const getClientIP = async () => {
@@ -73,8 +82,17 @@ function formatItemBreadcrumbs(item: ItemModel) {
 
 export default async function ItemViewer({ params, searchParams }: ItemProps) {
   revalidatePath("/");
-  const manifest = await getItemManifest(params.uuid);
-  const item = new ItemModel(params.uuid, manifest);
+  const [itemData, manifest] = await Promise.all([
+    getItemData(params.uuid),
+    getItemManifest(params.uuid),
+  ]);
+  if (!itemData) {
+    const capture = await CollectionsApi.getCaptureMetadata(params.uuid);
+    redirect(
+      `/items/${capture.itemUuid}?canvasIndex=${capture.orderInSequence - 1}`
+    );
+  }
+  const item = new ItemModel(params.uuid, manifest, itemData.captures);
 
   // only allow canvasIndex to be in the range of 0...item.imageIds.length (number of canvases)
   const imageIDs = item.imageIDs || [];
@@ -96,6 +114,7 @@ export default async function ItemViewer({ params, searchParams }: ItemProps) {
       <ItemPage
         manifest={manifest}
         uuid={params.uuid}
+        captures={itemData.captures}
         canvasIndex={clampedCanvasIndex}
       />
     </PageLayout>
