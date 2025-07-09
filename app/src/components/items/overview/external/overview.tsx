@@ -32,7 +32,7 @@ const ExternalLinksOverview = ({ catalogLink, archivesLink }) => {
             aria-label={`view in catalog`}
             type="buttonSecondary"
           >
-            View Catalog
+            Research Catalog
           </Link>
         )}
       </Box>
