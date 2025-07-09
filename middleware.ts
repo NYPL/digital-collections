@@ -20,8 +20,17 @@ const filterMap = {
 export function middleware(req: NextRequest) {
   const url = req.nextUrl;
   const pathname = url.pathname;
-
   const itemsMatch = pathname.match(/^\/items\/([^\/?#]+)/);
+
+  if (itemsMatch) {
+    const uuid = itemsMatch[1];
+    const cleanPath = `/items/${uuid}`;
+
+    if (pathname !== cleanPath) {
+      const newUrl = new URL(req.nextUrl.origin + cleanPath);
+      return NextResponse.redirect(newUrl.toString(), 301);
+    }
+  }
 
   const collectionMatch = pathname.match(/^\/collections\/([^\/?#]+)/);
   if (collectionMatch) {
