@@ -20,7 +20,7 @@ const ExternalLinksOverview = ({ catalogLink, archivesLink }) => {
             type="buttonSecondary"
             marginRight="xs"
           >
-            View Finding Aid
+            Finding Aid
           </Link>
         )}
         {catalogLink && (
@@ -32,7 +32,7 @@ const ExternalLinksOverview = ({ catalogLink, archivesLink }) => {
             aria-label={`view in catalog`}
             type="buttonSecondary"
           >
-            View Catalog
+            Research Catalog
           </Link>
         )}
       </Box>
