@@ -14,7 +14,7 @@ interface PlyrProps {
   type: string; // TODO: only accept 'video' | 'audio'... this requires updating Item model to either have a new typed field for content type that only expects these two options, or update the existing contentType field. I'm in favor of the former because the latter would need to be inclusive of images.
 }
 
-const PlyrPlayer = ({ title, sources, type }: PlyrProps) => {
+const Player = ({ title, sources, type }: PlyrProps) => {
   console.log("sources are: ", sources);
   const searchParams = useSearchParams();
   const { currentCanvasIndex, setCurrentCanvasIndex } = useCanvasContext();
@@ -115,4 +115,4 @@ const PlyrPlayer = ({ title, sources, type }: PlyrProps) => {
   );
 };
 
-export default PlyrPlayer;
+export default Player;
