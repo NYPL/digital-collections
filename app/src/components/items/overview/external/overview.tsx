@@ -20,7 +20,7 @@ const ExternalLinksOverview = ({ catalogLink, archivesLink }) => {
             type="buttonSecondary"
             marginRight="xs"
           >
-            View Finding Aid
+            Finding Aid
           </Link>
         )}
         {catalogLink && (
