@@ -93,6 +93,10 @@ const Player = ({ title, sources, type }: PlyrProps) => {
               return (
                 <Button
                   aria-label={`${truncateString(title, 20)} (${index + 1})`}
+                  aria-pressed={index === currentCanvasIndex}
+                  buttonType={
+                    index === currentCanvasIndex ? "primary" : "secondary"
+                  }
                   key={`item-canvas-${index + 1}-button`}
                   id={`item-canvas-${index + 1}-button`}
                   ref={(el) => (buttonRefs.current[index] = el)}
