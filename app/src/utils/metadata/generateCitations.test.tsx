@@ -6,7 +6,6 @@ describe("generateCitations", () => {
     link: "https://nypl.org/item/abc",
     location: "Main Branch",
     resource: "Text",
-    origin: "1901",
     dateIssued: "1902",
   };
 
