@@ -10,7 +10,6 @@ export interface CitationInput {
   link: string;
   location?: string;
   resource?: string;
-  origin?: string;
   dateIssued?: string;
 }
 
@@ -23,18 +22,18 @@ export function generateCitations(data: CitationInput): CitationOutput {
     year: "numeric",
   });
 
-  const { title, link, location, origin, dateIssued, resource } = data;
+  const { title, link, location, dateIssued, resource } = data;
 
   const MLA = `<p>${
     location ? location + ", " : ""
   }The New York Public Library. "${title}" <em>The New York Public Library Digital Collections</em>. ${
-    origin ? origin + "." : ""
-  } ${dateIssued ? dateIssued + "." : ""} ${link}</p>`;
+    dateIssued ? dateIssued + "." : ""
+  } ${link}</p>`;
 
   const APA = `<p>${
     location ? location + ", " : ""
-  }The New York Public Library. ${origin ? origin + "." : ""} ${
-    dateIssued ? dateIssued + "." : ""
+  }The New York Public Library. ${
+    dateIssued ? `(${dateIssued})` + "." : ""
   } <em>${title}</em> Retrieved from ${link}</p>`;
 
   const CHICAGO = `<p>${
@@ -42,8 +41,8 @@ export function generateCitations(data: CitationInput): CitationOutput {
   }The New York Public Library. "${title}" New York Public Library Digital Collections. Accessed ${today}. ${link}</p>`;
 
   const WIKI = `<p>&lt;ref name=NYPL&gt;{{cite web | url=${link} | title=${
-    resource ? "(" + resource + ")" : ""
-  }${title}${origin ? " (" + origin + ")" : ""}${
+    resource ? " (" + resource + ") " : ""
+  }${title}${
     dateIssued ? " (" + dateIssued + ")" : ""
   } | author=Digital Collections, The New York Public Library | accessdate=${today} | publisher=The New York Public Library, Astor, Lenox, and Tilden Foundations}}&lt;/ref&gt;</p>`;
 

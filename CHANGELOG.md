@@ -6,6 +6,18 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## Unreleased
+## [0.4.5] 2025-07-10
+### Added
+- Added redirects for OG direct capture links (DR-3715)
+- Added Playwright test to verify two collection's on home page (DR-3658)
+
+### Updated
+- Updated copy of "View this item elsewhere" buttons. (DR-3781)
+- updated middleware to strip /book from item urls
+
+### Fixed
+- Fix date formatting in citations (DR-3734)
+
 ## [0.4.4] 2025-07-01
 ### Added
 - Added Playwright tests to confirm featured section on the homepage (DR-3658)

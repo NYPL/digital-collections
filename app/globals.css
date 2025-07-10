@@ -20,3 +20,12 @@ mark {
   display: inline;
   color: inherit;
 }
+
+.openseadragon-container button.prev,
+.openseadragon-container button.next {
+    z-index: 10000 !important;
+}
+
+.plyr__video-wrapper{
+  height: 500px !important;
+}
