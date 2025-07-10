@@ -44,14 +44,19 @@ export class ItemModel {
   isImage: boolean;
   archivesLink: string | null;
   catalogLink: string | null;
-  citationData: CitationOutput;
+  citationData: CitationOutput | null;
   breadcrumbData: any;
   mediaFiles: string[];
   subcollectionName: string | null;
   permittedLocationText: string;
   captures: CaptureModel[];
 
-  constructor(uuid: string, manifest: any, captures?: CaptureModel[]) {
+  constructor(
+    uuid: string,
+    manifest: any,
+    captures?: CaptureModel[],
+    citationData?: any
+  ) {
     const parser = new Maniiifest(manifest);
     // Non-Manifest/Metadata related fields
     this.uuid = uuid;
@@ -154,20 +159,18 @@ export class ItemModel {
       : null;
 
     // Citation Data
-    this.citationData = generateCitations({
-      title: this.title,
-      link: this.link,
-      location:
-        extractAllAnchorsFromHTML(
-          this.metadata?.locations?.split("<br>")[0] ?? ""
-        )[0]?.text ?? "",
-      resource:
-        extractAllAnchorsFromHTML(
-          this.metadata?.typeOfResource?.split("<br>")[0] ?? ""
-        )[0]?.text ?? "",
-      origin: this.metadata?.origin,
-      dateIssued: this.metadata?.dateIssued,
-    });
+    this.citationData = null;
+    if (citationData) {
+      this.citationData = generateCitations({
+        title: citationData.title,
+        link: citationData.shareURL,
+        location: citationData.division,
+        resource: citationData.type,
+        dateIssued: citationData.year_end
+          ? `${citationData.year_start} - ${citationData.year_end}`
+          : citationData.year_start,
+      });
+    }
 
     // Breadcrumb Data
     const divisionLinkObj = extractAllAnchorsFromHTML(
