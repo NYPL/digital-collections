@@ -16,6 +16,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Fixed
 - Fix date formatting in citations (DR-3734)
+- Separate notes by line breaks (DR-3785)
 
 ## [0.4.4] 2025-07-01
 ### Added
