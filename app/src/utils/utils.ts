@@ -25,7 +25,7 @@ export const imageURL = (
   size = "!1600,1600",
   rotation = "0"
 ) => {
-  return `https://iiif.nypl.org/iiif/2/${imageId}/${region}/${size}/${rotation}/default.jpg`;
+  return `https://iiif.nypl.org/iiif/3/${imageId}/${region}/${size}/${rotation}/default.jpg`;
 };
 
 export function addCommas(number: string) {
