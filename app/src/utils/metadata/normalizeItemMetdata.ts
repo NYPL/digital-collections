@@ -18,7 +18,7 @@ export function normalizeItemMetadataFromManifest(
     locations: joinWithBr(raw["Library Locations"]),
     subjects: joinWithBr(raw["Subjects"]),
     genres: joinWithBr(raw["Genres"]),
-    notes: raw["Notes"]?.join("") || "",
+    notes: joinWithBr(raw["Notes"]),
     physicalDescription: joinWithBr(raw["Physical Description"]),
     typeOfResource: joinWithBr(raw["Resource Type"]),
     abstract: raw["Abstract"]?.[0] || "",
