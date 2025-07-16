@@ -17,6 +17,8 @@ test("navigates to Items landing page from homepage", async ({ page }) => {
 
   await expect(itemsLandingPage.items).toBeVisible();
   await itemsLandingPage.items.click();
+  // We need to click twice no that there's a warning banner
+  await itemsLandingPage.items.click();
   await expect(itemsLandingPage.page).toHaveURL(/\/(search)\//);
   await expect(itemsLandingPage.resultsHeading).toBeVisible();
 });
