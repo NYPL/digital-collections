@@ -82,7 +82,9 @@ function formatItemBreadcrumbs(item: ItemModel) {
 
 export default async function ItemViewer({ params, searchParams }: ItemProps) {
   revalidatePath("/");
-  const [itemData, manifest] = await Promise.all([
+  console.log("params are: ", params);
+  const [citationsData, itemData, manifest] = await Promise.all([
+    CollectionsApi.getCitationsData(params.uuid),
     getItemData(params.uuid),
     getItemManifest(params.uuid),
   ]);
@@ -92,6 +94,7 @@ export default async function ItemViewer({ params, searchParams }: ItemProps) {
       `/items/${capture.itemUuid}?canvasIndex=${capture.orderInSequence - 1}`
     );
   }
+
   const item = new ItemModel(params.uuid, manifest, itemData.captures);
 
   // only allow canvasIndex to be in the range of 0...item.imageIds.length (number of canvases)
@@ -112,6 +115,7 @@ export default async function ItemViewer({ params, searchParams }: ItemProps) {
       }}
     >
       <ItemPage
+        citationsData={citationsData}
         manifest={manifest}
         uuid={params.uuid}
         captures={itemData.captures}
