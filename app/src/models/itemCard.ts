@@ -1,4 +1,4 @@
-import { imageURL } from "../utils/utils";
+import { imageURL, imagesNYPLURL } from "../utils/utils";
 
 export class ItemCardModel {
   title: string;
@@ -15,6 +15,6 @@ export class ItemCardModel {
       ? `/items/${data.uuid}?canvasIndex=${data.canvasIndex}`
       : `/items/${data.uuid}`;
     this.imageID = data.imageID;
-    this.imageURL = imageURL(data.imageID, "square", "!288,288", "0");
+    this.imageURL = imagesNYPLURL(data.imageID); //imageURL(data.imageID, "square", "!288,288", "0");
   }
 }

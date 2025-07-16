@@ -6,6 +6,7 @@ import type {
 import type { AvailableFilterOption } from "../types/AvailableFilterType";
 import {
   imageURL,
+  imagesNYPLURL,
   formatHighlightText,
   capitalize,
   getRecordType,
@@ -37,7 +38,7 @@ export class SearchCardModel {
         ? `/items/${data.uuid}`
         : `/collections/${data.uuid}`;
 
-    this.imageURL = imageURL(data.imageID, "square", "!288,288", "0");
+    this.imageURL = imagesNYPLURL(data.imageID); //imageURL(data.imageID, "square", "!288,288", "0");
     this.numberOfDigitizedItems = data.numberOfDigitizedItems;
     this.containsOnSiteMaterial = data.containsOnSiteMaterial;
     this.containsAVMaterial = data.containsAVMaterial;
