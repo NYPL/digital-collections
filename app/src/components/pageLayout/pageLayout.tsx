@@ -4,7 +4,6 @@ import {
   DSProvider,
   SkipNavigation,
   Box,
-  Notification,
 } from "@nypl/design-system-react-components";
 import React, { useEffect } from "react";
 import { type PropsWithChildren } from "react";
@@ -65,18 +64,6 @@ const PageLayout = ({
       <DSProvider>
         <SearchProvider searchParams={searchParams}>
           <FeedbackProvider>
-            <Notification
-              notificationType="standard"
-              noMargin
-              notificationContent={
-                "We’re currently experiencing technical difficulties. Our team is working to resolve the issue as quickly as possible."
-              }
-              sx={{
-                "> div": {
-                  justifyContent: "center",
-                },
-              }}
-            />
             <SkipNavigation />
             <Header />
             {activePage === "home" ||
