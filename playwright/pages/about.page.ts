@@ -46,9 +46,9 @@ export class AboutPage {
   readonly webAndMobileAccessibilityPolicyLink: Locator;
   readonly emailLink: Locator;
 
-  // headings and text
-  readonly aboutPageText: Locator;
-  readonly aboutLinks: Locator;
+  //video sources
+  readonly videoPublicDomain: Locator;
+  readonly videoDownloadItems: Locator;
 
   constructor(page: Page) {
     this.page = page;
@@ -90,15 +90,19 @@ export class AboutPage {
 
     this.nyplDigitalCollectionsPlatformLink = page.getByRole("link", {
       name: '"NYPL Digital Collections Platform: An Introduction"',
+      exact: true,
     });
     this.browseItemsLink = page.getByRole("link", {
       name: "browse just the items that have no known U.S. copyright restrictions",
+      exact: true,
     });
     this.publicDomainItemsLink = page.getByRole("link", {
       name: "296,687 public domain items",
+      exact: true,
     });
     this.freeForAllLink = page.getByRole("link", {
       name: "Free for All: NYPL Enhances Public Domain Collections for Sharing and Reuse.",
+      exact: true,
     });
 
     this.permissionsAndReproductionsLink = page.getByRole("link", {
@@ -106,57 +110,80 @@ export class AboutPage {
     });
     this.investigateCopywrightLink = page.getByRole("link", {
       name: "How to Investigate the Copyright Status of a Work [PDF]",
+      exact: true,
     });
     this.publicDomainDeterminationChartLink = page.getByRole("link", {
       name: "public domain determination chart",
+      exact: true,
     });
     this.wikipediaLink = page.getByRole("link", {
       name: "Wikipedia",
+      exact: true,
     });
     this.fairUseBasicsLink = page.getByRole("link", {
       name: "fair use basics",
+      exact: true,
     });
     this.fairUseChecklistLink = page.getByRole("link", {
       name: "fair use checklist",
+      exact: true,
     });
     this.audioAndMovingImageLink = page.getByRole("link", {
       name: "Audio and Moving Image Preservation and Access Initiative.",
+      exact: true,
     });
     this.nyplCatalogLink = page.getByRole("link", {
       name: "NYPL Catalog",
+      exact: true,
     });
     this.nyplArchivesPortalLink = page.getByRole("link", {
       name: "NYPL Archives Portal",
+      exact: true,
     });
 
     this.digitalPublicLibraryOfAmericaLink = page.getByRole("link", {
       name: "Digital Public Library of America",
+      exact: true,
     });
     this.creativeCommonsLink = page.getByRole("link", {
       name: "Creative Commons CC0 1.0 Universal Public Domain Dedication",
+      exact: true,
     });
     this.nyplDigitalCollectionsAPILink = page.getByRole("link", {
       name: "The New York Public Library Digital Collections API",
+      exact: true,
     });
 
     this.publicDomainDigitalCollectionsGithubLink = page.getByRole("link", {
-      name: "Public Domain Digital Collections GitHub",
+      name: "public domain portion of Digital Collections on GitHub",
+      exact: true,
     });
     this.dplaLink = page.getByRole("link", {
       name: "Digital Public Library of America (DPLA)",
+      exact: true,
     });
     this.modsLink = page.getByRole("link", {
-      name: "Metadata Object Description Schema (MODS)",
+      name: "MODS",
+      exact: true,
     });
     this.internetArchiveBookReaderLink = page.getByRole("link", {
-      name: "Internet Archive BookReader",
+      name: "Internet Archive's BookReader.",
+      exact: true,
     });
     this.iiifComplianceLink = page.getByRole("link", {
-      name: "IIIF Compliance",
+      name: "IIIF compliance",
+      exact: true,
     });
     this.webAndMobileAccessibilityPolicyLink = page.getByRole("link", {
-      name: "Web and Mobile Accessibility Policy",
+      name: "Web & Mobile Accessibility Policy.",
+      exact: true,
     });
-    this.emailLink = page.getByRole("link", { name: "Email" });
+    this.emailLink = page.getByRole("link", {
+      name: "digitalcollections@nypl.org",
+      exact: true,
+    });
+
+    this.videoPublicDomain = this.page.locator("video").nth(0);
+    this.videoDownloadItems = this.page.locator("video").nth(1);
   }
 }

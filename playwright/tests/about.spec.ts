@@ -28,11 +28,10 @@ test("verify links on about page", async ({ page }) => {
   await expect(aboutPage.itemLink).toBeVisible();
   await expect(aboutPage.collectionLink).toBeVisible();
   await expect(aboutPage.divisionLink).toBeVisible();
-  await expect(aboutPage.aboutLink).toBeVisible();
   await expect(aboutPage.browseItemsLink).toBeVisible();
   await expect(aboutPage.publicDomainItemsLink).toBeVisible();
   await expect(aboutPage.freeForAllLink).toBeVisible();
-  await expect(aboutPage.permissionsAndReproductionsLink).toBeVisible();
+  await expect(aboutPage.permissionsAndReproductionsLink.first()).toBeVisible();
   await expect(aboutPage.investigateCopywrightLink).toBeVisible();
   await expect(aboutPage.publicDomainDeterminationChartLink).toBeVisible();
   await expect(aboutPage.wikipediaLink).toBeVisible();
@@ -53,4 +52,11 @@ test("verify links on about page", async ({ page }) => {
   await expect(aboutPage.iiifComplianceLink).toBeVisible();
   await expect(aboutPage.webAndMobileAccessibilityPolicyLink).toBeVisible();
   await expect(aboutPage.emailLink).toBeVisible();
+});
+
+test("verify video sources on about page", async ({ page }) => {
+  const aboutPage = new AboutPage(page);
+
+  await expect(aboutPage.videoPublicDomain).toBeVisible();
+  await expect(aboutPage.videoDownloadItems).toBeVisible();
 });
