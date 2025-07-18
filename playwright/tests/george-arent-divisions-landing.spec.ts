@@ -9,9 +9,7 @@ test.beforeEach(async ({ page }) => {
   await divisionsPage.seeMoreLink.nth(4).click();
 });
 
-test("from divisions page click see more link and verify divisions landing page", async ({
-  page,
-}) => {
+test("verify George Arents division's landing page", async ({ page }) => {
   const divisionsPage = new DivisionsPage(page);
   const divisionsLandingPage = new GeorgeArentDivisionsLandingPage(page);
 
