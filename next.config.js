@@ -22,6 +22,14 @@ const nextConfig = {
     remotePatterns: [
       {
         protocol: "https",
+        hostname: "images.nypl.org",
+      },
+      {
+        protocol: "https",
+        hostname: "images-qa.nypl.org",
+      },
+      {
+        protocol: "https",
         hostname: "iiif.nypl.org",
       },
       {

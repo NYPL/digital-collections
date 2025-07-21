@@ -28,6 +28,10 @@ export const imageURL = (
   return `https://iiif.nypl.org/iiif/3/${imageId}/${region}/${size}/${rotation}/default.jpg`;
 };
 
+export const imagesNYPLURL = (imageId: any) => {
+  return `https://images.nypl.org/index.php?id=${imageId}&t=r`;
+};
+
 export function addCommas(number: string) {
   // Return the formatted number
   return Number(number).toLocaleString("en-US");

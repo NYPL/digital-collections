@@ -1,4 +1,4 @@
-import { imageURL } from "../utils/utils";
+import { imageURL, imagesNYPLURL } from "../utils/utils";
 import { parseBoolean } from "../utils/utils";
 
 export class CollectionCardModel {
@@ -15,7 +15,7 @@ export class CollectionCardModel {
     this.title = data.title;
     this.url = `/collections/${data.uuid}`;
     this.imageID = data.image_id || data.imageID;
-    this.imageURL = imageURL(data.imageID, "square", "!288,288", "0");
+    this.imageURL = imagesNYPLURL(data.imageID); //imageURL(data.imageID, "square", "!288,288", "0");
     this.numberOfDigitizedItems =
       data.numberOfDigitizedItems || data.numItems || 0;
     this.containsOnSiteMaterials =
