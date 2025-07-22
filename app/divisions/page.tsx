@@ -1,7 +1,7 @@
 import React, { Suspense } from "react";
 import { Metadata } from "next";
 import DivisionsPage from "../src/components/pages/divisionsPage/divisionsPage";
-import { RepoApi } from "@/src/utils/apiClients/apiClients";
+import { CollectionsApi } from "@/src/utils/apiClients/apiClients";
 import { redirect } from "next/navigation";
 
 export const metadata: Metadata = {
@@ -12,11 +12,7 @@ export const metadata: Metadata = {
 };
 
 export default async function Divisions() {
-  const data = await RepoApi.getDivisionData();
-  // Repo API returns 404s within the data.
-  if (data?.headers?.code === "404") {
-    redirect("/404");
-  }
+  const data = await CollectionsApi.getDivisionData();
   return (
     <Suspense>
       <DivisionsPage summary={data?.summary} divisions={data?.divisions} />
