@@ -6,7 +6,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## Unreleased
-- Added Playwright test for the divisions-landing page (DR-3716)
+- - Added Playwright test for George Arents Division's landing page (DR-3716)
 - Added Playwright tests for the About page (DR-3762)
 ## [0.4.6] 2025-07-15
 ### Updated
@@ -28,7 +28,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Fix date formatting in citations (DR-3734)
 
 ## [0.4.4] 2025-07-01
-- Added Playwright test for George Arents Division's page (DR-3716)
 ### Added
 - Added Playwright tests to confirm featured section on the homepage (DR-3658)
 - Added Playwright tests to clear search results filters (DR-3659)
