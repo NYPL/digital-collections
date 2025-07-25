@@ -25,7 +25,7 @@ export const imageURL = (
   size = "!1600,1600",
   rotation = "0"
 ) => {
-  return `https://iiif.nypl.org/iiif/2/${imageId}/${region}/${size}/${rotation}/default.jpg`;
+  return `https://iiif.nypl.org/iiif/3/${imageId}/${region}/${size}/${rotation}/default.jpg`;
 };
 
 export function addCommas(number: string) {
@@ -277,3 +277,11 @@ export const parseBoolean = (value: any): boolean => {
   }
   return value == "true" ? true : false;
 };
+
+export function truncateString(str, num) {
+  if (str.length > num) {
+    return str.slice(0, num) + "...";
+  } else {
+    return str;
+  }
+}

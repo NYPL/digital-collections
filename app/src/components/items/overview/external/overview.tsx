@@ -5,7 +5,7 @@ const ExternalLinksOverview = ({ catalogLink, archivesLink }) => {
     <>
       <Box marginBottom="m">
         <Heading size="heading6" marginBottom="xs">
-          View this item elsewhere
+          {catalogLink && archivesLink ? "Data sources:" : "Data source:"}
         </Heading>
         {!catalogLink && !archivesLink && (
           <Text>This item does not have any external references yet</Text>
@@ -20,7 +20,7 @@ const ExternalLinksOverview = ({ catalogLink, archivesLink }) => {
             type="buttonSecondary"
             marginRight="xs"
           >
-            View Finding Aid
+            Finding Aid
           </Link>
         )}
         {catalogLink && (
@@ -32,7 +32,7 @@ const ExternalLinksOverview = ({ catalogLink, archivesLink }) => {
             aria-label={`view in catalog`}
             type="buttonSecondary"
           >
-            View Catalog
+            Research Catalog
           </Link>
         )}
       </Box>

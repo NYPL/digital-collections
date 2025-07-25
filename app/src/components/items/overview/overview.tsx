@@ -11,6 +11,7 @@ import { headerBreakpoints } from "@/src/utils/breakpoints";
 import ExternalLinksOverview from "./external/overview";
 import PrintOverview from "./print/overview";
 import CitationsOverview from "./citations/overview";
+import AVMaterialManifest from "./audiovisual/manifest";
 
 const ItemOverview = ({ item }) => {
   return (
@@ -30,7 +31,11 @@ const ItemOverview = ({ item }) => {
           catalogLink={item.catalogLink}
           archivesLink={item.archivesLink}
         />
-        {item.isImage && <PrintOverview imageIDs={item.imageIDs} />}
+        {item.isImage ? (
+          <PrintOverview buyable={item.buyable} imageIDs={item.imageIDs} />
+        ) : (
+          <AVMaterialManifest manifestURL={item.manifestURL} />
+        )}
       </ChakraSimpleGrid>
       <HorizontalRule marginTop="xs" marginBottom="m" />
       <ChakraSimpleGrid

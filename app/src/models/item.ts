@@ -20,6 +20,12 @@ import {
 // https://www.npmjs.com/package/@iiif/manifold
 // https://github.com/iiif-commons/manifold
 
+export class CaptureModel {
+  uuid: string;
+  imageId: string | null;
+  orderInSequence: number;
+}
+
 // TO DO: add isCartographic for map stuff
 export class ItemModel {
   uuid: string;
@@ -32,22 +38,30 @@ export class ItemModel {
   title: string;
   typeOfResource: string;
   isRestricted: boolean;
+  buyable: boolean;
   divisionLink: string;
   contentType: string;
   isImage: boolean;
   archivesLink: string | null;
   catalogLink: string | null;
-  citationData: CitationOutput;
+  citationData: CitationOutput | null;
   breadcrumbData: any;
   mediaFiles: string[];
   subcollectionName: string | null;
   permittedLocationText: string;
+  captures: CaptureModel[];
 
-  constructor(uuid: string, manifest: any) {
+  constructor(
+    uuid: string,
+    manifest: any,
+    captures?: CaptureModel[],
+    citationData?: any
+  ) {
     const parser = new Maniiifest(manifest);
     // Non-Manifest/Metadata related fields
     this.uuid = uuid;
     this.manifestURL = `${process.env.COLLECTIONS_API_URL}/manifests/${uuid}`;
+    this.captures = captures ?? [];
 
     // Manifest related fields
     this.hasItems = manifest.items.length > 0;
@@ -81,11 +95,15 @@ export class ItemModel {
       ? rawManifestMetadata["Is Restricted"].toString().toLowerCase() === "true"
       : true;
 
+    this.buyable = rawManifestMetadata["Buyable"]
+      ? rawManifestMetadata["Buyable"].toString().toLowerCase() === "true"
+      : false;
+
     //this will break in Prod if we don't deploy API first bc the name of the field is "Library Location"
     this.divisionLink =
       this.isRestricted && rawManifestMetadata["Division"]
         ? rawManifestMetadata["Division"].toString()
-        : rawManifestMetadata["Library Locations"][0] || "";
+        : rawManifestMetadata["Library Locations"]?.[0] || "";
 
     this.permittedLocationText =
       this.isRestricted && rawManifestMetadata["Permitted Locations"]
@@ -141,39 +159,44 @@ export class ItemModel {
       : null;
 
     // Citation Data
-    this.citationData = generateCitations({
-      title: this.title,
-      link: this.link,
-      location:
-        extractAllAnchorsFromHTML(
-          this.metadata?.locations?.split("<br>")[0] ?? ""
-        )[0].text ?? "",
-      resource:
-        extractAllAnchorsFromHTML(
-          this.metadata?.typeOfResource?.split("<br>")[0] ?? ""
-        )[0].text ?? "",
-      origin: this.metadata?.origin,
-      dateIssued: this.metadata?.dateIssued,
-    });
+    this.citationData = null;
+    if (citationData) {
+      this.citationData = generateCitations({
+        title: citationData.title,
+        link: citationData.shareURL,
+        location: citationData.division,
+        resource: citationData.type,
+        dateIssued: citationData.year_end
+          ? `${citationData.year_start} - ${citationData.year_end}`
+          : citationData.year_start,
+      });
+    }
 
     // Breadcrumb Data
     const divisionLinkObj = extractAllAnchorsFromHTML(
       this.metadata?.locations?.split("<br>")[0] ?? ""
     )[0];
-    divisionLinkObj["path"] = new URL(divisionLinkObj.href).pathname;
+    if (divisionLinkObj) {
+      divisionLinkObj["path"] = new URL(divisionLinkObj.href).pathname;
+    }
 
     const orderedCollections = this.metadata?.collection?.split("<br>") ?? [];
     // note: this points to the top level collection, not the immediate parent collection or subcollection
     const collectionLinkObj = extractAllAnchorsFromHTML(
       orderedCollections[0] ?? ""
     )[0];
-    if (collectionLinkObj) {
+    if (collectionLinkObj && divisionLinkObj) {
       collectionLinkObj["path"] = new URL(collectionLinkObj.href).pathname;
       this.breadcrumbData = {
         division: divisionLinkObj,
         collection: collectionLinkObj,
       };
-    } else {
+    } else if (collectionLinkObj) {
+      collectionLinkObj["path"] = new URL(collectionLinkObj.href).pathname;
+      this.breadcrumbData = {
+        collection: collectionLinkObj,
+      };
+    } else if (divisionLinkObj) {
       this.breadcrumbData = {
         division: divisionLinkObj,
       };
