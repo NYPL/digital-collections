@@ -100,8 +100,8 @@ test.describe("displays search results filters", () => {
   });
 });
 
-test.describe("filters search results", () => {
-  test("filters drop-downs in first row", async () => {
+test.describe("displays specific filter options", () => {
+  test("choose topic", async () => {
     await expect(searchPage.refineHeading).toBeVisible();
 
     await expect(searchPage.topicFilter).toBeVisible();
@@ -112,6 +112,18 @@ test.describe("filters search results", () => {
     await searchPage.applyFilterButton.click();
     await expect(searchPage.topicSelected).toBeVisible();
   });
+  test("choose name", async () => {
+    await expect(searchPage.refineHeading).toBeVisible();
+
+    await expect(searchPage.nameFilter).toBeVisible();
+    await searchPage.nameFilter.click();
+    await expect(searchPage.nameOption).toBeVisible();
+    await searchPage.nameOption.click();
+    await expect(searchPage.applyFilterButton).toBeVisible();
+    await searchPage.applyFilterButton.click();
+    await expect(searchPage.nameSelected).toBeVisible();
+  });
+
   test("filters drop-downs in second row", async () => {
     await expect(searchPage.refineHeading).toBeVisible();
 
