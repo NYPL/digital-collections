@@ -18,14 +18,25 @@ export default class SearchPage {
   readonly topicOption: Locator;
   readonly topicSelected: Locator;
   readonly nameFilter: Locator;
+  readonly nameOption: Locator;
+  readonly nameSelected: Locator;
   readonly collectionFilter: Locator;
+  readonly collectionOption: Locator;
+  readonly collectionSelected: Locator;
   readonly placeFilter: Locator;
+  readonly placeOption: Locator;
+  readonly placeSelected: Locator;
   readonly genreFilter: Locator;
+  readonly genreOption: Locator;
+  readonly genreSelected: Locator;
   readonly publisherFilter: Locator;
   readonly publisherOption: Locator;
   readonly publisherSelected: Locator;
   readonly divisionFilter: Locator;
+  readonly divisionOption: Locator;
   readonly typeFilter: Locator;
+  readonly typeOption: Locator;
+  readonly typeSelected: Locator;
   readonly startYear: Locator;
   readonly endYear: Locator;
   readonly applyDates: Locator;
@@ -87,6 +98,12 @@ export default class SearchPage {
       .locator("#select-topic")
       .getByText("Topic: Maps in education", { exact: true });
     this.nameFilter = this.page.getByRole("button", { name: "Name" });
+    this.nameOption = this.page
+      .locator("#select-name")
+      .getByText("Sheldonian Theatre", { exact: true });
+    this.nameSelected = this.page
+      .locator("#select-name")
+      .getByText("Name: Sheldonian Theatre", { exact: true });
     this.collectionFilter = this.page.getByRole("button", {
       name: "Collection",
     });
