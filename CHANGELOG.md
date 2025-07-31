@@ -9,6 +9,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Added Playwright test for Name filter for search-results page (DR-3796)
 - Added Playwright test for George Arents Division's landing page (DR-3716)
 - Added Playwright tests for the About page (DR-3762)
+- Added IIIF Manifest link to all Items
+
 ## [0.4.6] 2025-07-15
 ### Updated
 - Updated IIIF image urls to use v3 instead of v2
