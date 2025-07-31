@@ -117,7 +117,7 @@ describe("Repo API methods", () => {
                   apiUri:
                     "https://api.repo.nypl.org/api/v2/collections/e4d9e770-8b49-013d-5581-0242ac110002",
                   imageID: "3932292",
-                  containsOnSiteMaterials: "false",
+                  containsOnSiteMaterial: "false",
                   numItems: "1",
                   numberOfDigitizedItems: "1",
                 },
@@ -128,7 +128,7 @@ describe("Repo API methods", () => {
                   apiUri:
                     "https://api.repo.nypl.org/api/v2/collections/1f182f10-78ed-013d-5352-0242ac110004",
                   imageID: "58928925",
-                  containsOnSiteMaterials: "false",
+                  containsOnSiteMaterial: "false",
                   numItems: "2",
                   numberOfDigitizedItems: "2",
                 },
@@ -139,7 +139,7 @@ describe("Repo API methods", () => {
                   apiUri:
                     "https://api.repo.nypl.org/api/v2/collections/2f151240-6247-013d-50f1-0242ac110004",
                   imageID: "58928893",
-                  containsOnSiteMaterials: "false",
+                  containsOnSiteMaterial: "false",
                   numItems: "1",
                   numberOfDigitizedItems: "1",
                 },
