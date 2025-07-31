@@ -3,7 +3,7 @@ import {
   mockItemResponse,
 } from "__tests__/__mocks__/data/repoApi/mockApiResponses";
 import { fetchApi } from "../fetchApi/fetchApi";
-import { RepoApi } from "./apiClients";
+import { CollectionsApi, RepoApi } from "./apiClients";
 import defaultFeaturedItem from "@/src/data/defaultFeaturedItemData";
 
 jest.mock("../fetchApi/fetchApi");
@@ -30,66 +30,6 @@ describe("Repo API methods", () => {
       expect(result.numberOfDigitizedItems).toEqual("1,059,731");
       expect(result.featuredItem.imageID).toEqual(
         defaultFeaturedItem.featuredItem.imageID
-      );
-    });
-  });
-
-  describe("getDivisionData", () => {
-    it("forms the correct request from params with slug", async () => {
-      await RepoApi.getDivisionData({
-        slug: "testSlug",
-        pageNum: 1,
-        perPage: 3,
-      });
-
-      expect(fetchApi as jest.Mock).toHaveBeenCalledWith({
-        apiUrl: `${process.env.API_URL}/api/v2/divisions/testSlug?page=1&per_page=3`,
-      });
-    });
-
-    it("forms the correct request from no params", async () => {
-      await RepoApi.getDivisionData();
-
-      expect(fetchApi as jest.Mock).toHaveBeenCalledWith({
-        apiUrl: `${process.env.API_URL}/api/v2/divisions`,
-      });
-    });
-
-    it("returns successful response", async () => {
-      (fetchApi as jest.Mock).mockResolvedValueOnce(
-        Promise.resolve({
-          nyplAPI: {
-            response: {
-              headers: { status: "success", code: "200", message: "ok" },
-              summary: "divisions test",
-              divisions: [
-                {
-                  name: "Billy Rose Theatre Division",
-                  slug: "billy-rose-theatre-division",
-                  collections: [],
-                },
-                {
-                  name: "Carl H. Pforzheimer Collection of Shelley and His Circle",
-                  slug: "carl-h-pforzheimer-collection-of-shelley-and-his-circle",
-                  collections: [],
-                },
-              ],
-            },
-          },
-        })
-      );
-      const result = await RepoApi.getDivisionData();
-      expect(result.divisions.length).toEqual(2);
-      expect(result).toHaveProperty("summary");
-    });
-
-    it("handles error response", async () => {
-      (fetchApi as jest.Mock).mockRejectedValue(
-        new Error("fetchApi: Request timed out")
-      );
-
-      await expect(RepoApi.getDivisionData()).rejects.toThrow(
-        new Error("fetchApi: Request timed out")
       );
     });
   });
