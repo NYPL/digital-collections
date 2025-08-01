@@ -36,7 +36,7 @@ describe("Collections API methods", () => {
       const collections = await CollectionsApi.getCollectionsData();
 
       expect(fetchApi).toHaveBeenCalledWith({
-        apiUrl: `${process.env.COLLECTIONS_API_URL}/collections?page=1&perPage=48&sort=date-desc&keyword=`,
+        apiUrl: `${process.env.COLLECTIONS_API_URL}/collections?page=1&perPage=48&sort=relevance&keyword=`,
         options: { isRepoApi: false },
       });
 
