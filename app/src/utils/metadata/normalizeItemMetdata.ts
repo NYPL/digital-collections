@@ -22,7 +22,7 @@ export function normalizeItemMetadataFromManifest(
     physicalDescription: joinWithBr(raw["Physical Description"]),
     typeOfResource: joinWithBr(raw["Resource Type"]),
     abstract: raw["Abstract"]?.[0] || "",
-    languages: raw["Languages"]?.[0] || "",
+    languages: joinWithBr(raw["Languages"]),
     link: raw["Link"]?.[0] || "",
     identifiers: joinWithBr(raw["Identifiers"]),
     access: raw["Access"]?.[0] || "",
