@@ -48,6 +48,63 @@ describe("Collections API methods", () => {
     });
   });
 
+  describe("getDivisionData", () => {
+    it("forms the correct request from params with slug", async () => {
+      await CollectionsApi.getDivisionData({
+        slug: "testSlug",
+        pageNum: 1,
+        perPage: 3,
+      });
+
+      expect(fetchApi as jest.Mock).toHaveBeenCalledWith({
+        apiUrl: `${process.env.COLLECTIONS_API_URL}/divisions/testSlug?page=1&per_page=3`,
+        options: { isRepoApi: false },
+      });
+    });
+
+    it("forms the correct request from no params", async () => {
+      await CollectionsApi.getDivisionData();
+
+      expect(fetchApi as jest.Mock).toHaveBeenCalledWith({
+        apiUrl: `${process.env.COLLECTIONS_API_URL}/divisions`,
+        options: { isRepoApi: false },
+      });
+    });
+
+    it("returns successful response", async () => {
+      (fetchApi as jest.Mock).mockResolvedValueOnce(
+        Promise.resolve({
+          summary: "divisions test",
+          divisions: [
+            {
+              name: "Billy Rose Theatre Division",
+              slug: "billy-rose-theatre-division",
+              collections: [],
+            },
+            {
+              name: "Carl H. Pforzheimer Collection of Shelley and His Circle",
+              slug: "carl-h-pforzheimer-collection-of-shelley-and-his-circle",
+              collections: [],
+            },
+          ],
+        })
+      );
+      const result = await CollectionsApi.getDivisionData();
+      expect(result.divisions.length).toEqual(2);
+      expect(result).toHaveProperty("summary");
+    });
+
+    it("handles error response", async () => {
+      (fetchApi as jest.Mock).mockRejectedValue(
+        new Error("fetchApi: Request timed out")
+      );
+
+      await expect(CollectionsApi.getDivisionData()).rejects.toThrow(
+        new Error("fetchApi: Request timed out")
+      );
+    });
+  });
+
   describe("getHomePageData", () => {
     it("creates response containing random number and all 7 lanes", async () => {
       (fetchApi as jest.Mock).mockResolvedValueOnce(

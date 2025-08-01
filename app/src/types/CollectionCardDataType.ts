@@ -5,7 +5,7 @@ export interface CollectionCardDataType {
   imageID: string | null;
   imageURL: string;
   numberOfDigitizedItems: number;
-  containsOnSiteMaterials: boolean;
+  containsOnSiteMaterial: boolean;
 }
 
 export default CollectionCardDataType;
