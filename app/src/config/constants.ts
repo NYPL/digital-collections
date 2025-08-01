@@ -16,19 +16,21 @@ export const TRUNCATED_SEARCH_CARD_LENGTH = 140;
 export const CARDS_PER_PAGE = 48;
 
 export const DEFAULT_PAGE_NUM = 1;
-export const DEFAULT_COLLECTION_SORT = "date-desc";
+export const DEFAULT_COLLECTION_SORT = "relevance";
 export const DEFAULT_SEARCH_SORT = "relevance";
 export const DEFAULT_SEARCH_TERM = "";
 export const DEFAULT_FILTERS = [];
 // export const DEFAULT_SORT = [];
 
 export const COLLECTION_SORT_OPTIONS = {
+  relevance: "relevance",
   "date-desc": "date DESC",
   "date-asc": "date ASC",
   "title-desc": "title DESC",
   "title-asc": "title ASC",
 };
 export const COLLECTION_SORT_LABELS = {
+  relevance: "Relevance",
   "date-desc": "Newest to oldest",
   "date-asc": "Oldest to newest",
   "title-desc": "Title Z to A",
