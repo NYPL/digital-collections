@@ -10,6 +10,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Added Playwright test for George Arents Division's landing page (DR-3716)
 - Added Playwright tests for the About page (DR-3762)
 - Updated Divisions endpoints to use CollectionsAPI (DR-3214)
+- Added relevance to the Collections page (DR-3681)
 - Fixed multiple languages not displaying (DR-3764)
 
 ## [0.4.6] 2025-07-15
