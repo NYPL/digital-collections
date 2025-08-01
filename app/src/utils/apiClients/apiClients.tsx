@@ -132,26 +132,6 @@ export class RepoApi {
     return res?.nyplAPI?.response;
   }
 
-  static async getDivisionData({
-    pageNum = 1,
-    perPage = CARDS_PER_PAGE,
-    slug,
-  }: {
-    pageNum?: number;
-    perPage?: number;
-    slug?: string;
-  } = {}) {
-    let apiUrl = `${process.env.API_URL}/api/v2/divisions`;
-
-    if (slug) {
-      apiUrl += `/${slug}?page=${pageNum}&per_page=${perPage}`;
-    }
-
-    const res = await fetchApi({ apiUrl });
-
-    return res?.nyplAPI?.response;
-  }
-
   static async getLaneData({
     slug,
     pageNum = 1,
@@ -219,6 +199,26 @@ export class CollectionsApi {
       options: { isRepoApi: false },
     });
     return response;
+  }
+
+  static async getDivisionData({
+    pageNum = 1,
+    perPage = CARDS_PER_PAGE,
+    slug,
+  }: {
+    pageNum?: number;
+    perPage?: number;
+    slug?: string;
+  } = {}) {
+    let apiUrl = `${process.env.COLLECTIONS_API_URL}/divisions`;
+
+    if (slug) {
+      apiUrl += `/${slug}?page=${pageNum}&per_page=${perPage}`;
+    }
+    return await fetchApi({
+      apiUrl: apiUrl,
+      options: { isRepoApi: false },
+    });
   }
 
   static async getItemData(uuid: string) {
