@@ -2,7 +2,7 @@ import { Metadata } from "next";
 import React from "react";
 import DivisionPage from "../../src/components/pages/divisionPage/divisionPage";
 import { slugToString } from "../../src/utils/utils";
-import { RepoApi } from "../../src/utils/apiClients/apiClients";
+import { CollectionsApi } from "../../src/utils/apiClients/apiClients";
 import { Suspense } from "react";
 import { redirect } from "next/navigation";
 
@@ -27,14 +27,10 @@ export default async function Division({
   params,
   searchParams,
 }: DivisionProps) {
-  const data = await RepoApi.getDivisionData({
+  const data = await CollectionsApi.getDivisionData({
     slug: params.slug,
     pageNum: searchParams.page,
   });
-  // Repo API returns 404s within the data.
-  if (data?.headers?.code === "404") {
-    redirect("/404");
-  }
 
   return (
     <Suspense>
