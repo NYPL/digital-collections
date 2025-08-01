@@ -17,7 +17,7 @@ export const mockCollectionLaneResponse = {
         apiUri:
           "https://api.repo.nypl.org/api/v2/collections/6681fc20-c52b-012f-4eb1-58d385a7bc34",
         imageID: "wf39_171707",
-        containsOnSiteMaterials: "false",
+        containsOnSiteMaterial: "false",
         numItems: "177198",
         numberOfDigitizedItems: "177198",
       },
@@ -28,7 +28,7 @@ export const mockCollectionLaneResponse = {
         apiUri:
           "https://api.repo.nypl.org/api/v2/collections/16ad5350-c52e-012f-aecf-58d385a7bc34",
         imageID: "494030",
-        containsOnSiteMaterials: "false",
+        containsOnSiteMaterial: "false",
         numItems: "71626",
         numberOfDigitizedItems: "71626",
       },
@@ -39,7 +39,7 @@ export const mockCollectionLaneResponse = {
         apiUri:
           "https://api.repo.nypl.org/api/v2/collections/2589a880-c52c-012f-2cb4-58d385a7bc34",
         imageID: "TH-15522",
-        containsOnSiteMaterials: "false",
+        containsOnSiteMaterial: "false",
         numItems: "57361",
         numberOfDigitizedItems: "57361",
       },
@@ -50,7 +50,7 @@ export const mockCollectionLaneResponse = {
         apiUri:
           "https://api.repo.nypl.org/api/v2/collections/0146e060-c530-012f-1e6f-58d385a7bc34",
         imageID: "swope_631929",
-        containsOnSiteMaterials: "true",
+        containsOnSiteMaterial: "true",
         numItems: "50860",
         numberOfDigitizedItems: "50860",
       },
@@ -61,7 +61,7 @@ export const mockCollectionLaneResponse = {
         apiUri:
           "https://api.repo.nypl.org/api/v2/collections/5261fd50-c52e-012f-85ec-58d385a7bc34",
         imageID: "G90F173_009F",
-        containsOnSiteMaterials: "false",
+        containsOnSiteMaterial: "false",
         numItems: "42204",
         numberOfDigitizedItems: "42204",
       },
@@ -72,7 +72,7 @@ export const mockCollectionLaneResponse = {
         apiUri:
           "https://api.repo.nypl.org/api/v2/collections/7a830280-c542-012f-b87c-58d385a7bc34",
         imageID: "4063867",
-        containsOnSiteMaterials: "false",
+        containsOnSiteMaterial: "false",
         numItems: "39827",
         numberOfDigitizedItems: "39827",
       },
@@ -84,7 +84,7 @@ export const mockCollectionLaneResponse = {
         apiUri:
           "https://api.repo.nypl.org/api/v2/collections/a301da20-c52e-012f-cc55-58d385a7bc34",
         imageID: "708126F",
-        containsOnSiteMaterials: "false",
+        containsOnSiteMaterial: "false",
         numItems: "34742",
         numberOfDigitizedItems: "34742",
       },
@@ -95,7 +95,7 @@ export const mockCollectionLaneResponse = {
         apiUri:
           "https://api.repo.nypl.org/api/v2/collections/79d4a650-c52e-012f-67ad-58d385a7bc34",
         imageID: "820781",
-        containsOnSiteMaterials: "false",
+        containsOnSiteMaterial: "false",
         numItems: "34311",
         numberOfDigitizedItems: "34311",
       },
@@ -106,7 +106,7 @@ export const mockCollectionLaneResponse = {
         apiUri:
           "https://api.repo.nypl.org/api/v2/collections/e5462600-c5d9-012f-a6a3-58d385a7bc34",
         imageID: "58215588",
-        containsOnSiteMaterials: "false",
+        containsOnSiteMaterial: "false",
         numItems: "27827",
         numberOfDigitizedItems: "27827",
       },
@@ -118,7 +118,7 @@ export const mockCollectionLaneResponse = {
         apiUri:
           "https://api.repo.nypl.org/api/v2/collections/80fa1460-c52f-012f-be77-58d385a7bc34",
         imageID: "506894",
-        containsOnSiteMaterials: "false",
+        containsOnSiteMaterial: "false",
         numItems: "25428",
         numberOfDigitizedItems: "25428",
       },
@@ -129,7 +129,7 @@ export const mockCollectionLaneResponse = {
         apiUri:
           "https://api.repo.nypl.org/api/v2/collections/d3802d10-f49a-0139-3bff-0242ac110002",
         imageID: "58424723",
-        containsOnSiteMaterials: "false",
+        containsOnSiteMaterial: "false",
         numItems: "24855",
         numberOfDigitizedItems: "24855",
       },
@@ -140,7 +140,7 @@ export const mockCollectionLaneResponse = {
         apiUri:
           "https://api.repo.nypl.org/api/v2/collections/cd0fd890-b0de-0133-ad22-00505686d14e",
         imageID: "5706845",
-        containsOnSiteMaterials: "false",
+        containsOnSiteMaterial: "false",
         numItems: "15771",
         numberOfDigitizedItems: "15771",
       },
@@ -151,7 +151,7 @@ export const mockCollectionLaneResponse = {
         apiUri:
           "https://api.repo.nypl.org/api/v2/collections/1e6dd2f0-c530-012f-c1f8-58d385a7bc34",
         imageID: "2011162",
-        containsOnSiteMaterials: "false",
+        containsOnSiteMaterial: "false",
         numItems: "13637",
         numberOfDigitizedItems: "13637",
       },
@@ -162,7 +162,7 @@ export const mockCollectionLaneResponse = {
         apiUri:
           "https://api.repo.nypl.org/api/v2/collections/1a0528c0-0d47-0133-a1f0-58d385a7b928",
         imageID: "5381653",
-        containsOnSiteMaterials: "false",
+        containsOnSiteMaterial: "false",
         numItems: "9247",
         numberOfDigitizedItems: "9247",
       },
@@ -173,7 +173,7 @@ export const mockCollectionLaneResponse = {
         apiUri:
           "https://api.repo.nypl.org/api/v2/collections/26818d00-c611-012f-a212-58d385a7bc34",
         imageID: "92304",
-        containsOnSiteMaterials: "false",
+        containsOnSiteMaterial: "false",
         numItems: "7085",
         numberOfDigitizedItems: "7085",
       },
@@ -184,7 +184,7 @@ export const mockCollectionLaneResponse = {
         apiUri:
           "https://api.repo.nypl.org/api/v2/collections/d5e04a00-c61a-012f-127f-58d385a7bc34",
         imageID: "2029425",
-        containsOnSiteMaterials: "false",
+        containsOnSiteMaterial: "false",
         numItems: "7041",
         numberOfDigitizedItems: "7041",
       },
@@ -195,7 +195,7 @@ export const mockCollectionLaneResponse = {
         apiUri:
           "https://api.repo.nypl.org/api/v2/collections/f7ffc990-c5ae-012f-eb75-58d385a7bc34",
         imageID: "58086787",
-        containsOnSiteMaterials: "false",
+        containsOnSiteMaterial: "false",
         numItems: "3845",
         numberOfDigitizedItems: "3845",
       },
@@ -206,7 +206,7 @@ export const mockCollectionLaneResponse = {
         apiUri:
           "https://api.repo.nypl.org/api/v2/collections/0e023030-c5ab-012f-a4c2-58d385a7bc34",
         imageID: "485174",
-        containsOnSiteMaterials: "false",
+        containsOnSiteMaterial: "false",
         numItems: "3727",
         numberOfDigitizedItems: "3727",
       },
@@ -217,7 +217,7 @@ export const mockCollectionLaneResponse = {
         apiUri:
           "https://api.repo.nypl.org/api/v2/collections/8d08f9f0-c60b-012f-0c69-58d385a7bc34",
         imageID: "1150535",
-        containsOnSiteMaterials: "false",
+        containsOnSiteMaterial: "false",
         numItems: "3343",
         numberOfDigitizedItems: "3343",
       },
@@ -229,7 +229,7 @@ export const mockCollectionLaneResponse = {
         apiUri:
           "https://api.repo.nypl.org/api/v2/collections/531a8850-c607-012f-0a5d-58d385a7bc34",
         imageID: "58767265",
-        containsOnSiteMaterials: "false",
+        containsOnSiteMaterial: "false",
         numItems: "3321",
         numberOfDigitizedItems: "3321",
       },
@@ -240,7 +240,7 @@ export const mockCollectionLaneResponse = {
         apiUri:
           "https://api.repo.nypl.org/api/v2/collections/530a11c0-c8b6-0131-2d6e-58d385a7b928",
         imageID: "5242169",
-        containsOnSiteMaterials: "false",
+        containsOnSiteMaterial: "false",
         numItems: "3129",
         numberOfDigitizedItems: "3129",
       },
@@ -251,7 +251,7 @@ export const mockCollectionLaneResponse = {
         apiUri:
           "https://api.repo.nypl.org/api/v2/collections/0f38cb80-c5ae-012f-b01b-58d385a7bc34",
         imageID: "colmer_164_2041",
-        containsOnSiteMaterials: "false",
+        containsOnSiteMaterial: "false",
         numItems: "3122",
         numberOfDigitizedItems: "3122",
       },
@@ -262,7 +262,7 @@ export const mockCollectionLaneResponse = {
         apiUri:
           "https://api.repo.nypl.org/api/v2/collections/de8b3b60-c284-0135-01bc-33751ccfcc26",
         imageID: "57484879",
-        containsOnSiteMaterials: "false",
+        containsOnSiteMaterial: "false",
         numItems: "2844",
         numberOfDigitizedItems: "2844",
       },
@@ -273,7 +273,7 @@ export const mockCollectionLaneResponse = {
         apiUri:
           "https://api.repo.nypl.org/api/v2/collections/f5301480-9c31-0131-7b95-58d385a7bbd0",
         imageID: "5212943",
-        containsOnSiteMaterials: "false",
+        containsOnSiteMaterial: "false",
         numItems: "2598",
         numberOfDigitizedItems: "2598",
       },
@@ -284,7 +284,7 @@ export const mockCollectionLaneResponse = {
         apiUri:
           "https://api.repo.nypl.org/api/v2/collections/274b79c0-c5b6-012f-1730-58d385a7bc34",
         imageID: "1103827",
-        containsOnSiteMaterials: "false",
+        containsOnSiteMaterial: "false",
         numItems: "2505",
         numberOfDigitizedItems: "2505",
       },
