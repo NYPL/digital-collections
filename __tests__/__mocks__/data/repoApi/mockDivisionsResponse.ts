@@ -17,7 +17,7 @@ export const mockDivisionsResponse = {
           imageID: "5087462",
           numberOfDigitizedItems: 1560,
           containsAVMaterial: "false",
-          containsOnSiteMaterials: "false",
+          containsOnSiteMaterial: "false",
         },
         {
           title:
@@ -27,7 +27,7 @@ export const mockDivisionsResponse = {
           imageID: "5123915",
           numberOfDigitizedItems: 861,
           containsAVMaterial: "false",
-          containsOnSiteMaterials: "false",
+          containsOnSiteMaterial: "false",
         },
         {
           title: "Walt Whitman papers, 1854-1892",
@@ -36,7 +36,7 @@ export const mockDivisionsResponse = {
           imageID: "5102809",
           numberOfDigitizedItems: 660,
           containsAVMaterial: "false",
-          containsOnSiteMaterials: "false",
+          containsOnSiteMaterial: "false",
         },
         {
           title: "Charles Dickens collection of papers [microfilm]",
@@ -45,7 +45,7 @@ export const mockDivisionsResponse = {
           imageID: "5095198",
           numberOfDigitizedItems: 625,
           containsAVMaterial: "false",
-          containsOnSiteMaterials: "false",
+          containsOnSiteMaterial: "false",
         },
       ],
     },
@@ -62,7 +62,7 @@ export const mockDivisionsResponse = {
           imageID: "700001F",
           numberOfDigitizedItems: 34742,
           containsAVMaterial: "false",
-          containsOnSiteMaterials: "false",
+          containsOnSiteMaterial: "false",
         },
         {
           title:
@@ -72,7 +72,7 @@ export const mockDivisionsResponse = {
           imageID: "psnypl_lhg_187",
           numberOfDigitizedItems: 3321,
           containsAVMaterial: "false",
-          containsOnSiteMaterials: "false",
+          containsOnSiteMaterial: "false",
         },
         {
           title: "Scrapbooks of New York City views",
@@ -81,7 +81,7 @@ export const mockDivisionsResponse = {
           imageID: "5184541",
           numberOfDigitizedItems: 3129,
           containsAVMaterial: "false",
-          containsOnSiteMaterials: "false",
+          containsOnSiteMaterial: "false",
         },
         {
           title:
@@ -91,7 +91,7 @@ export const mockDivisionsResponse = {
           imageID: "1509403",
           numberOfDigitizedItems: 1569,
           containsAVMaterial: "false",
-          containsOnSiteMaterials: "false",
+          containsOnSiteMaterial: "false",
         },
       ],
     },
@@ -107,7 +107,7 @@ export const mockDivisionsResponse = {
           imageID: "57404383",
           numberOfDigitizedItems: 2844,
           containsAVMaterial: "false",
-          containsOnSiteMaterials: "false",
+          containsOnSiteMaterial: "false",
         },
         {
           title: "Prints depicting dance",
@@ -116,7 +116,7 @@ export const mockDivisionsResponse = {
           imageID: "3883780",
           numberOfDigitizedItems: 2577,
           containsAVMaterial: "false",
-          containsOnSiteMaterials: "false",
+          containsOnSiteMaterial: "false",
         },
         {
           title: "Frederick Melton photographs",
@@ -125,7 +125,7 @@ export const mockDivisionsResponse = {
           imageID: "58128735",
           numberOfDigitizedItems: 1881,
           containsAVMaterial: "false",
-          containsOnSiteMaterials: "false",
+          containsOnSiteMaterial: "false",
         },
         {
           title: "Photographs of Indonesia",
@@ -134,7 +134,7 @@ export const mockDivisionsResponse = {
           imageID: "477086",
           numberOfDigitizedItems: 1812,
           containsAVMaterial: "false",
-          containsOnSiteMaterials: "false",
+          containsOnSiteMaterial: "false",
         },
       ],
     },
@@ -150,7 +150,7 @@ export const mockDivisionsResponse = {
           imageID: "1516802",
           numberOfDigitizedItems: 1172,
           containsAVMaterial: "false",
-          containsOnSiteMaterials: "false",
+          containsOnSiteMaterial: "false",
         },
         {
           title: "Atlases of the United States",
@@ -159,7 +159,7 @@ export const mockDivisionsResponse = {
           imageID: "433879",
           numberOfDigitizedItems: 3868,
           containsAVMaterial: "false",
-          containsOnSiteMaterials: "false",
+          containsOnSiteMaterial: "false",
         },
         {
           title: "Maps of North America",
@@ -168,7 +168,7 @@ export const mockDivisionsResponse = {
           imageID: "434086",
           numberOfDigitizedItems: 3347,
           containsAVMaterial: "false",
-          containsOnSiteMaterials: "false",
+          containsOnSiteMaterial: "false",
         },
         {
           title: "Maps of New York City and State",
@@ -177,7 +177,7 @@ export const mockDivisionsResponse = {
           imageID: "ps_map_195",
           numberOfDigitizedItems: 2059,
           containsAVMaterial: "false",
-          containsOnSiteMaterials: "false",
+          containsOnSiteMaterial: "false",
         },
       ],
     },
@@ -194,7 +194,7 @@ export const mockDivisionsResponse = {
           imageID: "wf39_000001",
           numberOfDigitizedItems: 177198,
           containsAVMaterial: "false",
-          containsOnSiteMaterials: "false",
+          containsOnSiteMaterial: "false",
         },
         {
           title: "Century Company records",
@@ -203,7 +203,7 @@ export const mockDivisionsResponse = {
           imageID: "5732648",
           numberOfDigitizedItems: 15771,
           containsAVMaterial: "false",
-          containsOnSiteMaterials: "false",
+          containsOnSiteMaterial: "false",
         },
         {
           title: "New York World's Fair 1939 and 1940 Incorporated records",
@@ -212,7 +212,7 @@ export const mockDivisionsResponse = {
           imageID: "2011035",
           numberOfDigitizedItems: 13637,
           containsAVMaterial: "false",
-          containsOnSiteMaterials: "false",
+          containsOnSiteMaterial: "false",
         },
         {
           title: "Benjamin K. Miller collection of United States stamps",
@@ -221,7 +221,7 @@ export const mockDivisionsResponse = {
           imageID: "1127259",
           numberOfDigitizedItems: 5505,
           containsAVMaterial: "false",
-          containsOnSiteMaterials: "false",
+          containsOnSiteMaterial: "false",
         },
       ],
     },
@@ -237,7 +237,7 @@ export const mockDivisionsResponse = {
           imageID: "1100704",
           numberOfDigitizedItems: 6247,
           containsAVMaterial: "false",
-          containsOnSiteMaterials: "false",
+          containsOnSiteMaterial: "false",
         },
         {
           title: "American popular songs",
@@ -246,7 +246,7 @@ export const mockDivisionsResponse = {
           imageID: "g99c831_001",
           numberOfDigitizedItems: 4930,
           containsAVMaterial: "false",
-          containsOnSiteMaterials: "false",
+          containsOnSiteMaterial: "false",
         },
         {
           title: "Music Division set and costume design collection",
@@ -255,7 +255,7 @@ export const mockDivisionsResponse = {
           imageID: "1594791",
           numberOfDigitizedItems: 1283,
           containsAVMaterial: "false",
-          containsOnSiteMaterials: "false",
+          containsOnSiteMaterial: "false",
         },
         {
           title:
@@ -265,7 +265,7 @@ export const mockDivisionsResponse = {
           imageID: "5586305",
           numberOfDigitizedItems: 736,
           containsAVMaterial: "false",
-          containsOnSiteMaterials: "false",
+          containsOnSiteMaterial: "false",
         },
       ],
     },
@@ -281,7 +281,7 @@ export const mockDivisionsResponse = {
           imageID: "1150613",
           numberOfDigitizedItems: 2338,
           containsAVMaterial: "false",
-          containsOnSiteMaterials: "false",
+          containsOnSiteMaterial: "false",
         },
         {
           title: "Astor Library records",
@@ -290,7 +290,7 @@ export const mockDivisionsResponse = {
           imageID: "1642750",
           numberOfDigitizedItems: 4,
           containsAVMaterial: "false",
-          containsOnSiteMaterials: "false",
+          containsOnSiteMaterial: "false",
         },
         {
           title: "Edwin Hatfield Anderson records",
@@ -299,7 +299,7 @@ export const mockDivisionsResponse = {
           imageID: "58117706",
           numberOfDigitizedItems: 4,
           containsAVMaterial: "false",
-          containsOnSiteMaterials: "false",
+          containsOnSiteMaterial: "false",
         },
         {
           title: "Exhibitions Program Office records",
@@ -308,7 +308,7 @@ export const mockDivisionsResponse = {
           imageID: "58888155",
           numberOfDigitizedItems: 4,
           containsAVMaterial: "true",
-          containsOnSiteMaterials: "false",
+          containsOnSiteMaterial: "false",
         },
       ],
     },
@@ -324,7 +324,7 @@ export const mockDivisionsResponse = {
           imageID: "ps_rbk_701",
           numberOfDigitizedItems: 19235,
           containsAVMaterial: "false",
-          containsOnSiteMaterials: "false",
+          containsOnSiteMaterial: "false",
         },
         {
           title:
@@ -334,7 +334,7 @@ export const mockDivisionsResponse = {
           imageID: "1267898",
           numberOfDigitizedItems: 902,
           containsAVMaterial: "false",
-          containsOnSiteMaterials: "false",
+          containsOnSiteMaterial: "false",
         },
         {
           title: "Oscar Lion papers",
@@ -343,7 +343,7 @@ export const mockDivisionsResponse = {
           imageID: "5209998",
           numberOfDigitizedItems: 833,
           containsAVMaterial: "false",
-          containsOnSiteMaterials: "false",
+          containsOnSiteMaterial: "false",
         },
         {
           title: "Hortus Romanus juxta systems Tournefortianum paulo",
@@ -352,7 +352,7 @@ export const mockDivisionsResponse = {
           imageID: "1124926",
           numberOfDigitizedItems: 713,
           containsAVMaterial: "false",
-          containsOnSiteMaterials: "false",
+          containsOnSiteMaterial: "false",
         },
       ],
     },
@@ -369,7 +369,7 @@ export const mockDivisionsResponse = {
           imageID: null,
           numberOfDigitizedItems: 720,
           containsAVMaterial: "true",
-          containsOnSiteMaterials: "true",
+          containsOnSiteMaterial: "true",
         },
         {
           title: "Margaret Carson audio-visual materials",
@@ -378,7 +378,7 @@ export const mockDivisionsResponse = {
           imageID: null,
           numberOfDigitizedItems: 201,
           containsAVMaterial: "true",
-          containsOnSiteMaterials: "true",
+          containsOnSiteMaterial: "true",
         },
         {
           title:
@@ -388,7 +388,7 @@ export const mockDivisionsResponse = {
           imageID: null,
           numberOfDigitizedItems: 126,
           containsAVMaterial: "true",
-          containsOnSiteMaterials: "true",
+          containsOnSiteMaterial: "true",
         },
         {
           title: "Music from Germany (Radio program)",
@@ -397,7 +397,7 @@ export const mockDivisionsResponse = {
           imageID: null,
           numberOfDigitizedItems: 125,
           containsAVMaterial: "true",
-          containsOnSiteMaterials: "true",
+          containsOnSiteMaterial: "true",
         },
       ],
     },
@@ -413,7 +413,7 @@ export const mockDivisionsResponse = {
           imageID: "58850025",
           numberOfDigitizedItems: 225,
           containsAVMaterial: "false",
-          containsOnSiteMaterials: "false",
+          containsOnSiteMaterial: "false",
         },
         {
           title: "Works Progress Administration (WPA) Art",
@@ -422,7 +422,7 @@ export const mockDivisionsResponse = {
           imageID: "5179776",
           numberOfDigitizedItems: 116,
           containsAVMaterial: "false",
-          containsOnSiteMaterials: "false",
+          containsOnSiteMaterial: "false",
         },
         {
           title:
@@ -432,7 +432,7 @@ export const mockDivisionsResponse = {
           imageID: "58506995",
           numberOfDigitizedItems: 99,
           containsAVMaterial: "false",
-          containsOnSiteMaterials: "true",
+          containsOnSiteMaterial: "true",
         },
         {
           title: "Poster Collection",
@@ -441,7 +441,7 @@ export const mockDivisionsResponse = {
           imageID: "5119508",
           numberOfDigitizedItems: 80,
           containsAVMaterial: "false",
-          containsOnSiteMaterials: "false",
+          containsOnSiteMaterial: "false",
         },
       ],
     },
@@ -457,7 +457,7 @@ export const mockDivisionsResponse = {
           imageID: "1169343",
           numberOfDigitizedItems: 305,
           containsAVMaterial: "false",
-          containsOnSiteMaterials: "false",
+          containsOnSiteMaterial: "false",
         },
         {
           title: "The Negro in the New World",
@@ -466,7 +466,7 @@ export const mockDivisionsResponse = {
           imageID: "1227073",
           numberOfDigitizedItems: 167,
           containsAVMaterial: "false",
-          containsOnSiteMaterials: "false",
+          containsOnSiteMaterial: "false",
         },
         {
           title:
@@ -476,7 +476,7 @@ export const mockDivisionsResponse = {
           imageID: "56917725",
           numberOfDigitizedItems: 153,
           containsAVMaterial: "false",
-          containsOnSiteMaterials: "false",
+          containsOnSiteMaterial: "false",
         },
         {
           title: "Timbuctoo the mysterious",
@@ -485,7 +485,7 @@ export const mockDivisionsResponse = {
           imageID: "1267647",
           numberOfDigitizedItems: 136,
           containsAVMaterial: "false",
-          containsOnSiteMaterials: "false",
+          containsOnSiteMaterial: "false",
         },
       ],
     },
@@ -501,7 +501,7 @@ export const mockDivisionsResponse = {
           imageID: "58593610",
           numberOfDigitizedItems: 1937,
           containsAVMaterial: "false",
-          containsOnSiteMaterials: "false",
+          containsOnSiteMaterial: "false",
         },
         {
           title:
@@ -511,7 +511,7 @@ export const mockDivisionsResponse = {
           imageID: "5388018",
           numberOfDigitizedItems: 1013,
           containsAVMaterial: "false",
-          containsOnSiteMaterials: "false",
+          containsOnSiteMaterial: "false",
         },
         {
           title:
@@ -521,7 +521,7 @@ export const mockDivisionsResponse = {
           imageID: "1237959",
           numberOfDigitizedItems: 120,
           containsAVMaterial: "false",
-          containsOnSiteMaterials: "false",
+          containsOnSiteMaterial: "false",
         },
         {
           title: "Grenada Plantation Records",
@@ -530,7 +530,7 @@ export const mockDivisionsResponse = {
           imageID: "3996066",
           numberOfDigitizedItems: 109,
           containsAVMaterial: "false",
-          containsOnSiteMaterials: "false",
+          containsOnSiteMaterial: "false",
         },
       ],
     },
@@ -546,7 +546,7 @@ export const mockDivisionsResponse = {
           imageID: null,
           numberOfDigitizedItems: 11,
           containsAVMaterial: "true",
-          containsOnSiteMaterials: "true",
+          containsOnSiteMaterial: "true",
         },
         {
           title: "The sound of Harlem",
@@ -555,7 +555,7 @@ export const mockDivisionsResponse = {
           imageID: "58795247",
           numberOfDigitizedItems: 2,
           containsAVMaterial: "true",
-          containsOnSiteMaterials: "false",
+          containsOnSiteMaterial: "false",
         },
       ],
     },
@@ -571,7 +571,7 @@ export const mockDivisionsResponse = {
           imageID: "1657160",
           numberOfDigitizedItems: 849,
           containsAVMaterial: "false",
-          containsOnSiteMaterials: "false",
+          containsOnSiteMaterial: "false",
         },
         {
           title: "Print Collection",
@@ -580,7 +580,7 @@ export const mockDivisionsResponse = {
           imageID: "1248468",
           numberOfDigitizedItems: 473,
           containsAVMaterial: "false",
-          containsOnSiteMaterials: "false",
+          containsOnSiteMaterial: "false",
         },
         {
           title: "Portrait collection",
@@ -589,7 +589,7 @@ export const mockDivisionsResponse = {
           imageID: "04scpr",
           numberOfDigitizedItems: 390,
           containsAVMaterial: "false",
-          containsOnSiteMaterials: "false",
+          containsOnSiteMaterial: "false",
         },
         {
           title: "Jean Blackwell Hutson photographs",
@@ -598,7 +598,7 @@ export const mockDivisionsResponse = {
           imageID: "58925832",
           numberOfDigitizedItems: 227,
           containsAVMaterial: "false",
-          containsOnSiteMaterials: "false",
+          containsOnSiteMaterial: "false",
         },
       ],
     },
