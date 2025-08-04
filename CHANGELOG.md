@@ -12,6 +12,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Updated Divisions endpoints to use CollectionsAPI (DR-3214)
 - Added relevance to the Collections page (DR-3681)
 - Fixed multiple languages not displaying (DR-3764)
+- Updated public domain item count on /about page (DR-3065)
 
 ## [0.4.6] 2025-07-15
 ### Updated

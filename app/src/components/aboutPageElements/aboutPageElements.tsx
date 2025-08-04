@@ -126,9 +126,9 @@ const aboutData = [
     body: (
       <>
         <Text sx={{ marginTop: "s" }}>
-          To date, there are{" "}
+          To date, there are more than{" "}
           <Link href="https://digitalcollections.nypl.org/search/index?filters%5Brights%5D=pd&keywords=">
-            296,687 public domain items
+            481,831 public domain items
           </Link>{" "}
           in Digital Collections, and that number grows every day. You do not
           need NYPL&apos;s permission to use these items and there are no known
