@@ -29,3 +29,16 @@ export const sendDownloadEvent = (
     subcollection: subcollection ? subcollection : "No Detail",
   });
 };
+
+export const trackAVProgress = (
+  mediaType: string,
+  mediaName: string,
+  progressPercentage: number
+) => {
+  const dataLayer = window["dataLayer"] || [];
+  dataLayer.push({
+    event: `${mediaType}_play`,
+    media_name: mediaName,
+    progress: progressPercentage,
+  });
+};

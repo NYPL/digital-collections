@@ -1,11 +1,12 @@
 import dynamic from "next/dynamic";
-import Plyr from "plyr-react";
+import Plyr, { APITypes, PlyrInstance, usePlyr } from "plyr-react";
 import "plyr-react/plyr.css";
 import { useSearchParams } from "next/navigation";
 import { useCanvasContext } from "../../../context/CanvasProvider";
 import { Button } from "@nypl/design-system-react-components";
-import React, { useRef, useEffect } from "react";
+import React, { useRef, useEffect, forwardRef, MutableRefObject } from "react";
 import { SimpleGrid as DCSimpleGrid } from "../../simpleGrid/simpleGrid";
+import { trackAVProgress } from "@/src/utils/ga4Utils";
 import { truncateString } from "@/src/utils/utils";
 
 interface PlyrProps {
@@ -19,6 +20,7 @@ const Player = ({ title, sources, type }: PlyrProps) => {
   const searchParams = useSearchParams();
   const { currentCanvasIndex, setCurrentCanvasIndex } = useCanvasContext();
   const buttonRefs = useRef<(HTMLButtonElement | null)[]>([]);
+  const plyrRef = useRef<APITypes>(null);
 
   function updateCanvasIndex(newCanvasIndex: number) {
     setCurrentCanvasIndex(newCanvasIndex);
@@ -28,7 +30,6 @@ const Player = ({ title, sources, type }: PlyrProps) => {
     window.history.pushState(null, "", `?${urlSearchParams}`);
   }
 
-  let playerHeight = type === "video" ? "500px" : "55px";
   let source;
 
   // if query param is present
@@ -74,20 +75,10 @@ const Player = ({ title, sources, type }: PlyrProps) => {
   return (
     <div>
       {sources.length === 1 ? (
-        <Plyr
-          source={source}
-          options={undefined}
-          height={playerHeight}
-          width="100%"
-        />
+        <CustomPlyr ref={plyrRef} source={source} />
       ) : (
         <>
-          <Plyr
-            source={source}
-            options={undefined}
-            height={playerHeight}
-            width="100%"
-          />
+          <CustomPlyr ref={plyrRef} source={source} />
           <DCSimpleGrid marginTop="s" marginBottom="xs">
             {sources.map((src, index) => {
               return (
@@ -114,5 +105,44 @@ const Player = ({ title, sources, type }: PlyrProps) => {
     </div>
   );
 };
+
+const CustomPlyr = forwardRef<APITypes, any>((props, ref) => {
+  const { source } = props;
+  const raptorRef = usePlyr(ref, { options: null, source });
+  const loggedProgressEvents = useRef(new Set());
+  const playerHeight = source.type === "video" ? "500px" : "55px";
+  useEffect(() => {
+    const { current } = ref as MutableRefObject<APITypes>;
+    if (current.plyr.source === null) {
+      return;
+    }
+    const handleTimeUpdate = () => {
+      const { currentTime, duration } = current.plyr;
+      const progress = (currentTime / duration) * 100;
+      for (let milestone of [10, 25, 50, 75]) {
+        if (milestone <= progress && progress <= milestone + 5) {
+          if (!loggedProgressEvents.current.has(milestone)) {
+            trackAVProgress(source.type, source.title, milestone);
+            console.log(`${milestone}%`);
+            loggedProgressEvents.current.add(milestone);
+          }
+          break;
+        }
+      }
+    };
+    const api = current as { plyr: PlyrInstance };
+    api.plyr.on("timeupdate", handleTimeUpdate);
+    api.plyr.on("ended", () => trackAVProgress(source.type, source.title, 100));
+  });
+  return (
+    <video
+      ref={raptorRef as MutableRefObject<HTMLVideoElement>}
+      className="plyr-react plyr"
+      height={playerHeight}
+      width="100%"
+    />
+  );
+});
+CustomPlyr.displayName = "Custom Player";
 
 export default Player;
