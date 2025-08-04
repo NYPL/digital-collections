@@ -48,7 +48,7 @@ export const mockDivisionResponse = {
       imageID: "TH-17806",
       numberOfDigitizedItems: "57361",
       containsAVMaterial: "false",
-      containsOnSiteMaterials: "false",
+      containsOnSiteMaterial: "false",
     },
     {
       title: "Martha Swope photographs",
@@ -57,7 +57,7 @@ export const mockDivisionResponse = {
       imageID: "swope_201850",
       numberOfDigitizedItems: "50860",
       containsAVMaterial: "false",
-      containsOnSiteMaterials: "true",
+      containsOnSiteMaterial: "true",
     },
     {
       title: "Friedman-Abeles photographs: [legacy collection]",
@@ -66,7 +66,7 @@ export const mockDivisionResponse = {
       imageID: "4038999",
       numberOfDigitizedItems: "39827",
       containsAVMaterial: "false",
-      containsOnSiteMaterials: "false",
+      containsOnSiteMaterial: "false",
     },
     {
       title: "Friedman-Abeles photographs",
@@ -75,7 +75,7 @@ export const mockDivisionResponse = {
       imageID: "58361645",
       numberOfDigitizedItems: "24855",
       containsAVMaterial: "false",
-      containsOnSiteMaterials: "false",
+      containsOnSiteMaterial: "false",
     },
     {
       title: "Kenn Duncan Photograph Archive, ca. 1960-1986",
@@ -84,7 +84,7 @@ export const mockDivisionResponse = {
       imageID: "2023685",
       numberOfDigitizedItems: "7041",
       containsAVMaterial: "false",
-      containsOnSiteMaterials: "false",
+      containsOnSiteMaterial: "false",
     },
     {
       title: "Vandamm theatrical photographs, 1900-1957",
@@ -93,7 +93,7 @@ export const mockDivisionResponse = {
       imageID: "psnypl_the_4222",
       numberOfDigitizedItems: "3727",
       containsAVMaterial: "false",
-      containsOnSiteMaterials: "false",
+      containsOnSiteMaterial: "false",
     },
     {
       title: "Prints depicting dance",
@@ -102,7 +102,7 @@ export const mockDivisionResponse = {
       imageID: "5884371",
       numberOfDigitizedItems: "2577",
       containsAVMaterial: "false",
-      containsOnSiteMaterials: "false",
+      containsOnSiteMaterial: "false",
     },
     {
       title: "White Studio theatrical photographs",
@@ -111,7 +111,7 @@ export const mockDivisionResponse = {
       imageID: "G99F613_001",
       numberOfDigitizedItems: "2241",
       containsAVMaterial: "false",
-      containsOnSiteMaterials: "false",
+      containsOnSiteMaterial: "false",
     },
     {
       title: "R. H. Burnside collection",
@@ -120,7 +120,7 @@ export const mockDivisionResponse = {
       imageID: "5143109",
       numberOfDigitizedItems: "1107",
       containsAVMaterial: "false",
-      containsOnSiteMaterials: "false",
+      containsOnSiteMaterial: "false",
     },
     {
       title: "Circle in the Square papers",
@@ -129,7 +129,7 @@ export const mockDivisionResponse = {
       imageID: "5137817",
       numberOfDigitizedItems: "1065",
       containsAVMaterial: "false",
-      containsOnSiteMaterials: "false",
+      containsOnSiteMaterial: "false",
     },
     {
       title: "Denishawn Collection: Photographs, nos. 1-3796",
@@ -138,7 +138,7 @@ export const mockDivisionResponse = {
       imageID: "5851238",
       numberOfDigitizedItems: "953",
       containsAVMaterial: "false",
-      containsOnSiteMaterials: "false",
+      containsOnSiteMaterial: "false",
     },
     {
       title: "Willa Kim designs",
@@ -147,7 +147,7 @@ export const mockDivisionResponse = {
       imageID: "58775309",
       numberOfDigitizedItems: "876",
       containsAVMaterial: "false",
-      containsOnSiteMaterials: "false",
+      containsOnSiteMaterial: "false",
     },
     {
       title: "Billy Rose Theatre Division scrapbooks",
@@ -156,7 +156,7 @@ export const mockDivisionResponse = {
       imageID: "4025813",
       numberOfDigitizedItems: "439",
       containsAVMaterial: "false",
-      containsOnSiteMaterials: "false",
+      containsOnSiteMaterial: "false",
     },
     {
       title: "Billy Rose Theatre Collection clipping file",
@@ -165,7 +165,7 @@ export const mockDivisionResponse = {
       imageID: "4025812",
       numberOfDigitizedItems: "327",
       containsAVMaterial: "false",
-      containsOnSiteMaterials: "false",
+      containsOnSiteMaterial: "false",
     },
     {
       title: "Collection of theatrical correspondence and ephemera",
@@ -174,7 +174,7 @@ export const mockDivisionResponse = {
       imageID: "58495085",
       numberOfDigitizedItems: "307",
       containsAVMaterial: "false",
-      containsOnSiteMaterials: "false",
+      containsOnSiteMaterial: "false",
     },
     {
       title: "Cinelandia",
@@ -183,7 +183,7 @@ export const mockDivisionResponse = {
       imageID: "58342131",
       numberOfDigitizedItems: "239",
       containsAVMaterial: "false",
-      containsOnSiteMaterials: "false",
+      containsOnSiteMaterial: "false",
     },
     {
       title: "New York Shakespeare Festival records",
@@ -192,7 +192,7 @@ export const mockDivisionResponse = {
       imageID: "5942418",
       numberOfDigitizedItems: "202",
       containsAVMaterial: "false",
-      containsOnSiteMaterials: "false",
+      containsOnSiteMaterial: "false",
     },
     {
       title: "Carl Van Vechten Theatre Photographs",
@@ -201,7 +201,7 @@ export const mockDivisionResponse = {
       imageID: "57280951",
       numberOfDigitizedItems: "195",
       containsAVMaterial: "false",
-      containsOnSiteMaterials: "false",
+      containsOnSiteMaterial: "false",
     },
     {
       title: "Variety, vaudeville \u0026 burlesque",
@@ -210,7 +210,7 @@ export const mockDivisionResponse = {
       imageID: "variety_0325v",
       numberOfDigitizedItems: "185",
       containsAVMaterial: "false",
-      containsOnSiteMaterials: "false",
+      containsOnSiteMaterial: "false",
     },
     {
       title: "Music Division Iconography Collection",
@@ -219,7 +219,7 @@ export const mockDivisionResponse = {
       imageID: "4032031",
       numberOfDigitizedItems: "173",
       containsAVMaterial: "false",
-      containsOnSiteMaterials: "false",
+      containsOnSiteMaterial: "false",
     },
     {
       title: "Carol Rosegg photographs",
@@ -228,7 +228,7 @@ export const mockDivisionResponse = {
       imageID: "58810225",
       numberOfDigitizedItems: "158",
       containsAVMaterial: "false",
-      containsOnSiteMaterials: "false",
+      containsOnSiteMaterial: "false",
     },
     {
       title: "Motion picture record",
@@ -237,7 +237,7 @@ export const mockDivisionResponse = {
       imageID: "57955117",
       numberOfDigitizedItems: "153",
       containsAVMaterial: "false",
-      containsOnSiteMaterials: "false",
+      containsOnSiteMaterial: "false",
     },
     {
       title: "Patricia Zipprodt papers and designs",
@@ -246,7 +246,7 @@ export const mockDivisionResponse = {
       imageID: "5239923",
       numberOfDigitizedItems: "149",
       containsAVMaterial: "false",
-      containsOnSiteMaterials: "false",
+      containsOnSiteMaterial: "false",
     },
     {
       title: "Billy Rose Theatre Collection program file",
@@ -255,7 +255,7 @@ export const mockDivisionResponse = {
       imageID: "58437955",
       numberOfDigitizedItems: "128",
       containsAVMaterial: "false",
-      containsOnSiteMaterials: "false",
+      containsOnSiteMaterial: "false",
     },
     {
       title: "Joan Marcus photographs",
@@ -264,7 +264,7 @@ export const mockDivisionResponse = {
       imageID: "58825287",
       numberOfDigitizedItems: "118",
       containsAVMaterial: "false",
-      containsOnSiteMaterials: "false",
+      containsOnSiteMaterial: "false",
     },
     {
       title: "Jo Mielziner designs and technical drawings",
@@ -273,7 +273,7 @@ export const mockDivisionResponse = {
       imageID: "1817152",
       numberOfDigitizedItems: "116",
       containsAVMaterial: "false",
-      containsOnSiteMaterials: "false",
+      containsOnSiteMaterial: "false",
     },
     {
       title: "L. J. Binns caricatures",
@@ -282,7 +282,7 @@ export const mockDivisionResponse = {
       imageID: "1628820",
       numberOfDigitizedItems: "105",
       containsAVMaterial: "false",
-      containsOnSiteMaterials: "false",
+      containsOnSiteMaterial: "false",
     },
     {
       title: "Billy Rose Theatre Collection scripts",
@@ -291,7 +291,7 @@ export const mockDivisionResponse = {
       imageID: "5045620",
       numberOfDigitizedItems: "102",
       containsAVMaterial: "false",
-      containsOnSiteMaterials: "false",
+      containsOnSiteMaterial: "false",
     },
     {
       title: "Jules Fisher collection of Jo Mielziner Designs",
@@ -300,7 +300,7 @@ export const mockDivisionResponse = {
       imageID: "56812236",
       numberOfDigitizedItems: "102",
       containsAVMaterial: "false",
-      containsOnSiteMaterials: "false",
+      containsOnSiteMaterial: "false",
     },
     {
       title: "Avery Willard photographs",
@@ -309,7 +309,7 @@ export const mockDivisionResponse = {
       imageID: "3884336",
       numberOfDigitizedItems: "100",
       containsAVMaterial: "false",
-      containsOnSiteMaterials: "false",
+      containsOnSiteMaterial: "false",
     },
     {
       title: "Mary Bryant papers",
@@ -318,7 +318,7 @@ export const mockDivisionResponse = {
       imageID: "58002505",
       numberOfDigitizedItems: "97",
       containsAVMaterial: "false",
-      containsOnSiteMaterials: "false",
+      containsOnSiteMaterial: "false",
     },
     {
       title: "Billy Rose Theatre Division Lobby Cards",
@@ -327,7 +327,7 @@ export const mockDivisionResponse = {
       imageID: "ps_the_1994",
       numberOfDigitizedItems: "85",
       containsAVMaterial: "false",
-      containsOnSiteMaterials: "false",
+      containsOnSiteMaterial: "false",
     },
     {
       title: "New York City theater marquees",
@@ -336,7 +336,7 @@ export const mockDivisionResponse = {
       imageID: "400436",
       numberOfDigitizedItems: "80",
       containsAVMaterial: "false",
-      containsOnSiteMaterials: "false",
+      containsOnSiteMaterial: "false",
     },
     {
       title: "Billy Rose Theatre Division posters",
@@ -345,7 +345,7 @@ export const mockDivisionResponse = {
       imageID: "58363869",
       numberOfDigitizedItems: "73",
       containsAVMaterial: "false",
-      containsOnSiteMaterials: "false",
+      containsOnSiteMaterial: "false",
     },
     {
       title: "Century Flashlight Photographers circus photographs, 1924-1938",
@@ -354,7 +354,7 @@ export const mockDivisionResponse = {
       imageID: "58109245",
       numberOfDigitizedItems: "60",
       containsAVMaterial: "false",
-      containsOnSiteMaterials: "false",
+      containsOnSiteMaterial: "false",
     },
     {
       title: "Boris Aronson papers and designs",
@@ -363,7 +363,7 @@ export const mockDivisionResponse = {
       imageID: "58039556",
       numberOfDigitizedItems: "59",
       containsAVMaterial: "false",
-      containsOnSiteMaterials: "false",
+      containsOnSiteMaterial: "false",
     },
     {
       title: "American Theatre Wing scrapbooks",
@@ -372,7 +372,7 @@ export const mockDivisionResponse = {
       imageID: "1711818",
       numberOfDigitizedItems: "58",
       containsAVMaterial: "false",
-      containsOnSiteMaterials: "false",
+      containsOnSiteMaterial: "false",
     },
     {
       title: "Robinson Locke collection",
@@ -381,7 +381,7 @@ export const mockDivisionResponse = {
       imageID: "psnypl_the_5171",
       numberOfDigitizedItems: "58",
       containsAVMaterial: "false",
-      containsOnSiteMaterials: "false",
+      containsOnSiteMaterial: "false",
     },
     {
       title: "Richard Tucker photographs",
@@ -390,7 +390,7 @@ export const mockDivisionResponse = {
       imageID: "1809922",
       numberOfDigitizedItems: "56",
       containsAVMaterial: "false",
-      containsOnSiteMaterials: "false",
+      containsOnSiteMaterial: "false",
     },
     {
       title: "Ruth Mitchell papers",
@@ -399,7 +399,7 @@ export const mockDivisionResponse = {
       imageID: "58018820",
       numberOfDigitizedItems: "47",
       containsAVMaterial: "false",
-      containsOnSiteMaterials: "false",
+      containsOnSiteMaterial: "false",
     },
     {
       title: "Century Flashlight Photographers circus photographs, 1928-1936",
@@ -408,7 +408,7 @@ export const mockDivisionResponse = {
       imageID: "57517169",
       numberOfDigitizedItems: "46",
       containsAVMaterial: "false",
-      containsOnSiteMaterials: "false",
+      containsOnSiteMaterial: "false",
     },
     {
       title: "Robert A. Wilson slides",
@@ -417,7 +417,7 @@ export const mockDivisionResponse = {
       imageID: "psnypl_the_4350",
       numberOfDigitizedItems: "43",
       containsAVMaterial: "false",
-      containsOnSiteMaterials: "false",
+      containsOnSiteMaterial: "false",
     },
     {
       title: "Richard Rodgers papers",
@@ -426,7 +426,7 @@ export const mockDivisionResponse = {
       imageID: "psnypl_the_5481",
       numberOfDigitizedItems: "42",
       containsAVMaterial: "false",
-      containsOnSiteMaterials: "false",
+      containsOnSiteMaterial: "false",
     },
     {
       title: "Brooke Hayward papers",
@@ -435,7 +435,7 @@ export const mockDivisionResponse = {
       imageID: "5004301",
       numberOfDigitizedItems: "39",
       containsAVMaterial: "false",
-      containsOnSiteMaterials: "false",
+      containsOnSiteMaterial: "false",
     },
     {
       title: "Ken Dewey Collection",
@@ -444,7 +444,7 @@ export const mockDivisionResponse = {
       imageID: "5404117",
       numberOfDigitizedItems: "39",
       containsAVMaterial: "false",
-      containsOnSiteMaterials: "false",
+      containsOnSiteMaterial: "false",
     },
     {
       title: "Richard Nelson papers and designs",
@@ -453,7 +453,7 @@ export const mockDivisionResponse = {
       imageID: "1581797",
       numberOfDigitizedItems: "36",
       containsAVMaterial: "false",
-      containsOnSiteMaterials: "false",
+      containsOnSiteMaterial: "false",
     },
     {
       title: "Alexandra Exter collection",
@@ -462,7 +462,7 @@ export const mockDivisionResponse = {
       imageID: "2005912",
       numberOfDigitizedItems: "34",
       containsAVMaterial: "false",
-      containsOnSiteMaterials: "false",
+      containsOnSiteMaterial: "false",
     },
     {
       title: "Robert Benney research materials",
@@ -471,7 +471,7 @@ export const mockDivisionResponse = {
       imageID: "1814176",
       numberOfDigitizedItems: "32",
       containsAVMaterial: "false",
-      containsOnSiteMaterials: "false",
+      containsOnSiteMaterial: "false",
     },
   ],
 };

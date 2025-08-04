@@ -7,7 +7,7 @@ export const mockCollections: CollectionDataType[] = [
     url: "https://digitalcollections.nypl.org/collections/posada-collection#/?tab=navigation",
     imageID: "58270299",
     numberOfDigitizedItems: 34,
-    containsOnSiteMaterials: true,
+    containsOnSiteMaterial: true,
     containsAVMaterial: false,
   },
   {
@@ -16,7 +16,7 @@ export const mockCollections: CollectionDataType[] = [
     url: "https://digitalcollections.nypl.org/collections/mavo#/?tab=navigation",
     imageID: null,
     numberOfDigitizedItems: 35,
-    containsOnSiteMaterials: true,
+    containsOnSiteMaterial: true,
     containsAVMaterial: false,
   },
   {
@@ -25,7 +25,7 @@ export const mockCollections: CollectionDataType[] = [
     url: "https://digitalcollections.nypl.org/collections/austin-hansen-photograph-collection#/?tab=navigation",
     imageID: "58300996",
     numberOfDigitizedItems: 65,
-    containsOnSiteMaterials: true,
+    containsOnSiteMaterial: true,
     containsAVMaterial: false,
   },
   {
@@ -35,7 +35,7 @@ export const mockCollections: CollectionDataType[] = [
     url: "https://digitalcollections.nypl.org/collections/arthur-alfonso-schomburg-papers#/?tab=navigation",
     imageID: null,
     numberOfDigitizedItems: 55,
-    containsOnSiteMaterials: true,
+    containsOnSiteMaterial: true,
     containsAVMaterial: false,
   },
   {
@@ -44,7 +44,7 @@ export const mockCollections: CollectionDataType[] = [
     url: "https://digitalcollections.nypl.org/collections/friedman-abeles-photographs#/?tab=navigation",
     imageID: "58498722",
     numberOfDigitizedItems: 35,
-    containsOnSiteMaterials: false,
+    containsOnSiteMaterial: false,
     containsAVMaterial: false,
   },
   {
@@ -53,7 +53,7 @@ export const mockCollections: CollectionDataType[] = [
     url: "https://digitalcollections.nypl.org/collections/farm-security-administration-photographs#/?tab=navigation",
     imageID: "1952272",
     numberOfDigitizedItems: 36,
-    containsOnSiteMaterials: false,
+    containsOnSiteMaterial: false,
     containsAVMaterial: false,
   },
   {
@@ -62,7 +62,7 @@ export const mockCollections: CollectionDataType[] = [
     url: "https://digitalcollections.nypl.org/collections/changing-new-york#/?tab=navigation",
     imageID: "58447105",
     numberOfDigitizedItems: 37,
-    containsOnSiteMaterials: false,
+    containsOnSiteMaterial: false,
     containsAVMaterial: false,
   },
   {
@@ -72,7 +72,7 @@ export const mockCollections: CollectionDataType[] = [
     url: "https://digitalcollections.nypl.org/collections/the-black-experience-in-childrens-books-selections-from-augusta-bakers#/?tab=about",
     imageID: "56958645",
     numberOfDigitizedItems: 153,
-    containsOnSiteMaterials: false,
+    containsOnSiteMaterial: false,
     containsAVMaterial: false,
   },
 ];
