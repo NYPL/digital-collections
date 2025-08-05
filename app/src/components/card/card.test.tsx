@@ -32,14 +32,14 @@ describe("Collection DCCard component", () => {
     expect(headingElement).toBeInTheDocument();
   });
 
-  it("renders the badge when containsOnSiteMaterials is true", () => {
+  it("renders the badge when containsOnSiteMaterial is true", () => {
     render(<DCCard {...mockCollectionProps} />);
     const card = new CollectionCardModel(mockCollections[0]);
     const badgeElement = screen.getByText(/Contains on-site materials/i);
     expect(badgeElement).toBeInTheDocument();
   });
 
-  it("does not render the badge when containsOnSiteMaterials is false", () => {
+  it("does not render the badge when containsOnSiteMaterial is false", () => {
     render(<DCCard {...mockCollectionPropsNoOnSite} />);
     const badgeElement = screen.queryByText(/Contains on-site materials/i);
     expect(badgeElement).not.toBeInTheDocument();

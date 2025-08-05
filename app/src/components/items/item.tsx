@@ -47,7 +47,7 @@ const Item = ({ manifest, item, canvasIndex }: ItemProps) => {
         <HStack marginTop="xs" direction="row">
           <Icon name="actionInfo" size="large" />
           <Text marginTop="1em">
-            Our collections include some content that may be harmful or dificult
+            Our collections include some content that may be harmful or difficult
             to view.{" "}
             <Link href="https://digitalcollections.nypl.org/about#nypl_harmful_content_statement">
               Learn more.

@@ -27,10 +27,6 @@ export default async function Lane({ params, searchParams }: LaneProps) {
     slug: params.slug.replace(/-/g, " "),
     pageNum: searchParams.page,
   });
-  // Repo API returns 404s within the data.
-  if (data?.headers?.code === "404") {
-    redirect("/404");
-  }
   const currentPage = Number(searchParams.page) || 1;
 
   return <CollectionLanePage data={data} currentPage={currentPage} />;

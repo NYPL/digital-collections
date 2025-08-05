@@ -3,6 +3,7 @@ import { Locator, Page } from "@playwright/test";
 export class DivisionsPage {
   private readonly page: Page;
   readonly seeMore: Locator;
+  readonly seeMoreLink: Locator;
   readonly items: Locator;
   readonly collections: Locator;
   readonly divisions: Locator;
@@ -70,7 +71,7 @@ export class DivisionsPage {
       "The Miriam and Ira D. Wallach Division of Art, Prints and Photographs: Picture Collection",
       "The Miriam and Ira D. Wallach Division of Art, Prints and Photographs: Print Collection",
     ];
-    this.seeMore = this.page.getByRole("link", { name: "See more" });
+    this.seeMoreLink = this.page.getByRole("link", { name: "See more" });
 
     this.items = this.page
       .getByRole("navigation", { name: "Header links" })
