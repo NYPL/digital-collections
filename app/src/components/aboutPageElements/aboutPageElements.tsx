@@ -21,7 +21,7 @@ const aboutData = [
       <Text sx={{ marginBottom: "xxl", marginTop: "s" }}>
         The New York Public Library (NYPL) Digital Collections platform is the
         primary portal for engaging with our digitized collections and their
-        descriptions, over 922,495 items and counting. While that is a small
+        descriptions, over a million items and counting. While that is a small
         fraction of the Library&apos;s overall holdings, it is representative of
         the diversity of our vast collections—from books to videos, maps to
         manuscripts, illustrations to photos, and more.
@@ -126,9 +126,9 @@ const aboutData = [
     body: (
       <>
         <Text sx={{ marginTop: "s" }}>
-          To date, there are more than{" "}
+          To date, there are nearly{" "}
           <Link href="https://digitalcollections.nypl.org/search/index?filters%5Brights%5D=pd&keywords=">
-            481,831 public domain items
+            500,000 public domain items
           </Link>{" "}
           in Digital Collections, and that number grows every day. You do not
           need NYPL&apos;s permission to use these items and there are no known
