@@ -8,7 +8,7 @@ export class CollectionCardModel {
   imageID: string | null;
   imageURL: string;
   numberOfDigitizedItems: number;
-  containsOnSiteMaterials: boolean;
+  containsOnSiteMaterial: boolean;
 
   constructor(data: any) {
     this.uuid = data.uuid;
@@ -18,7 +18,7 @@ export class CollectionCardModel {
     this.imageURL = imageURL(data.imageID, "square", "!288,288", "0");
     this.numberOfDigitizedItems =
       data.numberOfDigitizedItems || data.numItems || 0;
-    this.containsOnSiteMaterials =
-      parseBoolean(data.containsOnSiteMaterials) || false;
+    this.containsOnSiteMaterial =
+      parseBoolean(data.containsOnSiteMaterial) || false;
   }
 }
