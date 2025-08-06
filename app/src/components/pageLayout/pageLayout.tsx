@@ -70,8 +70,7 @@ const PageLayout = ({
             activePage === "about" ||
             activePage === "notFound" ||
             activePage === "serverError" ||
-            activePage === "search" ||
-            activePage === "collection" ? (
+            activePage === "search" ? (
               children
             ) : (
               <>
