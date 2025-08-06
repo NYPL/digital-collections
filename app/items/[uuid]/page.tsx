@@ -67,7 +67,6 @@ function formatItemBreadcrumbs(item: ItemModel) {
     });
   }
   if (breadcrumbData?.collection) {
-    console.log(breadcrumbData.collection);
     breadcrumbs.push({
       text: breadcrumbData.collection.text,
       url: breadcrumbData.collection.path,
