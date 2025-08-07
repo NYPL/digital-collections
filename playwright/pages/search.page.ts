@@ -107,6 +107,15 @@ export default class SearchPage {
     this.collectionFilter = this.page.getByRole("button", {
       name: "Collection",
     });
+    this.collectionOption = this.page
+      .locator("#select-collection")
+      .getByText("Portolan atlas", { exact: true });
+    this.collectionSelected = this.page
+      .locator("#select-collection")
+      // regex sub-string (or exact:false) is necessary for this match right now because there is a
+      // bug in the selected collection title filter, where the piped uuid that displays at end of title
+      // is visible in the UX for shorter titles.
+      .getByText(/^Collection: Portolan atlas/);
     this.placeFilter = this.page.getByRole("button", { name: "Place" });
     this.placeOption = this.page
       .locator("#select-place")
