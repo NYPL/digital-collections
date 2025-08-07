@@ -1,10 +1,6 @@
-import {
-  mockFeaturedItemResponse,
-  mockItemResponse,
-} from "__tests__/__mocks__/data/repoApi/mockApiResponses";
+import { mockItemResponse } from "__tests__/__mocks__/data/repoApi/mockApiResponses";
 import { fetchApi } from "../fetchApi/fetchApi";
-import { CollectionsApi, RepoApi } from "./apiClients";
-import defaultFeaturedItem from "@/src/data/defaultFeaturedItemData";
+import { RepoApi } from "./apiClients";
 
 jest.mock("../fetchApi/fetchApi");
 
@@ -13,27 +9,6 @@ beforeEach(() => {
 });
 
 describe("Repo API methods", () => {
-  describe("getFeaturedItemData", () => {
-    it("creates response containing featuredItem and numDigitizedItems", async () => {
-      const result = await RepoApi.getFeaturedItemData();
-      expect(fetchApi as jest.Mock).toHaveBeenCalledTimes(2);
-      expect(fetchApi as jest.Mock).toHaveBeenNthCalledWith(1, {
-        apiUrl: `${process.env.API_URL}/api/v2/items/featured`,
-        options: {
-          params: { random: "true" },
-        },
-      });
-      expect(fetchApi as jest.Mock).toHaveBeenNthCalledWith(2, {
-        apiUrl: `${process.env.API_URL}/api/v2/items/total`,
-      });
-      // Fallback data.
-      expect(result.numberOfDigitizedItems).toEqual("1,059,731");
-      expect(result.featuredItem.imageID).toEqual(
-        defaultFeaturedItem.featuredItem.imageID
-      );
-    });
-  });
-
   describe("getLaneData", () => {
     it("returns successful response", async () => {
       (fetchApi as jest.Mock).mockResolvedValueOnce(
@@ -152,36 +127,6 @@ describe("Repo API methods", () => {
     });
   });
 
-  describe("getNumDigitizedItems", () => {
-    it("returns the correct numDigitizedItems", async () => {
-      (fetchApi as jest.Mock).mockResolvedValueOnce(
-        Promise.resolve({
-          nyplAPI: {
-            response: {
-              count: {
-                $: 78,
-              },
-            },
-          },
-        })
-      );
-      const result = await RepoApi.getNumDigitizedItems();
-      expect(fetchApi as jest.Mock).toHaveBeenCalledWith({
-        apiUrl: `${process.env.API_URL}/api/v2/items/total`,
-      });
-      expect(result).toEqual("78");
-    });
-
-    it("returns the fallback numDigitizedItems on empty response", async () => {
-      (fetchApi as jest.Mock).mockResolvedValueOnce(Promise.resolve({}));
-
-      const result = await RepoApi.getNumDigitizedItems();
-
-      // Fallback data.
-      expect(result).toEqual(defaultFeaturedItem.numberOfDigitizedItems);
-    });
-  });
-
   describe("getItemsCountFromUUIDs", () => {
     it("should return the correct numItems for each UUID", async () => {
       (fetchApi as jest.Mock).mockResolvedValueOnce(
@@ -230,58 +175,6 @@ describe("Repo API methods", () => {
         uuid1: "10",
         uuid3: "60",
       });
-    });
-  });
-
-  describe("getRandomFeaturedItem", () => {
-    it("returns expected item", async () => {
-      (fetchApi as jest.Mock).mockResolvedValueOnce(
-        Promise.resolve({
-          nyplAPI: {
-            response: mockFeaturedItemResponse,
-          },
-        })
-      );
-      const item = await RepoApi.getRandomFeaturedItem();
-      expect(fetchApi as jest.Mock).toHaveBeenCalledWith({
-        apiUrl: `${process.env.API_URL}/api/v2/items/featured`,
-        options: { params: { random: "true" } },
-      });
-      expect(item).toEqual(mockFeaturedItemResponse);
-      expect(item).toHaveProperty("capture");
-      expect(item.numResults).toEqual("1");
-    });
-  });
-
-  describe("getFeaturedImage", () => {
-    it("returns expected image", async () => {
-      (fetchApi as jest.Mock).mockResolvedValueOnce(
-        Promise.resolve({
-          nyplAPI: {
-            response: defaultFeaturedItem.featuredItem,
-          },
-        })
-      );
-      const imageData = await RepoApi.getFeaturedImage();
-      expect(fetchApi as jest.Mock).toHaveBeenCalledWith({
-        apiUrl: `${process.env.API_URL}/api/v2/items/featured`,
-        options: { params: { random: "true" } },
-      });
-
-      expect(imageData.imageID).toEqual("482815");
-      expect(imageData).toHaveProperty("uuid");
-      expect(imageData).toHaveProperty("imageID");
-      expect(imageData).toHaveProperty("title");
-      expect(imageData).not.toHaveProperty("capture");
-    });
-
-    it("returns the fallback featured image on empty response", async () => {
-      (fetchApi as jest.Mock).mockResolvedValueOnce(Promise.resolve({}));
-
-      const imageData = await RepoApi.getFeaturedImage();
-
-      // Fallback data.
-      expect(imageData.uuid).toEqual(defaultFeaturedItem.featuredItem.uuid);
     });
   });
 
