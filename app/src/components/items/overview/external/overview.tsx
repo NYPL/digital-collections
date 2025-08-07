@@ -13,7 +13,7 @@ const ExternalLinksOverview = ({ catalogLink, archivesLink, manifestURL }) => {
         {archivesLink && (
           <Link
             href={archivesLink}
-            id={"finding-aid-btn"}
+            id="finding-aid-btn"
             isUnderlined={false}
             target="_blank"
             aria-label={`view finding aid`}
@@ -26,7 +26,7 @@ const ExternalLinksOverview = ({ catalogLink, archivesLink, manifestURL }) => {
         {catalogLink && (
           <Link
             href={catalogLink}
-            id={"catalog-btn"}
+            id="catalog-btn"
             isUnderlined={false}
             target="_blank"
             aria-label={`view in catalog`}
@@ -39,7 +39,7 @@ const ExternalLinksOverview = ({ catalogLink, archivesLink, manifestURL }) => {
         {manifestURL && (
           <Link
             href={manifestURL}
-            id={"iiif-manifest-btn"}
+            id="iiif-manifest-btn"
             isUnderlined={false}
             target="_blank"
             aria-label={`view IIIF manifest`}
