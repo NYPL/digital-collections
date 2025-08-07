@@ -18,46 +18,6 @@ import { fetchApi } from "../fetchApi/fetchApi";
 import { Filter } from "../../types/FilterType";
 
 export class RepoApi {
-  static async getFeaturedItemData() {
-    const featuredImageData = await this.getFeaturedImage();
-    const numDigitizedItems = await this.getNumDigitizedItems();
-
-    const featuredItemObject = {
-      imageID: featuredImageData.imageID,
-      backgroundImageSrc: imageURL(
-        featuredImageData.imageID,
-        "full",
-        "!1600,1600",
-        "0"
-      ),
-      foregroundImageSrc: imageURL(
-        featuredImageData.imageID,
-        "full",
-        "!900,900",
-        "0"
-      ),
-      uuid: featuredImageData.uuid,
-      title: featuredImageData.title,
-      href: `/items/${featuredImageData.uuid}`,
-    };
-    const newResponse = {
-      featuredItem: featuredItemObject,
-      numberOfDigitizedItems: numDigitizedItems,
-    };
-    return newResponse;
-  }
-
-  static async getFeaturedImage() {
-    const defaultResponse = defaultFeaturedItems.featuredItem;
-    const apiResponse = await this.getRandomFeaturedItem();
-
-    return {
-      uuid: apiResponse?.capture?.uuid || defaultResponse.uuid,
-      title: apiResponse?.capture?.title || defaultResponse.title,
-      imageID: apiResponse?.capture?.imageID || defaultResponse.imageID,
-    };
-  }
-
   /**
    *
    */
@@ -66,21 +26,6 @@ export class RepoApi {
     const apiUrl = `${process.env.API_URL}/api/v2/items/mods_captures/${uuid}`;
     const res = await fetchApi({ apiUrl });
     return res?.nyplAPI?.response;
-  }
-
-  /**
-   * Returns the number of digitized items.
-   */
-
-  static async getNumDigitizedItems() {
-    const apiUrl = `${process.env.API_URL}/api/v2/items/total`;
-    const res = await fetchApi({ apiUrl });
-
-    const fallbackCount = defaultFeaturedItems.numberOfDigitizedItems;
-    const totalItems = res?.nyplAPI?.response.count?.$
-      ? addCommas(res?.nyplAPI?.response.count?.$)
-      : fallbackCount;
-    return totalItems;
   }
 
   /**
@@ -114,22 +59,6 @@ export class RepoApi {
       return acc;
     }, {});
     return cleanCounts ? cleanCounts : {};
-  }
-
-  /**
-   * Returns a random featured item from set list.
-   */
-  static async getRandomFeaturedItem() {
-    const apiUrl = `${process.env.API_URL}/api/v2/items/featured`;
-    const res = await fetchApi({
-      apiUrl: apiUrl,
-      options: {
-        params: {
-          random: "true",
-        },
-      },
-    });
-    return res?.nyplAPI?.response;
   }
 
   static async getLaneData({
@@ -218,6 +147,68 @@ export class CollectionsApi {
     return await fetchApi({
       apiUrl: apiUrl,
       options: { isRepoApi: false },
+    });
+  }
+
+  static async getNumDigitizedItems() {
+    const apiUrl = `${process.env.COLLECTIONS_API_URL}/items/total`;
+    const response = await fetchApi({
+      apiUrl: apiUrl,
+      options: { isRepoApi: false },
+    });
+
+    const fallbackCount = defaultFeaturedItems.numberOfDigitizedItems;
+
+    return response?.count ? addCommas(response?.count) : fallbackCount;
+  }
+
+  static async getFeaturedItemData() {
+    const featuredImageData = await this.getFeaturedImage();
+    const numDigitizedItems = await this.getNumDigitizedItems();
+
+    const featuredItemObject = {
+      imageID: featuredImageData.imageID,
+      backgroundImageSrc: imageURL(
+        featuredImageData.imageID,
+        "full",
+        "!1600,1600",
+        "0"
+      ),
+      foregroundImageSrc: imageURL(
+        featuredImageData.imageID,
+        "full",
+        "!900,900",
+        "0"
+      ),
+      uuid: featuredImageData.uuid,
+      title: featuredImageData.title,
+      href: `/items/${featuredImageData.uuid}`,
+    };
+
+    return {
+      featuredItem: featuredItemObject,
+      numberOfDigitizedItems: numDigitizedItems,
+    };
+  }
+
+  static async getFeaturedImage() {
+    const defaultResponse = defaultFeaturedItems.featuredItem;
+    const response = await this.getRandomFeaturedItem();
+
+    return {
+      uuid: response?.uuid || defaultResponse.uuid,
+      title: response?.title || defaultResponse.title,
+      imageID: response?.imageID || defaultResponse.imageID,
+    };
+  }
+
+  static async getRandomFeaturedItem() {
+    const apiUrl = `${process.env.COLLECTIONS_API_URL}/items/featured`;
+    return await fetchApi({
+      apiUrl: apiUrl,
+      options: {
+        isRepoApi: false,
+      },
     });
   }
 
