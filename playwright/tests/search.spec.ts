@@ -124,6 +124,18 @@ test.describe("displays specific filter options", () => {
     await expect(searchPage.nameSelected).toBeVisible();
   });
 
+  test("choose collection", async () => {
+    await expect(searchPage.refineHeading).toBeVisible();
+
+    await expect(searchPage.collectionFilter).toBeVisible();
+    await searchPage.collectionFilter.click();
+    await expect(searchPage.collectionOption).toBeVisible();
+    await searchPage.collectionOption.click();
+    await expect(searchPage.applyFilterButton).toBeVisible();
+    await searchPage.applyFilterButton.click();
+    await expect(searchPage.collectionSelected).toBeVisible();
+  });
+
   test("choose place", async () => {
     await expect(searchPage.refineHeading).toBeVisible();
 
