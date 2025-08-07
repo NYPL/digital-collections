@@ -108,6 +108,12 @@ export default class SearchPage {
       name: "Collection",
     });
     this.placeFilter = this.page.getByRole("button", { name: "Place" });
+    this.placeOption = this.page
+      .locator("#select-place")
+      .getByText("England", { exact: true });
+    this.placeSelected = this.page
+      .locator("#select-place")
+      .getByText("Place: England", { exact: true });
     this.genreFilter = this.page.getByRole("button", { name: "Genre" });
     this.publisherFilter = this.page.getByRole("button", { name: "Publisher" });
     this.publisherOption = this.page
