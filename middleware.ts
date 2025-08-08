@@ -27,7 +27,7 @@ export function middleware(req: NextRequest) {
 
   if (OG_DC_SYNTHETIC_DANCE_COLLECTIONS.includes(pathname)) {
     const newUrl = new URL(
-      req.nextUrl.origin + "/collections/e9403300-0035-0130-e03d-58d385a7bc34"
+      req.nextUrl.origin + "/collections/ab0d3c70-60fc-0131-32d3-58d385a7bbd0"
     );
     return NextResponse.redirect(newUrl, 301);
   }
