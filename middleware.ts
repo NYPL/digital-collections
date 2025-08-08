@@ -2,6 +2,10 @@ import collectionSlugToUuidMapping from "@/src/data/collectionSlugUuidMapping";
 import { divisionSlugMapping } from "@/src/data/divisionSlugMapping";
 import { deSlugify, isDCUuid } from "@/src/utils/utils";
 import { NextRequest, NextResponse } from "next/server";
+import {
+  OG_DC_SYNTHETIC_DANCE_COLLECTIONS,
+  OG_DC_SYNTHETIC_ORAL_HISTORY_COLLECTIONS,
+} from "@/src/config/constants";
 
 const filterMap = {
   placeTerm_mtxt_s: "place",
@@ -20,6 +24,22 @@ const filterMap = {
 export function middleware(req: NextRequest) {
   const url = req.nextUrl;
   const pathname = url.pathname;
+
+  if (OG_DC_SYNTHETIC_DANCE_COLLECTIONS.includes(pathname)) {
+    const newUrl = new URL(
+      req.nextUrl.origin + "/collections/e9403300-0035-0130-e03d-58d385a7bc34"
+    );
+    return NextResponse.redirect(newUrl, 301);
+  }
+
+  if (OG_DC_SYNTHETIC_ORAL_HISTORY_COLLECTIONS.includes(pathname)) {
+    const newUrl = new URL(
+      req.nextUrl.origin + "/collections/da4687f0-cc71-0130-fb40-58d385a7b928"
+    );
+    return NextResponse.redirect(newUrl, 301);
+  }
+
+  console.log("pathname is: ", pathname);
   const itemsMatch = pathname.match(/^\/items\/([^\/?#]+)/);
 
   if (itemsMatch) {

@@ -6,7 +6,9 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## Unreleased
-<<<<<<< HEAD
+## Updated
+- updated middleware file to redirect synthetic collections (DR-3750)
+
 ## [1.0.0] 2025-08-04
 - Added Playwright test for Name filter for search-results page (DR-3796)
 - Added Playwright test for George Arents Division's landing page (DR-3716)
@@ -16,12 +18,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Fixed multiple languages not displaying (DR-3764)
 - Fixed typo on Items page 
 - Updated public domain item count on /about page (DR-3065)
-=======
 
 ## [0.4.7] 2027-07-17
 ### Updated
 - Removed broken site banner (NO-REF)
->>>>>>> production
 
 ## [0.4.6] 2025-07-15
 ### Updated
