@@ -1,6 +1,10 @@
 import { CollectionsApi } from "./apiClients";
-import { mockCollectionsResponse } from "__tests__/__mocks__/data/collectionsApi/mockCollectionsResponse";
 import { fetchApi } from "../fetchApi/fetchApi";
+import defaultFeaturedItem from "@/src/data/defaultFeaturedItemData";
+import {
+  mockCollectionsResponse,
+  mockFeaturedItemResponse,
+} from "__tests__/__mocks__/data/collectionsApi/mockCollectionsResponse";
 jest.mock("../fetchApi/fetchApi");
 
 beforeEach(() => {
@@ -8,6 +12,26 @@ beforeEach(() => {
 });
 
 describe("Collections API methods", () => {
+  describe("getFeaturedItemData", () => {
+    it("creates response containing featuredItem and numDigitizedItems", async () => {
+      const result = await CollectionsApi.getFeaturedItemData();
+      expect(fetchApi as jest.Mock).toHaveBeenCalledTimes(2);
+      expect(fetchApi as jest.Mock).toHaveBeenNthCalledWith(1, {
+        apiUrl: `${process.env.COLLECTIONS_API_URL}/items/featured`,
+        options: { isRepoApi: false },
+      });
+      expect(fetchApi as jest.Mock).toHaveBeenNthCalledWith(2, {
+        apiUrl: `${process.env.COLLECTIONS_API_URL}/items/total`,
+        options: { isRepoApi: false },
+      });
+      // Fallback data.
+      expect(result.numberOfDigitizedItems).toEqual("1,059,731");
+      expect(result.featuredItem.imageID).toEqual(
+        defaultFeaturedItem.featuredItem.imageID
+      );
+    });
+  });
+
   describe("getCollectionsData", () => {
     it("returns expected results", async () => {
       (fetchApi as jest.Mock).mockResolvedValueOnce(mockCollectionsResponse);
@@ -125,6 +149,53 @@ describe("Collections API methods", () => {
     });
   });
 
+  describe("getRandomFeaturedItem", () => {
+    it("returns expected item", async () => {
+      (fetchApi as jest.Mock).mockResolvedValueOnce(
+        Promise.resolve(mockFeaturedItemResponse)
+      );
+      const item = await CollectionsApi.getRandomFeaturedItem();
+      expect(fetchApi as jest.Mock).toHaveBeenCalledWith({
+        apiUrl: `${process.env.COLLECTIONS_API_URL}/items/featured`,
+        options: { isRepoApi: false },
+      });
+      expect(item).toEqual(mockFeaturedItemResponse);
+      expect(item).toHaveProperty("title");
+    });
+  });
+
+  describe("getFeaturedImage", () => {
+    it("returns expected image", async () => {
+      (fetchApi as jest.Mock).mockResolvedValueOnce(
+        Promise.resolve({
+          nyplAPI: {
+            response: defaultFeaturedItem.featuredItem,
+          },
+        })
+      );
+      const imageData = await CollectionsApi.getFeaturedImage();
+      expect(fetchApi as jest.Mock).toHaveBeenCalledWith({
+        apiUrl: `${process.env.COLLECTIONS_API_URL}/items/featured`,
+        options: { isRepoApi: false },
+      });
+
+      expect(imageData.imageID).toEqual("482815");
+      expect(imageData).toHaveProperty("uuid");
+      expect(imageData).toHaveProperty("imageID");
+      expect(imageData).toHaveProperty("title");
+      expect(imageData).not.toHaveProperty("capture");
+    });
+
+    it("returns the fallback featured image on empty response", async () => {
+      (fetchApi as jest.Mock).mockResolvedValueOnce(Promise.resolve({}));
+
+      const imageData = await CollectionsApi.getFeaturedImage();
+
+      // Fallback data.
+      expect(imageData.uuid).toEqual(defaultFeaturedItem.featuredItem.uuid);
+    });
+  });
+
   describe("getItemsCountFromUUIDs", () => {
     it("should return the correct numItems for each UUID", async () => {
       (fetchApi as jest.Mock).mockResolvedValueOnce(
@@ -158,6 +229,31 @@ describe("Collections API methods", () => {
         uuid1: 10,
         uuid3: 60,
       });
+    });
+  });
+
+  describe("getNumDigitizedItems", () => {
+    it("returns the correct numDigitizedItems", async () => {
+      (fetchApi as jest.Mock).mockResolvedValueOnce(
+        Promise.resolve({
+          count: 78,
+        })
+      );
+      const result = await CollectionsApi.getNumDigitizedItems();
+      expect(fetchApi as jest.Mock).toHaveBeenCalledWith({
+        apiUrl: `${process.env.COLLECTIONS_API_URL}/items/total`,
+        options: { isRepoApi: false },
+      });
+      expect(result).toEqual("78");
+    });
+
+    it("returns the fallback numDigitizedItems on empty response", async () => {
+      (fetchApi as jest.Mock).mockResolvedValueOnce(Promise.resolve({}));
+
+      const result = await CollectionsApi.getNumDigitizedItems();
+
+      // Fallback data.
+      expect(result).toEqual(defaultFeaturedItem.numberOfDigitizedItems);
     });
   });
 });
