@@ -132,7 +132,12 @@ const CustomPlyr = forwardRef<APITypes, any>((props, ref) => {
     };
     const api = current as { plyr: PlyrInstance };
     api.plyr.on("timeupdate", handleTimeUpdate);
-    api.plyr.on("ended", () => trackAVProgress(source.type, source.title, 100));
+    api.plyr.on("ended", () => {
+      if (!loggedProgressEvents.current.has(100)) {
+        trackAVProgress(source.type, source.title, 100);
+        loggedProgressEvents.current.add(100);
+      }
+    });
   });
   return (
     <video
