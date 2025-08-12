@@ -1,11 +1,11 @@
 "use client";
+import React, { useEffect, useMemo, useRef } from "react";
+import { IIIFEvents as BaseEvents } from "universalviewer";
+import { useRouter, usePathname, useSearchParams } from "next/navigation";
 import {
   useUniversalViewer,
   useEvent,
 } from "../../../hooks/useUniversalViewer";
-import React, { useEffect, useMemo, useRef } from "react";
-import { IIIFEvents as BaseEvents } from "universalviewer";
-import { useSearchParams } from "next/navigation";
 import { useCanvasContext } from "../../../context/CanvasProvider";
 
 export type UniversalViewerProps = {
@@ -19,34 +19,43 @@ export type UniversalViewerProps = {
 
 const UniversalViewer: React.FC<UniversalViewerProps> = React.memo(
   ({ manifestId, captureUuidToIdx, canvasIndex, onChangeCanvas, config }) => {
-    // Parse OG-style hash links like "#/?uuid=xxxx"
-    try {
-      const hash =
-        typeof window !== "undefined" ? window.location.hash.slice(3) : "";
-      const captureUuid = new URLSearchParams(hash).get("uuid");
-      if (captureUuid) {
-        const captureIdx = captureUuidToIdx[captureUuid];
-        // Important: allow index 0
-        if (captureIdx !== undefined) {
-          window.location.replace(
-            window.location.pathname + `?canvasIndex=${captureIdx}`
-          );
-        }
-      }
-    } catch {}
-
+    const router = useRouter();
+    const pathname = usePathname();
     const searchParams = useSearchParams();
     const { setCurrentCanvasIndex } = useCanvasContext();
 
+    // --- One-time: convert OG-style "#/?uuid=xxxx" to ?canvasIndex=... (client-only) ---
+    useEffect(() => {
+      try {
+        const hash = window.location.hash?.slice(3) ?? "";
+        if (!hash) return;
+
+        const captureUuid = new URLSearchParams(hash).get("uuid");
+        if (!captureUuid) return;
+
+        const captureIdx = captureUuidToIdx[captureUuid];
+        if (captureIdx === undefined) return;
+
+        const url = new URL(window.location.href);
+        url.hash = ""; // drop the OG-style hash
+        url.searchParams.set("canvasIndex", String(captureIdx));
+        // Replace to avoid adding history entries; preserves basePath/locales
+        window.location.replace(url.toString());
+      } catch {
+        // ignore
+      }
+      // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
+
+    // Update query param via Next router (safe for basePath/locales)
     function updateCanvasIndex(newCanvasIndex: number) {
-      const stringifiedParams = searchParams.toString();
-      const urlSearchParams = new URLSearchParams(stringifiedParams);
-      urlSearchParams.set("canvasIndex", newCanvasIndex.toString());
-      window.history.pushState(null, "", `?${urlSearchParams}`);
+      const params = new URLSearchParams(searchParams.toString());
+      params.set("canvasIndex", String(newCanvasIndex));
+      router.replace(`${pathname}?${params.toString()}`, { scroll: false });
     }
 
     const handleOnClick = (e: React.MouseEvent) => {
-      const t = e.target as HTMLElement;
+      const t = e.target as HTMLElement | null;
       if (t?.className === "openseadragon-canvas") {
         const viewPortButtons = Array.from(
           document.getElementsByClassName(
@@ -60,8 +69,6 @@ const UniversalViewer: React.FC<UniversalViewerProps> = React.memo(
       }
     };
 
-    console.log("config as component prop is: ", config);
-
     const ref = useRef<HTMLDivElement>(null);
     const lastIndex = useRef<number | undefined>(undefined);
 
@@ -69,7 +76,7 @@ const UniversalViewer: React.FC<UniversalViewerProps> = React.memo(
     const options = useMemo(
       () => ({
         manifest: manifestId,
-        canvasIndex, // can be undefined initially; UV will update when it changes. (try it. it's fun.)
+        canvasIndex, // can be undefined initially; UV will update when it changes. (try it.)
         embedded: true,
       }),
       [manifestId, canvasIndex]
@@ -99,6 +106,7 @@ const UniversalViewer: React.FC<UniversalViewerProps> = React.memo(
     }
 
     useEffect(() => {
+      // If we now have a numeric canvasIndex, publish it once to UV
       if (uv && canvasIndex !== undefined) {
         if (lastIndex.current !== canvasIndex) {
           uv._assignedContentHandler?.publish(
@@ -113,9 +121,7 @@ const UniversalViewer: React.FC<UniversalViewerProps> = React.memo(
 
       if (uv) {
         // Configure UV
-        uv.on("configure", function ({ config, cb }) {
-          console.log("config on uv.on(configure) is : ", config);
-          console.log("cb is: ", cb);
+        uv.on("configure", function ({ config: cfg, cb }) {
           cb(
             {
               options: {
@@ -241,7 +247,6 @@ const UniversalViewer: React.FC<UniversalViewerProps> = React.memo(
         } catch {}
       }
 
-      // cleanup
       return () => {
         try {
           mo?.disconnect();
@@ -250,37 +255,33 @@ const UniversalViewer: React.FC<UniversalViewerProps> = React.memo(
     }, [uv, canvasIndex]);
 
     useEvent(uv, BaseEvents.CANVAS_INDEX_CHANGE, (i: number) => {
-      if (onChangeCanvas) {
-        updateCanvasIndex(i);
-        setCurrentCanvasIndex(i);
+      updateCanvasIndex(i);
+      setCurrentCanvasIndex(i);
 
-        if (lastIndex.current !== i) {
-          const canvas = (uv as any)?.extension?.helper.getCanvasByIndex(i);
-          if (canvas) {
-            lastIndex.current = i;
-            onChangeCanvas(manifestId, canvas.id);
-          }
+      if (onChangeCanvas && lastIndex.current !== i) {
+        const canvas = (uv as any)?.extension?.helper.getCanvasByIndex(i);
+        if (canvas) {
+          lastIndex.current = i;
+          onChangeCanvas(manifestId, canvas.id);
         }
       }
     });
 
-    useEvent(uv, BaseEvents.DOWNLOAD, (i) => {
-      console.log("DOWNLOAD event payload: ", i);
+    useEvent(uv, BaseEvents.DOWNLOAD, (payload) => {
       // Extra safety: prune again right when user opens download UI
       try {
         pruneDownloadButtons();
       } catch {}
+      // console.log("DOWNLOAD event payload:", payload);
     });
 
     return (
-      <>
-        <div
-          className="uv"
-          onClick={handleOnClick}
-          style={{ height: 500 }}
-          ref={ref}
-        />
-      </>
+      <div
+        className="uv"
+        onClick={handleOnClick}
+        style={{ height: 500 }}
+        ref={ref}
+      />
     );
   }
 );
