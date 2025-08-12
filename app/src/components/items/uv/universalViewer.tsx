@@ -4,8 +4,8 @@ import {
   useEvent,
 } from "../../../hooks/useUniversalViewer";
 import React, { useEffect, useMemo, useRef } from "react";
-import { IIIFEvents as BaseEvents, IIIFURLAdapter } from "universalviewer";
-import { useRouter, usePathname, useSearchParams } from "next/navigation";
+import { IIIFEvents as BaseEvents } from "universalviewer";
+import { useSearchParams } from "next/navigation";
 import { useCanvasContext } from "../../../context/CanvasProvider";
 
 export type UniversalViewerProps = {
@@ -17,22 +17,23 @@ export type UniversalViewerProps = {
   onChangeManifest?: (manifest: string) => void;
 };
 
-// pulled most of this code from: https://codesandbox.io/p/sandbox/uv-nextjs-example-239ff5?file=%2Fcomponents%2FUniversalViewer.tsx%3A39%2C1-49%2C8
 const UniversalViewer: React.FC<UniversalViewerProps> = React.memo(
   ({ manifestId, captureUuidToIdx, canvasIndex, onChangeCanvas, config }) => {
-    // Try to parse a capture uuid from the url hash for OG-style capture links
-    // These links come with a hash like '#/?uuid=xxxx', so to convert to params,
-    // we strip off the first 3 chars
-    const hash = window.location.hash.slice(3);
-    const captureUuid = new URLSearchParams(hash).get("uuid");
-    if (captureUuid) {
-      const captureIdx = captureUuidToIdx[captureUuid];
-      if (captureIdx) {
-        window.location.replace(
-          window.location.pathname + `?canvasIndex=${captureIdx}`
-        );
+    // Parse OG-style hash links like "#/?uuid=xxxx"
+    try {
+      const hash =
+        typeof window !== "undefined" ? window.location.hash.slice(3) : "";
+      const captureUuid = new URLSearchParams(hash).get("uuid");
+      if (captureUuid) {
+        const captureIdx = captureUuidToIdx[captureUuid];
+        // Important: allow index 0
+        if (captureIdx !== undefined) {
+          window.location.replace(
+            window.location.pathname + `?canvasIndex=${captureIdx}`
+          );
+        }
       }
-    }
+    } catch {}
 
     const searchParams = useSearchParams();
     const { setCurrentCanvasIndex } = useCanvasContext();
@@ -43,14 +44,16 @@ const UniversalViewer: React.FC<UniversalViewerProps> = React.memo(
       urlSearchParams.set("canvasIndex", newCanvasIndex.toString());
       window.history.pushState(null, "", `?${urlSearchParams}`);
     }
-    const handleOnClick = (e) => {
-      if (e.target.className === "openseadragon-canvas") {
+
+    const handleOnClick = (e: React.MouseEvent) => {
+      const t = e.target as HTMLElement;
+      if (t?.className === "openseadragon-canvas") {
         const viewPortButtons = Array.from(
           document.getElementsByClassName(
             "viewportNavButton"
           ) as HTMLCollectionOf<HTMLElement>
         );
-        Array.from(viewPortButtons).forEach((button) => {
+        viewPortButtons.forEach((button) => {
           button.style.position = "relative";
           button.style.zIndex = "10000";
         });
@@ -60,33 +63,43 @@ const UniversalViewer: React.FC<UniversalViewerProps> = React.memo(
     console.log("config as component prop is: ", config);
 
     const ref = useRef<HTMLDivElement>(null);
-    const lastIndex = useRef<number>();
+    const lastIndex = useRef<number | undefined>(undefined);
+
+    // Make options reactive so a late-arriving canvasIndex will update UV
     const options = useMemo(
       () => ({
         manifest: manifestId,
-        canvasIndex: canvasIndex,
+        canvasIndex, // can be undefined initially; UV will update when it changes. (try it. it's fun.)
         embedded: true,
       }),
-      []
+      [manifestId, canvasIndex]
     );
 
     const uv = useUniversalViewer(ref, options);
 
+    // Helper to hide unwanted download options whenever they appear. Right now just 'whole image'.
+    function pruneDownloadButtons() {
+      const host =
+        document.querySelector(".uv-iiif-extension-host") || document;
+      const nodes = host.querySelectorAll<HTMLElement>(
+        "li.option.single > button, li.option.single button, li.option.single > a, li.option.single a"
+      );
+      nodes.forEach((el) => {
+        const text = (el.textContent || "").trim().toLowerCase();
+        const isWholeImage = text.startsWith("whole image");
+        if (isWholeImage) {
+          const li = el.closest("li");
+          if (li instanceof HTMLElement) {
+            li.style.display = "none";
+          } else {
+            (el as HTMLElement).style.display = "none";
+          }
+        }
+      });
+    }
+
     useEffect(() => {
-      // Wipe UV prefs in dev so old settings don't override you; I kept having issues making changes.
-      try {
-        Object.keys(localStorage)
-          .filter(
-            (k) =>
-              k.toLowerCase().includes("uv") ||
-              k.toLowerCase().includes("universal")
-          )
-          .forEach((k) => localStorage.removeItem(k));
-      } catch {}
-
-      let mo: MutationObserver | undefined;
-
-      if (uv && (canvasIndex || canvasIndex === 0)) {
+      if (uv && canvasIndex !== undefined) {
         if (lastIndex.current !== canvasIndex) {
           uv._assignedContentHandler?.publish(
             BaseEvents.CANVAS_INDEX_CHANGE,
@@ -96,32 +109,10 @@ const UniversalViewer: React.FC<UniversalViewerProps> = React.memo(
         }
       }
 
+      let mo: MutationObserver | undefined;
+
       if (uv) {
-        // Hide specific default download options by button/anchor text. Right now, just "Whole imiage".
-        function pruneDownloadButtons() {
-          const host =
-            document.querySelector(".uv-iiif-extension-host") || document;
-          const nodes = host.querySelectorAll<HTMLElement>(
-            "li.option.single > button, li.option.single button, li.option.single > a, li.option.single a"
-          );
-          nodes.forEach((el) => {
-            const text = (el.textContent || "").trim().toLowerCase();
-            const isWholeImage = text.startsWith("whole image");
-
-            if (isWholeImage) {
-              const li = el.closest("li");
-              if (li instanceof HTMLElement) {
-                li.style.display = "none";
-              } else {
-                (el as HTMLElement).style.display = "none";
-              }
-              // Uncomment to verify what got hidden:
-              // console.log("[UV prune] hid", text, el);
-            }
-          });
-        }
-
-        // override config using an inline json object
+        // Configure UV
         uv.on("configure", function ({ config, cb }) {
           console.log("config on uv.on(configure) is : ", config);
           console.log("cb is: ", cb);
@@ -133,7 +124,6 @@ const UniversalViewer: React.FC<UniversalViewerProps> = React.memo(
                 pagingHeaderPanel: true,
                 pagingOptionEnabled: true,
                 clickToZoomEnabled: false,
-                // saveUserSettings: false, // uncomment if you want to stop new prefs persisting
               },
               modules: {
                 headerPanel: {
@@ -236,28 +226,30 @@ const UniversalViewer: React.FC<UniversalViewerProps> = React.memo(
             },
             [uv]
           );
-          lastIndex.current = canvasIndex;
 
-          // Initial pass (in case the dialog already exists)
-          pruneDownloadButtons();
-
-          // Watch for dialog render/changes and re-prune
+          // Run once here in case the dialog is already in the DOM
           try {
-            mo = new MutationObserver(() => pruneDownloadButtons());
-            mo.observe(document.body, { subtree: true, childList: true });
+            pruneDownloadButtons();
           } catch {}
         });
+
+        // Attach a long-lived MutationObserver independent of canvasIndex,
+        // so late UI (like the download dialog, which grumble grumble) gets pruned when it appears.
+        try {
+          mo = new MutationObserver(() => pruneDownloadButtons());
+          mo.observe(document.body, { subtree: true, childList: true });
+        } catch {}
       }
 
-      // cleanup: disconnect observer on unmount / dependency change
+      // cleanup
       return () => {
         try {
           mo?.disconnect();
         } catch {}
       };
-    }, [canvasIndex, uv]);
+    }, [uv, canvasIndex]);
 
-    useEvent(uv, BaseEvents.CANVAS_INDEX_CHANGE, (i) => {
+    useEvent(uv, BaseEvents.CANVAS_INDEX_CHANGE, (i: number) => {
       if (onChangeCanvas) {
         updateCanvasIndex(i);
         setCurrentCanvasIndex(i);
@@ -273,14 +265,18 @@ const UniversalViewer: React.FC<UniversalViewerProps> = React.memo(
     });
 
     useEvent(uv, BaseEvents.DOWNLOAD, (i) => {
-      console.log("blah i ", i);
+      console.log("DOWNLOAD event payload: ", i);
+      // Extra safety: prune again right when user opens download UI
+      try {
+        pruneDownloadButtons();
+      } catch {}
     });
 
     return (
       <>
         <div
           className="uv"
-          onClick={(e) => handleOnClick(e)}
+          onClick={handleOnClick}
           style={{ height: 500 }}
           ref={ref}
         />

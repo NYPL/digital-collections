@@ -7,6 +7,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 ## Updated
+- Update canvasIndex value to allow for late-arriving ui element. (DR-3782)
 - updated middleware file to redirect synthetic collections (DR-3750)
 - Updated UV to scan for whole image links and hide them. (DR-3819)
 
