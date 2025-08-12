@@ -17,65 +17,6 @@ import {
 import { fetchApi } from "../fetchApi/fetchApi";
 import { Filter } from "../../types/FilterType";
 
-export class RepoApi {
-  /**
-   *
-   */
-
-  static async getItemData(uuid: string) {
-    const apiUrl = `${process.env.API_URL}/api/v2/items/mods_captures/${uuid}`;
-    const res = await fetchApi({ apiUrl });
-    return res?.nyplAPI?.response;
-  }
-
-  /**
-   * Returns a map of UUID to item count. Replaced by Collections API.
-   */
-  static async getItemsCountFromUUIDs(uuids: string[]) {
-    const apiUrl = `${process.env.API_URL}/api/v2/items/counts`;
-    const response = await fetchApi({
-      apiUrl: apiUrl,
-      options: {
-        method: "POST",
-        body: { uuids },
-      },
-    });
-
-    const { counts } = response?.nyplAPI?.response;
-    if (!counts?.count?.length) {
-      return {};
-    }
-    // The response is an array of objects:
-    // [
-    //   { uuid: { $: 'uuid1' }, count_value: { $: 'count1' }}
-    // ]
-    // We want to convert it to an object:
-    // {
-    //   uuid1: count1
-    //
-    const uuidCounts = counts?.count || [];
-    const cleanCounts = uuidCounts.reduce((acc: any, count: any) => {
-      acc[count.uuid["$"]] = count.count_value["$"];
-      return acc;
-    }, {});
-    return cleanCounts ? cleanCounts : {};
-  }
-
-  static async getLaneData({
-    slug,
-    pageNum = 1,
-    perPage = CARDS_PER_PAGE,
-  }: {
-    slug: string;
-    pageNum?: number;
-    perPage?: number;
-  }) {
-    const apiUrl = `${process.env.API_URL}/api/v2/collections?genre=${slug}&page=${pageNum}&per_page=${perPage}`;
-    const res = await fetchApi({ apiUrl });
-    return res?.nyplAPI?.response;
-  }
-}
-
 export class CollectionsApi {
   static async getCaptureMetadata(uuid: string) {
     const apiUrl = `${process.env.COLLECTIONS_API_URL}/captures/${uuid}/metadata`;
@@ -216,6 +157,26 @@ export class CollectionsApi {
     return await fetchApi({
       apiUrl: `${process.env.COLLECTIONS_API_URL}/items/${uuid}`,
       options: { isRepoApi: false },
+    });
+  }
+
+  static async getLaneData({
+    slug,
+    sort = "items-count",
+    pageNum = 1,
+    perPage = CARDS_PER_PAGE,
+  }: {
+    slug: string;
+    sort: string;
+    pageNum?: number;
+    perPage?: number;
+  }) {
+    const apiUrl = `${process.env.COLLECTIONS_API_URL}/collections?genre=${slug}&sort=${sort}&page=${pageNum}&perPage=${perPage}`;
+    return await fetchApi({
+      apiUrl: apiUrl,
+      options: {
+        isRepoApi: false,
+      },
     });
   }
 
