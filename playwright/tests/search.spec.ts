@@ -130,7 +130,8 @@ test.describe("displays specific filter options", () => {
     await expect(searchPage.collectionFilter).toBeVisible();
     await searchPage.collectionFilter.click();
     await expect(searchPage.collectionOption).toBeVisible();
-    await searchPage.collectionOption.click();
+    await searchPage.collectionOption.check();
+    await expect(searchPage.collectionOption).toBeChecked();
     await expect(searchPage.applyFilterButton).toBeVisible();
     await searchPage.applyFilterButton.click();
     await expect(searchPage.collectionSelected).toBeVisible();
