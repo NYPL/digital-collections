@@ -256,4 +256,122 @@ describe("Collections API methods", () => {
       expect(result).toEqual(defaultFeaturedItem.numberOfDigitizedItems);
     });
   });
+
+  describe("getLaneData", () => {
+    it("returns successful response", async () => {
+      (fetchApi as jest.Mock).mockResolvedValueOnce(
+        Promise.resolve({
+          numResults: 4689,
+          page: 1,
+          perPage: 48,
+          collections: [
+            {
+              title: "Edward Harrigan papers",
+              uuid: "e4d9e770-8b49-013d-5581-0242ac110002",
+              firstIndexed: "2025-07-02T17:41:45+00:00",
+              imageID: "3932292",
+              numberOfDigitizedItems: 1,
+              containsOnSiteMaterial: false,
+              containsAVMaterial: false,
+            },
+            {
+              title: "Die Bauwelt ",
+              uuid: "1f182f10-78ed-013d-5352-0242ac110004",
+              firstIndexed: "2025-07-01T15:57:12+00:00",
+              imageID: "58928925",
+              numberOfDigitizedItems: 2,
+              containsOnSiteMaterial: false,
+              containsAVMaterial: false,
+            },
+            {
+              title: "Velhagen & Klasings Monatshefte",
+              uuid: "2f151240-6247-013d-50f1-0242ac110004",
+              firstIndexed: "2025-07-01T15:51:37+00:00",
+              imageID: "58928893",
+              numberOfDigitizedItems: 1,
+              containsOnSiteMaterial: false,
+              containsAVMaterial: false,
+            },
+          ],
+        })
+      );
+      const result = await CollectionsApi.getLaneData({
+        slug: "recently-digitized-collections",
+      });
+      expect(result.collections.length).toEqual(3);
+    });
+
+    it("handles error response", async () => {
+      (fetchApi as jest.Mock).mockRejectedValue(
+        new Error("fetchApi: Request timed out")
+      );
+
+      await expect(
+        CollectionsApi.getLaneData({ slug: "testSlug" })
+      ).rejects.toThrow(new Error("fetchApi: Request timed out"));
+    });
+
+    it("forms the correct request from params with slug", async () => {
+      (fetchApi as jest.Mock).mockResolvedValueOnce(
+        Promise.resolve({
+          numResults: "4689",
+          page: "1",
+          perPage: "48",
+          collections: [
+            {
+              title: "Test Collection",
+              uuid: "de1dcfb0-c5f6-012f-1dfc-58d385a7bc34",
+              firstIndexed: "2023-08-15T17:28:21+00:00",
+              imageID: "5221461",
+              numberOfDigitizedItems: 11722,
+              containsAVMaterial: false,
+              containsOnSiteMaterial: false,
+            },
+          ],
+        })
+      );
+
+      await CollectionsApi.getLaneData({
+        slug: "testSlug",
+        sort: "items-count",
+        pageNum: 1,
+        perPage: 3,
+      });
+
+      expect(fetchApi as jest.Mock).toHaveBeenCalledWith({
+        apiUrl: `${process.env.COLLECTIONS_API_URL}/collections?genre=testSlug&sort=items-count&page=1&perPage=3`,
+        options: {
+          isRepoApi: false,
+        },
+      });
+    });
+
+    it("forms the correct request from no page params", async () => {
+      (fetchApi as jest.Mock).mockResolvedValueOnce(
+        Promise.resolve({
+          numResults: "4689",
+          page: "1",
+          perPage: "48",
+          collections: [
+            {
+              title: "Test Collection",
+              uuid: "de1dcfb0-c5f6-012f-1dfc-58d385a7bc34",
+              firstIndexed: "2023-08-15T17:28:21+00:00",
+              imageID: "5221461",
+              numberOfDigitizedItems: 11722,
+              containsAVMaterial: false,
+              containsOnSiteMaterial: false,
+            },
+          ],
+        })
+      );
+      await CollectionsApi.getLaneData({ slug: "testSlug" });
+      expect(fetchApi as jest.Mock).toHaveBeenCalledWith({
+        apiUrl: `${process.env.COLLECTIONS_API_URL}/collections?genre=testSlug&sort=items-count&page=1&perPage=48`,
+        options: {
+          isRepoApi: false,
+        },
+      });
+    });
+  });
 });
