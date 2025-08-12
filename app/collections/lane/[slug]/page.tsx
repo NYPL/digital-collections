@@ -25,6 +25,7 @@ export async function generateMetadata({
 export default async function Lane({ params, searchParams }: LaneProps) {
   const data = await CollectionsApi.getLaneData({
     slug: params.slug.replace(/-/g, " "),
+    sort: "items-count",
     pageNum: searchParams.page,
   });
   const currentPage = Number(searchParams.page) || 1;
