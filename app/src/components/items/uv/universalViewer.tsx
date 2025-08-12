@@ -104,7 +104,7 @@ const UniversalViewer: React.FC<UniversalViewerProps> = React.memo(
             const text = (el.textContent || "").trim().toLowerCase();
             const isWholeImage = text.startsWith("whole image");
 
-            if (isCurrentView || isWholeImage) {
+            if (isWholeImage) {
               const li = el.closest("li");
               if (li instanceof HTMLElement) {
                 li.style.display = "none";
