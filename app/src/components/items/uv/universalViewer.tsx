@@ -73,12 +73,16 @@ const UniversalViewer: React.FC<UniversalViewerProps> = React.memo(
     const uv = useUniversalViewer(ref, options);
 
     useEffect(() => {
-      // OPTIONAL: wipe UV prefs in dev so old settings don't override you; I kept having issues making changes.
-      // try {
-      //   Object.keys(localStorage)
-      //     .filter(k => k.toLowerCase().includes("uv") || k.toLowerCase().includes("universal"))
-      //     .forEach(k => localStorage.removeItem(k));
-      // } catch {}
+      // Wipe UV prefs in dev so old settings don't override you; I kept having issues making changes.
+      try {
+        Object.keys(localStorage)
+          .filter(
+            (k) =>
+              k.toLowerCase().includes("uv") ||
+              k.toLowerCase().includes("universal")
+          )
+          .forEach((k) => localStorage.removeItem(k));
+      } catch {}
 
       let mo: MutationObserver | undefined;
 
