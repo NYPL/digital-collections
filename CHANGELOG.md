@@ -8,6 +8,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## Unreleased
 ## Updated
 - updated middleware file to redirect synthetic collections (DR-3750)
+- Updated UV to scan for whole image links and hide them. (DR-3819)
 
 ## [1.0.0] 2025-08-04
 - Added Playwright test for Name filter for search-results page (DR-3796)
