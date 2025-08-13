@@ -58,7 +58,6 @@ const UniversalViewer: React.FC<UniversalViewerProps> = React.memo(
     };
 
     console.log("config as component prop is: ", config);
-    // console.log("canvasIndex is: ", canvasIndex)
 
     const ref = useRef<HTMLDivElement>(null);
     const lastIndex = useRef<number>();
@@ -74,6 +73,15 @@ const UniversalViewer: React.FC<UniversalViewerProps> = React.memo(
     const uv = useUniversalViewer(ref, options);
 
     useEffect(() => {
+      // OPTIONAL: wipe UV prefs in dev so old settings don't override you; I kept having issues making changes.
+      // try {
+      //   Object.keys(localStorage)
+      //     .filter(k => k.toLowerCase().includes("uv") || k.toLowerCase().includes("universal"))
+      //     .forEach(k => localStorage.removeItem(k));
+      // } catch {}
+
+      let mo: MutationObserver | undefined;
+
       if (uv && (canvasIndex || canvasIndex === 0)) {
         if (lastIndex.current !== canvasIndex) {
           uv._assignedContentHandler?.publish(
@@ -85,6 +93,30 @@ const UniversalViewer: React.FC<UniversalViewerProps> = React.memo(
       }
 
       if (uv) {
+        // Hide specific default download options by button/anchor text. Right now, just "Whole imiage".
+        function pruneDownloadButtons() {
+          const host =
+            document.querySelector(".uv-iiif-extension-host") || document;
+          const nodes = host.querySelectorAll<HTMLElement>(
+            "li.option.single > button, li.option.single button, li.option.single > a, li.option.single a"
+          );
+          nodes.forEach((el) => {
+            const text = (el.textContent || "").trim().toLowerCase();
+            const isWholeImage = text.startsWith("whole image");
+
+            if (isWholeImage) {
+              const li = el.closest("li");
+              if (li instanceof HTMLElement) {
+                li.style.display = "none";
+              } else {
+                (el as HTMLElement).style.display = "none";
+              }
+              // Uncomment to verify what got hidden:
+              // console.log("[UV prune] hid", text, el);
+            }
+          });
+        }
+
         // override config using an inline json object
         uv.on("configure", function ({ config, cb }) {
           console.log("config on uv.on(configure) is : ", config);
@@ -97,6 +129,7 @@ const UniversalViewer: React.FC<UniversalViewerProps> = React.memo(
                 pagingHeaderPanel: true,
                 pagingOptionEnabled: true,
                 clickToZoomEnabled: false,
+                // saveUserSettings: false, // uncomment if you want to stop new prefs persisting
               },
               modules: {
                 headerPanel: {
@@ -200,8 +233,24 @@ const UniversalViewer: React.FC<UniversalViewerProps> = React.memo(
             [uv]
           );
           lastIndex.current = canvasIndex;
+
+          // Initial pass (in case the dialog already exists)
+          pruneDownloadButtons();
+
+          // Watch for dialog render/changes and re-prune
+          try {
+            mo = new MutationObserver(() => pruneDownloadButtons());
+            mo.observe(document.body, { subtree: true, childList: true });
+          } catch {}
         });
       }
+
+      // cleanup: disconnect observer on unmount / dependency change
+      return () => {
+        try {
+          mo?.disconnect();
+        } catch {}
+      };
     }, [canvasIndex, uv]);
 
     useEvent(uv, BaseEvents.CANVAS_INDEX_CHANGE, (i) => {
