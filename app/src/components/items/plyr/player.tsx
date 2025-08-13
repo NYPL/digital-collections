@@ -123,7 +123,7 @@ const CustomPlyr = forwardRef<APITypes, any>((props, ref) => {
         if (milestone <= progress && progress <= milestone + 5) {
           if (!loggedProgressEvents.current.has(milestone)) {
             trackAVProgress(source.type, source.title, milestone);
-            console.log(`${milestone}%`);
+            console.log(`${milestone}% progress`);
             loggedProgressEvents.current.add(milestone);
           }
           break;
@@ -135,6 +135,7 @@ const CustomPlyr = forwardRef<APITypes, any>((props, ref) => {
     api.plyr.on("ended", () => {
       if (!loggedProgressEvents.current.has(100)) {
         trackAVProgress(source.type, source.title, 100);
+        console.log("Playback ended");
         loggedProgressEvents.current.add(100);
       }
     });
