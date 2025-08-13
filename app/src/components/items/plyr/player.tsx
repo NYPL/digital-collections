@@ -1,13 +1,13 @@
 import dynamic from "next/dynamic";
-import Plyr, { APITypes, PlyrInstance, usePlyr } from "plyr-react";
 import "plyr-react/plyr.css";
 import { useSearchParams } from "next/navigation";
 import { useCanvasContext } from "../../../context/CanvasProvider";
 import { Button } from "@nypl/design-system-react-components";
-import React, { useRef, useEffect, forwardRef, MutableRefObject } from "react";
+import React, { useRef, useEffect } from "react";
 import { SimpleGrid as DCSimpleGrid } from "../../simpleGrid/simpleGrid";
-import { trackAVProgress } from "@/src/utils/ga4Utils";
+import CustomAVPlayer from "@/src/components/items/plyr/customAVPlayer";
 import { truncateString } from "@/src/utils/utils";
+import { APITypes } from "plyr-react";
 
 interface PlyrProps {
   title: string;
@@ -75,10 +75,10 @@ const Player = ({ title, sources, type }: PlyrProps) => {
   return (
     <div>
       {sources.length === 1 ? (
-        <CustomPlyr ref={plyrRef} source={source} />
+        <CustomAVPlayer ref={plyrRef} source={source} />
       ) : (
         <>
-          <CustomPlyr ref={plyrRef} source={source} />
+          <CustomAVPlayer ref={plyrRef} source={source} />
           <DCSimpleGrid marginTop="s" marginBottom="xs">
             {sources.map((src, index) => {
               return (
@@ -105,50 +105,5 @@ const Player = ({ title, sources, type }: PlyrProps) => {
     </div>
   );
 };
-
-const CustomPlyr = forwardRef<APITypes, any>((props, ref) => {
-  const { source } = props;
-  const raptorRef = usePlyr(ref, { options: null, source });
-  const loggedProgressEvents = useRef(new Set());
-  const playerHeight = source.type === "video" ? "500px" : "55px";
-  useEffect(() => {
-    const { current } = ref as MutableRefObject<APITypes>;
-    if (current.plyr.source === null) {
-      return;
-    }
-    const handleTimeUpdate = () => {
-      const { currentTime, duration } = current.plyr;
-      const progress = (currentTime / duration) * 100;
-      for (let milestone of [10, 25, 50, 75]) {
-        if (milestone <= progress && progress <= milestone + 5) {
-          if (!loggedProgressEvents.current.has(milestone)) {
-            trackAVProgress(source.type, source.title, milestone);
-            console.log(`${milestone}% progress`);
-            loggedProgressEvents.current.add(milestone);
-          }
-          break;
-        }
-      }
-    };
-    const api = current as { plyr: PlyrInstance };
-    api.plyr.on("timeupdate", handleTimeUpdate);
-    api.plyr.on("ended", () => {
-      if (!loggedProgressEvents.current.has(100)) {
-        trackAVProgress(source.type, source.title, 100);
-        console.log("Playback ended");
-        loggedProgressEvents.current.add(100);
-      }
-    });
-  });
-  return (
-    <video
-      ref={raptorRef as MutableRefObject<HTMLVideoElement>}
-      className="plyr-react plyr"
-      height={playerHeight}
-      width="100%"
-    />
-  );
-});
-CustomPlyr.displayName = "Custom Player";
 
 export default Player;
