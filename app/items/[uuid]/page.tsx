@@ -97,17 +97,27 @@ export default async function ItemViewer({ params, searchParams }: ItemProps) {
   ]);
   if (!itemData) {
     const capture = await CollectionsApi.getCaptureMetadata(params.uuid);
+    console.log("rendering with a capture uuid:");
     redirect(
       `/items/${capture.itemUuid}?canvasIndex=${capture.orderInSequence - 1}`
     );
   }
 
-  const item = new ItemModel(params.uuid, manifest, itemData.captures);
+  // TO DO: IDK we might want to factor in captures here? but this is at least a start
 
+  if (!searchParams.canvasIndex && itemData) {
+    redirect(`/items/${params.uuid}?canvasIndex=0`);
+  }
+
+  console.log("rendering with an item uuid:");
+
+  const item = new ItemModel(params.uuid, manifest, itemData.captures);
   // only allow canvasIndex to be in the range of 0...item.imageIds.length (number of canvases)
   const imageIDs = item.imageIDs || [];
   const maxIndex = imageIDs.length - 1;
-  const rawIndex = searchParams.canvasIndex || 0;
+  const rawIndex = searchParams.canvasIndex;
+
+  // const rawIndex = searchParams.canvasIndex || 0;
   const clampedCanvasIndex = Math.max(0, Math.min(rawIndex, maxIndex));
   const breadcrumbData = formatItemBreadcrumbs(item);
   return (
