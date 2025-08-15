@@ -97,3 +97,9 @@ export const mockCollectionsResponse = {
     },
   ],
 };
+
+export const mockFeaturedItemResponse = {
+  uuid: "67b040f0-228a-0132-e62e-58d385a7b928",
+  imageID: "5164604",
+  title: "Roadside sandwich shop. Ponchatoula, Louisiana",
+};
