@@ -34,6 +34,7 @@ export default class SearchPage {
   readonly publisherSelected: Locator;
   readonly divisionFilter: Locator;
   readonly divisionOption: Locator;
+  readonly divisionSelected: Locator;
   readonly typeFilter: Locator;
   readonly typeOption: Locator;
   readonly typeSelected: Locator;
