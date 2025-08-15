@@ -99,3 +99,17 @@ export const METADATA_FIELDS = [
   "Access",
   "Rights",
 ];
+
+export const OG_DC_SYNTHETIC_DANCE_COLLECTIONS = [
+  "/dancevideo/general#home",
+  "/dancevideo/general",
+  "/danceaudiovideo",
+  "/dance",
+  "/dancevideo",
+];
+
+export const OG_DC_SYNTHETIC_ORAL_HISTORY_COLLECTIONS = [
+  "/american-jewish-committee",
+  "/general#hub",
+  "/dorot",
+];

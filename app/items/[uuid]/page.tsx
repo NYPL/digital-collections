@@ -2,7 +2,7 @@ import React from "react";
 import { Metadata } from "next";
 import { headers } from "next/headers";
 import PageLayout from "../../src/components/pageLayout/pageLayout";
-import { createAdobeAnalyticsPageName } from "../../src/utils/utils";
+import { imageURL, createAdobeAnalyticsPageName } from "../../src/utils/utils";
 import { ItemModel } from "../../src/models/item";
 import { ItemPage } from "@/src/components/pages/itemPage/itemPage";
 import { revalidatePath } from "next/cache";
@@ -53,6 +53,14 @@ export async function generateMetadata({
     title: `${title} - NYPL Digital Collections`, //should be item title
     openGraph: {
       title: `${title} - NYPL Digital Collections`,
+      images: [
+        {
+          url: item.imageIDs
+            ? imageURL(item.imageIDs[0], "full", "!288,288", "0")
+            : "/noImage.png",
+          alt: `${title} - NYPL Digital Collections`,
+        },
+      ],
     },
   };
 }
@@ -67,7 +75,6 @@ function formatItemBreadcrumbs(item: ItemModel) {
     });
   }
   if (breadcrumbData?.collection) {
-    console.log(breadcrumbData.collection);
     breadcrumbs.push({
       text: breadcrumbData.collection.text,
       url: breadcrumbData.collection.path,
