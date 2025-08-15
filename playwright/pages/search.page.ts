@@ -125,6 +125,12 @@ export default class SearchPage {
       .locator("#select-place")
       .getByText("Place: England", { exact: true });
     this.genreFilter = this.page.getByRole("button", { name: "Genre" });
+    this.genreOption = this.page
+      .locator("#select-genre")
+      .getByText("Maps", { exact: true });
+    this.genreSelected = this.page
+      .locator("#select-genre")
+      .getByText("Genre: Maps", { exact: true });
     this.publisherFilter = this.page.getByRole("button", { name: "Publisher" });
     this.publisherOption = this.page
       .locator("#select-publisher")
@@ -133,7 +139,23 @@ export default class SearchPage {
       .locator("#select-publisher")
       .getByText("Publisher: Printed at the Theater,", { exact: true });
     this.divisionFilter = this.page.getByRole("button", { name: "Division" });
+    this.divisionOption = this.page
+      .locator("#select-division")
+      .getByText("Lionel Pincus and Princess Firyal Map Division", {
+        exact: true,
+      });
+    this.divisionSelected = this.page
+      .locator("#select-division")
+      .getByText("Division: Lionel Pincus and Princess Firyal Map Division", {
+        exact: true,
+      });
     this.typeFilter = this.page.getByRole("button", { name: "Type" });
+    this.typeOption = this.page
+      .locator("#select-type")
+      .getByText("Cartographic", { exact: true });
+    this.typeSelected = this.page
+      .locator("#select-type")
+      .getByText("Type: Cartographic", { exact: true });
     this.startYear = this.page.getByRole("textbox", { name: "Start year" });
     this.endYear = this.page.getByRole("textbox", { name: "End year" });
     this.applyDates = this.page.getByRole("button", { name: "Apply dates" });
