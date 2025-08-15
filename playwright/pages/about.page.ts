@@ -97,7 +97,7 @@ export class AboutPage {
       exact: true,
     });
     this.publicDomainItemsLink = page.getByRole("link", {
-      name: "296,687 public domain items",
+      name: "500,000 public domain items",
       exact: true,
     });
     this.freeForAllLink = page.getByRole("link", {
