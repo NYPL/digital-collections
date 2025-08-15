@@ -5,7 +5,7 @@ let searchPage: SearchPage;
 
 test.beforeEach(async ({ page }, testInfo) => {
   const excludedTests = [
-    "searches for a keyword from homepage",
+    "find item with a keyword search",
     "after opening 2nd row filters",
     "choose publisher",
     "choose genre",
@@ -18,31 +18,58 @@ test.beforeEach(async ({ page }, testInfo) => {
   }
 });
 
-test("searches for a keyword from homepage", async ({ page }) => {
-  searchPage = await SearchPage.loadPage("/", page);
+// Do a new search from a results-page
+test.describe("find item with a keyword search", () => {
+  let searchPage: SearchPage;
+  let page: Page;
+  let browserContext: BrowserContext;
 
-  await expect(searchPage.searchBar).toBeVisible();
-  await searchPage.searchBar.fill(searchPage.searchKeyword);
-  await expect(searchPage.searchBar).toHaveValue(searchPage.searchKeyword);
-  await expect(searchPage.searchButton).toBeVisible();
+  test.beforeAll(async ({ browser }) => {
+    browserContext = await browser.newContext();
+    page = await browserContext.newPage();
 
-  await searchPage.searchButton.click();
-  await page.waitForURL("/search/**", {
-    waitUntil: "load",
+    searchPage = await SearchPage.loadPage(SearchPage.searchResultsUrl, page);
+    await expect(searchPage.showFilters).toBeVisible();
+    await searchPage.showFilters.click();
   });
 
-  await expect(page).toHaveTitle("Search results - NYPL Digital Collections");
-});
+  test.afterAll(async () => {
+    // Close the page and context
+    await page.close();
+    await browserContext.close();
+  });
 
-test("displays search results", async () => {
-  await expect(searchPage.resultsHeading).toBeVisible();
-  await expect(searchPage.firstItemResult).toBeVisible();
-  await expect(searchPage.firstKeywordResult).toContainText(
-    searchPage.searchKeyword,
-    {
-      ignoreCase: true,
-    }
-  );
+  test("enter keyword and submit", async () => {
+    await expect(searchPage.searchBar).toBeVisible();
+    await searchPage.searchBar.fill(searchPage.searchKeyword);
+    await expect(searchPage.searchBar).toHaveValue(searchPage.searchKeyword);
+    await expect(searchPage.searchButton).toBeVisible();
+
+    await searchPage.searchButton.click();
+    await page.waitForURL("/search/**", {
+      waitUntil: "load",
+    });
+
+    await expect(page).toHaveTitle("Search results - NYPL Digital Collections");
+  });
+
+  // Item check can go here since this test's purpose is to verify
+  // results were actually returned for a search.   Thus, an item-link
+  // should be expected to be here by default when it passes.
+
+  test("display search results and clickable item", async () => {
+    await expect(searchPage.resultsHeading).toBeVisible();
+    await expect(searchPage.firstItemResult).toBeVisible();
+    await expect(searchPage.firstKeywordResult).toContainText(
+      searchPage.searchKeyword,
+      {
+        ignoreCase: true,
+      }
+    );
+    await searchPage.firstItemResult.click();
+    await expect(searchPage.page).toHaveURL(/\/(items)\//);
+    await expect(searchPage.refineHeading).not.toBeVisible();
+  });
 });
 
 test.describe("displays search results filters", () => {
