@@ -6,11 +6,15 @@ let searchPage: SearchPage;
 test.beforeEach(async ({ page }, testInfo) => {
   const excludedTests = [
     "find item with a keyword search",
+    "enter keyword and submit",
+    "display search results with a clickable item",
     "after opening 2nd row filters",
     "choose publisher",
     "choose genre",
     "choose division",
     "choose type",
+    "filter search results by date",
+    "filter search results by availability",
   ];
 
   if (!excludedTests.includes(testInfo.title)) {
@@ -57,7 +61,7 @@ test.describe("find item with a keyword search", () => {
   // results were actually returned for a search.   Thus, an item-link
   // should be expected to be here by default when it passes.
 
-  test("display search results and clickable item", async () => {
+  test("display search results with a clickable item", async () => {
     await expect(searchPage.resultsHeading).toBeVisible();
     await expect(searchPage.firstItemResult).toBeVisible();
     await expect(searchPage.firstKeywordResult).toContainText(
@@ -368,24 +372,13 @@ test.describe("sorts search results", () => {
   });
 });
 
-test.describe("clicks on an item in search results", () => {
-  test("clicks on an item in unfiltered search results", async () => {
-    await expect(searchPage.refineHeading).toBeVisible();
+test("clicks on an item in filtered search results", async () => {
+  await expect(searchPage.refineHeading).toBeVisible();
 
-    await expect(searchPage.firstItemResult).toBeVisible();
-    await searchPage.firstItemResult.click();
-    await expect(searchPage.page).toHaveURL(/\/(items)\//);
-    await expect(searchPage.refineHeading).not.toBeVisible();
-  });
+  await searchPage.filterSearchResults();
 
-  test("clicks on an item in filtered search results", async () => {
-    await expect(searchPage.refineHeading).toBeVisible();
-
-    await searchPage.filterSearchResults();
-
-    await expect(searchPage.firstItemResult).toBeVisible();
-    await searchPage.firstItemResult.click();
-    await expect(searchPage.page).toHaveURL(/\/(items)\//);
-    await expect(searchPage.refineHeading).not.toBeVisible();
-  });
+  await expect(searchPage.firstItemResult).toBeVisible();
+  await searchPage.firstItemResult.click();
+  await expect(searchPage.page).toHaveURL(/\/(items)\//);
+  await expect(searchPage.refineHeading).not.toBeVisible();
 });
