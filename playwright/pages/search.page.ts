@@ -110,6 +110,12 @@ export default class SearchPage {
     this.collectionOption = this.page
       .getByLabel("collection filter options")
       .getByText("Portolan atlas");
+
+    // The selected filter check below currently uses a fuzzy match
+    // because the collection UUID is appended to the
+    // collectionSelected display text, which is visible to users when
+    // collections have short titles. (DR-3838)
+
     this.collectionSelected = this.page.getByText("Collection: Portolan atlas");
     this.placeFilter = this.page.getByRole("button", { name: "Place" });
     this.placeOption = this.page
