@@ -147,7 +147,7 @@ test.describe("displays specific filter options", () => {
     await expect(searchPage.topicFilter).toBeVisible();
     await searchPage.topicFilter.click();
     await expect(searchPage.topicOption).toBeVisible();
-    await searchPage.topicOption.click();
+    await searchPage.topicOption.check();
     await expect(searchPage.applyFilterButton).toBeVisible();
     await searchPage.applyFilterButton.click();
     await expect(searchPage.topicSelected).toBeVisible();
@@ -158,7 +158,7 @@ test.describe("displays specific filter options", () => {
     await expect(searchPage.nameFilter).toBeVisible();
     await searchPage.nameFilter.click();
     await expect(searchPage.nameOption).toBeVisible();
-    await searchPage.nameOption.click();
+    await searchPage.nameOption.check();
     await expect(searchPage.applyFilterButton).toBeVisible();
     await searchPage.applyFilterButton.click();
     await expect(searchPage.nameSelected).toBeVisible();
@@ -183,7 +183,7 @@ test.describe("displays specific filter options", () => {
     await expect(searchPage.placeFilter).toBeVisible();
     await searchPage.placeFilter.click();
     await expect(searchPage.placeOption).toBeVisible();
-    await searchPage.placeOption.click();
+    await searchPage.placeOption.check();
     await expect(searchPage.applyFilterButton).toBeVisible();
     await searchPage.applyFilterButton.click();
     await expect(searchPage.placeSelected).toBeVisible();
@@ -215,7 +215,7 @@ test.describe("displays specific filter options", () => {
       await expect(searchPage.genreFilter).toBeVisible();
       await searchPage.genreFilter.click();
       await expect(searchPage.genreOption).toBeVisible();
-      await searchPage.genreOption.click();
+      await searchPage.genreOption.check();
       await expect(searchPage.applyFilterButton).toBeVisible();
       await searchPage.applyFilterButton.click();
       await expect(searchPage.genreSelected).toBeVisible();
@@ -225,7 +225,7 @@ test.describe("displays specific filter options", () => {
       await expect(searchPage.publisherFilter).toBeVisible();
       await searchPage.publisherFilter.click();
       await expect(searchPage.publisherOption).toBeVisible();
-      await searchPage.publisherOption.click();
+      await searchPage.publisherOption.check();
       await expect(searchPage.applyFilterButton).toBeVisible();
       await searchPage.applyFilterButton.click();
       await expect(searchPage.publisherSelected).toBeVisible();
@@ -235,7 +235,7 @@ test.describe("displays specific filter options", () => {
       await expect(searchPage.divisionFilter).toBeVisible();
       await searchPage.divisionFilter.click();
       await expect(searchPage.divisionOption).toBeVisible();
-      await searchPage.divisionOption.click();
+      await searchPage.divisionOption.check();
       await expect(searchPage.applyFilterButton).toBeVisible();
       await searchPage.applyFilterButton.click();
       await expect(searchPage.divisionSelected).toBeVisible();
@@ -245,7 +245,7 @@ test.describe("displays specific filter options", () => {
       await expect(searchPage.typeFilter).toBeVisible();
       await searchPage.typeFilter.click();
       await expect(searchPage.typeOption).toBeVisible();
-      await searchPage.typeOption.click();
+      await searchPage.typeOption.check();
       await expect(searchPage.applyFilterButton).toBeVisible();
       await searchPage.applyFilterButton.click();
       await expect(searchPage.typeSelected).toBeVisible();
