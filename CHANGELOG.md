@@ -11,6 +11,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - updated middleware file to redirect synthetic collections (DR-3750)
 - updates node version to 22
 - Updated UV to scan for whole image links and hide them. (DR-3819)
+- Updated Playwright tests for Collection and Place search-filters (DR-3796)
 
 ## Added
 - added OpenGraph image to Items page (DR-3791)
