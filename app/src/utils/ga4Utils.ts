@@ -1,7 +1,9 @@
 export const trackGa4PageView = (
   division?: string,
   collection?: string,
-  subCollection?: string
+  subCollection?: string,
+  contentType?: string,
+  resourceType?: string
 ) => {
   const dataLayer = window["dataLayer"] || [];
   dataLayer.push({
@@ -9,6 +11,8 @@ export const trackGa4PageView = (
     division_center: division ? division : "No Detail",
     collection: collection ? collection : "No Detail",
     subcollection: subCollection ? subCollection : "No Detail",
+    contentType: contentType ?? "Not set",
+    resourceType: resourceType ?? "Not set",
   });
 };
 
