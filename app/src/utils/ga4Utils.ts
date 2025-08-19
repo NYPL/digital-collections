@@ -11,8 +11,8 @@ export const trackGa4PageView = (
     division_center: division ? division : "No Detail",
     collection: collection ? collection : "No Detail",
     subcollection: subCollection ? subCollection : "No Detail",
-    contentType: contentType ?? "Not set",
-    resourceType: resourceType ?? "Not set",
+    dc_content_type: contentType ?? "Not set",
+    dc_resource_type: resourceType ?? "Not set",
   });
 };
 
