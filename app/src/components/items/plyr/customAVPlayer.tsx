@@ -29,6 +29,13 @@ const CustomAVPlayer = forwardRef<APITypes, any>((props, ref) => {
     };
     const api = current as { plyr: PlyrInstance };
     api.plyr.on("timeupdate", handleTimeUpdate);
+    api.plyr.on("playing", () => {
+      if (!loggedProgressEvents.current.has(0)) {
+        trackAVProgress(source.type, source.title, 0);
+        console.log("Playback started");
+        loggedProgressEvents.current.add(0);
+      }
+    });
     api.plyr.on("ended", () => {
       if (!loggedProgressEvents.current.has(100)) {
         trackAVProgress(source.type, source.title, 100);
