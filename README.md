@@ -439,13 +439,13 @@ Our branches (in order of stability are):
 
 ## Git workflow
 
-1.  Feature branches are cut from `main` using
+1.  Feature branches are cut from `qa` using
 
-    `git checkout -b feature/DR-123/feature-name`.
+    `git checkout -b feature/DR-123/feature-name origin/qa`.
 
 2.  Add your changes to the CHANGELOG.md file under `## [Unreleased]`. See [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) for formatting docs.
-3.  Create a pull request of the `feature` branch _into_ `main`.
-4.  After a feature branch has approved accessibility review and VQA, merge `feature` branch into `main`, then merge `main` branch into `qa` for testing. Merging can be done manually or with a pull request. Pushing the changes to the remote branch will automatically trigger a deployment to the `qa` environment.
+3.  Create a pull request of the `feature` branch _into_ `qa`.
+4.  After a feature branch has approved accessibility review and VQA, merge `feature` branch into `qa` for testing. Merging can be done manually or with a pull request. Pushing the changes to the remote branch will automatically trigger a deployment to the `qa` environment.
 
     4a. If you introduced a new path in your PR, update the reverse proxy QA configuration so that it will be accessible in the `qa` environment.
 
@@ -486,7 +486,16 @@ PR previews and `main` are all deployed to Vercel. Merges to `main` trigger auto
 
 QA deployments are automatically triggered by pushing changes to the `qa` branch. `qa` is deployed to AWS [via Github Actions](https://github.com/NYPL/digital-collections/blob/production/.github/workflows/deploy_qa.yml).
 
-Production deployments for this repo require a PR to the `production` branch. Once merged, `production` is deployed to AWS [via Github Actions](https://github.com/NYPL/digital-collections/blob/production/.github/workflows/deploy_production.yml).
+Production deployments are done using Github releases, using the following process:
+
+  1. In the Github UI, navigate to the 'Releases' tab on the right
+  2. Click 'Draft a new release'
+  3. Under 'Choose a tag', type in a new tag in the format `v${version-num}` and create it.
+      - The `version-num` should be a version bump of the previous release tag, following semantic versioning
+  4. Make sure the 'Previous tag' is set to the tag of the prior release
+  5. Hit 'Generate release notes' to populate the release description
+  6. Name the new release `Release - ${version-num}`
+  7. Finally, hit publish release and observe the deployment in github actions
 
 ### Summary of project phases
 
