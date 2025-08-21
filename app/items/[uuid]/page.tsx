@@ -119,6 +119,8 @@ export default async function ItemViewer({ params, searchParams }: ItemProps) {
         division: breadcrumbData[1]?.text,
         collection: breadcrumbData[2]?.text ?? "No detail",
         subcollection: item.subcollectionName ?? "No detail",
+        contentType: item.contentType,
+        resourceType: item.typeOfResource,
       }}
     >
       <ItemPage
