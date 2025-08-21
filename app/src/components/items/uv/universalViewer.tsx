@@ -129,6 +129,7 @@ const UniversalViewer: React.FC<UniversalViewerProps> = React.memo(
                 pagingHeaderPanel: true,
                 pagingOptionEnabled: true,
                 clickToZoomEnabled: false,
+                zoomToSearchResultEnabled: false,
                 // saveUserSettings: false, // uncomment if you want to stop new prefs persisting
               },
               modules: {
