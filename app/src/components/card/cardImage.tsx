@@ -2,15 +2,36 @@ import Image from "next/image";
 import React from "react";
 import { useState } from "react";
 import { DCCardProps } from "./card";
+import { usePathname } from "next/navigation";
+import { processedImages } from "../../data/croppedThumbsHomepage";
 
 interface CardImageProps extends Pick<DCCardProps, "record"> {
   imageHeight: number;
 }
 
+function findImageById(imageID) {
+  return processedImages.find((img) => img.imageID === imageID);
+}
+
+function setImageID(record: any, isHome: boolean) {
+  if (isHome) {
+    const found = findImageById(record.imageID);
+    if (found) {
+      return found.thumb_url_visual;
+    }
+  }
+  return record.imageID ? record.imageURL : "/noImage.png";
+}
+
 export const CardImage = ({ record, imageHeight }: CardImageProps) => {
+  const pathname = usePathname();
+  const isHome = pathname === "/";
+
   const [imageSrc, setImageSrc] = useState(
-    record.imageID ? record.imageURL : "/noImage.png"
+    setImageID(record, isHome)
+    // record.imageID ? record.imageURL : "/noImage.png"
   );
+
   const initialImageHeight = 144;
 
   return (

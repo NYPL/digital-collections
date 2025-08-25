@@ -9,7 +9,7 @@ export type ProcessedImage = {
   thumb_url_square: string;
 };
 
-const processedImages: ProcessedImage[] = [
+export const processedImages: ProcessedImage[] = [
   {
     imageID: "58270299",
     proxy_url:
