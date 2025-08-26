@@ -15,6 +15,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Added
 - added OpenGraph image to Items page (DR-3791)
+- added support to read right-to-left (DR-3841)
 
 ## [1.0.0] 2025-08-04
 - Added Playwright test for Name filter for search-results page (DR-3796)

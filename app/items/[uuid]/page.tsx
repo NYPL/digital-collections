@@ -106,9 +106,28 @@ export default async function ItemViewer({ params, searchParams }: ItemProps) {
 
   // only allow canvasIndex to be in the range of 0...item.imageIds.length (number of canvases)
   const imageIDs = item.imageIDs || [];
-  const maxIndex = imageIDs.length - 1;
-  const rawIndex = searchParams.canvasIndex || 0;
+  const maxIndex = Math.max(0, imageIDs.length - 1);
+
+  // If no canvasIndex provided (or it's not a number), use default based on viewing direction
+  const providedIndexRaw = (searchParams as any)?.canvasIndex;
+  const providedIndex =
+    typeof providedIndexRaw === "string"
+      ? Number(providedIndexRaw)
+      : typeof providedIndexRaw === "number"
+      ? providedIndexRaw
+      : NaN;
+
+  // Is this a right-to-left item?
+  const isRTL = item.viewingDirection?.toLowerCase() === "right-to-left";
+
+  const defaultIndex = isRTL ? maxIndex : 0;
+  const rawIndex = Number.isFinite(providedIndex)
+    ? providedIndex
+    : defaultIndex;
+
+  // Clamp to valid range
   const clampedCanvasIndex = Math.max(0, Math.min(rawIndex, maxIndex));
+
   const breadcrumbData = formatItemBreadcrumbs(item);
   return (
     <PageLayout

@@ -50,6 +50,7 @@ export class ItemModel {
   subcollectionName: string | null;
   permittedLocationText: string;
   captures: CaptureModel[];
+  viewingDirection: string;
 
   constructor(
     uuid: string,
@@ -211,5 +212,7 @@ export class ItemModel {
 
     // get a list of signed urls
     this.mediaFiles = annotations.map((annotation) => annotation.id);
+    this.viewingDirection = manifest["viewingDirection"];
+    console.log("item.readingDirection: ", manifest["viewingDirection"]);
   }
 }
