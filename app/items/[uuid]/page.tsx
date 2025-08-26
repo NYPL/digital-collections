@@ -117,8 +117,8 @@ export default async function ItemViewer({ params, searchParams }: ItemProps) {
       adobeAnalyticsPageName={createAdobeAnalyticsPageName("items", item.title)}
       ga4Data={{
         division: breadcrumbData[1]?.text,
-        collection: breadcrumbData[2]?.text ?? "No detail",
-        subcollection: item.subcollectionName ?? "No detail",
+        collection: breadcrumbData[2]?.text,
+        subcollection: item.subcollectionName ?? undefined,
         contentType: item.contentType,
         resourceType: item.typeOfResource,
       }}
