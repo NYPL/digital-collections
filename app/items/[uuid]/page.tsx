@@ -8,6 +8,7 @@ import { ItemPage } from "@/src/components/pages/itemPage/itemPage";
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import { CollectionsApi } from "@/src/utils/apiClients/apiClients";
+import { extractAllAnchorsFromHTML } from "@/src/utils/metadata/extractAnchorHrefs";
 
 type ItemProps = {
   params: {
@@ -120,7 +121,9 @@ export default async function ItemViewer({ params, searchParams }: ItemProps) {
         collection: breadcrumbData[2]?.text,
         subcollection: item.subcollectionName ?? undefined,
         contentType: item.contentType,
-        resourceType: item.typeOfResource,
+        resourceType: extractAllAnchorsFromHTML(item.typeOfResource)
+          .map((anchor) => anchor.text.toLowerCase())
+          .join(","),
       }}
     >
       <ItemPage
