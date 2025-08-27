@@ -15,6 +15,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Added
 - added OpenGraph image to Items page (DR-3791)
+- Added resourceType / contentType to GA4 data (DR-3836)
+- Added AV progress metrics to GA4 (DR-3593) (DR-3594)
 
 ## [1.0.0] 2025-08-04
 - Added Playwright test for Name filter for search-results page (DR-3796)
@@ -23,7 +25,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Updated Divisions endpoints to use CollectionsAPI (DR-3214)
 - Added relevance to the Collections page (DR-3681)
 - Fixed multiple languages not displaying (DR-3764)
-- Fixed typo on Items page 
+- Fixed typo on Items page
 - Updated public domain item count on /about page (DR-3065)
 
 ## [0.4.7] 2027-07-17
