@@ -17,7 +17,7 @@ function setImageID(record: any, isHome: boolean) {
   if (isHome) {
     const found = findImageById(record.imageID);
     if (found) {
-      return found.thumb_url_visual;
+      return found.thumb_url_center;
     }
   }
   return record.imageID ? record.imageURL : "/noImage.png";
