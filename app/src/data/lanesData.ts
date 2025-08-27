@@ -12,10 +12,10 @@ const lanesData = {
           imageID: "58270299",
         },
         {
-          uuid: "724303e0-c6bb-012f-afbd-58d385a7bc34",
-          title: "MAVO",
-          url: "https://digitalcollections.nypl.org/collections/mavo#/?tab=navigation",
-          imageID: "1408153",
+          uuid: "66d899e0-b7b9-013c-626c-0242ac110002",
+          title: "Jean Blackwell Hutson photographs",
+          url: "https://digitalcollections.nypl.org/collections/jean-blackwell-hutson-photographs#/?tab=navigation",
+          imageID: "58887224",
         },
         {
           uuid: "6b6532b0-5df7-013b-36f8-0242ac110002",
