@@ -80,7 +80,7 @@ export default async function Collection({
         { text: "Home", url: "/" },
         { text: "Collections", url: "/collections" },
         {
-          text: `${params.uuid}`,
+          text: `${collectionData.title}`,
           url: `/collections/${params.uuid}`,
         },
       ]}

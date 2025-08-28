@@ -1,12 +1,13 @@
 import dynamic from "next/dynamic";
-import Plyr from "plyr-react";
 import "plyr-react/plyr.css";
 import { useSearchParams } from "next/navigation";
 import { useCanvasContext } from "../../../context/CanvasProvider";
 import { Button } from "@nypl/design-system-react-components";
 import React, { useRef, useEffect } from "react";
 import { SimpleGrid as DCSimpleGrid } from "../../simpleGrid/simpleGrid";
+import CustomAVPlayer from "@/src/components/items/plyr/customAVPlayer";
 import { truncateString } from "@/src/utils/utils";
+import { APITypes } from "plyr-react";
 
 interface PlyrProps {
   title: string;
@@ -19,6 +20,7 @@ const Player = ({ title, sources, type }: PlyrProps) => {
   const searchParams = useSearchParams();
   const { currentCanvasIndex, setCurrentCanvasIndex } = useCanvasContext();
   const buttonRefs = useRef<(HTMLButtonElement | null)[]>([]);
+  const plyrRef = useRef<APITypes>(null);
 
   function updateCanvasIndex(newCanvasIndex: number) {
     setCurrentCanvasIndex(newCanvasIndex);
@@ -28,7 +30,6 @@ const Player = ({ title, sources, type }: PlyrProps) => {
     window.history.pushState(null, "", `?${urlSearchParams}`);
   }
 
-  let playerHeight = type === "video" ? "500px" : "55px";
   let source;
 
   // if query param is present
@@ -74,20 +75,10 @@ const Player = ({ title, sources, type }: PlyrProps) => {
   return (
     <div>
       {sources.length === 1 ? (
-        <Plyr
-          source={source}
-          options={undefined}
-          height={playerHeight}
-          width="100%"
-        />
+        <CustomAVPlayer ref={plyrRef} source={source} />
       ) : (
         <>
-          <Plyr
-            source={source}
-            options={undefined}
-            height={playerHeight}
-            width="100%"
-          />
+          <CustomAVPlayer ref={plyrRef} source={source} />
           <DCSimpleGrid marginTop="s" marginBottom="xs">
             {sources.map((src, index) => {
               return (
