@@ -1,14 +1,20 @@
+const GA_NOT_SET = "Not set";
+
 export const trackGa4PageView = (
   division?: string,
   collection?: string,
-  subCollection?: string
+  subCollection?: string,
+  contentType?: string,
+  resourceType?: string
 ) => {
   const dataLayer = window["dataLayer"] || [];
   dataLayer.push({
     event: "page_view",
-    division_center: division ? division : "No Detail",
-    collection: collection ? collection : "No Detail",
-    subcollection: subCollection ? subCollection : "No Detail",
+    division_center: division ? division : GA_NOT_SET,
+    collection: collection ? collection : GA_NOT_SET,
+    subcollection: subCollection ? subCollection : GA_NOT_SET,
+    dc_content_type: contentType ?? GA_NOT_SET,
+    dc_resource_type: resourceType ?? GA_NOT_SET,
   });
 };
 
@@ -24,8 +30,21 @@ export const sendDownloadEvent = (
     event: "file_download",
     file_name: fileName,
     file_extension: extension,
-    division_center: division ? division : "No Detail",
-    collection: collection ? collection : "No Detail",
-    subcollection: subcollection ? subcollection : "No Detail",
+    division_center: division ? division : GA_NOT_SET,
+    collection: collection ? collection : GA_NOT_SET,
+    subcollection: subcollection ? subcollection : GA_NOT_SET,
+  });
+};
+
+export const trackAVProgress = (
+  mediaType: string,
+  mediaName: string,
+  progressPercentage: number
+) => {
+  const dataLayer = window["dataLayer"] || [];
+  dataLayer.push({
+    event: `${mediaType}_play`,
+    media_name: mediaName,
+    progress: progressPercentage,
   });
 };

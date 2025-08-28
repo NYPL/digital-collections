@@ -6,7 +6,19 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## Unreleased
-<<<<<<< HEAD
+
+## [1.1.0] 2025-08-28
+## Updated
+- updated middleware file to redirect synthetic collections (DR-3750)
+- updates node version to 22
+- Updated UV to scan for whole image links and hide them. (DR-3819)
+- Updated Playwright tests for Collection and Place search-filters (DR-3796)
+
+## Added
+- added OpenGraph image to Items page (DR-3791)
+- Added resourceType / contentType to GA4 data (DR-3836)
+- Added AV progress metrics to GA4 (DR-3593) (DR-3594)
+
 ## [1.0.0] 2025-08-04
 - Added Playwright test for Name filter for search-results page (DR-3796)
 - Added Playwright test for George Arents Division's landing page (DR-3716)
@@ -14,14 +26,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Updated Divisions endpoints to use CollectionsAPI (DR-3214)
 - Added relevance to the Collections page (DR-3681)
 - Fixed multiple languages not displaying (DR-3764)
-- Fixed typo on Items page 
+- Fixed typo on Items page
 - Updated public domain item count on /about page (DR-3065)
-=======
 
 ## [0.4.7] 2027-07-17
 ### Updated
 - Removed broken site banner (NO-REF)
->>>>>>> production
 
 ## [0.4.6] 2025-07-15
 ### Updated

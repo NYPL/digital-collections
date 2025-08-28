@@ -1,38 +1,3 @@
-export const mockFeaturedItemResponse = {
-  headers: { status: "success", code: "200", message: "ok" },
-  numResults: "1",
-  capture: {
-    uuid: "67b040f0-228a-0132-e62e-58d385a7b928",
-    imageLinks: {
-      imageLink: [
-        "http://images.nypl.org/index.php?id=5164604&t=t&download=1&suffix=67b040f0-228a-0132-e62e-58d385a7b928.001",
-        "http://images.nypl.org/index.php?id=5164604&t=f&download=1&suffix=67b040f0-228a-0132-e62e-58d385a7b928.001",
-        "http://images.nypl.org/index.php?id=5164604&t=b&download=1&suffix=67b040f0-228a-0132-e62e-58d385a7b928.001",
-        "http://images.nypl.org/index.php?id=5164604&t=r&download=1&suffix=67b040f0-228a-0132-e62e-58d385a7b928.001",
-        "http://images.nypl.org/index.php?id=5164604&t=q&download=1&suffix=67b040f0-228a-0132-e62e-58d385a7b928.001",
-        "http://images.nypl.org/index.php?id=5164604&t=v&download=1&suffix=67b040f0-228a-0132-e62e-58d385a7b928.001",
-        "http://images.nypl.org/index.php?id=5164604&t=g&download=1&suffix=67b040f0-228a-0132-e62e-58d385a7b928.001",
-        "http://images.nypl.org/index.php?id=5164604&t=w&download=1&suffix=67b040f0-228a-0132-e62e-58d385a7b928.001",
-        "http://images.nypl.org/index.php?id=5164604&t=s&download=1&suffix=67b040f0-228a-0132-e62e-58d385a7b928.001",
-        "http://images.nypl.org/index.php?id=5164604&t=j&download=1&suffix=67b040f0-228a-0132-e62e-58d385a7b928.001",
-      ],
-    },
-    apiUri:
-      "http://api.repo.nypl.org/api/v2/items/mods/67b040f0-228a-0132-e62e-58d385a7b928",
-    typeOfResource: "still image",
-    imageID: "5164604",
-    sortString: "0000000001|0000000007|0000000014|0000000001",
-    itemLink:
-      "http://digitalcollections.nypl.org/items/67b040f0-228a-0132-e62e-58d385a7b928",
-    highResLink: "https://link.nypl.org/GyZyYkQfEeSTtU9llX1nUwH",
-    title: "Roadside sandwich shop. Ponchatoula, Louisiana",
-    dateDigitized: "2015-05-19T15:05:21Z",
-    rightsStatement:
-      'The New York Public Library believes that this item is in the public domain under the laws of the United States, but did not make a determination as to its copyright status under the copyright laws of other countries. This item may not be in the public domain under the laws of other countries. Though not required, if you want to credit us as the source, please use the following statement, "From The New York Public Library," and provide a link back to the item on our Digital Collections site. Doing so helps us track how our collection is used and helps justify freely releasing even more content in the future.',
-    rightsStatementURI: "http://rightsstatements.org/vocab/NoC-US/1.0/",
-  },
-};
-
 export const mockItemResponse = {
   headers: {
     status: {

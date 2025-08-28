@@ -22,7 +22,13 @@ interface PageLayoutProps {
   activePage: string;
   breadcrumbs?: BreadcrumbsDataProps[];
   adobeAnalyticsPageName?: string;
-  ga4Data?: { collection?: string; division?: string; subcollection?: string };
+  ga4Data?: {
+    collection?: string;
+    division?: string;
+    subcollection?: string;
+    contentType?: string;
+    resourceType?: string;
+  };
   searchParams?: SearchParamsType | CollectionSearchParamsType;
 }
 
@@ -41,7 +47,9 @@ const PageLayout = ({
       trackGa4PageView(
         ga4Data.division,
         ga4Data.collection,
-        ga4Data.subcollection
+        ga4Data.subcollection,
+        ga4Data.contentType,
+        ga4Data.resourceType
       );
     }
   });
@@ -70,8 +78,7 @@ const PageLayout = ({
             activePage === "about" ||
             activePage === "notFound" ||
             activePage === "serverError" ||
-            activePage === "search" ||
-            activePage === "collection" ? (
+            activePage === "search" ? (
               children
             ) : (
               <>
