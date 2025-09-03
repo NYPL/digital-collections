@@ -229,6 +229,11 @@ const UniversalViewer: React.FC<UniversalViewerProps> = React.memo(
                     zoomOut: "Zoom Out",
                   },
                 },
+                downloadDialogue: {
+                  options: {
+                    downloadCurrentViewEnabled: false,
+                  },
+                },
               },
             },
             [uv]
