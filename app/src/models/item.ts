@@ -14,6 +14,7 @@ import {
   generateCitations,
   CitationOutput,
 } from "../utils/metadata/generateCitations";
+import { APIItem } from "../types/CollectionsAPI";
 
 // https://github.com/jptmoore/maniiifest
 // other resources:
@@ -54,18 +55,17 @@ export class ItemModel {
   constructor(
     uuid: string,
     manifest: any,
-    captures?: CaptureModel[],
+    itemDetail: APIItem,
     citationData?: any
   ) {
     const parser = new Maniiifest(manifest);
     // Non-Manifest/Metadata related fields
     this.uuid = uuid;
     this.manifestURL = `${process.env.COLLECTIONS_API_URL}/manifests/${uuid}`;
-    this.captures = captures ?? [];
+    this.captures = itemDetail.captures;
 
     // Manifest related fields
-    this.hasItems = manifest.items.length > 0;
-    const canvases = Array.from(parser.iterateManifestCanvas());
+    this.hasItems = this.captures.length > 0;
     const annotations = Array.from(parser.iterateManifestCanvasAnnotation());
     // Metadata assignment
     const manifestMetadataArray = Array.from(parser.iterateManifestMetadata());
@@ -91,13 +91,9 @@ export class ItemModel {
       ? rawManifestMetadata["Resource Type"].toString()
       : "";
 
-    this.isRestricted = rawManifestMetadata["Is Restricted"]
-      ? rawManifestMetadata["Is Restricted"].toString().toLowerCase() === "true"
-      : true;
+    this.isRestricted = itemDetail.isRestricted;
 
-    this.buyable = rawManifestMetadata["Buyable"]
-      ? rawManifestMetadata["Buyable"].toString().toLowerCase() === "true"
-      : false;
+    this.buyable = itemDetail.buyable;
 
     //this will break in Prod if we don't deploy API first bc the name of the field is "Library Location"
     this.divisionLink =
@@ -106,8 +102,8 @@ export class ItemModel {
         : rawManifestMetadata["Library Locations"]?.[0] || "";
 
     this.permittedLocationText =
-      this.isRestricted && rawManifestMetadata["Permitted Locations"]
-        ? rawManifestMetadata["Permitted Locations"][0]?.toString()
+      this.isRestricted && itemDetail.permittedLocationText
+        ? itemDetail.permittedLocationText
         : "";
 
     // for viewer configs and order print button
@@ -126,9 +122,9 @@ export class ItemModel {
     // example canvas.id is: "https://iiif.nypl.org/iiif/3/TH-38454/full/!700,700/0/default.jpg"
     this.imageIDs =
       this.hasItems && this.isImage
-        ? canvases.map((canvas) => {
-            return canvas.id.split("/")[5];
-          })
+        ? this.captures.flatMap((capture) =>
+            capture.imageId ? [capture.imageId] : []
+          )
         : null;
 
     // Special NYPL Identifiers for external links

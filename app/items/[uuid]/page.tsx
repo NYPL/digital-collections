@@ -46,8 +46,15 @@ const getClientIP = async () => {
 export async function generateMetadata({
   params,
 }: ItemProps): Promise<Metadata> {
-  const manifest = await getItemManifest(params.uuid);
-  const item = new ItemModel(params.uuid, manifest);
+  const [itemDetail, manifest] = await Promise.all([
+    getItemData(params.uuid),
+    getItemManifest(params.uuid),
+  ]);
+  // If we get no item data, this ends up being a canvas redirect anyway
+  if (!itemDetail) {
+    return {};
+  }
+  const item = new ItemModel(params.uuid, manifest, itemDetail);
   params.item = item;
   const title = item.title;
   return {
@@ -103,7 +110,7 @@ export default async function ItemViewer({ params, searchParams }: ItemProps) {
     );
   }
 
-  const item = new ItemModel(params.uuid, manifest, itemData.captures);
+  const item = new ItemModel(params.uuid, manifest, itemData);
 
   // only allow canvasIndex to be in the range of 0...item.imageIds.length (number of canvases)
   const imageIDs = item.imageIDs || [];
@@ -130,7 +137,7 @@ export default async function ItemViewer({ params, searchParams }: ItemProps) {
         citationsData={citationsData}
         manifest={manifest}
         uuid={params.uuid}
-        captures={itemData.captures}
+        itemDetail={itemData}
         canvasIndex={clampedCanvasIndex}
       />
     </PageLayout>
