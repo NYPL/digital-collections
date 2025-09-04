@@ -1,0 +1,17 @@
+{
+  "uuid": "a9c43f00-c600-012f-59c3-58d385a7bc34",
+  "buyable": false,
+  "isRestricted": false,
+  "permittedLocationText": null,
+  "contentType": "image",
+  "yearStart": null,
+  "yearEnd": null,
+  "citationResourceType": "Still Image",
+  "captures": [
+    {
+      "uuid": "abcd",
+      "imageId": "1107651",
+      "orderInSequence": 1
+    }
+  ]
+}

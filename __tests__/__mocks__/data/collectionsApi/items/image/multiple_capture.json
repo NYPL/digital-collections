@@ -1,0 +1,37 @@
+{
+  "uuid": "d6799d40-c0bf-0139-b046-0242ac110004",
+  "buyable": false,
+  "isRestricted": false,
+  "permittedLocationText": null,
+  "contentType": "image",
+  "yearStart": null,
+  "yearEnd": null,
+  "citationResourceType": "Three Dimensional Object",
+  "captures": [
+    {
+      "uuid": "abcd",
+      "imageId": "58317977",
+      "orderInSequence": 1
+    },
+    {
+      "uuid": "abcd",
+      "imageId": "58317978",
+      "orderInSequence": 2
+    },
+    {
+      "uuid": "abcd",
+      "imageId": "58317979",
+      "orderInSequence": 3
+    },
+    {
+      "uuid": "abcd",
+      "imageId": "58317980",
+      "orderInSequence": 4
+    },
+    {
+      "uuid": "abcd",
+      "imageId": "58317981",
+      "orderInSequence": 5
+    }
+  ]
+}

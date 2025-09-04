@@ -7,10 +7,10 @@ import { ItemModel } from "@/src/models/item";
 export function ItemPage({
   manifest,
   uuid,
-  captures,
+  itemDetail,
   canvasIndex,
   citationsData,
 }) {
-  const item = new ItemModel(uuid, manifest, captures, citationsData);
+  const item = new ItemModel(uuid, manifest, itemDetail, citationsData);
   return <Item manifest={manifest} item={item} canvasIndex={canvasIndex} />;
 }
