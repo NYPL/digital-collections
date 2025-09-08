@@ -19,7 +19,6 @@ import {
 } from "@nypl/design-system-react-components";
 
 interface ItemProps {
-  manifest: any;
   item: ItemModel;
   canvasIndex: number; //for when/if this is a query param
 }
@@ -28,7 +27,7 @@ const renderViewer = (item) => {
   return item.hasItems && !item.isRestricted;
 };
 
-const Item = ({ manifest, item, canvasIndex }: ItemProps) => {
+const Item = ({ item, canvasIndex }: ItemProps) => {
   return (
     <CanvasProvider>
       <Box marginTop="-3em">
@@ -47,8 +46,8 @@ const Item = ({ manifest, item, canvasIndex }: ItemProps) => {
         <HStack marginTop="xs" direction="row">
           <Icon name="actionInfo" size="large" />
           <Text marginTop="1em">
-            Our collections include some content that may be harmful or difficult
-            to view.{" "}
+            Our collections include some content that may be harmful or
+            difficult to view.{" "}
             <Link href="https://digitalcollections.nypl.org/about#nypl_harmful_content_statement">
               Learn more.
             </Link>{" "}

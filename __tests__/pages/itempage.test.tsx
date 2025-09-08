@@ -2,7 +2,7 @@ import { render } from "@testing-library/react";
 import { axe } from "jest-axe";
 import React from "react";
 import { ItemPage } from "@/src/components/pages/itemPage/itemPage";
-import singleImageCaptureManifest from "../__mocks__/data/collectionsApi/manifests/item/image/single_capture.json";
+import singleImageCaptureItemDetail from "../__mocks__/data/collectionsApi/items/image/single_capture.json";
 
 jest.mock("next/navigation", () => ({
   useRouter: () => ({
@@ -15,7 +15,7 @@ describe.skip("Item page accessibility", () => {
   it("passes axe accessibility test", async () => {
     const { container } = render(
       <ItemPage
-        manifest={singleImageCaptureManifest}
+        itemDetail={singleImageCaptureItemDetail}
         uuid="a9c43f00-c600-012f-59c3-58d385a7bc34"
         canvasIndex={0}
       />

@@ -11,7 +11,183 @@
     {
       "uuid": "abcd",
       "imageId": "1107651",
+      "mediaFileUrl": null,
       "orderInSequence": 1
     }
+  ],
+  "manifestMetadata": [
+    {
+      "label": {
+        "en": [
+          "Collection"
+        ]
+      },
+      "value": {
+        "en": [
+          "\u003Cspan\u003E\u003Ca href='http://qa-digitalcollections.nypl.org/collections/a945bb70-c600-012f-7ed6-58d385a7bc34'\u003ETobacco, its history and associations: including an account of the plant and its manufacture; with its modes of use in all ages and countries\u003C/a\u003E\u003C/span\u003E"
+        ]
+      }
+    },
+    {
+      "label": {
+        "en": [
+          "Names"
+        ]
+      },
+      "value": {
+        "en": [
+          "\u003Cspan\u003E\u003Ca href='http://qa-digitalcollections.nypl.org/search/index?filters=%5Bname%3DBunbury%2C+Henry+William%2C+1750-1811%5D'\u003EBunbury, Henry William, 1750-1811\u003C/a\u003E  (Artist)\u003C/span\u003E"
+        ]
+      }
+    },
+    {
+      "label": {
+        "en": [
+          "Identifiers"
+        ]
+      },
+      "value": {
+        "en": [
+          "\u003Cspan\u003E\u003Cb\u003EUniversal Unique Identifier (UUID):\u003C/b\u003E a9c43f00-c600-012f-59c3-58d385a7bc34\u003C/span\u003E"
+        ]
+      }
+    },
+    {
+      "label": {
+        "en": [
+          "Dates / Origin"
+        ]
+      },
+      "value": {
+        "en": [
+          "\u003Cspan\u003EDate Created \u003Ca href='http://qa-digitalcollections.nypl.org/search/index?filters=%5ByearBegin%3D1792%5D%5ByearEnd%3D1792%5D'\u003E1792\u003C/a\u003E\u003C/span\u003E",
+          "\u003Cspan\u003EPublisher: \u003Ca href='http://qa-digitalcollections.nypl.org/search/index?filters=%5Bpublisher%3DDickinson%2C+W.%5D'\u003EDickinson, W.\u003C/a\u003E\u003C/span\u003E"
+        ]
+      }
+    },
+    {
+      "label": {
+        "en": [
+          "Physical Description"
+        ]
+      },
+      "value": {
+        "en": [
+          "\u003Cspan\u003E\u003Ca href='http://qa-digitalcollections.nypl.org/search/index?filters=%5Bform%3DEngravings%5D'\u003EEngravings\u003C/a\u003E\u003C/span\u003E",
+          "39 x 50 cm."
+        ]
+      }
+    },
+    {
+      "label": {
+        "en": [
+          "Library Locations"
+        ]
+      },
+      "value": {
+        "en": [
+          "\u003Cspan\u003E\u003Ca href='http://qa-digitalcollections.nypl.org/divisions/george-arents-collection'\u003EGeorge Arents Collection\u003C/a\u003E\u003C/span\u003E",
+          "Shelf locator: Arents 3248"
+        ]
+      }
+    },
+    {
+      "label": {
+        "en": [
+          "Subjects"
+        ]
+      },
+      "value": {
+        "en": [
+          "\u003Cspan\u003E\u003Ca href='http://qa-digitalcollections.nypl.org/search/index?filters=%5Btopic%3DTobacco%5D'\u003ETobacco\u003C/a\u003E\u003C/span\u003E",
+          "\u003Cspan\u003E\u003Ca href='http://qa-digitalcollections.nypl.org/search/index?filters=%5Btopic%3DSmoking%5D'\u003ESmoking\u003C/a\u003E\u003C/span\u003E",
+          "\u003Cspan\u003E\u003Ca href='http://qa-digitalcollections.nypl.org/search/index?filters=%5Btopic%3DPoliticians%5D'\u003EPoliticians\u003C/a\u003E\u003C/span\u003E"
+        ]
+      }
+    },
+    {
+      "label": {
+        "en": [
+          "Title"
+        ]
+      },
+      "value": {
+        "en": [
+          "A smoking club"
+        ]
+      }
+    },
+    {
+      "label": {
+        "en": [
+          "Division"
+        ]
+      },
+      "value": {
+        "en": [
+          "\u003Cspan\u003E\u003Ca href='https://www.nypl.org/locations/schwarzman/rare-books-division/arents-collection'\u003EGeorge Arents Collection\u003C/a\u003E\u003C/span\u003E"
+        ]
+      }
+    },
+    {
+      "label": {
+        "en": [
+          "Genres"
+        ]
+      },
+      "value": {
+        "en": [
+          "\u003Cspan\u003E\u003Ca href='http://qa-digitalcollections.nypl.org/search/index?filters=%5Bgenre%3DPrints%5D'\u003EPrints\u003C/a\u003E\u003C/span\u003E"
+        ]
+      }
+    },
+    {
+      "label": {
+        "en": [
+          "Resource Type"
+        ]
+      },
+      "value": {
+        "en": [
+          "\u003Cspan\u003E\u003Ca href='http://qa-digitalcollections.nypl.org/search/index?filters=%5Btype%3Dstill+image%5D'\u003EStill Image\u003C/a\u003E\u003C/span\u003E"
+        ]
+      }
+    },
+    {
+      "label": {
+        "en": [
+          "Rights"
+        ]
+      },
+      "value": {
+        "en": [
+          "The New York Public Library believes that this item is in the public domain under the laws of the United States, but did not make a determination as to its copyright status under the copyright laws of other countries. This item may not be in the public domain under the laws of other countries. Though not required, if you want to credit us as the source, please use the following statement, \"From The New York Public Library,\" and provide a link back to the item on our Digital Collections site. Doing so helps us track how our collection is used and helps justify freely releasing even more content in the future."
+        ]
+      }
+    },
+    {
+      "label": {
+        "en": [
+          "Is Restricted"
+        ]
+      },
+      "value": {
+        "en": [
+          "False"
+        ]
+      }
+    },
+    {
+      "label": {
+        "en": [
+          "Content Type"
+        ]
+      },
+      "value": {
+        "en": [
+          "image"
+        ]
+      }
+    }
   ]
-}
+} 
