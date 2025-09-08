@@ -1,0 +1,17 @@
+{
+  "uuid": "1df2df50-c32b-0133-e4e8-60f81dd2b63c",
+  "buyable": false,
+  "isRestricted": false,
+  "permittedLocationText": null,
+  "contentType": "audio",
+  "yearStart": null,
+  "yearEnd": null,
+  "citationResourceType": "Sound Recording",
+  "captures": [
+    {
+      "uuid": "abcd",
+      "imageId": null,
+      "orderInSequence": 1
+    }
+  ]
+}

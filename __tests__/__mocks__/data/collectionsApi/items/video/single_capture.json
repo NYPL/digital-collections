@@ -1,0 +1,17 @@
+{
+  "uuid": "fd2f5090-0381-0131-a95f-3c075448cc4b",
+  "buyable": false,
+  "isRestricted": false,
+  "permittedLocationText": null,
+  "contentType": "video",
+  "yearStart": null,
+  "yearEnd": null,
+  "citationResourceType": "Moving Image",
+  "captures": [
+    {
+      "uuid": "abcd",
+      "imageId": null,
+      "orderInSequence": 1
+    }
+  ]
+}
