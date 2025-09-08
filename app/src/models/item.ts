@@ -53,16 +53,19 @@ export class ItemModel {
   permittedLocationText: string;
   captures: CaptureModel[];
 
-  constructor(
-    uuid: string,
-    manifest: any,
-    itemDetail: APIItem,
-    citationData?: any
-  ) {
-    const parser = new Maniiifest(manifest);
-    // Non-Manifest/Metadata related fields
+  constructor(uuid: string, itemDetail: APIItem, citationData?: any) {
     this.uuid = uuid;
     this.manifestURL = `${process.env.COLLECTIONS_API_URL}/manifests/${uuid}`;
+    // Really, we just need the metadata - construct a fake manifest around the metadata
+    // so we can use the helper methods from Maniiifest
+    const parser = new Maniiifest({
+      context: "http://iiif.io/api/presentation/3/context.json",
+      type: "Manifest",
+      label: "Dummy Label",
+      id: this.manifestURL,
+      metadata: itemDetail.manifestMetadata,
+    });
+    // Non-Manifest/Metadata related fields
     this.captures = itemDetail.captures;
 
     // Manifest related fields
