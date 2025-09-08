@@ -16,6 +16,7 @@ import {
 } from "../../config/constants";
 import { fetchApi } from "../fetchApi/fetchApi";
 import { Filter } from "../../types/FilterType";
+import { APIItem } from "@/src/types/CollectionsAPI";
 
 export class CollectionsApi {
   static async getCaptureMetadata(uuid: string) {
@@ -153,7 +154,7 @@ export class CollectionsApi {
     });
   }
 
-  static async getItemData(uuid: string) {
+  static async getItemData(uuid: string): Promise<APIItem> {
     return await fetchApi({
       apiUrl: `${process.env.COLLECTIONS_API_URL}/items/${uuid}`,
       options: { isRepoApi: false },
