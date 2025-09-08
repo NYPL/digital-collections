@@ -15,4 +15,5 @@ export interface APIItem {
   yearEnd: string | null;
   citationResourceType: string | null;
   captures: APICapture[];
+  manifestMetadata: any;
 }
