@@ -1,6 +1,7 @@
 export interface APICapture {
   uuid: string;
   imageId: string | null;
+  mediaFileUrl: string | null;
   orderInSequence: number;
 }
 

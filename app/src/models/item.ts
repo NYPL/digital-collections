@@ -24,6 +24,7 @@ import { APIItem } from "../types/CollectionsAPI";
 export class CaptureModel {
   uuid: string;
   imageId: string | null;
+  mediaFileUrl: string | null;
   orderInSequence: number;
 }
 
@@ -206,6 +207,8 @@ export class ItemModel {
     }
 
     // get a list of signed urls
-    this.mediaFiles = annotations.map((annotation) => annotation.id);
+    this.mediaFiles = this.captures.flatMap((capture) =>
+      capture.mediaFileUrl ? [capture.mediaFileUrl] : []
+    );
   }
 }
