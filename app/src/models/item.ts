@@ -24,6 +24,7 @@ import { APIItem } from "../types/CollectionsAPI";
 export class CaptureModel {
   uuid: string;
   imageId: string | null;
+  mediaFileUrl: string | null;
   orderInSequence: number;
 }
 
@@ -52,16 +53,19 @@ export class ItemModel {
   permittedLocationText: string;
   captures: CaptureModel[];
 
-  constructor(
-    uuid: string,
-    manifest: any,
-    itemDetail: APIItem,
-    citationData?: any
-  ) {
-    const parser = new Maniiifest(manifest);
-    // Non-Manifest/Metadata related fields
+  constructor(uuid: string, itemDetail: APIItem, citationData?: any) {
     this.uuid = uuid;
     this.manifestURL = `${process.env.COLLECTIONS_API_URL}/manifests/${uuid}`;
+    // Really, we just need the metadata - construct a fake manifest around the metadata
+    // so we can use the helper methods from Maniiifest
+    const parser = new Maniiifest({
+      context: "http://iiif.io/api/presentation/3/context.json",
+      type: "Manifest",
+      label: "Dummy Label",
+      id: this.manifestURL,
+      metadata: itemDetail.manifestMetadata,
+    });
+    // Non-Manifest/Metadata related fields
     this.captures = itemDetail.captures;
 
     // Manifest related fields
@@ -206,6 +210,8 @@ export class ItemModel {
     }
 
     // get a list of signed urls
-    this.mediaFiles = annotations.map((annotation) => annotation.id);
+    this.mediaFiles = this.captures.flatMap((capture) =>
+      capture.mediaFileUrl ? [capture.mediaFileUrl] : []
+    );
   }
 }
