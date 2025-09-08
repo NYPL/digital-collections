@@ -11,26 +11,31 @@
     {
       "uuid": "abcd",
       "imageId": "58317977",
+      "mediaFileUrl": null,
       "orderInSequence": 1
     },
     {
       "uuid": "abcd",
       "imageId": "58317978",
+      "mediaFileUrl": null,
       "orderInSequence": 2
     },
     {
       "uuid": "abcd",
       "imageId": "58317979",
+      "mediaFileUrl": null,
       "orderInSequence": 3
     },
     {
       "uuid": "abcd",
       "imageId": "58317980",
+      "mediaFileUrl": null,
       "orderInSequence": 4
     },
     {
       "uuid": "abcd",
       "imageId": "58317981",
+      "mediaFileUrl": null,
       "orderInSequence": 5
     }
   ]

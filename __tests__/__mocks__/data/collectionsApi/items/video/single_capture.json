@@ -11,6 +11,7 @@
     {
       "uuid": "abcd",
       "imageId": null,
+      "mediaFileUrl": null,
       "orderInSequence": 1
     }
   ]
