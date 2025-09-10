@@ -18,6 +18,7 @@ export class SearchCardModel {
   url: string;
   imageID: string;
   imageURL: string;
+  videoThumbnail: string | null;
   recordType: SearchResultRecordType;
   numberOfDigitizedItems: number;
   containsOnSiteMaterial: boolean;
@@ -38,6 +39,7 @@ export class SearchCardModel {
         : `/collections/${data.uuid}`;
 
     this.imageURL = imageURL(data.imageID, "square", "!288,288", "0");
+    this.videoThumbnail = data.videoThumbnail;
     this.numberOfDigitizedItems = data.numberOfDigitizedItems;
     this.containsOnSiteMaterial = data.containsOnSiteMaterial;
     this.containsAVMaterial = data.containsAVMaterial;
