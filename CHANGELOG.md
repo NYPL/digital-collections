@@ -1,3 +1,7 @@
+> [!WARNING]
+> This Changelog is deprecated. All releases following 1.2.0 will be managed in the github actions tab. This document now serves
+> as a historical log of releases prior to 1.2.0
+
 # Change Log
 
 All notable changes to this project will be documented in this file.
