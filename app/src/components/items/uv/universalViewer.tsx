@@ -129,6 +129,7 @@ const UniversalViewer: React.FC<UniversalViewerProps> = React.memo(
                 pagingHeaderPanel: true,
                 pagingOptionEnabled: true,
                 clickToZoomEnabled: false,
+                zoomToBoundsEnabled: false,
                 // saveUserSettings: false, // uncomment if you want to stop new prefs persisting
               },
               modules: {
@@ -226,6 +227,11 @@ const UniversalViewer: React.FC<UniversalViewerProps> = React.memo(
                     rotateRight: "Rotate Right",
                     zoomIn: "Zoom In",
                     zoomOut: "Zoom Out",
+                  },
+                },
+                downloadDialogue: {
+                  options: {
+                    downloadCurrentViewEnabled: false,
                   },
                 },
               },
