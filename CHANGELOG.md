@@ -7,18 +7,19 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
-## Updated
+## [1.2.0] 2025-09-15
+### Updated
 - Use items endpoint for more item metadata fields (DR-3855)
 - Stop calling manifests endpoint for item pages (DR-3855)
 
 ## [1.1.0] 2025-08-28
-## Updated
+### Updated
 - updated middleware file to redirect synthetic collections (DR-3750)
 - updates node version to 22
 - Updated UV to scan for whole image links and hide them. (DR-3819)
 - Updated Playwright tests for Collection and Place search-filters (DR-3796)
 
-## Added
+### Added
 - added OpenGraph image to Items page (DR-3791)
 - Added resourceType / contentType to GA4 data (DR-3836)
 - Added AV progress metrics to GA4 (DR-3593) (DR-3594)
