@@ -1,13 +1,14 @@
 {
-  "id": "http://qa-api-collections.nypl.org/manifests/33e3aab0-16fc-013d-c413-0242ac110002",
-  "type": "Manifest",
-  "label": {
-    "en": [
-      "Ojos Que No Ven"
-    ]
-  },
-  "@context": "http://iiif.io/api/presentation/3/context.json",
-  "metadata": [
+  "uuid": "/33e3aab0-16fc-013d-c413-0242ac110002",
+  "buyable": false,
+  "isRestricted": true,
+  "permittedLocationText": null,
+  "contentType": "video",
+  "yearStart": null,
+  "yearEnd": null,
+  "citationResourceType": "Moving Image",
+  "captures": [],
+  "manifestMetadata": [
     {
       "label": {
         "en": [
@@ -197,30 +198,5 @@
         ]
       }
     }
-  ],
-  "summary": {
-    "en": [
-      "Gay Men's Health Crisis records||212f6f20-16fb-013d-11c7-0242ac110003"
-    ]
-  },
-  "requiredStatement": null,
-  "rendering": null,
-  "service": null,
-  "services": null,
-  "viewingDirection": null,
-  "placeholderCanvas": null,
-  "accompanyingCanvas": null,
-  "rights": null,
-  "start": null,
-  "navDate": null,
-  "navPlace": null,
-  "provider": null,
-  "seeAlso": null,
-  "thumbnail": null,
-  "homepage": null,
-  "behavior": null,
-  "partOf": null,
-  "items": [],
-  "structures": null,
-  "annotations": null
+  ]
 }

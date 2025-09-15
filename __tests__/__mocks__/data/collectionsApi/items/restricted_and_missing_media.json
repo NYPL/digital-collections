@@ -1,13 +1,14 @@
 {
-  "id": "http://localhost:8000/manifests/794fcf20-b822-0133-7afc-60f81dd2b63c",
-  "type": "Manifest",
-  "label": {
-    "en": [
-      "Through the looking glass one+two"
-    ]
-  },
-  "@context": "http://iiif.io/api/presentation/3/context.json",
-  "metadata": [
+  "uuid": "794fcf20-b822-0133-7afc-60f81dd2b63c",
+  "buyable": false,
+  "isRestricted": true,
+  "permittedLocationText": null,
+  "contentType": "audio",
+  "yearStart": null,
+  "yearEnd": null,
+  "citationResourceType": "Sound Recording",
+  "captures": [],
+  "manifestMetadata": [
     {
       "label": {
         "en": [
@@ -185,30 +186,5 @@
         ]
       }
     }
-  ],
-  "summary": {
-    "en": [
-      "Merce Cunningham Dance Foundation Collection. Audio materials||0ed4e240-509c-0136-8e2a-79e0a253f893"
-    ]
-  },
-  "requiredStatement": null,
-  "rendering": null,
-  "service": null,
-  "services": null,
-  "viewingDirection": null,
-  "placeholderCanvas": null,
-  "accompanyingCanvas": null,
-  "rights": null,
-  "start": null,
-  "navDate": null,
-  "navPlace": null,
-  "provider": null,
-  "seeAlso": null,
-  "thumbnail": null,
-  "homepage": null,
-  "behavior": null,
-  "partOf": null,
-  "items": [],
-  "structures": null,
-  "annotations": null
+  ]
 }

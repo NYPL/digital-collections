@@ -1,20 +1,20 @@
 import { ItemModel } from "../../app/src/models/item"; // adjust path as needed
 
 //general items
-import restrictedAndMissingMediaManifest from "../__mocks__/data/collectionsApi/manifests/item/restricted_and_missing_media.json";
-import restrictedManifest from "../__mocks__/data/collectionsApi/manifests/item/restricted.json";
+import restrictedAndMissingItemDetail from "../__mocks__/data/collectionsApi/items/restricted_and_missing_media.json";
+import restrictedItemDetail from "../__mocks__/data/collectionsApi/items/restricted.json";
 
 //images
-import singleImageCaptureManifest from "../__mocks__/data/collectionsApi/manifests/item/image/single_capture.json";
-import multiImageCaptureManifest from "../__mocks__/data/collectionsApi/manifests/item/image/multiple_capture.json";
+import singleImageCaptureItemDetail from "../__mocks__/data/collectionsApi/items/image/single_capture.json";
+import multipleImageCaptureItemDetail from "../__mocks__/data/collectionsApi/items/image/multiple_capture.json";
 
 //audio
-import singleAudioCaptureManifest from "../__mocks__/data/collectionsApi/manifests/item/audio/single_capture.json";
+import singleAudioCaptureItemDetail from "../__mocks__/data/collectionsApi/items/audio/single_capture.json";
 
 //video
 //note: no multi video capture manifest bc we allegedly don't have Items that have multiple video captures
-import singleVideoCaptureManifest from "../__mocks__/data/collectionsApi/manifests/item/video/single_capture.json";
-import missingMediaVideoCaptureManifest from "../__mocks__/data/collectionsApi/manifests/item/video/missing_capture.json";
+import singleVideoCaptureItemDetail from "../__mocks__/data/collectionsApi/items/video/single_capture.json";
+import missingMediaVideoCaptureItemDetail from "../__mocks__/data/collectionsApi/items/video/missing_capture.json";
 
 describe("ItemModel - Image - Single Capture", () => {
   const uuid = "a9c43f00-c600-012f-59c3-58d385a7bc34";
@@ -22,7 +22,7 @@ describe("ItemModel - Image - Single Capture", () => {
   let item: ItemModel;
 
   beforeEach(() => {
-    item = new ItemModel(uuid, singleImageCaptureManifest);
+    item = new ItemModel(uuid, singleImageCaptureItemDetail);
   });
 
   describe("Non-Manifest/Metadata related fields", () => {
@@ -94,7 +94,7 @@ describe("ItemModel - Image - Multiple Capture", () => {
   let item: ItemModel;
 
   beforeEach(() => {
-    item = new ItemModel(uuid, multiImageCaptureManifest);
+    item = new ItemModel(uuid, multipleImageCaptureItemDetail);
   });
 
   describe("Non-Manifest/Metadata related fields", () => {
@@ -142,7 +142,7 @@ describe("ItemModel - Video - Single Capture", () => {
   let item: ItemModel;
 
   beforeEach(() => {
-    item = new ItemModel(uuid, singleVideoCaptureManifest);
+    item = new ItemModel(uuid, singleVideoCaptureItemDetail);
   });
 
   describe("sets the correct Manifest-related fields", () => {
@@ -174,7 +174,7 @@ describe("ItemModel - Video - Missing Captures", () => {
   let item: ItemModel;
 
   beforeEach(() => {
-    item = new ItemModel(uuid, missingMediaVideoCaptureManifest);
+    item = new ItemModel(uuid, missingMediaVideoCaptureItemDetail);
   });
 
   describe("sets the correct Manifest-related fields", () => {
@@ -206,7 +206,7 @@ describe("ItemModel - Audio - Single Capture", () => {
   let item: ItemModel;
 
   beforeEach(() => {
-    item = new ItemModel(uuid, singleAudioCaptureManifest);
+    item = new ItemModel(uuid, singleAudioCaptureItemDetail);
   });
 
   describe("sets the correct Manifest-related fields", () => {
@@ -238,7 +238,7 @@ describe("ItemModel - Restricted", () => {
   let item: ItemModel;
 
   beforeEach(() => {
-    item = new ItemModel(uuid, restrictedManifest);
+    item = new ItemModel(uuid, restrictedItemDetail);
   });
 
   describe("sets the correct metadata-related fields", () => {

@@ -46,8 +46,12 @@ const getClientIP = async () => {
 export async function generateMetadata({
   params,
 }: ItemProps): Promise<Metadata> {
-  const manifest = await getItemManifest(params.uuid);
-  const item = new ItemModel(params.uuid, manifest);
+  const itemDetail = await getItemData(params.uuid);
+  // If we get no item data, this ends up being a canvas redirect anyway
+  if (!itemDetail) {
+    return {};
+  }
+  const item = new ItemModel(params.uuid, itemDetail);
   params.item = item;
   const title = item.title;
   return {
@@ -91,10 +95,9 @@ function formatItemBreadcrumbs(item: ItemModel) {
 export default async function ItemViewer({ params, searchParams }: ItemProps) {
   revalidatePath("/");
   console.log("params are: ", params);
-  const [citationsData, itemData, manifest] = await Promise.all([
+  const [citationsData, itemData] = await Promise.all([
     CollectionsApi.getCitationsData(params.uuid),
     getItemData(params.uuid),
-    getItemManifest(params.uuid),
   ]);
   if (!itemData) {
     const capture = await CollectionsApi.getCaptureMetadata(params.uuid);
@@ -103,7 +106,7 @@ export default async function ItemViewer({ params, searchParams }: ItemProps) {
     );
   }
 
-  const item = new ItemModel(params.uuid, manifest, itemData.captures);
+  const item = new ItemModel(params.uuid, itemData);
 
   // only allow canvasIndex to be in the range of 0...item.imageIds.length (number of canvases)
   const imageIDs = item.imageIDs || [];
@@ -128,9 +131,8 @@ export default async function ItemViewer({ params, searchParams }: ItemProps) {
     >
       <ItemPage
         citationsData={citationsData}
-        manifest={manifest}
         uuid={params.uuid}
-        captures={itemData.captures}
+        itemDetail={itemData}
         canvasIndex={clampedCanvasIndex}
       />
     </PageLayout>
