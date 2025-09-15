@@ -27,8 +27,9 @@ const getItemManifest = async (uuid: string) => {
 };
 
 const getItemData = async (uuid: string) => {
+  const clientIP = await getClientIP();
   try {
-    return await CollectionsApi.getItemData(uuid);
+    return await CollectionsApi.getItemData(uuid, clientIP);
   } catch (error: any) {
     return null;
   }
