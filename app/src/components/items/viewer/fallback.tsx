@@ -48,7 +48,7 @@ const ItemMediaViewerFallback = ({ item }: ItemProps) => {
               marginTop="xxxs"
             />
           }
-          type="negative"
+          variant="negative"
         />
       )}
     </>

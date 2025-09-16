@@ -31,7 +31,7 @@ const FeaturedContentComponent = ({ randomNumber }: FeaturedContentProps) => {
             isUnderlined={false}
             target="_blank"
             aria-label={`${data.buttonText}, ${data.heading}`}
-            type="buttonPrimary"
+            variant="buttonPrimary"
           >
             {data.buttonText}
           </Link>
