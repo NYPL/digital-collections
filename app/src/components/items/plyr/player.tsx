@@ -9,13 +9,22 @@ import CustomAVPlayer from "@/src/components/items/plyr/customAVPlayer";
 import { truncateString } from "@/src/utils/utils";
 import { APITypes } from "plyr-react";
 
+export class PlyrCaption {
+  kind: string;
+  label: string;
+  srclang: string;
+  src: string;
+  default: boolean;
+}
+
 interface PlyrProps {
   title: string;
   sources: string[];
+  captions: PlyrCaption[] | null;
   type: string; // TODO: only accept 'video' | 'audio'... this requires updating Item model to either have a new typed field for content type that only expects these two options, or update the existing contentType field. I'm in favor of the former because the latter would need to be inclusive of images.
 }
 
-const Player = ({ title, sources, type }: PlyrProps) => {
+const Player = ({ title, sources, captions, type }: PlyrProps) => {
   console.log("sources are: ", sources);
   const searchParams = useSearchParams();
   const { currentCanvasIndex, setCurrentCanvasIndex } = useCanvasContext();
@@ -70,6 +79,10 @@ const Player = ({ title, sources, type }: PlyrProps) => {
         },
       ],
     };
+  }
+
+  if (captions.length) {
+    source.tracks = captions;
   }
 
   return (
