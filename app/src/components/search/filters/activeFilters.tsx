@@ -104,7 +104,7 @@ const ActiveFilters = ({ searchManager, allFilters }: ActiveFilterProps) => {
             id: filter.filter,
             label: getFilterLabel(filter),
           }))}
-          type="filter"
+          variant="filter"
           sx={{ flexWrap: "wrap" }}
         />
       </Flex>

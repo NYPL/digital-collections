@@ -69,7 +69,7 @@ const Filters = ({
       )}
       <Button
         id="see-more-filters"
-        buttonType="secondary"
+        variant="secondary"
         onClick={() => {
           setFiltersExpanded((prev) => !prev);
         }}
