@@ -1,8 +1,11 @@
+import { PlyrCaption } from "../components/items/plyr/player";
+
 export interface APICapture {
   uuid: string;
   imageId: string | null;
   mediaFileUrl: string | null;
   orderInSequence: number;
+  captions: PlyrCaption[] | null;
 }
 
 export interface APIItem {

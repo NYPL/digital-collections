@@ -81,7 +81,7 @@ const Player = ({ title, sources, captions, type }: PlyrProps) => {
     };
   }
 
-  if (captions.length) {
+  if (captions && captions.length) {
     source.tracks = captions;
   }
 
