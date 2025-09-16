@@ -101,7 +101,7 @@ const SearchBarComponent = forwardRef<HTMLDivElement, SearchBarProps>(
         onChange={textInputProps?.onChange}
         pattern={textInputProps?.pattern}
         placeholder={textInputPlaceholder}
-        textInputType="searchBar"
+        textInputVariant="searchBar"
         type="text"
         value={textInputProps?.value}
         onKeyDown={(event) => {
@@ -119,7 +119,7 @@ const SearchBarComponent = forwardRef<HTMLDivElement, SearchBarProps>(
     const buttonElem = (
       <Button
         className="searchButton"
-        buttonType="primary"
+        variant="primary"
         id={`searchbar-button-${id}`}
         isDisabled={isDisabled}
         onClick={onSubmit}

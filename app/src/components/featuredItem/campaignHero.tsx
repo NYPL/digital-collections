@@ -28,7 +28,7 @@ const CampaignHero = ({ featuredItemData }) => {
       backgroundImageSrc={data.featuredItem.backgroundImageSrc}
       backgroundColor="ui.bg.default"
       isDarkBackgroundImage
-      heroType="campaign"
+      variant="campaign"
       isDarkText
       heading={
         <CampaignHeroHeading

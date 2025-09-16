@@ -4,7 +4,7 @@ import React from "react";
 const NotificationBanner = () => {
   return (
     <Notification
-      notificationType="announcement"
+      variant="announcement"
       noMargin
       notificationContent={
         <>

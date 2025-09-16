@@ -83,7 +83,7 @@ const PageLayout = ({
             ) : (
               <>
                 <Breadcrumbs
-                  breadcrumbsType="digitalCollections"
+                  variant="digitalCollections"
                   breadcrumbsData={breadcrumbs || []}
                   aria-label={activePage}
                 />

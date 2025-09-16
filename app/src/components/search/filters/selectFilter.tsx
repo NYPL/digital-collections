@@ -183,7 +183,7 @@ const SelectFilterComponent = ({
       {selected && (
         <Button
           id="clear-filter"
-          buttonType="secondary"
+          variant="secondary"
           width="100%"
           marginBottom={sortedOptions.length > 10 ? "xs" : "0"}
           marginTop="xs"

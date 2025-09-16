@@ -242,7 +242,7 @@ const CollectionMetadata = ({ data }: { data: CollectionMetadataProps }) => {
           <ButtonGroup marginBottom="m">
             {mssID && (
               <Button
-                buttonType="secondary"
+                variant="secondary"
                 id="finding-aid-btn"
                 onClick={() =>
                   window.open(`https://archives.nypl.org/${mssID}`, "_blank")
@@ -253,7 +253,7 @@ const CollectionMetadata = ({ data }: { data: CollectionMetadataProps }) => {
             )}
             {bNumbers && (
               <Button
-                buttonType="secondary"
+                variant="secondary"
                 id="catalog-btn"
                 onClick={() =>
                   window.open(

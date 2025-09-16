@@ -50,7 +50,7 @@ const MobileNavMenu = () => {
         <Button
           aria-label={isOpen ? "Close Navigation" : "Open Navigation"}
           aria-expanded={isOpen ? true : null}
-          buttonType="text"
+          variant="text"
           id="mobileNav-btn"
           onClick={() => {
             setIsOpen(!isOpen);
@@ -89,7 +89,7 @@ const MobileNavMenu = () => {
               id="header-mobile-links"
               listItems={listItems}
               noStyling
-              type="ul"
+              variant="ul"
               sx={{ backgroundColor: "ui.white", paddingTop: "m" }}
             />
             <HorizontalRule
