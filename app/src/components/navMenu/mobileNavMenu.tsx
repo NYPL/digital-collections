@@ -49,7 +49,7 @@ const MobileNavMenu = () => {
       <FocusLock isDisabled={!isOpen}>
         <Button
           aria-label={isOpen ? "Close Navigation" : "Open Navigation"}
-          aria-expanded={isOpen ? true : null}
+          aria-expanded={isOpen ? true : undefined}
           variant="text"
           id="mobileNav-btn"
           onClick={() => {

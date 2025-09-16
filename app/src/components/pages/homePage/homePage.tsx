@@ -1,6 +1,5 @@
 "use client";
 import {
-  TemplateAppContainer,
   Template,
   TemplateBreakout,
   TemplateContent,

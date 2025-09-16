@@ -337,7 +337,7 @@ const aboutData = [
           .
         </Text>
         <List
-          type="ul"
+          variant="ul"
           sx={{
             paddingLeft: "s",
             "li::before": {
@@ -463,14 +463,14 @@ const aboutData = [
         sx={{ marginBottom: "xxl", marginTop: "s" }}
         accordionData={[
           {
-            accordionType: "default",
+            variant: "default",
             label:
               "What harmful or difficult content may be found in NYPL's Digital Collections?",
             panel: (
               <>
                 <Text sx={{ marginBottom: "xs" }}>Some items may: </Text>
                 <List
-                  type="ul"
+                  variant="ul"
                   sx={{
                     paddingLeft: "s",
                     "li::before": {
@@ -502,7 +502,7 @@ const aboutData = [
             ),
           },
           {
-            accordionType: "default",
+            variant: "default",
             label: "Why does NYPL make potentially harmful content available?",
             panel: (
               <Text>
@@ -516,12 +516,12 @@ const aboutData = [
             ),
           },
           {
-            accordionType: "default",
+            variant: "default",
             label:
               "How is this material described, and why are some of the terms used in the descriptions harmful?",
             panel: (
               <List
-                type="ul"
+                variant="ul"
                 sx={{
                   paddingLeft: "s",
                   "li::before": {
@@ -560,14 +560,14 @@ const aboutData = [
             ),
           },
           {
-            accordionType: "default",
+            variant: "default",
             label:
               "How are librarians, cataloguers, and archivists working to address this problem and help users better understand such content?",
             panel: (
               <>
                 <Text sx={{ marginBottom: "xs" }}>Examples include: </Text>
                 <List
-                  type="ul"
+                  variant="ul"
                   sx={{
                     paddingLeft: "s",
                     "li::before": {
@@ -607,7 +607,7 @@ const aboutData = [
             ),
           },
           {
-            accordionType: "default",
+            variant: "default",
             label: "How can I report harmful content?",
             panel: (
               <>
@@ -627,7 +627,7 @@ const aboutData = [
                 </Text>
                 <Text>
                   <List
-                    type="ul"
+                    variant="ul"
                     sx={{
                       paddingLeft: "s",
                       "li::before": {
