@@ -7,6 +7,7 @@ export class CollectionCardModel {
   url: string;
   imageID: string | null;
   imageURL: string;
+  videoThumbnail: string | null;
   numberOfDigitizedItems: number;
   containsOnSiteMaterial: boolean;
 
@@ -16,6 +17,7 @@ export class CollectionCardModel {
     this.url = `/collections/${data.uuid}`;
     this.imageID = data.image_id || data.imageID;
     this.imageURL = imageURL(data.imageID, "square", "!288,288", "0");
+    this.videoThumbnail = data.videoThumbnail;
     this.numberOfDigitizedItems =
       data.numberOfDigitizedItems || data.numItems || 0;
     this.containsOnSiteMaterial =
