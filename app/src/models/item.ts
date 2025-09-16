@@ -15,6 +15,7 @@ import {
   CitationOutput,
 } from "../utils/metadata/generateCitations";
 import { APIItem } from "../types/CollectionsAPI";
+import { PlyrCaption } from "../components/items/plyr/player";
 
 // https://github.com/jptmoore/maniiifest
 // other resources:
@@ -25,6 +26,7 @@ export class CaptureModel {
   uuid: string;
   imageId: string | null;
   mediaFileUrl: string | null;
+  captions: PlyrCaption[] | null;
   orderInSequence: number;
 }
 
@@ -49,6 +51,7 @@ export class ItemModel {
   citationData: CitationOutput | null;
   breadcrumbData: any;
   mediaFiles: string[];
+  captions: PlyrCaption[] | null;
   subcollectionName: string | null;
   permittedLocationText: string;
   captures: CaptureModel[];
@@ -213,5 +216,6 @@ export class ItemModel {
     this.mediaFiles = this.captures.flatMap((capture) =>
       capture.mediaFileUrl ? [capture.mediaFileUrl] : []
     );
+    this.captions = this.captures.flatMap((capture) => capture.captions || []);
   }
 }
