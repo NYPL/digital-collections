@@ -56,7 +56,6 @@ test("verify links on about page", async ({ page }) => {
 
 test("verify video sources on about page", async ({ page }) => {
   const aboutPage = new AboutPage(page);
-
   await expect(aboutPage.videoPublicDomain).toBeVisible();
   await expect(aboutPage.videoDownloadItems).toBeVisible();
 });

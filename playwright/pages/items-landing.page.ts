@@ -37,7 +37,7 @@ export default class ItemsLandingPage {
     gotoPage: string,
     page: Page
   ): Promise<ItemsLandingPage> {
-    await page.goto(gotoPage, { waitUntil: "load" });
+    await page.goto(gotoPage);
     return new ItemsLandingPage(page);
   }
 }
