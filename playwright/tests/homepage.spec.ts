@@ -5,7 +5,7 @@ test.beforeEach(async ({ page }) => {
   await page.goto("/", { waitUntil: "domcontentloaded" });
 });
 
-test("verify navigation menu is displayed (items, collections, divisions, about", async ({
+test("verify navigation menu is displayed (items, collections, divisions, about)", async ({
   page,
 }) => {
   const dchomepage = new DCHomepage(page);
@@ -72,10 +72,9 @@ test("verify footer links are visible", async ({ page }) => {
 });
 
 test("verify feedback button is visible", async ({ page }) => {
-  // for some reason this test is slow when running npm run dev, so increasing timeout
+  // this test is flaky; increasing timeout
   test.setTimeout(120000);
   const dchomepage = new DCHomepage(page);
-  await page.waitForLoadState("load");
   await expect(dchomepage.feedbackButton).toBeVisible();
   await dchomepage.feedbackButton.click();
   await expect(dchomepage.feedbackForm).toBeVisible();

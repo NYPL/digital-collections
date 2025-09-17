@@ -1,16 +1,18 @@
 import { test, expect } from "@playwright/test";
 import SearchPage from "../pages/search.page";
 
-let searchPage: SearchPage;
-
 test.beforeEach(async ({ page }, testInfo) => {
   if (testInfo.title !== "searches for a keyword from homepage") {
-    searchPage = await SearchPage.loadPage(SearchPage.searchResultsUrl, page);
+    const searchPage = new SearchPage(page);
+    await searchPage.loadPage(SearchPage.searchResultsUrl);
   }
 });
 
 test("searches for a keyword from homepage", async ({ page }) => {
-  searchPage = await SearchPage.loadPage("/", page);
+  const searchPage = new SearchPage(page);
+  await page.goto("/", {
+    waitUntil: "domcontentloaded",
+  });
 
   await expect(searchPage.searchBar).toBeVisible();
   await searchPage.searchBar.fill(searchPage.searchKeyword);
@@ -19,13 +21,14 @@ test("searches for a keyword from homepage", async ({ page }) => {
 
   await searchPage.searchButton.click();
   await page.waitForURL("/search/**", {
-    waitUntil: "load",
+    timeout: 60000,
   });
 
   await expect(page).toHaveTitle("Search results - NYPL Digital Collections");
 });
 
-test("displays search results", async () => {
+test("displays search results", async ({ page }) => {
+  const searchPage = new SearchPage(page);
   await expect(searchPage.resultsHeading).toBeVisible();
   await expect(searchPage.firstItemResult).toBeVisible();
   await expect(searchPage.firstKeywordResult).toContainText(
@@ -37,7 +40,8 @@ test("displays search results", async () => {
 });
 
 test.describe("displays search results filters", () => {
-  test("displays first row of drop-down filters", async () => {
+  test("displays first row of drop-down filters", async ({ page }) => {
+    const searchPage = new SearchPage(page);
     await expect(searchPage.refineHeading).toBeVisible();
 
     await expect(searchPage.topicFilter).toBeVisible();
@@ -46,7 +50,10 @@ test.describe("displays search results filters", () => {
     await expect(searchPage.placeFilter).toBeVisible();
   });
 
-  test("does not yet display second row of drop-down filters", async () => {
+  test("does not yet display second row of drop-down filters", async ({
+    page,
+  }) => {
+    const searchPage = new SearchPage(page);
     await expect(searchPage.refineHeading).toBeVisible();
 
     await expect(searchPage.genreFilter).not.toBeVisible();
@@ -55,7 +62,8 @@ test.describe("displays search results filters", () => {
     await expect(searchPage.typeFilter).not.toBeVisible();
   });
 
-  test("displays second row of drop-down filters", async () => {
+  test("displays second row of drop-down filters", async ({ page }) => {
+    const searchPage = new SearchPage(page);
     await expect(searchPage.refineHeading).toBeVisible();
 
     await expect(searchPage.showFilters).toBeVisible();
@@ -66,7 +74,8 @@ test.describe("displays search results filters", () => {
     await expect(searchPage.typeFilter).toBeVisible();
   });
 
-  test("displays date range filters", async () => {
+  test("displays date range filters", async ({ page }) => {
+    const searchPage = new SearchPage(page);
     await expect(searchPage.refineHeading).toBeVisible();
 
     await expect(searchPage.showFilters).toBeVisible();
@@ -76,7 +85,8 @@ test.describe("displays search results filters", () => {
     await expect(searchPage.applyDates).toBeVisible();
   });
 
-  test("displays availability filters", async () => {
+  test("displays availability filters", async ({ page }) => {
+    const searchPage = new SearchPage(page);
     await expect(searchPage.refineHeading).toBeVisible();
 
     await expect(searchPage.showFilters).toBeVisible();
@@ -86,7 +96,8 @@ test.describe("displays search results filters", () => {
     await expect(searchPage.availableOnsite).toBeVisible();
   });
 
-  test("hides second row of drop-down filters", async () => {
+  test("hides second row of drop-down filters", async ({ page }) => {
+    const searchPage = new SearchPage(page);
     await expect(searchPage.refineHeading).toBeVisible();
 
     await expect(searchPage.showFilters).toBeVisible();
@@ -101,18 +112,20 @@ test.describe("displays search results filters", () => {
 });
 
 test.describe("displays specific filter options", () => {
-  test("choose topic", async () => {
+  test("choose topic", async ({ page }) => {
+    const searchPage = new SearchPage(page);
     await expect(searchPage.refineHeading).toBeVisible();
 
     await expect(searchPage.topicFilter).toBeVisible();
     await searchPage.topicFilter.click();
-    await expect(searchPage.topicOption).toBeVisible();
+    await expect(searchPage.topicOption).toBeVisible({ timeout: 20000 });
     await searchPage.topicOption.click();
     await expect(searchPage.applyFilterButton).toBeVisible();
     await searchPage.applyFilterButton.click();
     await expect(searchPage.topicSelected).toBeVisible();
   });
-  test("choose name", async () => {
+  test("choose name", async ({ page }) => {
+    const searchPage = new SearchPage(page);
     await expect(searchPage.refineHeading).toBeVisible();
 
     await expect(searchPage.nameFilter).toBeVisible();
@@ -124,7 +137,8 @@ test.describe("displays specific filter options", () => {
     await expect(searchPage.nameSelected).toBeVisible();
   });
 
-  test("choose collection", async () => {
+  test("choose collection", async ({ page }) => {
+    const searchPage = new SearchPage(page);
     await expect(searchPage.refineHeading).toBeVisible();
 
     await expect(searchPage.collectionFilter).toBeVisible();
@@ -137,7 +151,8 @@ test.describe("displays specific filter options", () => {
     await expect(searchPage.collectionSelected).toBeVisible();
   });
 
-  test("choose place", async () => {
+  test("choose place", async ({ page }) => {
+    const searchPage = new SearchPage(page);
     await expect(searchPage.refineHeading).toBeVisible();
 
     await expect(searchPage.placeFilter).toBeVisible();
@@ -149,7 +164,8 @@ test.describe("displays specific filter options", () => {
     await expect(searchPage.placeSelected).toBeVisible();
   });
 
-  test("filters drop-downs in second row", async () => {
+  test("filters drop-downs in second row", async ({ page }) => {
+    const searchPage = new SearchPage(page);
     await expect(searchPage.refineHeading).toBeVisible();
 
     await expect(searchPage.showFilters).toBeVisible();
@@ -163,7 +179,8 @@ test.describe("displays specific filter options", () => {
     await expect(searchPage.publisherSelected).toBeVisible();
   });
 
-  test("filters search results by dates", async () => {
+  test("filters search results by dates", async ({ page }) => {
+    const searchPage = new SearchPage(page);
     await expect(searchPage.refineHeading).toBeVisible();
 
     await expect(searchPage.showFilters).toBeVisible();
@@ -178,7 +195,8 @@ test.describe("displays specific filter options", () => {
     await expect(searchPage.endYear).toHaveValue("1800");
   });
 
-  test("filters search results by availability", async () => {
+  test("filters search results by availability", async ({ page }) => {
+    const searchPage = new SearchPage(page);
     await expect(searchPage.refineHeading).toBeVisible();
 
     await expect(searchPage.showFilters).toBeVisible();
@@ -190,7 +208,8 @@ test.describe("displays specific filter options", () => {
 });
 
 test.describe("clears search results filters", () => {
-  test("clears all filters in Filters Applied", async () => {
+  test("clears all filters in Filters Applied", async ({ page }) => {
+    const searchPage = new SearchPage(page);
     await expect(searchPage.refineHeading).toBeVisible();
 
     await searchPage.filterSearchResults(); // reset filters to topic and publisher
@@ -201,7 +220,8 @@ test.describe("clears search results filters", () => {
     await expect(searchPage.publisherSelected).not.toBeVisible();
   });
 
-  test("clears drop-down filter", async () => {
+  test("clears drop-down filter", async ({ page }) => {
+    const searchPage = new SearchPage(page);
     await expect(searchPage.refineHeading).toBeVisible();
 
     await searchPage.filterSearchResults(); // reset filters to topic and publisher
@@ -213,7 +233,8 @@ test.describe("clears search results filters", () => {
     await expect(searchPage.topicSelected).not.toBeVisible();
   });
 
-  test("clears one filter in Filters Applied", async () => {
+  test("clears one filter in Filters Applied", async ({ page }) => {
+    const searchPage = new SearchPage(page);
     await expect(searchPage.refineHeading).toBeVisible();
 
     await searchPage.filterSearchResults(); // reset filters to topic and publisher
@@ -225,17 +246,21 @@ test.describe("clears search results filters", () => {
 });
 
 test.describe("sorts search results", () => {
-  test("sorts search results by age", async () => {
+  test("sorts search results by age", async ({ page }) => {
+    const searchPage = new SearchPage(page);
     await expect(searchPage.resultsHeading).toBeVisible();
     await expect(searchPage.sortButton).toBeVisible();
     await searchPage.sortButton.click();
     await expect(searchPage.sortByNewest).toBeVisible();
     await expect(searchPage.sortByOldest).toBeVisible();
     await searchPage.sortByNewest.click();
-    await expect(searchPage.sortByNewestSelected).toBeVisible();
+    await expect(searchPage.sortByNewestSelected).toBeVisible({
+      timeout: 20000,
+    });
   });
 
-  test("sorts search results alphabetically", async () => {
+  test("sorts search results alphabetically", async ({ page }) => {
+    const searchPage = new SearchPage(page);
     await expect(searchPage.resultsHeading).toBeVisible();
     await expect(searchPage.sortButton).toBeVisible();
     await searchPage.sortButton.click();
@@ -245,7 +270,8 @@ test.describe("sorts search results", () => {
     await expect(searchPage.sortByAlphaSelected).toBeVisible();
   });
 
-  test("sorts search results by type", async () => {
+  test("sorts search results by type", async ({ page }) => {
+    const searchPage = new SearchPage(page);
     await expect(searchPage.resultsHeading).toBeVisible();
     await expect(searchPage.sortButton).toBeVisible();
     await searchPage.sortButton.click();
@@ -255,7 +281,8 @@ test.describe("sorts search results", () => {
     await expect(searchPage.sortByCollectionsSelected).toBeVisible();
   });
 
-  test("sorts search results by relevance", async () => {
+  test("sorts search results by relevance", async ({ page }) => {
+    const searchPage = new SearchPage(page);
     await expect(searchPage.resultsHeading).toBeVisible();
     await expect(searchPage.sortButton).toBeVisible();
     await searchPage.sortButton.click();
@@ -266,7 +293,8 @@ test.describe("sorts search results", () => {
 });
 
 test.describe("clicks on an item in search results", () => {
-  test("clicks on an item in unfiltered search results", async () => {
+  test("clicks on an item in unfiltered search results", async ({ page }) => {
+    const searchPage = new SearchPage(page);
     await expect(searchPage.refineHeading).toBeVisible();
 
     await expect(searchPage.firstItemResult).toBeVisible();
@@ -275,7 +303,8 @@ test.describe("clicks on an item in search results", () => {
     await expect(searchPage.refineHeading).not.toBeVisible();
   });
 
-  test("clicks on an item in filtered search results", async () => {
+  test("clicks on an item in filtered search results", async ({ page }) => {
+    const searchPage = new SearchPage(page);
     await expect(searchPage.refineHeading).toBeVisible();
 
     await searchPage.filterSearchResults();
