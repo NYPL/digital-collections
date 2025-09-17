@@ -32,11 +32,8 @@ jobs:
       - name: Run build
         run: npm run build
 
-      - name: Start server
-        run: npm run start
-
       - name: Run Playwright tests
-        run: npx playwright test
+        run: npm run playwright
 
       - uses: actions/upload-artifact@v4
         if: ${{ !cancelled() && failure() }}
