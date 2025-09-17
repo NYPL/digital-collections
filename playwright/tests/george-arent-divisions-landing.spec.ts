@@ -9,8 +9,7 @@ test.beforeEach(async ({ page }) => {
   await divisionsPage.seeMoreLink.nth(4).click();
 });
 
-test("verify George Arents division's landing page", async ({ page }) => {
-  const divisionsPage = new DivisionsPage(page);
+test("verify George Arents division landing page", async ({ page }) => {
   const divisionsLandingPage = new GeorgeArentDivisionsLandingPage(page);
 
   await expect(divisionsLandingPage.itemsGeorgeDivisionHeading).toBeVisible();

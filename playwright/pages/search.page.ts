@@ -212,7 +212,7 @@ export default class SearchPage {
   }
 
   static async loadPage(gotoPage: string, page: Page): Promise<SearchPage> {
-    await page.goto(gotoPage, { waitUntil: "load" });
+    await page.goto(gotoPage);
     return new SearchPage(page);
   }
 

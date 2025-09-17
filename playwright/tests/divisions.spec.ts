@@ -32,10 +32,10 @@ test("verify collections on division's page", async ({ page }) => {
     "Contains on-site materials"
   );
   await expect(divisionsPage.wallaceDivisionPictureCollection).toBeVisible();
-  await expect(divisionsPage.marthaSwopePhotographicCollectionItems).not.toBe(
+  expect(divisionsPage.marthaSwopePhotographicCollectionItems).not.toBe(
     "0 items"
   );
-  await expect(divisionsPage.wallaceDivisionPictureCollectionItems).not.toBe(
+  expect(divisionsPage.wallaceDivisionPictureCollectionItems).not.toBe(
     "0 items"
   );
 });

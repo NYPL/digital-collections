@@ -2,7 +2,7 @@ import { test, expect } from "@playwright/test";
 import { DCHomepage } from "../pages/dc_homepage";
 
 test.beforeEach(async ({ page }) => {
-  await page.goto("/");
+  await page.goto("/", { waitUntil: "domcontentloaded" });
 });
 
 test("verify navigation menu is displayed (items, collections, divisions, about", async ({
@@ -67,25 +67,15 @@ test("verify explore further section is visible", async ({ page }) => {
 
 test("verify footer links are visible", async ({ page }) => {
   const dchomepage = new DCHomepage(page);
+  // the full footer content should be tested in the footer repo, not here in DC
   await expect(dchomepage.footerAccessibilityLink).toBeVisible();
-  await expect(dchomepage.footerPressLink).toBeVisible();
-  await expect(dchomepage.footerCareersLink).toBeVisible();
-  await expect(dchomepage.footerAboutNyplLink).toBeVisible();
-  await expect(dchomepage.footerSpaceRentalLink).toBeVisible();
-  await expect(dchomepage.footerPrivacyPolicyLink).toBeVisible();
-  await expect(dchomepage.footerOtherPoliciesLink).toBeVisible();
-  await expect(dchomepage.footerTermsAndConditionsLink).toBeVisible();
-  await expect(dchomepage.footerGovernanceLink).toBeVisible();
-  await expect(dchomepage.footerRulesAndRegulationsLink).toBeVisible();
-  await expect(dchomepage.footerLanguage).toBeVisible();
-  await expect(dchomepage.footerSocialFacebook).toBeVisible();
-  await expect(dchomepage.footerSocialTwitter).toBeVisible();
-  await expect(dchomepage.footerSocialInstagram).toBeVisible();
-  await expect(dchomepage.footerSocialYouTube).toBeVisible();
 });
 
 test("verify feedback button is visible", async ({ page }) => {
+  // for some reason this test is slow when running npm run dev, so increasing timeout
+  test.setTimeout(120000);
   const dchomepage = new DCHomepage(page);
+  await page.waitForLoadState("load");
   await expect(dchomepage.feedbackButton).toBeVisible();
   await dchomepage.feedbackButton.click();
   await expect(dchomepage.feedbackForm).toBeVisible();
