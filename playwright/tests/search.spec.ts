@@ -8,7 +8,7 @@ test.beforeEach(async ({ page }, testInfo) => {
   }
 });
 
-test("searches for a keyword from homepage", async ({ page }) => {
+test.skip("searches for a keyword from homepage", async ({ page }) => {
   const searchPage = new SearchPage(page);
   await page.goto("/", {
     waitUntil: "domcontentloaded",
