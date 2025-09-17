@@ -1,5 +1,5 @@
 import { test, expect } from "@playwright/test";
-import { GeorgeArentDivisionsLandingPage } from "../pages/george-arent-divisions-landing-page";
+import { GeorgeArentDivisionsLandingPage } from "../pages/george-arent-divisions-landing.page";
 import { DivisionsPage } from "../pages/divisions.page";
 
 test.beforeEach(async ({ page }) => {
