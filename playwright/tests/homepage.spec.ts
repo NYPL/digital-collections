@@ -1,8 +1,10 @@
 import { test, expect } from "@playwright/test";
 import { DCHomepage } from "../pages/homepage.page";
 
+//test.setTimeout(60000);
+
 test.beforeEach(async ({ page }) => {
-  await page.goto("/", { waitUntil: "domcontentloaded" });
+  await page.goto("/", { waitUntil: "networkidle" });
 });
 
 test("verify navigation menu is displayed (items, collections, divisions, about)", async ({
@@ -73,7 +75,10 @@ test("verify footer links are visible", async ({ page }) => {
 
 test("verify feedback button is visible", async ({ page }) => {
   // this test is flaky; increasing timeout
-  test.setTimeout(120000);
+  // test.setTimeout(120000);
+  // a timeout set wihin the block won't affect this test, so using page timeout override instead
+  page.setDefaultTimeout(60000); // 60 seconds
+
   const dchomepage = new DCHomepage(page);
   await expect(dchomepage.feedbackButton).toBeVisible();
   await dchomepage.feedbackButton.click();
