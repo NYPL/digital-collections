@@ -85,13 +85,13 @@ test("verify footer links are visible", async ({ page }) => {
   page.setDefaultTimeout(30000); // 30 seconds
   const dchomepage = new DCHomepage(page);
   // the full footer content should be tested in the footer repo, not here in DC
+
   await expect(dchomepage.footerAccessibilityLink).toBeVisible();
 });
 
 test("verify feedback button is visible", async ({ page }) => {
-  // With route-filtering on and domcontentload as a default,
-  // extending timeouts might not be necessary anymore for feedback button.
-  //page.setDefaultTimeout(60000); // 60 seconds
+  // With route-filtering on, extending timeouts might not be necessary
+  // for feedback button tests.
   test.setTimeout(60000);
 
   const dchomepage = new DCHomepage(page);
