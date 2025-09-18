@@ -155,6 +155,9 @@ export class DCHomepage {
     this.footerAccessibilityLink = this.page.getByRole("link", {
       name: "Accessibility",
     });
+    this.footerPrivacyPolicyLink = this.page.getByRole("link", {
+      name: "Privacy Policy",
+    });
 
     //feedback button
     this.feedbackButton = this.page.getByRole("button", { name: "Feedback" });
