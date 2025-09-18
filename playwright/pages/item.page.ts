@@ -11,8 +11,7 @@ export default class ItemPage {
     this.page = page;
   }
 
-  static async loadPage(gotoPage: string, page: Page): Promise<ItemPage> {
-    await page.goto(gotoPage, { waitUntil: "load" });
-    return new ItemPage(page);
+  async loadPage(gotoPage: string): Promise<void> {
+    await this.page.goto(gotoPage);
   }
 }
