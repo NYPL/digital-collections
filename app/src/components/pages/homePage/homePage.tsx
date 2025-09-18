@@ -21,10 +21,10 @@ export default function HomePage({ data }) {
       activePage="home"
       adobeAnalyticsPageName={createAdobeAnalyticsPageName("home")}
     >
-      <Template variant="full">
-        <TemplateHeader>
+      <Template>
+        <TemplateBreakout>
           <CampaignHero featuredItemData={data.featuredItemData} />
-        </TemplateHeader>
+        </TemplateBreakout>
         <TemplateMain>
           <TemplateContent>
             <HomePageMainContent
