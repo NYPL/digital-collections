@@ -7,23 +7,34 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
-## Updated
+### Updated
+
+- Fix Playwright test timeouts
+
+## [1.2.0] 2025-09-15
+
+### Updated
+
 - Use items endpoint for more item metadata fields (DR-3855)
 - Stop calling manifests endpoint for item pages (DR-3855)
 
 ## [1.1.0] 2025-08-28
-## Updated
+
+### Updated
+
 - updated middleware file to redirect synthetic collections (DR-3750)
 - updates node version to 22
 - Updated UV to scan for whole image links and hide them. (DR-3819)
 - Updated Playwright tests for Collection and Place search-filters (DR-3796)
 
-## Added
+### Added
+
 - added OpenGraph image to Items page (DR-3791)
 - Added resourceType / contentType to GA4 data (DR-3836)
 - Added AV progress metrics to GA4 (DR-3593) (DR-3594)
 
 ## [1.0.0] 2025-08-04
+
 - Added Playwright test for Name filter for search-results page (DR-3796)
 - Added Playwright test for George Arents Division's landing page (DR-3716)
 - Added Playwright tests for the About page (DR-3762)
@@ -34,36 +45,47 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Updated public domain item count on /about page (DR-3065)
 
 ## [0.4.7] 2027-07-17
+
 ### Updated
+
 - Removed broken site banner (NO-REF)
 
 ## [0.4.6] 2025-07-15
+
 ### Updated
+
 - Updated IIIF image urls to use v3 instead of v2
 
 ### Fixed
+
 - Separate notes by line breaks (DR-3785)
 
 ## [0.4.5] 2025-07-10
+
 ### Added
+
 - Added redirects for OG direct capture links (DR-3715)
 - Added Playwright test to verify two collection's on home page (DR-3658)
 
 ### Updated
+
 - Updated copy of "View this item elsewhere" buttons. (DR-3781)
 - updated middleware to strip /book from item urls
 
 ### Fixed
+
 - Fix date formatting in citations (DR-3734)
 
 ## [0.4.4] 2025-07-01
+
 ### Added
+
 - Added Playwright tests to confirm featured section on the homepage (DR-3658)
 - Added Playwright tests to clear search results filters (DR-3659)
 - Added Playwright tests to sort search results (DR-3659)
 - Added Image ID to Items page (DR-3695)
 - Added Playwright test feedback button to the home page (DR-3658)
-- Added Playwright  test where a user clicks Divisions from home page navigation menu (DR-3655)
+- Added Playwright test where a user clicks Divisions from home page navigation menu (DR-3655)
 - Added Playwright test to verify two collections and contains onsite material label on Divisions page (DR-3655)
 - Added Playwright updated test to verify navigation menu on Divisons page (DR-3655)
 - Added Playwright test to verify Division's name headings and the see more links for each division (DR-3655)
@@ -72,18 +94,22 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Added Playwright tests to navigate to Items landing page and confirm elements are displayed (DR-3761)
 
 ### Fixed
+
 - Fixed Order Print button (DR-3486)
 - Fixed bug with UniversalViewer where image controls are hidden after clicking an image (DR-3692)
 - Fixed grammatical mistake on filter options. (NO-REF)
 
 ### Updated
+
 - Updated breadcrumb to include Division and Collection information (DR-3701)
 - Updated Collections page to bolden the Polonsky note (DR-3705)
 - Updated `fetch` calls to include original client IP (DR-3754)
 - Updated Item page to use React Player for AV materials
 
 ## [0.4.3] 2025-06-17
+
 ### Added
+
 - Added Universal Viewer support and metadata fields
 - Conditionally render viewer with rights logic (DR-3645)
 - Added Playwright testing library (DR-3680)
@@ -93,7 +119,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Added Playwright test to filter search results with dropdowns (DR-3659)
 - Added GitHub Actions workflow to run Playwright tests on PRs (DR-3721)
 - Added Playwright tests to clear search results filters (DR-3659)
-
 
 ## [0.4.2] 2025-05-22
 

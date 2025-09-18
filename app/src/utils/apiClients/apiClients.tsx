@@ -154,10 +154,13 @@ export class CollectionsApi {
     });
   }
 
-  static async getItemData(uuid: string): Promise<APIItem> {
+  static async getItemData(
+    uuid: string,
+    clientIP: string | null
+  ): Promise<APIItem> {
     return await fetchApi({
       apiUrl: `${process.env.COLLECTIONS_API_URL}/items/${uuid}`,
-      options: { isRepoApi: false },
+      options: { isRepoApi: false, clientIP: clientIP },
     });
   }
 
