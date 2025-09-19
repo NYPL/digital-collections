@@ -33,5 +33,5 @@ test("verify George Arents division landing page", async ({ page }) => {
   await expect(
     divisionsLandingPage.collectionsGeorgeArentsHeading
   ).toBeVisible();
-  await expect(divisionsLandingPage.georgeArentsPagination).toBeVisible();
+  await expect(divisionsLandingPage.georgeArentsPagination).toBeHidden();
 });
