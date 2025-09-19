@@ -18,7 +18,7 @@ test.beforeEach(async ({ page }) => {
   await page.route("**/default.jpg", (route) => route.abort());
 
   // Navigate to the page after setting up the routing rules.
-  await page.goto("/", { waitUntil: "load" });
+  await page.goto("/");
 });
 
 test("verify navigation menu is displayed (items, collections, divisions, about)", async ({
