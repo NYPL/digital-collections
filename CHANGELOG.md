@@ -8,7 +8,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## Unreleased
 
 ### Updated
-
+- Fix timeouts on homepage localhost tests (DR-3790)
 - Fix Playwright test timeouts
 
 ## [1.2.0] 2025-09-15

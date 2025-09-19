@@ -2,7 +2,23 @@ import { test, expect } from "@playwright/test";
 import { DCHomepage } from "../pages/homepage.page";
 
 test.beforeEach(async ({ page }) => {
-  await page.goto("/", { waitUntil: "domcontentloaded" });
+  // Block analytics, tracking, and third-party domains
+  await page.route(/.*googletagmanager\.com.*/, (route) => route.abort());
+  await page.route(/.*demdex\.net.*/, (route) => route.abort());
+  await page.route(/.*adobedtm\.com.*/, (route) => route.abort());
+  await page.route(/.*everesttech\.net.*/, (route) => route.abort());
+  await page.route(/.*ipify\.org.*/, (route) => route.abort());
+  await page.route(/.*google\.com.*/, (route) => route.abort());
+  await page.route(/.*omappapi\.com.*/, (route) => route.abort());
+  await page.route(/.*google-analytics\.com.*/, (route) => route.abort());
+
+  // If necessary, block the main-image overlay from iiif
+  // When running the whole suite, feedback on the homepage will often
+  // timeout when default img overlays are slow
+  await page.route("**/default.jpg", (route) => route.abort());
+
+  // Navigate to the page after setting up the routing rules.
+  await page.goto("/");
 });
 
 test("verify navigation menu is displayed (items, collections, divisions, about)", async ({
@@ -66,14 +82,18 @@ test("verify explore further section is visible", async ({ page }) => {
 });
 
 test("verify footer links are visible", async ({ page }) => {
+  page.setDefaultTimeout(30000); // 30 seconds
   const dchomepage = new DCHomepage(page);
   // the full footer content should be tested in the footer repo, not here in DC
+
   await expect(dchomepage.footerAccessibilityLink).toBeVisible();
 });
 
 test("verify feedback button is visible", async ({ page }) => {
-  // this test is flaky; increasing timeout
-  test.setTimeout(120000);
+  // With route-filtering on, extending timeouts might not be necessary
+  // for feedback button tests.
+  test.setTimeout(60000);
+
   const dchomepage = new DCHomepage(page);
   await expect(dchomepage.feedbackButton).toBeVisible();
   await dchomepage.feedbackButton.click();
