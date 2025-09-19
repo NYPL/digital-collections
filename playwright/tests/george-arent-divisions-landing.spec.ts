@@ -12,7 +12,7 @@ test.beforeEach(async ({ page }) => {
   await page.route(/.*google\.com.*/, (route) => route.abort());
   await page.route(/.*googletagmanager\.com.*/, (route) => route.abort());
   await page.route(/.*ipify\.org.*/, (route) => route.abort());
-  await page.route(/.*nr-data\.com.*/, (route) => route.abort());
+  await page.route(/.*nr-data\.net.*/, (route) => route.abort());
   await page.route(/.*omappapi\.com.*/, (route) => route.abort());
 
   // Navigate to the page after setting up the routing rules.
