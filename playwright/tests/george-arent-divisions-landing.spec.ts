@@ -18,15 +18,20 @@ test("verify George Arents division landing page", async ({ page }) => {
 
   await expect(divisionsLandingPage.itemsGeorgeDivisionHeading).toBeVisible();
   await expect(divisionsLandingPage.itemsGeorgeArentsSeemoreLink).toBeVisible();
-
   await expect(divisionsLandingPage.contactLink).toBeVisible();
   await expect(
     divisionsLandingPage.collectionsGeorgeArentsHeading
   ).toBeVisible();
-  // await expect(divisionsLandingPage.georgeArentsPagination).toBeHidden();
-
-  const pagination = divisionsLandingPage.georgeArentsPagination;
-  // Scroll the pagination element into the viewport
-  await pagination.scrollIntoViewIfNeeded();
-  await expect(pagination).toBeVisible();
 });
+
+test.skip(
+  "verify pagination is present and visible",
+  { tag: "@flaky" },
+  async ({ page }) => {
+    // Flakey: this test will pass/fail based on whether qa-api or prod-api is called from test-dc.
+    const divisionsLandingPage = new GeorgeArentDivisionsLandingPage(page);
+
+    await divisionsLandingPage.georgeArentsPagination.scrollIntoViewIfNeeded();
+    await expect(divisionsLandingPage.georgeArentsPagination).toBeVisible();
+  }
+);
