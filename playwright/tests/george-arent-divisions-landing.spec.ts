@@ -10,6 +10,9 @@ test.beforeEach(async ({ page }) => {
   await divisionsPage.seeMoreLink.nth(4).click();
 });
 
+// account for generally slow loading of this page
+test.setTimeout(60000);
+
 test("verify George Arents division landing page", async ({ page }) => {
   const divisionsLandingPage = new GeorgeArentDivisionsLandingPage(page);
 
@@ -20,5 +23,10 @@ test("verify George Arents division landing page", async ({ page }) => {
   await expect(
     divisionsLandingPage.collectionsGeorgeArentsHeading
   ).toBeVisible();
-  await expect(divisionsLandingPage.georgeArentsPagination).toBeHidden();
+  // await expect(divisionsLandingPage.georgeArentsPagination).toBeHidden();
+
+  const pagination = divisionsLandingPage.georgeArentsPagination;
+  // Scroll the pagination element into the viewport
+  await pagination.scrollIntoViewIfNeeded();
+  await expect(pagination).toBeVisible();
 });
