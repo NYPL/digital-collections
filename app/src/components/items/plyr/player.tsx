@@ -82,7 +82,17 @@ const Player = ({ title, sources, captions, type }: PlyrProps) => {
   }
 
   if (captions && captions.length) {
-    source.tracks = captions;
+    let tracks: object[] = [];
+    captions.forEach((caption) => {
+      tracks.push({
+        kind: "captions",
+        label: "English",
+        srclang: "en",
+        src: caption,
+        default: true,
+      });
+    });
+    source.tracks = tracks;
   }
 
   return (
