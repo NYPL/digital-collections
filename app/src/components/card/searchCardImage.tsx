@@ -5,7 +5,7 @@ import { Box } from "@nypl/design-system-react-components";
 
 export const SearchCardImage = ({ record }) => {
   const [imageSrc, setImageSrc] = useState(
-    record.imageID ? record.imageURL : "/noImage.png"
+    record.videoThumbnail || (record.imageID ? record.imageURL : "/noImage.png")
   );
 
   return (
