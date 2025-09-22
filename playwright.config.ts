@@ -1,4 +1,4 @@
-import { defineConfig, devices } from "@playwright/test";
+import { defineConfig, devices, test as base } from "@playwright/test";
 
 /**
  * Read environment variables from file.
@@ -11,6 +11,36 @@ import { defineConfig, devices } from "@playwright/test";
 /**
  * See https://playwright.dev/docs/test-configuration.
  */
+
+// Create a descriptive type for custom fixture
+type RouteFilterFixtures = {
+  routeFilterFixture: void;
+};
+
+// Extend the base test object with new fixture type
+const test = base.extend<RouteFilterFixtures>({
+  routeFilterFixture: [
+    async ({ page }, use) => {
+      // Block analytics, tracking, and third-party domains
+      await page.route(/.*adobedc\.net.*/, (route) => route.abort());
+      await page.route(/.*adobedtm\.com.*/, (route) => route.abort());
+      await page.route(/.*demdex\.net.*/, (route) => route.abort());
+      await page.route(/.*everesttech\.net.*/, (route) => route.abort());
+      await page.route(/.*google-analytics\.com.*/, (route) => route.abort());
+      await page.route(/.*google\.com.*/, (route) => route.abort());
+      await page.route(/.*googletagmanager\.com.*/, (route) => route.abort());
+      await page.route(/.*ipify\.org.*/, (route) => route.abort());
+      await page.route(/.*nr-data\.com.*/, (route) => route.abort());
+      await page.route(/.*omappapi\.com.*/, (route) => route.abort());
+      await use();
+    },
+    { auto: true },
+  ],
+});
+
+// Export new extended test object, which includes the route-filter
+export { test, expect } from "@playwright/test";
+
 export default defineConfig({
   testDir: "./playwright",
   timeout: 30000, // default timeout for each test
@@ -38,7 +68,10 @@ export default defineConfig({
   projects: [
     {
       name: "chromium",
-      use: { ...devices["Desktop Chrome"] },
+      use: {
+        ...devices["Desktop Chrome"],
+        ...test,
+      },
     },
 
     // {
