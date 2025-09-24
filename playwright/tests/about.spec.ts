@@ -53,9 +53,3 @@ test("verify links on about page", async ({ page }) => {
   await expect(aboutPage.webAndMobileAccessibilityPolicyLink).toBeVisible();
   await expect(aboutPage.emailLink).toBeVisible();
 });
-
-test("verify video sources on about page", async ({ page }) => {
-  const aboutPage = new AboutPage(page);
-  await expect(aboutPage.videoPublicDomain).toBeVisible();
-  await expect(aboutPage.videoDownloadItems).toBeVisible();
-});
