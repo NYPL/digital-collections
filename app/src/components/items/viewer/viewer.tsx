@@ -88,6 +88,7 @@ const ItemMediaViewer = ({ item, canvasIndex }: ItemProps) => {
         <PlyrPlayer
           title={item.title}
           sources={item.mediaFiles}
+          captions={item.captions}
           type={item.contentType}
         />
       </>
