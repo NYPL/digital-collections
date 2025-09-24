@@ -45,7 +45,11 @@ const aboutData = [
       <Box sx={{ marginBottom: "xxl" }}>
         <Text sx={{ marginTop: "s" }}>
           {" "}
-          Looking for something? Start by searching or browse through{" "}
+          <b>Looking for something? </b>
+        </Text>
+        <Text>
+          {" "}
+          Start by searching or browse through{" "}
           <Link href="https://digitalcollections.nypl.org/search/index">
             item
           </Link>
@@ -59,10 +63,13 @@ const aboutData = [
           </Link>
           .
         </Text>
+
         <Text>
           {" "}
-          Looking for images you can reuse freely? You can explore materials
-          that have{" "}
+          <b>Looking for images you can reuse freely? </b>
+        </Text>
+        <Text>
+          You can explore materials that have{" "}
           <Link href="https://digitalcollections.nypl.org/search/index?filters=%5Brights%3DpublicDomain%5D">
             no known U.S. copyright restrictions{" "}
           </Link>
@@ -71,6 +78,60 @@ const aboutData = [
         </Text>
 
         <Text> Use filters to make your search more specific:</Text>
+        <List type="ul">
+          <li>
+            {" "}
+            <b>Public Domain</b> - Only see items with no known copyright
+            restrictions.
+          </li>
+          <li>
+            {" "}
+            <b>Available Online</b> - View materials you can access remotely
+            (some may have limited use).
+          </li>
+          <li>
+            {" "}
+            <b>Contains On-site Materials</b> - Show only items you’ll need to
+            visit the library to view.
+          </li>
+        </List>
+
+        <Text>
+          <b>Need to narrow things down?</b>
+        </Text>
+        <Text>
+          You can also filter by <b>date range</b> or combine filters across
+          different categories to find exactly what you need.
+        </Text>
+
+        <Text>
+          <b>Want to sort your results? You&apos;ve got options:</b>
+        </Text>
+        <List type="ul">
+          <li>
+            {" "}
+            <b>Relevance</b> - Closest matches to your search query{" "}
+          </li>
+          <li>
+            {" "}
+            <b>Recency</b> - Newest or oldest items first, sorted by when items
+            were added to Digital Collections website
+          </li>
+          <li>
+            {" "}
+            <b>Alphabetically</b> - A to Z or Z to A
+          </li>
+          <li>
+            {" "}
+            <b>Collections First</b> - Collections that match your search
+          </li>
+          <li>
+            {" "}
+            <b>Items First</b> - Individual items that match your search
+          </li>
+        </List>
+
+        <Text>Take some time to explore - there&apos;s a lot to discover!</Text>
       </Box>
     ),
   },
