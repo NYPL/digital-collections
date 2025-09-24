@@ -9,7 +9,7 @@ interface CardImageProps extends Pick<DCCardProps, "record"> {
 
 export const CardImage = ({ record, imageHeight }: CardImageProps) => {
   const [imageSrc, setImageSrc] = useState(
-    record.imageID ? record.imageURL : "/noImage.png"
+    record.videoThumbnail || (record.imageID ? record.imageURL : "/noImage.png")
   );
   const initialImageHeight = 144;
 
