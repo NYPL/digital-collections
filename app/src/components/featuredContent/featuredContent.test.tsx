@@ -36,10 +36,7 @@ describe("Featured Content component renders with expected props", () => {
       );
 
       const button = within(component).getByTestId("featured-visit-store");
-      expect(button).toHaveAttribute(
-        "href",
-        "https://nypl.artehouse.com/perl/home.pl"
-      );
+      expect(button).toHaveAttribute("href", "https://www.nyplprint.store/");
     });
   });
 });
