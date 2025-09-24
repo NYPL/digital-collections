@@ -1,8 +1,8 @@
-import { test, expect } from "@playwright/test";
+import { test, expect } from "../base";
 import { DCHomepage } from "../pages/homepage.page";
 
 test.beforeEach(async ({ page }) => {
-  // If necessary, block the main-image overlay from iiif
+  // If necessary, block the main-image overlay from iiif.
   // When running the whole suite, feedback on the homepage will often
   // timeout when default img overlays are slow
   await page.route("**/default.jpg", (route) => route.abort());

@@ -1,4 +1,4 @@
-import { test, expect } from "@playwright/test";
+import { test, expect } from "../base";
 import { GeorgeArentDivisionsLandingPage } from "../pages/george-arent-divisions-landing.page";
 import { DivisionsPage } from "../pages/divisions.page";
 
@@ -24,10 +24,11 @@ test("verify George Arents division landing page", async ({ page }) => {
   ).toBeVisible();
 });
 
-test.skip(
+test(
   "verify pagination is present and visible",
   { tag: "@flaky" },
   async ({ page }) => {
+    test.skip();
     // Flakey: this test will pass/fail based on whether qa-api or prod-api is called from test-dc.
     const divisionsLandingPage = new GeorgeArentDivisionsLandingPage(page);
 
