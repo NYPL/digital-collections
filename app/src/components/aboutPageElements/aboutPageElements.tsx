@@ -5,6 +5,7 @@ import {
   Heading,
   Accordion,
   Box,
+  Image,
 } from "@nypl/design-system-react-components";
 
 const aboutData = [
@@ -44,10 +45,8 @@ const aboutData = [
       <Box sx={{ marginBottom: "xxl" }}>
         <Text sx={{ marginTop: "s" }}>
           {" "}
-          Looking for something? Start with a{" "}
-          <Link href="https://digitalcollections.nypl.org">search</Link> or
-          begin browsing by{" "}
-          <Link href="https://digitalcollections.nypl.org/search/index?utf8=%E2%9C%93&keywords=">
+          Looking for something? Start by searching or browse through{" "}
+          <Link href="https://digitalcollections.nypl.org/search/index">
             item
           </Link>
           ,{" "}
@@ -58,30 +57,20 @@ const aboutData = [
           <Link href="https://digitalcollections.nypl.org/divisions">
             division
           </Link>
-          . For a more extensive user guide and primer, see{" "}
-          <Link href="https://www.nypl.org/blog/2015/01/21/digital-collections-platform-intro">
-            &quot;NYPL Digital Collections Platform: An Introduction&quot;
-          </Link>
           .
         </Text>
         <Text>
           {" "}
-          Looking for images you can reuse freely? You can{" "}
-          <Link href="https://digitalcollections.nypl.org/search/index?filters%5Brights%5D=pd&keywords=">
-            browse just the items that have no known U.S. copyright restrictions
+          Looking for images you can reuse freely? You can explore materials
+          that have{" "}
+          <Link href="https://digitalcollections.nypl.org/search/index?filters=%5Brights%3DpublicDomain%5D">
+            no known U.S. copyright restrictions{" "}
           </Link>
-          . When searching, select the Search only public domain items option to
-          filter your results to items with no known U.S. copyright
-          restrictions. On the Browse page, you can easily turn this filter on
-          and off with the &quot;Show Only Public Domain&quot; button in the
-          upper left corner of the page.
+          . Just check the <b>&quot;Show Only Public Domain&quot;</b> option
+          when searching or in the filter area.{" "}
         </Text>
-        <video style={{ width: "100%", height: "100%" }} controls>
-          <source
-            src="https://digitalcollections-prod.s3.amazonaws.com/assets/pd_browse-f8b759aeef3ef78c396e2e27b5498528.mp4"
-            type="video/mp4"
-          />
-        </video>
+
+        <Text> Use filters to make your search more specific:</Text>
       </Box>
     ),
   },
@@ -90,16 +79,19 @@ const aboutData = [
     body: (
       <Box sx={{ marginBottom: "xxl" }}>
         <Text sx={{ marginTop: "s" }}>
-          To download, navigate to the Download Options section under each item.
-          Simply click on your preferred file size and check your browser&apos;s
-          download folder for the image.{" "}
+          Click on the download button in the bottom left corner of the image
+          viewer.{" "}
         </Text>
-        <video style={{ width: "100%", height: "100%" }} controls>
-          <source
-            src="https://digitalcollections-prod.s3.amazonaws.com/assets/pd_download-f4513d03a49cd6a20013cd7a6b73e8a1.mp4"
-            type="video/mp4"
-          />
-        </video>
+        <Text sx={{ marginTop: "s" }}>
+          Available download options will appear in the menu. Simply click on
+          your preferred file size and check your browser&apos;s download folder
+          or new tab for the image.{" "}
+        </Text>
+        <Text sx={{ marginTop: "s" }}>
+          When viewing items as a two page spread, select the page you want to
+          download by clicking on the right or left image.{" "}
+        </Text>
+        <Image alt="item-view" src="/item.png" height={"100%"} width={"100%"} />
       </Box>
     ),
   },
