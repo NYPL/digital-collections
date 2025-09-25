@@ -1,18 +1,8 @@
-import { test, expect } from "@playwright/test";
+import { test, expect } from "../base";
 import { DCHomepage } from "../pages/homepage.page";
 
 test.beforeEach(async ({ page }) => {
-  // Block analytics, tracking, and third-party domains
-  await page.route(/.*googletagmanager\.com.*/, (route) => route.abort());
-  await page.route(/.*demdex\.net.*/, (route) => route.abort());
-  await page.route(/.*adobedtm\.com.*/, (route) => route.abort());
-  await page.route(/.*everesttech\.net.*/, (route) => route.abort());
-  await page.route(/.*ipify\.org.*/, (route) => route.abort());
-  await page.route(/.*google\.com.*/, (route) => route.abort());
-  await page.route(/.*omappapi\.com.*/, (route) => route.abort());
-  await page.route(/.*google-analytics\.com.*/, (route) => route.abort());
-
-  // If necessary, block the main-image overlay from iiif
+  // If necessary, block the main-image overlay from iiif.
   // When running the whole suite, feedback on the homepage will often
   // timeout when default img overlays are slow
   await page.route("**/default.jpg", (route) => route.abort());
