@@ -118,24 +118,28 @@ describe("fetchApi", () => {
 
   it("handles a Collections API 422 error for invalid param values", async () => {
     const mockBadParams = { param1: "value1", param2: "value2" };
-    const mockResponse = { response: "mockResponse" };
+    const mockResponse = "mockResponse";
     (global as any).fetch = jest.fn(() =>
       Promise.resolve({
         status: 422,
         statusText: "Invalid parameter value: something something",
-        json: async () => mockResponse,
+        text: async () => mockResponse,
       })
     ) as jest.Mock;
 
-    const response = await fetchApi({
-      apiUrl: mockApiUrl,
-      options: {
-        isRepoApi: false,
-        params: mockBadParams,
-      },
-    });
-
-    expect(response).toEqual(mockResponse);
+    await expect(
+      fetchApi({
+        apiUrl: mockApiUrl,
+        options: {
+          isRepoApi: false,
+          params: mockBadParams,
+        },
+      })
+    ).rejects.toEqual(
+      new Error(
+        "Error fetching mockurl.org?param1=value1&param2=value2: 422 mockResponse"
+      )
+    );
   });
 
   it("throws an error for non-200 status", async () => {
@@ -143,11 +147,12 @@ describe("fetchApi", () => {
       Promise.resolve({
         status: 500,
         statusText: "Internal Server Error",
+        text: async () => "Bad things happened",
       })
     ) as jest.Mock;
 
     await expect(fetchApi({ apiUrl: mockApiUrl })).rejects.toEqual(
-      new Error("fetchApi: 500 Internal Server Error")
+      new Error(`Error fetching ${mockApiUrl}: 500 Bad things happened`)
     );
   });
 
