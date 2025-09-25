@@ -71,26 +71,24 @@ export const fetchApi = async ({
     ]);
   };
 
+  let response: Response;
   try {
-    const response = (await fetchWithTimeout(apiUrl, {
+    response = (await fetchWithTimeout(apiUrl, {
       method,
       headers: headers,
       body: method === "POST" ? JSON.stringify(body) : undefined,
       next,
     })) as Response;
-
-    if (response.status === 422) {
-      logger.error(`Invalid parameter value: ${apiUrl}`);
-    } else if (!response.ok) {
-      throw new Error(
-        `fetchApi: ${response.status} ${
-          response.statusText ? response.statusText : "No message"
-        }`
-      );
-    }
-    return await response.json();
   } catch (error) {
     logger.error(error);
     throw new Error(error.message);
   }
+  if (response.ok) {
+    return await response.json();
+  }
+  const responseText = await response.text();
+
+  throw new Error(
+    `Error fetching ${apiUrl}: ${response.status} ${responseText}`
+  );
 };
