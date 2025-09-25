@@ -93,7 +93,7 @@ export class AboutPage {
       exact: true,
     });
     this.browseItemsLink = page.getByRole("link", {
-      name: "browse just the items that have no known U.S. copyright restrictions",
+      name: "no known U.S. copyright restrictions ",
       exact: true,
     });
     this.publicDomainItemsLink = page.getByRole("link", {
