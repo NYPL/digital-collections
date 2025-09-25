@@ -16,7 +16,7 @@ const featuredContentData: FeaturedContentDataType[] = [
     heading: "Digital Collections print store",
     overline: "Featured",
     text: "Decorative prints for purchase: choose from archival prints, framed art, stretched canvas, vintage wood, and wall murals.",
-    link: "https://nypl.artehouse.com/perl/home.pl",
+    link: "https://www.nyplprint.store/",
     buttonText: "Visit Store",
     buttonId: "featured-visit-store",
     ariaLabel: "Visit the Digital Collections print store",
