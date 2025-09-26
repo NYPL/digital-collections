@@ -51,29 +51,29 @@ const aboutData = [
           {" "}
           Start by searching or browse through{" "}
           <Link href="https://digitalcollections.nypl.org/search/index">
-            item
+            items
           </Link>
           ,{" "}
           <Link href="https://digitalcollections.nypl.org/collections">
-            collection
+            collections
           </Link>
           , or{" "}
           <Link href="https://digitalcollections.nypl.org/divisions">
-            division
+            divisions
           </Link>
           .
         </Text>
 
         <Text>
           {" "}
-          <b>Looking for images you can reuse freely? </b>
+          <b> Want images you can reuse freely? </b>
         </Text>
         <Text>
           You can explore materials that have{" "}
           <Link href="https://digitalcollections.nypl.org/search/index?filters=%5Brights%3DpublicDomain%5D">
-            no known U.S. copyright restrictions{" "}
+            no known U.S. copyright restrictions
           </Link>
-          . Just check the <b>&quot;Show Only Public Domain&quot;</b> option
+          . Just check the <b>&quot;Search Only Public Domain&quot;</b> option
           when searching or in the filter area.{" "}
         </Text>
 
@@ -105,7 +105,7 @@ const aboutData = [
         </Text>
 
         <Text>
-          <b>Want to sort your results? You&apos;ve got options:</b>
+          <b>Want to sort your results?</b> You&apos;ve got options:
         </Text>
         <List type="ul">
           <li>
@@ -144,9 +144,11 @@ const aboutData = [
           viewer.{" "}
         </Text>
         <Text sx={{ marginTop: "s" }}>
-          Available download options will appear in the menu. Simply click on
-          your preferred file size and check your browser&apos;s download folder
-          or new tab for the image.{" "}
+          Available download options will appear in the menu.
+        </Text>
+        <Text>
+          Simply click on your preferred file size and check your browser&apos;s
+          download folder or new tab for the image.{" "}
         </Text>
         <Text sx={{ marginTop: "s" }}>
           When viewing items as a two page spread, select the page you want to
