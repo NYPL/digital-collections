@@ -5,9 +5,9 @@ import {
   Heading,
   Accordion,
   Box,
-  Image,
 } from "@nypl/design-system-react-components";
-
+import Image from "next/image";
+import itemImage from "../../../../public/item.png";
 const aboutData = [
   {
     heading: (
@@ -152,7 +152,14 @@ const aboutData = [
           When viewing items as a two page spread, select the page you want to
           download by clicking on the right or left image.{" "}
         </Text>
-        <Image alt="item-view" src="/item.png" height={"100%"} width={"100%"} />
+        <Image
+          alt="item-view"
+          src={itemImage}
+          style={{
+            width: "100%",
+            minHeight: "100%",
+          }}
+        />
       </Box>
     ),
   },
