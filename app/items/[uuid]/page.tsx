@@ -94,7 +94,6 @@ function formatItemBreadcrumbs(item: ItemModel) {
 }
 
 export default async function ItemViewer({ params, searchParams }: ItemProps) {
-  revalidatePath("/");
   console.log("params are: ", params);
   const [citationsData, itemData] = await Promise.all([
     CollectionsApi.getCitationsData(params.uuid),

@@ -40,6 +40,12 @@ const nextConfig = {
   // the modules that newrelic supports should not be mangled by webpack. Thus,
   // we need to "externalize" all of the modules that newrelic supports.
 
+  logging: {
+    fetches: {
+      fullUrl: true,
+    },
+  },
+
   webpack: (config) => {
     if (process.env.NEW_RELIC_APP_NAME) {
       nrExternals(config);

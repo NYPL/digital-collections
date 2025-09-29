@@ -25,6 +25,7 @@ export const fetchApi = async ({
     clientIP?: string | null;
     isRepoApi?: boolean;
     next?;
+    cache?: string;
   };
 }) => {
   const {
@@ -34,6 +35,7 @@ export const fetchApi = async ({
     clientIP = null,
     isRepoApi = true,
     next,
+    cache = "force-cache",
   } = options;
 
   const headers: Record<string, string> = {};

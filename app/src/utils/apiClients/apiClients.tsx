@@ -31,7 +31,7 @@ export class CollectionsApi {
     const apiUrl = `${process.env.COLLECTIONS_API_URL}/items/${uuid}/citations`;
     return await fetchApi({
       apiUrl: apiUrl,
-      options: { isRepoApi: false },
+      options: { isRepoApi: false, cache: "no-store" },
     });
   }
 
@@ -160,7 +160,7 @@ export class CollectionsApi {
   ): Promise<APIItem> {
     return await fetchApi({
       apiUrl: `${process.env.COLLECTIONS_API_URL}/items/${uuid}`,
-      options: { isRepoApi: false, clientIP: clientIP },
+      options: { isRepoApi: false, clientIP: clientIP, cache: "no-store" },
     });
   }
 
