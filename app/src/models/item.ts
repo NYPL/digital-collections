@@ -114,9 +114,7 @@ export class ItemModel {
         : "";
 
     // for viewer configs and order print button
-    this.contentType = rawManifestMetadata["Content Type"]
-      ? rawManifestMetadata["Content Type"][0].toString()
-      : "";
+    this.contentType = itemDetail["contentType"] ?? "";
 
     // only used for order print button
     this.isImage =
