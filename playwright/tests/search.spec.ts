@@ -8,25 +8,6 @@ test.beforeEach(async ({ page }, testInfo) => {
   }
 });
 
-test.skip("searches for a keyword from homepage", async ({ page }) => {
-  const searchPage = new SearchPage(page);
-  await page.goto("/", {
-    waitUntil: "domcontentloaded",
-  });
-
-  await expect(searchPage.searchBar).toBeVisible();
-  await searchPage.searchBar.fill(searchPage.searchKeyword);
-  await expect(searchPage.searchBar).toHaveValue(searchPage.searchKeyword);
-  await expect(searchPage.searchButton).toBeVisible();
-
-  await searchPage.searchButton.click();
-  await page.waitForURL("/search/**", {
-    timeout: 60000,
-  });
-
-  await expect(page).toHaveTitle("Search results - NYPL Digital Collections");
-});
-
 test("displays search results", async ({ page }) => {
   const searchPage = new SearchPage(page);
   await expect(searchPage.resultsHeading).toBeVisible();
