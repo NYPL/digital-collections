@@ -1,11 +1,9 @@
-// search-items-result.ts
-
 import { test, expect } from "../base";
 import SearchPage from "../pages/search.page";
 import { applyRouteFilters } from "../utils/routeFilters";
 import { Browser, Page } from "@playwright/test"; // <-- Import is only for types
 
-let searchPage: SearchPage; // Global variable to hold the Page Object
+let searchPage: SearchPage;
 
 // Do a new basic-search from the results-page
 test.describe.serial("find item with a basic keyword search", () => {
