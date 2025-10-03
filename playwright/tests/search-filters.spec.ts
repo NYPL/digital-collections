@@ -9,8 +9,6 @@ test.beforeEach(async ({ page }) => {
   searchPage = new SearchPage(page);
   // 2. Call the instance method to load the page
   await searchPage.loadPage(SearchPage.searchResultsUrl);
-
-  // The route filters are applied automatically by the global beforeEach hook in base.ts
 });
 
 test.describe("display and hide filter options", () => {
