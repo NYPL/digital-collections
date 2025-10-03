@@ -77,7 +77,7 @@ test.describe("display and hide filter options", () => {
   });
 });
 
-test.describe("choose specific filter options", () => {
+test.describe("choose default filter options", () => {
   test("choose topic", async () => {
     await expect(searchPage.refineHeading).toBeVisible();
 
