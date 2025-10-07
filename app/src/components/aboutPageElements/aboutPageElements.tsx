@@ -6,7 +6,8 @@ import {
   Accordion,
   Box,
 } from "@nypl/design-system-react-components";
-
+import Image from "next/image";
+import itemImage from "../../../../public/item.png";
 const aboutData = [
   {
     heading: (
@@ -44,44 +45,93 @@ const aboutData = [
       <Box sx={{ marginBottom: "xxl" }}>
         <Text sx={{ marginTop: "s" }}>
           {" "}
-          Looking for something? Start with a{" "}
-          <Link href="https://digitalcollections.nypl.org">search</Link> or
-          begin browsing by{" "}
-          <Link href="https://digitalcollections.nypl.org/search/index?utf8=%E2%9C%93&keywords=">
-            item
-          </Link>
-          ,{" "}
-          <Link href="https://digitalcollections.nypl.org/collections">
-            collection
-          </Link>
-          , or{" "}
-          <Link href="https://digitalcollections.nypl.org/divisions">
-            division
-          </Link>
-          . For a more extensive user guide and primer, see{" "}
-          <Link href="https://www.nypl.org/blog/2015/01/21/digital-collections-platform-intro">
-            &quot;NYPL Digital Collections Platform: An Introduction&quot;
-          </Link>
-          .
+          <b>Looking for something? </b>
         </Text>
         <Text>
           {" "}
-          Looking for images you can reuse freely? You can{" "}
-          <Link href="https://digitalcollections.nypl.org/search/index?filters%5Brights%5D=pd&keywords=">
-            browse just the items that have no known U.S. copyright restrictions
+          Start by searching or browse through{" "}
+          <Link href="https://digitalcollections.nypl.org/search/index">
+            items
           </Link>
-          . When searching, select the Search only public domain items option to
-          filter your results to items with no known U.S. copyright
-          restrictions. On the Browse page, you can easily turn this filter on
-          and off with the &quot;Show Only Public Domain&quot; button in the
-          upper left corner of the page.
+          ,{" "}
+          <Link href="https://digitalcollections.nypl.org/collections">
+            collections
+          </Link>
+          , or{" "}
+          <Link href="https://digitalcollections.nypl.org/divisions">
+            divisions
+          </Link>
+          .
         </Text>
-        <video style={{ width: "100%", height: "100%" }} controls>
-          <source
-            src="https://digitalcollections-prod.s3.amazonaws.com/assets/pd_browse-f8b759aeef3ef78c396e2e27b5498528.mp4"
-            type="video/mp4"
-          />
-        </video>
+
+        <Text>
+          {" "}
+          <b> Want images you can reuse freely? </b>
+        </Text>
+        <Text>
+          You can explore materials that have{" "}
+          <Link href="https://digitalcollections.nypl.org/search/index?filters=%5Brights%3DpublicDomain%5D">
+            no known U.S. copyright restrictions
+          </Link>
+          . Just check the <b>&quot;Search Only Public Domain&quot;</b> option
+          when searching or in the filter area.{" "}
+        </Text>
+
+        <Text> Use filters to make your search more specific:</Text>
+        <List type="ul">
+          <li>
+            {" "}
+            <b>Public Domain</b> - Only see items with no known copyright
+            restrictions.
+          </li>
+          <li>
+            {" "}
+            <b>Available Online</b> - View materials you can access remotely
+            (some may have limited use).
+          </li>
+          <li>
+            {" "}
+            <b>Contains On-site Materials</b> - Show only items you’ll need to
+            visit the library to view.
+          </li>
+        </List>
+
+        <Text>
+          <b>Need to narrow things down?</b>
+        </Text>
+        <Text>
+          You can also filter by <b>date range</b> or combine filters across
+          different categories to find exactly what you need.
+        </Text>
+
+        <Text>
+          <b>Want to sort your results?</b> You&apos;ve got options:
+        </Text>
+        <List type="ul">
+          <li>
+            {" "}
+            <b>Relevance</b> - Closest matches to your search query{" "}
+          </li>
+          <li>
+            {" "}
+            <b>Recency</b> - Newest or oldest items first, sorted by when items
+            were added to Digital Collections website
+          </li>
+          <li>
+            {" "}
+            <b>Alphabetically</b> - A to Z or Z to A
+          </li>
+          <li>
+            {" "}
+            <b>Collections First</b> - Collections that match your search
+          </li>
+          <li>
+            {" "}
+            <b>Items First</b> - Individual items that match your search
+          </li>
+        </List>
+
+        <Text>Take some time to explore - there&apos;s a lot to discover!</Text>
       </Box>
     ),
   },
@@ -90,16 +140,28 @@ const aboutData = [
     body: (
       <Box sx={{ marginBottom: "xxl" }}>
         <Text sx={{ marginTop: "s" }}>
-          To download, navigate to the Download Options section under each item.
-          Simply click on your preferred file size and check your browser&apos;s
-          download folder for the image.{" "}
+          Click on the download button in the bottom left corner of the image
+          viewer.{" "}
         </Text>
-        <video style={{ width: "100%", height: "100%" }} controls>
-          <source
-            src="https://digitalcollections-prod.s3.amazonaws.com/assets/pd_download-f4513d03a49cd6a20013cd7a6b73e8a1.mp4"
-            type="video/mp4"
-          />
-        </video>
+        <Text sx={{ marginTop: "s" }}>
+          Available download options will appear in the menu.
+        </Text>
+        <Text>
+          Simply click on your preferred file size and check your browser&apos;s
+          download folder or new tab for the image.{" "}
+        </Text>
+        <Text sx={{ marginTop: "s" }}>
+          When viewing items as a two page spread, select the page you want to
+          download by clicking on the right or left image.{" "}
+        </Text>
+        <Image
+          alt="item-view"
+          src={itemImage}
+          style={{
+            width: "100%",
+            minHeight: "100%",
+          }}
+        />
       </Box>
     ),
   },

@@ -1,11 +1,17 @@
-import { test, expect } from "@playwright/test";
-import { DCHomepage } from "../pages/dc_homepage";
+import { test, expect } from "../base";
+import { DCHomepage } from "../pages/homepage.page";
 
 test.beforeEach(async ({ page }) => {
+  // If necessary, block the main-image overlay from iiif.
+  // When running the whole suite, feedback on the homepage will often
+  // timeout when default img overlays are slow
+  await page.route("**/default.jpg", (route) => route.abort());
+
+  // Navigate to the page after setting up the routing rules.
   await page.goto("/");
 });
 
-test("verify navigation menu is displayed (items, collections, divisions, about", async ({
+test("verify navigation menu is displayed (items, collections, divisions, about)", async ({
   page,
 }) => {
   const dchomepage = new DCHomepage(page);
@@ -66,25 +72,18 @@ test("verify explore further section is visible", async ({ page }) => {
 });
 
 test("verify footer links are visible", async ({ page }) => {
+  page.setDefaultTimeout(30000); // 30 seconds
   const dchomepage = new DCHomepage(page);
+  // the full footer content should be tested in the footer repo, not here in DC
+
   await expect(dchomepage.footerAccessibilityLink).toBeVisible();
-  await expect(dchomepage.footerPressLink).toBeVisible();
-  await expect(dchomepage.footerCareersLink).toBeVisible();
-  await expect(dchomepage.footerAboutNyplLink).toBeVisible();
-  await expect(dchomepage.footerSpaceRentalLink).toBeVisible();
-  await expect(dchomepage.footerPrivacyPolicyLink).toBeVisible();
-  await expect(dchomepage.footerOtherPoliciesLink).toBeVisible();
-  await expect(dchomepage.footerTermsAndConditionsLink).toBeVisible();
-  await expect(dchomepage.footerGovernanceLink).toBeVisible();
-  await expect(dchomepage.footerRulesAndRegulationsLink).toBeVisible();
-  await expect(dchomepage.footerLanguage).toBeVisible();
-  await expect(dchomepage.footerSocialFacebook).toBeVisible();
-  await expect(dchomepage.footerSocialTwitter).toBeVisible();
-  await expect(dchomepage.footerSocialInstagram).toBeVisible();
-  await expect(dchomepage.footerSocialYouTube).toBeVisible();
 });
 
 test("verify feedback button is visible", async ({ page }) => {
+  // With route-filtering on, extending timeouts might not be necessary
+  // for feedback button tests.
+  test.setTimeout(60000);
+
   const dchomepage = new DCHomepage(page);
   await expect(dchomepage.feedbackButton).toBeVisible();
   await dchomepage.feedbackButton.click();

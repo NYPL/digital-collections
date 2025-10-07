@@ -4,7 +4,11 @@
 #     - Test
 name: CI
 
-on: push
+on:
+  workflow_call:
+  pull_request:
+    branches:
+      - qa
 
 jobs:
   lint:
