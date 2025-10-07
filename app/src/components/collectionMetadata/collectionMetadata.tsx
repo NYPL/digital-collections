@@ -233,7 +233,9 @@ const CollectionMetadata = ({ data }: { data: CollectionMetadataProps }) => {
 
   return (
     <Flex marginTop="l" marginBottom="m" flexDir="column" maxWidth="720px">
-      <Heading size="heading6">Collection information</Heading>
+      <Heading size="heading6" marginBottom="s">
+        Collection information
+      </Heading>
       {(mssID || bNumbers) && (
         <>
           <Text marginBottom="xs">
