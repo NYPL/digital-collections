@@ -6,6 +6,7 @@ export class ItemCardModel {
   url: string;
   imageID: string;
   imageURL: string;
+  videoThumbnail: string | null;
   canvasIndex?: number;
 
   constructor(data: any) {
@@ -16,5 +17,6 @@ export class ItemCardModel {
       : `/items/${data.uuid}`;
     this.imageID = data.imageID;
     this.imageURL = imageURL(data.imageID, "square", "!288,288", "0");
+    this.videoThumbnail = data.videoThumbnail;
   }
 }

@@ -77,13 +77,13 @@ export class AboutPage {
 
     // links
     this.searchLink = page.getByRole("link", { name: "search", exact: true });
-    this.itemLink = page.getByRole("link", { name: "item", exact: true });
+    this.itemLink = page.getByRole("link", { name: "items", exact: true });
     this.collectionLink = page.getByRole("link", {
-      name: "collection",
+      name: "collections",
       exact: true,
     });
     this.divisionLink = page.getByRole("link", {
-      name: "division",
+      name: "divisions",
       exact: true,
     });
     this.aboutLink = page.getByRole("link", { name: "about", exact: true });
@@ -93,7 +93,7 @@ export class AboutPage {
       exact: true,
     });
     this.browseItemsLink = page.getByRole("link", {
-      name: "browse just the items that have no known U.S. copyright restrictions",
+      name: "no known U.S. copyright restrictions ",
       exact: true,
     });
     this.publicDomainItemsLink = page.getByRole("link", {

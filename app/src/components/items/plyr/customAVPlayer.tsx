@@ -50,6 +50,7 @@ const CustomAVPlayer = forwardRef<APITypes, any>((props, ref) => {
       className="plyr-react plyr"
       height={playerHeight}
       width="100%"
+      crossOrigin="anonymous"
     />
   );
 });

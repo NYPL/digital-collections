@@ -28,6 +28,10 @@ const nextConfig = {
         protocol: "https",
         hostname: "iiif-qa.nypl.org",
       },
+      {
+        protocol: "https",
+        hostname: "repo-transcoded-web-media-thumnails.s3.amazonaws.com",
+      },
     ],
     deviceSizes: [480, 768, 1024, 1280],
   },

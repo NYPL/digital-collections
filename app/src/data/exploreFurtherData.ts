@@ -10,7 +10,7 @@ const exploreFurtherData: ExploreFurtherDataType[] = [
     title: "Digital Collections Print Store",
     description:
       "Decorative prints for purchase: choose from archival prints, framed art, stretched canvas, vintage wood, and wall murals.",
-    url: "http://nypl.artehouse.com/perl/home.pl",
+    url: "https://www.nyplprint.store/",
     image: serviceArtehouse,
     imgAlt: "Service Artehouse",
   },

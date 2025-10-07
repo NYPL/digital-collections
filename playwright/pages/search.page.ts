@@ -211,9 +211,8 @@ export default class SearchPage {
     });
   }
 
-  static async loadPage(gotoPage: string, page: Page): Promise<SearchPage> {
-    await page.goto(gotoPage, { waitUntil: "load" });
-    return new SearchPage(page);
+  async loadPage(gotoPage: string): Promise<void> {
+    await this.page.goto(gotoPage);
   }
 
   async filterSearchResults(): Promise<void> {
