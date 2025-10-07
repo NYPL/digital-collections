@@ -73,6 +73,7 @@ export const Lane = ({
           }}
           level="h2"
           size="heading3"
+          paddingBottom={"s"}
         >
           {laneContents.heading}
         </Heading>
