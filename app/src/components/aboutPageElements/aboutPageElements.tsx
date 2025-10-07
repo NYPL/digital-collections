@@ -43,11 +43,11 @@ const aboutData = [
     heading: <Heading level="h2" size="heading4" text="Find items" />,
     body: (
       <Box sx={{ marginBottom: "xxl" }}>
-        <Text sx={{ marginTop: "s" }}>
+        <Text sx={{ marginTop: "s", marginBottom: "s" }}>
           {" "}
           <b>Looking for something? </b>
         </Text>
-        <Text>
+        <Text sx={{ marginBottom: "s" }}>
           {" "}
           Start by searching or browse through{" "}
           <Link href="https://digitalcollections.nypl.org/search/index">
@@ -64,7 +64,7 @@ const aboutData = [
           .
         </Text>
 
-        <Text>
+        <Text sx={{ marginBottom: "s" }}>
           {" "}
           <b> Want images you can reuse freely? </b>
         </Text>
@@ -78,7 +78,7 @@ const aboutData = [
         </Text>
 
         <Text> Use filters to make your search more specific:</Text>
-        <List type="ul">
+        <List sx={{ marginBottom: "s" }} variant="ul">
           <li>
             {" "}
             <b>Public Domain</b> - Only see items with no known copyright
@@ -96,7 +96,7 @@ const aboutData = [
           </li>
         </List>
 
-        <Text>
+        <Text sx={{ marginBottom: "s" }}>
           <b>Need to narrow things down?</b>
         </Text>
         <Text>
@@ -107,7 +107,7 @@ const aboutData = [
         <Text>
           <b>Want to sort your results?</b> You&apos;ve got options:
         </Text>
-        <List type="ul">
+        <List sx={{ marginBottom: "s" }} variant="ul">
           <li>
             {" "}
             <b>Relevance</b> - Closest matches to your search query{" "}
