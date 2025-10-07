@@ -20,7 +20,7 @@ const FeaturedContentComponent = ({ randomNumber }: FeaturedContentProps) => {
       isFullWidth={true}
       textContent={
         <Box>
-          <Heading level="h2" overline={data.overline}>
+          <Heading level="h2" overline={data.overline} marginBottom={"s"}>
             {data.heading}
           </Heading>
           <p>{data.text}</p>
@@ -32,6 +32,7 @@ const FeaturedContentComponent = ({ randomNumber }: FeaturedContentProps) => {
             target="_blank"
             aria-label={`${data.buttonText}, ${data.heading}`}
             variant="buttonPrimary"
+            marginTop={"s"}
           >
             {data.buttonText}
           </Link>
