@@ -96,6 +96,7 @@ const Filters = ({
           tabIndex="-1"
           id="refine-search-heading"
           size="heading4"
+          marginBottom="s"
         >
           {headingText}
         </Heading>
