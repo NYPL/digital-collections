@@ -275,7 +275,7 @@ const CollectionMetadata = ({ data }: { data: CollectionMetadataProps }) => {
             Abstract
           </Text>
           {abstract.map((text, index) => (
-            <Text marginBottom="" key={index}>
+            <Text marginBottom="xs" key={index}>
               {parse(text)}
             </Text>
           ))}
