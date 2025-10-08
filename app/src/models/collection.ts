@@ -1,7 +1,7 @@
 export class CollectionModel {
   title: string;
   uuid: string;
-  abstract?: string;
+  abstract?: string[];
   accessCondition?: string[];
   mssID?: string;
   bNumbers?: string[];
