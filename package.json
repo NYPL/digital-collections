@@ -43,6 +43,8 @@
   "dependencies": {
     "@types/react": "19.2.2",
     "@types/react-dom": "19.2.1",
+    "@chakra-ui/react": "2.8.2",
+    "@chakra-ui/system": "2.6.2",
     "dotenv": "16.4.5",
     "eslint": "8.48.0",
     "googleapis": "129.0.0",
