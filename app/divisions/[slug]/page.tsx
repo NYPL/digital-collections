@@ -7,13 +7,14 @@ import { Suspense } from "react";
 import { redirect } from "next/navigation";
 
 export type DivisionProps = {
-  params: { slug: string };
-  searchParams: { page: number };
+  params: Promise<{ slug: string }>;
+  searchParams: Promise<{ page: number }>;
 };
 
-export async function generateMetadata({
-  params,
-}: DivisionProps): Promise<Metadata> {
+export async function generateMetadata(
+  props: DivisionProps
+): Promise<Metadata> {
+  const params = await props.params;
   const slug = slugToString(params.slug);
   return {
     title: `${slug} - NYPL Digital Collections`,
@@ -23,10 +24,9 @@ export async function generateMetadata({
   };
 }
 
-export default async function Division({
-  params,
-  searchParams,
-}: DivisionProps) {
+export default async function Division(props: DivisionProps) {
+  const searchParams = await props.searchParams;
+  const params = await props.params;
   const data = await CollectionsApi.getDivisionData({
     slug: params.slug,
     pageNum: searchParams.page,

@@ -5,7 +5,7 @@ import {
   SkipNavigation,
   Box,
 } from "@nypl/design-system-react-components";
-import React, { useEffect } from "react";
+import React, { useEffect, type JSX } from "react";
 import { type PropsWithChildren } from "react";
 import Header from "../header/header";
 import Script from "next/script";

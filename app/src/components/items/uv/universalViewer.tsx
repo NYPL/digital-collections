@@ -60,7 +60,7 @@ const UniversalViewer: React.FC<UniversalViewerProps> = React.memo(
     console.log("config as component prop is: ", config);
 
     const ref = useRef<HTMLDivElement>(null);
-    const lastIndex = useRef<number>();
+    const lastIndex = useRef<number>(undefined);
     const options = useMemo(
       () => ({
         manifest: manifestId,

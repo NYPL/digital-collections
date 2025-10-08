@@ -15,7 +15,7 @@ export function useEvent(
 }
 
 export function useUniversalViewer(
-  ref: React.RefObject<HTMLDivElement>,
+  ref: React.RefObject<HTMLDivElement | null>,
   options: any
 ) {
   const [uv, setUv] = useState<Viewer>();

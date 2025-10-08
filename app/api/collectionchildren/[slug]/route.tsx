@@ -23,8 +23,9 @@ interface CollectionChild {
 
 export async function GET(
   req: NextRequest,
-  { params }: { params: { slug: string } }
+  props: { params: Promise<{ slug: string }> }
 ) {
+  const params = await props.params;
   const uuid = params.slug;
 
   if (!uuid) {

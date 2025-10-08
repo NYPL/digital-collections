@@ -129,11 +129,10 @@ const SelectFilterModal = forwardRef<HTMLButtonElement, SelectFilterModalProps>(
         >{`View all ${filter.name.toLowerCase()}${
           filter.name === "Publishers" ? "" : "s"
         }`}</Button>
-
         <Modal
           finalFocusRef={
             focusOutside
-              ? (accordionButtonRef as RefObject<FocusableElement>)
+              ? (accordionButtonRef as RefObject<FocusableElement | null>)
               : viewMoreButtonRef
           }
           isOpen={isOpen}

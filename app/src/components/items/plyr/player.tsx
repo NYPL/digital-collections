@@ -113,12 +113,14 @@ const Player = ({ title, sources, captions, type }: PlyrProps) => {
                   }
                   key={`item-canvas-${index + 1}-button`}
                   id={`item-canvas-${index + 1}-button`}
-                  ref={(el) => (buttonRefs.current[index] = el)}
+                  ref={(el) => {
+                    buttonRefs.current[index] = el;
+                  }}
                   onClick={() => {
                     updateCanvasIndex(index);
                   }}
                 >
-                  {truncateString(title, 20)} ({index + 1})
+                  {truncateString(title, 20)}({index + 1})
                 </Button>
               );
             })}
