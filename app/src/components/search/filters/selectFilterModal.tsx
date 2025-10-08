@@ -132,8 +132,8 @@ const SelectFilterModal = forwardRef<HTMLButtonElement, SelectFilterModalProps>(
         <Modal
           finalFocusRef={
             focusOutside
-              ? (accordionButtonRef as RefObject<FocusableElement | null>)
-              : viewMoreButtonRef
+              ? (accordionButtonRef as RefObject<FocusableElement>)
+              : (viewMoreButtonRef as RefObject<FocusableElement>)
           }
           isOpen={isOpen}
           onClose={() => {

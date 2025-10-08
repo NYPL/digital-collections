@@ -40,7 +40,7 @@ const listItems = dcNavLinks.map(({ href, text }) => (
 
 const MobileNavMenu = () => {
   const [isOpen, setIsOpen] = useState<boolean>(false);
-  const ref = useRef<HTMLDivElement>(null);
+  const ref = useRef<HTMLDivElement>(null) as React.RefObject<HTMLDivElement>;
 
   useCloseDropDown(setIsOpen, ref);
 
