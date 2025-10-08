@@ -16,7 +16,7 @@ export type CollectionSearchParamsType = {
 
 type CollectionProps = {
   params: Promise<{ uuid: string }>;
-  searchParams: CollectionSearchParamsType;
+  searchParams: Promise<CollectionSearchParamsType>;
 };
 
 export async function generateMetadata(

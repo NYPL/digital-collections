@@ -24,7 +24,7 @@ export const metadata: Metadata = {
 };
 
 export type SearchProps = {
-  searchParams: SearchParamsType;
+  searchParams: Promise<SearchParamsType>;
 };
 
 export default async function Search(props: SearchProps) {

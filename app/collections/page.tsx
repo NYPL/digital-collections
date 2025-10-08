@@ -10,7 +10,7 @@ import { CollectionSearchParamsType } from "./[uuid]/page";
 
 export type CollectionsProps = {
   params: Promise<{ slug: string }>;
-  searchParams: CollectionSearchParamsType;
+  searchParams: Promise<CollectionSearchParamsType>;
 };
 
 export const metadata: Metadata = {
