@@ -2,8 +2,7 @@ import { NextRequest } from "next/server";
 import { fetchApi } from "@/src/utils/fetchApi/fetchApi";
 import { CARDS_PER_PAGE } from "@/src/config/constants";
 
-const oneMonth = 60 * 60 * 24 * 30;
-export const revalidate = oneMonth;
+export const revalidate = 2592000; // one month, eg, 60 * 60 * 24 * 30
 
 const PAGESIZE = 50;
 
@@ -70,7 +69,7 @@ async function fetchPage(
   const apiUrl = `${process.env.COLLECTIONS_API_URL}/collections/${uuid}/children?page=${page}&perPage=${PAGESIZE}`;
   const response = await fetchApi({
     apiUrl,
-    options: { isRepoApi: false, next: { revalidate: oneMonth } },
+    options: { isRepoApi: false, next: { revalidate: revalidate } },
   });
   return response;
 }
