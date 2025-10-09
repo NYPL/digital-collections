@@ -1,3 +1,4 @@
+//item-metadata.page.ts
 import { Locator, Page, expect } from "@playwright/test";
 
 export default class ItemMetadataPage {
