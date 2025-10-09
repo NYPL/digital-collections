@@ -1,5 +1,4 @@
 import { Locator, Page, expect } from "@playwright/test";
-import { getExactByRole } from "../utils/locatorHelpers";
 
 export default class ItemMetadataPage {
   readonly page: Page;
@@ -40,8 +39,6 @@ export default class ItemMetadataPage {
   readonly identifiersText: Locator;
   readonly rightsHeading: Locator;
   readonly rightsText: Locator;
-  readonly collectionSelected: Locator;
-  readonly placeFilter: Locator;
   readonly dataSourceHeading: Locator;
   readonly dataSourceLink: Locator;
 
@@ -53,6 +50,7 @@ export default class ItemMetadataPage {
   // Collection (req)???
   // Dates/Origin heading
   // Library location’s heading and text (req)
+  // Library shelf locator (optional, under location heading)
   // Topics and links
   // Genre and link
   // Notes and text
@@ -67,27 +65,176 @@ export default class ItemMetadataPage {
   constructor(page: Page) {
     this.page = page;
 
-    // replace with item page locators
-    // check item breadcrumb
+    // Title
+    // This finds the specific <p> element containing 'Title'
+    this.titleHeading = this.page.getByText("Title", { exact: true });
 
-    //data-source:
-    this.dataSourceHeading = getExactByRole(
-      this.page,
-      "heading",
-      "Data source:"
-    );
-    this.dataSourceLink = getExactByRole(this.page, "link", "view in catalog");
+    // Defines the TARGET (the content right after the header)
+    // This is the relative locator that enforces the structural relationship.
+    this.titleText = this.titleHeading.locator("+ p");
 
-    // ARIA: (check text and link in spec?)
-    // - link "view in catalog":
-    //   - /url: link://https://www.nypl.org/research/research-catalog/bib/b14924644
-    //   - text: Research Catalog
+    // Collection
+    this.collectionHeading = this.page.getByText("Collection", { exact: true });
+    this.collectionText = this.collectionHeading.locator("+ p");
+    this.collectionLink = this.collectionText.locator("a").first(); // Target the link within the following paragraph
 
-    // replace with item metadata
+    // Dates/Origin
+    this.datesHeading = this.page.getByText("Dates/Origin", { exact: true });
+    this.datesText = this.datesHeading.locator("+ p");
+    this.datesLink = this.datesText.locator("a").first();
 
-    // this.itemDataHeader = this.page.getByRole('heading', { name: 'Item data', exact: true });
-    this.itemDataHeader = getExactByRole(this.page, "heading", "Item data");
+    // Library Location
+    this.libraryHeading = this.page.getByText("Library location", {
+      exact: true,
+    }); // Assuming full heading text
+    this.libraryLink = this.libraryHeading.locator("+ p > a"); // Assumes link is inside the next paragraph
+
+    // Topics
+    this.topicHeading = this.page.getByText("Topic", { exact: true });
+    this.topicText = this.topicHeading.locator("+ p");
+
+    // Name (Creator/Author)
+    this.nameHeading = this.page.getByText("Name", { exact: true });
+    this.nameText = this.nameHeading.locator("+ p");
+
+    // Place/Geographic
+    this.placeHeading = this.page.getByText("Place", { exact: true });
+    this.placeText = this.placeHeading.locator("+ p");
+
+    // Genre
+    this.genreHeading = this.page.getByText("Genre", { exact: true });
+    this.genreText = this.genreHeading.locator("+ p");
+
+    // Notes
+    this.notesHeading = this.page.getByText("Notes", { exact: true });
+    this.notesText = this.notesHeading.locator("+ p");
+
+    // --- 2. COMPLEX/LOWER METADATA FIELDS ---
+
+    // Physical Description
+    this.physicalHeading = this.page.getByText("Physical Description", {
+      exact: true,
+    });
+    this.physicalText = this.physicalHeading.locator("+ p");
+
+    // Description
+    this.descriptionHeading = this.page.getByText("Description", {
+      exact: true,
+    });
+    this.descriptionText = this.descriptionHeading.locator("+ p");
+
+    // Type of Resource
+    this.typeHeading = this.page.getByText("Type of Resource", { exact: true });
+    this.typeText = this.typeHeading.locator("+ p");
+
+    // Identifiers
+    this.identifiersHeading = this.page.getByText("Identifiers", {
+      exact: true,
+    });
+    this.identifiersText = this.identifiersHeading.locator("+ p");
+
+    // Rights Statement
+    this.rightsHeading = this.page.getByText("Rights Statement", {
+      exact: true,
+    });
+    this.rightsText = this.rightsHeading.locator("+ p");
   }
+
+  async verifyTitleTextContent(): Promise<void> {
+    // Since 'this.titleText' was defined using the adjacent selector '+ p',
+    // this assertion inherently validates the structure AND the content.
+
+    // Structural check: Ensure the element exists and is visible
+    await expect(this.titleText).toBeVisible();
+
+    // Content check: Assert the specific expected text
+    await expect(this.titleText).toHaveText(
+      "To His Excellency Sr. Henry Moore, Bart"
+    );
+  }
+
+  // async verifyPhysicalDescriptionContent(): Promise<void> {
+  //   // Since 'this.titleText' was defined using the adjacent selector '+ p',
+  //   // this assertion inherently validates the structure AND the content.
+
+  //   // Structural check: Ensure the element exists and is visible
+  //   await expect(this.titleText).toBeVisible();
+
+  //   // Content check: Assert the specific expected text
+  //   await expect(this.titleText).toHaveText(
+  //     'To His Excellency Sr. Henry Moore, Bart'
+  //   );
+  // }
+
+  // async verifyTypoOfResourceContent(): Promise<void> {
+  //   // Since 'this.titleText' was defined using the adjacent selector '+ p',
+  //   // this assertion inherently validates the structure AND the content.
+
+  //   // Structural check: Ensure the element exists and is visible
+  //   await expect(this.titleText).toBeVisible();
+
+  //   // Content check: Assert the specific expected text
+  //   await expect(this.titleText).toHaveText(
+  //     'To His Excellency Sr. Henry Moore, Bart'
+  //   );
+  // }
+
+  //  Verifies the presence of the required UUID identifier and conditionally checks
+  //  the optional RLIN/OCLC and Catalog ID fields if they exist.
+  async verifyAllIdentifiers(
+    uuidValue: string,
+    oclcValue: string,
+    bNumber: string
+  ): Promise<void> {
+    // Structural Check (required for all identifier content)
+    await expect(this.identifiersHeading).toBeVisible();
+    await expect(this.identifiersText).toBeVisible();
+
+    // --- REQUIRED FIELD CHECK  ---
+
+    // UUID (Must always be visible and have the expected content)
+    const uuidLocator = this.identifiersText.locator(
+      'span:has-text("Universal Unique Identifier (UUID):")'
+    );
+    await expect(uuidLocator).toHaveText(
+      `Universal Unique Identifier (UUID): ${uuidValue}`
+    );
+
+    // --- OPTIONAL FIELD CHECKS (Conditional or Soft Assertions) ---
+
+    // RLIN/OCLC (Asserts value if field is found, otherwise skips)
+    const oclcLocator = this.identifiersText.locator(
+      'span:has-text("RLIN/OCLC:")'
+    );
+
+    // Check existence and assert content ONLY if the element is attached to the DOM.
+    // If the element is not found, the test continues without error.
+    if ((await oclcLocator.count()) > 0) {
+      await expect(oclcLocator).toHaveText(`RLIN/OCLC: ${oclcValue}`);
+    }
+
+    // Catalog Link
+    const catalogLinkLocator = this.identifiersText
+      .locator('span:has-text("NYPL Catalog ID")')
+      .locator("a");
+
+    // Check existence and assert content ONLY if the element is attached to the DOM.
+    if ((await catalogLinkLocator.count()) > 0) {
+      await expect(catalogLinkLocator).toBeVisible();
+      await expect(catalogLinkLocator).toHaveText(bNumber);
+    }
+  }
+
+  async verifyRightsContent(): Promise<void> {
+    // Structural check: Ensure the element exists and is visible
+    await expect(this.rightsHeading).toBeVisible();
+
+    // Content check: Assert the specific expected text
+    await expect(this.rightsText).toHaveText(
+      "To His Excellency Sr. Henry Moore, Bart"
+    );
+  }
+
   async loadPage(gotoPage: string): Promise<void> {
     await this.page.goto(gotoPage);
   }
