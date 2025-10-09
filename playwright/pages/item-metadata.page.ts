@@ -37,6 +37,9 @@ export default class ItemMetadataPage {
   readonly typeText: Locator;
   readonly identifiersHeading: Locator;
   readonly identifiersText: Locator;
+  EXPECTED_UUID_VALUE = "8b2b3160-c5d5-012f-d95c-58d385a7bc34";
+  EXPECTED_OCLC_VALUE = "24501668";
+  EXPECTED_BNUMBER_VALUE = "b14924644";
   readonly rightsHeading: Locator;
   readonly rightsText: Locator;
   readonly dataSourceHeading: Locator;
@@ -181,47 +184,42 @@ export default class ItemMetadataPage {
 
   //  Verifies the presence of the required UUID identifier and conditionally checks
   //  the optional RLIN/OCLC and Catalog ID fields if they exist.
-  async verifyAllIdentifiers(
-    uuidValue: string,
-    oclcValue: string,
-    bNumber: string
-  ): Promise<void> {
-    // Structural Check (required for all identifier content)
-    await expect(this.identifiersHeading).toBeVisible();
-    await expect(this.identifiersText).toBeVisible();
 
-    // --- REQUIRED FIELD CHECK  ---
-
-    // UUID (Must always be visible and have the expected content)
+  async verifyUUIDIdentifierIsPresent(): Promise<void> {
+    // 1. Locate the element using the scoped locator
     const uuidLocator = this.identifiersText.locator(
       'span:has-text("Universal Unique Identifier (UUID):")'
     );
+
+    // 2. Assert the element is visible and contains the exact required content
+    await expect(uuidLocator).toBeVisible();
     await expect(uuidLocator).toHaveText(
-      `Universal Unique Identifier (UUID): ${uuidValue}`
+      `Universal Unique Identifier (UUID): ${this.EXPECTED_UUID_VALUE}`
     );
+  }
 
-    // --- OPTIONAL FIELD CHECKS (Conditional or Soft Assertions) ---
-
-    // RLIN/OCLC (Asserts value if field is found, otherwise skips)
+  async verifyOclcIdentifierIsPresent(): Promise<void> {
+    // Check existence first (Conditional Check)
     const oclcLocator = this.identifiersText.locator(
       'span:has-text("RLIN/OCLC:")'
     );
 
-    // Check existence and assert content ONLY if the element is attached to the DOM.
-    // If the element is not found, the test continues without error.
     if ((await oclcLocator.count()) > 0) {
-      await expect(oclcLocator).toHaveText(`RLIN/OCLC: ${oclcValue}`);
+      await expect(oclcLocator).toHaveText(
+        `RLIN/OCLC: ${this.EXPECTED_OCLC_VALUE}`
+      );
     }
+  }
 
-    // Catalog Link
+  async verifyCatalogLinkIsPresent(): Promise<void> {
+    // Check existence first (Conditional Check)
     const catalogLinkLocator = this.identifiersText
       .locator('span:has-text("NYPL Catalog ID")')
       .locator("a");
 
-    // Check existence and assert content ONLY if the element is attached to the DOM.
     if ((await catalogLinkLocator.count()) > 0) {
       await expect(catalogLinkLocator).toBeVisible();
-      await expect(catalogLinkLocator).toHaveText(bNumber);
+      await expect(catalogLinkLocator).toHaveText(this.EXPECTED_BNUMBER_VALUE);
     }
   }
 
