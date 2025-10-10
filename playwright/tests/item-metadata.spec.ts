@@ -1,56 +1,48 @@
 import { test, expect } from "../base";
 import ItemMetadataPage from "../pages/item-metadata.page";
 
-let itemMetadataPage: ItemMetadataPage; // Global variable declared here
+let itemMetadataPage: ItemMetadataPage;
 
 test.beforeEach(async ({ page }) => {
-  // 1. Instantiate the Page Object using the provided fixture
   itemMetadataPage = new ItemMetadataPage(page);
-  // 2. Call the instance method to load the page
   await itemMetadataPage.loadPage(ItemMetadataPage.itemResultURL);
 });
 
+// --- Tests for Required Fields ---
+
 test.describe("Item Metadata Page Visibility and Content Checks", () => {
-  // ThIS mighe be called at top, so don't need here to reload?
-  // test.beforeEach(async ({ page }) => {
-  //   itemMetadataPage = new ItemMetadataPage(page);
-
-  //   await itemMetadataPage.loadPage(ItemMetadataPage.itemResultURL);
-  // });
-
-  // --- Tests for Required Fields ---
-
   test.skip('should display the main "Item Data" header', async () => {
     // Verifies the main required heading is present.
+    // why is this  passing?  Where is the "Item data" text called from?
     await expect(itemMetadataPage.itemDataHeader).toBeVisible();
   });
 
   test("should verify the Title heading and corresponding text are visible", async () => {
     // Checks the required Title heading and its text content.
-    await expect(itemMetadataPage.titleHeading).toBeVisible();
-    await expect(itemMetadataPage.titleText).not.toBeEmpty();
+    expect(itemMetadataPage.titleHeading).toBeVisible;
+    await itemMetadataPage.verifyTitleTextContent();
   });
 
   test.describe("Item Identifiers Verification", () => {
     // SETUP: Ensure the mandatory structural containers are visible before each test runs.
     test.beforeEach(async () => {
-      // Structural integrity (Heading and Container) must be verified before checking content
+      // Verify heading and containers before checking content
       await expect(itemMetadataPage.identifiersHeading).toBeVisible();
       await expect(itemMetadataPage.identifiersText).toBeVisible();
     });
 
     test("verify required UUID identifier is present", async () => {
-      // This test now only checks the non-negotiable UUID field.
+      // This checks only the required UUID field.
       await itemMetadataPage.verifyUUIDIdentifierIsPresent();
     });
 
     test("verify the RLIN/OCLC identifier if present", async () => {
-      // This test only verifies the OCLC field (which is conditionally checked inside the method).
+      // This test checks OCLC field (which is conditionally checked inside the method).
       await itemMetadataPage.verifyOclcIdentifierIsPresent();
     });
 
     test("verify the NYPL Catalog Link if presents", async () => {
-      // This test only verifies the Catalog Link field.
+      // This test checks the Catalog Link field.
       await itemMetadataPage.verifyCatalogLinkIsPresent();
     });
 

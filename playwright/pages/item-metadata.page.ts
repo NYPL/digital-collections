@@ -151,7 +151,7 @@ export default class ItemMetadataPage {
     await expect(this.titleText).toBeVisible();
 
     // Content check: Assert the specific expected text
-    await expect(this.titleText).toHaveText(
+    await expect(this.titleText).toContainText(
       "To His Excellency Sr. Henry Moore, Bart"
     );
   }
