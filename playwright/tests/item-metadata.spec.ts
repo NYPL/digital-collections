@@ -13,10 +13,8 @@ test.beforeEach(async ({ page }) => {
 test.describe("Item Metadata Page Visibility and Content Checks", () => {
   // ThIS mighe be called at top, so don't need here to reload?
   // test.beforeEach(async ({ page }) => {
-  //   // 1. Instantiate the Page Object
   //   itemMetadataPage = new ItemMetadataPage(page);
 
-  //   // 2. Load the page using the instance method
   //   await itemMetadataPage.loadPage(ItemMetadataPage.itemResultURL);
   // });
 

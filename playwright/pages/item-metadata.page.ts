@@ -231,7 +231,7 @@ export default class ItemMetadataPage {
 
     // Content check: Assert the specific expected text
     await expect(this.rightsText).toHaveText(
-      "To His Excellency Sr. Henry Moore, Bart"
+      "SOME RIGHTS TEXT WILL GO HERE, AND IT VARIES"
     );
   }
 
