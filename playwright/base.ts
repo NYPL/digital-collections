@@ -1,4 +1,4 @@
-import { test as base, expect, Page, TestInfo } from "@playwright/test"; // Add Page and TestInfo types
+import { test as base, expect, Page, TestInfo } from "@playwright/test";
 import { applyRouteFilters } from "./utils/routeFilters";
 
 // export function that applies filters conditionally
