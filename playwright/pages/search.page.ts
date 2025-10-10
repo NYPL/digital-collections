@@ -97,12 +97,8 @@ export default class SearchPage {
       .getByLabel("topic filter options")
       .getByText("Maps in education", { exact: true });
     this.topicSelected = this.page
-      //this matcher gets two hits, could this be because getByLabel is not
-      // limiting the match to within the filter's select area?  So we're going to restrict
-      // to first match for this method, since the 2nd match seems to be erroneously matching
-      // on the global, deletable "filter tags" below these search filter rows.
-      .getByText("Topic: Maps in education")
-      .nth(1);
+      .getByRole("button", { name: "Select topic" })
+      .getByText("Topic: Maps in education");
 
     this.nameFilter = this.page.getByRole("button", { name: "Name" });
     this.nameOption = this.page

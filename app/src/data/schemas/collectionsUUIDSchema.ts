@@ -2,7 +2,7 @@
 export const collectionsUUIDSchema = {
   title: "string",
   uuid: "string",
-  abstract: "string",
+  abstract: ["string"],
   accessCondition: ["string"],
   archivesCollectionID: "string", // MSS ID, to be used in a archives.nypl.org url
   bNumber: "string", // to be used in a nypl.org/research/research-catalog/bib/ url

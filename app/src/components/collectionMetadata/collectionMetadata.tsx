@@ -14,7 +14,7 @@ import parse from "html-react-parser";
 export type CollectionMetadataProps = {
   title: string;
   uuid: string;
-  abstract?: string;
+  abstract?: string[];
   accessCondition?: string[];
   mssID?: string;
   bNumbers?: string[];
@@ -274,7 +274,11 @@ const CollectionMetadata = ({ data }: { data: CollectionMetadataProps }) => {
           <Text size="overline1" marginBottom="xs">
             Abstract
           </Text>
-          <Text marginBottom="0">{abstract}</Text>
+          {abstract.map((text, index) => (
+            <Text marginBottom="xs" key={index}>
+              {parse(text)}
+            </Text>
+          ))}
         </Box>
       )}
 
