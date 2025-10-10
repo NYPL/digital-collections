@@ -38,9 +38,9 @@ export default class ItemMetadataPage {
   readonly typeText: Locator;
   readonly identifiersHeading: Locator;
   readonly identifiersText: Locator;
-  EXPECTED_UUID_VALUE = "8b2b3160-c5d5-012f-d95c-58d385a7bc34";
-  EXPECTED_OCLC_VALUE = "24501668";
-  EXPECTED_BNUMBER_VALUE = "b14924644";
+  static readonly EXPECTED_UUID_VALUE = "8b2b3160-c5d5-012f-d95c-58d385a7bc34";
+  static readonly EXPECTED_OCLC_VALUE = "24501668";
+  static readonly EXPECTED_BNUMBER_VALUE = "b14924644";
   readonly rightsHeading: Locator;
   readonly rightsText: Locator;
   readonly dataSourceHeading: Locator;
@@ -195,7 +195,7 @@ export default class ItemMetadataPage {
     // 2. Assert the element is visible and contains the exact required content
     await expect(uuidLocator).toBeVisible();
     await expect(uuidLocator).toHaveText(
-      `Universal Unique Identifier (UUID): ${this.EXPECTED_UUID_VALUE}`
+      `Universal Unique Identifier (UUID): ${ItemMetadataPage.EXPECTED_UUID_VALUE}`
     );
   }
 
@@ -207,7 +207,7 @@ export default class ItemMetadataPage {
 
     if ((await oclcLocator.count()) > 0) {
       await expect(oclcLocator).toHaveText(
-        `RLIN/OCLC: ${this.EXPECTED_OCLC_VALUE}`
+        `RLIN/OCLC: ${ItemMetadataPage.EXPECTED_OCLC_VALUE}`
       );
     }
   }
@@ -220,7 +220,9 @@ export default class ItemMetadataPage {
 
     if ((await catalogLinkLocator.count()) > 0) {
       await expect(catalogLinkLocator).toBeVisible();
-      await expect(catalogLinkLocator).toHaveText(this.EXPECTED_BNUMBER_VALUE);
+      await expect(catalogLinkLocator).toHaveText(
+        ItemMetadataPage.EXPECTED_BNUMBER_VALUE
+      );
     }
   }
 

@@ -33,6 +33,37 @@ test.describe("Item Metadata Page Visibility and Content Checks", () => {
     await expect(itemMetadataPage.titleText).not.toBeEmpty();
   });
 
+  test.describe("Item Identifiers Verification", () => {
+    // SETUP: Ensure the mandatory structural containers are visible before each test runs.
+    test.beforeEach(async () => {
+      // Structural integrity (Heading and Container) must be verified before checking content
+      await expect(itemMetadataPage.identifiersHeading).toBeVisible();
+      await expect(itemMetadataPage.identifiersText).toBeVisible();
+    });
+
+    test("verify required UUID identifier is present", async () => {
+      // This test now only checks the non-negotiable UUID field.
+      await itemMetadataPage.verifyUUIDIdentifierIsPresent();
+    });
+
+    test("verify the RLIN/OCLC identifier if present", async () => {
+      // This test only verifies the OCLC field (which is conditionally checked inside the method).
+      await itemMetadataPage.verifyOclcIdentifierIsPresent();
+    });
+
+    test("verify the NYPL Catalog Link if presents", async () => {
+      // This test only verifies the Catalog Link field.
+      await itemMetadataPage.verifyCatalogLinkIsPresent();
+    });
+
+    // This test works but not sure it's needed
+
+    // test.skip('should verify the Identifiers block contains only one link', async () => {
+    //   // This test verifies the count constraint.
+    //   await expect(itemMetadataPage.identifiersText.locator('a')).toHaveCount(1);
+    // });
+  });
+
   // test('should verify the Library location and Dates headings are present', async () => {
   //   // Checks for other critical required headings.
   //   await expect(itemMetadataPage.libraryHeading).toBeVisible();
