@@ -5,9 +5,7 @@ import SearchPage from "../pages/search.page";
 let searchPage: SearchPage; // Global variable declared here
 
 test.beforeEach(async ({ page }) => {
-  // 1. Instantiate the Page Object using the provided fixture
   searchPage = new SearchPage(page);
-  // 2. Call the instance method to load the page
   await searchPage.loadPage(SearchPage.searchResultsUrl);
 });
 
