@@ -1,7 +1,7 @@
 export const mockCollectionResponse = {
   title: "Sample Collection",
   uuid: "123-uuid",
-  abstract: "This is a sample abstract.",
+  abstract: ["This is a sample abstract."],
   accessCondition: ["Open access"],
   archivesCollectionID: "12345",
   bNumber: "b1234567",
