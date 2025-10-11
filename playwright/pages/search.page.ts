@@ -34,7 +34,6 @@ export default class SearchPage {
   readonly publisherSelected: Locator;
   readonly divisionFilter: Locator;
   readonly divisionOption: Locator;
-  readonly divisionSelected: Locator;
   readonly typeFilter: Locator;
   readonly typeOption: Locator;
   readonly typeSelected: Locator;
@@ -48,7 +47,7 @@ export default class SearchPage {
   readonly hideFilters: Locator;
   readonly applyFilterButton: Locator;
   readonly clearFilterButton: Locator;
-  readonly clearNameFilterApplied: Locator;
+  readonly clearTopicFilterApplied: Locator;
   readonly clearAllFilters: Locator;
 
   // sort search results
@@ -91,22 +90,20 @@ export default class SearchPage {
     this.refineHeading = this.page.getByRole("heading", {
       name: "Refine your search",
     });
-
     this.topicFilter = this.page.getByRole("button", { name: "Topic" });
     this.topicOption = this.page
-      .getByLabel("topic filter options")
+      .locator("#select-topic")
       .getByText("Maps in education", { exact: true });
     this.topicSelected = this.page
-      .getByRole("button", { name: "Select topic" })
-      .getByText("Topic: Maps in education");
-
+      .locator("#select-topic")
+      .getByText("Topic: Maps in education", { exact: true });
     this.nameFilter = this.page.getByRole("button", { name: "Name" });
     this.nameOption = this.page
-      .getByLabel("name filter options")
+      .locator("#select-name")
       .getByText("Sheldonian Theatre", { exact: true });
-    this.nameSelected = this.page.getByText("Name: Sheldonian Theatre", {
-      exact: true,
-    });
+    this.nameSelected = this.page
+      .locator("#select-name")
+      .getByText("Name: Sheldonian Theatre", { exact: true });
     this.collectionFilter = this.page.getByRole("button", {
       name: "Collection",
     });
@@ -114,7 +111,7 @@ export default class SearchPage {
       .getByLabel("collection filter options")
       .getByText("Portolan atlas");
 
-    // The selected collection-filter check below currently uses a fuzzy match
+    // The selected filter check below currently uses a fuzzy match
     // because the collection UUID is appended to the
     // collectionSelected display text, which is visible to users when
     // collections have short titles. (DR-3838)
@@ -122,39 +119,21 @@ export default class SearchPage {
     this.collectionSelected = this.page.getByText("Collection: Portolan atlas");
     this.placeFilter = this.page.getByRole("button", { name: "Place" });
     this.placeOption = this.page
-      .getByLabel("place filter options")
+      .locator("#select-place")
       .getByText("England", { exact: true });
-    this.placeSelected = this.page.getByText("Place: England", { exact: true });
+    this.placeSelected = this.page
+      .locator("#select-place")
+      .getByText("Place: England", { exact: true });
     this.genreFilter = this.page.getByRole("button", { name: "Genre" });
-    this.genreOption = this.page
-      .getByLabel("genre filter options")
-      .getByText("Maps", { exact: true });
-    this.genreSelected = this.page.getByText("Genre: Maps", { exact: true });
     this.publisherFilter = this.page.getByRole("button", { name: "Publisher" });
     this.publisherOption = this.page
-      .getByLabel("publisher filter options")
+      .locator("#select-publisher")
       .getByText("Printed at the Theater,", { exact: true });
-    this.publisherSelected = this.page.getByText(
-      "Publisher: Printed at the Theater,",
-      { exact: true }
-    );
+    this.publisherSelected = this.page
+      .locator("#select-publisher")
+      .getByText("Publisher: Printed at the Theater,", { exact: true });
     this.divisionFilter = this.page.getByRole("button", { name: "Division" });
-    this.divisionOption = this.page
-      .getByLabel("division filter options")
-      .getByText("Lionel Pincus and Princess Firyal Map Division", {
-        exact: true,
-      });
-    this.divisionSelected = this.page.getByText(
-      "Division: Lionel Pincus and Princess Firyal Map Division",
-      { exact: true }
-    );
     this.typeFilter = this.page.getByRole("button", { name: "Type" });
-    this.typeOption = this.page
-      .getByLabel("type filter options")
-      .getByText("Cartographic", { exact: true });
-    this.typeSelected = this.page.getByText("Type: Cartographic", {
-      exact: true,
-    });
     this.startYear = this.page.getByRole("textbox", { name: "Start year" });
     this.endYear = this.page.getByRole("textbox", { name: "End year" });
     this.applyDates = this.page.getByRole("button", { name: "Apply dates" });
@@ -181,8 +160,8 @@ export default class SearchPage {
       name: "Clear filter",
       exact: true,
     });
-    this.clearNameFilterApplied = this.page.getByRole("button", {
-      name: "Sheldonian Theatre, click to remove filter",
+    this.clearTopicFilterApplied = this.page.getByRole("button", {
+      name: "Maps in education, click to remove filter",
     });
     this.clearAllFilters = this.page
       .locator("#search-filter-tags")
@@ -237,16 +216,16 @@ export default class SearchPage {
   }
 
   async filterSearchResults(): Promise<void> {
-    // filters a drop-down (Name) in the first row
-    await expect(this.nameFilter).toBeVisible();
-    await this.nameFilter.click();
-    await expect(this.nameOption).toBeVisible();
-    await this.nameOption.click();
+    // filters a drop-down in the first row
+    await expect(this.topicFilter).toBeVisible();
+    await this.topicFilter.click();
+    await expect(this.topicOption).toBeVisible();
+    await this.topicOption.click();
     await expect(this.applyFilterButton).toBeVisible();
     await this.applyFilterButton.click();
-    await expect(this.nameSelected).toBeVisible();
+    await expect(this.topicSelected).toBeVisible();
 
-    // filters a drop-down (Publisher) in the second row
+    // filters a drop-down in the second row
     if (await this.showFilters.isVisible()) {
       await expect(this.showFilters).toBeVisible();
       await this.showFilters.click();
