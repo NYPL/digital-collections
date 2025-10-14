@@ -18,7 +18,7 @@ const CampaignHeroSubText = ({ featuredItem }: CampaignHeroSubtextProps) => {
   );
   return (
     <>
-      <Text paddingTop={"s"}>
+      <Text paddingTop="s">
         This site is a living database with new materials added every day,
         featuring prints, photographs, maps, manuscripts, streaming video, and
         more.
@@ -35,7 +35,7 @@ const CampaignHeroSubText = ({ featuredItem }: CampaignHeroSubtextProps) => {
           Learn more
         </DSLink>
       </Text>
-      <HorizontalRule marginTop={"s"} marginBottom={"s"} />
+      <HorizontalRule marginTop="s" marginBottom="s" />
       <Box>
         <Text
           mb="0px"
