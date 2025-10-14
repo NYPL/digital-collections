@@ -1,20 +1,26 @@
-import { test as base, expect, Page, TestInfo } from "@playwright/test";
+import { test as base } from "@playwright/test";
 import { applyRouteFilters } from "./utils/routeFilters";
 
-// export function that applies filters conditionally
-export async function applyGlobalFilters(page: Page, testInfo: TestInfo) {
-  const shouldSkipRouting = testInfo.tags.includes("@no-global-filter");
+// Create custom fixture
+type RouteFilterFixtures = {
+  routeFilterFixture: void;
+};
 
-  if (!shouldSkipRouting) {
-    await applyRouteFilters(page);
-  }
-}
+// Extend base test object with custom fixture
+export const test = base.extend<RouteFilterFixtures>({
+  routeFilterFixture: [
+    async ({ page }, use, testInfo) => {
+      // Check if test has a '@no-global-filter' tag
+      const shouldSkipRouting = testInfo.tags.includes("@no-global-filter");
 
-// apply route filters
-base.beforeEach(async ({ page }, testInfo) => {
-  // This maintains the auto-filtering for simple tests
-  await applyGlobalFilters(page, testInfo);
+      if (!shouldSkipRouting) {
+        // If tag is not present, apply global route filters to the test
+        await applyRouteFilters(page);
+      }
+      await use();
+    },
+    { auto: true },
+  ],
 });
 
-export const test = base.extend({}); // Keep the base extend for custom test object
-export { expect };
+export { expect } from "@playwright/test";
