@@ -5,7 +5,6 @@ const NotificationBanner = () => {
   return (
     <Notification
       variant="announcement"
-      // noMargin
       notificationContent={
         <>
           Digital Collections is getting a new look. Prefer the former version?
