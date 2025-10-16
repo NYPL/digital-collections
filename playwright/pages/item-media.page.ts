@@ -1,4 +1,3 @@
-//item-media.page.ts
 import { Locator, Page, expect, TestInfo } from "@playwright/test";
 import { waitForSlowResource } from "../utils/slowWaitHelpers";
 

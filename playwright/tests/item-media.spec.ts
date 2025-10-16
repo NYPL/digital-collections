@@ -1,5 +1,3 @@
-//item-media.spec.ts
-
 import { test, expect, TestInfo } from "@playwright/test"; // Note: TestInfo is required
 import ItemMediaPage from "../pages/item-media.page"; // Your new Page Object
 import { applyRouteFilters } from "../utils/routeFilters";
