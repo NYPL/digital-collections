@@ -92,7 +92,7 @@ const ActiveFilters = ({ searchManager, allFilters }: ActiveFilterProps) => {
           // @ts-ignore
           tabIndex={-1}
           id="filters-applied"
-          sx={{ margin: 0, fontWeight: 400 }}
+          sx={{ margin: 0, fontWeight: 400, paddingBottom: "s" }}
         >
           Filters applied:
         </Text>
