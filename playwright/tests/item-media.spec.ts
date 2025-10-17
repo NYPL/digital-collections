@@ -8,9 +8,9 @@ test.describe.configure({ timeout: 90000 });
 
 test.describe("Verify Image Viewer Controls", () => {
   test.beforeEach(async ({ page }) => {
-    itemMediaPage = new ItemMediaPage(page);
+    itemMediaPage = new ItemMediaPage(page, "IMAGE");
 
-    await itemMediaPage.loadPage(ItemMediaPage.itemMediaURL);
+    await itemMediaPage.loadPage(ItemMediaPage.itemImageURL);
   });
 
   test("all image-specific controls are visible", async () => {
@@ -25,5 +25,28 @@ test.describe("Verify Image Viewer Controls", () => {
   test("video controls are NOT visible", async () => {
     // check that no AUDIO/VIDEO controls are appearing (verifying correct UV mode)
     await expect(itemMediaPage.playButton).toBeHidden();
+  });
+});
+
+test.describe("Verify Video Viewer Controls", () => {
+  test.beforeEach(async ({ page }) => {
+    itemMediaPage = new ItemMediaPage(page, "VIDEO");
+
+    await itemMediaPage.loadPage(ItemMediaPage.itemVideoURL);
+  });
+
+  test("all video-specific controls are visible", async () => {
+    await itemMediaPage.verifyViewerIsReady();
+
+    // check if VIDEO Controls are visible
+
+    await expect(itemMediaPage.playButton).toBeVisible();
+  });
+
+  test("image controls are NOT visible", async () => {
+    // check that no IMAGE controls are appearing (verifying correct UV mode)
+    await expect(itemMediaPage.zoomInButton).toBeHidden();
+    await expect(itemMediaPage.rotateRightButton).toBeHidden();
+    await expect(itemMediaPage.fullScreenButton).toBeHidden();
   });
 });
