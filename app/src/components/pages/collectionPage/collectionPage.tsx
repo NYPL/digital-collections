@@ -113,7 +113,7 @@ const CollectionPage = ({
   }, [searchResults]);
 
   return (
-    <Box id="mainContent">
+    <Box id="collectionsPageContent">
       <MobileSearchBanner />
       <Box
         sx={{

@@ -3,11 +3,7 @@ import {
   Template,
   TemplateBreakout,
   TemplateContent,
-  TemplateFooter,
-  TemplateFull,
-  TemplateHeader,
   TemplateMain,
-  TemplateSidebar,
 } from "@nypl/design-system-react-components";
 import React from "react";
 import ExploreFurther from "../../exploreFurther/exploreFurther";
@@ -31,7 +27,9 @@ export default function HomePage({ data }) {
               swimlanes={data.swimLaneData.lanesWithNumItems}
               randomNumber={data.swimLaneData.randomNumber}
             />
-            <ExploreFurther />
+            <TemplateBreakout>
+              <ExploreFurther />
+            </TemplateBreakout>
           </TemplateContent>
         </TemplateMain>
       </Template>

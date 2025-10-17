@@ -4,6 +4,7 @@ import {
   DSProvider,
   SkipNavigation,
   Box,
+  useResponsiveSpacing,
 } from "@nypl/design-system-react-components";
 import React, { useEffect } from "react";
 import { type PropsWithChildren } from "react";
@@ -54,6 +55,8 @@ const PageLayout = ({
     }
   });
 
+  const { responsivePadding } = useResponsiveSpacing();
+
   return (
     <>
       {/* <!-- Adobe Analytics  --> */}
@@ -93,7 +96,7 @@ const PageLayout = ({
                   sx={{
                     margin: "auto",
                     maxWidth: "1280px",
-                    padding: "64px 16px",
+                    padding: responsivePadding,
                   }}
                 >
                   {children as JSX.Element}

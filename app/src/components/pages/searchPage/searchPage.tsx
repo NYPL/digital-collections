@@ -81,7 +81,7 @@ const SearchPage = ({
   useSubcollectionRedirect();
 
   return (
-    <Box id="mainContent">
+    <Box id="searchPageContent">
       <MobileSearchBanner />
       <Box
         sx={{
