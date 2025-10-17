@@ -3,8 +3,7 @@ import ItemMediaPage from "../pages/item-media.page";
 
 let itemMediaPage: ItemMediaPage;
 
-// CRITICAL: Configure the suite's timeout settings before the describe block.
-// Assumes 90s is the required timeout for the slow UV module.
+// configure  suite's timeout settings before the describe block.
 test.describe.configure({ timeout: 90000 });
 
 test.describe("Image Viewer Control Verification", () => {
@@ -13,22 +12,21 @@ test.describe("Image Viewer Control Verification", () => {
 
     await itemMediaPage.loadPage(ItemMediaPage.itemMediaURL);
 
-    // Wait for the stable UV heading to confirm the module is fully initialized
+    // wait for stable UV heading to confirm the module is fully loaded
     await itemMediaPage.viewerHeading.waitFor({ state: "visible" });
   });
 
   test("should verify all IMAGE-specific controls are visible", async () => {
-    // Assert on the mandatory structural anchor
     await expect(itemMediaPage.viewerHeading).toBeVisible();
 
-    // Assert IMAGE Controls are visible
+    // check if IMAGE Controls are visible
     await expect(itemMediaPage.zoomInButton).toBeVisible();
     await expect(itemMediaPage.rotateRightButton).toBeVisible();
     await expect(itemMediaPage.fullScreenButton).toBeVisible();
   });
 
   test("should verify VIDEO controls are NOT visible", async () => {
-    // Assert VIDEO Controls are hidden (crucial for verifying correct UV mode)
+    // check that no AUDIO/VIDEO controls are appearing (verifying correct UV mode)
     await expect(itemMediaPage.playButton).toBeHidden();
   });
 });
