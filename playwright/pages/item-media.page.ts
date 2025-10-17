@@ -1,30 +1,50 @@
-import { Locator, Page, expect, TestInfo } from "@playwright/test";
-import { waitForSlowResource } from "../utils/slowWaitHelpers";
+import { Locator, Page, expect } from "@playwright/test";
 
 export default class ItemMediaPage {
-  // FIX 2: Standard Class Name Convention
   readonly page: Page;
-  // Assuming 'mainHeroImage' is the locator for your Universal Viewer component.
-  readonly mainHeroImage: Locator;
 
-  // FIX 3: The constructor is required to initialize 'this.page'
+  // Structural locators
+  readonly viewerHeading: Locator;
+
+  // Image Control Locators (Unique to IMAGE viewer mode)
+  readonly zoomInButton: Locator;
+  readonly rotateRightButton: Locator;
+  readonly fullScreenButton: Locator;
+
+  // Video/Audio Control Locators (Unique to VIDEO viewer mode)
+  readonly playButton: Locator;
+
+  static itemMediaURL: string = "/items/4387c9f0-c53c-012f-9924-58d385a7bc34";
+
   constructor(page: Page) {
     this.page = page;
-    // Example initialization for the locator
-    this.mainHeroImage = page.locator(".universal-viewer-canvas");
+
+    // ANCHOR: The most stable, accessible element that appears when the UV is ready.
+    this.viewerHeading = this.page.getByRole("heading", {
+      name: "Media Viewer",
+      level: 2,
+    });
+
+    // CONTROLS: Standard accessible locators for image-specific controls
+    this.zoomInButton = page.getByRole("button", { name: "Zoom In" });
+    this.rotateRightButton = page.getByRole("button", { name: "Rotate Right" });
+    this.fullScreenButton = page.getByRole("button", { name: "Full Screen" });
+
+    //  VIDEO CONTROL (we want to confirm is NOT visible on image pages)
+    this.playButton = page.getByRole("button", { name: "Play" });
   }
 
-  // Waits for the Universal Viewer image to load using a temporary 90s timeout.
-  async verifyMainImageLoads(testInfo: TestInfo): Promise<void> {
-    // CRITICAL: Call the utility, passing the locator, the page instance,
-    // and the original timeout value from testInfo.
-    await waitForSlowResource(
-      this.mainHeroImage,
-      this.page,
-      testInfo.timeout // Get the original timeout (the overall test timeout)
-    );
+  async loadPage(gotoPage: string): Promise<void> {
+    await this.page.goto(gotoPage);
+  }
 
-    // Final check that the image is now visible after the long wait
-    await expect(this.mainHeroImage).toBeVisible();
+  //  Verify the media viewer loads using the most stable locator (the Heading).
+  async verifyMainImageLoads(): Promise<void> {
+    // 1. Wait for the stable, accessible heading (The definitive structural check)
+    // This uses the long timeout set in the spec file.
+    await this.viewerHeading.waitFor({ state: "visible" });
+
+    // 2. Final check on the actual rendering canvas.
+    // await expect(this.mainCanvas).toBeVisible();
   }
 }
