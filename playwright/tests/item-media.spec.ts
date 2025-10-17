@@ -1,6 +1,5 @@
-import { test, expect } from "@playwright/test";
+import { test, expect } from "../base";
 import ItemMediaPage from "../pages/item-media.page";
-import { applyRouteFilters } from "../utils/routeFilters"; // Assuming filter utility exists
 
 let itemMediaPage: ItemMediaPage;
 
@@ -10,13 +9,8 @@ test.describe.configure({ timeout: 90000 });
 
 test.describe("Image Viewer Control Verification", () => {
   test.beforeEach(async ({ page }) => {
-    // Register the route filters BEFORE navigation.
-    await applyRouteFilters(page);
-
-    // Instantiate the Page Object
     itemMediaPage = new ItemMediaPage(page);
 
-    // Load the specific Image item URL
     await itemMediaPage.loadPage(ItemMediaPage.itemMediaURL);
 
     // Wait for the stable UV heading to confirm the module is fully initialized
