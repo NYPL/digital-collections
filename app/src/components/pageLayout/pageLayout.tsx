@@ -96,7 +96,10 @@ const PageLayout = ({
                   sx={{
                     margin: "auto",
                     maxWidth: "1280px",
-                    padding: responsivePadding,
+                    paddingTop: responsivePadding,
+                    paddingBottom: responsivePadding,
+                    paddingLeft: "64px",
+                    paddingRight: "64px",
                   }}
                 >
                   {children as JSX.Element}
