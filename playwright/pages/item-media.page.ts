@@ -1,4 +1,5 @@
 import { Locator, Page, expect } from "@playwright/test";
+import { IMAGE_UUID } from "../utils/mediaData";
 
 export default class ItemMediaPage {
   readonly page: Page;
@@ -14,7 +15,9 @@ export default class ItemMediaPage {
   // Video/Audio Control Locators (Unique to VIDEO viewer mode)
   readonly playButton: Locator;
 
-  static itemMediaURL: string = "/items/4387c9f0-c53c-012f-9924-58d385a7bc34";
+  static get itemMediaURL(): string {
+    return `/items/${IMAGE_UUID}`;
+  }
 
   constructor(page: Page) {
     this.page = page;
@@ -36,15 +39,11 @@ export default class ItemMediaPage {
 
   async loadPage(gotoPage: string): Promise<void> {
     await this.page.goto(gotoPage);
+    await this.viewerHeading.waitFor({ state: "visible" });
   }
 
-  //  Verify the media viewer loads using the most stable locator (the Heading).
-  async verifyMainImageLoads(): Promise<void> {
-    // 1. Wait for the stable, accessible heading (The definitive structural check)
-    // This uses the long timeout set in the spec file.
-    await this.viewerHeading.waitFor({ state: "visible" });
-
-    // 2. Final check on the actual rendering canvas.
-    // await expect(this.mainCanvas).toBeVisible();
+  async verifyViewerIsReady(): Promise<void> {
+    // this will be called in spec to confirm the stability step succeeded.
+    await expect(this.viewerHeading).toBeVisible();
   }
 }
