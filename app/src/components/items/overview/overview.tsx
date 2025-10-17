@@ -1,10 +1,6 @@
 import MetadataOverview from "./metadata/overview";
 
-import {
-  chakra,
-  SimpleGrid as ChakraSimpleGrid,
-  ChakraComponent,
-} from "@chakra-ui/react";
+import { SimpleGrid as ChakraSimpleGrid } from "@chakra-ui/react";
 import { HorizontalRule } from "@nypl/design-system-react-components";
 import React, { forwardRef } from "react";
 import { headerBreakpoints } from "@/src/utils/breakpoints";
@@ -49,6 +45,7 @@ const ItemOverview = ({ item }) => {
         }}
       >
         <MetadataOverview metadata={item.renderableMetadata} />
+
         <CitationsOverview citationData={item.citationData} />
       </ChakraSimpleGrid>
     </>
