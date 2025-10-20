@@ -1,8 +1,10 @@
 import { Locator, Page, expect } from "@playwright/test";
-import { IMAGE_UUID } from "../utils/mediaData";
 
 export default class ItemMediaPage {
   readonly page: Page;
+
+  static readonly IMAGE_UUID = "4387c9f0-c53c-012f-9924-58d385a7bc34";
+  static readonly VIDEO_UUID = "8820d790-e50c-0130-3a92-3c075448cc4b";
 
   // Structural locators
   readonly viewerHeading: Locator;
@@ -16,7 +18,7 @@ export default class ItemMediaPage {
   readonly playButton: Locator;
 
   static get itemMediaURL(): string {
-    return `/items/${IMAGE_UUID}`;
+    return `/items/${ItemMediaPage.IMAGE_UUID}`;
   }
 
   constructor(page: Page) {
