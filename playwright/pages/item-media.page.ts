@@ -34,7 +34,7 @@ export default class ItemMediaPage {
   }
 
   static get itemVideoURL(): string {
-    return `/items/${ItemMediaPage.IMAGE_UUID}`;
+    return `/items/${ItemMediaPage.VIDEO_UUID}`;
   }
 
   constructor(page: Page, expectedType: "IMAGE" | "VIDEO") {
