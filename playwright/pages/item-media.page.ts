@@ -24,18 +24,15 @@ export default class ItemMediaPage {
   constructor(page: Page) {
     this.page = page;
 
-    // ANCHOR: The most stable, accessible element that appears when the UV is ready.
     this.viewerHeading = this.page.getByRole("heading", {
       name: "Media Viewer",
       level: 2,
     });
 
-    // CONTROLS: Standard accessible locators for image-specific controls
     this.zoomInButton = page.getByRole("button", { name: "Zoom In" });
     this.rotateRightButton = page.getByRole("button", { name: "Rotate Right" });
     this.fullScreenButton = page.getByRole("button", { name: "Full Screen" });
 
-    //  VIDEO CONTROL (we want to confirm is NOT visible on image pages)
     this.playButton = page.getByRole("button", { name: "Play" });
   }
 
