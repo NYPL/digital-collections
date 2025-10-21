@@ -34,7 +34,7 @@ export default class ItemMediaPage {
   }
 
   static get itemVideoURL(): string {
-    return `/items/${ItemMediaPage.VIDEO_UUID}`;
+    return `/items/${ItemMediaPage.IMAGE_UUID}`;
   }
 
   constructor(page: Page, expectedType: "IMAGE" | "VIDEO") {
@@ -89,7 +89,7 @@ export default class ItemMediaPage {
     // If it's not an video or an image, it should be an audio file, which also uses the player
     else {
       await this.playButton.waitFor({ state: "visible" });
-      // Or, should we also specify audio, and throw an error if an unknown content type slips in there?
+      // Or, should we also specify audio, and throw an error if an unknown 4th content type slips in there?
       // throw new Error(`Unknown content type: ${this.expectedContentType}. Cannot determine viewer stabilization locator.`);
     }
   }
