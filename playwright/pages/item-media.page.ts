@@ -1,18 +1,10 @@
-import { Locator, Page, expect } from "@playwright/test";
+import { Locator, Page } from "@playwright/test";
 
 export default class ItemMediaPage {
   readonly page: Page;
 
   static readonly IMAGE_UUID = "4387c9f0-c53c-012f-9924-58d385a7bc34";
   static readonly VIDEO_UUID = "8820d790-e50c-0130-3a92-3c075448cc4b";
-
-  // Set the appropriate content type
-  static get CONTENT_MAP() {
-    return {
-      [ItemMediaPage.IMAGE_UUID]: "IMAGE",
-      [ItemMediaPage.VIDEO_UUID]: "VIDEO",
-    } as const;
-  }
 
   // Store the expected content-type
   readonly expectedContentType: "IMAGE" | "VIDEO";
@@ -27,14 +19,14 @@ export default class ItemMediaPage {
 
   // Video/Audio control locators (unique to VIDEO viewer mode)
   readonly playButton: Locator;
-  readonly scrubBar: Locator;
 
-  static get itemImageURL(): string {
-    return `/items/${ItemMediaPage.IMAGE_UUID}`;
-  }
+  // Would the scrubBar appear if the video is an on-site, restricted item?
+  // We should have other tests that check this under Rights-Checks conditions.
+  // Here we are only concerned with the Play-button on a known public-video.
+  // readonly scrubBar: Locator;
 
-  static get itemVideoURL(): string {
-    return `/items/${ItemMediaPage.VIDEO_UUID}`;
+  static getItemURL(uuid: string): string {
+    return `/items/${uuid}`;
   }
 
   constructor(page: Page, expectedType: "IMAGE" | "VIDEO") {
@@ -51,13 +43,12 @@ export default class ItemMediaPage {
     this.fullScreenButton = page.getByRole("button", { name: "Full Screen" });
     // this.playButton = page.getByRole("button", { name: "Play" });
     this.playButton = page.locator("button").filter({ hasText: /^Play$/ });
-    this.scrubBar = page.getByRole("slider", { name: "seek slider" });
+    // this.scrubBar = page.getByRole("slider", { name: "seek slider" });
   }
 
-  async loadPage(gotoPage: string): Promise<void> {
+  async loadPage(uuid: string): Promise<void> {
+    const gotoPage = `/items/${uuid}`;
     await this.page.goto(gotoPage);
-    // remove this possibly redundant wait?
-    // await this.viewerHeading.waitFor({ state: "visible" });
   }
 
   // Waits for the correct viewer type (Image or Video) to stabilize in the DOM.
@@ -70,7 +61,7 @@ export default class ItemMediaPage {
     else if (this.expectedContentType === "IMAGE") {
       await this.viewerHeading.waitFor({ state: "visible", timeout: 90000 });
     }
-    // throw an error if an unknown type is passed
+    // check for 3rd content-type fallback
     else {
       // If it's neither a video or an image, it SHOULD be an audio, which defaults to the video player.
       // Later, we can test for audio and throw and error below if an unexpected type rears its head.
