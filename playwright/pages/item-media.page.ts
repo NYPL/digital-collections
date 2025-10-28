@@ -4,7 +4,9 @@ export default class ItemMediaPage {
   readonly page: Page;
 
   static readonly IMAGE_UUID = "4387c9f0-c53c-012f-9924-58d385a7bc34";
-  static readonly VIDEO_UUID = "8820d790-e50c-0130-3a92-3c075448cc4b";
+  // static readonly VIDEO_UUID = "8820d790-e50c-0130-3a92-3c075448cc4b";
+  // static readonly VIDEO_UUID = "e5f46ea0-e530-0130-cf28-3c075448cc4b";
+  static readonly VIDEO_UUID = "6c5b2f80-e508-0130-855d-3c075448cc4b";
 
   // Store the expected content-types
   readonly expectedContentType: "IMAGE" | "VIDEO";
