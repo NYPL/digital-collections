@@ -3,9 +3,6 @@ import ItemMediaPage from "../pages/item-media.page";
 
 let itemMediaPage: ItemMediaPage;
 
-// configure  suite's timeout settings before the describe block.
-test.describe.configure({ timeout: 90000 });
-
 test.describe("Verify Image Viewer Controls", () => {
   test.beforeEach(async ({ page }) => {
     itemMediaPage = new ItemMediaPage(page, "IMAGE");
