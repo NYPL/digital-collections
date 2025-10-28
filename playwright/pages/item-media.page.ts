@@ -54,7 +54,7 @@ export default class ItemMediaPage {
     }
     // check for IMAGE content
     else if (this.expectedContentType === "IMAGE") {
-      await this.viewerHeading.waitFor({ state: "visible", timeout: 90000 });
+      await this.zoomInButton.waitFor({ state: "visible", timeout: 90000 });
     }
     // check for 3rd content-type fallback (currently AUDIO)
     else {
