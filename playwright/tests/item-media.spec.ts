@@ -14,7 +14,7 @@ test.describe("Verify Image Viewer Controls", () => {
   });
 
   test("primary image-specific controls are visible", async () => {
-    await itemMediaPage.verifyViewerIsReady();
+    await itemMediaPage.getViewerControls();
 
     // check if IMAGE Controls are visible and that the main video control doesn't appear
     await expect(itemMediaPage.zoomInButton).toBeVisible();
@@ -33,7 +33,7 @@ test.describe("Verify Video Viewer Controls", () => {
   });
 
   test("primary video-specific controls are visible", async () => {
-    await itemMediaPage.verifyViewerIsReady();
+    await itemMediaPage.getViewerControls();
 
     // check if VIDEO Controls are visible, no image controls appear
     await expect(itemMediaPage.playButton).toBeVisible();
