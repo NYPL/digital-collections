@@ -32,7 +32,7 @@ test.describe("Verify Video Viewer Controls", () => {
   test("primary video-specific controls are visible", async () => {
     await itemMediaPage.getViewerControls();
 
-    // check if VIDEO Controls are visible, no image controls appear
+    // check if VIDEO Controls are visible, and no image controls appear
     await expect(itemMediaPage.playButton).toBeVisible();
     await expect(itemMediaPage.zoomInButton).toBeHidden();
     await expect(itemMediaPage.rotateRightButton).toBeHidden();
