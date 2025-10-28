@@ -6,7 +6,7 @@ export default class ItemMediaPage {
   static readonly IMAGE_UUID = "4387c9f0-c53c-012f-9924-58d385a7bc34";
   static readonly VIDEO_UUID = "8820d790-e50c-0130-3a92-3c075448cc4b";
 
-  // Store the expected content-type
+  // Store the expected content-types
   readonly expectedContentType: "IMAGE" | "VIDEO";
 
   //Viewer locator
@@ -17,13 +17,8 @@ export default class ItemMediaPage {
   readonly rotateRightButton: Locator;
   readonly fullScreenButton: Locator;
 
-  // Video/Audio control locators (unique to VIDEO viewer mode)
+  // Video/Audio control locators (unique to VIDEO/AUDIO viewer mode)
   readonly playButton: Locator;
-
-  // Would the scrubBar appear if the video is an on-site, restricted item?
-  // We should have other tests that check this under Rights-Checks conditions.
-  // Here we are only concerned with the Play-button on a known public-video.
-  // readonly scrubBar: Locator;
 
   static getItemURL(uuid: string): string {
     return `/items/${uuid}`;
@@ -61,11 +56,8 @@ export default class ItemMediaPage {
     else if (this.expectedContentType === "IMAGE") {
       await this.viewerHeading.waitFor({ state: "visible", timeout: 90000 });
     }
-    // check for 3rd content-type fallback
+    // check for 3rd content-type fallback (currently AUDIO)
     else {
-      // If it's neither a video or an image, it SHOULD be an audio, which defaults to the video player.
-      // Later, we can test for audio and throw and error below if an unexpected type rears its head.
-      // throw new Error(`Unknown content type: ${this.expectedContentType}. Cannot determine viewer stabilization locator.`);
       await this.playButton.waitFor({ state: "visible", timeout: 90000 });
     }
   }
@@ -80,8 +72,6 @@ export default class ItemMediaPage {
     // If it's not an video or an image, it should be an audio file, which also uses the player
     else {
       await this.playButton.waitFor({ state: "visible" });
-      // Or, should we also specify audio, and throw an error if an unknown 4th content type slips in there?
-      // throw new Error(`Unknown content type: ${this.expectedContentType}. Cannot determine viewer stabilization locator.`);
     }
   }
 }
