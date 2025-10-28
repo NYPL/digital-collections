@@ -47,7 +47,7 @@ export default class ItemMediaPage {
   }
 
   // Waits for the correct viewer type (Image or Video) to stabilize in the DOM.
-  async stabilizeViewer(): Promise<void> {
+  async getViewerControls(): Promise<void> {
     // check for VIDEO content
     if (this.expectedContentType === "VIDEO") {
       await this.playButton.waitFor({ state: "visible", timeout: 90000 });
@@ -59,19 +59,6 @@ export default class ItemMediaPage {
     // check for 3rd content-type fallback (currently AUDIO)
     else {
       await this.playButton.waitFor({ state: "visible", timeout: 90000 });
-    }
-  }
-
-  async verifyViewerIsReady(): Promise<void> {
-    // check the appropriate anchor based on the content type
-    if (this.expectedContentType === "VIDEO") {
-      await this.playButton.waitFor({ state: "visible" });
-    } else if (this.expectedContentType === "IMAGE") {
-      await this.viewerHeading.waitFor({ state: "visible" });
-    }
-    // If it's not an video or an image, it should be an audio file, which also uses the player
-    else {
-      await this.playButton.waitFor({ state: "visible" });
     }
   }
 }
