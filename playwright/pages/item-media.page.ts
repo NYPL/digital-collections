@@ -4,9 +4,7 @@ export default class ItemMediaPage {
   readonly page: Page;
 
   static readonly IMAGE_UUID = "4387c9f0-c53c-012f-9924-58d385a7bc34";
-  // static readonly VIDEO_UUID = "8820d790-e50c-0130-3a92-3c075448cc4b";
-  // static readonly VIDEO_UUID = "e5f46ea0-e530-0130-cf28-3c075448cc4b";
-  static readonly VIDEO_UUID = "6c5b2f80-e508-0130-855d-3c075448cc4b";
+  static readonly VIDEO_UUID = "09a14bf0-0382-0131-8ec7-3c075448cc4b";
 
   // Store the expected content-types
   readonly expectedContentType: "IMAGE" | "VIDEO";
@@ -38,9 +36,7 @@ export default class ItemMediaPage {
     this.zoomInButton = page.getByRole("button", { name: "Zoom In" });
     this.rotateRightButton = page.getByRole("button", { name: "Rotate Right" });
     this.fullScreenButton = page.getByRole("button", { name: "Full Screen" });
-    // this.playButton = page.getByRole("button", { name: "Play" });
     this.playButton = page.locator("button").filter({ hasText: /^Play$/ });
-    // this.scrubBar = page.getByRole("slider", { name: "seek slider" });
   }
 
   async loadPage(uuid: string): Promise<void> {
@@ -52,15 +48,15 @@ export default class ItemMediaPage {
   async getViewerControls(): Promise<void> {
     // check for VIDEO content
     if (this.expectedContentType === "VIDEO") {
-      await this.playButton.waitFor({ state: "visible", timeout: 90000 });
+      await this.playButton.waitFor({ state: "visible" });
     }
     // check for IMAGE content
     else if (this.expectedContentType === "IMAGE") {
-      await this.zoomInButton.waitFor({ state: "visible", timeout: 90000 });
+      await this.zoomInButton.waitFor({ state: "visible" });
     }
     // check for 3rd content-type fallback (currently AUDIO)
     else {
-      await this.playButton.waitFor({ state: "visible", timeout: 90000 });
+      await this.playButton.waitFor({ state: "visible" });
     }
   }
 }
