@@ -50,6 +50,7 @@ export default class SearchPage {
   readonly clearFilterButton: Locator;
   readonly clearNameFilterApplied: Locator;
   readonly clearTopicFilterApplied: Locator;
+  readonly clearPublisherFilterApplied: Locator;
   readonly clearAllFilters: Locator;
 
   // sort search results
@@ -184,6 +185,9 @@ export default class SearchPage {
     });
     this.clearNameFilterApplied = this.page.getByRole("button", {
       name: "Sheldonian Theatre, click to remove filter",
+    });
+    this.clearPublisherFilterApplied = this.page.getByRole("button", {
+      name: "Printed at the Theater,, click to remove filter",
     });
     this.clearAllFilters = this.page
       .locator("#search-filter-tags")
