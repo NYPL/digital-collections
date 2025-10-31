@@ -1,7 +1,6 @@
 import { test, expect } from "../base";
 import SearchPage from "../pages/search.page";
 import { applyRouteFilters } from "../utils/routeFilters";
-// import { Browser, Page } from "@playwright/test"; // <-- Import is only for types
 
 let searchPage: SearchPage;
 
