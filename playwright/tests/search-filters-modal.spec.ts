@@ -7,7 +7,7 @@ let searchPage: SearchPage;
 test.describe.serial("apply filters in open modal", () => {
   // Runs ONCE to create the shared, filtered page context.
   test.beforeAll(async ({ browser }) => {
-    // Manually create context/page
+    // Manually create context/page to force serialization to remain in block
     const browserContext = await browser.newContext();
     const page = await browserContext.newPage();
 
