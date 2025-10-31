@@ -1,7 +1,6 @@
 import { test, expect } from "../base";
 import SearchPage from "../pages/search.page";
 import { applyRouteFilters } from "../utils/routeFilters";
-// import { Browser, Page } from "@playwright/test"; // <-- Import is only for types
 
 let searchPage: SearchPage;
 
@@ -9,7 +8,7 @@ let searchPage: SearchPage;
 test.describe.serial("find item with a basic keyword search", () => {
   // Runs ONCE to create the shared, filtered page context.
   test.beforeAll(async ({ browser }) => {
-    // Manually create context/page
+    // Manually create context/page to force serialization to remain in block
     const browserContext = await browser.newContext();
     const page = await browserContext.newPage();
 
