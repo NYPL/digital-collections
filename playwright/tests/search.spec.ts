@@ -212,20 +212,18 @@ test.describe("clears search results filters", () => {
     const searchPage = new SearchPage(page);
     await expect(searchPage.refineHeading).toBeVisible();
 
-    await searchPage.filterSearchResults(); // reset filters to topic and publisher
+    await searchPage.filterSearchResults(); // reset filters to name and publisher
 
     await expect(searchPage.clearAllFilters).toBeVisible();
     await searchPage.clearAllFilters.click();
-    await expect(searchPage.topicSelected).not.toBeVisible();
+    await expect(searchPage.nameSelected).not.toBeVisible();
     await expect(searchPage.publisherSelected).not.toBeVisible();
   });
 
   test("clears drop-down filter", async ({ page }) => {
     const searchPage = new SearchPage(page);
     await expect(searchPage.refineHeading).toBeVisible();
-
-    await searchPage.filterSearchResults(); // reset filters to topic and publisher
-
+    await searchPage.filterSearchResults(); // reset filters to name and publisher
     await expect(searchPage.nameFilter).toBeVisible();
     await searchPage.nameFilter.click();
     await expect(searchPage.clearFilterButton).toBeVisible();
@@ -242,6 +240,7 @@ test.describe("clears search results filters", () => {
     await expect(searchPage.clearNameFilterApplied).toBeVisible();
     await searchPage.clearNameFilterApplied.click();
     await expect(searchPage.nameSelected).not.toBeVisible();
+    await expect(searchPage.clearPublisherFilterApplied).toBeVisible();
   });
 });
 
