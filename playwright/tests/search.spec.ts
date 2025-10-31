@@ -1,4 +1,4 @@
-import { test, expect } from "@playwright/test";
+import { test, expect } from "../base";
 import SearchPage from "../pages/search.page";
 
 test.beforeEach(async ({ page }, testInfo) => {
@@ -226,11 +226,11 @@ test.describe("clears search results filters", () => {
 
     await searchPage.filterSearchResults(); // reset filters to topic and publisher
 
-    await expect(searchPage.topicFilter).toBeVisible();
-    await searchPage.topicFilter.click();
+    await expect(searchPage.nameFilter).toBeVisible();
+    await searchPage.nameFilter.click();
     await expect(searchPage.clearFilterButton).toBeVisible();
     await searchPage.clearFilterButton.click();
-    await expect(searchPage.topicSelected).not.toBeVisible();
+    await expect(searchPage.nameSelected).not.toBeVisible();
   });
 
   test("clears one filter in Filters Applied", async ({ page }) => {
