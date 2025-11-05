@@ -7,7 +7,7 @@ const BackToTopLink = () => {
       isUnderlined={false}
       hasVisitedState={false}
       gap="xxs"
-      type="action"
+      variant="action"
       href="#"
     >
       Back to top{"  "}

@@ -17,7 +17,7 @@ const ExternalLinksOverview = ({ catalogLink, archivesLink }) => {
             isUnderlined={false}
             target="_blank"
             aria-label={`view finding aid`}
-            type="buttonSecondary"
+            variant="buttonSecondary"
             marginRight="xs"
           >
             Finding Aid
@@ -30,7 +30,7 @@ const ExternalLinksOverview = ({ catalogLink, archivesLink }) => {
             isUnderlined={false}
             target="_blank"
             aria-label={`view in catalog`}
-            type="buttonSecondary"
+            variant="buttonSecondary"
           >
             Research Catalog
           </Link>

@@ -42,7 +42,7 @@ export default function ErrorPage() {
         </Link>{" "}
         if the error persists.
       </Text>
-      <Link type="buttonPrimary" href="/">
+      <Link variant="buttonPrimary" href="/">
         Back to Digital Collections
       </Link>
     </Flex>

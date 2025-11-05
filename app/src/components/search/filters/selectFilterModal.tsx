@@ -112,7 +112,7 @@ const SelectFilterModal = forwardRef<HTMLButtonElement, SelectFilterModalProps>(
     return (
       <>
         <Button
-          buttonType="secondary"
+          variant="secondary"
           width="100%"
           id="modal-btn"
           onClick={handleOpen}
@@ -272,7 +272,7 @@ const SelectFilterModal = forwardRef<HTMLButtonElement, SelectFilterModalProps>(
 
               <ButtonGroup padding="m" marginX="auto">
                 <Button
-                  buttonType="secondary"
+                  variant="secondary"
                   onClick={() => {
                     handleClose(false);
                     setModalCurrent(current);

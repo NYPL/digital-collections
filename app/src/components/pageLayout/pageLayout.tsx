@@ -4,6 +4,7 @@ import {
   DSProvider,
   SkipNavigation,
   Box,
+  useResponsiveSpacing,
 } from "@nypl/design-system-react-components";
 import React, { useEffect } from "react";
 import { type PropsWithChildren } from "react";
@@ -54,6 +55,8 @@ const PageLayout = ({
     }
   });
 
+  const { responsivePadding } = useResponsiveSpacing();
+
   return (
     <>
       {/* <!-- Adobe Analytics  --> */}
@@ -83,7 +86,7 @@ const PageLayout = ({
             ) : (
               <>
                 <Breadcrumbs
-                  breadcrumbsType="digitalCollections"
+                  variant="digitalCollections"
                   breadcrumbsData={breadcrumbs || []}
                   aria-label={activePage}
                 />
@@ -93,7 +96,10 @@ const PageLayout = ({
                   sx={{
                     margin: "auto",
                     maxWidth: "1280px",
-                    padding: "64px 16px",
+                    paddingLeft: responsivePadding,
+                    paddingRight: responsivePadding,
+                    paddingTop: "64px",
+                    paddingBottom: "64px",
                   }}
                 >
                   {children as JSX.Element}

@@ -38,7 +38,7 @@ const NavMenu = ({ render }: NavMenuProps) => {
         listItems={listItems}
         inline={true}
         noStyling
-        type="ul"
+        variant="ul"
         sx={{
           marginBottom: "xs",
           "& li": {

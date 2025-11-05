@@ -77,7 +77,7 @@ export const DateFilter = forwardRef<TextInputRefType, DateFilterProps>(
 
     return (
       <>
-        <Heading size="heading6" level="h3">
+        <Heading size="heading6" level="h3" marginBottom="s">
           Date range:
         </Heading>
         <form onSubmit={handleSubmit}>

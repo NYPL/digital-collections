@@ -69,7 +69,7 @@ const Filters = ({
       )}
       <Button
         id="see-more-filters"
-        buttonType="secondary"
+        variant="secondary"
         onClick={() => {
           setFiltersExpanded((prev) => !prev);
         }}
@@ -96,6 +96,7 @@ const Filters = ({
           tabIndex="-1"
           id="refine-search-heading"
           size="heading4"
+          marginBottom="s"
         >
           {headingText}
         </Heading>
