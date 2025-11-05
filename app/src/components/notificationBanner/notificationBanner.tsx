@@ -4,8 +4,7 @@ import React from "react";
 const NotificationBanner = () => {
   return (
     <Notification
-      notificationType="announcement"
-      noMargin
+      variant="announcement"
       notificationContent={
         <>
           Digital Collections is getting a new look. Prefer the former version?

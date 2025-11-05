@@ -26,7 +26,7 @@ const AVMaterialManifest = ({ manifestURL }) => {
             isUnderlined={false}
             target="_blank"
             aria-label={`view IIIF manifest`}
-            type="buttonSecondary"
+            variant="buttonSecondary"
           >
             Link to Item Manifest
           </Link>

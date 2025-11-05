@@ -108,7 +108,7 @@ const Player = ({ title, sources, captions, type }: PlyrProps) => {
                 <Button
                   aria-label={`${truncateString(title, 20)} (${index + 1})`}
                   aria-pressed={index === currentCanvasIndex}
-                  buttonType={
+                  variant={
                     index === currentCanvasIndex ? "primary" : "secondary"
                   }
                   key={`item-canvas-${index + 1}-button`}

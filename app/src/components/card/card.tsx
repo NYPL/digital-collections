@@ -59,7 +59,7 @@ export const Card = forwardRef<HTMLDivElement, DCCardProps>(
       >
         <CardContent>
           {isCollection && record.containsOnSiteMaterial && (
-            <StatusBadge sx={{ marginBottom: "0px" }} type="informative">
+            <StatusBadge sx={{ marginBottom: "0px" }} variant="informative">
               Contains on-site materials
             </StatusBadge>
           )}

@@ -39,7 +39,7 @@ const RightsFilter = ({ searchManager }: RightsFilterProps) => {
 
   return (
     <>
-      <Heading size="heading6" level="h3">
+      <Heading size="heading6" level="h3" marginBottom="s">
         Show only:
       </Heading>
       <RadioGroup
