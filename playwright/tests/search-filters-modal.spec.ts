@@ -91,7 +91,7 @@ test.describe.serial("apply filters in open modal", () => {
     test("choose filter results by availability", async () => {
       await expect(searchPage.refineHeading).toBeVisible();
       await expect(searchPage.availablePublicDomain).toBeVisible();
-      await searchPage.availablePublicDomain.click();
+      await searchPage.availablePublicDomain.check();
       await expect(searchPage.availablePublicDomain).toBeChecked();
     });
   });
