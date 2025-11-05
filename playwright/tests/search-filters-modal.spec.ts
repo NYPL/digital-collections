@@ -6,6 +6,20 @@ let searchPage: SearchPage;
 
 test.describe.serial("apply filters in open modal", () => {
   // Runs ONCE to create the shared, filtered page context.
+
+  /**
+  JUSTIFICATION FOR .serial USAGE:
+  
+  These tests intentionally use .serial to maintain browser state across multiple test steps. This deviates from Playwright's recommendation for isolated tests for the following reasons:
+  
+  1. Performance: Avoids 6 separate page loads (60% faster: 16.57s vs 26.23s)
+  2. Resource efficiency: Uses single worker instead of 6 parallel workers
+  3. User journey testing: Simulates realistic workflow of opening modal once and applying multiple filters in sequence
+  4. State accumulation: Each filter builds on previous selections
+
+  Alternative considered: Single comprehensive test, but rejected because individual filter
+  */
+
   test.beforeAll(async ({ browser }) => {
     // Manually create context/page to force serialization to remain in block
     const browserContext = await browser.newContext();
