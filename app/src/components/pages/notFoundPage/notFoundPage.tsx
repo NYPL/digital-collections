@@ -53,7 +53,7 @@ export default function NotFoundPage() {
           The page you were looking for doesn&apos;t exist or may have moved
           elsewhere.
         </Text>
-        <Link type="buttonPrimary" href="/">
+        <Link variant="buttonPrimary" href="/">
           Back to Digital Collections
         </Link>
       </Flex>

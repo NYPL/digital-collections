@@ -37,7 +37,7 @@ const ExploreFurther = () => {
       >
         <Box sx={{ paddingBottom: "s" }}>
           <Heading size="heading3" text="Explore further" />
-          <Text size="subtitle2" sx={{ fontWeight: "400" }}>
+          <Text size="subtitle2" sx={{ fontWeight: "400", marginTop: "s" }}>
             Here are some other ways you can access and engage with digital
             content at NYPL and beyond:
           </Text>
@@ -48,6 +48,7 @@ const ExploreFurther = () => {
             key={`card-key-${index}`}
             data-testid={`test-id-${index}`}
             mainActionLink={item.url}
+            marginTop={"s"}
             imageProps={{
               component: (
                 <Image

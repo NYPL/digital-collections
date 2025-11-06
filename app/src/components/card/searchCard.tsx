@@ -32,7 +32,7 @@ export interface SearchCardProps {
 
 const onSiteMaterialBadge = (recordType: SearchResultRecordType) => {
   return (
-    <StatusBadge sx={{ margin: "0" }} type="informative">
+    <StatusBadge sx={{ margin: "0" }} variant="informative">
       {recordType === "Item"
         ? "Available on-site only"
         : "Contains on-site only materials"}
@@ -65,7 +65,7 @@ const contentTypeTag = (result: SearchCardType) => {
             label: displayLabel,
           },
         ]}
-        type="filter"
+        variant="filter"
         sx={{ margin: 0 }}
       />
     )

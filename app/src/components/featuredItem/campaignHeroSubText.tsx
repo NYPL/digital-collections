@@ -18,12 +18,12 @@ const CampaignHeroSubText = ({ featuredItem }: CampaignHeroSubtextProps) => {
   );
   return (
     <>
-      <Text>
+      <Text paddingTop="s">
         This site is a living database with new materials added every day,
         featuring prints, photographs, maps, manuscripts, streaming video, and
         more.
       </Text>
-      <Text sx={{ marginRight: "s" }}>
+      <Text sx={{ marginRight: "s", paddingTop: "s" }}>
         Our collections include some content that may be harmful or difficult
         to&nbsp;view.{" "}
         <DSLink
@@ -35,7 +35,7 @@ const CampaignHeroSubText = ({ featuredItem }: CampaignHeroSubtextProps) => {
           Learn more
         </DSLink>
       </Text>
-      <HorizontalRule />
+      <HorizontalRule marginTop="s" marginBottom="s" />
       <Box>
         <Text
           mb="0px"

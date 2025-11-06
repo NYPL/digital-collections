@@ -1,5 +1,10 @@
 "use client";
-import { TemplateAppContainer } from "@nypl/design-system-react-components";
+import {
+  Template,
+  TemplateBreakout,
+  TemplateContent,
+  TemplateMain,
+} from "@nypl/design-system-react-components";
 import React from "react";
 import ExploreFurther from "../../exploreFurther/exploreFurther";
 import CampaignHero from "../../featuredItem/campaignHero";
@@ -12,20 +17,22 @@ export default function HomePage({ data }) {
       activePage="home"
       adobeAnalyticsPageName={createAdobeAnalyticsPageName("home")}
     >
-      <TemplateAppContainer
-        breakout={
-          <div id="hero">
-            <CampaignHero featuredItemData={data.featuredItemData} />
-          </div>
-        }
-        contentPrimary={
-          <HomePageMainContent
-            swimlanes={data.swimLaneData.lanesWithNumItems}
-            randomNumber={data.swimLaneData.randomNumber}
-          />
-        }
-      />
-      <ExploreFurther />
+      <Template>
+        <TemplateBreakout>
+          <CampaignHero featuredItemData={data.featuredItemData} />
+        </TemplateBreakout>
+        <TemplateMain>
+          <TemplateContent>
+            <HomePageMainContent
+              swimlanes={data.swimLaneData.lanesWithNumItems}
+              randomNumber={data.swimLaneData.randomNumber}
+            />
+            <TemplateBreakout>
+              <ExploreFurther />
+            </TemplateBreakout>
+          </TemplateContent>
+        </TemplateMain>
+      </Template>
     </PageLayout>
   );
 }

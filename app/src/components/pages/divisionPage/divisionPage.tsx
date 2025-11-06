@@ -92,7 +92,7 @@ export default function DivisionPage({ data }: any) {
       >
         <Heading level="h1" text={data.name} subtitle={data.summary} />
         <Link
-          type="standalone"
+          variant="standalone"
           target="_blank"
           href={data.nyplLink}
           style={{ width: "fit-content" }}
