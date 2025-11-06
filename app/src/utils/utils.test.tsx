@@ -9,6 +9,7 @@ import {
   getHighestRankedHighlight,
   replaceEmWithMark,
   highlightTitleWords,
+  titleToDCParam,
 } from "./utils";
 import { AvailableFilterOption } from "../types/AvailableFilterType";
 
@@ -373,5 +374,16 @@ describe("highlightTitleWords", () => {
     const title = "The Great Gatsby, 1800, 1900";
     const result = highlightTitleWords(title, highlights);
     expect(result).toBe("The <mark>Great</mark> Gatsby, 1800, 1900");
+  });
+});
+
+describe("titleToDCParam", () => {
+  it("replaces & with '%26' and spaces with '+'", () => {
+    const title =
+      "The Miriam and Ira D. Wallach Division of Art, Prints and Photographs: Art & Architecture Collection";
+    const result = titleToDCParam(title);
+    expect(result).toBe(
+      "The+Miriam+and+Ira+D.+Wallach+Division+of+Art,+Prints+and+Photographs:+Art+%26+Architecture+Collection"
+    );
   });
 });
