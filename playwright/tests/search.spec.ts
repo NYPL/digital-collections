@@ -1,4 +1,4 @@
-import { test, expect } from "@playwright/test";
+import { test, expect } from "../base";
 import SearchPage from "../pages/search.page";
 
 test.beforeEach(async ({ page }, testInfo) => {
@@ -212,36 +212,35 @@ test.describe("clears search results filters", () => {
     const searchPage = new SearchPage(page);
     await expect(searchPage.refineHeading).toBeVisible();
 
-    await searchPage.filterSearchResults(); // reset filters to topic and publisher
+    await searchPage.filterSearchResults(); // reset filters to name and publisher
 
     await expect(searchPage.clearAllFilters).toBeVisible();
     await searchPage.clearAllFilters.click();
-    await expect(searchPage.topicSelected).not.toBeVisible();
+    await expect(searchPage.nameSelected).not.toBeVisible();
     await expect(searchPage.publisherSelected).not.toBeVisible();
   });
 
   test("clears drop-down filter", async ({ page }) => {
     const searchPage = new SearchPage(page);
     await expect(searchPage.refineHeading).toBeVisible();
-
-    await searchPage.filterSearchResults(); // reset filters to topic and publisher
-
-    await expect(searchPage.topicFilter).toBeVisible();
-    await searchPage.topicFilter.click();
+    await searchPage.filterSearchResults(); // reset filters to name and publisher
+    await expect(searchPage.nameFilter).toBeVisible();
+    await searchPage.nameFilter.click();
     await expect(searchPage.clearFilterButton).toBeVisible();
     await searchPage.clearFilterButton.click();
-    await expect(searchPage.topicSelected).not.toBeVisible();
+    await expect(searchPage.nameSelected).not.toBeVisible();
   });
 
   test("clears one filter in Filters Applied", async ({ page }) => {
     const searchPage = new SearchPage(page);
     await expect(searchPage.refineHeading).toBeVisible();
 
-    await searchPage.filterSearchResults(); // reset filters to topic and publisher
+    await searchPage.filterSearchResults(); // reset filters to name and publisher
 
-    await expect(searchPage.clearTopicFilterApplied).toBeVisible();
-    await searchPage.clearTopicFilterApplied.click();
-    await expect(searchPage.topicSelected).not.toBeVisible();
+    await expect(searchPage.clearNameFilterApplied).toBeVisible();
+    await searchPage.clearNameFilterApplied.click();
+    await expect(searchPage.nameSelected).not.toBeVisible();
+    await expect(searchPage.clearPublisherFilterApplied).toBeVisible();
   });
 });
 
