@@ -1,4 +1,4 @@
-import { test, expect } from "@playwright/test";
+import { test, expect } from "../base";
 import ItemPage from "../pages/item.page";
 
 test("Capture uuid redirects to correct canvas", async ({ page, baseURL }) => {

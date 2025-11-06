@@ -1,4 +1,4 @@
-import { test, expect } from "@playwright/test";
+import { test, expect } from "../base";
 import { DivisionsPage } from "../pages/divisions.page";
 
 test.beforeEach(async ({ page }) => {
