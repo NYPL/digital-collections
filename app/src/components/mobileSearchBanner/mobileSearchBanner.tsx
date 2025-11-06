@@ -12,7 +12,7 @@ export const MobileSearchBanner = () => {
         },
       }}
       isDismissible
-      type="informative"
+      variant="informative"
       content="Digital Collections is optimized for desktop use. Some features may not be available on mobile devices."
     />
   );

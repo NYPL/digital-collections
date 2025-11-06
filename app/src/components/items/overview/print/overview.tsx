@@ -45,7 +45,7 @@ const PrintOverview = ({ buyable, imageIDs }) => {
               isUnderlined={false}
               target="_blank"
               aria-label={`order print`}
-              type="buttonSecondary"
+              variant="buttonSecondary"
             >
               Order Print
             </Link>

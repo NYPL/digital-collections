@@ -380,7 +380,9 @@ const CollectionStructure = ({
         },
       }}
     >
-      <Heading size="heading6">Collection structure</Heading>
+      <Heading paddingBottom="s" size="heading6">
+        Collection structure
+      </Heading>
       <Box
         ref={scrollContainerRef}
         w="300px"

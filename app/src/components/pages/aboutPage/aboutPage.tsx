@@ -24,7 +24,7 @@ export default function AboutPage() {
       adobeAnalyticsPageName={createAdobeAnalyticsPageName("about")}
     >
       <Box
-        id="mainContent"
+        id="aboutPageContent"
         sx={{
           maxWidth: "820px",
           margin: "s",

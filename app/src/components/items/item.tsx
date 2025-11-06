@@ -33,7 +33,9 @@ const Item = ({ item, canvasIndex }: ItemProps) => {
       <Box marginTop="-3em">
         {renderViewer(item) ? (
           <>
-            <Heading level="h1">{item.title}</Heading>
+            <Heading level="h1" paddingBottom="s">
+              {item.title}
+            </Heading>
             <ItemMediaViewer item={item} canvasIndex={canvasIndex} />
           </>
         ) : (
@@ -45,7 +47,7 @@ const Item = ({ item, canvasIndex }: ItemProps) => {
         {/* TODO: horizontally align Icon with Text with breakpoints */}
         <HStack marginTop="xs" direction="row">
           <Icon name="actionInfo" size="large" />
-          <Text marginTop="1em">
+          <Text marginTop="1em" paddingBottom="s">
             Our collections include some content that may be harmful or
             difficult to view.{" "}
             <Link href="https://digitalcollections.nypl.org/about#nypl_harmful_content_statement">

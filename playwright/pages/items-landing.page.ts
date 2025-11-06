@@ -30,7 +30,7 @@ export default class ItemsLandingPage {
       name: "Refine your search",
     });
     this.topicFilter = this.page.getByRole("button", { name: "Topic" });
-    this.sortButton = this.page.locator("#menu-button-sort-menu");
+    this.sortButton = this.page.locator("#sort-menu");
   }
 
   static async loadPage(

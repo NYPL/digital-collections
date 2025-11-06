@@ -43,11 +43,11 @@ const aboutData = [
     heading: <Heading level="h2" size="heading4" text="Find items" />,
     body: (
       <Box sx={{ marginBottom: "xxl" }}>
-        <Text sx={{ marginTop: "s" }}>
+        <Text sx={{ marginTop: "s", marginBottom: "s" }}>
           {" "}
           <b>Looking for something? </b>
         </Text>
-        <Text>
+        <Text sx={{ marginBottom: "s" }}>
           {" "}
           Start by searching or browse through{" "}
           <Link href="https://digitalcollections.nypl.org/search/index">
@@ -64,11 +64,11 @@ const aboutData = [
           .
         </Text>
 
-        <Text>
+        <Text sx={{ marginBottom: "s" }}>
           {" "}
           <b> Want images you can reuse freely? </b>
         </Text>
-        <Text>
+        <Text sx={{ marginBottom: "s" }}>
           You can explore materials that have{" "}
           <Link href="https://digitalcollections.nypl.org/search/index?filters=%5Brights%3DpublicDomain%5D">
             no known U.S. copyright restrictions
@@ -78,7 +78,7 @@ const aboutData = [
         </Text>
 
         <Text> Use filters to make your search more specific:</Text>
-        <List type="ul">
+        <List sx={{ marginBottom: "s" }} variant="ul">
           <li>
             {" "}
             <b>Public Domain</b> - Only see items with no known copyright
@@ -96,7 +96,7 @@ const aboutData = [
           </li>
         </List>
 
-        <Text>
+        <Text sx={{ marginBottom: "s" }}>
           <b>Need to narrow things down?</b>
         </Text>
         <Text>
@@ -107,7 +107,7 @@ const aboutData = [
         <Text>
           <b>Want to sort your results?</b> You&apos;ve got options:
         </Text>
-        <List type="ul">
+        <List sx={{ marginBottom: "s" }} variant="ul">
           <li>
             {" "}
             <b>Relevance</b> - Closest matches to your search query{" "}
@@ -150,7 +150,7 @@ const aboutData = [
           Simply click on your preferred file size and check your browser&apos;s
           download folder or new tab for the image.{" "}
         </Text>
-        <Text sx={{ marginTop: "s" }}>
+        <Text sx={{ marginTop: "s", marginBottom: "s" }}>
           When viewing items as a two page spread, select the page you want to
           download by clicking on the right or left image.{" "}
         </Text>
@@ -187,7 +187,7 @@ const aboutData = [
     ),
     body: (
       <>
-        <Text sx={{ marginTop: "s" }}>
+        <Text sx={{ marginTop: "s", marginBottom: "s" }}>
           To date, there are nearly{" "}
           <Link href="https://digitalcollections.nypl.org/search/index?filters%5Brights%5D=pd&keywords=">
             500,000 public domain items
@@ -199,7 +199,7 @@ const aboutData = [
           format of the materials and what the items depict. It is your
           responsibility to respect these rights.{" "}
         </Text>
-        <Text>
+        <Text sx={{ marginBottom: "s" }}>
           Though it is not required, please credit public domain items with,
           &quot;From The New York Public Library,&quot; and provide a link back
           to each item on the Digital Collections website. Doing so helps us
@@ -229,7 +229,7 @@ const aboutData = [
     ),
     body: (
       <>
-        <Text sx={{ marginTop: "s" }}>
+        <Text sx={{ marginTop: "s", marginBottom: "s" }}>
           Unless you are a lawyer and/or outside of the United States, there
           isn&apos;t really a difference. The term &quot;public domain&quot; is
           not consistently used largely because it means different things in
@@ -274,7 +274,7 @@ const aboutData = [
     ),
     body: (
       <>
-        <Text sx={{ marginTop: "s" }}>
+        <Text sx={{ marginTop: "s", marginBottom: "s" }}>
           Not all Digital Collections items have been formally reviewed for
           copyright status. For unmarked items, we do not grant or deny
           permission for reuse. You may want to look into resources that can
@@ -295,7 +295,7 @@ const aboutData = [
           </Link>{" "}
           made available by the Cornell Copyright Information Center.{" "}
         </Text>
-        <Text>
+        <Text sx={{ marginBottom: "s" }}>
           If materials are not in the public domain, it is your responsibility
           to determine and satisfy copyright or other use restrictions when
           publishing or otherwise using the materials. You are solely
@@ -388,7 +388,7 @@ const aboutData = [
     heading: <Heading level="h2" size="heading4" text="Available metadata" />,
     body: (
       <>
-        <Text sx={{ marginTop: "s" }}>
+        <Text sx={{ marginTop: "s", marginBottom: "s" }}>
           NYPL metadata published via the sources below is released under a{" "}
           <Link
             target="_blank"
@@ -399,12 +399,13 @@ const aboutData = [
           .
         </Text>
         <List
-          type="ul"
+          variant="ul"
           sx={{
             paddingLeft: "s",
             "li::before": {
               color: "ui.border.hover",
             },
+            marginBottom: "s",
           }}
         >
           <li>
@@ -453,7 +454,7 @@ const aboutData = [
     heading: <Heading level="h2" size="heading4" text="Platform" />,
     body: (
       <>
-        <Text sx={{ marginTop: "s" }}>
+        <Text sx={{ marginTop: "s", marginBottom: "s" }}>
           The Digital Collections platform utilizes JavaScript libraries such as
           Next.js, React, and the{" "}
           <Link
@@ -525,19 +526,20 @@ const aboutData = [
         sx={{ marginBottom: "xxl", marginTop: "s" }}
         accordionData={[
           {
-            accordionType: "default",
+            variant: "default",
             label:
               "What harmful or difficult content may be found in NYPL's Digital Collections?",
             panel: (
               <>
                 <Text sx={{ marginBottom: "xs" }}>Some items may: </Text>
                 <List
-                  type="ul"
+                  variant="ul"
                   sx={{
                     paddingLeft: "s",
                     "li::before": {
                       color: "ui.border.hover",
                     },
+                    paddingBottom: "s",
                   }}
                 >
                   <li>
@@ -564,10 +566,10 @@ const aboutData = [
             ),
           },
           {
-            accordionType: "default",
+            variant: "default",
             label: "Why does NYPL make potentially harmful content available?",
             panel: (
-              <Text>
+              <Text sx={{ marginBottom: "s" }}>
                 We collect, preserve, and provide these materials to our patrons
                 freely and openly and without censorship. Our collections do
                 include depictions and records of people experiencing trauma and
@@ -578,17 +580,18 @@ const aboutData = [
             ),
           },
           {
-            accordionType: "default",
+            variant: "default",
             label:
               "How is this material described, and why are some of the terms used in the descriptions harmful?",
             panel: (
               <List
-                type="ul"
+                variant="ul"
                 sx={{
                   paddingLeft: "s",
                   "li::before": {
                     color: "ui.border.hover",
                   },
+                  paddingBottom: "s",
                 }}
               >
                 <li>
@@ -622,19 +625,20 @@ const aboutData = [
             ),
           },
           {
-            accordionType: "default",
+            variant: "default",
             label:
               "How are librarians, cataloguers, and archivists working to address this problem and help users better understand such content?",
             panel: (
               <>
                 <Text sx={{ marginBottom: "xs" }}>Examples include: </Text>
                 <List
-                  type="ul"
+                  variant="ul"
                   sx={{
                     paddingLeft: "s",
                     "li::before": {
                       color: "ui.border.hover",
                     },
+                    paddingBottom: "s",
                   }}
                 >
                   <li>
@@ -669,32 +673,33 @@ const aboutData = [
             ),
           },
           {
-            accordionType: "default",
+            variant: "default",
             label: "How can I report harmful content?",
             panel: (
               <>
-                <Text>
+                <Text sx={{ marginBottom: "s" }}>
                   Please note: this process applies only to language found
                   within metadata descriptions of items on Digital Collections,
                   not to the content of the original material. NYPL does not
                   alter the content of original research material.{" "}
                 </Text>
-                <Text>
+                <Text sx={{ marginBottom: "s" }}>
                   You can help us by reporting potentially harmful language that
                   you see in item descriptions in Digital Collections.
                 </Text>
-                <Text sx={{ marginBottom: "xs" }}>
+                <Text sx={{ marginBottom: "s" }}>
                   Click the feedback form button at the bottom of this page and
                   include:
                 </Text>
-                <Text>
+                <Text sx={{ marginBottom: "s" }}>
                   <List
-                    type="ul"
+                    variant="ul"
                     sx={{
                       paddingLeft: "s",
                       "li::before": {
                         color: "ui.border.hover",
                       },
+                      paddingBottom: "s",
                     }}
                   >
                     <li>a link to the item on Digital Collections</li>
@@ -712,7 +717,7 @@ const aboutData = [
                   professional best practices, and allocation of staff
                   resources.{" "}
                 </Text>
-                <Text>
+                <Text sx={{ marginBottom: "s" }}>
                   Adapted from the{" "}
                   <Link
                     target="_blank"
