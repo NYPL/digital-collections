@@ -89,7 +89,7 @@ export const stringToSlug = (string: string = ""): string => {
 };
 
 export const titleToDCParam = (string: string = ""): string => {
-  return string?.replace(/\s+/g, "+"); // replace spaces with +
+  return encodeURIComponent(string);
 };
 
 export const totalNumPages = (numResults: string, perPage: number): number => {
