@@ -378,12 +378,12 @@ describe("highlightTitleWords", () => {
 });
 
 describe("titleToDCParam", () => {
-  it("replaces & with '%26' and spaces with '+'", () => {
+  it("replaces & with '%26' and spaces with '%20'", () => {
     const title =
       "The Miriam and Ira D. Wallach Division of Art, Prints and Photographs: Art & Architecture Collection";
     const result = titleToDCParam(title);
     expect(result).toBe(
-      "The+Miriam+and+Ira+D.+Wallach+Division+of+Art,+Prints+and+Photographs:+Art+%26+Architecture+Collection"
+      "The%20Miriam%20and%20Ira%20D.%20Wallach%20Division%20of%20Art%2C%20Prints%20and%20Photographs%3A%20Art%20%26%20Architecture%20Collection"
     );
   });
 });
