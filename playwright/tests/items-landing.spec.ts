@@ -1,4 +1,4 @@
-import { test, expect } from "@playwright/test";
+import { test, expect } from "../base";
 import ItemsLandingPage from "../pages/items-landing.page";
 
 let itemsLandingPage: ItemsLandingPage;
