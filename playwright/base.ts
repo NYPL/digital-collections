@@ -25,12 +25,12 @@ export const test = base.extend<RouteFilterFixtures>({
 
 // Teardown with global afterEach cleanup hook
 test.afterEach(async ({ page }) => {
-  // 1. Clear session and cookies (Using compatible explicit calls)
+  // 1. Clear session and cookies with explicit calls
   await page.context().clearCookies();
   await page.evaluate(() => window.localStorage.clear());
   await page.evaluate(() => window.sessionStorage.clear());
 
-  // 2. Remove all network interception rules (Using the correct method)
+  // 2. Remove all network interception rules
   await page.unrouteAll();
 });
 
