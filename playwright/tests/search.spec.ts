@@ -118,7 +118,7 @@ test.describe("displays specific filter options", () => {
 
     await expect(searchPage.topicFilter).toBeVisible();
     await searchPage.topicFilter.click();
-    await expect(searchPage.topicOption).toBeVisible({ timeout: 20000 });
+    await expect(searchPage.topicOption).toBeVisible();
     await searchPage.topicOption.click();
     await expect(searchPage.applyFilterButton).toBeVisible();
     await searchPage.applyFilterButton.click();
@@ -253,9 +253,8 @@ test.describe("sorts search results", () => {
     await expect(searchPage.sortByNewest).toBeVisible();
     await expect(searchPage.sortByOldest).toBeVisible();
     await searchPage.sortByNewest.click();
-    await expect(searchPage.sortByNewestSelected).toBeVisible({
-      timeout: 20000,
-    });
+    await searchPage.sortByNewest.waitFor({ state: "hidden" });
+    await expect(searchPage.sortByNewestSelected).toBeVisible();
   });
 
   test("sorts search results alphabetically", async ({ page }) => {
@@ -266,6 +265,7 @@ test.describe("sorts search results", () => {
     await expect(searchPage.sortByAlpha).toBeVisible();
     await expect(searchPage.sortByReverseAlpha).toBeVisible();
     await searchPage.sortByAlpha.click();
+    await searchPage.sortByAlpha.waitFor({ state: "hidden" });
     await expect(searchPage.sortByAlphaSelected).toBeVisible();
   });
 
@@ -277,6 +277,7 @@ test.describe("sorts search results", () => {
     await expect(searchPage.sortByCollections).toBeVisible();
     await expect(searchPage.sortByItems).toBeVisible();
     await searchPage.sortByCollections.click();
+    await searchPage.sortByCollections.waitFor({ state: "hidden" });
     await expect(searchPage.sortByCollectionsSelected).toBeVisible();
   });
 
