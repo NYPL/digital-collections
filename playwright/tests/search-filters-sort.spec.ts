@@ -14,7 +14,6 @@ test.describe.serial("choose specific sort options", () => {
   });
 
   test("sorts search results by relevance", async ({ page }) => {
-    // await searchPage.sortButton.click();
     await expect(searchPage.sortByRelevance).toBeVisible();
     await searchPage.sortByRelevance.click({ force: true });
     await expect(searchPage.sortByRelevanceSelected).toBeVisible({
@@ -23,7 +22,6 @@ test.describe.serial("choose specific sort options", () => {
   });
 
   test("sorts search results by age", async ({ page }) => {
-    // const searchPage = new SearchPage(page);
     await expect(searchPage.sortByNewest).toBeVisible();
     await expect(searchPage.sortByOldest).toBeVisible();
     await searchPage.sortByNewest.click({ force: true });
@@ -33,7 +31,6 @@ test.describe.serial("choose specific sort options", () => {
   });
 
   test("sorts search results alphabetically", async ({ page }) => {
-    // const searchPage = new SearchPage(page);
     await expect(searchPage.sortByAlpha).toBeVisible();
     await expect(searchPage.sortByReverseAlpha).toBeVisible();
     await searchPage.sortByAlpha.click({ force: true });
@@ -43,7 +40,6 @@ test.describe.serial("choose specific sort options", () => {
   });
 
   test("sorts search results by type", async ({ page }) => {
-    // const searchPage = new SearchPage(page);
     await expect(searchPage.sortByCollections).toBeVisible();
     await expect(searchPage.sortByItems).toBeVisible();
     await searchPage.sortByCollections.click({ force: true });
