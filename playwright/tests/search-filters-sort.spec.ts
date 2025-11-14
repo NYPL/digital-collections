@@ -3,7 +3,7 @@ import SearchPage from "../pages/search.page";
 
 let searchPage: SearchPage;
 
-test.describe.serial("choose specific sort options", () => {
+test.describe("choose specific sort options", () => {
   test.beforeEach(async ({ page }) => {
     searchPage = new SearchPage(page);
     await searchPage.loadPage(SearchPage.searchResultsUrl);
