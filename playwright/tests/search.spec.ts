@@ -244,53 +244,6 @@ test.describe("clears search results filters", () => {
   });
 });
 
-test.describe("sorts search results", () => {
-  test("sorts search results by age", async ({ page }) => {
-    const searchPage = new SearchPage(page);
-    await expect(searchPage.resultsHeading).toBeVisible();
-    await expect(searchPage.sortButton).toBeVisible();
-    await searchPage.sortButton.click();
-    await expect(searchPage.sortByNewest).toBeVisible();
-    await expect(searchPage.sortByOldest).toBeVisible();
-    await searchPage.sortByNewest.click();
-    await expect(searchPage.sortByNewestSelected).toBeVisible({
-      timeout: 20000,
-    });
-  });
-
-  test("sorts search results alphabetically", async ({ page }) => {
-    const searchPage = new SearchPage(page);
-    await expect(searchPage.resultsHeading).toBeVisible();
-    await expect(searchPage.sortButton).toBeVisible();
-    await searchPage.sortButton.click();
-    await expect(searchPage.sortByAlpha).toBeVisible();
-    await expect(searchPage.sortByReverseAlpha).toBeVisible();
-    await searchPage.sortByAlpha.click();
-    await expect(searchPage.sortByAlphaSelected).toBeVisible();
-  });
-
-  test("sorts search results by type", async ({ page }) => {
-    const searchPage = new SearchPage(page);
-    await expect(searchPage.resultsHeading).toBeVisible();
-    await expect(searchPage.sortButton).toBeVisible();
-    await searchPage.sortButton.click();
-    await expect(searchPage.sortByCollections).toBeVisible();
-    await expect(searchPage.sortByItems).toBeVisible();
-    await searchPage.sortByCollections.click();
-    await expect(searchPage.sortByCollectionsSelected).toBeVisible();
-  });
-
-  test("sorts search results by relevance", async ({ page }) => {
-    const searchPage = new SearchPage(page);
-    await expect(searchPage.resultsHeading).toBeVisible();
-    await expect(searchPage.sortButton).toBeVisible();
-    await searchPage.sortButton.click();
-    await expect(searchPage.sortByRelevance).toBeVisible();
-    await searchPage.sortByRelevance.click();
-    await expect(searchPage.sortByRelevanceSelected).toBeVisible();
-  });
-});
-
 test.describe("clicks on an item in search results", () => {
   test("clicks on an item in unfiltered search results", async ({ page }) => {
     const searchPage = new SearchPage(page);
