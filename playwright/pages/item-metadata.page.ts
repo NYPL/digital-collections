@@ -18,6 +18,7 @@ export default class ItemMetadataPage {
   readonly datesLink: Locator;
   readonly libraryHeading: Locator;
   readonly libraryLink: Locator;
+  readonly shelfLocatorText: Locator;
   readonly topicHeading: Locator;
   readonly topicText: Locator;
   readonly nameHeading: Locator;
@@ -40,6 +41,7 @@ export default class ItemMetadataPage {
   static readonly EXPECTED_UUID_VALUE = "8b2b3160-c5d5-012f-d95c-58d385a7bc34";
   static readonly EXPECTED_OCLC_VALUE = "24501668";
   static readonly EXPECTED_BNUMBER_VALUE = "b14924644";
+  static readonly EXPECTED_SHELFLOCATOR_VALUE = "Map Div. 97-6199 [LHS 839]";
   readonly rightsHeading: Locator;
   readonly rightsText: Locator;
   readonly dataSourceHeading: Locator;
@@ -81,7 +83,7 @@ export default class ItemMetadataPage {
     this.collectionText = this.collectionHeading.locator("+ p");
     this.collectionLink = this.collectionText.locator("a").first(); // Target the link within the following paragraph
 
-    // Dates/Origin
+    // Dates/Origin  (this can be Dates or Date?)
     this.datesHeading = this.page.getByText("Dates/Origin", { exact: true });
     this.datesText = this.datesHeading.locator("+ p");
     this.datesLink = this.datesText.locator("a").first();
@@ -91,6 +93,9 @@ export default class ItemMetadataPage {
       exact: true,
     }); // Assuming full heading text
     this.libraryLink = this.libraryHeading.locator("+ p > a"); // Assumes link is inside the next paragraph
+
+    // Library shelf locator (optional)
+    this.shelfLocatorText = this.libraryHeading.getByText(/Shelf locator:/i);
 
     // Topics
     this.topicHeading = this.page.getByText("Topic", { exact: true });
@@ -223,6 +228,16 @@ export default class ItemMetadataPage {
         ItemMetadataPage.EXPECTED_BNUMBER_VALUE
       );
     }
+    //  // Get URL the link points to before clicking it
+    // const expectedUrl = (await catalogLinkLocator.getAttribute('href'))!;
+
+    // await catalogLinkLocator.click();
+
+    // await this.page.waitForURL(expectedUrl, { timeout: 30000 });
+
+    // // Check for correct catalog page
+    // const verificationText = "The New York Public Library"; // Example verification text
+    // await expect(this.page.locator('body')).toContainText(verificationText, { timeout: 15000 });
   }
 
   async verifyRightsContent(): Promise<void> {
