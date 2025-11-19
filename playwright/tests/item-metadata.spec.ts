@@ -47,3 +47,13 @@ test.describe("Required Basic Metadata", () => {
     });
   });
 });
+
+test.describe("Optional Basic Metadata", () => {
+  // SETUP: Ensure the mandatory structural containers are visible before each test runs.
+  test.describe("Optional Identifiers", () => {
+    test("Call Number", async () => {
+      // This checks only the Shelf Locator field.
+      // code-goes-here
+    });
+  });
+});
