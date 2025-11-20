@@ -48,12 +48,20 @@ test.describe("Required Basic Metadata", () => {
   });
 });
 
-test.describe("Optional Basic Metadata", () => {
-  // SETUP: Ensure the mandatory structural containers are visible before each test runs.
-  test.describe("Optional Identifiers", () => {
-    test("Call Number", async () => {
-      // This checks only the Shelf Locator field.
-      // code-goes-here
-    });
+test.describe("Required Basic Metadata", () => {
+  test("should include Shelf Locator if present", async () => {
+    await itemMetadataPage.verifyShelfLocatorIsPresent();
   });
 });
+
+// test.describe("Optional Basic Metadata", () => {
+//   // SETUP: Ensure the mandatory structural containers are visible before each test runs.
+
+//   test.describe("Optional Identifiers", () => {
+//     test("Call Number", async () => {
+//       // This checks only the Shelf Locator field.
+//       await expect(itemMetadataPage.shelfLocatorText).toBeVisible();
+//       await itemMetadataPage.verifyShelfLocatorCallNumberContent();
+//     });
+//   });
+// });
