@@ -10,7 +10,7 @@ test.beforeEach(async ({ page }) => {
 
 // --- Tests for Required Fields ---
 
-test.describe("Required Basic Metadata", () => {
+test.describe("Metadata Fields", () => {
   test.skip('should display main "Item Data" header', async () => {
     // Verifies the main required heading is present.
     // why is this  passing?  Where is the "Item data" text called from?
@@ -23,7 +23,7 @@ test.describe("Required Basic Metadata", () => {
     await itemMetadataPage.verifyTitleTextContent();
   });
 
-  test.describe("Required Identifiers", () => {
+  test.describe("Identifiers", () => {
     // SETUP: Ensure the mandatory structural containers are visible before each test runs.
     test.beforeEach(async () => {
       // Verify heading and containers before checking content
@@ -48,7 +48,7 @@ test.describe("Required Basic Metadata", () => {
   });
 });
 
-test.describe("Optional Basic Metadata", () => {
+test.describe("Other Identifiers", () => {
   test("should include Shelf Locator if present", async () => {
     await itemMetadataPage.verifyShelfLocatorIsPresent();
   });
