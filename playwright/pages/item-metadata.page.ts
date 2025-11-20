@@ -95,10 +95,6 @@ export default class ItemMetadataPage {
     this.libraryLink = this.libraryHeading.locator("+ p > a"); // Assumes link is inside the next paragraph
 
     // Library shelf locator
-    // this.shelfLocatorText = this.libraryHeading.getByText(/Shelf locator/i);
-
-    // Above locator doesn't work due to non-descendant, non-semantic tags used in front end.
-
     this.shelfLocatorText = this.libraryHeading
       .page()
       .locator(
@@ -170,35 +166,6 @@ export default class ItemMetadataPage {
     );
   }
 
-  // async verifyPhysicalDescriptionContent(): Promise<void> {
-  //   // Since 'this.titleText' was defined using the adjacent selector '+ p',
-  //   // this assertion inherently validates the structure AND the content.
-
-  //   // Structural check: Ensure the element exists and is visible
-  //   await expect(this.titleText).toBeVisible();
-
-  //   // Content check: Assert the specific expected text
-  //   await expect(this.titleText).toHaveText(
-  //     'To His Excellency Sr. Henry Moore, Bart'
-  //   );
-  // }
-
-  // async verifyTypoOfResourceContent(): Promise<void> {
-  //   // Since 'this.titleText' was defined using the adjacent selector '+ p',
-  //   // this assertion inherently validates the structure AND the content.
-
-  //   // Structural check: Ensure the element exists and is visible
-  //   await expect(this.titleText).toBeVisible();
-
-  //   // Content check: Assert the specific expected text
-  //   await expect(this.titleText).toHaveText(
-  //     'To His Excellency Sr. Henry Moore, Bart'
-  //   );
-  // }
-
-  //  Verifies the presence of the required UUID identifier and conditionally checks
-  //  the optional RLIN/OCLC and Catalog ID fields if they exist.
-
   async verifyUUIDIdentifierIsPresent(): Promise<void> {
     // 1. Locate the element using the scoped locator
     const uuidLocator = this.identifiersText.locator(
@@ -239,34 +206,12 @@ export default class ItemMetadataPage {
     // const expectedUrl = (await catalogLinkLocator.getAttribute('href'))!;
 
     // await catalogLinkLocator.click();
-
-    // await this.page.waitForURL(expectedUrl, { timeout: 30000 });
-
     // // Check for correct catalog page
     // const verificationText = "The New York Public Library"; // Example verification text
     // await expect(this.page.locator('body')).toContainText(verificationText, { timeout: 15000 });
   }
 
-  // async verifyShelfLocatorIsPresent(): Promise<void> {
-  //   const shelfLocator = this.shelfLocatorText.getByText(/Shelf locator:/i);
-
-  //   await expect(shelfLocator).toBeVisible();
-
-  //   await expect(shelfLocator).toHaveText(
-  //     ItemMetadataPage.EXPECTED_SHELF_LOCATOR_VALUE,
-  //   );
-  // }
-
   async verifyShelfLocatorIsPresent(): Promise<void> {
-    // // --- DEBUG INSTRUMENTATION ---
-    // // Read the locator count and content *before* any assertions run.
-    // const locatorCount = await this.shelfLocatorText.count();
-    // const rawText = await this.shelfLocatorText.textContent();
-
-    // console.log(`[DEBUG] Shelf Locator Count: ${locatorCount}`);
-    // console.log(`[DEBUG] Raw Text Content: "${rawText}"`);
-    // // -----------------------------
-
     await expect(this.shelfLocatorText).toBeVisible();
 
     // confirms the text value includes the Call Number.
