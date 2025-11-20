@@ -41,7 +41,7 @@ export default class ItemMetadataPage {
   static readonly EXPECTED_UUID_VALUE = "8b2b3160-c5d5-012f-d95c-58d385a7bc34";
   static readonly EXPECTED_OCLC_VALUE = "24501668";
   static readonly EXPECTED_BNUMBER_VALUE = "b14924644";
-  static readonly EXPECTED_SHELFLOCATOR_VALUE = "Map Div. 97-6199 [LHS 839]";
+  static readonly EXPECTED_SHELF_LOCATOR_VALUE = "Map Div. 97-6199 [LHS 839]";
   readonly rightsHeading: Locator;
   readonly rightsText: Locator;
   readonly dataSourceHeading: Locator;
@@ -94,8 +94,17 @@ export default class ItemMetadataPage {
     }); // Assuming full heading text
     this.libraryLink = this.libraryHeading.locator("+ p > a"); // Assumes link is inside the next paragraph
 
-    // Library shelf locator (optional)
-    this.shelfLocatorText = this.libraryHeading.getByText(/Shelf locator:/i);
+    // Library shelf locator
+    // this.shelfLocatorText = this.libraryHeading.getByText(/Shelf locator/i);
+
+    // Above locator doesn't work due to non-descendant, non-semantic tags used in front end.
+
+    this.shelfLocatorText = this.libraryHeading
+      .page()
+      .locator(
+        'div:has-text("Library location")' // Find the heading container
+      )
+      .getByText(/Shelf locator:/i);
 
     // Topics
     this.topicHeading = this.page.getByText("Topic", { exact: true });
@@ -209,11 +218,10 @@ export default class ItemMetadataPage {
       'span:has-text("RLIN/OCLC:")'
     );
 
-    if ((await oclcLocator.count()) > 0) {
-      await expect(oclcLocator).toHaveText(
-        `RLIN/OCLC: ${ItemMetadataPage.EXPECTED_OCLC_VALUE}`
-      );
-    }
+    await expect(oclcLocator).toBeVisible();
+    await expect(oclcLocator).toHaveText(
+      `RLIN/OCLC: ${ItemMetadataPage.EXPECTED_OCLC_VALUE}`
+    );
   }
 
   async verifyCatalogLinkIsPresent(): Promise<void> {
@@ -222,12 +230,11 @@ export default class ItemMetadataPage {
       .locator('span:has-text("NYPL Catalog ID")')
       .locator("a");
 
-    if ((await catalogLinkLocator.count()) > 0) {
-      await expect(catalogLinkLocator).toBeVisible();
-      await expect(catalogLinkLocator).toHaveText(
-        ItemMetadataPage.EXPECTED_BNUMBER_VALUE
-      );
-    }
+    await expect(catalogLinkLocator).toBeVisible();
+    await expect(catalogLinkLocator).toHaveText(
+      ItemMetadataPage.EXPECTED_BNUMBER_VALUE
+    );
+
     //  // Get URL the link points to before clicking it
     // const expectedUrl = (await catalogLinkLocator.getAttribute('href'))!;
 
@@ -238,6 +245,34 @@ export default class ItemMetadataPage {
     // // Check for correct catalog page
     // const verificationText = "The New York Public Library"; // Example verification text
     // await expect(this.page.locator('body')).toContainText(verificationText, { timeout: 15000 });
+  }
+
+  // async verifyShelfLocatorIsPresent(): Promise<void> {
+  //   const shelfLocator = this.shelfLocatorText.getByText(/Shelf locator:/i);
+
+  //   await expect(shelfLocator).toBeVisible();
+
+  //   await expect(shelfLocator).toHaveText(
+  //     ItemMetadataPage.EXPECTED_SHELF_LOCATOR_VALUE,
+  //   );
+  // }
+
+  async verifyShelfLocatorIsPresent(): Promise<void> {
+    // // --- DEBUG INSTRUMENTATION ---
+    // // Read the locator count and content *before* any assertions run.
+    // const locatorCount = await this.shelfLocatorText.count();
+    // const rawText = await this.shelfLocatorText.textContent();
+
+    // console.log(`[DEBUG] Shelf Locator Count: ${locatorCount}`);
+    // console.log(`[DEBUG] Raw Text Content: "${rawText}"`);
+    // // -----------------------------
+
+    await expect(this.shelfLocatorText).toBeVisible();
+
+    // confirms the text value includes the Call Number.
+    await expect(this.shelfLocatorText).toContainText(
+      ItemMetadataPage.EXPECTED_SHELF_LOCATOR_VALUE
+    );
   }
 
   async verifyRightsContent(): Promise<void> {
