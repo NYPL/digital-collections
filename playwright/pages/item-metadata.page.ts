@@ -205,14 +205,6 @@ export default class ItemMetadataPage {
     await expect(catalogLinkLocator).toHaveText(
       ItemMetadataPage.EXPECTED_BNUMBER_VALUE
     );
-
-    //  // Get URL the link points to before clicking it
-    // const expectedUrl = (await catalogLinkLocator.getAttribute('href'))!;
-
-    // await catalogLinkLocator.click();
-    // // Check for correct catalog page
-    // const verificationText = "The New York Public Library"; // Example verification text
-    // await expect(this.page.locator('body')).toContainText(verificationText, { timeout: 15000 });
   }
 
   async verifyShelfLocatorIsPresent(): Promise<void> {
