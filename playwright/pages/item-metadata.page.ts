@@ -38,6 +38,8 @@ export default class ItemMetadataPage {
   readonly typeText: Locator;
   readonly identifiersHeading: Locator;
   readonly identifiersText: Locator;
+  static readonly EXPECTED_TITLE_VALUE =
+    "To His Excellency Sr. Henry Moore, Bart";
   static readonly EXPECTED_UUID_VALUE = "8b2b3160-c5d5-012f-d95c-58d385a7bc34";
   static readonly EXPECTED_OCLC_VALUE = "24501668";
   static readonly EXPECTED_BNUMBER_VALUE = "b14924644";
@@ -81,12 +83,14 @@ export default class ItemMetadataPage {
     // Collection
     this.collectionHeading = this.page.getByText("Collection", { exact: true });
     this.collectionText = this.collectionHeading.locator("+ p");
-    this.collectionLink = this.collectionText.locator("a").first(); // Target the link within the following paragraph
+    this.collectionLink = this.collectionText.getByRole("link").first(); // Target the link within the following paragraph
+
+    this.collectionLink = this.collectionText.getByRole("link").first(); // Target the link within the following paragraph
 
     // Dates/Origin  (this can be Dates or Date?)
     this.datesHeading = this.page.getByText("Dates/Origin", { exact: true });
     this.datesText = this.datesHeading.locator("+ p");
-    this.datesLink = this.datesText.locator("a").first();
+    this.datesLink = this.datesText.getByRole("link").first();
 
     // Library Location
     this.libraryHeading = this.page.getByText("Library location", {
@@ -162,7 +166,7 @@ export default class ItemMetadataPage {
 
     // Content check: Assert the specific expected text
     await expect(this.titleText).toContainText(
-      "To His Excellency Sr. Henry Moore, Bart"
+      ItemMetadataPage.EXPECTED_TITLE_VALUE
     );
   }
 
@@ -195,7 +199,7 @@ export default class ItemMetadataPage {
     // Check existence first (Conditional Check)
     const catalogLinkLocator = this.identifiersText
       .locator('span:has-text("NYPL Catalog ID")')
-      .locator("a");
+      .getByRole("link");
 
     await expect(catalogLinkLocator).toBeVisible();
     await expect(catalogLinkLocator).toHaveText(
