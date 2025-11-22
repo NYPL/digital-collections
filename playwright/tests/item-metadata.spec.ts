@@ -15,7 +15,7 @@ test.describe("Metadata Fields", () => {
   });
 
   test("should display Title heading and corresponding text", async () => {
-    expect(itemMetadataPage.titleHeading).toBeVisible;
+    await expect(itemMetadataPage.titleHeading).toBeVisible();
     await itemMetadataPage.verifyTitleTextContent();
   });
 
