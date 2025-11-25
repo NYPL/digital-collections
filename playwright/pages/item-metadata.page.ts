@@ -172,10 +172,9 @@ export default class ItemMetadataPage {
 
   async verifyUUIDIdentifierIsPresent(): Promise<void> {
     // 1. Locate the element using the scoped locator
-    const uuidLocator = this.identifiersText.locator(
-      'span:has-text("Universal Unique Identifier (UUID):")'
-    );
-
+    const uuidLocator = this.identifiersText
+      .locator("span")
+      .filter({ hasText: /Universal Unique Identifier \(UUID\):/ });
     // 2. Assert the element is visible and contains the exact required content
     await expect(uuidLocator).toBeVisible();
     await expect(uuidLocator).toHaveText(
