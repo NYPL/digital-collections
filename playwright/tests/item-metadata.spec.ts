@@ -9,11 +9,6 @@ test.beforeEach(async ({ page }) => {
 });
 
 test.describe("Metadata Fields", () => {
-  test.skip('should display main "Item Data" header', async () => {
-    // Verifies the main required heading is present.
-    await expect(itemMetadataPage.itemDataHeader).toBeVisible();
-  });
-
   test("should display Title heading and corresponding text", async () => {
     await expect(itemMetadataPage.titleHeading).toBeVisible();
     await itemMetadataPage.verifyTitleTextContent();
@@ -21,7 +16,7 @@ test.describe("Metadata Fields", () => {
 
   test.describe("Identifiers", () => {
     test.beforeEach(async () => {
-      // Verify heading and containers before checking content
+      // Verify identifiers heading and containers before checking content
       await expect(itemMetadataPage.identifiersHeading).toBeVisible();
       await expect(itemMetadataPage.identifiersText).toBeVisible();
     });
