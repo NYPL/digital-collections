@@ -49,26 +49,6 @@ export default class ItemMetadataPage {
   readonly dataSourceHeading: Locator;
   readonly dataSourceLink: Locator;
 
-  // METADATA:
-  // Data Source link to catalog (optional)
-  // Item Data heading (req)
-
-  // Title (req)
-  // Collection (req)???
-  // Dates/Origin heading
-  // Library location’s heading and text (req)
-  // Library shelf locator (optional, under location heading)
-  // Topics and links
-  // Genre and link
-  // Notes and text
-  // Physical Description and text
-  // Description and text
-  // Type of Resource (req)?
-  // Identifiers and text (req - at minimum there will be an item uuid)
-  // Rights Statement heading and text (req)
-  // Name heading and text
-  // Place/Geographic heading and text
-
   constructor(page: Page) {
     this.page = page;
 
