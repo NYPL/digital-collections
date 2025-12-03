@@ -49,25 +49,6 @@ test.describe("Metadata Fields", () => {
       await itemMetadataPage.verifyCatalogLinkIsPresent();
     });
   });
-  test.describe("Collection/Titles", () => {
-    test.beforeEach(async () => {
-      // Verify collections heading and containers before checking content
-      await expect(itemMetadataPage.collectionHeading).toBeVisible();
-      await expect(itemMetadataPage.collectionText).toBeVisible();
-    });
-
-    // test("should include UUID", async () => {
-    //   await itemMetadataPage.verifyUUIDIdentifierIsPresent();
-    // });
-
-    // test("should include RLIN/OCLC identifier if present", async () => {
-    //   await itemMetadataPage.verifyOclcIdentifierIsPresent();
-    // });
-
-    // test("should include the NYPL Catalog Link if present", async () => {
-    //   await itemMetadataPage.verifyCatalogLinkIsPresent();
-    // });
-  });
 });
 
 test.describe("Other Identifiers", () => {
