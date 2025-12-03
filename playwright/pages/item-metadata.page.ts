@@ -11,8 +11,9 @@ export default class ItemMetadataPage {
   readonly titleText: Locator;
   readonly collectionHeading: Locator;
   readonly collectionText: Locator;
-  readonly collectionLink: Locator;
   // there are multiple links on collection that we'll need to test
+  readonly collectionRootLink: Locator;
+  readonly collectionLevelOneLink: Locator;
   readonly datesHeading: Locator;
   readonly datesText: Locator;
   readonly datesLink: Locator;
@@ -44,6 +45,9 @@ export default class ItemMetadataPage {
   static readonly EXPECTED_OCLC_VALUE = "24501668";
   static readonly EXPECTED_BNUMBER_VALUE = "b14924644";
   static readonly EXPECTED_SHELF_LOCATOR_VALUE = "Map Div. 97-6199 [LHS 839]";
+  static readonly EXPECTED_COLLECTION_ROOT_VALUE =
+    "Lawrence H. Slaughter Collection of English maps, charts, globes, books and atlases";
+  static readonly EXPECTED_COLLECTION_LEVEL_ONE_VALUE = "Charts and maps";
   readonly rightsHeading: Locator;
   readonly rightsText: Locator;
   readonly dataSourceHeading: Locator;
@@ -56,16 +60,18 @@ export default class ItemMetadataPage {
     // This finds the specific <p> element containing 'Title'
     this.titleHeading = this.page.getByText("Title", { exact: true });
 
-    // Defines the TARGET (the content right after the header)
     // This is the relative locator that enforces the structural relationship.
     this.titleText = this.titleHeading.locator("+ p");
+
+    // Identifiers
+    this.identifiersHeading = this.page.getByText("Identifiers", {
+      exact: true,
+    });
+    this.identifiersText = this.identifiersHeading.locator("+ p");
 
     // Collection
     this.collectionHeading = this.page.getByText("Collection", { exact: true });
     this.collectionText = this.collectionHeading.locator("+ p");
-    this.collectionLink = this.collectionText.getByRole("link").first(); // Target the link within the following paragraph
-
-    this.collectionLink = this.collectionText.getByRole("link").first(); // Target the link within the following paragraph
 
     // Dates/Origin  (this can be Dates or Date?)
     this.datesHeading = this.page.getByText("Dates/Origin", { exact: true });
@@ -192,6 +198,30 @@ export default class ItemMetadataPage {
     // confirms the text value includes the Call Number.
     await expect(this.shelfLocatorText).toContainText(
       ItemMetadataPage.EXPECTED_SHELF_LOCATOR_VALUE
+    );
+  }
+
+  async verifyCollectionRootLink(): Promise<void> {
+    // check for the main link
+    const collectionRootLinkLocator = this.collectionText
+      .getByRole("link")
+      .nth(0);
+
+    await expect(collectionRootLinkLocator).toBeVisible();
+    await expect(collectionRootLinkLocator).toHaveText(
+      ItemMetadataPage.EXPECTED_COLLECTION_ROOT_VALUE
+    );
+  }
+
+  async verifyCollectionLevelOneLink(): Promise<void> {
+    // check for the second link
+    const collectionLevelOneLinkLocator = this.collectionText
+      .getByRole("link")
+      .nth(1);
+
+    await expect(collectionLevelOneLinkLocator).toBeVisible();
+    await expect(collectionLevelOneLinkLocator).toHaveText(
+      ItemMetadataPage.EXPECTED_COLLECTION_LEVEL_ONE_VALUE
     );
   }
 

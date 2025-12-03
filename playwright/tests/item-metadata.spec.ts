@@ -14,6 +14,22 @@ test.describe("Metadata Fields", () => {
     await itemMetadataPage.verifyTitleTextContent();
   });
 
+  test.describe("Collection", () => {
+    test.beforeEach(async () => {
+      // Verify collection heading and containers before checking content
+      await expect(itemMetadataPage.collectionHeading).toBeVisible();
+      await expect(itemMetadataPage.collectionText).toBeVisible();
+    });
+
+    test("should include main/root collection link", async () => {
+      await itemMetadataPage.verifyCollectionRootLink();
+    });
+
+    test("should include sub-collection link, if present", async () => {
+      await itemMetadataPage.verifyCollectionLevelOneLink();
+    });
+  });
+
   test.describe("Identifiers", () => {
     test.beforeEach(async () => {
       // Verify identifiers heading and containers before checking content
@@ -32,6 +48,25 @@ test.describe("Metadata Fields", () => {
     test("should include the NYPL Catalog Link if present", async () => {
       await itemMetadataPage.verifyCatalogLinkIsPresent();
     });
+  });
+  test.describe("Collection/Titles", () => {
+    test.beforeEach(async () => {
+      // Verify collections heading and containers before checking content
+      await expect(itemMetadataPage.collectionHeading).toBeVisible();
+      await expect(itemMetadataPage.collectionText).toBeVisible();
+    });
+
+    // test("should include UUID", async () => {
+    //   await itemMetadataPage.verifyUUIDIdentifierIsPresent();
+    // });
+
+    // test("should include RLIN/OCLC identifier if present", async () => {
+    //   await itemMetadataPage.verifyOclcIdentifierIsPresent();
+    // });
+
+    // test("should include the NYPL Catalog Link if present", async () => {
+    //   await itemMetadataPage.verifyCatalogLinkIsPresent();
+    // });
   });
 });
 
