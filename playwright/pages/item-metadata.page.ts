@@ -39,6 +39,10 @@ export default class ItemMetadataPage {
   readonly typeText: Locator;
   readonly identifiersHeading: Locator;
   readonly identifiersText: Locator;
+  readonly rightsHeading: Locator;
+  readonly rightsText: Locator;
+  readonly dataSourceHeading: Locator;
+  readonly dataSourceLink: Locator;
   static readonly EXPECTED_TITLE_VALUE =
     "To His Excellency Sr. Henry Moore, Bart";
   static readonly EXPECTED_UUID_VALUE = "8b2b3160-c5d5-012f-d95c-58d385a7bc34";
@@ -48,10 +52,6 @@ export default class ItemMetadataPage {
   static readonly EXPECTED_COLLECTION_ROOT_VALUE =
     "Lawrence H. Slaughter Collection of English maps, charts, globes, books and atlases";
   static readonly EXPECTED_COLLECTION_LEVEL_ONE_VALUE = "Charts and maps";
-  readonly rightsHeading: Locator;
-  readonly rightsText: Locator;
-  readonly dataSourceHeading: Locator;
-  readonly dataSourceLink: Locator;
 
   constructor(page: Page) {
     this.page = page;
