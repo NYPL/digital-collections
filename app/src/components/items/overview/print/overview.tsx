@@ -19,7 +19,7 @@ import { headerBreakpoints } from "@/src/utils/breakpoints";
 import React, { forwardRef } from "react";
 import { useCanvasContext } from "../../../../context/CanvasProvider";
 
-const PrintOverview = ({ buyable, imageIDs }) => {
+const PrintOverview = ({ showOrderPrintButton, imageIDs }) => {
   const { currentCanvasIndex } = useCanvasContext();
   const imageID = imageIDs[currentCanvasIndex];
   return (
@@ -34,7 +34,7 @@ const PrintOverview = ({ buyable, imageIDs }) => {
           },
         }}
       >
-        {buyable && (
+        {showOrderPrintButton && (
           <Box marginBottom="m">
             <Heading size="heading6" marginBottom="xs">
               Purchase this print

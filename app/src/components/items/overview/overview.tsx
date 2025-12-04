@@ -8,8 +8,9 @@ import ExternalLinksOverview from "./external/overview";
 import PrintOverview from "./print/overview";
 import CitationsOverview from "./citations/overview";
 import AVMaterialManifest from "./audiovisual/manifest";
+import { ItemModel } from "@/src/models/item";
 
-const ItemOverview = ({ item }) => {
+const ItemOverview = ({ item }: { item: ItemModel }) => {
   return (
     <>
       <ChakraSimpleGrid
@@ -28,7 +29,10 @@ const ItemOverview = ({ item }) => {
           archivesLink={item.archivesLink}
         />
         {item.isImage ? (
-          <PrintOverview buyable={item.buyable} imageIDs={item.imageIDs} />
+          <PrintOverview
+            showOrderPrintButton={item.buyable && !item.isRestricted}
+            imageIDs={item.imageIDs}
+          />
         ) : (
           <AVMaterialManifest manifestURL={item.manifestURL} />
         )}
