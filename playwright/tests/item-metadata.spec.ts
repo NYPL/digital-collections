@@ -8,7 +8,7 @@ test.beforeEach(async ({ page }) => {
   await itemMetadataPage.loadPage(ItemMetadataPage.itemResultURL);
 });
 
-test.describe("Metadata Fields", () => {
+test.describe("Verify Metadata Fields", () => {
   test("should display Title heading and corresponding text", async () => {
     await expect(itemMetadataPage.titleHeading).toBeVisible();
     await itemMetadataPage.verifyTitleTextContent();
