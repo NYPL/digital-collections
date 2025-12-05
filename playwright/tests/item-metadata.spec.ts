@@ -25,7 +25,7 @@ test.describe("Verify Metadata Fields", () => {
       await itemMetadataPage.verifyCollectionRootLink();
     });
 
-    test("should include sub-collection link, if present", async () => {
+    test("should include sub-collection link", async () => {
       await itemMetadataPage.verifyCollectionLevelOneLink();
     });
   });
@@ -41,18 +41,18 @@ test.describe("Verify Metadata Fields", () => {
       await itemMetadataPage.verifyUUIDIdentifierIsPresent();
     });
 
-    test("should include RLIN/OCLC identifier if present", async () => {
+    test("should include RLIN/OCLC identifier", async () => {
       await itemMetadataPage.verifyOclcIdentifierIsPresent();
     });
 
-    test("should include the NYPL Catalog Link if present", async () => {
+    test("should include the NYPL Catalog Link", async () => {
       await itemMetadataPage.verifyCatalogLinkIsPresent();
     });
   });
 });
 
 test.describe("Other Identifiers", () => {
-  test("should include Shelf Locator if present", async () => {
+  test("should include Shelf Locator", async () => {
     await itemMetadataPage.verifyShelfLocatorIsPresent();
   });
 });
