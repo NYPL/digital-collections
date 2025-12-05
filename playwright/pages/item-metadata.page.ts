@@ -52,6 +52,10 @@ export default class ItemMetadataPage {
   static readonly EXPECTED_COLLECTION_ROOT_VALUE =
     "Lawrence H. Slaughter Collection of English maps, charts, globes, books and atlases";
   static readonly EXPECTED_COLLECTION_LEVEL_ONE_VALUE = "Charts and maps";
+  static readonly EXPECTED_NAME_ONE_VALUE = "Ratzer, Bernard";
+  static readonly EXPECTED_NAME_ONE_ROLE_VALUE = "(Cartographer)";
+  static readonly EXPECTED_NAME_TWO_ROLE_VALUE = "Kitchin, Thomas, 1718-1784";
+  static readonly EXPECTED_NAME_TWO_VALUE = "(Engraver)";
 
   constructor(page: Page) {
     this.page = page;
@@ -223,6 +227,10 @@ export default class ItemMetadataPage {
     await expect(collectionLevelOneLinkLocator).toHaveText(
       ItemMetadataPage.EXPECTED_COLLECTION_LEVEL_ONE_VALUE
     );
+  }
+
+  async verifyNameFieldValues(): Promise<void> {
+    // something will go here
   }
 
   async verifyRightsContent(): Promise<void> {
