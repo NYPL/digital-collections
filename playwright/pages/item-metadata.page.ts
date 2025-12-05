@@ -52,6 +52,7 @@ export default class ItemMetadataPage {
   static readonly EXPECTED_COLLECTION_ROOT_VALUE =
     "Lawrence H. Slaughter Collection of English maps, charts, globes, books and atlases";
   static readonly EXPECTED_COLLECTION_LEVEL_ONE_VALUE = "Charts and maps";
+  static readonly EXPECTED_NAME_COUNT = 2;
   static readonly EXPECTED_NAME_ONE_VALUE = "Ratzer, Bernard";
   static readonly EXPECTED_NAME_ONE_ROLE_VALUE = "(Cartographer)";
   static readonly EXPECTED_NAME_TWO_ROLE_VALUE = "Kitchin, Thomas, 1718-1784";
@@ -229,9 +230,70 @@ export default class ItemMetadataPage {
     );
   }
 
-  async verifyNameFieldValues(): Promise<void> {
-    // something will go here
+  async verifyNameFieldList(): Promise<void> {
+    // Find all name entry containers
+    const allNameEntryContainers = this.nameText.locator(":scope > *");
+
+    // If the item returns less/more than the expected nodes, this line fails immediately.
+    await expect(allNameEntryContainers).toHaveCount(
+      ItemMetadataPage.EXPECTED_NAME_COUNT
+    );
   }
+
+  async verifyNameOneValue(): Promise<void> {
+    // Locate the specific name link
+    const nameOneLink = this.nameText.getByRole("link").nth(0);
+
+    // Assert Link Content (Value Check)
+    await expect(nameOneLink).toBeVisible();
+    await expect(nameOneLink).toHaveText(
+      ItemMetadataPage.EXPECTED_NAME_ONE_VALUE
+    );
+  }
+
+  async verifyNameOneRole(): Promise<void> {
+    // Locate the parent container using its structural selector
+    const nameOneEntryContainer = this.nameText.locator(":scope > *").nth(0);
+
+    // Check the full container text for the ROLE.
+    const fullExpectedText = `${ItemMetadataPage.EXPECTED_NAME_ONE_VALUE} ${ItemMetadataPage.EXPECTED_NAME_ONE_ROLE_VALUE}`;
+
+    // We use toContainText to ensure the role text follows the name correctly within the <span> container.
+    await expect(nameOneEntryContainer).toContainText(fullExpectedText);
+  }
+
+  async verifyNameTwoValue(): Promise<void> {
+    const nameTwoLink = this.nameText.getByRole("link").nth(1);
+
+    await expect(nameTwoLink).toBeVisible();
+    await expect(nameTwoLink).toHaveText(
+      ItemMetadataPage.EXPECTED_NAME_TWO_VALUE
+    );
+  }
+
+  async verifyNameTwoRole(): Promise<void> {
+    const nameTwoEntryContainer = this.nameText.locator(":scope > *").nth(1);
+    const fullExpectedText = `${ItemMetadataPage.EXPECTED_NAME_TWO_VALUE} ${ItemMetadataPage.EXPECTED_NAME_TWO_ROLE_VALUE}`;
+
+    await expect(nameTwoEntryContainer).toContainText(fullExpectedText);
+  }
+
+  // async verifyNameTwoLinkAndRole(): Promise<void> {
+
+  //   const nameTwoLink = this.nameText.getByRole("link").nth(1);
+  //   const nameTwoEntryContainer = this.nameText.locator(':scope > *').nth(1);
+
+  //   await expect(nameTwoLink).toBeVisible()
+  //   await expect(nameTwoLink).toHaveText(
+  //     ItemMetadataPage.EXPECTED_NAME_TWO_VALUE,
+  //   );
+
+  //   const fullExpectedText = `${ItemMetadataPage.EXPECTED_NAME_TWO_VALUE} ${ItemMetadataPage.EXPECTED_NAME_TWO_ROLE_VALUE}`;
+
+  //   await expect(nameTwoEntryContainer).toContainText(
+  //     fullExpectedText,
+  //   );
+  // }
 
   async verifyRightsContent(): Promise<void> {
     // Structural check: Ensure the element exists and is visible
