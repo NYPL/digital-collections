@@ -56,3 +56,19 @@ test.describe("Other Identifiers", () => {
     await itemMetadataPage.verifyShelfLocatorIsPresent();
   });
 });
+
+test.describe("Name", () => {
+  test.beforeEach(async () => {
+    // Verify collection heading and containers before checking content
+    await expect(itemMetadataPage.nameHeading).toBeVisible();
+    await expect(itemMetadataPage.nameText).toBeVisible();
+  });
+
+  test.describe("should include first name and role", async () => {
+    //test goes here
+  });
+
+  test.describe("should include second name and role", async () => {
+    //test goes here
+  });
+});
