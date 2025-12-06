@@ -55,8 +55,8 @@ export default class ItemMetadataPage {
   static readonly EXPECTED_NAME_COUNT = 2;
   static readonly EXPECTED_NAME_ONE_VALUE = "Ratzer, Bernard";
   static readonly EXPECTED_NAME_ONE_ROLE_VALUE = "(Cartographer)";
-  static readonly EXPECTED_NAME_TWO_ROLE_VALUE = "Kitchin, Thomas, 1718-1784";
-  static readonly EXPECTED_NAME_TWO_VALUE = "(Engraver)";
+  static readonly EXPECTED_NAME_TWO_VALUE = "Kitchin, Thomas, 1718-1784";
+  static readonly EXPECTED_NAME_TWO_ROLE_VALUE = "(Engraver)";
 
   constructor(page: Page) {
     this.page = page;
@@ -230,6 +230,17 @@ export default class ItemMetadataPage {
     );
   }
 
+  /**
+   * Enforces a patient wait for the Names section heading to be structurally attached
+   * to the DOM, compensating for asynchronous loading delays.
+   */
+
+  // DIDN'T WORK:
+  // async waitForNamesSection(): Promise<void> {
+  //     // Use the explicit wait for attachment/visibility with a long timeout
+  //     await this.nameHeading.waitFor({ state: 'attached', timeout: 45000 });
+  // }
+
   async verifyNameFieldList(): Promise<void> {
     // Find all name entry containers
     const allNameEntryContainers = this.nameText.locator(":scope > *");
@@ -308,4 +319,10 @@ export default class ItemMetadataPage {
   async loadPage(gotoPage: string): Promise<void> {
     await this.page.goto(gotoPage);
   }
+
+  // async loadPage(gotoPage: string): Promise<void> {
+  //   // Force Playwright to wait only for the core DOM and JS execution,
+  //   // ignoring slow assets like the Universal Viewer.
+  //   await this.page.goto(gotoPage, { waitUntil: 'domcontentloaded' });
+  // }
 }
