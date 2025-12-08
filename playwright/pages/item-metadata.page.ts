@@ -98,19 +98,19 @@ export default class ItemMetadataPage {
       .getByText(/Shelf locator:/i);
 
     // Topics
-    this.topicHeading = this.page.getByText("Topic", { exact: true });
+    this.topicHeading = this.page.getByText("Topics", { exact: true });
     this.topicText = this.topicHeading.locator("+ p");
 
     // Name (Creator/Author)
-    this.nameHeading = this.page.getByText("Name", { exact: true });
+    this.nameHeading = this.page.getByText("Names", { exact: true });
     this.nameText = this.nameHeading.locator("+ p");
 
     // Place/Geographic
-    this.placeHeading = this.page.getByText("Place", { exact: true });
+    this.placeHeading = this.page.getByText("Places", { exact: true });
     this.placeText = this.placeHeading.locator("+ p");
 
     // Genre
-    this.genreHeading = this.page.getByText("Genre", { exact: true });
+    this.genreHeading = this.page.getByText("Genres", { exact: true });
     this.genreText = this.genreHeading.locator("+ p");
 
     // Notes
@@ -230,20 +230,9 @@ export default class ItemMetadataPage {
     );
   }
 
-  /**
-   * Enforces a patient wait for the Names section heading to be structurally attached
-   * to the DOM, compensating for asynchronous loading delays.
-   */
-
-  // DIDN'T WORK:
-  // async waitForNamesSection(): Promise<void> {
-  //     // Use the explicit wait for attachment/visibility with a long timeout
-  //     await this.nameHeading.waitFor({ state: 'attached', timeout: 45000 });
-  // }
-
   async verifyNameFieldList(): Promise<void> {
     // Find all name entry containers
-    const allNameEntryContainers = this.nameText.locator(":scope > *");
+    const allNameEntryContainers = this.nameText.locator("span");
 
     // If the item returns less/more than the expected nodes, this line fails immediately.
     await expect(allNameEntryContainers).toHaveCount(
@@ -264,7 +253,7 @@ export default class ItemMetadataPage {
 
   async verifyNameOneRole(): Promise<void> {
     // Locate the parent container using its structural selector
-    const nameOneEntryContainer = this.nameText.locator(":scope > *").nth(0);
+    const nameOneEntryContainer = this.nameText.locator("span").nth(0);
 
     // Check the full container text for the ROLE.
     const fullExpectedText = `${ItemMetadataPage.EXPECTED_NAME_ONE_VALUE} ${ItemMetadataPage.EXPECTED_NAME_ONE_ROLE_VALUE}`;
@@ -283,28 +272,11 @@ export default class ItemMetadataPage {
   }
 
   async verifyNameTwoRole(): Promise<void> {
-    const nameTwoEntryContainer = this.nameText.locator(":scope > *").nth(1);
+    const nameTwoEntryContainer = this.nameText.locator("span").nth(1);
     const fullExpectedText = `${ItemMetadataPage.EXPECTED_NAME_TWO_VALUE} ${ItemMetadataPage.EXPECTED_NAME_TWO_ROLE_VALUE}`;
 
     await expect(nameTwoEntryContainer).toContainText(fullExpectedText);
   }
-
-  // async verifyNameTwoLinkAndRole(): Promise<void> {
-
-  //   const nameTwoLink = this.nameText.getByRole("link").nth(1);
-  //   const nameTwoEntryContainer = this.nameText.locator(':scope > *').nth(1);
-
-  //   await expect(nameTwoLink).toBeVisible()
-  //   await expect(nameTwoLink).toHaveText(
-  //     ItemMetadataPage.EXPECTED_NAME_TWO_VALUE,
-  //   );
-
-  //   const fullExpectedText = `${ItemMetadataPage.EXPECTED_NAME_TWO_VALUE} ${ItemMetadataPage.EXPECTED_NAME_TWO_ROLE_VALUE}`;
-
-  //   await expect(nameTwoEntryContainer).toContainText(
-  //     fullExpectedText,
-  //   );
-  // }
 
   async verifyRightsContent(): Promise<void> {
     // Structural check: Ensure the element exists and is visible
@@ -319,10 +291,4 @@ export default class ItemMetadataPage {
   async loadPage(gotoPage: string): Promise<void> {
     await this.page.goto(gotoPage);
   }
-
-  // async loadPage(gotoPage: string): Promise<void> {
-  //   // Force Playwright to wait only for the core DOM and JS execution,
-  //   // ignoring slow assets like the Universal Viewer.
-  //   await this.page.goto(gotoPage, { waitUntil: 'domcontentloaded' });
-  // }
 }
