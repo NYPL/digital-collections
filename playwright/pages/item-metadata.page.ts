@@ -1,7 +1,34 @@
 import { Locator, Page, expect } from "@playwright/test";
 
+class FieldLocatorService {
+  // Method returns an object containing both the Locator and the content/text Pattern
+  public getNameLocatorAndPattern(
+    allEntryContainers: Locator,
+    expectedData: { name: string; role: string }
+  ): { locator: Locator; pattern: RegExp } {
+    // Define escaped delimiters for the front-end pattern
+    const prefix = "\\(";
+    const suffix = "\\)";
+
+    // Pattern: [Name] + [one or more whitespace (\s+)] + [(Literal Paren)] + [Role] + [Literal Paren]
+    const fullExpectedPattern = new RegExp(
+      expectedData.name + "\\s+" + prefix + expectedData.role + suffix,
+      "i"
+    );
+
+    // Filter the general locator to find the specific container
+    const locator = allEntryContainers.filter({
+      hasText: fullExpectedPattern,
+    });
+
+    // return locator values and full-text for assertions
+    return { locator: locator, pattern: fullExpectedPattern };
+  }
+}
+
 export default class ItemMetadataPage {
   readonly page: Page;
+  private locatorService = new FieldLocatorService();
 
   static itemResultURL: string = "/items/8b2b3160-c5d5-012f-d95c-58d385a7bc34";
 
@@ -52,6 +79,11 @@ export default class ItemMetadataPage {
   static readonly EXPECTED_COLLECTION_ROOT_VALUE =
     "Lawrence H. Slaughter Collection of English maps, charts, globes, books and atlases";
   static readonly EXPECTED_COLLECTION_LEVEL_ONE_VALUE = "Charts and maps";
+  static readonly EXPECTED_NAMES = [
+    { name: "Ratzer, Bernard", role: "Cartographer" },
+    { name: "Kitchin, Thomas, 1718-1784", role: "Engraver" },
+  ];
+
   static readonly EXPECTED_NAME_COUNT = 2;
   static readonly EXPECTED_NAME_ONE_VALUE = "Ratzer, Bernard";
   static readonly EXPECTED_NAME_ONE_ROLE_VALUE = "(Cartographer)";
@@ -230,52 +262,45 @@ export default class ItemMetadataPage {
     );
   }
 
-  async verifyNameFieldList(): Promise<void> {
-    // Find all name entry containers
+  async verifyNameCount(): Promise<void> {
+    const allNameEntryContainers = this.nameText.locator("span");
+    await expect(allNameEntryContainers).toHaveCount(
+      ItemMetadataPage.EXPECTED_NAMES.length
+    );
+  }
+
+  // Checks if Name is a clickable link and Role is text.
+  async verifyNameLinks(): Promise<void> {
     const allNameEntryContainers = this.nameText.locator("span");
 
-    // If the item returns less/more than the expected nodes, this line fails immediately.
-    await expect(allNameEntryContainers).toHaveCount(
-      ItemMetadataPage.EXPECTED_NAME_COUNT
-    );
+    for (const expectedName of ItemMetadataPage.EXPECTED_NAMES) {
+      const { locator: nameContainer } =
+        this.locatorService.getNameLocatorAndPattern(
+          allNameEntryContainers,
+          expectedName
+        );
+
+      const nameLink = nameContainer.getByRole("link");
+
+      await expect(nameLink).toBeVisible();
+      await expect(nameLink).toHaveText(expectedName.name);
+    }
   }
 
-  async verifyNameOneValue(): Promise<void> {
-    // Locate the specific name link
-    const nameOneLink = this.nameText.getByRole("link").nth(0);
+  // Check if Name and Role matches expected value
+  async verifyNameDataValues(): Promise<void> {
+    const allNameEntryContainers = this.nameText.locator("span");
 
-    // Assert Link Content (Value Check)
-    await expect(nameOneLink).toBeVisible();
-    await expect(nameOneLink).toHaveText(
-      ItemMetadataPage.EXPECTED_NAME_ONE_VALUE
-    );
-  }
+    for (const expectedName of ItemMetadataPage.EXPECTED_NAMES) {
+      const { locator: nameContainer, pattern: fullExpectedPattern } =
+        this.locatorService.getNameLocatorAndPattern(
+          allNameEntryContainers,
+          expectedName
+        );
 
-  async verifyNameOneRole(): Promise<void> {
-    // Locate the parent container using its structural selector
-    const nameOneEntryContainer = this.nameText.locator("span").nth(0);
-
-    // Check the full container text for the ROLE.
-    const fullExpectedText = `${ItemMetadataPage.EXPECTED_NAME_ONE_VALUE} ${ItemMetadataPage.EXPECTED_NAME_ONE_ROLE_VALUE}`;
-
-    // We use toContainText to ensure the role text follows the name correctly within the <span> container.
-    await expect(nameOneEntryContainer).toContainText(fullExpectedText);
-  }
-
-  async verifyNameTwoValue(): Promise<void> {
-    const nameTwoLink = this.nameText.getByRole("link").nth(1);
-
-    await expect(nameTwoLink).toBeVisible();
-    await expect(nameTwoLink).toHaveText(
-      ItemMetadataPage.EXPECTED_NAME_TWO_VALUE
-    );
-  }
-
-  async verifyNameTwoRole(): Promise<void> {
-    const nameTwoEntryContainer = this.nameText.locator("span").nth(1);
-    const fullExpectedText = `${ItemMetadataPage.EXPECTED_NAME_TWO_VALUE} ${ItemMetadataPage.EXPECTED_NAME_TWO_ROLE_VALUE}`;
-
-    await expect(nameTwoEntryContainer).toContainText(fullExpectedText);
+      // Verify the full text (including the non-clickable role) is present.
+      await expect(nameContainer).toHaveText(fullExpectedPattern);
+    }
   }
 
   async verifyRightsContent(): Promise<void> {
