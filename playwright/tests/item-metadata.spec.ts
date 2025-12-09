@@ -57,50 +57,21 @@ test.describe("Other Identifiers", () => {
   });
 });
 
-// test.describe("Name", () => {
-//   test.beforeEach(async () => {
-//     // Verify collection heading and containers before checking content
-//     await expect(itemMetadataPage.nameHeading).toBeVisible();
-//     await expect(itemMetadataPage.nameText).toBeVisible();
-//   });
-
-//   test.describe("should include first name and role", async () => {
-//     //test goes here
-//   });
-
-//   test.describe("should include second name and role", async () => {
-//     //test goes here
-//   });
-// });
-
-// Inside item-metadata.spec.ts
-
 test.describe("Names", () => {
-  test.beforeEach(async () => {
-    // Verify collection heading and containers before checking content
-    await itemMetadataPage.nameHeading.focus();
-
+  test.beforeEach(async ({ page }) => {
     await expect(itemMetadataPage.nameHeading).toBeVisible();
     await expect(itemMetadataPage.nameText).toBeVisible();
   });
 
-  test("should contain all available names", async () => {
-    await itemMetadataPage.verifyNameFieldList();
+  test("should display the correct number of expected name fields", async () => {
+    await itemMetadataPage.verifyNameCount();
   });
 
-  test("should include name one link", async () => {
-    await itemMetadataPage.verifyNameOneValue();
+  test("should display link for name and text for Role", async () => {
+    await itemMetadataPage.verifyNameLinks();
   });
 
-  test("should include name one's role", async () => {
-    await itemMetadataPage.verifyNameOneRole();
-  });
-
-  test("should include name two link", async () => {
-    await itemMetadataPage.verifyNameTwoValue();
-  });
-
-  test("should include name two's role", async () => {
-    await itemMetadataPage.verifyNameTwoRole();
+  test("should display correct name and role values", async () => {
+    await itemMetadataPage.verifyNameDataValues();
   });
 });
