@@ -75,3 +75,23 @@ test.describe("Names", () => {
     await itemMetadataPage.verifyNameDataValues();
   });
 });
+
+test.describe("Subjects", () => {
+  test.beforeEach(async () => {
+    // Verify heading and containers before checking content
+    await expect(itemMetadataPage.topicHeading).toBeVisible();
+    await expect(itemMetadataPage.topicText).toBeVisible();
+  });
+
+  test("should display the correct number of subject fields", async () => {
+    await itemMetadataPage.verifyTopicCount();
+  });
+
+  test("should display clickable links for all subject entries", async () => {
+    await itemMetadataPage.verifyTopicLinks();
+  });
+
+  test("should display correct subject values", async () => {
+    await itemMetadataPage.verifyTopicDataValues();
+  });
+});

@@ -24,6 +24,43 @@ class FieldLocatorService {
     // return locator values and full-text for assertions
     return { locator: locator, pattern: fullExpectedPattern };
   }
+
+  public getTopicLocator(
+    allEntryContainers: Locator,
+    expectedText: string
+  ): { locator: Locator; pattern: RegExp } {
+    // Escape special characters so parentheses like "(N.Y.)" can match)
+    const escapedText = expectedText.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+
+    // Pattern: the text must be contained (no start/end anchors)
+    const locatorPattern = new RegExp(escapedText, "i");
+
+    // Match entire string we will use start/end anchors for strict matching
+    const fullExpectedPattern = new RegExp(`^${escapedText}$`, "i");
+
+    // Filter the general locator to find the specific container
+    const locator = allEntryContainers.filter({
+      hasText: locatorPattern,
+    });
+
+    return { locator: locator, pattern: fullExpectedPattern };
+  }
+
+  public getBasicLocator(
+    allEntryContainers: Locator,
+    expectedText: string
+  ): { locator: Locator; pattern: RegExp } {
+    // Pattern:  define pattern here
+    const basicExpectedPattern = new RegExp(`^${expectedText}$`, "i");
+
+    // Filter the general locator to find the specific container
+    const locator = allEntryContainers.filter({
+      hasText: basicExpectedPattern,
+    });
+
+    // return locator values and full-text for assertions
+    return { locator: locator, pattern: basicExpectedPattern };
+  }
 }
 
 export default class ItemMetadataPage {
@@ -83,6 +120,10 @@ export default class ItemMetadataPage {
     { name: "Ratzer, Bernard", role: "Cartographer" },
     { name: "Kitchin, Thomas, 1718-1784", role: "Engraver" },
   ];
+  static readonly EXPECTED_SUBJECTS = [
+    "New York (N.Y.) -- Maps -- Early works to 1800",
+    "New York (N.Y.) -- Administrative and political divisions -- Maps -- Early works to 1800",
+  ];
 
   constructor(page: Page) {
     this.page = page;
@@ -123,8 +164,8 @@ export default class ItemMetadataPage {
       )
       .getByText(/Shelf locator:/i);
 
-    // Topics
-    this.topicHeading = this.page.getByText("Topics", { exact: true });
+    // Subjects
+    this.topicHeading = this.page.getByText("Subjects", { exact: true });
     this.topicText = this.topicHeading.locator("+ p");
 
     // Name (Creator/Author)
@@ -294,6 +335,48 @@ export default class ItemMetadataPage {
 
       // Verify the full text (including the non-clickable role) is present.
       await expect(nameContainer).toHaveText(fullExpectedPattern);
+    }
+  }
+
+  async verifyTopicCount(): Promise<void> {
+    const allTopicEntryContainers = this.topicText.locator("span");
+    await expect(allTopicEntryContainers).toHaveCount(
+      ItemMetadataPage.EXPECTED_SUBJECTS.length
+    );
+  }
+
+  // Checks for clickable Subjects links.
+  async verifyTopicLinks(): Promise<void> {
+    const allTopicEntryContainers = this.topicText.locator("span");
+
+    for (const expectedTopic of ItemMetadataPage.EXPECTED_SUBJECTS) {
+      const { locator: topicContainer } = this.locatorService.getTopicLocator(
+        allTopicEntryContainers,
+        expectedTopic
+      );
+
+      const topicLink = topicContainer.getByRole("link");
+
+      await expect(topicLink).toBeVisible();
+      // Verify that the link itself contains the full expected text
+      await expect(topicLink).toHaveText(expectedTopic);
+    }
+  }
+
+  // Checks subject values
+  async verifyTopicDataValues(): Promise<void> {
+    const allTopicEntryContainers = this.topicText.locator("span");
+
+    for (const expectedTopic of ItemMetadataPage.EXPECTED_SUBJECTS) {
+      const { locator: topicContainer, pattern: fullExpectedPattern } =
+        this.locatorService.getTopicLocator(
+          allTopicEntryContainers,
+          expectedTopic
+        );
+
+      // Verify the container's full visible text matches the expected value.
+      // Since there is only one link inside the span, this confirms structure and value.
+      await expect(topicContainer).toHaveText(fullExpectedPattern);
     }
   }
 
