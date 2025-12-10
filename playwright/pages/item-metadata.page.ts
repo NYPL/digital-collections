@@ -84,12 +84,6 @@ export default class ItemMetadataPage {
     { name: "Kitchin, Thomas, 1718-1784", role: "Engraver" },
   ];
 
-  static readonly EXPECTED_NAME_COUNT = 2;
-  static readonly EXPECTED_NAME_ONE_VALUE = "Ratzer, Bernard";
-  static readonly EXPECTED_NAME_ONE_ROLE_VALUE = "(Cartographer)";
-  static readonly EXPECTED_NAME_TWO_VALUE = "Kitchin, Thomas, 1718-1784";
-  static readonly EXPECTED_NAME_TWO_ROLE_VALUE = "(Engraver)";
-
   constructor(page: Page) {
     this.page = page;
 
