@@ -353,16 +353,16 @@ export default class ItemMetadataPage {
 
       const currentLink = allLinks.nth(currentLinkIndex);
 
-      // 1. Get link text and append
+      // Get link text and append
       const linkText = await currentLink.textContent();
       if (linkText) {
         constructedLineText += linkText.trim();
       }
 
-      // 2. The Core Logic: Check the raw DOM for the " -- " continuation signal
+      // Check the DOM for the " -- " signal
       const isFollowedByDelimiter = await currentLink.evaluate(
         (linkElement) => {
-          // Traverse up to the <span>, then check the next sibling node.
+          // traverse up to the <span> and check the next sibling node
           const spanElement = linkElement.closest("span");
           if (!spanElement) return false;
 
@@ -391,14 +391,13 @@ export default class ItemMetadataPage {
         }
       );
 
-      // 3. Update the constructed line text based on the delimiter signal
-      // 3. Update the constructed line text based on the delimiter signal
+      // Update constructed line text based on the delimiter signal
       if (isFollowedByDelimiter) {
         constructedLineText += " -- ";
       } else {
-        // Absence of the delimiter means the line is FINISHED.
+        // No delimiter means the line is FINISHED.
         constructedLines.push(constructedLineText.trim());
-        constructedLineText = ""; // Reset for the next line
+        constructedLineText = "";
       }
 
       currentLinkIndex++;
@@ -408,7 +407,7 @@ export default class ItemMetadataPage {
   }
 
   async verifyTopicTotalCount(): Promise<void> {
-    // The length of the reconstructed array is the count of separate subject lines found.
+    // Count of separate subject lines based on DOM-constructed array.
     const actualLineCount = (await this.getTopicLocatorAndDelimiter()).length;
 
     //  Get the expected count from the static data array.
@@ -429,8 +428,8 @@ export default class ItemMetadataPage {
       line.fullText.replace(/\s+/g, " ").trim()
     );
 
-    // Verify that the fullText values expected are showing up (in their correct
-    // structure and sequence) in the DOM.
+    // Verify that the fullText values expected are showing up
+    // (in their correct structure and sequence) in the DOM.
     expect(actualConstructedLines).toEqual(expectedData);
   }
 
