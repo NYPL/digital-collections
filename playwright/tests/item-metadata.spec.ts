@@ -56,3 +56,22 @@ test.describe("Other Identifiers", () => {
     await itemMetadataPage.verifyShelfLocatorIsPresent();
   });
 });
+
+test.describe("Names", () => {
+  test.beforeEach(async ({ page }) => {
+    await expect(itemMetadataPage.nameHeading).toBeVisible();
+    await expect(itemMetadataPage.nameText).toBeVisible();
+  });
+
+  test("should display the correct number of expected name fields", async () => {
+    await itemMetadataPage.verifyNameCount();
+  });
+
+  test("should display link for name and text for Role", async () => {
+    await itemMetadataPage.verifyNameLinks();
+  });
+
+  test("should display correct name and role values", async () => {
+    await itemMetadataPage.verifyNameDataValues();
+  });
+});

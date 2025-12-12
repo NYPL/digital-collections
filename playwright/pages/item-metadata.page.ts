@@ -1,7 +1,34 @@
 import { Locator, Page, expect } from "@playwright/test";
 
+class FieldLocatorService {
+  // Method returns an object containing both the Locator and the content/text Pattern
+  public getNameLocatorAndPattern(
+    allEntryContainers: Locator,
+    expectedData: { name: string; role: string }
+  ): { locator: Locator; pattern: RegExp } {
+    // Define escaped delimiters for the front-end pattern
+    const prefix = "\\(";
+    const suffix = "\\)";
+
+    // Pattern: [Name] + [one or more whitespace (\s+)] + [(Literal Paren)] + [Role] + [Literal Paren]
+    const fullExpectedPattern = new RegExp(
+      expectedData.name + "\\s+" + prefix + expectedData.role + suffix,
+      "i"
+    );
+
+    // Filter the general locator to find the specific container
+    const locator = allEntryContainers.filter({
+      hasText: fullExpectedPattern,
+    });
+
+    // return locator values and full-text for assertions
+    return { locator: locator, pattern: fullExpectedPattern };
+  }
+}
+
 export default class ItemMetadataPage {
   readonly page: Page;
+  private locatorService = new FieldLocatorService();
 
   static itemResultURL: string = "/items/8b2b3160-c5d5-012f-d95c-58d385a7bc34";
 
@@ -39,6 +66,10 @@ export default class ItemMetadataPage {
   readonly typeText: Locator;
   readonly identifiersHeading: Locator;
   readonly identifiersText: Locator;
+  readonly rightsHeading: Locator;
+  readonly rightsText: Locator;
+  readonly dataSourceHeading: Locator;
+  readonly dataSourceLink: Locator;
   static readonly EXPECTED_TITLE_VALUE =
     "To His Excellency Sr. Henry Moore, Bart";
   static readonly EXPECTED_UUID_VALUE = "8b2b3160-c5d5-012f-d95c-58d385a7bc34";
@@ -48,10 +79,10 @@ export default class ItemMetadataPage {
   static readonly EXPECTED_COLLECTION_ROOT_VALUE =
     "Lawrence H. Slaughter Collection of English maps, charts, globes, books and atlases";
   static readonly EXPECTED_COLLECTION_LEVEL_ONE_VALUE = "Charts and maps";
-  readonly rightsHeading: Locator;
-  readonly rightsText: Locator;
-  readonly dataSourceHeading: Locator;
-  readonly dataSourceLink: Locator;
+  static readonly EXPECTED_NAMES = [
+    { name: "Ratzer, Bernard", role: "Cartographer" },
+    { name: "Kitchin, Thomas, 1718-1784", role: "Engraver" },
+  ];
 
   constructor(page: Page) {
     this.page = page;
@@ -93,19 +124,19 @@ export default class ItemMetadataPage {
       .getByText(/Shelf locator:/i);
 
     // Topics
-    this.topicHeading = this.page.getByText("Topic", { exact: true });
+    this.topicHeading = this.page.getByText("Topics", { exact: true });
     this.topicText = this.topicHeading.locator("+ p");
 
     // Name (Creator/Author)
-    this.nameHeading = this.page.getByText("Name", { exact: true });
+    this.nameHeading = this.page.getByText("Names", { exact: true });
     this.nameText = this.nameHeading.locator("+ p");
 
     // Place/Geographic
-    this.placeHeading = this.page.getByText("Place", { exact: true });
+    this.placeHeading = this.page.getByText("Places", { exact: true });
     this.placeText = this.placeHeading.locator("+ p");
 
     // Genre
-    this.genreHeading = this.page.getByText("Genre", { exact: true });
+    this.genreHeading = this.page.getByText("Genres", { exact: true });
     this.genreText = this.genreHeading.locator("+ p");
 
     // Notes
@@ -223,6 +254,47 @@ export default class ItemMetadataPage {
     await expect(collectionLevelOneLinkLocator).toHaveText(
       ItemMetadataPage.EXPECTED_COLLECTION_LEVEL_ONE_VALUE
     );
+  }
+
+  async verifyNameCount(): Promise<void> {
+    const allNameEntryContainers = this.nameText.locator("span");
+    await expect(allNameEntryContainers).toHaveCount(
+      ItemMetadataPage.EXPECTED_NAMES.length
+    );
+  }
+
+  // Checks if Name is a clickable link and Role is text.
+  async verifyNameLinks(): Promise<void> {
+    const allNameEntryContainers = this.nameText.locator("span");
+
+    for (const expectedName of ItemMetadataPage.EXPECTED_NAMES) {
+      const { locator: nameContainer } =
+        this.locatorService.getNameLocatorAndPattern(
+          allNameEntryContainers,
+          expectedName
+        );
+
+      const nameLink = nameContainer.getByRole("link");
+
+      await expect(nameLink).toBeVisible();
+      await expect(nameLink).toHaveText(expectedName.name);
+    }
+  }
+
+  // Check if Name and Role matches expected value
+  async verifyNameDataValues(): Promise<void> {
+    const allNameEntryContainers = this.nameText.locator("span");
+
+    for (const expectedName of ItemMetadataPage.EXPECTED_NAMES) {
+      const { locator: nameContainer, pattern: fullExpectedPattern } =
+        this.locatorService.getNameLocatorAndPattern(
+          allNameEntryContainers,
+          expectedName
+        );
+
+      // Verify the full text (including the non-clickable role) is present.
+      await expect(nameContainer).toHaveText(fullExpectedPattern);
+    }
   }
 
   async verifyRightsContent(): Promise<void> {
