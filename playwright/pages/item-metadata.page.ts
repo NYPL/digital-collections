@@ -25,27 +25,6 @@ class FieldLocatorService {
     return { locator: locator, pattern: fullExpectedPattern };
   }
 
-  public getTopicLocator(
-    allEntryContainers: Locator,
-    expectedText: string
-  ): { locator: Locator; pattern: RegExp } {
-    // Escape special characters so parentheses like "(N.Y.)" can match)
-    const escapedText = expectedText.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
-
-    // Pattern: the text must be contained (no start/end anchors)
-    const locatorPattern = new RegExp(escapedText, "i");
-
-    // Match entire string we will use start/end anchors for strict matching
-    const fullExpectedPattern = new RegExp(`^${escapedText}$`, "i");
-
-    // Filter the general locator to find the specific container
-    const locator = allEntryContainers.filter({
-      hasText: locatorPattern,
-    });
-
-    return { locator: locator, pattern: fullExpectedPattern };
-  }
-
   public getBasicLocator(
     allEntryContainers: Locator,
     expectedText: string
@@ -110,6 +89,8 @@ export default class ItemMetadataPage {
   static readonly EXPECTED_TITLE_VALUE =
     "To His Excellency Sr. Henry Moore, Bart";
   static readonly EXPECTED_UUID_VALUE = "8b2b3160-c5d5-012f-d95c-58d385a7bc34";
+  static readonly EXPECTED_TOPIC_UUID_VALUE =
+    "27373b60-c55f-012f-b3cd-58d385a7bc34";
   static readonly EXPECTED_OCLC_VALUE = "24501668";
   static readonly EXPECTED_BNUMBER_VALUE = "b14924644";
   static readonly EXPECTED_SHELF_LOCATOR_VALUE = "Map Div. 97-6199 [LHS 839]";
@@ -120,9 +101,21 @@ export default class ItemMetadataPage {
     { name: "Ratzer, Bernard", role: "Cartographer" },
     { name: "Kitchin, Thomas, 1718-1784", role: "Engraver" },
   ];
-  static readonly EXPECTED_SUBJECTS = [
-    "New York (N.Y.) -- Maps -- Early works to 1800",
-    "New York (N.Y.) -- Administrative and political divisions -- Maps -- Early works to 1800",
+  static readonly EXPECTED_TOPIC_LINK_MAP = [
+    {
+      fullText: "New York (N.Y.)",
+      linkCount: 1,
+    },
+    // Compound Structure (Multiple Links, separated by --)
+    {
+      fullText: "Parades & processions -- New York (State) -- New York",
+      linkCount: 3,
+    },
+    // Another Simple line
+    {
+      fullText: "Memorial Day",
+      linkCount: 1,
+    },
   ];
 
   constructor(page: Page) {
@@ -338,46 +331,135 @@ export default class ItemMetadataPage {
     }
   }
 
-  async verifyTopicCount(): Promise<void> {
-    const allTopicEntryContainers = this.topicText.locator("span");
-    await expect(allTopicEntryContainers).toHaveCount(
-      ItemMetadataPage.EXPECTED_SUBJECTS.length
-    );
-  }
+  public async getTopicLocatorAndDelimiter(): Promise<string[]> {
+    const parentContainer = this.topicText;
 
-  // Checks for clickable Subjects links.
-  async verifyTopicLinks(): Promise<void> {
-    const allTopicEntryContainers = this.topicText.locator("span");
+    const allLinks = parentContainer.locator("a");
+    const totalLinks = await allLinks.count();
+    const constructedLines: string[] = [];
 
-    for (const expectedTopic of ItemMetadataPage.EXPECTED_SUBJECTS) {
-      const { locator: topicContainer } = this.locatorService.getTopicLocator(
-        allTopicEntryContainers,
-        expectedTopic
+    let currentLinkIndex = 0;
+    let constructedLineText = "";
+
+    // Loop through all links in the block, stopping when all are processed.
+    while (currentLinkIndex < totalLinks || constructedLineText.length > 0) {
+      // If we processed the last link and still have text, save it and exit the loop.
+      if (currentLinkIndex >= totalLinks) {
+        if (constructedLineText.length > 0) {
+          constructedLines.push(constructedLineText.trim());
+        }
+        break;
+      }
+
+      const currentLink = allLinks.nth(currentLinkIndex);
+
+      // 1. Get link text and append
+      const linkText = await currentLink.textContent();
+      if (linkText) {
+        constructedLineText += linkText.trim();
+      }
+
+      // 2. The Core Logic: Check the raw DOM for the " -- " continuation signal
+      const isFollowedByDelimiter = await currentLink.evaluate(
+        (linkElement) => {
+          // Traverse up to the <span>, then check the next sibling node.
+          const spanElement = linkElement.closest("span");
+          if (!spanElement) return false;
+
+          let nextSibling = spanElement.nextSibling;
+
+          // Skip invisible nodes (whitespace, comments, etc.)
+          // and stop if it's an ELEMENT_NODE or if it has meaningful text content.
+          while (
+            nextSibling &&
+            nextSibling.nodeType !== Node.ELEMENT_NODE && // check for 'not an HTML tag'
+            nextSibling.textContent?.trim() === ""
+          ) {
+            nextSibling = nextSibling.nextSibling;
+          }
+
+          // Check if nextSibling exists AND is a Text Node (the delimiter content).
+          if (nextSibling && nextSibling.nodeType === Node.TEXT_NODE) {
+            const content = nextSibling.textContent;
+
+            // Return true if the content is not null/empty AND contains the delimiter.
+            return content !== null && content.includes(" -- ");
+          }
+
+          // If nextSibling is null or not a Text Node, the line is finished.
+          return false;
+        }
       );
 
-      const topicLink = topicContainer.getByRole("link");
+      // 3. Update the constructed line text based on the delimiter signal
+      // 3. Update the constructed line text based on the delimiter signal
+      if (isFollowedByDelimiter) {
+        constructedLineText += " -- ";
+      } else {
+        // Absence of the delimiter means the line is FINISHED.
+        constructedLines.push(constructedLineText.trim());
+        constructedLineText = ""; // Reset for the next line
+      }
 
-      await expect(topicLink).toBeVisible();
-      // Verify that the link itself contains the full expected text
-      await expect(topicLink).toHaveText(expectedTopic);
+      currentLinkIndex++;
     }
+
+    return constructedLines;
   }
 
-  // Checks subject values
-  async verifyTopicDataValues(): Promise<void> {
-    const allTopicEntryContainers = this.topicText.locator("span");
+  async verifyTopicTotalCount(): Promise<void> {
+    // The length of the reconstructed array is the count of separate subject lines found.
+    const actualLineCount = (await this.getTopicLocatorAndDelimiter()).length;
 
-    for (const expectedTopic of ItemMetadataPage.EXPECTED_SUBJECTS) {
-      const { locator: topicContainer, pattern: fullExpectedPattern } =
-        this.locatorService.getTopicLocator(
-          allTopicEntryContainers,
-          expectedTopic
-        );
+    //  Get the expected count from the static data array.
+    const expectedLineCount = ItemMetadataPage.EXPECTED_TOPIC_LINK_MAP.length;
 
-      // Verify the container's full visible text matches the expected value.
-      // Since there is only one link inside the span, this confirms structure and value.
-      await expect(topicContainer).toHaveText(fullExpectedPattern);
+    // Compare the reconstructed line count against the expected line count.
+    // This also confirms the logic correctly identified the start/end points of each compound subject.
+    expect(actualLineCount).toEqual(expectedLineCount);
+  }
+
+  async verifyTopicText(): Promise<void> {
+    // This calls the internal method that runs the complex DOM traversal logic.
+    const actualConstructedLines = await this.getTopicLocatorAndDelimiter();
+
+    // Map the expected values array to just the full string values.
+    const expectedData = ItemMetadataPage.EXPECTED_TOPIC_LINK_MAP.map((line) =>
+      // Normalize whitespace
+      line.fullText.replace(/\s+/g, " ").trim()
+    );
+
+    // Verify that the fullText values expected are showing up (in their correct
+    // structure and sequence) in the DOM.
+    expect(actualConstructedLines).toEqual(expectedData);
+  }
+
+  async verifyTopicLinksAreClickable(): Promise<void> {
+    const allLinks = this.topicText.locator("a");
+    let currentLinkIndex = 0;
+
+    // Total count (needed for the post-loop assertion)
+    let expectedTotalLinkCount = 0;
+
+    // Loop over the clean, expected subject line data
+    for (const expectedLine of ItemMetadataPage.EXPECTED_TOPIC_LINK_MAP) {
+      // calculate the expected count
+      expectedTotalLinkCount += expectedLine.linkCount;
+
+      // Check each link within this single subject line
+      for (let i = 0; i < expectedLine.linkCount; i++) {
+        const linkLocator = allLinks.nth(currentLinkIndex);
+
+        await expect(linkLocator).toBeVisible();
+        await expect(linkLocator).toHaveAttribute("href", /https?:\/\//);
+
+        currentLinkIndex++;
+      }
     }
+
+    // Final check for total link integrity
+    const actualTotalLinksFound = await allLinks.count();
+    expect(actualTotalLinksFound).toEqual(expectedTotalLinkCount);
   }
 
   async verifyRightsContent(): Promise<void> {
