@@ -44,7 +44,7 @@
     "@types/react": "18.2.21",
     "@types/react-dom": "18.2.7",
     "dotenv": "16.4.5",
-    "eslint": "8.48.0",
+    "eslint": "8.56.0",
     "googleapis": "129.0.0",
     "html-react-parser": "5.2.2",
     "newrelic": "12.5.1",
