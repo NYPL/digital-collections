@@ -332,70 +332,71 @@ export default class ItemMetadataPage {
   }
 
   public async getTopicLocatorAndDelimiter(): Promise<string[]> {
-    const parentContainer = this.topicText;
-
+    const parentContainer = this.topicText; // The <p> element
     const allLinks = parentContainer.locator("a");
     const totalLinks = await allLinks.count();
-    const constructedLines: string[] = [];
 
+    const constructedLines: string[] = [];
     let currentLinkIndex = 0;
     let constructedLineText = "";
 
-    // Loop through all links in the block, stopping when all are processed.
-    while (currentLinkIndex < totalLinks || constructedLineText.length > 0) {
-      // If we processed the last link and still have text, save it and exit the loop.
-      if (currentLinkIndex >= totalLinks) {
-        if (constructedLineText.length > 0) {
-          constructedLines.push(constructedLineText.trim());
-        }
-        break;
-      }
-
+    while (currentLinkIndex < totalLinks) {
       const currentLink = allLinks.nth(currentLinkIndex);
-
-      // Get link text and append
       const linkText = await currentLink.textContent();
+
       if (linkText) {
         constructedLineText += linkText.trim();
       }
 
-      // Check the DOM for the " -- " signal
-      const isFollowedByDelimiter = await currentLink.evaluate(
+      // Check the DOM for delimiters and subject-line terminators
+      const { isCompound, isFinished } = await currentLink.evaluate(
         (linkElement) => {
-          // traverse up to the <span> and check the next sibling node
           const spanElement = linkElement.closest("span");
-          if (!spanElement) return false;
+          if (!spanElement) return { isCompound: false, isFinished: true };
 
           let nextSibling = spanElement.nextSibling;
 
-          // Skip invisible nodes (whitespace, comments, etc.)
-          // and stop if it's an ELEMENT_NODE or if it has meaningful text content.
-          while (
+          // Check for Compound Subject Links Delimiter
+          let isCompound = false;
+          if (
             nextSibling &&
-            nextSibling.nodeType !== Node.ELEMENT_NODE && // check for 'not an HTML tag'
-            nextSibling.textContent?.trim() === ""
+            nextSibling.nodeType === Node.TEXT_NODE &&
+            nextSibling.textContent?.includes(" -- ")
           ) {
+            isCompound = true;
             nextSibling = nextSibling.nextSibling;
           }
 
-          // Check if nextSibling exists AND is a Text Node (the delimiter content).
-          if (nextSibling && nextSibling.nodeType === Node.TEXT_NODE) {
-            const content = nextSibling.textContent;
-
-            // Return true if the content is not null/empty AND contains the delimiter.
-            return content !== null && content.includes(" -- ");
+          // Check for Subject Line Ending (<br>)
+          let isFinished = false;
+          // Skip non-significant whitespace/text nodes
+          while (nextSibling && nextSibling.nodeType !== Node.ELEMENT_NODE) {
+            if (nextSibling.textContent?.trim() !== "") {
+              break;
+            }
+            nextSibling = nextSibling.nextSibling;
           }
 
-          // If nextSibling is null or not a Text Node, the line is finished.
-          return false;
+          // Checks for existence, ensures it's an element, and then explicitly checks the tag name for BR.
+          if (
+            nextSibling &&
+            nextSibling.nodeType === Node.ELEMENT_NODE &&
+            (nextSibling as Element).tagName === "BR"
+          ) {
+            isFinished = true;
+          }
+
+          return { isCompound, isFinished };
         }
       );
 
-      // Update constructed line text based on the delimiter signal
-      if (isFollowedByDelimiter) {
+      if (isCompound) {
+        // Line continues, append the delimiter text.
         constructedLineText += " -- ";
-      } else {
-        // No delimiter means the line is FINISHED.
+      }
+
+      // Subject line is finished if the DOM has a <br> or if this is the very last link in the list.
+      if (isFinished || currentLinkIndex === totalLinks - 1) {
         constructedLines.push(constructedLineText.trim());
         constructedLineText = "";
       }
