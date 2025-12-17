@@ -3,7 +3,7 @@ import random
 
 from locust import HttpUser, task, between
 
-SEARCH_PAGE_URL = "/search/index"
+SEARCH_PAGE_PATH = "/search/index"
 
 
 class SearchPageUser(HttpUser):
@@ -12,7 +12,7 @@ class SearchPageUser(HttpUser):
     # Get search page with empty search
     @task(2)
     def search_page_empty_search(self):
-        path = SEARCH_PAGE_URL
+        path = SEARCH_PAGE_PATH
         name = "empty search"
         self.client.get(path, name=name)
 
@@ -31,7 +31,7 @@ class SearchPageUser(HttpUser):
             search_term = search_term.replace(" ", "+")
             page = i
             query_string = f"?keywords={search_term}&page={page}"
-            path = f"{SEARCH_PAGE_URL}{query_string}"
+            path = f"{SEARCH_PAGE_PATH}{query_string}"
             name = f"search '{search_term.replace("+", " ")}' (page {page})"
             self.client.get(path, name=name)
             time.sleep(random.randint(10, 30))  # Give user time to explore current page
@@ -44,7 +44,7 @@ class SearchPageUser(HttpUser):
         search_query_param = f"q={search_term}"
         filter_query_param = f"filters[genre]={filter_option}"
         query_string = f"?{search_query_param}&{filter_query_param}"
-        path = f"{SEARCH_PAGE_URL}{query_string}"
+        path = f"{SEARCH_PAGE_PATH}{query_string}"
         name = "filter for genre 'Atlases' on search 'maps'"
         self.client.get(path, name=name)
 
@@ -55,6 +55,6 @@ class SearchPageUser(HttpUser):
         search_query_param = f"q={search_term}"
         sort_query_param = f"sort={sort_option}"
         query_string = f"?{search_query_param}&{sort_query_param}"
-        path = f"{SEARCH_PAGE_URL}{query_string}"
+        path = f"{SEARCH_PAGE_PATH}{query_string}"
         name = "sort by 'date-desc' on search 'maps'"
         self.client.get(path, name=name)
