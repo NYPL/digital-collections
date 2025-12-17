@@ -5,6 +5,7 @@ from locust import HttpUser, task, between
 
 COLLECTIONS_PAGE_PATH = "/collections"
 
+
 class CollectionsPageUser(HttpUser):
     wait_time = between(7, 15)
 

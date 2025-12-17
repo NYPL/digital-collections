@@ -4,6 +4,7 @@ from locust import HttpUser, task, between
 
 DIVISION_PAGE_PATH = "/divisions/{slug}"
 
+
 class DivisionPageUser(HttpUser):
     wait_time = between(7, 15)
 
