@@ -36,7 +36,6 @@ class SearchPageUser(HttpUser):
             self.client.get(path, name=name)
             time.sleep(random.randint(10, 30))  # Give user time to explore current page
 
-
     # Get search page with a genre filter applied
     @task(1)
     def search_page_filter(self):
