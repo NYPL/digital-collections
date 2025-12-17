@@ -2,6 +2,7 @@ from locust import HttpUser, task, between
 
 ITEM_PAGE_PATH = "/items/{uuid}"
 
+
 class ItemPageUser(HttpUser):
     wait_time = between(7, 15)
 

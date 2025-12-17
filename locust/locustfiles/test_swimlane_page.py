@@ -4,6 +4,7 @@ from locust import HttpUser, task, between
 
 SWIMLANE_PAGE_PATH = "/collections/lane/{slug}"
 
+
 class SwimlanePageUser(HttpUser):
     wait_time = between(7, 15)
 
