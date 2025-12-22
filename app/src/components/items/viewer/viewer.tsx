@@ -54,6 +54,13 @@ const uvConfig = {
         zoomOut: "Zoom Out",
       },
     },
+    downloadDialogue: {
+      options: {
+        downloadWholeImageHighResEnabled: false,
+        downloadWholeImageLowResEnabled: false,
+        downloadCurrentViewEnabled: false,
+      },
+    },
   },
 };
 
