@@ -243,7 +243,7 @@ const UniversalViewer: React.FC<UniversalViewerProps> = React.memo(
         sendDownloadEvent(fileInfo.name, fileInfo.extension);
       } else {
         console.log(`Could not parse file info from label ${label}`);
-        sendDownloadEvent("Not set", "Not set");
+        sendDownloadEvent(label);
       }
     });
 
