@@ -7,6 +7,7 @@ import React, { useEffect, useMemo, useRef } from "react";
 import { IIIFEvents as BaseEvents, IIIFURLAdapter } from "universalviewer";
 import { useRouter, usePathname, useSearchParams } from "next/navigation";
 import { useCanvasContext } from "../../../context/CanvasProvider";
+import { sendDownloadEvent } from "@/src/utils/ga4Utils";
 
 export type UniversalViewerProps = {
   config?: any;
@@ -236,9 +237,26 @@ const UniversalViewer: React.FC<UniversalViewerProps> = React.memo(
       }
     });
 
-    useEvent(uv, BaseEvents.DOWNLOAD, (i) => {
-      console.log("blah i ", i);
+    useEvent(uv, BaseEvents.DOWNLOAD, ({ label }) => {
+      const fileInfo = parseUVDownloadFilename(label);
+      if (fileInfo) {
+        sendDownloadEvent(fileInfo.name, fileInfo.extension);
+      } else {
+        console.log(`Could not parse file info from label ${label}`);
+        sendDownloadEvent("Not set", "Not set");
+      }
     });
+
+    const parseUVDownloadFilename = (fileLabel: string) => {
+      const match = fileLabel.match(/^(.*)\s\((.*)\)$/);
+      if (match) {
+        return {
+          name: match[1],
+          extension: match[2],
+        };
+      }
+      return null;
+    };
 
     return (
       <>
