@@ -28,6 +28,7 @@ export interface SearchCardProps {
   result: SearchCardType;
   keywords: string;
   isLargerThanLargeTablet: boolean;
+  viewMode: "grid" | "list";
 }
 
 const onSiteMaterialBadge = (recordType: SearchResultRecordType) => {
@@ -105,6 +106,7 @@ export const SearchCard = ({
   result,
   keywords,
   isLargerThanLargeTablet,
+  viewMode,
 }: SearchCardProps) => {
   const truncatedTitle = result.title.length > TRUNCATED_SEARCH_CARD_LENGTH;
 
@@ -117,7 +119,7 @@ export const SearchCard = ({
         component: <SearchCardImage key={result.imageID} record={result} />,
       }}
       mainActionLink={result.url}
-      layout="row"
+      layout={viewMode === "list" ? "row" : "column"}
       maxWidth="945px"
     >
       <CardHeading

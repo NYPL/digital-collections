@@ -208,17 +208,24 @@ export function middleware(req: NextRequest) {
   if (itemsMatch) {
     allowedParams = new Set(["type", "canvasIndex", "uuid", "cv"]);
   } else {
-    allowedParams = new Set(["q", "sort", "page", "filters"]);
+    allowedParams = new Set(["q", "sort", "page", "filters", "viewMode"]);
   }
 
   // Remove all other params except allowed ones
   const keys = Array.from(searchParams.keys());
+  console.log("Middleware - all params before filtering:", keys);
+  console.log("Middleware - allowedParams:", Array.from(allowedParams));
   keys.forEach((key) => {
     if (!allowedParams.has(key)) {
+      console.log(`Middleware - removing param: ${key}`);
       searchParams.delete(key);
       modified = true;
     }
   });
+  console.log(
+    "Middleware - params after filtering:",
+    Array.from(searchParams.keys())
+  );
   // Redirect if changes were made
   if (modified) {
     const newUrl = `${url.origin}${url.pathname}?${searchParams.toString()}`;
