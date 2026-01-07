@@ -4,7 +4,6 @@ import { CollectionsPage } from "../src/components/pages/collectionsPage/collect
 import { CollectionsApi } from "@/src/utils/apiClients/apiClients";
 import { redirect } from "next/navigation";
 import PageLayout from "@/src/components/pageLayout/pageLayout";
-import { createAdobeAnalyticsPageName } from "@/src/utils/utils";
 import { revalidatePath } from "next/cache";
 import { CollectionSearchParamsType } from "./[uuid]/page";
 
@@ -44,7 +43,6 @@ export default async function Collections({ searchParams }: CollectionsProps) {
         { text: "Home", url: "/" },
         { text: "Collections", url: "/collections" },
       ]}
-      adobeAnalyticsPageName={createAdobeAnalyticsPageName("all-collections")}
     >
       <CollectionsPage collectionsSearchParams={searchParams} data={data} />
     </PageLayout>
