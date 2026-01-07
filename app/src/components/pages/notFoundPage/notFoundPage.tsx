@@ -7,7 +7,6 @@ import {
 } from "@nypl/design-system-react-components";
 import PageLayout from "../../pageLayout/pageLayout";
 import Image from "next/image";
-import { createAdobeAnalyticsPageName } from "@/src/utils/utils";
 import { useEffect } from "react";
 import { usePathname } from "next/navigation";
 
@@ -25,12 +24,7 @@ export default function NotFoundPage() {
   }, [pathname]);
 
   return (
-    <PageLayout
-      activePage="notFound"
-      adobeAnalyticsPageName={createAdobeAnalyticsPageName(
-        "page-not-found-error"
-      )}
-    >
+    <PageLayout activePage="notFound">
       <Flex
         flexDir="column"
         marginTop="xxl"

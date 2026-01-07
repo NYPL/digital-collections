@@ -1,7 +1,7 @@
 import React from "react";
 import { Metadata } from "next";
 import PageLayout from "../../src/components/pageLayout/pageLayout";
-import { createAdobeAnalyticsPageName, imageURL } from "@/src/utils/utils";
+import { imageURL } from "@/src/utils/utils";
 import CollectionPage from "@/src/components/pages/collectionPage/collectionPage";
 import { CollectionsApi } from "@/src/utils/apiClients/apiClients";
 import { AvailableFilterOption } from "@/src/types/AvailableFilterType";
@@ -84,10 +84,6 @@ export default async function Collection({
           url: `/collections/${params.uuid}`,
         },
       ]}
-      adobeAnalyticsPageName={createAdobeAnalyticsPageName(
-        "collections",
-        params.uuid
-      )}
       ga4Data={{
         collection: collectionData.title,
         division: collectionData.divisionTitle,

@@ -10,7 +10,6 @@ import React, { useEffect, useState } from "react";
 import { Lane as DCLane } from "../../lane/lane";
 import LaneLoading from "../../lane/laneLoading";
 import LaneDataType from "@/src/types/LaneDataType";
-import { createAdobeAnalyticsPageName } from "@/src/utils/utils";
 
 interface DivisionsProps {
   summary: string;
@@ -31,7 +30,6 @@ export default function DivisionsPage({ summary, divisions }: DivisionsProps) {
         { text: "Home", url: "/" },
         { text: "Divisions", url: "/divisions" },
       ]}
-      adobeAnalyticsPageName={createAdobeAnalyticsPageName("divisions")}
     >
       {divisions && divisions.length > 0 ? (
         <>
