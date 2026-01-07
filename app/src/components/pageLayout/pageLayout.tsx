@@ -11,8 +11,6 @@ import { type PropsWithChildren } from "react";
 import Header from "../header/header";
 import Script from "next/script";
 import { BreadcrumbsDataProps } from "@nypl/design-system-react-components/dist/src/components/Breadcrumbs/Breadcrumbs";
-import { ADOBE_EMBED_URL } from "../../config/constants";
-import { trackVirtualPageView } from "../../utils/utils";
 import { FeedbackProvider } from "@/src/context/FeedbackProvider";
 import { SearchParamsType } from "@/search/index/page";
 import { SearchProvider } from "@/src/context/SearchProvider";
@@ -22,7 +20,6 @@ import { trackGa4PageView } from "@/src/utils/ga4Utils";
 interface PageLayoutProps {
   activePage: string;
   breadcrumbs?: BreadcrumbsDataProps[];
-  adobeAnalyticsPageName?: string;
   ga4Data?: {
     collection?: string;
     division?: string;
@@ -37,13 +34,11 @@ const PageLayout = ({
   children,
   activePage,
   breadcrumbs,
-  adobeAnalyticsPageName,
   ga4Data,
   searchParams,
 }: PropsWithChildren<PageLayoutProps>) => {
-  // Track page view events to Adobe Analytics
+  // Track page view events to Google Analytics
   useEffect(() => {
-    trackVirtualPageView(adobeAnalyticsPageName);
     if (ga4Data) {
       trackGa4PageView(
         ga4Data.division,
@@ -59,19 +54,6 @@ const PageLayout = ({
 
   return (
     <>
-      {/* <!-- Adobe Analytics  --> */}
-      <Script async src={ADOBE_EMBED_URL} />
-      <Script id="adobeDataLayerDefinition">
-        {`
-            // First define the global variable for the entire data layer array
-            window.adobeDataLayer = window.adobeDataLayer || [];
-            // Then push in the variables required in the Initial Data Layer Definition
-            window.adobeDataLayer.push({
-              disable_page_view: true
-            });
-        `}
-      </Script>
-      {/* <!-- / Adobe Analytics  --> */}
       <DSProvider>
         <SearchProvider searchParams={searchParams}>
           <FeedbackProvider>

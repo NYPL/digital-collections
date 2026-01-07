@@ -10,13 +10,9 @@ import ExploreFurther from "../../exploreFurther/exploreFurther";
 import CampaignHero from "../../featuredItem/campaignHero";
 import HomePageMainContent from "../../homePageMainContent/homePageMainContent";
 import PageLayout from "../../pageLayout/pageLayout";
-import { createAdobeAnalyticsPageName } from "@/src/utils/utils";
 export default function HomePage({ data }) {
   return (
-    <PageLayout
-      activePage="home"
-      adobeAnalyticsPageName={createAdobeAnalyticsPageName("home")}
-    >
+    <PageLayout activePage="home">
       <Template>
         <TemplateBreakout>
           <CampaignHero featuredItemData={data.featuredItemData} />
