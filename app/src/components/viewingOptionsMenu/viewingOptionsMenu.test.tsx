@@ -1,12 +1,12 @@
 import { fireEvent, render, screen, waitFor } from "@testing-library/react";
-import SortMenu from "./sortMenu";
+import ViewingOptionsMenu from "./viewingOptionsMenu";
 import {
   DEFAULT_SEARCH_SORT,
   DEFAULT_SEARCH_TERM,
 } from "@/src/config/constants";
 import { GeneralSearchManager } from "@/src/utils/searchManager/searchManager";
 
-describe("SortMenu", () => {
+describe("ViewingOptionsMenu", () => {
   const updateURL = jest.fn();
   const options = {
     relevance: "Relevance",
@@ -28,7 +28,7 @@ describe("SortMenu", () => {
 
   it("renders with correct initial sort label", () => {
     render(
-      <SortMenu
+      <ViewingOptionsMenu
         updateURL={updateURL}
         sort={manager.sort}
         searchManager={manager}
@@ -43,7 +43,7 @@ describe("SortMenu", () => {
 
   it("displays menu options on open", async () => {
     render(
-      <SortMenu
+      <ViewingOptionsMenu
         updateURL={updateURL}
         sort={manager.sort}
         searchManager={manager}
@@ -63,7 +63,7 @@ describe("SortMenu", () => {
 
   it("calls updateURL with the correct query string when an option is selected", async () => {
     render(
-      <SortMenu
+      <ViewingOptionsMenu
         updateURL={updateURL}
         searchManager={manager}
         sort={manager.sort}

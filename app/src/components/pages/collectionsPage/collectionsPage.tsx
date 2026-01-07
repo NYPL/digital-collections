@@ -23,7 +23,7 @@ import {
 import { CollectionSearchManager } from "@/src/utils/searchManager/searchManager";
 import { headerBreakpoints } from "@/src/utils/breakpoints";
 import DCSearchBar from "../../search/dcSearchBar";
-import SortMenu from "../../sortMenu/sortMenu";
+import ViewingOptionsMenu from "../../viewingOptionsMenu/viewingOptionsMenu";
 
 export function CollectionsPage({ data, collectionsSearchParams }) {
   const { push } = useRouter();
@@ -172,11 +172,12 @@ export function CollectionsPage({ data, collectionsSearchParams }) {
             marginBottom: "l",
           }}
         >
-          <SortMenu
+          <ViewingOptionsMenu
             options={COLLECTION_SORT_LABELS}
             sort={data.sort}
             searchManager={collectionsSearchManager}
             updateURL={updateURL}
+            showViewModeButtons={false}
           />
         </Box>
       </Flex>

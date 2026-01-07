@@ -4,6 +4,7 @@ import {
   DEFAULT_SEARCH_TERM,
   DEFAULT_FILTERS,
   ALLOWED_FILTERS,
+  DEFAULT_VIEW_MODE,
 } from "../../config/constants";
 import { Filter } from "../../types/FilterType";
 import {
@@ -18,12 +19,14 @@ export interface SearchManager {
   handleKeywordChange(value: string): void;
   handlePageChange(pageNumber: number): string;
   handleSortChange(id: string): string;
+  handleViewModeChange(mode: "grid" | "list"): string;
   handleAddFilter(newFilters: Filter[] | Filter): string;
   handleRemoveFilter(filtersToRemove: Filter[] | Filter): string;
   clearAllFilters(): string;
   get keywords(): string;
   get sort(): string;
   get page(): number;
+  get viewMode(): "grid" | "list";
   get filters(): Filter[];
   get availableFilters(): AvailableFilter[];
   get lastFilterRef(): MutableRefObject<string | null>;
@@ -36,6 +39,7 @@ abstract class BaseSearchManager implements SearchManager {
   protected defaultSort: string;
   protected currentKeywords: string;
   protected currentFilters: Set<string>;
+  protected currentViewMode: "grid" | "list";
   protected currentAvailableFilters: AvailableFilter[];
   public lastFilterRef: MutableRefObject<string | null>;
 
@@ -52,6 +56,7 @@ abstract class BaseSearchManager implements SearchManager {
     initialKeywords: string;
     initialAvailableFilters?: Record<string, AvailableFilterOption[]>;
     lastFilterRef?: MutableRefObject<string | null>;
+    initialViewMode?: "grid" | "list";
   }) {
     this.currentPage = config.initialPage;
     this.currentSort = config.initialSort;
@@ -60,6 +65,7 @@ abstract class BaseSearchManager implements SearchManager {
       (config.initialFilters || []).map((filter) => JSON.stringify(filter))
     );
     this.currentKeywords = config.initialKeywords;
+    this.currentViewMode = config.initialViewMode || "list";
     this.currentAvailableFilters = transformToDisplayAvailableFilters(
       config.initialAvailableFilters ?? {}
     );
@@ -88,6 +94,10 @@ abstract class BaseSearchManager implements SearchManager {
     this.lastFilterRef.current = value;
   }
 
+  get viewMode() {
+    return this.currentViewMode;
+  }
+
   get availableFilters(): AvailableFilter[] {
     return this.currentAvailableFilters;
   }
@@ -114,6 +124,7 @@ abstract class BaseSearchManager implements SearchManager {
       sort: this.currentSort,
       page: DEFAULT_PAGE_NUM,
       filters: filterToString(this.filters),
+      viewMode: this.currentViewMode,
     });
   }
 
@@ -136,6 +147,18 @@ abstract class BaseSearchManager implements SearchManager {
       sort: this.currentSort,
       page: DEFAULT_PAGE_NUM,
       filters: filterToString(this.filters),
+      viewMode: this.currentViewMode,
+    });
+  }
+
+  handleViewModeChange(mode: "grid" | "list") {
+    this.currentViewMode = mode;
+    return this.getQueryString({
+      q: this.currentKeywords,
+      sort: this.currentSort,
+      page: this.currentPage,
+      filters: filterToString(this.filters),
+      viewMode: mode,
     });
   }
 
@@ -146,6 +169,7 @@ abstract class BaseSearchManager implements SearchManager {
       sort: this.currentSort,
       page: DEFAULT_PAGE_NUM,
       filters: filterToString(DEFAULT_FILTERS),
+      viewMode: this.currentViewMode,
     });
   }
 }
@@ -169,6 +193,7 @@ export class GeneralSearchManager extends BaseSearchManager {
       sort: this.currentSort,
       page: pageNumber,
       filters: filterToString(this.filters),
+      viewMode: this.currentViewMode,
     });
   }
 
@@ -180,25 +205,34 @@ export class GeneralSearchManager extends BaseSearchManager {
       sort: sort,
       page: this.currentPage,
       filters: filterToString(this.filters),
+      viewMode: this.currentViewMode,
     });
   }
 
   getQueryString = (paramsObject: Record<string, any>) => {
     const newParams: Record<string, string> = {};
-    const defaultValues = [
-      DEFAULT_SEARCH_TERM,
-      DEFAULT_PAGE_NUM,
-      this.defaultSort,
-      DEFAULT_FILTERS,
-    ];
 
     Object.keys(paramsObject).forEach((key) => {
       const value = paramsObject[key];
-      if (!defaultValues.includes(value)) {
-        newParams[key] = value;
+
+      // Check if this is a non-default value
+      let isDefault = false;
+
+      if (key === "q") {
+        isDefault = value === DEFAULT_SEARCH_TERM;
+      } else if (key === "page") {
+        isDefault = value === DEFAULT_PAGE_NUM;
+      } else if (key === "sort") {
+        isDefault = value === this.defaultSort;
+      } else if (key === "filters") {
+        isDefault = value === "";
+      } else if (key === "viewMode") {
+        isDefault = value === DEFAULT_VIEW_MODE;
       }
     });
-    return createQueryStringFromObject(newParams);
+
+    const queryString = createQueryStringFromObject(newParams);
+    return queryString;
   };
 }
 
@@ -219,6 +253,7 @@ export class CollectionSearchManager extends BaseSearchManager {
       q: this.currentKeywords,
       sort: this.currentSort,
       page: pageNumber,
+      viewMode: this.currentViewMode,
     });
   }
 
@@ -228,23 +263,45 @@ export class CollectionSearchManager extends BaseSearchManager {
       q: this.currentKeywords,
       sort: sort,
       page: this.currentPage,
+      viewMode: this.currentViewMode,
+    });
+  }
+
+  handleViewModeChange(mode: "grid" | "list") {
+    this.currentViewMode = mode;
+    return this.getQueryString({
+      q: this.currentKeywords,
+      sort: this.currentSort,
+      page: this.currentPage,
+      viewMode: mode,
     });
   }
 
   getQueryString = (paramsObject: Record<string, any>) => {
     const newParams: Record<string, string> = {};
-    const defaultValues = [
-      DEFAULT_SEARCH_TERM,
-      DEFAULT_PAGE_NUM,
-      DEFAULT_COLLECTION_SORT,
-    ];
 
     Object.keys(paramsObject).forEach((key) => {
       const value = paramsObject[key];
-      if (!defaultValues.includes(value)) {
+
+      // Check if this is a non-default value
+      let isDefault = false;
+
+      if (key === "q") {
+        isDefault = value === DEFAULT_SEARCH_TERM;
+      } else if (key === "page") {
+        isDefault = value === DEFAULT_PAGE_NUM;
+      } else if (key === "sort") {
+        isDefault = value === DEFAULT_COLLECTION_SORT;
+      } else if (key === "viewMode") {
+        isDefault = value === DEFAULT_VIEW_MODE;
+      }
+
+      // Include parameter if it's not the default value
+      if (!isDefault) {
         newParams[key] = value;
       }
     });
+
     return createQueryStringFromObject(newParams);
   };
 }

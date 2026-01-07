@@ -8,13 +8,15 @@ import { SearchResultType } from "@/src/types/SearchResultsType";
 const SearchCardsGrid = ({
   results,
   keywords,
+  viewMode,
 }: {
   results: SearchResultType[];
   keywords: string;
+  viewMode: "grid" | "list";
 }) => {
   const { isLargerThanLargeTablet } = useBreakpoints();
   return (
-    <SimpleGrid columns={1} gap="grid.l">
+    <SimpleGrid columns={viewMode === "list" ? 1 : 4} gap="grid.l">
       {results?.map((result: SearchResultType, index: number) => {
         const searchResult = new SearchCardModel(result);
         return (
@@ -23,6 +25,7 @@ const SearchCardsGrid = ({
             keywords={keywords}
             result={searchResult}
             isLargerThanLargeTablet={isLargerThanLargeTablet}
+            viewMode={viewMode}
           />
         );
       })}

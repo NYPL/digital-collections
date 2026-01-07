@@ -16,7 +16,7 @@ import { usePathname, useRouter } from "next/navigation";
 import SearchCardsGrid from "../../grids/searchCardsGrid";
 import { headerBreakpoints } from "@/src/utils/breakpoints";
 import { MobileSearchBanner } from "../../mobileSearchBanner/mobileSearchBanner";
-import SortMenu from "../../sortMenu/sortMenu";
+import ViewingOptionsMenu from "../../viewingOptionsMenu/viewingOptionsMenu";
 import ActiveFilters from "../../search/filters/activeFilters";
 import NoResultsFound from "../../results/noResultsFound";
 import SearchCardGridLoading from "../../grids/searchCardGridLoading";
@@ -43,10 +43,21 @@ const SearchPage = ({
   const [filtersExpanded, setFiltersExpanded] = useState(false);
 
   const updateURL = async (queryString: string) => {
-    setIsLoaded(false);
+    const currentQueryString = window.location.search;
     const newUrl = `${pathname}?${queryString}`;
-    push(newUrl);
+
+    if (
+      currentQueryString === queryString ||
+      currentQueryString === `?${queryString}`
+    ) {
+      headingRef.current?.focus();
+      return;
+    } else {
+      setIsLoaded(false);
+      push(newUrl);
+    }
   };
+
   useEffect(() => {
     setIsLoaded(true);
     let didFocusElement = false;
@@ -76,7 +87,7 @@ const SearchPage = ({
 
     isFirstLoad.current = true;
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [searchResults]);
+  }, [searchResults, searchManager.viewMode]);
 
   useSubcollectionRedirect();
 
@@ -195,7 +206,7 @@ const SearchPage = ({
                 CARDS_PER_PAGE,
                 searchManager.page
               )} results`}</Heading>
-              <SortMenu
+              <ViewingOptionsMenu
                 options={SEARCH_SORT_LABELS}
                 sort={searchResults.sort}
                 searchManager={searchManager}
@@ -216,6 +227,7 @@ const SearchPage = ({
               <SearchCardsGrid
                 keywords={searchResults.keyword}
                 results={searchResults.results}
+                viewMode={searchManager.viewMode}
               />
             ) : (
               [...Array(12)].map((_, index) => (

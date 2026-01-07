@@ -25,7 +25,7 @@ import {
   stringToFilter,
 } from "@/src/utils/searchManager/searchManager";
 import { usePathname, useRouter } from "next/navigation";
-import SortMenu from "../../sortMenu/sortMenu";
+import ViewingOptionsMenu from "../../viewingOptionsMenu/viewingOptionsMenu";
 import ActiveFilters from "../../search/filters/activeFilters";
 import NoResultsFound from "../../results/noResultsFound";
 import SearchCardGridLoading from "../../grids/searchCardGridLoading";
@@ -63,6 +63,7 @@ const CollectionPage = ({
     initialKeywords: searchParams?.q || DEFAULT_SEARCH_TERM,
     initialAvailableFilters: searchParams?.availableFilters,
     lastFilterRef: useRef<string | null>(null),
+    initialViewMode: searchParams?.viewMode,
   });
 
   const totalPages = totalNumPages(
@@ -206,7 +207,7 @@ const CollectionPage = ({
                     CARDS_PER_PAGE,
                     collectionSearchManager.page
                   )} results`}</Heading>
-                  <SortMenu
+                  <ViewingOptionsMenu
                     options={COLLECTION_LANDING_SORT_LABELS}
                     searchManager={collectionSearchManager}
                     sort={searchResults.sort}
@@ -223,6 +224,7 @@ const CollectionPage = ({
                   <SearchCardsGrid
                     keywords={searchResults.keyword}
                     results={searchResults.results}
+                    viewMode={collectionSearchManager.viewMode}
                   />
                 ) : (
                   [...Array(12)].map((_, index) => (
