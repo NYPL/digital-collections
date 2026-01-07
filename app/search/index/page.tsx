@@ -1,6 +1,5 @@
 import React from "react";
 import PageLayout from "../../src/components/pageLayout/pageLayout";
-import { createAdobeAnalyticsPageName } from "@/src/utils/utils";
 import { CollectionsApi } from "@/src/utils/apiClients/apiClients";
 import { Metadata } from "next";
 import SearchPage from "@/src/components/pages/searchPage/searchPage";
@@ -51,7 +50,6 @@ export default async function Search({ searchParams }: SearchProps) {
         { text: "Home", url: "/" },
         { text: "Keyword Search", url: "/search/index" },
       ]}
-      adobeAnalyticsPageName={createAdobeAnalyticsPageName(pageName, "")}
       searchParams={updatedSearchParams}
     >
       <SearchPage searchResults={searchResults} />

@@ -16,11 +16,7 @@ import React, { useEffect, useState, useRef } from "react";
 import PageLayout from "../../pageLayout/pageLayout";
 import { headerBreakpoints } from "../../../utils/breakpoints";
 import { CardsGrid } from "../../grids/cardsGrid";
-import {
-  totalNumPages,
-  createAdobeAnalyticsPageName,
-  displayResults,
-} from "../../../utils/utils";
+import { totalNumPages, displayResults } from "../../../utils/utils";
 import { Lane as DCLane } from "../../lane/lane";
 import LaneLoading from "../../lane/laneLoading";
 import { CARDS_PER_PAGE } from "@/src/config/constants";
@@ -67,7 +63,6 @@ export default function DivisionPage({ data }: any) {
         { text: "Divisions", url: "/divisions" },
         { text: `${data.name}`, url: `/divisions/${data.slug}` },
       ]}
-      adobeAnalyticsPageName={createAdobeAnalyticsPageName("divisions", slug)}
       ga4Data={{ division: data.name }}
     >
       <Box
