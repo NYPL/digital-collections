@@ -212,27 +212,35 @@ export class GeneralSearchManager extends BaseSearchManager {
   getQueryString = (paramsObject: Record<string, any>) => {
     const newParams: Record<string, string> = {};
 
-    Object.keys(paramsObject).forEach((key) => {
-      const value = paramsObject[key];
+    Object.entries(paramsObject).forEach(([key, value]) => {
+      if (value == null) return;
 
-      // Check if this is a non-default value
       let isDefault = false;
 
-      if (key === "q") {
-        isDefault = value === DEFAULT_SEARCH_TERM;
-      } else if (key === "page") {
-        isDefault = value === DEFAULT_PAGE_NUM;
-      } else if (key === "sort") {
-        isDefault = value === this.defaultSort;
-      } else if (key === "filters") {
-        isDefault = value === "";
-      } else if (key === "viewMode") {
-        isDefault = value === DEFAULT_VIEW_MODE;
+      switch (key) {
+        case "q":
+          isDefault = value === DEFAULT_SEARCH_TERM;
+          break;
+        case "page":
+          isDefault = value === DEFAULT_PAGE_NUM;
+          break;
+        case "sort":
+          isDefault = value === this.defaultSort;
+          break;
+        case "filters":
+          isDefault = value === "";
+          break;
+        case "viewMode":
+          isDefault = value === DEFAULT_VIEW_MODE;
+          break;
+      }
+
+      if (!isDefault) {
+        newParams[key] = value;
       }
     });
 
-    const queryString = createQueryStringFromObject(newParams);
-    return queryString;
+    return createQueryStringFromObject(newParams);
   };
 }
 
@@ -280,23 +288,29 @@ export class CollectionSearchManager extends BaseSearchManager {
   getQueryString = (paramsObject: Record<string, any>) => {
     const newParams: Record<string, string> = {};
 
-    Object.keys(paramsObject).forEach((key) => {
-      const value = paramsObject[key];
+    Object.entries(paramsObject).forEach(([key, value]) => {
+      if (value == null) return;
 
-      // Check if this is a non-default value
       let isDefault = false;
 
-      if (key === "q") {
-        isDefault = value === DEFAULT_SEARCH_TERM;
-      } else if (key === "page") {
-        isDefault = value === DEFAULT_PAGE_NUM;
-      } else if (key === "sort") {
-        isDefault = value === DEFAULT_COLLECTION_SORT;
-      } else if (key === "viewMode") {
-        isDefault = value === DEFAULT_VIEW_MODE;
+      switch (key) {
+        case "q":
+          isDefault = value === DEFAULT_SEARCH_TERM;
+          break;
+        case "page":
+          isDefault = value === DEFAULT_PAGE_NUM;
+          break;
+        case "sort":
+          isDefault = value === this.defaultSort;
+          break;
+        case "filters":
+          isDefault = value === "";
+          break;
+        case "viewMode":
+          isDefault = value === DEFAULT_VIEW_MODE;
+          break;
       }
 
-      // Include parameter if it's not the default value
       if (!isDefault) {
         newParams[key] = value;
       }
