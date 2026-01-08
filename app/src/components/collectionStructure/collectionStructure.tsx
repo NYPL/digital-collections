@@ -25,6 +25,7 @@ interface CollectionStructureProps {
   uuid: string;
   updateURL: (queryString: string) => Promise<void>;
   searchManager: SearchManager;
+  setRenderCollectionStructure: () => Dispatch<SetStateAction<boolean>>;
 }
 
 interface ToggleItemAndChildrenParams {
@@ -184,6 +185,7 @@ const CollectionStructure = ({
   uuid,
   searchManager,
   updateURL,
+  setRenderCollectionStructure,
 }: CollectionStructureProps) => {
   const [tree, setTree] = useState<OpenStateItem[]>([]);
   const [isLoaded, setIsLoaded] = useState(false);
@@ -367,6 +369,7 @@ const CollectionStructure = ({
 
   // If no subcontainers, don't display collection structure
   if (tree.length === 0) {
+    setRenderCollectionStructure(false);
     return null;
   }
 
