@@ -225,6 +225,7 @@ const CollectionPage = ({
                     keywords={searchResults.keyword}
                     results={searchResults.results}
                     viewMode={collectionSearchManager.viewMode}
+                    type="collection"
                   />
                 ) : (
                   [...Array(12)].map((_, index) => (
