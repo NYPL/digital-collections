@@ -36,8 +36,8 @@ export const SearchCardImage = ({ record, viewMode }) => {
         fill
         decoding="sync"
         style={{
-          objectFit: viewMode == "grid" ? "contain" : "cover",
-          objectPosition: "center", //viewMode == "grid" ? "center" : "top",
+          objectFit: viewMode === "grid" ? "contain" : "cover",
+          objectPosition: "center",
         }}
         onError={(_event) => {
           console.warn(
