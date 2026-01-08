@@ -1,5 +1,8 @@
 import { Locator, Page, expect } from "@playwright/test";
 
+// sets which UUID is to be used for sample record navigation
+export type MetadataScenario = "DEFAULT" | "SAMPLE1" | "SAMPLE2";
+
 class FieldLocatorService {
   // Method returns an object containing both the Locator and the content/text Pattern
   public getNameLocatorAndPattern(
@@ -46,7 +49,17 @@ export default class ItemMetadataPage {
   readonly page: Page;
   private locatorService = new FieldLocatorService();
 
-  static itemResultURL: string = "/items/8b2b3160-c5d5-012f-d95c-58d385a7bc34";
+  // Sample URL-Record Mapping
+  private static readonly SCENARIOS: Record<MetadataScenario, string> = {
+    DEFAULT: "8b2b3160-c5d5-012f-d95c-58d385a7bc34",
+    SAMPLE1: "25a47180-c55f-012f-3759-58d385a7bc34", // Topics
+    SAMPLE2: "4649be20-9890-0138-2359-2360945aaf51", // Genres
+  };
+
+  async loadScenario(scenario: MetadataScenario): Promise<void> {
+    const uuid = ItemMetadataPage.SCENARIOS[scenario];
+    await this.page.goto(`/items/${uuid}`);
+  }
 
   // item-metadata
   readonly itemDataHeader: Locator;
@@ -91,6 +104,8 @@ export default class ItemMetadataPage {
   static readonly EXPECTED_UUID_VALUE = "8b2b3160-c5d5-012f-d95c-58d385a7bc34";
   static readonly EXPECTED_TOPIC_UUID_VALUE =
     "27373b60-c55f-012f-b3cd-58d385a7bc34";
+  static readonly EXPECTED_GENRE_UUID_VALUE =
+    "4649be20-9890-0138-2359-2360945aaf51";
   static readonly EXPECTED_OCLC_VALUE = "24501668";
   static readonly EXPECTED_BNUMBER_VALUE = "b14924644";
   static readonly EXPECTED_SHELF_LOCATOR_VALUE = "Map Div. 97-6199 [LHS 839]";
@@ -100,6 +115,10 @@ export default class ItemMetadataPage {
   static readonly EXPECTED_NAMES = [
     { name: "Ratzer, Bernard", role: "Cartographer" },
     { name: "Kitchin, Thomas, 1718-1784", role: "Engraver" },
+  ];
+  static readonly EXPECTED_GENRES = [
+    "Posters",
+    "Placards (Information Artifacts)",
   ];
   static readonly EXPECTED_TOPIC_LINK_MAP = [
     {
@@ -461,6 +480,52 @@ export default class ItemMetadataPage {
     const actualTotalLinksFound = await allLinks.count();
     expect(actualTotalLinksFound).toEqual(expectedTotalLinkCount);
   }
+
+  /*
+   * Note: We are using Playwright's built-in innerText() functionality
+   * to capture <br> tags as newlines, allowing for a data pipeline
+   * that is more resilient than manual DOM traversal.
+   */
+  async verifyGenreText(): Promise<void> {
+    const rawText = await this.genreText.innerText();
+
+    // Transform and normalize content
+    const actualGenres = rawText
+      .split("\n")
+      .map((val) => val.trim().replace(/\s+/g, " "))
+      .filter((val) => val.length > 0);
+
+    expect(actualGenres).toEqual(ItemMetadataPage.EXPECTED_GENRES);
+  }
+
+  async verifyGenreLinksAreClickable(): Promise<void> {
+    const genreLinks = this.genreText.getByRole("link");
+    const expectedCount = ItemMetadataPage.EXPECTED_GENRES.length;
+
+    await expect(genreLinks).toHaveCount(expectedCount);
+
+    for (let i = 0; i < expectedCount; i++) {
+      await expect(genreLinks.nth(i)).toBeVisible();
+      // Check for valid link pattern
+      await expect(genreLinks.nth(i)).toHaveAttribute("href", /genre/);
+    }
+  }
+
+  // async verifyGenreLinks(): Promise<void> {
+  //   const expectedGenres = ItemMetadataPage.EXPECTED_GENRES;
+  //   const genreLinks = this.genreText.getByRole("link");
+
+  //   // 1. Verify Count
+  //   await expect(genreLinks).toHaveCount(expectedGenres.length);
+
+  //   // 2. Verify individual link text and presence
+  //   for (let i = 0; i < expectedGenres.length; i++) {
+  //     const link = genreLinks.nth(i);
+  //     await expect(link).toBeVisible();
+  //     await expect(link).toHaveText(expectedGenres[i]);
+  //     await expect(link).toHaveAttribute("href", /\/items\/search\?search_scope=genre/);
+  //   }
+  // }
 
   async verifyRightsContent(): Promise<void> {
     // Structural check: Ensure the element exists and is visible

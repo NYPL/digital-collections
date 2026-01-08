@@ -3,10 +3,10 @@ import ItemMetadataPage from "../pages/item-metadata.page";
 
 let itemMetadataPage: ItemMetadataPage;
 
-test.describe("Verify Metadata Fields", () => {
+test.describe("Verify Default Test Record", () => {
   test.beforeEach(async ({ page }) => {
     itemMetadataPage = new ItemMetadataPage(page);
-    await itemMetadataPage.loadPage(ItemMetadataPage.itemResultURL);
+    await itemMetadataPage.loadScenario("DEFAULT");
   });
 
   test("should display Title heading and corresponding text", async () => {
@@ -76,18 +76,11 @@ test.describe("Verify Metadata Fields", () => {
   });
 });
 
-test.describe("Subjects", () => {
-  test.describe("Verify Links", () => {
+test.describe("Verify Sample Record 1", () => {
+  test.describe("Subjects", () => {
     test.beforeEach(async ({ page }) => {
       // Load the SPECIFIC Topics-modified URL before each test in this block
-      itemMetadataPage = new ItemMetadataPage(page);
-
-      await itemMetadataPage.loadPage(
-        ItemMetadataPage.itemResultURL.replace(
-          ItemMetadataPage.EXPECTED_UUID_VALUE,
-          ItemMetadataPage.EXPECTED_TOPIC_UUID_VALUE
-        )
-      );
+      await itemMetadataPage.loadScenario("SAMPLE1");
 
       await expect(itemMetadataPage.topicHeading).toBeVisible();
       await expect(itemMetadataPage.topicText).toBeVisible();
@@ -103,6 +96,31 @@ test.describe("Subjects", () => {
 
     test("should display correct subject values", async () => {
       await itemMetadataPage.verifyTopicText();
+    });
+  });
+});
+
+test.describe("Verify Sample Record 2", () => {
+  test.describe("Genres", () => {
+    test.beforeEach(async ({ page }) => {
+      // Load the SPECIFIC GENRE-modified URL before each test in this block
+      await itemMetadataPage.loadScenario("SAMPLE2");
+    });
+
+    test("should include correct genre names", async () => {
+      await itemMetadataPage.verifyGenreText();
+    });
+
+    test("should contain links that are clickable", async () => {
+      await itemMetadataPage.verifyGenreLinksAreClickable();
+    });
+
+    test("should display correct number of expected genre fields", async () => {
+      // This provides a redundant but helpful check on the DOM count
+      const genreLinks = itemMetadataPage.genreText.getByRole("link");
+      await expect(genreLinks).toHaveCount(
+        ItemMetadataPage.EXPECTED_GENRES.length
+      );
     });
   });
 });
