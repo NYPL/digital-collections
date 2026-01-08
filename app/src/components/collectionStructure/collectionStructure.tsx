@@ -1,4 +1,10 @@
-import { useState, useEffect, useRef } from "react";
+import {
+  useState,
+  useEffect,
+  useRef,
+  type Dispatch,
+  type SetStateAction,
+} from "react";
 import { Box } from "@chakra-ui/react";
 import {
   Flex,
@@ -25,7 +31,7 @@ interface CollectionStructureProps {
   uuid: string;
   updateURL: (queryString: string) => Promise<void>;
   searchManager: SearchManager;
-  setRenderCollectionStructure: () => Dispatch<SetStateAction<boolean>>;
+  setRenderCollectionStructure: Dispatch<SetStateAction<boolean>>;
 }
 
 interface ToggleItemAndChildrenParams {
