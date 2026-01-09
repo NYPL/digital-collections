@@ -93,6 +93,8 @@ export default class ItemMetadataPage {
   readonly descriptionText: Locator;
   readonly typeHeading: Locator;
   readonly typeText: Locator;
+  readonly languageHeading: Locator;
+  readonly languageText: Locator;
   readonly identifiersHeading: Locator;
   readonly identifiersText: Locator;
   readonly rightsHeading: Locator;
@@ -112,6 +114,7 @@ export default class ItemMetadataPage {
     { name: "Ratzer, Bernard", role: "Cartographer" },
     { name: "Kitchin, Thomas, 1718-1784", role: "Engraver" },
   ];
+  static readonly EXPECTED_LANGUAGE_VALUE = "English";
 
   constructor(page: Page) {
     this.page = page;
