@@ -16,7 +16,6 @@ import {
   displayResults,
   slugToString,
   totalNumPages,
-  createAdobeAnalyticsPageName,
 } from "../../../utils/utils";
 import { CardsGrid } from "../../grids/cardsGrid";
 import React, { useEffect, useRef, useState } from "react";
@@ -68,10 +67,6 @@ export default function CollectionLanePage({ data }: any) {
         { text: "Collections", url: "/collections" },
         { text: `${title}`, url: `/collections/lane/${slug}` },
       ]}
-      adobeAnalyticsPageName={createAdobeAnalyticsPageName(
-        "collections|lane",
-        slug
-      )}
     >
       <Box
         sx={{

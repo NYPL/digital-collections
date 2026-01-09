@@ -2,7 +2,7 @@ import React from "react";
 import { Metadata } from "next";
 import { headers } from "next/headers";
 import PageLayout from "../../src/components/pageLayout/pageLayout";
-import { imageURL, createAdobeAnalyticsPageName } from "../../src/utils/utils";
+import { imageURL } from "../../src/utils/utils";
 import { ItemModel } from "../../src/models/item";
 import { ItemPage } from "@/src/components/pages/itemPage/itemPage";
 import { revalidatePath } from "next/cache";
@@ -119,7 +119,6 @@ export default async function ItemViewer({ params, searchParams }: ItemProps) {
     <PageLayout
       activePage="item"
       breadcrumbs={breadcrumbData}
-      adobeAnalyticsPageName={createAdobeAnalyticsPageName("items", item.title)}
       ga4Data={{
         division: breadcrumbData[1]?.text,
         collection: breadcrumbData[2]?.text,

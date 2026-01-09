@@ -2,7 +2,6 @@
 import { Box } from "@nypl/design-system-react-components";
 import aboutPageElements from "../../aboutPageElements/aboutPageElements";
 import PageLayout from "../../pageLayout/pageLayout";
-import { createAdobeAnalyticsPageName } from "@/src/utils/utils";
 
 export default function AboutPage() {
   function createSection(
@@ -19,10 +18,7 @@ export default function AboutPage() {
   }
 
   return (
-    <PageLayout
-      activePage="about"
-      adobeAnalyticsPageName={createAdobeAnalyticsPageName("about")}
-    >
+    <PageLayout activePage="about">
       <Box
         id="aboutPageContent"
         sx={{
