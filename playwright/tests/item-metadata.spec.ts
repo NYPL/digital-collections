@@ -3,9 +3,12 @@ import ItemMetadataPage from "../pages/item-metadata.page";
 
 let itemMetadataPage: ItemMetadataPage;
 
+test.beforeEach(async ({ page }) => {
+  itemMetadataPage = new ItemMetadataPage(page);
+});
+
 test.describe("Verify Default Test Record", () => {
   test.beforeEach(async ({ page }) => {
-    itemMetadataPage = new ItemMetadataPage(page);
     await itemMetadataPage.loadScenario("DEFAULT");
   });
 
