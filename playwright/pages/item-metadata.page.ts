@@ -199,6 +199,10 @@ export default class ItemMetadataPage {
     });
     this.identifiersText = this.identifiersHeading.locator("+ p");
 
+    // Languages
+    this.languageHeading = this.page.getByText("Languages", { exact: true });
+    this.languageText = this.languageHeading.locator("+ p");
+
     // Rights Statement
     this.rightsHeading = this.page.getByText("Rights Statement", {
       exact: true,
@@ -327,6 +331,16 @@ export default class ItemMetadataPage {
       // Verify the full text (including the non-clickable role) is present.
       await expect(nameContainer).toHaveText(fullExpectedPattern);
     }
+  }
+
+  async verifyLanguageValues(): Promise<void> {
+    await expect(this.languageHeading).toBeVisible();
+
+    const languageLink = this.languageText.getByRole("link");
+    await expect(languageLink).toBeVisible();
+    await expect(languageLink).toHaveText(
+      ItemMetadataPage.EXPECTED_LANGUAGE_VALUE
+    );
   }
 
   async verifyRightsContent(): Promise<void> {
