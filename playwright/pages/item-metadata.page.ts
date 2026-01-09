@@ -343,6 +343,24 @@ export default class ItemMetadataPage {
     );
   }
 
+  async verifyLanguageText(): Promise<void> {
+    await expect(this.languageHeading).toBeVisible();
+    await expect(this.languageText).toContainText(
+      ItemMetadataPage.EXPECTED_LANGUAGE_VALUE
+    );
+  }
+
+  async verifyLanguageLinks(): Promise<void> {
+    const languageLink = this.languageText.getByRole("link");
+
+    // If it's visible and has the right text, Playwright has already
+    // confirmed it's a functional link role.
+    await expect(languageLink).toBeVisible();
+    await expect(languageLink).toHaveText(
+      ItemMetadataPage.EXPECTED_LANGUAGE_VALUE
+    );
+  }
+
   async verifyRightsContent(): Promise<void> {
     // Structural check: Ensure the element exists and is visible
     await expect(this.rightsHeading).toBeVisible();
