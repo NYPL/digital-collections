@@ -38,7 +38,7 @@ export class SearchCardModel {
         ? `/items/${data.uuid}`
         : `/collections/${data.uuid}`;
 
-    this.imageURL = imageURL(data.imageID, "square", "!288,288", "0");
+    this.imageURL = imageURL(data.imageID, "full", "!288,288", "0");
     this.videoThumbnail = data.videoThumbnail;
     this.numberOfDigitizedItems = data.numberOfDigitizedItems;
     this.containsOnSiteMaterial = data.containsOnSiteMaterial;
