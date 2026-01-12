@@ -41,7 +41,6 @@ export const SearchCardImage = ({ record, viewMode }) => {
           // objectPosition: "center",
           backgroundColor: "#f5f5f5",
         }}
-        xs
         onError={(_event) => {
           console.warn(
             `SearchCardImage: Card image failed to load, fallback image loaded instead. ImageURL: ${record.imageURL}`
