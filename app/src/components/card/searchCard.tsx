@@ -116,7 +116,13 @@ export const SearchCard = ({
     <Card
       id={result.uuid}
       imageProps={{
-        component: <SearchCardImage key={result.imageID} record={result} />,
+        component: (
+          <SearchCardImage
+            key={result.imageID}
+            record={result}
+            viewMode={viewMode}
+          />
+        ),
       }}
       mainActionLink={result.url}
       layout={viewMode === "list" ? "row" : "column"}
