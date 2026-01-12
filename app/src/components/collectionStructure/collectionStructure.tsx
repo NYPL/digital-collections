@@ -1,4 +1,10 @@
-import { useState, useEffect, useRef } from "react";
+import {
+  useState,
+  useEffect,
+  useRef,
+  type Dispatch,
+  type SetStateAction,
+} from "react";
 import { Box } from "@chakra-ui/react";
 import {
   Flex,
@@ -25,6 +31,7 @@ interface CollectionStructureProps {
   uuid: string;
   updateURL: (queryString: string) => Promise<void>;
   searchManager: SearchManager;
+  setRenderCollectionStructure: Dispatch<SetStateAction<boolean>>;
 }
 
 interface ToggleItemAndChildrenParams {
@@ -184,6 +191,7 @@ const CollectionStructure = ({
   uuid,
   searchManager,
   updateURL,
+  setRenderCollectionStructure,
 }: CollectionStructureProps) => {
   const [tree, setTree] = useState<OpenStateItem[]>([]);
   const [isLoaded, setIsLoaded] = useState(false);
@@ -367,6 +375,7 @@ const CollectionStructure = ({
 
   // If no subcontainers, don't display collection structure
   if (tree.length === 0) {
+    setRenderCollectionStructure(false);
     return null;
   }
 

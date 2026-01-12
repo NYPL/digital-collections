@@ -228,6 +228,7 @@ const SearchPage = ({
                 keywords={searchResults.keyword}
                 results={searchResults.results}
                 viewMode={searchManager.viewMode}
+                numColumns={4}
               />
             ) : (
               [...Array(12)].map((_, index) => (

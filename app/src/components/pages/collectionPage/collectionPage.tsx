@@ -54,6 +54,8 @@ const CollectionPage = ({
   const refineHeadingRef = useRef<HTMLHeadingElement>(null);
   const isFirstLoad = useRef<boolean>(false);
   const [filtersExpanded, setFiltersExpanded] = useState(false);
+  const [renderCollectionStructure, setRenderCollectionStructure] =
+    useState(true);
 
   const collectionSearchManager = new GeneralSearchManager({
     initialPage: Number(searchParams?.page) || DEFAULT_PAGE_NUM,
@@ -170,6 +172,7 @@ const CollectionPage = ({
             uuid={collectionData.uuid}
             updateURL={updateURL}
             searchManager={collectionSearchManager}
+            setRenderCollectionStructure={setRenderCollectionStructure}
           />
           <Box width="100%">
             <CollectionSearch
@@ -225,6 +228,7 @@ const CollectionPage = ({
                     keywords={searchResults.keyword}
                     results={searchResults.results}
                     viewMode={collectionSearchManager.viewMode}
+                    numColumns={renderCollectionStructure ? 3 : 4}
                   />
                 ) : (
                   [...Array(12)].map((_, index) => (

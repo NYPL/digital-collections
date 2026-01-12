@@ -9,14 +9,16 @@ const SearchCardsGrid = ({
   results,
   keywords,
   viewMode,
+  numColumns,
 }: {
   results: SearchResultType[];
   keywords: string;
   viewMode: "grid" | "list";
+  numColumns: number;
 }) => {
   const { isLargerThanLargeTablet } = useBreakpoints();
   return (
-    <SimpleGrid columns={viewMode === "list" ? 1 : 4} gap="grid.l">
+    <SimpleGrid columns={viewMode === "list" ? 1 : numColumns} gap="grid.l">
       {results?.map((result: SearchResultType, index: number) => {
         const searchResult = new SearchCardModel(result);
         return (
