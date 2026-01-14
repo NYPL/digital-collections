@@ -112,7 +112,7 @@ export default class ItemMetadataPage {
     { name: "Ratzer, Bernard", role: "Cartographer" },
     { name: "Kitchin, Thomas, 1718-1784", role: "Engraver" },
   ];
-  static readonly EXPECTED_PHYSICAL_EXTENT_VALUE =
+  static readonly EXPECTED_PHYSICAL_DESCRIPTION_VALUE =
     "Extent: 1 map ; 59 x 89 cm.";
 
   constructor(page: Page) {
