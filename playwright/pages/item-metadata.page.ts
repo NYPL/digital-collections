@@ -93,6 +93,8 @@ export default class ItemMetadataPage {
   readonly descriptionText: Locator;
   readonly typeHeading: Locator;
   readonly typeText: Locator;
+  readonly languageHeading: Locator;
+  readonly languageText: Locator;
   readonly identifiersHeading: Locator;
   readonly identifiersText: Locator;
   readonly rightsHeading: Locator;
@@ -102,6 +104,8 @@ export default class ItemMetadataPage {
   static readonly EXPECTED_TITLE_VALUE =
     "To His Excellency Sr. Henry Moore, Bart";
   static readonly EXPECTED_UUID_VALUE = "8b2b3160-c5d5-012f-d95c-58d385a7bc34";
+  static readonly EXPECTED_TOPIC_UUID_VALUE =
+    "27373b60-c55f-012f-b3cd-58d385a7bc34";
   static readonly EXPECTED_OCLC_VALUE = "24501668";
   static readonly EXPECTED_BNUMBER_VALUE = "b14924644";
   static readonly EXPECTED_SHELF_LOCATOR_VALUE = "Map Div. 97-6199 [LHS 839]";
@@ -118,6 +122,23 @@ export default class ItemMetadataPage {
   static readonly EXPECTED_NOTES = [
     'Content: Black/white, 20" x 30"',
     "Content: 1577340, 1577402",
+  ];
+  static readonly EXPECTED_LANGUAGE_VALUE = "English";
+  static readonly EXPECTED_TOPIC_LINK_MAP = [
+    {
+      fullText: "New York (N.Y.)",
+      linkCount: 1,
+    },
+    // Compound Structure (Multiple Links, separated by --)
+    {
+      fullText: "Parades & processions -- New York (State) -- New York",
+      linkCount: 3,
+    },
+    // Another Simple line
+    {
+      fullText: "Memorial Day",
+      linkCount: 1,
+    },
   ];
 
   constructor(page: Page) {
@@ -159,8 +180,8 @@ export default class ItemMetadataPage {
       )
       .getByText(/Shelf locator:/i);
 
-    // Topics
-    this.topicHeading = this.page.getByText("Topics", { exact: true });
+    // Subjects
+    this.topicHeading = this.page.getByText("Subjects", { exact: true });
     this.topicText = this.topicHeading.locator("+ p");
 
     // Name (Creator/Author)
@@ -354,6 +375,165 @@ export default class ItemMetadataPage {
       .filter((line) => line.trim().length > 0);
 
     expect(actualNotes.length).toEqual(ItemMetadataPage.EXPECTED_NOTES.length);
+  }
+
+  async verifyLanguageValues(): Promise<void> {
+    await expect(this.languageHeading).toBeVisible();
+
+    const languageLink = this.languageText.getByRole("link");
+    await expect(languageLink).toBeVisible();
+    await expect(languageLink).toHaveText(
+      ItemMetadataPage.EXPECTED_LANGUAGE_VALUE
+    );
+  }
+
+  async verifyLanguageText(): Promise<void> {
+    await expect(this.languageHeading).toBeVisible();
+    await expect(this.languageText).toContainText(
+      ItemMetadataPage.EXPECTED_LANGUAGE_VALUE
+    );
+  }
+
+  async verifyLanguageLinks(): Promise<void> {
+    const languageLink = this.languageText.getByRole("link");
+
+    // If it's visible and has the right text, Playwright has already
+    // confirmed it's a functional link role.
+    await expect(languageLink).toBeVisible();
+    await expect(languageLink).toHaveText(
+      ItemMetadataPage.EXPECTED_LANGUAGE_VALUE
+    );
+  }
+
+  public async getTopicLocatorAndDelimiter(): Promise<string[]> {
+    const parentContainer = this.topicText; // The <p> element
+    const allLinks = parentContainer.locator("a");
+    const totalLinks = await allLinks.count();
+
+    const constructedLines: string[] = [];
+    let currentLinkIndex = 0;
+    let constructedLineText = "";
+
+    while (currentLinkIndex < totalLinks) {
+      const currentLink = allLinks.nth(currentLinkIndex);
+      const linkText = await currentLink.textContent();
+
+      if (linkText) {
+        constructedLineText += linkText.trim();
+      }
+
+      // Check the DOM for delimiters and subject-line terminators
+      const { isCompound, isFinished } = await currentLink.evaluate(
+        (linkElement) => {
+          const spanElement = linkElement.closest("span");
+          if (!spanElement) return { isCompound: false, isFinished: true };
+
+          let nextSibling = spanElement.nextSibling;
+
+          // Check for Compound Subject Links Delimiter
+          let isCompound = false;
+          if (
+            nextSibling &&
+            nextSibling.nodeType === Node.TEXT_NODE &&
+            nextSibling.textContent?.includes(" -- ")
+          ) {
+            isCompound = true;
+            nextSibling = nextSibling.nextSibling;
+          }
+
+          // Check for Subject Line Ending (<br>)
+          let isFinished = false;
+          // Skip non-significant whitespace/text nodes
+          while (nextSibling && nextSibling.nodeType !== Node.ELEMENT_NODE) {
+            if (nextSibling.textContent?.trim() !== "") {
+              break;
+            }
+            nextSibling = nextSibling.nextSibling;
+          }
+
+          // Checks for existence, ensures it's an element, and then explicitly checks the tag name for BR.
+          if (
+            nextSibling &&
+            nextSibling.nodeType === Node.ELEMENT_NODE &&
+            (nextSibling as Element).tagName === "BR"
+          ) {
+            isFinished = true;
+          }
+
+          return { isCompound, isFinished };
+        }
+      );
+
+      if (isCompound) {
+        // Line continues, append the delimiter text.
+        constructedLineText += " -- ";
+      }
+
+      // Subject line is finished if the DOM has a <br> or if this is the very last link in the list.
+      if (isFinished || currentLinkIndex === totalLinks - 1) {
+        constructedLines.push(constructedLineText.trim());
+        constructedLineText = "";
+      }
+
+      currentLinkIndex++;
+    }
+
+    return constructedLines;
+  }
+
+  async verifyTopicTotalCount(): Promise<void> {
+    // Count of separate subject lines based on DOM-constructed array.
+    const actualLineCount = (await this.getTopicLocatorAndDelimiter()).length;
+
+    //  Get the expected count from the static data array.
+    const expectedLineCount = ItemMetadataPage.EXPECTED_TOPIC_LINK_MAP.length;
+
+    // Compare the reconstructed line count against the expected line count.
+    // This also confirms the logic correctly identified the start/end points of each compound subject.
+    expect(actualLineCount).toEqual(expectedLineCount);
+  }
+
+  async verifyTopicText(): Promise<void> {
+    // This calls the internal method that runs the complex DOM traversal logic.
+    const actualConstructedLines = await this.getTopicLocatorAndDelimiter();
+
+    // Map the expected values array to just the full string values.
+    const expectedData = ItemMetadataPage.EXPECTED_TOPIC_LINK_MAP.map((line) =>
+      // Normalize whitespace
+      line.fullText.replace(/\s+/g, " ").trim()
+    );
+
+    // Verify that the fullText values expected are showing up
+    // (in their correct structure and sequence) in the DOM.
+    expect(actualConstructedLines).toEqual(expectedData);
+  }
+
+  async verifyTopicLinksAreClickable(): Promise<void> {
+    const allLinks = this.topicText.locator("a");
+    let currentLinkIndex = 0;
+
+    // Total count (needed for the post-loop assertion)
+    let expectedTotalLinkCount = 0;
+
+    // Loop over the clean, expected subject line data
+    for (const expectedLine of ItemMetadataPage.EXPECTED_TOPIC_LINK_MAP) {
+      // calculate the expected count
+      expectedTotalLinkCount += expectedLine.linkCount;
+
+      // Check each link within this single subject line
+      for (let i = 0; i < expectedLine.linkCount; i++) {
+        const linkLocator = allLinks.nth(currentLinkIndex);
+
+        await expect(linkLocator).toBeVisible();
+        await expect(linkLocator).toHaveAttribute("href", /https?:\/\//);
+
+        currentLinkIndex++;
+      }
+    }
+
+    // Final check for total link integrity
+    const actualTotalLinksFound = await allLinks.count();
+    expect(actualTotalLinksFound).toEqual(expectedTotalLinkCount);
   }
 
   async verifyRightsContent(): Promise<void> {

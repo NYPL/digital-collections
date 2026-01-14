@@ -77,6 +77,31 @@ test.describe("Verify Default Test Record", () => {
       await itemMetadataPage.verifyNameDataValues();
     });
   });
+});
+
+test.describe("Verify Sample Record 1", () => {
+  test.beforeEach(async ({ page }) => {
+    await itemMetadataPage.loadScenario("SAMPLE1");
+  });
+
+  test.describe("Subjects", () => {
+    test.beforeEach(async ({ page }) => {
+      await expect(itemMetadataPage.topicHeading).toBeVisible();
+      await expect(itemMetadataPage.topicText).toBeVisible();
+    });
+
+    test("should display the correct number of subject fields", async () => {
+      await itemMetadataPage.verifyTopicTotalCount();
+    });
+
+    test("should display clickable links for all subject entries", async () => {
+      await itemMetadataPage.verifyTopicLinksAreClickable();
+    });
+
+    test("should display correct subject values", async () => {
+      await itemMetadataPage.verifyTopicText();
+    });
+  });
 
   test.describe("Physical Description", () => {
     test.beforeEach(async () => {
@@ -104,6 +129,16 @@ test.describe("Verify Sample Record 2", () => {
 
     test("should contain the correct number of notes", async () => {
       await itemMetadataPage.verifyNotesCount();
+    });
+  });
+
+  test.describe("Languages", () => {
+    test("should include correct language values", async () => {
+      await itemMetadataPage.verifyLanguageText();
+    });
+
+    test("should contain links that are clickable", async () => {
+      await itemMetadataPage.verifyLanguageLinks();
     });
   });
 });
