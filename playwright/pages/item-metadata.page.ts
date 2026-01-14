@@ -1,5 +1,8 @@
 import { Locator, Page, expect } from "@playwright/test";
 
+// sets which UUID is to be used for sample record navigation
+export type MetadataScenario = "DEFAULT" | "SAMPLE1" | "SAMPLE2";
+
 class FieldLocatorService {
   // Method returns an object containing both the Locator and the content/text Pattern
   public getNameLocatorAndPattern(
@@ -24,13 +27,39 @@ class FieldLocatorService {
     // return locator values and full-text for assertions
     return { locator: locator, pattern: fullExpectedPattern };
   }
+
+  public getBasicLocator(
+    allEntryContainers: Locator,
+    expectedText: string
+  ): { locator: Locator; pattern: RegExp } {
+    // Pattern:  define pattern here
+    const basicExpectedPattern = new RegExp(`^${expectedText}$`, "i");
+
+    // Filter the general locator to find the specific container
+    const locator = allEntryContainers.filter({
+      hasText: basicExpectedPattern,
+    });
+
+    // return locator values and full-text for assertions
+    return { locator: locator, pattern: basicExpectedPattern };
+  }
 }
 
 export default class ItemMetadataPage {
   readonly page: Page;
   private locatorService = new FieldLocatorService();
 
-  static itemResultURL: string = "/items/8b2b3160-c5d5-012f-d95c-58d385a7bc34";
+  // Sample URL-Record Mapping
+  private static readonly SCENARIOS: Record<MetadataScenario, string> = {
+    DEFAULT: "8b2b3160-c5d5-012f-d95c-58d385a7bc34",
+    SAMPLE1: "25a47180-c55f-012f-3759-58d385a7bc34", // Topics
+    SAMPLE2: "4649be20-9890-0138-2359-2360945aaf51", // Genres
+  };
+
+  async loadScenario(scenario: MetadataScenario): Promise<void> {
+    const uuid = ItemMetadataPage.SCENARIOS[scenario];
+    await this.page.goto(`/items/${uuid}`);
+  }
 
   // item-metadata
   readonly itemDataHeader: Locator;
@@ -83,6 +112,8 @@ export default class ItemMetadataPage {
     { name: "Ratzer, Bernard", role: "Cartographer" },
     { name: "Kitchin, Thomas, 1718-1784", role: "Engraver" },
   ];
+  static readonly EXPECTED_PHYSICAL_EXTENT_VALUE =
+    "Extent: 1 map ; 59 x 89 cm.";
 
   constructor(page: Page) {
     this.page = page;
@@ -160,12 +191,6 @@ export default class ItemMetadataPage {
     // Type of Resource
     this.typeHeading = this.page.getByText("Type of Resource", { exact: true });
     this.typeText = this.typeHeading.locator("+ p");
-
-    // Identifiers
-    this.identifiersHeading = this.page.getByText("Identifiers", {
-      exact: true,
-    });
-    this.identifiersText = this.identifiersHeading.locator("+ p");
 
     // Rights Statement
     this.rightsHeading = this.page.getByText("Rights Statement", {
