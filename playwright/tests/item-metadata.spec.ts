@@ -3,10 +3,13 @@ import ItemMetadataPage from "../pages/item-metadata.page";
 
 let itemMetadataPage: ItemMetadataPage;
 
-test.describe("Verify Metadata Fields", () => {
+test.beforeEach(async ({ page }) => {
+  itemMetadataPage = new ItemMetadataPage(page);
+});
+
+test.describe("Verify Default Test Record", () => {
   test.beforeEach(async ({ page }) => {
-    itemMetadataPage = new ItemMetadataPage(page);
-    await itemMetadataPage.loadPage(ItemMetadataPage.itemResultURL);
+    await itemMetadataPage.loadScenario("DEFAULT");
   });
 
   test("should display Title heading and corresponding text", async () => {
@@ -76,19 +79,13 @@ test.describe("Verify Metadata Fields", () => {
   });
 });
 
-test.describe("Subjects", () => {
-  test.describe("Verify Links", () => {
+test.describe("Verify Sample Record 1", () => {
+  test.beforeEach(async ({ page }) => {
+    await itemMetadataPage.loadScenario("SAMPLE1");
+  });
+
+  test.describe("Subjects", () => {
     test.beforeEach(async ({ page }) => {
-      // Load the SPECIFIC Topics-modified URL before each test in this block
-      itemMetadataPage = new ItemMetadataPage(page);
-
-      await itemMetadataPage.loadPage(
-        ItemMetadataPage.itemResultURL.replace(
-          ItemMetadataPage.EXPECTED_UUID_VALUE,
-          ItemMetadataPage.EXPECTED_TOPIC_UUID_VALUE
-        )
-      );
-
       await expect(itemMetadataPage.topicHeading).toBeVisible();
       await expect(itemMetadataPage.topicText).toBeVisible();
     });
@@ -103,6 +100,22 @@ test.describe("Subjects", () => {
 
     test("should display correct subject values", async () => {
       await itemMetadataPage.verifyTopicText();
+    });
+  });
+});
+
+test.describe("Verify Sample Record 2", () => {
+  test.beforeEach(async ({ page }) => {
+    await itemMetadataPage.loadScenario("SAMPLE2");
+  });
+
+  test.describe("Languages", () => {
+    test("should include correct language values", async () => {
+      await itemMetadataPage.verifyLanguageText();
+    });
+
+    test("should contain links that are clickable", async () => {
+      await itemMetadataPage.verifyLanguageLinks();
     });
   });
 });
