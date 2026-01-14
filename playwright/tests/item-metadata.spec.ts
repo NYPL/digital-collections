@@ -79,13 +79,37 @@ test.describe("Verify Default Test Record", () => {
   });
 });
 
-test.describe("Verify Sample Record 2", () => {
-  test.describe("Languages", () => {
+test.describe("Verify Sample Record 1", () => {
+  test.beforeEach(async ({ page }) => {
+    await itemMetadataPage.loadScenario("SAMPLE1");
+  });
+
+  test.describe("Subjects", () => {
     test.beforeEach(async ({ page }) => {
-      // Load the SPECIFIC LANGUAGE-modified URL before each test in this block
-      await itemMetadataPage.loadScenario("SAMPLE2");
+      await expect(itemMetadataPage.topicHeading).toBeVisible();
+      await expect(itemMetadataPage.topicText).toBeVisible();
     });
 
+    test("should display the correct number of subject fields", async () => {
+      await itemMetadataPage.verifyTopicTotalCount();
+    });
+
+    test("should display clickable links for all subject entries", async () => {
+      await itemMetadataPage.verifyTopicLinksAreClickable();
+    });
+
+    test("should display correct subject values", async () => {
+      await itemMetadataPage.verifyTopicText();
+    });
+  });
+});
+
+test.describe("Verify Sample Record 2", () => {
+  test.beforeEach(async ({ page }) => {
+    await itemMetadataPage.loadScenario("SAMPLE2");
+  });
+
+  test.describe("Languages", () => {
     test("should include correct language values", async () => {
       await itemMetadataPage.verifyLanguageText();
     });
