@@ -327,17 +327,14 @@ export default class ItemMetadataPage {
     }
   }
 
-  async verifyNotesCount(): Promise<void> {
-    const rawText = await this.notesText.innerText();
-    // Playwright's innerText() converts <br> tags to newlines
-    const actualNotes = rawText
-      .split("\n")
-      .filter((line) => line.trim().length > 0);
-
-    expect(actualNotes.length).toEqual(ItemMetadataPage.EXPECTED_NOTES.length);
+  async verifyPhysicalDescriptionContent(): Promise<void> {
+    await expect(this.physicalHeading).toBeVisible();
+    await expect(this.physicalText).toContainText(
+      ItemMetadataPage.EXPECTED_PHYSICAL_DESCRIPTION_VALUE
+    );
   }
 
-  async verifyNotesValues(): Promise<void> {
+  async verifyNotesText(): Promise<void> {
     const rawText = await this.notesText.innerText();
 
     // Normalize whitespace and split by newline to verify each distinct note
@@ -347,6 +344,16 @@ export default class ItemMetadataPage {
       .filter((val) => val.length > 0);
 
     expect(actualNotes).toEqual(ItemMetadataPage.EXPECTED_NOTES);
+  }
+
+  async verifyNotesCount(): Promise<void> {
+    const rawText = await this.notesText.innerText();
+    // Playwright's innerText() converts <br> tags to newlines
+    const actualNotes = rawText
+      .split("\n")
+      .filter((line) => line.trim().length > 0);
+
+    expect(actualNotes.length).toEqual(ItemMetadataPage.EXPECTED_NOTES.length);
   }
 
   async verifyRightsContent(): Promise<void> {
