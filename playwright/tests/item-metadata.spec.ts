@@ -5,10 +5,13 @@ let itemMetadataPage: ItemMetadataPage;
 
 test.beforeEach(async ({ page }) => {
   itemMetadataPage = new ItemMetadataPage(page);
-  await itemMetadataPage.loadPage(ItemMetadataPage.itemResultURL);
 });
 
-test.describe("Verify Metadata Fields", () => {
+test.describe("Verify Default Test Record", () => {
+  test.beforeEach(async ({ page }) => {
+    await itemMetadataPage.loadScenario("DEFAULT");
+  });
+
   test("should display Title heading and corresponding text", async () => {
     await expect(itemMetadataPage.titleHeading).toBeVisible();
     await itemMetadataPage.verifyTitleTextContent();
@@ -49,29 +52,58 @@ test.describe("Verify Metadata Fields", () => {
       await itemMetadataPage.verifyCatalogLinkIsPresent();
     });
   });
-});
 
-test.describe("Other Identifiers", () => {
-  test("should include Shelf Locator", async () => {
-    await itemMetadataPage.verifyShelfLocatorIsPresent();
+  test.describe("Other Identifiers", () => {
+    test("should include Shelf Locator", async () => {
+      await itemMetadataPage.verifyShelfLocatorIsPresent();
+    });
+  });
+
+  test.describe("Names", () => {
+    test.beforeEach(async ({ page }) => {
+      await expect(itemMetadataPage.nameHeading).toBeVisible();
+      await expect(itemMetadataPage.nameText).toBeVisible();
+    });
+
+    test("should display the correct number of expected name fields", async () => {
+      await itemMetadataPage.verifyNameCount();
+    });
+
+    test("should display link for name and text for Role", async () => {
+      await itemMetadataPage.verifyNameLinks();
+    });
+
+    test("should display correct name and role values", async () => {
+      await itemMetadataPage.verifyNameDataValues();
+    });
+  });
+
+  test.describe("Physical Description", () => {
+    test.beforeEach(async () => {
+      // Verify identifiers heading and containers before checking content
+      await expect(itemMetadataPage.physicalHeading).toBeVisible();
+      await expect(itemMetadataPage.physicalText).toBeVisible();
+    });
+
+    test("should display correct physical description values", async () => {
+      await itemMetadataPage.verifyPhysicalDescriptionContent();
+    });
   });
 });
 
-test.describe("Names", () => {
-  test.beforeEach(async ({ page }) => {
-    await expect(itemMetadataPage.nameHeading).toBeVisible();
-    await expect(itemMetadataPage.nameText).toBeVisible();
-  });
+test.describe("Verify Sample Record 2", () => {
+  test.describe("Notes", () => {
+    test.beforeEach(async ({ page }) => {
+      // Load the SPECIFIC NOTES-modified URL before each test in this block
+      await itemMetadataPage.loadScenario("SAMPLE2");
+    });
 
-  test("should display the correct number of expected name fields", async () => {
-    await itemMetadataPage.verifyNameCount();
-  });
+    test("should include correct notes values", async () => {
+      await itemMetadataPage.verifyNotesText();
+    });
 
-  test("should display link for name and text for Role", async () => {
-    await itemMetadataPage.verifyNameLinks();
-  });
-
-  test("should display correct name and role values", async () => {
-    await itemMetadataPage.verifyNameDataValues();
+    test("should contain the correct number of notes", async () => {
+      await itemMetadataPage.verifyNotesCount();
+    });
   });
 });
