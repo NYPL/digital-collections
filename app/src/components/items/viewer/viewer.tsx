@@ -14,7 +14,12 @@ interface ItemProps {
 const uvConfig = {
   options: {
     footerPanelEnabled: true,
+    pagingEnabled: true,
+    pagingHeaderPanel: true,
+    pagingOptionEnabled: true,
     clickToZoomEnabled: false,
+    zoomToBoundsEnabled: false,
+    // saveUserSettings: false, // uncomment if you want to stop new prefs persisting
   },
   modules: {
     headerPanel: {
@@ -24,13 +29,71 @@ const uvConfig = {
         settingsButtonEnabled: true,
       },
     },
+    pagingHeaderPanel: {
+      options: {
+        autoCompleteBoxEnabled: true,
+        autocompleteAllowWords: false,
+        galleryButtonEnabled: true,
+        imageSelectionBoxEnabled: false,
+        pageModeEnabled: false,
+        pagingToggleEnabled: true,
+      },
+      content: {
+        close: "Close",
+        emptyValue: "Please enter a value",
+        first: "First",
+        firstImage: "First Image",
+        firstPage: "First Page",
+        folio: "Folio",
+        gallery: "Gallery",
+        go: "Go",
+        help: "Help",
+        image: "Image",
+        last: "Last",
+        lastImage: "Last Image",
+        lastPage: "Last Page",
+        next: "Next",
+        nextImage: "Next Image",
+        nextPage: "Next Page",
+        of: "of {0}",
+        oneUp: "Single page view",
+        page: "Page",
+        pageSearchLabel: "Search by Page Number",
+        previous: "Previous",
+        previousImage: "Previous Image",
+        previousPage: "Previous Page",
+        settings: "Settings",
+        twoUp: "Two page view",
+      },
+    },
+    shareDialogue: {
+      options: {
+        embedTemplate:
+          '<iframe src="{0}" width="{1}" height="{2}" allowfullscreen frameborder="0"></iframe>',
+        instructionsEnabled: false,
+        shareFrameEnabled: true,
+        shareManifestsEnabled: true,
+      },
+      content: {
+        customSize: "custom",
+        embed: "Embed",
+        embedInstructions:
+          "To embed this item in your own website, copy and paste the code below.",
+        height: "Height",
+        iiif: "IIIF Manifest",
+        share: "Share",
+        shareInstructions: "To share this item, copy the URL below.",
+        size: "Size:",
+        width: "Width",
+      },
+    },
     openSeadragonCenterPanel: {
       options: {
         animationTime: 0.15,
-        autoHideControls: true,
+        autoHideControls: false,
         requiredStatementEnabled: true,
         blendTime: 0,
-        constrainDuringPan: false,
+        constrainDuringPan: true,
         controlsFadeAfterInactive: 10000,
         controlsFadeDelay: 20000,
         controlsFadeLength: 20000,
@@ -56,9 +119,9 @@ const uvConfig = {
     },
     downloadDialogue: {
       options: {
+        downloadCurrentViewEnabled: false,
         downloadWholeImageHighResEnabled: false,
         downloadWholeImageLowResEnabled: false,
-        downloadCurrentViewEnabled: false,
       },
     },
   },
