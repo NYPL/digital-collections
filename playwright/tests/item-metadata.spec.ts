@@ -3,12 +3,12 @@ import ItemMetadataPage from "../pages/item-metadata.page";
 
 let itemMetadataPage: ItemMetadataPage;
 
-test.beforeEach(async ({ page }) => {
-  itemMetadataPage = new ItemMetadataPage(page);
-  await itemMetadataPage.loadPage(ItemMetadataPage.itemResultURL);
-});
-
 test.describe("Verify Metadata Fields", () => {
+  test.beforeEach(async ({ page }) => {
+    itemMetadataPage = new ItemMetadataPage(page);
+    await itemMetadataPage.loadPage(ItemMetadataPage.itemResultURL);
+  });
+
   test("should display Title heading and corresponding text", async () => {
     await expect(itemMetadataPage.titleHeading).toBeVisible();
     await itemMetadataPage.verifyTitleTextContent();
@@ -49,29 +49,60 @@ test.describe("Verify Metadata Fields", () => {
       await itemMetadataPage.verifyCatalogLinkIsPresent();
     });
   });
-});
 
-test.describe("Other Identifiers", () => {
-  test("should include Shelf Locator", async () => {
-    await itemMetadataPage.verifyShelfLocatorIsPresent();
+  test.describe("Other Identifiers", () => {
+    test("should include Shelf Locator", async () => {
+      await itemMetadataPage.verifyShelfLocatorIsPresent();
+    });
+  });
+
+  test.describe("Names", () => {
+    test.beforeEach(async ({ page }) => {
+      await expect(itemMetadataPage.nameHeading).toBeVisible();
+      await expect(itemMetadataPage.nameText).toBeVisible();
+    });
+
+    test("should display the correct number of expected name fields", async () => {
+      await itemMetadataPage.verifyNameCount();
+    });
+
+    test("should display link for name and text for Role", async () => {
+      await itemMetadataPage.verifyNameLinks();
+    });
+
+    test("should display correct name and role values", async () => {
+      await itemMetadataPage.verifyNameDataValues();
+    });
   });
 });
 
-test.describe("Names", () => {
-  test.beforeEach(async ({ page }) => {
-    await expect(itemMetadataPage.nameHeading).toBeVisible();
-    await expect(itemMetadataPage.nameText).toBeVisible();
-  });
+test.describe("Subjects", () => {
+  test.describe("Verify Links", () => {
+    test.beforeEach(async ({ page }) => {
+      // Load the SPECIFIC Topics-modified URL before each test in this block
+      itemMetadataPage = new ItemMetadataPage(page);
 
-  test("should display the correct number of expected name fields", async () => {
-    await itemMetadataPage.verifyNameCount();
-  });
+      await itemMetadataPage.loadPage(
+        ItemMetadataPage.itemResultURL.replace(
+          ItemMetadataPage.EXPECTED_UUID_VALUE,
+          ItemMetadataPage.EXPECTED_TOPIC_UUID_VALUE
+        )
+      );
 
-  test("should display link for name and text for Role", async () => {
-    await itemMetadataPage.verifyNameLinks();
-  });
+      await expect(itemMetadataPage.topicHeading).toBeVisible();
+      await expect(itemMetadataPage.topicText).toBeVisible();
+    });
 
-  test("should display correct name and role values", async () => {
-    await itemMetadataPage.verifyNameDataValues();
+    test("should display the correct number of subject fields", async () => {
+      await itemMetadataPage.verifyTopicTotalCount();
+    });
+
+    test("should display clickable links for all subject entries", async () => {
+      await itemMetadataPage.verifyTopicLinksAreClickable();
+    });
+
+    test("should display correct subject values", async () => {
+      await itemMetadataPage.verifyTopicText();
+    });
   });
 });
