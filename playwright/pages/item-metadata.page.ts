@@ -1,5 +1,8 @@
 import { Locator, Page, expect } from "@playwright/test";
 
+// sets which UUID is to be used for sample record navigation
+export type MetadataScenario = "DEFAULT" | "SAMPLE1" | "SAMPLE2";
+
 class FieldLocatorService {
   // Method returns an object containing both the Locator and the content/text Pattern
   public getNameLocatorAndPattern(
@@ -46,7 +49,17 @@ export default class ItemMetadataPage {
   readonly page: Page;
   private locatorService = new FieldLocatorService();
 
-  static itemResultURL: string = "/items/8b2b3160-c5d5-012f-d95c-58d385a7bc34";
+  // Sample URL-Record Mapping
+  private static readonly SCENARIOS: Record<MetadataScenario, string> = {
+    DEFAULT: "8b2b3160-c5d5-012f-d95c-58d385a7bc34",
+    SAMPLE1: "25a47180-c55f-012f-3759-58d385a7bc34", // Topics
+    SAMPLE2: "4649be20-9890-0138-2359-2360945aaf51", // Genres
+  };
+
+  async loadScenario(scenario: MetadataScenario): Promise<void> {
+    const uuid = ItemMetadataPage.SCENARIOS[scenario];
+    await this.page.goto(`/items/${uuid}`);
+  }
 
   // item-metadata
   readonly itemDataHeader: Locator;
@@ -80,6 +93,8 @@ export default class ItemMetadataPage {
   readonly descriptionText: Locator;
   readonly typeHeading: Locator;
   readonly typeText: Locator;
+  readonly languageHeading: Locator;
+  readonly languageText: Locator;
   readonly identifiersHeading: Locator;
   readonly identifiersText: Locator;
   readonly rightsHeading: Locator;
@@ -101,6 +116,7 @@ export default class ItemMetadataPage {
     { name: "Ratzer, Bernard", role: "Cartographer" },
     { name: "Kitchin, Thomas, 1718-1784", role: "Engraver" },
   ];
+  static readonly EXPECTED_LANGUAGE_VALUE = "English";
   static readonly EXPECTED_TOPIC_LINK_MAP = [
     {
       fullText: "New York (N.Y.)",
@@ -195,11 +211,9 @@ export default class ItemMetadataPage {
     this.typeHeading = this.page.getByText("Type of Resource", { exact: true });
     this.typeText = this.typeHeading.locator("+ p");
 
-    // Identifiers
-    this.identifiersHeading = this.page.getByText("Identifiers", {
-      exact: true,
-    });
-    this.identifiersText = this.identifiersHeading.locator("+ p");
+    // Languages
+    this.languageHeading = this.page.getByText("Languages", { exact: true });
+    this.languageText = this.languageHeading.locator("+ p");
 
     // Rights Statement
     this.rightsHeading = this.page.getByText("Rights Statement", {
@@ -329,6 +343,34 @@ export default class ItemMetadataPage {
       // Verify the full text (including the non-clickable role) is present.
       await expect(nameContainer).toHaveText(fullExpectedPattern);
     }
+  }
+
+  async verifyLanguageValues(): Promise<void> {
+    await expect(this.languageHeading).toBeVisible();
+
+    const languageLink = this.languageText.getByRole("link");
+    await expect(languageLink).toBeVisible();
+    await expect(languageLink).toHaveText(
+      ItemMetadataPage.EXPECTED_LANGUAGE_VALUE
+    );
+  }
+
+  async verifyLanguageText(): Promise<void> {
+    await expect(this.languageHeading).toBeVisible();
+    await expect(this.languageText).toContainText(
+      ItemMetadataPage.EXPECTED_LANGUAGE_VALUE
+    );
+  }
+
+  async verifyLanguageLinks(): Promise<void> {
+    const languageLink = this.languageText.getByRole("link");
+
+    // If it's visible and has the right text, Playwright has already
+    // confirmed it's a functional link role.
+    await expect(languageLink).toBeVisible();
+    await expect(languageLink).toHaveText(
+      ItemMetadataPage.EXPECTED_LANGUAGE_VALUE
+    );
   }
 
   public async getTopicLocatorAndDelimiter(): Promise<string[]> {
