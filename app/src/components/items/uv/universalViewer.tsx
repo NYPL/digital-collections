@@ -92,6 +92,9 @@ const UniversalViewer: React.FC<UniversalViewerProps> = React.memo(
       }
 
       if (uv) {
+        uv.on("reload", () => {
+          uv.fire("configure");
+        });
         // override config using an inline json object
         uv.on("configure", function ({ config, cb }) {
           console.log("config on uv.on(configure) is : ", config);
