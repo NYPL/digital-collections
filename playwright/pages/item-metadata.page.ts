@@ -356,6 +356,17 @@ export default class ItemMetadataPage {
     }
   }
 
+  private async getNormalizedLinesFromLocator(
+    locator: Locator
+  ): Promise<string[]> {
+    // Playwright's innerText() converts the <br> tags into newlines (\n)
+    const rawText = await locator.innerText();
+    return rawText
+      .split("\n")
+      .map((val) => val.trim().replace(/\s+/g, " "))
+      .filter((val) => val.length > 0);
+  }
+
   async verifyGenreCount(): Promise<void> {
     const genreLinks = this.genreText.getByRole("link");
     await expect(genreLinks).toHaveCount(
@@ -364,14 +375,9 @@ export default class ItemMetadataPage {
   }
 
   async verifyGenreValues(): Promise<void> {
-    // innerText() converts the <br> tags into newlines (\n)
-    const rawText = await this.genreText.innerText();
-
-    // Split by newline, trim whitespace, and remove empty strings
-    const actualGenres = rawText
-      .split("\n")
-      .map((val) => val.trim())
-      .filter((val) => val.length > 0);
+    const actualGenres = await this.getNormalizedLinesFromLocator(
+      this.genreText
+    );
 
     // Check expected content
     expect(actualGenres).toEqual(ItemMetadataPage.EXPECTED_GENRES);
@@ -397,24 +403,17 @@ export default class ItemMetadataPage {
   }
 
   async verifyNotesText(): Promise<void> {
-    const rawText = await this.notesText.innerText();
-
     // Normalize whitespace and split by newline to verify each distinct note
-    const actualNotes = rawText
-      .split("\n")
-      .map((val) => val.trim().replace(/\s+/g, " "))
-      .filter((val) => val.length > 0);
-
+    const actualNotes = await this.getNormalizedLinesFromLocator(
+      this.notesText
+    );
     expect(actualNotes).toEqual(ItemMetadataPage.EXPECTED_NOTES);
   }
 
   async verifyNotesCount(): Promise<void> {
-    const rawText = await this.notesText.innerText();
-    // Playwright's innerText() converts <br> tags to newlines
-    const actualNotes = rawText
-      .split("\n")
-      .filter((line) => line.trim().length > 0);
-
+    const actualNotes = await this.getNormalizedLinesFromLocator(
+      this.notesText
+    );
     expect(actualNotes.length).toEqual(ItemMetadataPage.EXPECTED_NOTES.length);
   }
 
