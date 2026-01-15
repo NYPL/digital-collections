@@ -116,6 +116,13 @@ export default class ItemMetadataPage {
     { name: "Ratzer, Bernard", role: "Cartographer" },
     { name: "Kitchin, Thomas, 1718-1784", role: "Engraver" },
   ];
+  static readonly EXPECTED_PHYSICAL_DESCRIPTION_VALUE =
+    "Extent: 1 map ; 59 x 89 cm.";
+
+  static readonly EXPECTED_NOTES = [
+    'Content: Black/white, 20" x 30"',
+    "Content: 1577340, 1577402",
+  ];
   static readonly EXPECTED_LANGUAGE_VALUE = "English";
   static readonly EXPECTED_TOPIC_LINK_MAP = [
     {
@@ -343,6 +350,35 @@ export default class ItemMetadataPage {
       // Verify the full text (including the non-clickable role) is present.
       await expect(nameContainer).toHaveText(fullExpectedPattern);
     }
+  }
+
+  async verifyPhysicalDescriptionContent(): Promise<void> {
+    await expect(this.physicalHeading).toBeVisible();
+    await expect(this.physicalText).toContainText(
+      ItemMetadataPage.EXPECTED_PHYSICAL_DESCRIPTION_VALUE
+    );
+  }
+
+  async verifyNotesText(): Promise<void> {
+    const rawText = await this.notesText.innerText();
+
+    // Normalize whitespace and split by newline to verify each distinct note
+    const actualNotes = rawText
+      .split("\n")
+      .map((val) => val.trim().replace(/\s+/g, " "))
+      .filter((val) => val.length > 0);
+
+    expect(actualNotes).toEqual(ItemMetadataPage.EXPECTED_NOTES);
+  }
+
+  async verifyNotesCount(): Promise<void> {
+    const rawText = await this.notesText.innerText();
+    // Playwright's innerText() converts <br> tags to newlines
+    const actualNotes = rawText
+      .split("\n")
+      .filter((line) => line.trim().length > 0);
+
+    expect(actualNotes.length).toEqual(ItemMetadataPage.EXPECTED_NOTES.length);
   }
 
   async verifyLanguageValues(): Promise<void> {
