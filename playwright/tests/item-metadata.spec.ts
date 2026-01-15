@@ -77,6 +77,17 @@ test.describe("Verify Default Test Record", () => {
       await itemMetadataPage.verifyNameDataValues();
     });
   });
+  test.describe("Physical Description", () => {
+    test.beforeEach(async () => {
+      // Verify identifiers heading and containers before checking content
+      await expect(itemMetadataPage.physicalHeading).toBeVisible();
+      await expect(itemMetadataPage.physicalText).toBeVisible();
+    });
+
+    test("should display correct physical description values", async () => {
+      await itemMetadataPage.verifyPhysicalDescriptionContent();
+    });
+  });
 });
 
 test.describe("Verify Sample Record 1", () => {
@@ -102,27 +113,14 @@ test.describe("Verify Sample Record 1", () => {
       await itemMetadataPage.verifyTopicText();
     });
   });
-
-  test.describe("Physical Description", () => {
-    test.beforeEach(async () => {
-      // Verify identifiers heading and containers before checking content
-      await expect(itemMetadataPage.physicalHeading).toBeVisible();
-      await expect(itemMetadataPage.physicalText).toBeVisible();
-    });
-
-    test("should display correct physical description values", async () => {
-      await itemMetadataPage.verifyPhysicalDescriptionContent();
-    });
-  });
 });
 
 test.describe("Verify Sample Record 2", () => {
-  test.describe("Notes", () => {
-    test.beforeEach(async ({ page }) => {
-      // Load the SPECIFIC NOTES-modified URL before each test in this block
-      await itemMetadataPage.loadScenario("SAMPLE2");
-    });
+  test.beforeEach(async ({ page }) => {
+    await itemMetadataPage.loadScenario("SAMPLE2");
+  });
 
+  test.describe("Notes", () => {
     test("should include correct notes values", async () => {
       await itemMetadataPage.verifyNotesText();
     });
