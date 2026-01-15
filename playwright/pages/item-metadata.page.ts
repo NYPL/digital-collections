@@ -218,6 +218,10 @@ export default class ItemMetadataPage {
     this.typeHeading = this.page.getByText("Type of Resource", { exact: true });
     this.typeText = this.typeHeading.locator("+ p");
 
+    // Languages
+    this.languageHeading = this.page.getByText("Languages", { exact: true });
+    this.languageText = this.languageHeading.locator("+ p");
+
     // Rights Statement
     this.rightsHeading = this.page.getByText("Rights Statement", {
       exact: true,
