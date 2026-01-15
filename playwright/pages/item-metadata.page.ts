@@ -356,6 +356,39 @@ export default class ItemMetadataPage {
     }
   }
 
+  async verifyGenreCount(): Promise<void> {
+    const genreLinks = this.genreText.getByRole("link");
+    await expect(genreLinks).toHaveCount(
+      ItemMetadataPage.EXPECTED_GENRES.length
+    );
+  }
+
+  async verifyGenreValues(): Promise<void> {
+    // innerText() converts the <br> tags into newlines (\n)
+    const rawText = await this.genreText.innerText();
+
+    // Split by newline, trim whitespace, and remove empty strings
+    const actualGenres = rawText
+      .split("\n")
+      .map((val) => val.trim())
+      .filter((val) => val.length > 0);
+
+    // Check expected content
+    expect(actualGenres).toEqual(ItemMetadataPage.EXPECTED_GENRES);
+  }
+
+  async verifyGenreLinks(): Promise<void> {
+    // Get all genre links
+    const genreLinks = this.genreText.getByRole("link");
+
+    for (let i = 0; i < ItemMetadataPage.EXPECTED_GENRES.length; i++) {
+      const expectedText = ItemMetadataPage.EXPECTED_GENRES[i];
+      const currentLink = genreLinks.nth(i);
+      await expect(currentLink).toHaveText(expectedText);
+      await expect(currentLink).toBeVisible();
+    }
+  }
+
   async verifyPhysicalDescriptionContent(): Promise<void> {
     await expect(this.physicalHeading).toBeVisible();
     await expect(this.physicalText).toContainText(
