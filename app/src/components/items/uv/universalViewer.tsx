@@ -96,6 +96,7 @@ const UniversalViewer: React.FC<UniversalViewerProps> = React.memo(
         uv.on("configure", function ({ config, cb }) {
           console.log("config on uv.on(configure) is : ", config);
           console.log("cb is: ", cb);
+          console.log(config);
           cb(
             {
               options: {
