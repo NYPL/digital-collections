@@ -1,3 +1,4 @@
+import { sendLayoutSelectedEvent } from "@/src/utils/ga4Utils";
 import { SearchManager } from "@/src/utils/searchManager/searchManager";
 import {
   Menu,
@@ -60,6 +61,7 @@ const ViewingOptionsMenu = ({
             variant={searchManager.viewMode == "grid" ? "primary" : "text"}
             aria-pressed={searchManager.viewMode == "grid" ? true : false}
             onClick={() => {
+              sendLayoutSelectedEvent("Grid");
               if (setFiltersExpanded) {
                 setFiltersExpanded(false);
               }
@@ -88,6 +90,7 @@ const ViewingOptionsMenu = ({
             variant={searchManager.viewMode == "list" ? "primary" : "text"}
             aria-pressed={searchManager.viewMode == "list" ? true : false}
             onClick={() => {
+              sendLayoutSelectedEvent("List");
               if (setFiltersExpanded) {
                 setFiltersExpanded(false);
               }
