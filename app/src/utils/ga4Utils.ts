@@ -36,6 +36,14 @@ export const sendDownloadEvent = (
   });
 };
 
+export const sendLayoutSelectedEvent = (viewMode: "Grid" | "List") => {
+  const dataLayer = window["dataLayer"] || [];
+  dataLayer.push({
+    event: "select_layout",
+    layout_type: viewMode,
+  });
+};
+
 export const trackAVProgress = (
   mediaType: string,
   mediaName: string,
