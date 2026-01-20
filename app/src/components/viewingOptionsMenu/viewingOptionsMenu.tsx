@@ -1,3 +1,4 @@
+import { sendLayoutSelectedEvent } from "@/src/utils/ga4Utils";
 import { SearchManager } from "@/src/utils/searchManager/searchManager";
 import {
   Menu,
@@ -56,6 +57,7 @@ const ViewingOptionsMenu = ({
             variant="iconOnly"
             onClick={() => {
               console.log("Grid button clicked");
+              sendLayoutSelectedEvent("Grid");
               console.log("Current viewMode:", searchManager.viewMode);
               if (setFiltersExpanded) {
                 setFiltersExpanded(false);
@@ -78,6 +80,7 @@ const ViewingOptionsMenu = ({
           <Button
             variant="iconOnly"
             onClick={() => {
+              sendLayoutSelectedEvent("List");
               if (setFiltersExpanded) {
                 setFiltersExpanded(false);
               }
