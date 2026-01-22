@@ -65,7 +65,7 @@ abstract class BaseSearchManager implements SearchManager {
       (config.initialFilters || []).map((filter) => JSON.stringify(filter))
     );
     this.currentKeywords = config.initialKeywords;
-    this.currentViewMode = config.initialViewMode || "list";
+    this.currentViewMode = config.initialViewMode || DEFAULT_VIEW_MODE;
     this.currentAvailableFilters = transformToDisplayAvailableFilters(
       config.initialAvailableFilters ?? {}
     );
