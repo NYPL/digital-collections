@@ -1,8 +1,0 @@
-User-agent: Bytedance
-Disallow: /
-
-User-agent: Bytespider
-Disallow: /
-
-User-agent: GPTBot
-Disallow: / 
