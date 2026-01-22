@@ -53,7 +53,7 @@ const ViewingOptionsMenu = ({
           }}
         >
           <Button
-            variant="iconOnly"
+            variant={searchManager.viewMode == "grid" ? "primary" : "secondary"}
             onClick={() => {
               console.log("Grid button clicked");
               console.log("Current viewMode:", searchManager.viewMode);
@@ -76,7 +76,7 @@ const ViewingOptionsMenu = ({
           </Button>
 
           <Button
-            variant="iconOnly"
+            variant={searchManager.viewMode == "list" ? "primary" : "secondary"}
             onClick={() => {
               if (setFiltersExpanded) {
                 setFiltersExpanded(false);
