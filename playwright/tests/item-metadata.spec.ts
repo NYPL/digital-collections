@@ -130,6 +130,20 @@ test.describe("Verify Sample Record 2", () => {
     });
   });
 
+  test.describe("Genres", () => {
+    test("should include correct genre values", async () => {
+      await itemMetadataPage.verifyGenreValues();
+    });
+
+    test("should contain the correct number of genres", async () => {
+      await itemMetadataPage.verifyGenreCount();
+    });
+
+    test("should display genres as links", async () => {
+      await itemMetadataPage.verifyGenreLinks();
+    });
+  });
+
   test.describe("Languages", () => {
     test("should include correct language values", async () => {
       await itemMetadataPage.verifyLanguageText();
