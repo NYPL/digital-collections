@@ -599,9 +599,8 @@ export default class ItemMetadataPage {
     for (let i = 0; i < ItemMetadataPage.EXPECTED_RESOURCE_TYPES.length; i++) {
       const expectedText = ItemMetadataPage.EXPECTED_RESOURCE_TYPES[i];
       const currentLink = typeLinks.nth(i);
-
-      await expect(currentLink).toBeVisible();
       await expect(currentLink).toHaveText(expectedText);
+      await expect(currentLink).toBeVisible();
     }
   }
 

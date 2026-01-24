@@ -154,3 +154,23 @@ test.describe("Verify Sample Record 2", () => {
     });
   });
 });
+
+test.describe("Verify Sample Record 3", () => {
+  test.beforeEach(async ({ page }) => {
+    await itemMetadataPage.loadScenario("SAMPLE3");
+  });
+
+  test.describe("Type of Resource", () => {
+    test("should include correct resource type values", async () => {
+      await itemMetadataPage.verifyTypeValues();
+    });
+
+    test("should contain the correct number of resource types", async () => {
+      await itemMetadataPage.verifyTypeCount();
+    });
+
+    test("should display resource types as links", async () => {
+      await itemMetadataPage.verifyTypeLinks();
+    });
+  });
+});
