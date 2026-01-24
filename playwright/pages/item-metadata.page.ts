@@ -221,7 +221,7 @@ export default class ItemMetadataPage {
     this.descriptionText = this.descriptionHeading.locator("+ p");
 
     // Type of Resource
-    this.typeHeading = this.page.getByText("Type of Resource", { exact: true });
+    this.typeHeading = this.page.getByText("Type of Resource");
     this.typeText = this.typeHeading.locator("+ p");
 
     // Languages
