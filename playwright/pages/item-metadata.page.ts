@@ -145,6 +145,7 @@ export default class ItemMetadataPage {
       linkCount: 1,
     },
   ];
+  static readonly EXPECTED_RESOURCE_TYPES = ["Still Image", "Text"];
 
   constructor(page: Page) {
     this.page = page;
@@ -575,6 +576,33 @@ export default class ItemMetadataPage {
     // Final check for total link integrity
     const actualTotalLinksFound = await allLinks.count();
     expect(actualTotalLinksFound).toEqual(expectedTotalLinkCount);
+  }
+
+  // Check Type of Resource links count
+  async verifyTypeCount(): Promise<void> {
+    const typeLinks = this.typeText.getByRole("link");
+    await expect(typeLinks).toHaveCount(
+      ItemMetadataPage.EXPECTED_RESOURCE_TYPES.length
+    );
+  }
+
+  // Check Type or Resource text values
+  async verifyTypeValues(): Promise<void> {
+    const actualTypes = await this.getNormalizedLinesFromLocator(this.typeText);
+    expect(actualTypes).toEqual(ItemMetadataPage.EXPECTED_RESOURCE_TYPES);
+  }
+
+  // Verify correct links for Type of Resource text
+  async verifyTypeLinks(): Promise<void> {
+    const typeLinks = this.typeText.getByRole("link");
+
+    for (let i = 0; i < ItemMetadataPage.EXPECTED_RESOURCE_TYPES.length; i++) {
+      const expectedText = ItemMetadataPage.EXPECTED_RESOURCE_TYPES[i];
+      const currentLink = typeLinks.nth(i);
+
+      await expect(currentLink).toBeVisible();
+      await expect(currentLink).toHaveText(expectedText);
+    }
   }
 
   async verifyRightsContent(): Promise<void> {
