@@ -1,7 +1,7 @@
 import { Locator, Page, expect } from "@playwright/test";
 
 // sets which UUID is to be used for sample record navigation
-export type MetadataScenario = "DEFAULT" | "SAMPLE1" | "SAMPLE2";
+export type MetadataScenario = "DEFAULT" | "SAMPLE1" | "SAMPLE2" | "SAMPLE3";
 
 class FieldLocatorService {
   // Method returns an object containing both the Locator and the content/text Pattern
@@ -54,6 +54,7 @@ export default class ItemMetadataPage {
     DEFAULT: "8b2b3160-c5d5-012f-d95c-58d385a7bc34",
     SAMPLE1: "25a47180-c55f-012f-3759-58d385a7bc34", // Topics
     SAMPLE2: "4649be20-9890-0138-2359-2360945aaf51", // Genres
+    SAMPLE3: "52ec6dd0-ff9e-012f-fa96-58d385a7bc34", // Type of Resource
   };
 
   async loadScenario(scenario: MetadataScenario): Promise<void> {
