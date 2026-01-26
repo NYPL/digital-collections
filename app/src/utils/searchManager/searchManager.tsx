@@ -113,10 +113,12 @@ abstract class BaseSearchManager implements SearchManager {
   get analyticsData(): AnalyticsData {
     const filters = this.filters;
     const filterNames = filters.map((f) => f.filter);
+    const searchType =
+      filters.find((f) => f.filter === "rights")?.value ?? "default";
 
     return {
       searchTerm: this.keywords ?? undefined,
-      searchType: "",
+      searchType: searchType,
       filterNames: filterNames,
       searchResultsLayout: this.viewMode,
     };
