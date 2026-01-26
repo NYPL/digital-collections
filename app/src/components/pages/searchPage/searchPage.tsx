@@ -23,6 +23,7 @@ import SearchCardGridLoading from "../../grids/searchCardGridLoading";
 import BackToTopLink from "../../backToTopLink/backToTopLink";
 import { SearchResultsType } from "@/src/types/SearchResultsType";
 import { useSubcollectionRedirect } from "@/src/hooks/useSubcollectionRedirect";
+import { trackSearchResults } from "@/src/utils/ga4Utils";
 
 const SearchPage = ({
   searchResults,
@@ -90,6 +91,13 @@ const SearchPage = ({
   }, [searchResults, searchManager.viewMode]);
 
   useSubcollectionRedirect();
+  const analyticsData = searchManager.analyticsData;
+  trackSearchResults(
+    analyticsData.searchType,
+    analyticsData.searchResultsLayout,
+    analyticsData.filterNames,
+    analyticsData.searchTerm
+  );
 
   return (
     <Box id="searchPageContent">

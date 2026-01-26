@@ -38,6 +38,7 @@ import { SearchResultsType } from "@/src/types/SearchResultsType";
 import { CollectionModel } from "@/src/models/collection";
 import { useSubcollectionRedirect } from "@/src/hooks/useSubcollectionRedirect";
 import { CollectionSearchParamsType } from "@/collections/[uuid]/page";
+import { trackSearchResults } from "@/src/utils/ga4Utils";
 
 type CollectionPageProps = {
   searchResults: SearchResultsType;
@@ -80,6 +81,13 @@ const CollectionPage = ({
     push(`${pathname}?${queryString}`, { scroll: false });
   };
   const [isLoaded, setIsLoaded] = useState(false);
+  const analyticsData = collectionSearchManager.analyticsData;
+  trackSearchResults(
+    analyticsData.searchType,
+    analyticsData.searchResultsLayout,
+    analyticsData.filterNames,
+    analyticsData.searchTerm
+  );
 
   useSubcollectionRedirect();
 
