@@ -24,6 +24,7 @@ import BackToTopLink from "../../backToTopLink/backToTopLink";
 import { SearchResultsType } from "@/src/types/SearchResultsType";
 import { useSubcollectionRedirect } from "@/src/hooks/useSubcollectionRedirect";
 import useBreakpoints from "@/src/hooks/useBreakpoints";
+import { trackSearchResults } from "@/src/utils/ga4Utils";
 
 const SearchPage = ({
   searchResults,
@@ -90,6 +91,16 @@ const SearchPage = ({
     isFirstLoad.current = true;
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [searchResults, searchManager.viewMode]);
+
+  const analyticsData = searchManager.analyticsData;
+  useEffect(() => {
+    trackSearchResults(
+      analyticsData.searchType,
+      analyticsData.searchResultsLayout,
+      analyticsData.filterNames,
+      analyticsData.searchTerm
+    );
+  }, [JSON.stringify(analyticsData)]);
 
   useSubcollectionRedirect();
 

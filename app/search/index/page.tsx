@@ -6,6 +6,7 @@ import SearchPage from "@/src/components/pages/searchPage/searchPage";
 import { Filter } from "@/src/types/FilterType";
 import { AvailableFilter } from "@/src/types/AvailableFilterType";
 import { revalidatePath } from "next/cache";
+import { trackSearchResults } from "@/src/utils/ga4Utils";
 
 export interface SearchParamsType {
   q: string;
