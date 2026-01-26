@@ -88,14 +88,17 @@ const SearchPage = ({
 
     isFirstLoad.current = true;
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    const analyticsData = searchManager.analyticsData;
+  }, [searchResults, searchManager.viewMode]);
+
+  const analyticsData = searchManager.analyticsData;
+  useEffect(() => {
     trackSearchResults(
       analyticsData.searchType,
       analyticsData.searchResultsLayout,
       analyticsData.filterNames,
       analyticsData.searchTerm
     );
-  }, [searchResults, searchManager.viewMode]);
+  }, [analyticsData]);
 
   useSubcollectionRedirect();
 

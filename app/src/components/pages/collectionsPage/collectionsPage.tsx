@@ -91,14 +91,16 @@ export function CollectionsPage({ data, collectionsSearchParams }) {
 
     isFirstLoad.current = true;
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    const analyticsData = collectionsSearchManager.analyticsData;
+  }, [collections]);
+  const analyticsData = collectionsSearchManager.analyticsData;
+  useEffect(() => {
     trackSearchResults(
       analyticsData.searchType,
       analyticsData.searchResultsLayout,
       analyticsData.filterNames,
       analyticsData.searchTerm
     );
-  }, [collections]);
+  }, [analyticsData]);
 
   return (
     <>

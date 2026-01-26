@@ -81,14 +81,6 @@ const CollectionPage = ({
     push(`${pathname}?${queryString}`, { scroll: false });
   };
   const [isLoaded, setIsLoaded] = useState(false);
-  const analyticsData = collectionSearchManager.analyticsData;
-  trackSearchResults(
-    analyticsData.searchType,
-    analyticsData.searchResultsLayout,
-    analyticsData.filterNames,
-    analyticsData.searchTerm
-  );
-
   useSubcollectionRedirect();
 
   useEffect(() => {
@@ -122,6 +114,16 @@ const CollectionPage = ({
     isFirstLoad.current = true;
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [searchResults]);
+
+  const analyticsData = collectionSearchManager.analyticsData;
+  useEffect(() => {
+    trackSearchResults(
+      analyticsData.searchType,
+      analyticsData.searchResultsLayout,
+      analyticsData.filterNames,
+      analyticsData.searchTerm
+    );
+  }, [analyticsData]);
 
   return (
     <Box id="collectionsPageContent">
