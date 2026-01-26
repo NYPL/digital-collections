@@ -92,6 +92,7 @@ const SearchPage = ({
 
   const analyticsData = searchManager.analyticsData;
   useEffect(() => {
+    console.log(analyticsData);
     trackSearchResults(
       analyticsData.searchType,
       analyticsData.searchResultsLayout,
