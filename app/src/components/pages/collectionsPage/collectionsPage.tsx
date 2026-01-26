@@ -100,7 +100,7 @@ export function CollectionsPage({ data, collectionsSearchParams }) {
       analyticsData.filterNames,
       analyticsData.searchTerm
     );
-  }, [analyticsData]);
+  }, [JSON.stringify(analyticsData)]);
 
   return (
     <>

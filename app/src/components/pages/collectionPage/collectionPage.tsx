@@ -123,8 +123,7 @@ const CollectionPage = ({
       analyticsData.filterNames,
       analyticsData.searchTerm
     );
-  }, [analyticsData]);
-
+  }, [JSON.stringify(analyticsData)]);
   return (
     <Box id="collectionsPageContent">
       <MobileSearchBanner />
