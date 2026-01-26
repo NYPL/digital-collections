@@ -99,7 +99,12 @@ const SearchPage = ({
       analyticsData.filterNames,
       analyticsData.searchTerm
     );
-  }, [analyticsData]);
+  }, [
+    analyticsData.searchType,
+    analyticsData.searchResultsLayout,
+    analyticsData.filterNames,
+    analyticsData.searchTerm,
+  ]);
 
   useSubcollectionRedirect();
 
