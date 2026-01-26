@@ -56,3 +56,25 @@ export const trackAVProgress = (
     progress: progressPercentage,
   });
 };
+
+export const trackSearchResults = (
+  searchType: string,
+  searchResultsLayout: "grid" | "list",
+  filterNames: string[],
+  searchTerm?: string
+) => {
+  const dataLayer = window["dataLayer"] || [];
+  const layout = { grid: "Grid", list: "List" }[searchResultsLayout];
+  let data = {
+    event: "view_search_results",
+    search_type: searchType,
+    search_results_layout: layout,
+  };
+  if (searchTerm) {
+    data["search_term"] = searchTerm;
+  }
+  if (filterNames) {
+    data["filter_name"] = filterNames.join("|");
+  }
+  dataLayer.push(data);
+};

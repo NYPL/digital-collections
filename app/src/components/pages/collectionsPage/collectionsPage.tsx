@@ -24,6 +24,7 @@ import { CollectionSearchManager } from "@/src/utils/searchManager/searchManager
 import { headerBreakpoints } from "@/src/utils/breakpoints";
 import DCSearchBar from "../../search/dcSearchBar";
 import ViewingOptionsMenu from "../../viewingOptionsMenu/viewingOptionsMenu";
+import { trackSearchResults } from "@/src/utils/ga4Utils";
 
 export function CollectionsPage({ data, collectionsSearchParams }) {
   const { push } = useRouter();
@@ -91,6 +92,15 @@ export function CollectionsPage({ data, collectionsSearchParams }) {
     isFirstLoad.current = true;
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [collections]);
+  const analyticsData = collectionsSearchManager.analyticsData;
+  useEffect(() => {
+    trackSearchResults(
+      analyticsData.searchType,
+      analyticsData.searchResultsLayout,
+      analyticsData.filterNames,
+      analyticsData.searchTerm
+    );
+  }, [JSON.stringify(analyticsData)]);
 
   return (
     <>
