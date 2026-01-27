@@ -38,6 +38,7 @@ import { SearchResultsType } from "@/src/types/SearchResultsType";
 import { CollectionModel } from "@/src/models/collection";
 import { useSubcollectionRedirect } from "@/src/hooks/useSubcollectionRedirect";
 import { CollectionSearchParamsType } from "@/collections/[uuid]/page";
+import useBreakpoints from "@/src/hooks/useBreakpoints";
 
 type CollectionPageProps = {
   searchResults: SearchResultsType;
@@ -56,6 +57,7 @@ const CollectionPage = ({
   const [filtersExpanded, setFiltersExpanded] = useState(false);
   const [renderCollectionStructure, setRenderCollectionStructure] =
     useState(true);
+  const { isLargerThanSmallTablet } = useBreakpoints();
 
   const collectionSearchManager = new GeneralSearchManager({
     initialPage: Number(searchParams?.page) || DEFAULT_PAGE_NUM,
@@ -181,7 +183,7 @@ const CollectionPage = ({
             />
             <Flex
               sx={{
-                [`@media screen and (min-width: ${headerBreakpoints.lgMobile}px)`]:
+                [`@media screen and (min-width: ${headerBreakpoints.smTablet}px)`]:
                   {
                     flexDir: "row",
                     marginBottom: "s",
@@ -216,6 +218,7 @@ const CollectionPage = ({
                     sort={searchResults.sort}
                     updateURL={updateURL}
                     setFiltersExpanded={setFiltersExpanded}
+                    showViewModeButtons={isLargerThanSmallTablet}
                   />
                 </>
               )}

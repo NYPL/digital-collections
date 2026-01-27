@@ -23,6 +23,7 @@ import SearchCardGridLoading from "../../grids/searchCardGridLoading";
 import BackToTopLink from "../../backToTopLink/backToTopLink";
 import { SearchResultsType } from "@/src/types/SearchResultsType";
 import { useSubcollectionRedirect } from "@/src/hooks/useSubcollectionRedirect";
+import useBreakpoints from "@/src/hooks/useBreakpoints";
 
 const SearchPage = ({
   searchResults,
@@ -41,6 +42,7 @@ const SearchPage = ({
   const isFirstLoad = useRef<boolean>(false);
   const [isLoaded, setIsLoaded] = useState(false);
   const [filtersExpanded, setFiltersExpanded] = useState(false);
+  const { isLargerThanSmallTablet } = useBreakpoints();
 
   const updateURL = async (queryString: string) => {
     const currentQueryString = window.location.search;
@@ -177,7 +179,7 @@ const SearchPage = ({
         />
         <Flex
           sx={{
-            [`@media screen and (min-width: ${headerBreakpoints.lgMobile}px)`]:
+            [`@media screen and (min-width: ${headerBreakpoints.smTablet}px)`]:
               {
                 flexDir: "row",
                 marginBottom: "s",
@@ -212,6 +214,7 @@ const SearchPage = ({
                 searchManager={searchManager}
                 setFiltersExpanded={setFiltersExpanded}
                 updateURL={updateURL}
+                showViewModeButtons={isLargerThanSmallTablet}
               />{" "}
             </>
           ) : (
