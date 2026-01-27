@@ -16,9 +16,27 @@ const SearchCardsGrid = ({
   viewMode: "grid" | "list";
   numColumns: number;
 }) => {
-  const { isLargerThanLargeTablet } = useBreakpoints();
+  const {
+    isLargerThanLargeTablet,
+    isLargerThanSmallTablet,
+    isLargerThanLargeMobile,
+  } = useBreakpoints();
+
+  // Calculate responsive columns based on viewport
+  // If viewport is mobile (< 768px), use 1 column
+  // If viewport is between tablet (768-1024px), use 2 columns
+  // Otherwise use the max numColumns passed from parent
+  const getResponsiveColumns = () => {
+    if (viewMode === "list") return 1;
+    if (!isLargerThanLargeMobile) return 1; // Mobile: 1 column
+    if (isLargerThanSmallTablet && !isLargerThanLargeTablet) return 2; // Tablet (768-1024px): 2 columns
+    return numColumns; // Desktop: use max numColumns (4 for Search, 3/4 for Collection)
+  };
+
+  const responsiveColumns = getResponsiveColumns();
+
   return (
-    <SimpleGrid columns={viewMode === "list" ? 1 : numColumns} gap="grid.l">
+    <SimpleGrid columns={responsiveColumns} gap="grid.l">
       {results?.map((result: SearchResultType, index: number) => {
         const searchResult = new SearchCardModel(result);
         return (
@@ -28,6 +46,7 @@ const SearchCardsGrid = ({
             result={searchResult}
             isLargerThanLargeTablet={isLargerThanLargeTablet}
             viewMode={viewMode}
+            numColumns={responsiveColumns}
           />
         );
       })}

@@ -29,11 +29,22 @@ export interface SearchCardProps {
   keywords: string;
   isLargerThanLargeTablet: boolean;
   viewMode: "grid" | "list";
+  numColumns: number;
 }
 
-const onSiteMaterialBadge = (recordType: SearchResultRecordType) => {
+const onSiteMaterialBadge = (
+  recordType: SearchResultRecordType,
+  viewMode: "grid" | "list"
+) => {
   return (
-    <StatusBadge sx={{ margin: "0" }} variant="informative">
+    <StatusBadge
+      sx={{
+        margin: "0",
+        whiteSpace: viewMode === "grid" ? "normal" : "nowrap",
+        wordWrap: viewMode === "grid" ? "break-word" : "normal",
+      }}
+      variant="informative"
+    >
       {recordType === "Item"
         ? "Available on-site only"
         : "Contains on-site only materials"}
@@ -107,6 +118,7 @@ export const SearchCard = ({
   keywords,
   isLargerThanLargeTablet,
   viewMode,
+  numColumns,
 }: SearchCardProps) => {
   const truncatedTitle = result.title.length > TRUNCATED_SEARCH_CARD_LENGTH;
 
@@ -148,8 +160,10 @@ export const SearchCard = ({
       <CardContent>
         <Flex flexDir="column" gap="xs">
           {result.containsOnSiteMaterial &&
-            onSiteMaterialBadge(result.recordType)}
-          {keywords?.length > 0 && highlightField(result.highlights)}
+            onSiteMaterialBadge(result.recordType, viewMode)}
+          {keywords?.length > 0 &&
+            viewMode === "list" &&
+            highlightField(result.highlights)}
           {contentTypeTag(result)}
         </Flex>
       </CardContent>
