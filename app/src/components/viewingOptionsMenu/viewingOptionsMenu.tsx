@@ -50,6 +50,7 @@ const ViewingOptionsMenu = ({
             gap: "0px",
             border: "1px solid var(--nypl-colors-ui-border-default)",
             height: "40px",
+            padding: "4px",
           }}
         >
           <Button
@@ -64,6 +65,11 @@ const ViewingOptionsMenu = ({
               const queryString = searchManager.handleViewModeChange("grid");
               console.log("Query string for grid:", queryString);
               updateURL(queryString);
+            }}
+            sx={{
+              padding: "inherit",
+              height: "auto",
+              width: "auto",
             }}
           >
             <Icon
@@ -83,6 +89,12 @@ const ViewingOptionsMenu = ({
               }
               searchManager.setLastFilter("list-view-button");
               updateURL(searchManager.handleViewModeChange("list"));
+            }}
+            sx={{
+              padding: "inherit",
+              height: "auto",
+              width: "auto",
+              marginLeft: "4px",
             }}
           >
             <Icon
