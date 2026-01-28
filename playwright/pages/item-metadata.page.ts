@@ -146,6 +146,8 @@ export default class ItemMetadataPage {
     },
   ];
   static readonly EXPECTED_RESOURCE_TYPES = ["Still Image", "Text"];
+  static readonly EXPECTED_RIGHTS_VALUE =
+    'The New York Public Library believes that this item is in the public domain under the laws of the United States, but did not make a determination as to its copyright status under the copyright laws of other countries. This item may not be in the public domain under the laws of other countries. Though not required, if you want to credit us as the source, please use the following statement, "From The New York Public Library," and provide a link back to the item on our Digital Collections site. Doing so helps us track how our collection is used and helps justify freely releasing even more content in the future.';
 
   constructor(page: Page) {
     this.page = page;
@@ -229,7 +231,7 @@ export default class ItemMetadataPage {
     this.languageText = this.languageHeading.locator("+ p");
 
     // Rights Statement
-    this.rightsHeading = this.page.getByText("Rights Statement", {
+    this.rightsHeading = this.page.getByText("Rights", {
       exact: true,
     });
     this.rightsText = this.rightsHeading.locator("+ p");
@@ -604,15 +606,29 @@ export default class ItemMetadataPage {
     }
   }
 
-  async verifyRightsContent(): Promise<void> {
-    // Structural check: Ensure the element exists and is visible
-    await expect(this.rightsHeading).toBeVisible();
+  // async verifyRightsContent(): Promise<void> {
+  //   await expect(this.rightsHeading).toBeVisible();
 
-    // Content check: Assert the specific expected text
-    await expect(this.rightsText).toHaveText(
-      "SOME RIGHTS TEXT WILL GO HERE, AND IT VARIES"
+  //   // Content check: assert specific expected text
+  //   await expect(this.rightsText).toHaveText(ItemMetadataPage.EXPECTED_RIGHTS_VALUE);
+  // }
+
+  async verifyRightsContent(): Promise<void> {
+    await expect(this.rightsHeading).toBeVisible();
+    await expect(this.rightsText).toContainText(
+      ItemMetadataPage.EXPECTED_RIGHTS_VALUE
     );
   }
+
+  // async verifyRightsContent(): Promise<void> {
+  //   // Structural check: Ensure the element exists and is visible
+  //   await expect(this.rightsHeading).toBeVisible();
+
+  //   // Content check: Assert the specific expected text
+  //   await expect(this.rightsText).toHaveText(
+  //     "SOME RIGHTS TEXT WILL GO HERE, AND IT VARIES"
+  //   );
+  // }
 
   async loadPage(gotoPage: string): Promise<void> {
     await this.page.goto(gotoPage);
