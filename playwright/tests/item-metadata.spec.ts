@@ -77,6 +77,7 @@ test.describe("Verify Default Test Record", () => {
       await itemMetadataPage.verifyNameDataValues();
     });
   });
+
   test.describe("Physical Description", () => {
     test.beforeEach(async () => {
       // Verify identifiers heading and containers before checking content
@@ -86,6 +87,17 @@ test.describe("Verify Default Test Record", () => {
 
     test("should display correct physical description values", async () => {
       await itemMetadataPage.verifyPhysicalDescriptionContent();
+    });
+  });
+
+  test.describe("Rights Statement", () => {
+    test.beforeEach(async () => {
+      await expect(itemMetadataPage.rightsHeading).toBeVisible();
+      await expect(itemMetadataPage.rightsText).toBeVisible();
+    });
+
+    test("should display correct rights statement text", async () => {
+      await itemMetadataPage.verifyRightsContent();
     });
   });
 });
