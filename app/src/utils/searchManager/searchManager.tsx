@@ -95,7 +95,14 @@ abstract class BaseSearchManager implements SearchManager {
   }
 
   get viewMode() {
-    return this.currentViewMode;
+    if (typeof window !== "undefined") {
+      return (
+        (localStorage.getItem("viewMode") as "grid" | "list") ||
+        this.currentViewMode
+      );
+    } else {
+      return this.currentViewMode;
+    }
   }
 
   get availableFilters(): AvailableFilter[] {
@@ -152,6 +159,7 @@ abstract class BaseSearchManager implements SearchManager {
   }
 
   handleViewModeChange(mode: "grid" | "list") {
+    localStorage.setItem("viewMode", mode);
     this.currentViewMode = mode;
     return this.getQueryString({
       q: this.currentKeywords,
