@@ -232,7 +232,14 @@ const CollectionMetadata = ({ data }: { data: CollectionMetadataProps }) => {
   const [isExpanded, setIsExpanded] = useState(false);
 
   return (
-    <Flex marginTop="l" marginBottom="m" flexDir="column" maxWidth="720px">
+    <Flex
+      marginTop="l"
+      marginBottom="m"
+      flexDir="column"
+      maxWidth="720px"
+      paddingLeft="0px"
+      paddingRight="0px"
+    >
       <Heading size="heading6" marginBottom="s">
         Collection information
       </Heading>
