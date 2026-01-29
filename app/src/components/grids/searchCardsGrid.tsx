@@ -22,15 +22,11 @@ const SearchCardsGrid = ({
     isLargerThanLargeMobile,
   } = useBreakpoints();
 
-  // Calculate responsive columns based on viewport
-  // If viewport is mobile (< 768px), use 1 column
-  // If viewport is between tablet (768-1024px), use 2 columns
-  // Otherwise use the max numColumns passed from parent
   const getResponsiveColumns = () => {
     if (viewMode === "list") return 1;
-    if (!isLargerThanLargeMobile) return 1; // Mobile: 1 column
-    if (isLargerThanSmallTablet && !isLargerThanLargeTablet) return 2; // Tablet (768-1024px): 2 columns
-    return numColumns; // Desktop: use max numColumns (4 for Search, 3/4 for Collection)
+    if (!isLargerThanLargeMobile) return 1;
+    if (isLargerThanSmallTablet && !isLargerThanLargeTablet) return 2;
+    return numColumns;
   };
 
   const responsiveColumns = getResponsiveColumns();
