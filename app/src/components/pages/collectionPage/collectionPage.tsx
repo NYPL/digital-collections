@@ -130,7 +130,10 @@ const CollectionPage = ({
         <Box
           maxWidth="1280px"
           mx="auto"
-          sx={{ paddingLeft: { base: 0, xl: "s" } }}
+          sx={{
+            paddingLeft: "0px",
+            paddingRight: "0px",
+          }}
         >
           <Heading
             level="h1"
@@ -155,8 +158,8 @@ const CollectionPage = ({
         maxWidth="1280px"
         mx="auto"
         sx={{
-          paddingLeft: { base: "m", xl: "s" },
-          paddingRight: { base: "m", xl: "s" },
+          paddingLeft: "0px",
+          paddingRight: "0px",
         }}
       >
         <ActiveFilters
