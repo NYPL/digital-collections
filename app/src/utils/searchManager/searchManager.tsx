@@ -159,7 +159,9 @@ abstract class BaseSearchManager implements SearchManager {
   }
 
   handleViewModeChange(mode: "grid" | "list") {
-    localStorage.setItem("viewMode", mode);
+    if (typeof window !== "undefined") {
+      localStorage.setItem("viewMode", mode);
+    }
     this.currentViewMode = mode;
     return this.getQueryString({
       q: this.currentKeywords,
