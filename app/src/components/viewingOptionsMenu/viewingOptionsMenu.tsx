@@ -51,6 +51,7 @@ const ViewingOptionsMenu = ({
             border: "1px solid var(--nypl-colors-ui-border-default)",
             height: "40px",
             padding: "4px",
+            borderRadius: "2px",
           }}
         >
           <Button
