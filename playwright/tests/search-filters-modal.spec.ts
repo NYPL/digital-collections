@@ -102,10 +102,26 @@ test.describe.serial("apply filters in open modal", () => {
       await expect(searchPage.endYear).toHaveValue("1800");
     });
 
-    test("choose filter results by availability", async () => {
-      await expect(searchPage.availablePublicDomain).toBeVisible();
-      await searchPage.availablePublicDomain.check();
-      await expect(searchPage.availablePublicDomain).toBeChecked();
+    test.describe.serial("filter results by availability", () => {
+      test("Public Domain", async () => {
+        await searchPage.availablePublicDomain.check({ force: true });
+        await expect(searchPage.availablePublicDomain).toBeChecked();
+      });
+
+      test("Available Online", async () => {
+        await searchPage.availableOnline.check({ force: true });
+        await expect(searchPage.availableOnline).toBeChecked();
+        // Checking this should uncheck the previous one (Radio logic)
+        await expect(searchPage.availablePublicDomain).not.toBeChecked();
+      });
+
+      test("On-site", async () => {
+        await searchPage.availableOnsite.check({ force: true });
+        await expect(searchPage.availableOnsite).toBeChecked();
+        await expect(searchPage.availableOnline).not.toBeChecked();
+
+        await expect(searchPage.refineHeading).toBeVisible();
+      });
     });
   });
 });
