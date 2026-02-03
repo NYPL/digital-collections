@@ -21,7 +21,8 @@ export const imageURL = (
   size = "!1600,1600",
   rotation = "0"
 ) => {
-  return `https://iiif.nypl.org/iiif/3/${imageId}/${region}/${size}/${rotation}/default.jpg`;
+  const baseIIIF = process.env.IIIF_URL;
+  return `${baseIIIF}/iiif/3/${imageId}/${region}/${size}/${rotation}/default.jpg`;
 };
 
 export function addCommas(number: string) {
