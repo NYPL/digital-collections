@@ -8,9 +8,9 @@ test.describe("choose specific sort options", () => {
     searchPage = new SearchPage(page);
     await searchPage.loadPage(SearchPage.searchResultsUrl);
 
-    await searchPage.sortButton.click();
-
     await expect(searchPage.refineHeading).toBeVisible();
+
+    await searchPage.sortButton.click();
   });
 
   test("sorts search results by relevance", async ({ page }) => {
