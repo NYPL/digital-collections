@@ -184,6 +184,14 @@ export class CollectionsApi {
     });
   }
 
+  static async getRandomPage(): Promise<string> {
+    const apiUrl = `${process.env.COLLECTIONS_API_URL}/random`;
+    return await fetchApi({
+      apiUrl: apiUrl,
+      options: { isRepoApi: false },
+    });
+  }
+
   /**
    * Fetches search results based on the provided parameters, for /search/index and /collections/[uuid] pages.
    *

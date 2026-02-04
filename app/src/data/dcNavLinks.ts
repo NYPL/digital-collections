@@ -1,5 +1,9 @@
 export const dcNavLinks = [
   {
+    href: `/discover`,
+    text: "Discover",
+  },
+  {
     href: `/search/index`,
     text: "Items",
   },
