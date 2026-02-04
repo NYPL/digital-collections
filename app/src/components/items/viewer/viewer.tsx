@@ -59,12 +59,13 @@ const uvConfig = {
 
 const ItemMediaViewer = ({ item, canvasIndex }: ItemProps) => {
   let viewer;
-  let contentType = item.contentType;
+  let { contentType } = item;
+  let showUniversalViewer = item.isImage || contentType == "model";
   const captureUuidToIdx = Object.fromEntries(
     item.captures.map((capture) => [capture.uuid, capture.orderInSequence - 1])
   );
 
-  if (item.isImage) {
+  if (showUniversalViewer) {
     viewer = (
       <>
         <UniversalViewer
