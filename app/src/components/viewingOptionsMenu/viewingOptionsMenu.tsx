@@ -56,6 +56,7 @@ const ViewingOptionsMenu = ({
         >
           <Button
             variant={searchManager.viewMode == "grid" ? "primary" : "text"}
+            aria-pressed={searchManager.viewMode == "grid" ? true : false}
             onClick={() => {
               console.log("Grid button clicked");
               console.log("Current viewMode:", searchManager.viewMode);
@@ -72,6 +73,7 @@ const ViewingOptionsMenu = ({
               height: "auto",
               width: "auto",
             }}
+            aria-label="grid view"
           >
             <Icon
               id="grid-menu-icon"
@@ -79,11 +81,13 @@ const ViewingOptionsMenu = ({
               decorative={false}
               title="Grid view icon"
               size="large"
+              aria-hidden="true"
             />
           </Button>
 
           <Button
             variant={searchManager.viewMode == "list" ? "primary" : "text"}
+            aria-pressed={searchManager.viewMode == "list" ? true : false}
             onClick={() => {
               if (setFiltersExpanded) {
                 setFiltersExpanded(false);
@@ -97,6 +101,7 @@ const ViewingOptionsMenu = ({
               width: "auto",
               marginLeft: "4px",
             }}
+            aria-label="list view"
           >
             <Icon
               id="list-menu-icon"
@@ -104,6 +109,7 @@ const ViewingOptionsMenu = ({
               decorative={false}
               title="List view icon"
               size="large"
+              aria-hidden="true"
             />
           </Button>
         </ButtonGroup>
