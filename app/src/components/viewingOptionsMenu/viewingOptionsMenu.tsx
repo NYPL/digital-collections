@@ -68,7 +68,7 @@ const ViewingOptionsMenu = ({
             sx={{
               padding: "inherit",
               height: "auto",
-              width: "auto",
+              minWidth: "auto",
             }}
             aria-label="grid view"
           >
@@ -95,7 +95,7 @@ const ViewingOptionsMenu = ({
             sx={{
               padding: "inherit",
               height: "auto",
-              width: "auto",
+              minWidth: "auto",
               marginLeft: "4px",
             }}
             aria-label="list view"
