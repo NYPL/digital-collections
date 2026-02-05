@@ -58,14 +58,11 @@ const ViewingOptionsMenu = ({
             variant={searchManager.viewMode == "grid" ? "primary" : "text"}
             aria-pressed={searchManager.viewMode == "grid" ? true : false}
             onClick={() => {
-              console.log("Grid button clicked");
-              console.log("Current viewMode:", searchManager.viewMode);
               if (setFiltersExpanded) {
                 setFiltersExpanded(false);
               }
               searchManager.setLastFilter("grid-view-button");
               const queryString = searchManager.handleViewModeChange("grid");
-              console.log("Query string for grid:", queryString);
               updateURL(queryString);
             }}
             sx={{
