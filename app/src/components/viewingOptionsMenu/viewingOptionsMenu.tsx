@@ -51,26 +51,26 @@ const ViewingOptionsMenu = ({
             border: "1px solid var(--nypl-colors-ui-border-default)",
             height: "40px",
             padding: "4px",
+            borderRadius: "2px",
           }}
         >
           <Button
-            variant={searchManager.viewMode == "grid" ? "primary" : "secondary"}
+            variant={searchManager.viewMode == "grid" ? "primary" : "text"}
+            aria-pressed={searchManager.viewMode == "grid" ? true : false}
             onClick={() => {
-              console.log("Grid button clicked");
-              console.log("Current viewMode:", searchManager.viewMode);
               if (setFiltersExpanded) {
                 setFiltersExpanded(false);
               }
               searchManager.setLastFilter("grid-view-button");
               const queryString = searchManager.handleViewModeChange("grid");
-              console.log("Query string for grid:", queryString);
               updateURL(queryString);
             }}
             sx={{
               padding: "inherit",
               height: "auto",
-              width: "auto",
+              minWidth: "auto",
             }}
+            aria-label="grid view"
           >
             <Icon
               id="grid-menu-icon"
@@ -78,11 +78,13 @@ const ViewingOptionsMenu = ({
               decorative={false}
               title="Grid view icon"
               size="large"
+              aria-hidden="true"
             />
           </Button>
 
           <Button
-            variant={searchManager.viewMode == "list" ? "primary" : "secondary"}
+            variant={searchManager.viewMode == "list" ? "primary" : "text"}
+            aria-pressed={searchManager.viewMode == "list" ? true : false}
             onClick={() => {
               if (setFiltersExpanded) {
                 setFiltersExpanded(false);
@@ -93,9 +95,10 @@ const ViewingOptionsMenu = ({
             sx={{
               padding: "inherit",
               height: "auto",
-              width: "auto",
+              minWidth: "auto",
               marginLeft: "4px",
             }}
+            aria-label="list view"
           >
             <Icon
               id="list-menu-icon"
@@ -103,6 +106,7 @@ const ViewingOptionsMenu = ({
               decorative={false}
               title="List view icon"
               size="large"
+              aria-hidden="true"
             />
           </Button>
         </ButtonGroup>
