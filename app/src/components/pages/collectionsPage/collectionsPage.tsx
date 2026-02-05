@@ -95,9 +95,9 @@ export function CollectionsPage({ data, collectionsSearchParams }) {
   const analyticsData = collectionsSearchManager.analyticsData;
   useEffect(() => {
     trackSearchResults(
-      analyticsData.searchType,
       analyticsData.searchResultsLayout,
       analyticsData.filterNames,
+      analyticsData.searchType,
       analyticsData.searchTerm
     );
   }, [JSON.stringify(analyticsData)]);

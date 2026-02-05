@@ -59,16 +59,16 @@ export const trackAVProgress = (
 };
 
 export const trackSearchResults = (
-  searchType: string,
   searchResultsLayout: "grid" | "list",
   filterNames: string[],
+  searchType?: string,
   searchTerm?: string
 ) => {
   const dataLayer = window["dataLayer"] || [];
   const layout = upperGridViewLayoutParam(searchResultsLayout);
   let data = {
     event: "view_search_results",
-    search_type: searchType,
+    search_type: searchType ?? "default",
     search_results_layout: layout,
   };
   if (searchTerm) {
