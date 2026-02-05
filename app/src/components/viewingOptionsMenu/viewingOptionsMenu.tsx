@@ -31,6 +31,7 @@ const ViewingOptionsMenu = ({
         showLabel
         selectedItem={sort}
         labelText={`Sort by: ${options[sort]}`}
+        labelAsAriaLabel
         listItemsData={Object.entries(options).map(([id, label]) => ({
           id,
           label,
