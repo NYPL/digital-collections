@@ -1,11 +1,11 @@
-import { Locator, Page } from "@playwright/test";
+import { Locator, Page, expect } from "@playwright/test";
 
 export default class ItemMediaPage {
   readonly page: Page;
 
   static readonly IMAGE_UUID = "4387c9f0-c53c-012f-9924-58d385a7bc34";
   static readonly VIDEO_UUID = "09a14bf0-0382-0131-8ec7-3c075448cc4b";
-
+  static readonly PUBLICDOMAIN_UUID = "ddaef250-c54d-012f-2b56-58d385a7bc34";
   // Store the expected content-types
   readonly expectedContentType: "IMAGE" | "VIDEO";
 
@@ -14,7 +14,9 @@ export default class ItemMediaPage {
   readonly downloadButton: Locator;
   readonly downloadOverlay: Locator;
   readonly downloadOptionSmall: Locator;
+  readonly downloadOptionStandard: Locator;
   readonly closeOverlayButton: Locator;
+  readonly orderPrintButton: Locator;
   readonly shareButton: Locator;
 
   // Image control locators (unique to IMAGE viewer mode)
@@ -44,12 +46,18 @@ export default class ItemMediaPage {
     this.playButton = page.locator("button").filter({ hasText: /^Play$/ });
 
     // Download options
-    this.downloadButton = page.locator("#download-btn");
-    this.downloadButton = page.locator("#download-btn");
+    this.downloadButton = page
+      .locator("#download-btn")
+      .filter({ visible: true });
     this.downloadOverlay = page.locator("div.overlay.download");
     this.downloadOptionSmall = this.downloadOverlay.getByRole("button", {
-      name: /Small/i,
+      name: /Smallish/i,
     });
+    this.downloadOptionStandard = this.downloadOverlay.getByRole("button", {
+      name: /Standard/i,
+    });
+    // this.downloadOptionSmall = this.downloadOverlay.locator('button', { hasText: /Small/i });
+    // this.downloadOptionStandard = this.downloadOverlay.locator('button', { hasText: /Standard/i });
     this.closeOverlayButton = this.downloadOverlay.getByRole("button", {
       name: "Close",
     });
@@ -79,9 +87,33 @@ export default class ItemMediaPage {
     }
   }
 
-  // Click Download Icon
+  // Downloads
+
+  // Opens and verifies download overlay modal
   async openDownloadMenu(): Promise<void> {
     await this.downloadButton.click();
     await expect(this.downloadOverlay).toBeVisible();
+  }
+
+  // Dismisses  download overlay and verifies it is removed from the view.
+  async closeDownloadMenu(): Promise<void> {
+    await this.closeOverlayButton.click();
+    await expect(this.downloadOverlay).not.toBeVisible();
+  }
+
+  // Purchase Print
+
+  async verifyOrderPrintAvailable(): Promise<void> {
+    // 1. Ensure it's in the viewport/visible
+    await expect(this.orderPrintButton).toBeVisible();
+
+    // 2. Ensure it hasn't been disabled by some weird Chakra-UI state
+    await expect(this.orderPrintButton).toBeEnabled();
+
+    // 3. Precision check: Ensure it actually points to the external vendor
+    await expect(this.orderPrintButton).toHaveAttribute(
+      "href",
+      /archivea\.studio/
+    );
   }
 }
