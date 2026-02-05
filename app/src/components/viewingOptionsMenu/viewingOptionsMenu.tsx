@@ -61,7 +61,7 @@ const ViewingOptionsMenu = ({
             variant={searchManager.viewMode == "grid" ? "primary" : "text"}
             aria-pressed={searchManager.viewMode == "grid" ? true : false}
             onClick={() => {
-              sendLayoutSelectedEvent("Grid");
+              sendLayoutSelectedEvent("grid");
               if (setFiltersExpanded) {
                 setFiltersExpanded(false);
               }
@@ -90,7 +90,7 @@ const ViewingOptionsMenu = ({
             variant={searchManager.viewMode == "list" ? "primary" : "text"}
             aria-pressed={searchManager.viewMode == "list" ? true : false}
             onClick={() => {
-              sendLayoutSelectedEvent("List");
+              sendLayoutSelectedEvent("list");
               if (setFiltersExpanded) {
                 setFiltersExpanded(false);
               }
