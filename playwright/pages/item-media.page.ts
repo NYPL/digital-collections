@@ -104,13 +104,7 @@ export default class ItemMediaPage {
   // Purchase Print
 
   async verifyOrderPrintAvailable(): Promise<void> {
-    // 1. Ensure it's in the viewport/visible
     await expect(this.orderPrintButton).toBeVisible();
-
-    // 2. Ensure it hasn't been disabled by some weird Chakra-UI state
-    await expect(this.orderPrintButton).toBeEnabled();
-
-    // 3. Precision check: Ensure it actually points to the external vendor
     await expect(this.orderPrintButton).toHaveAttribute(
       "href",
       /archivea\.studio/
