@@ -8,10 +8,6 @@ test.describe("choose specific sort options", () => {
     searchPage = new SearchPage(page);
     await searchPage.loadPage(SearchPage.searchResultsUrl);
 
-    await page.evaluate(() => {
-      localStorage.setItem("viewMode", "grid");
-    });
-
     await searchPage.sortButton.click();
 
     await expect(searchPage.refineHeading).toBeVisible();
