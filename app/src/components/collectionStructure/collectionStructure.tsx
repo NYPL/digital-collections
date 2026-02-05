@@ -384,8 +384,8 @@ const CollectionStructure = ({
       flexDir="column"
       sx={{
         marginBottom: "xxl",
-        [`@media screen and (max-width: ${headerBreakpoints.smTablet}px)`]: {
-          display: "none",
+        [`@media screen and (min-width: ${headerBreakpoints.smTablet}px)`]: {
+          display: "inline",
         },
       }}
     >
