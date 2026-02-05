@@ -120,9 +120,9 @@ const CollectionPage = ({
   const analyticsData = collectionSearchManager.analyticsData;
   useEffect(() => {
     trackSearchResults(
-      analyticsData.searchType,
       analyticsData.searchResultsLayout,
       analyticsData.filterNames,
+      analyticsData.searchType,
       analyticsData.searchTerm
     );
   }, [JSON.stringify(analyticsData)]);
