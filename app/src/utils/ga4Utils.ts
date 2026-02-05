@@ -36,11 +36,12 @@ export const sendDownloadEvent = (
   });
 };
 
-export const sendLayoutSelectedEvent = (viewMode: "Grid" | "List") => {
+export const sendLayoutSelectedEvent = (viewMode: "grid" | "list") => {
   const dataLayer = window["dataLayer"] || [];
+  const layout = upperGridViewLayoutParam(viewMode);
   dataLayer.push({
     event: "select_layout",
-    layout_type: viewMode,
+    layout_type: layout,
   });
 };
 
@@ -64,7 +65,7 @@ export const trackSearchResults = (
   searchTerm?: string
 ) => {
   const dataLayer = window["dataLayer"] || [];
-  const layout = { grid: "Grid", list: "List" }[searchResultsLayout];
+  const layout = upperGridViewLayoutParam(searchResultsLayout);
   let data = {
     event: "view_search_results",
     search_type: searchType,
@@ -77,4 +78,8 @@ export const trackSearchResults = (
     data["filter_name"] = filterNames.join("|");
   }
   dataLayer.push(data);
+};
+
+const upperGridViewLayoutParam = (param: "grid" | "list") => {
+  return { grid: "Grid", list: "List" }[param];
 };
