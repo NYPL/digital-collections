@@ -21,7 +21,7 @@ export const imageURL = (
   size = "!1600,1600",
   rotation = "0"
 ) => {
-  const baseIIIF = process.env.IIIF_URL;
+  const baseIIIF = process.env.IIIF_URL || "https://iiif.nypl.org";
   return `${baseIIIF}/iiif/3/${imageId}/${region}/${size}/${rotation}/default.jpg`;
 };
 
