@@ -11,6 +11,11 @@ export default class ItemMediaPage {
 
   //Viewer locator
   readonly viewerHeading: Locator;
+  readonly downloadButton: Locator;
+  readonly downloadOverlay: Locator;
+  readonly downloadOptionSmall: Locator;
+  readonly closeOverlayButton: Locator;
+  readonly shareButton: Locator;
 
   // Image control locators (unique to IMAGE viewer mode)
   readonly zoomInButton: Locator;
@@ -37,6 +42,20 @@ export default class ItemMediaPage {
     this.rotateRightButton = page.getByRole("button", { name: "Rotate Right" });
     this.fullScreenButton = page.getByRole("button", { name: "Full Screen" });
     this.playButton = page.locator("button").filter({ hasText: /^Play$/ });
+
+    // Download options
+    this.downloadButton = page.locator("#download-btn");
+    this.downloadButton = page.locator("#download-btn");
+    this.downloadOverlay = page.locator("div.overlay.download");
+    this.downloadOptionSmall = this.downloadOverlay.getByRole("button", {
+      name: /Small/i,
+    });
+    this.closeOverlayButton = this.downloadOverlay.getByRole("button", {
+      name: "Close",
+    });
+
+    // Share options
+    this.shareButton = page.getByRole("button", { name: "Share" });
   }
 
   async loadPage(uuid: string): Promise<void> {
@@ -58,5 +77,11 @@ export default class ItemMediaPage {
     else {
       await this.playButton.waitFor({ state: "visible" });
     }
+  }
+
+  // Click Download Icon
+  async openDownloadMenu(): Promise<void> {
+    await this.downloadButton.click();
+    await expect(this.downloadOverlay).toBeVisible();
   }
 }
