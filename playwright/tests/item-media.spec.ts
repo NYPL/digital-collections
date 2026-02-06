@@ -40,28 +40,25 @@ test.describe("Verify Video Viewer Controls", () => {
   });
 });
 
-test.describe("Verify Image Viewer Download Actions", () => {
+test.describe("Verify Download Actions", () => {
   test.beforeEach(async ({ page }) => {
     itemMediaPage = new ItemMediaPage(page, "IMAGE");
     await itemMediaPage.loadPage(ItemMediaPage.IMAGE_UUID);
   });
 
-  test("Should display all available options", async () => {
+  test("should display all available download options", async () => {
     await itemMediaPage.getViewerControls();
+    await itemMediaPage.openDownloadMenu();
 
-    await test.step("should display an options menu", async () => {
-      await itemMediaPage.openDownloadMenu();
-    });
-
-    await test.step("should dislay Small option", async () => {
+    await test.step("verify small image size", async () => {
       await expect(itemMediaPage.downloadOptionSmall).toBeVisible();
     });
 
-    await test.step("should dislay Standard option", async () => {
+    await test.step("verify standard image", async () => {
       await expect(itemMediaPage.downloadOptionStandard).toBeVisible();
     });
 
-    await test.step("should allow closing download Menu", async () => {
+    await test.step("verify closed successfully", async () => {
       await itemMediaPage.closeDownloadMenu();
     });
   });
