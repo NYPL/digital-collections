@@ -576,16 +576,6 @@ export default class ItemMetadataPage {
     expect(actualTotalLinksFound).toEqual(expectedTotalLinkCount);
   }
 
-  async verifyRightsContent(): Promise<void> {
-    // Structural check: Ensure the element exists and is visible
-    await expect(this.rightsHeading).toBeVisible();
-
-    // Content check: Assert the specific expected text
-    await expect(this.rightsText).toHaveText(
-      "SOME RIGHTS TEXT WILL GO HERE, AND IT VARIES"
-    );
-  }
-
   async loadPage(gotoPage: string): Promise<void> {
     await this.page.goto(gotoPage);
   }
