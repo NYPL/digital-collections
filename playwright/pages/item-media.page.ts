@@ -46,20 +46,15 @@ export default class ItemMediaPage {
     this.playButton = page.locator("button").filter({ hasText: /^Play$/ });
 
     // Download options
-    this.downloadButton = page
-      .locator("#download-btn")
-      .filter({ visible: true });
+
+    this.downloadButton = page.getByRole("button", { name: /Download/i });
     this.downloadOverlay = page.locator("div.overlay.download");
-    this.downloadOptionSmall = this.downloadOverlay.getByRole("button", {
-      name: /Small/i,
+    this.downloadOptionSmall = page.locator("button", { hasText: /Small/i });
+    this.downloadOptionStandard = page.locator("button", {
+      hasText: /Standard/,
     });
-    this.downloadOptionStandard = this.downloadOverlay.getByRole("button", {
-      name: /Standard/i,
-    });
-    // this.downloadOptionSmall = this.downloadOverlay.locator('button', { hasText: /Small/i });
-    // this.downloadOptionStandard = this.downloadOverlay.locator('button', { hasText: /Standard/i });
     this.closeOverlayButton = this.downloadOverlay.getByRole("button", {
-      name: "Close",
+      name: /Close/i,
     });
 
     // Share options
@@ -95,7 +90,11 @@ export default class ItemMediaPage {
   // Opens and verifies download overlay modal
   async openDownloadMenu(): Promise<void> {
     await this.downloadButton.click();
-    await expect(this.downloadOverlay).toBeVisible();
+
+    // Wait for the popup to be visible
+    await this.downloadOptionSmall.waitFor({ state: "visible" });
+
+    await expect(this.downloadOptionSmall).toBeEnabled();
   }
 
   // Dismisses  download overlay and verifies it is removed from the view.
