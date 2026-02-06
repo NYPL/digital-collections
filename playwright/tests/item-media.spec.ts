@@ -46,7 +46,7 @@ test.describe("Verify Image Viewer Download Actions", () => {
     await itemMediaPage.loadPage(ItemMediaPage.IMAGE_UUID);
   });
 
-  test("Clicking the download icon", async () => {
+  test("Should display all available options", async () => {
     await itemMediaPage.getViewerControls();
 
     await test.step("should display an options menu", async () => {
@@ -67,11 +67,21 @@ test.describe("Verify Image Viewer Download Actions", () => {
   });
 });
 
-test.describe("Verify Purchase Print Option", () => {
+test.describe("Verify Purchase Option", () => {
   test.beforeEach(async ({ page }) => {
     itemMediaPage = new ItemMediaPage(page, "IMAGE");
     await itemMediaPage.loadPage(ItemMediaPage.PUBLICDOMAIN_UUID);
   });
 
-  // verifyOrderPrintAvailable
+  test("should display order text and correct link", async () => {
+    await itemMediaPage.getViewerControls();
+
+    await test.step("display 'Order Print' button with correct text", async () => {
+      await itemMediaPage.verifyOrderPrintButton();
+    });
+
+    await test.step("button should link to external vendor", async () => {
+      await itemMediaPage.verifyOrderPrintLink();
+    });
+  });
 });

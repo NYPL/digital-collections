@@ -51,7 +51,7 @@ export default class ItemMediaPage {
       .filter({ visible: true });
     this.downloadOverlay = page.locator("div.overlay.download");
     this.downloadOptionSmall = this.downloadOverlay.getByRole("button", {
-      name: /Smallish/i,
+      name: /Small/i,
     });
     this.downloadOptionStandard = this.downloadOverlay.getByRole("button", {
       name: /Standard/i,
@@ -64,6 +64,9 @@ export default class ItemMediaPage {
 
     // Share options
     this.shareButton = page.getByRole("button", { name: "Share" });
+
+    // Purchase option
+    this.orderPrintButton = page.locator("#print-btn");
   }
 
   async loadPage(uuid: string): Promise<void> {
@@ -103,8 +106,14 @@ export default class ItemMediaPage {
 
   // Purchase Print
 
-  async verifyOrderPrintAvailable(): Promise<void> {
+  // Check button
+  async verifyOrderPrintButton(): Promise<void> {
     await expect(this.orderPrintButton).toBeVisible();
+    await expect(this.orderPrintButton).toHaveText(/Order Print/i);
+  }
+
+  // Check vendor link
+  async verifyOrderPrintLink(): Promise<void> {
     await expect(this.orderPrintButton).toHaveAttribute(
       "href",
       /archivea\.studio/
