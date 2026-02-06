@@ -606,29 +606,12 @@ export default class ItemMetadataPage {
     }
   }
 
-  // async verifyRightsContent(): Promise<void> {
-  //   await expect(this.rightsHeading).toBeVisible();
-
-  //   // Content check: assert specific expected text
-  //   await expect(this.rightsText).toHaveText(ItemMetadataPage.EXPECTED_RIGHTS_VALUE);
-  // }
-
   async verifyRightsContent(): Promise<void> {
     await expect(this.rightsHeading).toBeVisible();
     await expect(this.rightsText).toContainText(
       ItemMetadataPage.EXPECTED_RIGHTS_VALUE
     );
   }
-
-  // async verifyRightsContent(): Promise<void> {
-  //   // Structural check: Ensure the element exists and is visible
-  //   await expect(this.rightsHeading).toBeVisible();
-
-  //   // Content check: Assert the specific expected text
-  //   await expect(this.rightsText).toHaveText(
-  //     "SOME RIGHTS TEXT WILL GO HERE, AND IT VARIES"
-  //   );
-  // }
 
   async loadPage(gotoPage: string): Promise<void> {
     await this.page.goto(gotoPage);
