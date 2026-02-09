@@ -40,6 +40,7 @@ import { useSubcollectionRedirect } from "@/src/hooks/useSubcollectionRedirect";
 import { CollectionSearchParamsType } from "@/collections/[uuid]/page";
 import useBreakpoints from "@/src/hooks/useBreakpoints";
 import { trackSearchResults } from "@/src/utils/ga4Utils";
+import useSearchAnalytics from "@/src/hooks/useSearchAnalytics";
 
 type CollectionPageProps = {
   searchResults: SearchResultsType;
@@ -117,15 +118,8 @@ const CollectionPage = ({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [searchResults]);
 
-  const analyticsData = collectionSearchManager.analyticsData;
-  useEffect(() => {
-    trackSearchResults(
-      analyticsData.searchResultsLayout,
-      analyticsData.filterNames,
-      analyticsData.searchType,
-      analyticsData.searchTerm
-    );
-  }, [JSON.stringify(analyticsData)]);
+  useSearchAnalytics(collectionSearchManager);
+
   return (
     <Box id="collectionsPageContent">
       <MobileSearchBanner />
