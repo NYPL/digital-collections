@@ -12,6 +12,7 @@ jobs:
       #COLLECTIONS_API_AUTH_TOKEN: ${{ secrets.COLLECTIONS_API_AUTH_TOKEN }}
       COLLECTIONS_API_URL: ${{ secrets.QA_COLLECTIONS_API_URL }}
       COLLECTIONS_API_AUTH_TOKEN: ${{ secrets.QA_COLLECTIONS_API_AUTH_TOKEN }}
+      NEW_RELIC_ENABLED: false
 
     steps:
       - uses: actions/checkout@v4
