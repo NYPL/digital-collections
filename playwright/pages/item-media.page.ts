@@ -49,8 +49,10 @@ export default class ItemMediaPage {
 
     this.downloadButton = page.getByRole("button", { name: /Download/i });
     this.downloadOverlay = page.locator("div.overlay.download");
-    this.downloadOptionSmall = page.locator("button", { hasText: /Small/i });
-    this.downloadOptionStandard = page.locator("button", {
+    this.downloadOptionSmall = this.downloadOverlay.locator("button", {
+      hasText: /Small/i,
+    });
+    this.downloadOptionStandard = this.downloadOverlay.locator("button", {
       hasText: /Standard/,
     });
     this.closeOverlayButton = this.downloadOverlay.getByRole("button", {
