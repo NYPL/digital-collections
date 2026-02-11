@@ -24,7 +24,6 @@ import { CollectionSearchManager } from "@/src/utils/searchManager/searchManager
 import { headerBreakpoints } from "@/src/utils/breakpoints";
 import DCSearchBar from "../../search/dcSearchBar";
 import ViewingOptionsMenu from "../../viewingOptionsMenu/viewingOptionsMenu";
-import { trackSearchResults } from "@/src/utils/ga4Utils";
 import useSearchAnalytics from "@/src/hooks/useSearchAnalytics";
 
 export function CollectionsPage({ data, collectionsSearchParams }) {

@@ -39,7 +39,6 @@ import { CollectionModel } from "@/src/models/collection";
 import { useSubcollectionRedirect } from "@/src/hooks/useSubcollectionRedirect";
 import { CollectionSearchParamsType } from "@/collections/[uuid]/page";
 import useBreakpoints from "@/src/hooks/useBreakpoints";
-import { trackSearchResults } from "@/src/utils/ga4Utils";
 import useSearchAnalytics from "@/src/hooks/useSearchAnalytics";
 
 type CollectionPageProps = {

@@ -1,8 +1,5 @@
 import { useEffect } from "react";
-import {
-  GeneralSearchManager,
-  SearchManager,
-} from "../utils/searchManager/searchManager";
+import { SearchManager } from "../utils/searchManager/searchManager";
 import { trackSearchResults } from "../utils/ga4Utils";
 
 const useSearchAnalytics = (searchManager: SearchManager) => {

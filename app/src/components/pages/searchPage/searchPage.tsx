@@ -24,7 +24,6 @@ import BackToTopLink from "../../backToTopLink/backToTopLink";
 import { SearchResultsType } from "@/src/types/SearchResultsType";
 import { useSubcollectionRedirect } from "@/src/hooks/useSubcollectionRedirect";
 import useBreakpoints from "@/src/hooks/useBreakpoints";
-import { trackSearchResults } from "@/src/utils/ga4Utils";
 import useSearchAnalytics from "@/src/hooks/useSearchAnalytics";
 
 const SearchPage = ({
