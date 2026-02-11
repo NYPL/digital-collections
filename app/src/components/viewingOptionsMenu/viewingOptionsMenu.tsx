@@ -49,7 +49,8 @@ const ViewingOptionsMenu = ({
         <ButtonGroup
           sx={{
             gap: "0px",
-            border: "1px solid var(--nypl-colors-ui-border-default)",
+            outline: "1px solid var(--nypl-colors-ui-border-default)",
+            outlineOffset: "-1px",
             height: "40px",
             padding: "4px",
             borderRadius: "2px",
