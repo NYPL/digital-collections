@@ -1,7 +1,3 @@
-import {
-  ADOBE_ANALYTICS_SITE_SECTION,
-  ADOBE_ANALYTICS_DC_PREFIX,
-} from "../config/constants";
 import CollectionDataType from "@/src/types/CollectionDataType";
 import ItemDataType from "@/src/types/ItemDataType";
 import { AvailableFilterOption } from "../types/AvailableFilterType";
@@ -25,7 +21,8 @@ export const imageURL = (
   size = "!1600,1600",
   rotation = "0"
 ) => {
-  return `https://iiif.nypl.org/iiif/3/${imageId}/${region}/${size}/${rotation}/default.jpg`;
+  const baseIIIF = process.env.IIIF_URL || "https://iiif.nypl.org";
+  return `${baseIIIF}/iiif/3/${imageId}/${region}/${size}/${rotation}/default.jpg`;
 };
 
 export function addCommas(number: string) {
@@ -51,25 +48,6 @@ export function getCustomTimestamp() {
 
   return timestamp;
 }
-
-/**
- * Tracks a virtual page view to Adobe Analytics on page navigation.
- */
-export const trackVirtualPageView = (pagename) => {
-  // @ts-ignore
-  // Adobe does not support TS types.
-  const adobeDataLayer = window["adobeDataLayer"] || [];
-
-  adobeDataLayer.push({
-    page_name: null,
-    site_section: null,
-  });
-  adobeDataLayer.push({
-    event: "virtual_page_view",
-    page_name: `${ADOBE_ANALYTICS_DC_PREFIX}${pagename}`,
-    site_section: ADOBE_ANALYTICS_SITE_SECTION,
-  });
-};
 
 export const slugToString = (slug: string = ""): string => {
   return slug
@@ -101,13 +79,6 @@ export function isCollectionType(
 ): records is CollectionDataType[] {
   return "numberOfDigitizedItems" in records[0];
 }
-
-export const createAdobeAnalyticsPageName = (
-  base: string,
-  recordName: string = ""
-): string => {
-  return recordName ? `${base}|${stringToSlug(recordName)}` : base;
-};
 
 export function displayResults(
   numFound: number,

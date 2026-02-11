@@ -12,7 +12,6 @@ const nextConfig = {
   },
   reactStrictMode: false,
   env: {
-    ADOBE_EMBED_URL: process.env.ADOBE_EMBED_URL,
     APP_ENV: process.env.APP_ENV,
     NEW_RELIC_LICENSE_KEY: process.env.NEW_RELIC_LICENSE_KEY,
     NEW_RELIC_APP_NAME: `${process.env.NEW_RELIC_APP_NAME}`,

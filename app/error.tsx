@@ -3,7 +3,6 @@ import { useEffect } from "react";
 
 import PageLayout from "./src/components/pageLayout/pageLayout";
 import ErrorPage from "./src/components/pages/errorPage/errorPage";
-import { createAdobeAnalyticsPageName } from "./src/utils/utils";
 
 export default function Error({
   error,
@@ -21,12 +20,7 @@ export default function Error({
   }, [error]);
 
   return (
-    <PageLayout
-      activePage="serverError"
-      adobeAnalyticsPageName={createAdobeAnalyticsPageName(
-        "internal-server-error"
-      )}
-    >
+    <PageLayout activePage="serverError">
       <ErrorPage />
     </PageLayout>
   );
