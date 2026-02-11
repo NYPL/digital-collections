@@ -1,7 +1,7 @@
 import { Locator, Page, expect } from "@playwright/test";
 
 // sets which UUID is to be used for sample record navigation
-export type MetadataScenario = "DEFAULT" | "SAMPLE1" | "SAMPLE2";
+export type MetadataScenario = "DEFAULT" | "SAMPLE1" | "SAMPLE2" | "SAMPLE3";
 
 class FieldLocatorService {
   // Method returns an object containing both the Locator and the content/text Pattern
@@ -54,6 +54,7 @@ export default class ItemMetadataPage {
     DEFAULT: "8b2b3160-c5d5-012f-d95c-58d385a7bc34",
     SAMPLE1: "25a47180-c55f-012f-3759-58d385a7bc34", // Topics
     SAMPLE2: "4649be20-9890-0138-2359-2360945aaf51", // Genres
+    SAMPLE3: "52ec6dd0-ff9e-012f-fa96-58d385a7bc34", // Type of Resource
   };
 
   async loadScenario(scenario: MetadataScenario): Promise<void> {
@@ -144,6 +145,9 @@ export default class ItemMetadataPage {
       linkCount: 1,
     },
   ];
+  static readonly EXPECTED_RESOURCE_TYPES = ["Still Image", "Text"];
+  static readonly EXPECTED_RIGHTS_VALUE =
+    'The New York Public Library believes that this item is in the public domain under the laws of the United States, but did not make a determination as to its copyright status under the copyright laws of other countries. This item may not be in the public domain under the laws of other countries. Though not required, if you want to credit us as the source, please use the following statement, "From The New York Public Library," and provide a link back to the item on our Digital Collections site. Doing so helps us track how our collection is used and helps justify freely releasing even more content in the future.';
 
   constructor(page: Page) {
     this.page = page;
@@ -219,7 +223,7 @@ export default class ItemMetadataPage {
     this.descriptionText = this.descriptionHeading.locator("+ p");
 
     // Type of Resource
-    this.typeHeading = this.page.getByText("Type of Resource", { exact: true });
+    this.typeHeading = this.page.getByText("Type of Resource");
     this.typeText = this.typeHeading.locator("+ p");
 
     // Languages
@@ -227,7 +231,7 @@ export default class ItemMetadataPage {
     this.languageText = this.languageHeading.locator("+ p");
 
     // Rights Statement
-    this.rightsHeading = this.page.getByText("Rights Statement", {
+    this.rightsHeading = this.page.getByText("Rights", {
       exact: true,
     });
     this.rightsText = this.rightsHeading.locator("+ p");
@@ -574,6 +578,39 @@ export default class ItemMetadataPage {
     // Final check for total link integrity
     const actualTotalLinksFound = await allLinks.count();
     expect(actualTotalLinksFound).toEqual(expectedTotalLinkCount);
+  }
+
+  // Check Type of Resource links count
+  async verifyTypeCount(): Promise<void> {
+    const typeLinks = this.typeText.getByRole("link");
+    await expect(typeLinks).toHaveCount(
+      ItemMetadataPage.EXPECTED_RESOURCE_TYPES.length
+    );
+  }
+
+  // Check Type or Resource text values
+  async verifyTypeValues(): Promise<void> {
+    const actualTypes = await this.getNormalizedLinesFromLocator(this.typeText);
+    expect(actualTypes).toEqual(ItemMetadataPage.EXPECTED_RESOURCE_TYPES);
+  }
+
+  // Verify correct links for Type of Resource text
+  async verifyTypeLinks(): Promise<void> {
+    const typeLinks = this.typeText.getByRole("link");
+
+    for (let i = 0; i < ItemMetadataPage.EXPECTED_RESOURCE_TYPES.length; i++) {
+      const expectedText = ItemMetadataPage.EXPECTED_RESOURCE_TYPES[i];
+      const currentLink = typeLinks.nth(i);
+      await expect(currentLink).toHaveText(expectedText);
+      await expect(currentLink).toBeVisible();
+    }
+  }
+
+  async verifyRightsContent(): Promise<void> {
+    await expect(this.rightsHeading).toBeVisible();
+    await expect(this.rightsText).toContainText(
+      ItemMetadataPage.EXPECTED_RIGHTS_VALUE
+    );
   }
 
   async loadPage(gotoPage: string): Promise<void> {
