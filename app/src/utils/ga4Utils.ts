@@ -74,7 +74,7 @@ export const trackSearchResults = (
   if (searchTerm) {
     data["search_term"] = searchTerm;
   }
-  if (filterNames) {
+  if (filterNames.length > 0) {
     data["filter_name"] = filterNames.join("|");
   }
   dataLayer.push(data);
