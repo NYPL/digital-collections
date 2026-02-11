@@ -63,7 +63,7 @@ export default class ItemMediaPage {
     this.shareButton = page.getByRole("button", { name: "Share" });
 
     // Purchase option
-    this.orderPrintButton = page.locator("#print-btn");
+    this.orderPrintButton = page.getByRole("link", { name: /Order Print/i });
   }
 
   async loadPage(uuid: string): Promise<void> {
@@ -110,7 +110,6 @@ export default class ItemMediaPage {
   // Check button
   async verifyOrderPrintButton(): Promise<void> {
     await expect(this.orderPrintButton).toBeVisible();
-    await expect(this.orderPrintButton).toHaveText(/Order Print/i);
   }
 
   // Check vendor link
