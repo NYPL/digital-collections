@@ -77,6 +77,7 @@ test.describe("Verify Default Test Record", () => {
       await itemMetadataPage.verifyNameDataValues();
     });
   });
+
   test.describe("Physical Description", () => {
     test.beforeEach(async () => {
       // Verify identifiers heading and containers before checking content
@@ -86,6 +87,17 @@ test.describe("Verify Default Test Record", () => {
 
     test("should display correct physical description values", async () => {
       await itemMetadataPage.verifyPhysicalDescriptionContent();
+    });
+  });
+
+  test.describe("Rights Statement", () => {
+    test.beforeEach(async () => {
+      await expect(itemMetadataPage.rightsHeading).toBeVisible();
+      await expect(itemMetadataPage.rightsText).toBeVisible();
+    });
+
+    test("should display correct rights statement text", async () => {
+      await itemMetadataPage.verifyRightsContent();
     });
   });
 });
@@ -151,6 +163,26 @@ test.describe("Verify Sample Record 2", () => {
 
     test("should contain links that are clickable", async () => {
       await itemMetadataPage.verifyLanguageLinks();
+    });
+  });
+});
+
+test.describe("Verify Sample Record 3", () => {
+  test.beforeEach(async ({ page }) => {
+    await itemMetadataPage.loadScenario("SAMPLE3");
+  });
+
+  test.describe("Type of Resource", () => {
+    test("should include correct resource type values", async () => {
+      await itemMetadataPage.verifyTypeValues();
+    });
+
+    test("should contain the correct number of resource types", async () => {
+      await itemMetadataPage.verifyTypeCount();
+    });
+
+    test("should display resource types as links", async () => {
+      await itemMetadataPage.verifyTypeLinks();
     });
   });
 });
