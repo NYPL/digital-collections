@@ -39,6 +39,7 @@ import { CollectionModel } from "@/src/models/collection";
 import { useSubcollectionRedirect } from "@/src/hooks/useSubcollectionRedirect";
 import { CollectionSearchParamsType } from "@/collections/[uuid]/page";
 import useBreakpoints from "@/src/hooks/useBreakpoints";
+import useSearchAnalytics from "@/src/hooks/useSearchAnalytics";
 
 type CollectionPageProps = {
   searchResults: SearchResultsType;
@@ -82,7 +83,6 @@ const CollectionPage = ({
     push(`${pathname}?${queryString}`, { scroll: false });
   };
   const [isLoaded, setIsLoaded] = useState(false);
-
   useSubcollectionRedirect();
 
   useEffect(() => {
@@ -116,6 +116,8 @@ const CollectionPage = ({
     isFirstLoad.current = true;
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [searchResults]);
+
+  useSearchAnalytics(collectionSearchManager);
 
   return (
     <Box id="collectionsPageContent">
