@@ -39,3 +39,46 @@ test.describe("Verify Video Viewer Controls", () => {
     await expect(itemMediaPage.fullScreenButton).toBeHidden();
   });
 });
+
+test.describe("Verify Download Actions", () => {
+  test.beforeEach(async ({ page }) => {
+    itemMediaPage = new ItemMediaPage(page, "IMAGE");
+    await itemMediaPage.loadPage(ItemMediaPage.IMAGE_UUID);
+  });
+
+  test("should display all available download options", async () => {
+    await itemMediaPage.getViewerControls();
+    await itemMediaPage.openDownloadMenu();
+
+    await test.step("verify small image size", async () => {
+      await expect(itemMediaPage.downloadOptionSmall).toBeVisible();
+    });
+
+    await test.step("verify standard image", async () => {
+      await expect(itemMediaPage.downloadOptionStandard).toBeVisible();
+    });
+
+    await test.step("verify closed successfully", async () => {
+      await itemMediaPage.closeDownloadMenu();
+    });
+  });
+});
+
+test.describe("Verify Purchase Option", () => {
+  test.beforeEach(async ({ page }) => {
+    itemMediaPage = new ItemMediaPage(page, "IMAGE");
+    await itemMediaPage.loadPage(ItemMediaPage.PUBLICDOMAIN_UUID);
+  });
+
+  test("should display order text and correct link", async () => {
+    await itemMediaPage.getViewerControls();
+
+    await test.step("display 'Order Print' button with correct text", async () => {
+      await itemMediaPage.verifyOrderPrintButton();
+    });
+
+    await test.step("button should link to external vendor", async () => {
+      await itemMediaPage.verifyOrderPrintLink();
+    });
+  });
+});
