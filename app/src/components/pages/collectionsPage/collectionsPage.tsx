@@ -24,6 +24,7 @@ import { CollectionSearchManager } from "@/src/utils/searchManager/searchManager
 import { headerBreakpoints } from "@/src/utils/breakpoints";
 import DCSearchBar from "../../search/dcSearchBar";
 import ViewingOptionsMenu from "../../viewingOptionsMenu/viewingOptionsMenu";
+import useSearchAnalytics from "@/src/hooks/useSearchAnalytics";
 
 export function CollectionsPage({ data, collectionsSearchParams }) {
   const { push } = useRouter();
@@ -91,6 +92,8 @@ export function CollectionsPage({ data, collectionsSearchParams }) {
     isFirstLoad.current = true;
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [collections]);
+
+  useSearchAnalytics(collectionsSearchManager);
 
   return (
     <>

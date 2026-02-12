@@ -24,6 +24,7 @@ import BackToTopLink from "../../backToTopLink/backToTopLink";
 import { SearchResultsType } from "@/src/types/SearchResultsType";
 import { useSubcollectionRedirect } from "@/src/hooks/useSubcollectionRedirect";
 import useBreakpoints from "@/src/hooks/useBreakpoints";
+import useSearchAnalytics from "@/src/hooks/useSearchAnalytics";
 
 const SearchPage = ({
   searchResults,
@@ -91,6 +92,7 @@ const SearchPage = ({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [searchResults, searchManager.viewMode]);
 
+  useSearchAnalytics(searchManager);
   useSubcollectionRedirect();
 
   return (
