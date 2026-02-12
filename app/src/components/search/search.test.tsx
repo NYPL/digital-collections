@@ -2,15 +2,20 @@ import React from "react";
 import { render, fireEvent, screen } from "@testing-library/react";
 import "@testing-library/jest-dom";
 import Search from "./search";
-import { useRouter } from "next/navigation";
+import { useSearchParams, useRouter } from "next/navigation";
 import { SearchProvider } from "@/src/context/SearchProvider";
 
 jest.mock("next/navigation", () => ({
   useRouter: jest.fn(),
+  useSearchParams: jest.fn(),
 }));
+const mockParams = {
+  get: (value) => null,
+};
 const mockRouter = {
   push: jest.fn(),
 };
+(useSearchParams as jest.Mock).mockReturnValue(mockParams);
 (useRouter as jest.Mock).mockReturnValue(mockRouter);
 
 const component = (

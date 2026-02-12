@@ -2,6 +2,15 @@ import React from "react";
 import { render } from "@testing-library/react";
 import { DEFAULT_PAGE_NUM, DEFAULT_SEARCH_TERM } from "../config/constants";
 import { useSearchContext, SearchProvider } from "./SearchProvider";
+import { useSearchParams } from "next/navigation";
+
+jest.mock("next/navigation", () => ({
+  useSearchParams: jest.fn(),
+}));
+const mockParams = {
+  get: (value) => null,
+};
+(useSearchParams as jest.Mock).mockReturnValue(mockParams);
 
 const TestComponent = () => {
   const { searchManager } = useSearchContext();
