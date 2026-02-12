@@ -3,6 +3,7 @@ import { SearchProvider } from "@/src/context/SearchProvider";
 import { render } from "@testing-library/react";
 import { mockSearchResponse } from "__tests__/__mocks__/data/collectionsApi/mockSearchResponse";
 import { axe } from "jest-axe";
+import { useSearchParams } from "next/navigation";
 import React from "react";
 
 jest.mock("next/navigation", () => ({
@@ -10,10 +11,14 @@ jest.mock("next/navigation", () => ({
     push: jest.fn(),
   }),
   usePathname: jest.fn(),
+  useSearchParams: jest.fn(),
 }));
 
 describe("Search page accessibility", () => {
   it("passes axe accessibility test", async () => {
+    (useSearchParams as jest.Mock).mockImplementation(() => ({
+      get: (value) => null,
+    }));
     const { container } = render(
       <SearchProvider>
         <SearchPage searchResults={mockSearchResponse} />

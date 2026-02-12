@@ -1,12 +1,19 @@
 import PageLayout from "@/src/components/pageLayout/pageLayout";
 import ErrorPage from "@/src/components/pages/errorPage/errorPage";
 import { fireEvent, render, screen } from "@testing-library/react";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import React from "react";
 
 jest.mock("next/navigation", () => ({
   useRouter: jest.fn(),
+  useSearchParams: jest.fn(),
 }));
+
+beforeEach(() => {
+  (useSearchParams as jest.Mock).mockImplementation(() => ({
+    get: (value) => null,
+  }));
+});
 
 describe("Error page", () => {
   it("renders an error message", () => {
