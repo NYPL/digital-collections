@@ -25,7 +25,7 @@ import {
   stringToFilter,
 } from "@/src/utils/searchManager/searchManager";
 import { usePathname, useRouter } from "next/navigation";
-import SortMenu from "../../sortMenu/sortMenu";
+import ViewingOptionsMenu from "../../viewingOptionsMenu/viewingOptionsMenu";
 import ActiveFilters from "../../search/filters/activeFilters";
 import NoResultsFound from "../../results/noResultsFound";
 import SearchCardGridLoading from "../../grids/searchCardGridLoading";
@@ -38,6 +38,8 @@ import { SearchResultsType } from "@/src/types/SearchResultsType";
 import { CollectionModel } from "@/src/models/collection";
 import { useSubcollectionRedirect } from "@/src/hooks/useSubcollectionRedirect";
 import { CollectionSearchParamsType } from "@/collections/[uuid]/page";
+import useBreakpoints from "@/src/hooks/useBreakpoints";
+import useSearchAnalytics from "@/src/hooks/useSearchAnalytics";
 
 type CollectionPageProps = {
   searchResults: SearchResultsType;
@@ -54,6 +56,9 @@ const CollectionPage = ({
   const refineHeadingRef = useRef<HTMLHeadingElement>(null);
   const isFirstLoad = useRef<boolean>(false);
   const [filtersExpanded, setFiltersExpanded] = useState(false);
+  const [renderCollectionStructure, setRenderCollectionStructure] =
+    useState(true);
+  const { isLargerThanSmallTablet } = useBreakpoints();
 
   const collectionSearchManager = new GeneralSearchManager({
     initialPage: Number(searchParams?.page) || DEFAULT_PAGE_NUM,
@@ -63,6 +68,7 @@ const CollectionPage = ({
     initialKeywords: searchParams?.q || DEFAULT_SEARCH_TERM,
     initialAvailableFilters: searchParams?.availableFilters,
     lastFilterRef: useRef<string | null>(null),
+    initialViewMode: searchParams?.viewMode,
   });
 
   const totalPages = totalNumPages(
@@ -77,7 +83,6 @@ const CollectionPage = ({
     push(`${pathname}?${queryString}`, { scroll: false });
   };
   const [isLoaded, setIsLoaded] = useState(false);
-
   useSubcollectionRedirect();
 
   useEffect(() => {
@@ -112,6 +117,8 @@ const CollectionPage = ({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [searchResults]);
 
+  useSearchAnalytics(collectionSearchManager);
+
   return (
     <Box id="collectionsPageContent">
       <MobileSearchBanner />
@@ -125,7 +132,10 @@ const CollectionPage = ({
         <Box
           maxWidth="1280px"
           mx="auto"
-          sx={{ paddingLeft: { base: 0, xl: "s" } }}
+          sx={{
+            paddingLeft: "0px",
+            paddingRight: "0px",
+          }}
         >
           <Heading
             level="h1"
@@ -150,8 +160,8 @@ const CollectionPage = ({
         maxWidth="1280px"
         mx="auto"
         sx={{
-          paddingLeft: { base: "m", xl: "s" },
-          paddingRight: { base: "m", xl: "s" },
+          paddingLeft: "0px",
+          paddingRight: "0px",
         }}
       >
         <ActiveFilters
@@ -169,6 +179,7 @@ const CollectionPage = ({
             uuid={collectionData.uuid}
             updateURL={updateURL}
             searchManager={collectionSearchManager}
+            setRenderCollectionStructure={setRenderCollectionStructure}
           />
           <Box width="100%">
             <CollectionSearch
@@ -177,7 +188,7 @@ const CollectionPage = ({
             />
             <Flex
               sx={{
-                [`@media screen and (min-width: ${headerBreakpoints.lgMobile}px)`]:
+                [`@media screen and (min-width: ${headerBreakpoints.smTablet}px)`]:
                   {
                     flexDir: "row",
                     marginBottom: "s",
@@ -206,12 +217,13 @@ const CollectionPage = ({
                     CARDS_PER_PAGE,
                     collectionSearchManager.page
                   )} results`}</Heading>
-                  <SortMenu
+                  <ViewingOptionsMenu
                     options={COLLECTION_LANDING_SORT_LABELS}
                     searchManager={collectionSearchManager}
                     sort={searchResults.sort}
                     updateURL={updateURL}
                     setFiltersExpanded={setFiltersExpanded}
+                    showViewModeButtons={isLargerThanSmallTablet}
                   />
                 </>
               )}
@@ -223,6 +235,8 @@ const CollectionPage = ({
                   <SearchCardsGrid
                     keywords={searchResults.keyword}
                     results={searchResults.results}
+                    viewMode={collectionSearchManager.viewMode}
+                    numColumns={renderCollectionStructure ? 3 : 4}
                   />
                 ) : (
                   [...Array(12)].map((_, index) => (

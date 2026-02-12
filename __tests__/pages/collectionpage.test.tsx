@@ -6,18 +6,24 @@ import { mockCollectionResponse } from "__tests__/__mocks__/data/collectionsApi/
 import { mockSearchResponse } from "__tests__/__mocks__/data/collectionsApi/mockSearchResponse";
 
 import { axe } from "jest-axe";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import React from "react";
 
 jest.mock("next/navigation", () => ({
   useRouter: jest.fn(),
   usePathname: jest.fn(),
+  useSearchParams: jest.fn(),
 }));
 
 beforeEach(() => {
   (useRouter as jest.Mock).mockImplementation(() => ({
     pathname: "/collections/hello",
   }));
+  (useSearchParams as jest.Mock).mockReturnValue({
+    get: (key) => {
+      return { viewMode: "list" }[key];
+    },
+  });
 });
 
 describe("Collection page accessibility", () => {

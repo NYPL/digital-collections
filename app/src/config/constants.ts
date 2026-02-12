@@ -14,6 +14,7 @@ export const DEFAULT_COLLECTION_SORT = "relevance";
 export const DEFAULT_SEARCH_SORT = "relevance";
 export const DEFAULT_SEARCH_TERM = "";
 export const DEFAULT_FILTERS = [];
+export const DEFAULT_VIEW_MODE = "grid";
 // export const DEFAULT_SORT = [];
 
 export const COLLECTION_SORT_OPTIONS = {
