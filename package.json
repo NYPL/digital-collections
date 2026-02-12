@@ -82,7 +82,7 @@
     "lint-staged": "15.0.1",
     "maniiifest": "1.4.1",
     "prettier": "3.0.3",
-    "puppeteer": "22.6.2"
+    "puppeteer": "22.15.0"
   },
   "overrides": {
     "nwsapi": "2.2.13"
