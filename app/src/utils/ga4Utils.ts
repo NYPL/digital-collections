@@ -36,6 +36,15 @@ export const sendDownloadEvent = (
   });
 };
 
+export const sendLayoutSelectedEvent = (viewMode: "grid" | "list") => {
+  const dataLayer = window["dataLayer"] || [];
+  const layout = upperGridViewLayoutParam(viewMode);
+  dataLayer.push({
+    event: "select_layout",
+    layout_type: layout,
+  });
+};
+
 export const trackAVProgress = (
   mediaType: string,
   mediaName: string,
@@ -47,4 +56,30 @@ export const trackAVProgress = (
     media_name: mediaName,
     progress: progressPercentage,
   });
+};
+
+export const trackSearchResults = (
+  searchResultsLayout: "grid" | "list",
+  filterNames: string[],
+  searchType?: string,
+  searchTerm?: string
+) => {
+  const dataLayer = window["dataLayer"] || [];
+  const layout = upperGridViewLayoutParam(searchResultsLayout);
+  let data = {
+    event: "view_search_results",
+    search_type: searchType ?? "default",
+    search_results_layout: layout,
+  };
+  if (searchTerm) {
+    data["search_term"] = searchTerm;
+  }
+  if (filterNames.length > 0) {
+    data["filter_name"] = filterNames.join("|");
+  }
+  dataLayer.push(data);
+};
+
+const upperGridViewLayoutParam = (param: "grid" | "list") => {
+  return { grid: "Grid", list: "List" }[param];
 };

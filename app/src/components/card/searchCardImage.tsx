@@ -3,7 +3,7 @@ import React from "react";
 import { useState } from "react";
 import { Box } from "@nypl/design-system-react-components";
 
-export const SearchCardImage = ({ record }) => {
+export const SearchCardImage = ({ record, viewMode }) => {
   const [imageSrc, setImageSrc] = useState(
     record.videoThumbnail || (record.imageID ? record.imageURL : "/noImage.png")
   );
@@ -36,8 +36,10 @@ export const SearchCardImage = ({ record }) => {
         fill
         decoding="sync"
         style={{
-          objectFit: "cover",
-          objectPosition: "top",
+          // objectFit: "contain",
+          objectFit: viewMode === "grid" ? "contain" : "cover",
+          // objectPosition: "center",
+          backgroundColor: "#f5f5f5",
         }}
         onError={(_event) => {
           console.warn(

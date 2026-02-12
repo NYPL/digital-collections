@@ -12,6 +12,7 @@ export type CollectionSearchParamsType = {
   filters: string;
   page: number;
   availableFilters?: Record<string, AvailableFilterOption[]>;
+  viewMode?: "grid" | "list";
 };
 
 type CollectionProps = {

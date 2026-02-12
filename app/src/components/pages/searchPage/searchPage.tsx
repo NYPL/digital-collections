@@ -16,13 +16,15 @@ import { usePathname, useRouter } from "next/navigation";
 import SearchCardsGrid from "../../grids/searchCardsGrid";
 import { headerBreakpoints } from "@/src/utils/breakpoints";
 import { MobileSearchBanner } from "../../mobileSearchBanner/mobileSearchBanner";
-import SortMenu from "../../sortMenu/sortMenu";
+import ViewingOptionsMenu from "../../viewingOptionsMenu/viewingOptionsMenu";
 import ActiveFilters from "../../search/filters/activeFilters";
 import NoResultsFound from "../../results/noResultsFound";
 import SearchCardGridLoading from "../../grids/searchCardGridLoading";
 import BackToTopLink from "../../backToTopLink/backToTopLink";
 import { SearchResultsType } from "@/src/types/SearchResultsType";
 import { useSubcollectionRedirect } from "@/src/hooks/useSubcollectionRedirect";
+import useBreakpoints from "@/src/hooks/useBreakpoints";
+import useSearchAnalytics from "@/src/hooks/useSearchAnalytics";
 
 const SearchPage = ({
   searchResults,
@@ -41,12 +43,24 @@ const SearchPage = ({
   const isFirstLoad = useRef<boolean>(false);
   const [isLoaded, setIsLoaded] = useState(false);
   const [filtersExpanded, setFiltersExpanded] = useState(false);
+  const { isLargerThanSmallTablet } = useBreakpoints();
 
   const updateURL = async (queryString: string) => {
-    setIsLoaded(false);
+    const currentQueryString = window.location.search;
     const newUrl = `${pathname}?${queryString}`;
-    push(newUrl);
+
+    if (
+      currentQueryString === queryString ||
+      currentQueryString === `?${queryString}`
+    ) {
+      headingRef.current?.focus();
+      return;
+    } else {
+      setIsLoaded(false);
+      push(newUrl);
+    }
   };
+
   useEffect(() => {
     setIsLoaded(true);
     let didFocusElement = false;
@@ -76,8 +90,9 @@ const SearchPage = ({
 
     isFirstLoad.current = true;
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [searchResults]);
+  }, [searchResults, searchManager.viewMode]);
 
+  useSearchAnalytics(searchManager);
   useSubcollectionRedirect();
 
   return (
@@ -166,7 +181,7 @@ const SearchPage = ({
         />
         <Flex
           sx={{
-            [`@media screen and (min-width: ${headerBreakpoints.lgMobile}px)`]:
+            [`@media screen and (min-width: ${headerBreakpoints.smTablet}px)`]:
               {
                 flexDir: "row",
                 marginBottom: "s",
@@ -195,12 +210,13 @@ const SearchPage = ({
                 CARDS_PER_PAGE,
                 searchManager.page
               )} results`}</Heading>
-              <SortMenu
+              <ViewingOptionsMenu
                 options={SEARCH_SORT_LABELS}
                 sort={searchResults.sort}
                 searchManager={searchManager}
                 setFiltersExpanded={setFiltersExpanded}
                 updateURL={updateURL}
+                showViewModeButtons={isLargerThanSmallTablet}
               />{" "}
             </>
           ) : (
@@ -216,6 +232,8 @@ const SearchPage = ({
               <SearchCardsGrid
                 keywords={searchResults.keyword}
                 results={searchResults.results}
+                viewMode={searchManager.viewMode}
+                numColumns={4}
               />
             ) : (
               [...Array(12)].map((_, index) => (
