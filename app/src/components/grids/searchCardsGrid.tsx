@@ -8,13 +8,31 @@ import { SearchResultType } from "@/src/types/SearchResultsType";
 const SearchCardsGrid = ({
   results,
   keywords,
+  viewMode,
+  numColumns,
 }: {
   results: SearchResultType[];
   keywords: string;
+  viewMode: "grid" | "list";
+  numColumns: number;
 }) => {
-  const { isLargerThanLargeTablet } = useBreakpoints();
+  const {
+    isLargerThanLargeTablet,
+    isLargerThanSmallTablet,
+    isLargerThanLargeMobile,
+  } = useBreakpoints();
+
+  const getResponsiveColumns = () => {
+    if (viewMode === "list") return 1;
+    if (!isLargerThanLargeMobile) return 1;
+    if (isLargerThanSmallTablet && !isLargerThanLargeTablet) return 2;
+    return numColumns;
+  };
+
+  const responsiveColumns = getResponsiveColumns();
+
   return (
-    <SimpleGrid columns={1} gap="grid.l">
+    <SimpleGrid columns={responsiveColumns} gap="grid.l">
       {results?.map((result: SearchResultType, index: number) => {
         const searchResult = new SearchCardModel(result);
         return (
@@ -23,6 +41,8 @@ const SearchCardsGrid = ({
             keywords={keywords}
             result={searchResult}
             isLargerThanLargeTablet={isLargerThanLargeTablet}
+            viewMode={viewMode}
+            numColumns={responsiveColumns}
           />
         );
       })}

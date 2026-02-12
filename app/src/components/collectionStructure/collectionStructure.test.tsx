@@ -22,6 +22,7 @@ const mockSearchManager = new GeneralSearchManager({
   lastFilterRef: { current: null },
 });
 
+const mockSetRenderCollectionStructure = jest.fn();
 const mockUpdateURL = jest.fn().mockResolvedValue(undefined);
 
 describe("Collection structure", () => {
@@ -59,6 +60,7 @@ describe("Collection structure", () => {
       <CollectionStructure
         uuid="root-uuid"
         searchManager={mockSearchManager}
+        setRenderCollectionStructure={mockSetRenderCollectionStructure}
         updateURL={mockUpdateURL}
       />
     );
@@ -74,6 +76,7 @@ describe("Collection structure", () => {
       <CollectionStructure
         uuid="root-uuid"
         searchManager={mockSearchManager}
+        setRenderCollectionStructure={mockSetRenderCollectionStructure}
         updateURL={mockUpdateURL}
       />
     );
@@ -95,6 +98,7 @@ describe("Collection structure", () => {
       <CollectionStructure
         uuid="root-uuid"
         searchManager={mockSearchManager}
+        setRenderCollectionStructure={mockSetRenderCollectionStructure}
         updateURL={mockUpdateURL}
       />
     );
@@ -110,6 +114,7 @@ describe("Collection structure", () => {
       <CollectionStructure
         uuid="root-uuid"
         searchManager={mockSearchManager}
+        setRenderCollectionStructure={mockSetRenderCollectionStructure}
         updateURL={mockUpdateURL}
       />
     );

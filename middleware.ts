@@ -39,7 +39,6 @@ export function middleware(req: NextRequest) {
     return NextResponse.redirect(newUrl, 301);
   }
 
-  console.log("pathname is: ", pathname);
   const itemsMatch = pathname.match(/^\/items\/([^\/?#]+)/);
 
   if (itemsMatch) {
@@ -208,7 +207,7 @@ export function middleware(req: NextRequest) {
   if (itemsMatch) {
     allowedParams = new Set(["type", "canvasIndex", "uuid", "cv"]);
   } else {
-    allowedParams = new Set(["q", "sort", "page", "filters"]);
+    allowedParams = new Set(["q", "sort", "page", "filters", "viewMode"]);
   }
 
   // Remove all other params except allowed ones

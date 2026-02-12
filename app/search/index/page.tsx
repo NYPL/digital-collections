@@ -13,6 +13,7 @@ export interface SearchParamsType {
   filters: Filter[];
   page: number;
   availableFilters?: AvailableFilter[];
+  viewMode: "grid" | "list";
 }
 
 export const metadata: Metadata = {
