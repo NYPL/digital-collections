@@ -1,11 +1,18 @@
 "use client";
-import React, { createContext, useContext, useRef, useMemo } from "react";
+import React, {
+  createContext,
+  useContext,
+  useEffect,
+  useRef,
+  useMemo,
+} from "react";
 import { useSearchParams } from "next/navigation";
 import {
   DEFAULT_FILTERS,
   DEFAULT_PAGE_NUM,
   DEFAULT_SEARCH_SORT,
   DEFAULT_SEARCH_TERM,
+  DEFAULT_VIEW_MODE,
 } from "../config/constants";
 import {
   GeneralSearchManager,
@@ -32,6 +39,9 @@ export const SearchProvider = ({
     | "list"
     | null;
 
+  const initialViewMode =
+    viewModeFromUrl || searchParams?.viewMode || DEFAULT_VIEW_MODE;
+
   const lastFilterRef = useRef<string | null>(null);
 
   const searchManager = useMemo(() => {
@@ -44,7 +54,7 @@ export const SearchProvider = ({
       initialAvailableFilters:
         searchParams?.availableFilters || DEFAULT_FILTERS,
       lastFilterRef: lastFilterRef,
-      initialViewMode: viewModeFromUrl || searchParams?.viewMode,
+      initialViewMode: initialViewMode,
     });
     return manager;
   }, [
@@ -55,7 +65,28 @@ export const SearchProvider = ({
     searchParams?.availableFilters,
     searchParams?.viewMode,
     viewModeFromUrl,
+    initialViewMode,
   ]);
+
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+
+    const cachedViewMode = localStorage.getItem("viewMode") as "grid" | "list";
+
+    if (viewModeFromUrl) {
+      if (cachedViewMode !== viewModeFromUrl) {
+        localStorage.setItem("viewMode", viewModeFromUrl);
+      }
+    } else if (
+      cachedViewMode &&
+      ["grid", "list"].includes(cachedViewMode) &&
+      searchManager.viewMode !== cachedViewMode
+    ) {
+      searchManager.handleViewModeChange(cachedViewMode);
+    } else {
+      searchManager.handleViewModeChange(initialViewMode);
+    }
+  }, [viewModeFromUrl, searchManager]);
 
   return (
     <SearchContext.Provider value={{ searchManager }}>
