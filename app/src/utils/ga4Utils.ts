@@ -40,8 +40,8 @@ export const sendLayoutSelectedEvent = (viewMode: "grid" | "list") => {
   const dataLayer = window["dataLayer"] || [];
   const layout = upperGridViewLayoutParam(viewMode);
   dataLayer.push({
-    event: "select_layout",
-    layout_type: layout,
+    event: "select_search_results_layout",
+    search_results_layout: layout,
   });
 };
 
