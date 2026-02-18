@@ -1,11 +1,18 @@
 "use client";
-import React, { createContext, useContext, useRef, useMemo } from "react";
+import React, {
+  createContext,
+  useContext,
+  useEffect,
+  useRef,
+  useMemo,
+} from "react";
 import { useSearchParams } from "next/navigation";
 import {
   DEFAULT_FILTERS,
   DEFAULT_PAGE_NUM,
   DEFAULT_SEARCH_SORT,
   DEFAULT_SEARCH_TERM,
+  DEFAULT_VIEW_MODE,
 } from "../config/constants";
 import {
   GeneralSearchManager,
@@ -27,10 +34,21 @@ export const SearchProvider = ({
   children: React.ReactNode;
 }) => {
   const urlSearchParams = useSearchParams();
-  const viewModeFromUrl = urlSearchParams.get("viewMode") as
-    | "grid"
-    | "list"
-    | null;
+  const viewModeFromUrl = urlSearchParams.get("viewMode");
+  const validViewMode = (
+    mode: string | null | undefined
+  ): mode is "grid" | "list" => {
+    return mode === "grid" || mode === "list";
+  };
+
+  let initialViewMode: "grid" | "list" | undefined;
+  if (validViewMode(viewModeFromUrl)) {
+    initialViewMode = viewModeFromUrl;
+  } else if (validViewMode(searchParams?.viewMode)) {
+    initialViewMode = searchParams.viewMode;
+  } else {
+    initialViewMode = undefined;
+  }
 
   const lastFilterRef = useRef<string | null>(null);
 
@@ -44,7 +62,7 @@ export const SearchProvider = ({
       initialAvailableFilters:
         searchParams?.availableFilters || DEFAULT_FILTERS,
       lastFilterRef: lastFilterRef,
-      initialViewMode: viewModeFromUrl || searchParams?.viewMode,
+      initialViewMode: initialViewMode,
     });
     return manager;
   }, [
@@ -55,7 +73,26 @@ export const SearchProvider = ({
     searchParams?.availableFilters,
     searchParams?.viewMode,
     viewModeFromUrl,
+    initialViewMode,
   ]);
+
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+
+    const cachedViewMode = localStorage.getItem("viewMode") as "grid" | "list";
+
+    if (viewModeFromUrl) {
+      if (cachedViewMode !== viewModeFromUrl) {
+        localStorage.setItem("viewMode", viewModeFromUrl);
+      }
+    } else if (cachedViewMode && ["grid", "list"].includes(cachedViewMode)) {
+      if (searchManager.viewMode !== cachedViewMode) {
+        searchManager.handleViewModeChange(cachedViewMode);
+      }
+    } else {
+      searchManager.handleViewModeChange(initialViewMode || DEFAULT_VIEW_MODE);
+    }
+  }, [viewModeFromUrl, searchManager.viewMode, searchManager]);
 
   return (
     <SearchContext.Provider value={{ searchManager }}>

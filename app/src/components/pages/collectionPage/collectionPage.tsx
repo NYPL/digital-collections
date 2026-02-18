@@ -86,6 +86,12 @@ const CollectionPage = ({
   useSubcollectionRedirect();
 
   useEffect(() => {
+    if (searchParams?.viewMode) {
+      localStorage.setItem("viewMode", searchParams.viewMode);
+    }
+  }, [searchParams?.viewMode]);
+
+  useEffect(() => {
     setIsLoaded(true);
     let didFocusElement = false;
 

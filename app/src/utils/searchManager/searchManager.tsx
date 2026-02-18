@@ -39,7 +39,7 @@ abstract class BaseSearchManager implements SearchManager {
   protected defaultSort: string;
   protected currentKeywords: string;
   protected currentFilters: Set<string>;
-  protected currentViewMode: "grid" | "list";
+  protected currentViewMode: "grid" | "list" | undefined;
   protected currentAvailableFilters: AvailableFilter[];
   public lastFilterRef: MutableRefObject<string | null>;
 
@@ -65,7 +65,9 @@ abstract class BaseSearchManager implements SearchManager {
       (config.initialFilters || []).map((filter) => JSON.stringify(filter))
     );
     this.currentKeywords = config.initialKeywords;
-    this.currentViewMode = config.initialViewMode || DEFAULT_VIEW_MODE;
+    this.currentViewMode = config.initialViewMode
+      ? config.initialViewMode
+      : undefined;
     this.currentAvailableFilters = transformToDisplayAvailableFilters(
       config.initialAvailableFilters ?? {}
     );
@@ -95,7 +97,15 @@ abstract class BaseSearchManager implements SearchManager {
   }
 
   get viewMode() {
-    return this.currentViewMode;
+    if (typeof window !== "undefined") {
+      const cachedViewMode = localStorage.getItem("viewMode") as
+        | "grid"
+        | "list";
+      if (!this.currentViewMode && cachedViewMode) {
+        return cachedViewMode;
+      }
+    }
+    return this.currentViewMode || DEFAULT_VIEW_MODE;
   }
 
   get availableFilters(): AvailableFilter[] {
@@ -152,6 +162,9 @@ abstract class BaseSearchManager implements SearchManager {
   }
 
   handleViewModeChange(mode: "grid" | "list") {
+    if (typeof window !== "undefined") {
+      localStorage.setItem("viewMode", mode);
+    }
     this.currentViewMode = mode;
     return this.getQueryString({
       q: this.currentKeywords,
@@ -231,7 +244,7 @@ export class GeneralSearchManager extends BaseSearchManager {
           isDefault = value === "";
           break;
         case "viewMode":
-          isDefault = value === DEFAULT_VIEW_MODE;
+          isDefault = false;
           break;
       }
 
@@ -307,7 +320,7 @@ export class CollectionSearchManager extends BaseSearchManager {
           isDefault = value === "";
           break;
         case "viewMode":
-          isDefault = value === DEFAULT_VIEW_MODE;
+          isDefault = false;
           break;
       }
 
