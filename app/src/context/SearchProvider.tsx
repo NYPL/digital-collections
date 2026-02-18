@@ -37,7 +37,9 @@ export const SearchProvider = ({
   const viewModeFromUrl = urlSearchParams.get("viewMode");
   const validViewMode = (
     mode: string | null | undefined
-  ): mode is "grid" | "list" => mode === "grid" || mode === "list";
+  ): mode is "grid" | "list" => {
+    return mode === "grid" || mode === "list";
+  };
 
   const initialViewMode = validViewMode(viewModeFromUrl)
     ? viewModeFromUrl
