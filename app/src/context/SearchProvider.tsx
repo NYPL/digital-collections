@@ -41,11 +41,14 @@ export const SearchProvider = ({
     return mode === "grid" || mode === "list";
   };
 
-  const initialViewMode = validViewMode(viewModeFromUrl)
-    ? viewModeFromUrl
-    : validViewMode(searchParams?.viewMode)
-    ? searchParams.viewMode
-    : undefined;
+  let initialViewMode: "grid" | "list" | undefined;
+  if (validViewMode(viewModeFromUrl)) {
+    initialViewMode = viewModeFromUrl;
+  } else if (validViewMode(searchParams?.viewMode)) {
+    initialViewMode = searchParams.viewMode;
+  } else {
+    initialViewMode = undefined;
+  }
 
   const lastFilterRef = useRef<string | null>(null);
 
