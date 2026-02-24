@@ -24,6 +24,20 @@ const ViewingOptionsMenu = ({
   sort,
   showViewModeButtons = true,
 }: ViewingOptionsMenuProps) => {
+  const layoutSelectHandler = (viewMode: "grid" | "list"): (() => void) => {
+    return () => {
+      if (searchManager.viewMode == viewMode) {
+        return;
+      }
+      sendLayoutSelectedEvent(viewMode);
+      if (setFiltersExpanded) {
+        setFiltersExpanded(false);
+      }
+      searchManager.setLastFilter(`${viewMode}-view-button`);
+      const queryString = searchManager.handleViewModeChange(viewMode);
+      updateURL(queryString);
+    };
+  };
   return (
     <div style={{ display: "flex", alignItems: "center", gap: "4px" }}>
       <Menu
@@ -60,15 +74,7 @@ const ViewingOptionsMenu = ({
           <Button
             variant={searchManager.viewMode == "grid" ? "primary" : "text"}
             aria-pressed={searchManager.viewMode == "grid" ? true : false}
-            onClick={() => {
-              sendLayoutSelectedEvent("grid");
-              if (setFiltersExpanded) {
-                setFiltersExpanded(false);
-              }
-              searchManager.setLastFilter("grid-view-button");
-              const queryString = searchManager.handleViewModeChange("grid");
-              updateURL(queryString);
-            }}
+            onClick={layoutSelectHandler("grid")}
             sx={{
               padding: "inherit",
               height: "auto",
@@ -89,14 +95,7 @@ const ViewingOptionsMenu = ({
           <Button
             variant={searchManager.viewMode == "list" ? "primary" : "text"}
             aria-pressed={searchManager.viewMode == "list" ? true : false}
-            onClick={() => {
-              sendLayoutSelectedEvent("list");
-              if (setFiltersExpanded) {
-                setFiltersExpanded(false);
-              }
-              searchManager.setLastFilter("list-view-button");
-              updateURL(searchManager.handleViewModeChange("list"));
-            }}
+            onClick={layoutSelectHandler("list")}
             sx={{
               padding: "inherit",
               height: "auto",
