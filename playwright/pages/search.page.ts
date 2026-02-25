@@ -5,6 +5,7 @@ export default class SearchPage {
   readonly searchKeyword: string;
   readonly searchBar: Locator;
   readonly searchButton: Locator;
+  readonly searchInput: Locator;
 
   // search results
   static searchResultsUrl: string = "/search/index?q=map%20of%20scandinavia";
@@ -83,6 +84,9 @@ export default class SearchPage {
     this.searchKeyword = "map of scandinavia";
     this.searchBar = this.page.getByLabel("Search keyword(s)");
     this.searchButton = this.page.getByRole("button", { name: "Search" });
+    this.searchInput = this.page.getByRole("textbox", {
+      name: "Search keyword(s)",
+    });
 
     // search results
     this.resultsHeading = this.page.getByRole("heading", {
@@ -318,9 +322,54 @@ export default class SearchPage {
       } else {
         // List: Card 2 is displayed below Card 1
         expect(box2.y).toBeGreaterThan(box1.y + box1.height);
-        // And cards align on the left 'x' coordinate
+        // Cards align on the left 'x' coordinate
         expect(box1.x).toBeCloseTo(box2.x, 1);
       }
     }
+  }
+
+  async verifyMultiRowLayout(viewType: "grid" | "list"): Promise<void> {
+    const card1 = this.allCards.nth(0); // Box 1
+    const card4 = this.allCards.nth(3); // The Row/Column Indicator
+    const card5 = this.allCards.nth(4); // The Wrap Indicator
+
+    const box1 = await card1.boundingBox();
+    const box4 = await card4.boundingBox();
+    const box5 = await card5.boundingBox();
+
+    if (box1 && box4 && box5) {
+      if (viewType === "grid") {
+        // Card 4 shares same row as Card 1
+        expect(box4.y).toBeCloseTo(box1.y, 5);
+        // Card 5 must wrap back same column as Card 1
+        expect(box5.x).toBeCloseTo(box1.x, 5);
+        // Card 5 is in row below Card 4
+        expect(box5.y).toBeGreaterThan(box4.y);
+      } else {
+        // Card 4 shares same column as Card 1
+        expect(box4.x).toBeCloseTo(box1.x, 5);
+        // Card 5 shares same column as Card 4
+        expect(box5.x).toBeCloseTo(box1.x, 5);
+        // Cards 1, 4 and 5 are sequentially below each other
+        expect(box4.y).toBeGreaterThan(box1.y);
+        expect(box5.y).toBeGreaterThan(box4.y);
+      }
+    }
+  }
+
+  async verifyLayoutSearch(expectedView: "grid" | "list") {
+    await this.searchInput.clear();
+    await this.searchInput.fill("forest");
+    await this.searchButton.click();
+
+    await this.page.waitForLoadState("networkidle");
+    await this.verifyLayout(expectedView);
+  }
+
+  async verifyLayoutReloadState(expectedView: "grid" | "list") {
+    await this.page.reload();
+    await this.page.waitForLoadState("domcontentloaded");
+
+    await this.verifyLayout(expectedView);
   }
 }
