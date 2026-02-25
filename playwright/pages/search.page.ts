@@ -341,7 +341,7 @@ export default class SearchPage {
       if (viewType === "grid") {
         // Card 4 shares same row as Card 1
         expect(box4.y).toBeCloseTo(box1.y, 5);
-        // Card 5 must wrap back same column as Card 1
+        // Card 5 must wrap back to same column as Card 1
         expect(box5.x).toBeCloseTo(box1.x, 5);
         // Card 5 is in row below Card 4
         expect(box5.y).toBeGreaterThan(box4.y);
