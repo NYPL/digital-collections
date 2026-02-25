@@ -5,7 +5,6 @@ export default class SearchPage {
   readonly searchKeyword: string;
   readonly searchBar: Locator;
   readonly searchButton: Locator;
-  readonly searchInput: Locator;
 
   // search results
   static searchResultsUrl: string = "/search/index?q=map%20of%20scandinavia";
@@ -82,11 +81,8 @@ export default class SearchPage {
 
     // replace with homepage locators
     this.searchKeyword = "map of scandinavia";
-    this.searchBar = this.page.getByLabel("Search keyword(s)");
+    this.searchBar = this.page.getByPlaceholder(/search/i);
     this.searchButton = this.page.getByRole("button", { name: "Search" });
-    this.searchInput = this.page.getByRole("textbox", {
-      name: "Search keyword(s)",
-    });
 
     // search results
     this.resultsHeading = this.page.getByRole("heading", {
@@ -358,8 +354,8 @@ export default class SearchPage {
   }
 
   async verifyLayoutSearch(expectedView: "grid" | "list") {
-    await this.searchInput.clear();
-    await this.searchInput.fill("forest");
+    await this.searchBar.clear();
+    await this.searchBar.fill("forest");
     await this.searchButton.click();
 
     await this.allCards.first().waitFor({ state: "visible" });
