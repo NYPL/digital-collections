@@ -362,7 +362,7 @@ export default class SearchPage {
     await this.searchInput.fill("forest");
     await this.searchButton.click();
 
-    await this.page.waitForLoadState("networkidle");
+    await this.allCards.first().waitFor({ state: "visible" });
     await this.verifyLayout(expectedView);
   }
 
