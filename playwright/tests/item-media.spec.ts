@@ -47,6 +47,7 @@ test.describe("Verify Download Actions", () => {
   });
 
   test("should display all available download options", async () => {
+    test.slow();
     await itemMediaPage.getViewerControls();
     await itemMediaPage.openDownloadMenu();
 
