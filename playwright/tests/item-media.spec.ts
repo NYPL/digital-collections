@@ -1,6 +1,25 @@
 import { test, expect } from "../base";
 import ItemMediaPage from "../pages/item-media.page";
 
+test.beforeAll(async ({ playwright, baseURL }) => {
+  if (process.env.CI) {
+    const context = await playwright.request.newContext();
+
+    const targets = [
+      ItemMediaPage.IMAGE_UUID,
+      ItemMediaPage.VIDEO_UUID,
+      ItemMediaPage.PUBLICDOMAIN_UUID,
+    ].map((uuid) => `${baseURL}${ItemMediaPage.getItemURL(uuid)}`);
+
+    // hit media to warm-up but don't wait for results
+    targets.forEach((url) => {
+      context.get(url).catch(() => {});
+    });
+
+    console.log("pre-warm requests for media assets...");
+  }
+});
+
 let itemMediaPage: ItemMediaPage;
 
 test.describe("Verify Image Viewer Controls", () => {
