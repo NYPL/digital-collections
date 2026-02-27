@@ -3,10 +3,15 @@ import { Locator, Page, expect } from "@playwright/test";
 export default class ItemMediaPage {
   readonly page: Page;
 
-  static readonly IMAGE_UUID = "4387c9f0-c53c-012f-9924-58d385a7bc34";
-  static readonly VIDEO_UUID = "09a14bf0-0382-0131-8ec7-3c075448cc4b";
-  static readonly PUBLICDOMAIN_UUID = "ddaef250-c54d-012f-2b56-58d385a7bc34";
-  static readonly IMAGE_IMAGEID = "821487";
+  // static readonly IMAGE_UUID = "4387c9f0-c53c-012f-9924-58d385a7bc34";
+  // static readonly VIDEO_UUID = "09a14bf0-0382-0131-8ec7-3c075448cc4b";
+  // static readonly PUBLICDOMAIN_UUID = "ddaef250-c54d-012f-2b56-58d385a7bc34";
+  // static readonly IMAGE_IMAGEID = "821487";
+
+  static readonly IMAGE_UUID = "9ed6a200-c5fe-012f-51eb-58d385a7bc34";
+  static readonly IMAGE_IMAGEID = "404083";
+  static readonly VIDEO_UUID = "9d0b0200-e378-0130-c01b-3c075448cc4b";
+  static readonly PUBLICDOMAIN_UUID = "c4649390-c6df-012f-fcd9-58d385a7bc34";
 
   // Store the expected content-types
   readonly expectedContentType: "IMAGE" | "VIDEO";
@@ -39,7 +44,7 @@ export default class ItemMediaPage {
     if (!url) {
       throw new Error(
         "\n\n [ENV ERROR]: IIIF_URL is undefined. \n" +
-          "Run 'export locally or check CI.\n"
+          "Run export locally or check CI.\n"
       );
     }
     return url;
