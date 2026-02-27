@@ -40,10 +40,16 @@ export default defineConfig({
   /* Configure projects for major browsers */
   projects: [
     {
+      name: "setup",
+      testMatch: /setup\/warmup-media\.ts/,
+    },
+    {
       name: "chromium",
       use: {
         ...devices["Desktop Chrome"],
       },
+      dependencies: ["setup"],
+      testIgnore: /setup\/.*/,
     },
 
     // {
