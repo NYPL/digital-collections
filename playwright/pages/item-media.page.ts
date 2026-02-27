@@ -6,6 +6,8 @@ export default class ItemMediaPage {
   static readonly IMAGE_UUID = "4387c9f0-c53c-012f-9924-58d385a7bc34";
   static readonly VIDEO_UUID = "09a14bf0-0382-0131-8ec7-3c075448cc4b";
   static readonly PUBLICDOMAIN_UUID = "ddaef250-c54d-012f-2b56-58d385a7bc34";
+  static readonly IMAGE_IMAGEID = "821487";
+
   // Store the expected content-types
   readonly expectedContentType: "IMAGE" | "VIDEO";
 
@@ -29,6 +31,23 @@ export default class ItemMediaPage {
 
   static getItemURL(uuid: string): string {
     return `/items/${uuid}`;
+  }
+
+  // Setup iiif warm-up
+  static get IIIF_BASE_URL(): string {
+    const url = process.env.IIIF_URL;
+    if (!url) {
+      throw new Error(
+        "\n\n [ENV ERROR]: IIIF_URL is undefined. \n" +
+          "Run 'export locally or check CI.\n"
+      );
+    }
+    return url;
+  }
+
+  // Construct IIIF url
+  static getIIIFWarmupURL(): string {
+    return `${this.IIIF_BASE_URL}/iiif/3/${this.IMAGE_IMAGEID}/full/200,/0/default.jpg`;
   }
 
   constructor(page: Page, expectedType: "IMAGE" | "VIDEO") {
