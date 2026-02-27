@@ -8,10 +8,26 @@ export default class ItemMediaPage {
   // static readonly PUBLICDOMAIN_UUID = "ddaef250-c54d-012f-2b56-58d385a7bc34";
   // static readonly IMAGE_IMAGEID = "821487";
 
-  static readonly IMAGE_UUID = "9ed6a200-c5fe-012f-51eb-58d385a7bc34";
-  static readonly IMAGE_IMAGEID = "404083";
-  static readonly VIDEO_UUID = "9d0b0200-e378-0130-c01b-3c075448cc4b";
-  static readonly PUBLICDOMAIN_UUID = "c4649390-c6df-012f-fcd9-58d385a7bc34";
+  // static readonly IMAGE_UUID = "9ed6a200-c5fe-012f-51eb-58d385a7bc34";
+  // static readonly IMAGE_IMAGEID = "404083";
+  // static readonly VIDEO_UUID = "9d0b0200-e378-0130-c01b-3c075448cc4b";
+  // static readonly PUBLICDOMAIN_UUID = "c4649390-c6df-012f-fcd9-58d385a7bc34";
+
+  // static readonly IMAGE_UUID = "f2416750-5530-0135-9b00-1bd2ebeab8de";
+  // static readonly IMAGE_IMAGEID = "57366147";
+  // static readonly VIDEO_UUID = "27e5bd00-e378-0130-2025-3c075448cc4b";
+  // static readonly PUBLICDOMAIN_UUID = "79149800-ea2a-0133-d30f-00505686d14e";
+
+  // static readonly IMAGE_UUID = "1235c2d0-e8ff-0131-dd75-58d385a7b928";
+  // static readonly IMAGE_IMAGEID = "5146225";
+  // static readonly VIDEO_UUID = "93547140-f876-0130-3a9e-3c075448cc4b";
+  // static readonly PUBLICDOMAIN_UUID = "100d2590-996a-0139-4432-0242ac11000";
+
+  static readonly IMAGE_UUID = "2908e770-93e9-0130-c6a3-58d385a7b928";
+  static readonly IMAGE_IMAGEID = "5051201";
+  static readonly VIDEO_UUID = "93547140-f876-0130-3a9e-3c075448cc4b";
+  static readonly PUBLICDOMAIN_UUID = "d583c9f0-c5ed-012f-714b-58d385a7bc34";
+  static readonly PUBLICDOMAIN_IMAGEID = "433682";
 
   // Store the expected content-types
   readonly expectedContentType: "IMAGE" | "VIDEO";
@@ -50,10 +66,14 @@ export default class ItemMediaPage {
     return url;
   }
 
-  // Construct IIIF url
-  static getIIIFWarmupURL(): string {
-    return `${this.IIIF_BASE_URL}/iiif/3/${this.IMAGE_IMAGEID}/full/200,/0/default.jpg`;
+  static getIIIFWarmupURL(imageId: string = this.IMAGE_IMAGEID): string {
+    return `${this.IIIF_BASE_URL}/iiif/3/${imageId}/full/200,/0/default.jpg`;
   }
+
+  // // Construct IIIF url
+  // static getIIIFWarmupURL(): string {
+  //   return `${this.IIIF_BASE_URL}/iiif/3/${this.IMAGE_IMAGEID}/full/200,/0/default.jpg`;
+  // }
 
   constructor(page: Page, expectedType: "IMAGE" | "VIDEO") {
     this.page = page;

@@ -2,12 +2,25 @@ import { test as setup } from "@playwright/test";
 import ItemMediaPage from "../pages/item-media.page";
 
 setup("warmup: media assets", async ({ request }) => {
-  const url = ItemMediaPage.getIIIFWarmupURL();
+  setup.setTimeout(90000);
 
-  //request.get(url).catch(() => {});
+  const urls = [
+    ItemMediaPage.IMAGE_IMAGEID,
+    ItemMediaPage.PUBLICDOMAIN_IMAGEID,
+  ];
 
-  request.get(url).catch((e) => console.log(e));
+  for (const id of urls) {
+    // Pass the to POM for url
+    const url = ItemMediaPage.getIIIFWarmupURL(id);
 
-  // give IIIF a running-start to warm before site kicks off
+    console.log(`[START-CONNECT]: ${id}`);
+
+    await request
+      .get(url)
+      .then((res) => console.log(`[CONNECT] ${id} Status: ${res.status()}`))
+      .catch((e) => console.log(`[ERROR] ${id}: ${e.message}`));
+  }
+
+  // give IIIF a running-start to warm before suite kicks off
   await new Promise((resolve) => setTimeout(resolve, 10000));
 });
