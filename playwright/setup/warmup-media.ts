@@ -3,6 +3,12 @@ import ItemMediaPage from "../pages/item-media.page";
 
 setup("warmup: media assets", async ({ request }) => {
   setup.setTimeout(90000);
+  // since we are using a test-type framework in this utility,
+  // the 90 sec should ensure that there is a long enough timeout
+  // for one of the CI's limited wokers to first poke IIIF, then
+  // still have enough time to land on the item-media test before
+  // playwright calls finish line.  The default timeout of
+  // 30 sec wasn't allowing this sometimes on slower cold starts.
 
   const urls = [
     ItemMediaPage.IMAGE_IMAGEID,
