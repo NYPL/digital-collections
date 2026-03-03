@@ -1,5 +1,9 @@
 export const dcNavLinks = [
   {
+    href: `/shuffle`,
+    text: "Shuffle",
+  },
+  {
     href: `/search/index`,
     text: "Items",
   },
