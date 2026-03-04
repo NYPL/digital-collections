@@ -8,8 +8,13 @@ import ExternalLinksOverview from "./external/overview";
 import PrintOverview from "./print/overview";
 import CitationsOverview from "./citations/overview";
 import AVMaterialManifest from "./audiovisual/manifest";
+import { ItemModel } from "@/src/models/item";
 
-const ItemOverview = ({ item }) => {
+interface ItemOverviewProps {
+  item: ItemModel;
+}
+
+const ItemOverview = ({ item }: ItemOverviewProps) => {
   return (
     <>
       <ChakraSimpleGrid
