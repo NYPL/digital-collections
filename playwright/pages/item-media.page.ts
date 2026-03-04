@@ -23,11 +23,11 @@ export default class ItemMediaPage {
   // static readonly VIDEO_UUID = "93547140-f876-0130-3a9e-3c075448cc4b";
   // static readonly PUBLICDOMAIN_UUID = "100d2590-996a-0139-4432-0242ac11000";
 
-  static readonly IMAGE_UUID = "d336d020-75dd-0133-612e-00505686d14e";
-  static readonly IMAGE_IMAGEID = "57273250";
+  static readonly IMAGE_UUID = "072bf850-7692-0137-124d-0e5a0d71995d";
+  static readonly IMAGE_IMAGEID = "58053562";
   static readonly VIDEO_UUID = "93547140-f876-0130-3a9e-3c075448cc4b";
-  static readonly PUBLICDOMAIN_UUID = "d94c9eb0-c5fe-012f-36ea-58d385a7bc34";
-  static readonly PUBLICDOMAIN_IMAGEID = "1811136";
+  static readonly PUBLICDOMAIN_UUID = "b1cde9f0-8bd2-0133-8b81-00505686a51c";
+  static readonly PUBLICDOMAIN_IMAGEID = "57231531";
 
   // Store the expected content-types
   readonly expectedContentType: "IMAGE" | "VIDEO";
