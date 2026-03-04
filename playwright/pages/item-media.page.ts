@@ -23,11 +23,11 @@ export default class ItemMediaPage {
   // static readonly VIDEO_UUID = "93547140-f876-0130-3a9e-3c075448cc4b";
   // static readonly PUBLICDOMAIN_UUID = "100d2590-996a-0139-4432-0242ac11000";
 
-  static readonly IMAGE_UUID = "2908e770-93e9-0130-c6a3-58d385a7b928";
-  static readonly IMAGE_IMAGEID = "5051201";
+  static readonly IMAGE_UUID = "d336d020-75dd-0133-612e-00505686d14e";
+  static readonly IMAGE_IMAGEID = "57273250";
   static readonly VIDEO_UUID = "93547140-f876-0130-3a9e-3c075448cc4b";
-  static readonly PUBLICDOMAIN_UUID = "d583c9f0-c5ed-012f-714b-58d385a7bc34";
-  static readonly PUBLICDOMAIN_IMAGEID = "433682";
+  static readonly PUBLICDOMAIN_UUID = "d94c9eb0-c5fe-012f-36ea-58d385a7bc34";
+  static readonly PUBLICDOMAIN_IMAGEID = "1811136";
 
   // Store the expected content-types
   readonly expectedContentType: "IMAGE" | "VIDEO";
@@ -54,9 +54,8 @@ export default class ItemMediaPage {
     return `/items/${uuid}`;
   }
 
-  // Setup iiif warm-up
   static get IIIF_BASE_URL(): string {
-    const url = process.env.IIIF_URL;
+    const url = process.env.IIIF_URL || "https://iiif.nypl.org";
     if (!url) {
       throw new Error(
         "\n\n [ENV ERROR]: IIIF_URL is undefined. \n" +
@@ -67,13 +66,10 @@ export default class ItemMediaPage {
   }
 
   static getIIIFWarmupURL(imageId: string = this.IMAGE_IMAGEID): string {
-    return `${this.IIIF_BASE_URL}/iiif/3/${imageId}/full/200,/0/default.jpg`;
+    const baseUrl = this.IIIF_BASE_URL;
+    const warmupUrl = `${this.IIIF_BASE_URL}/iiif/3/${imageId}/full/200,/0/default.jpg`;
+    return warmupUrl;
   }
-
-  // // Construct IIIF url
-  // static getIIIFWarmupURL(): string {
-  //   return `${this.IIIF_BASE_URL}/iiif/3/${this.IMAGE_IMAGEID}/full/200,/0/default.jpg`;
-  // }
 
   constructor(page: Page, expectedType: "IMAGE" | "VIDEO") {
     this.page = page;

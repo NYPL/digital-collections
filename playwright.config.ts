@@ -12,6 +12,8 @@ import { defineConfig, devices } from "@playwright/test";
  * See https://playwright.dev/docs/test-configuration.
  */
 
+process.env.IIIF_URL = process.env.IIIF_URL || "https://iiif.nypl.org";
+
 export default defineConfig({
   testDir: "./playwright",
   timeout: 30000, // default timeout for each test

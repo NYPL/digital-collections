@@ -19,6 +19,8 @@ setup("warmup: media assets", async ({ request }) => {
     // Pass the to POM for url
     const url = ItemMediaPage.getIIIFWarmupURL(id);
 
+    console.log(`[START-DOMAIN]: ${url}`);
+
     console.log(`[START-CONNECT]: ${id}`);
 
     await request
