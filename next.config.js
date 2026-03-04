@@ -26,7 +26,7 @@ const nextConfig = {
       },
       {
         protocol: "https",
-        hostname: "iiif-qa.nypl.org",
+        hostname: "qa-iiif.nypl.org",
       },
       {
         protocol: "https",
