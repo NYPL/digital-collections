@@ -2,12 +2,29 @@ import { test, expect } from "../base";
 import ItemMediaPage from "../pages/item-media.page";
 
 let itemMediaPage: ItemMediaPage;
+let actualCluster = "No IIIF traffic detected";
 
 test.describe("Verify Image Viewer Controls", () => {
   test.beforeEach(async ({ page }) => {
     itemMediaPage = new ItemMediaPage(page, "IMAGE");
 
+    // Attach passive listener to confirm image media source
+    page.on("request", (request) => {
+      const url = request.url();
+      if (url.includes("/iiif/")) {
+        try {
+          actualCluster = new URL(url).hostname;
+        } catch (e) {
+          // Fallback if URL can't be parsed
+          actualCluster = url;
+        }
+      }
+    });
     await itemMediaPage.loadPage(ItemMediaPage.IMAGE_UUID);
+  });
+
+  test.afterAll(async () => {
+    console.log(`\n IIIF-URL: [ ${actualCluster} ]\n`);
   });
 
   test("primary image-specific controls are visible", async () => {

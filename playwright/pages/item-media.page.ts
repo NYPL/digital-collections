@@ -3,11 +3,11 @@ import { Locator, Page, expect } from "@playwright/test";
 export default class ItemMediaPage {
   readonly page: Page;
 
-  static readonly IMAGE_UUID = "072bf850-7692-0137-124d-0e5a0d71995d";
-  static readonly IMAGE_IMAGEID = "58053562";
+  static readonly IMAGE_UUID = "d2e96310-c614-012f-8c44-58d385a7bc34";
+  static readonly IMAGE_IMAGEID = "487528";
   static readonly VIDEO_UUID = "93547140-f876-0130-3a9e-3c075448cc4b";
-  static readonly PUBLICDOMAIN_UUID = "b1cde9f0-8bd2-0133-8b81-00505686a51c";
-  static readonly PUBLICDOMAIN_IMAGEID = "57231531";
+  static readonly PUBLICDOMAIN_UUID = "63a24db0-c5f9-012f-ac43-58d385a7bc34";
+  static readonly PUBLICDOMAIN_IMAGEID = "108541";
 
   // Store the expected content-types
   readonly expectedContentType: "IMAGE" | "VIDEO";
