@@ -14,6 +14,10 @@ import { Fragment } from "react";
 import parse from "html-react-parser";
 import { metadataFieldToDisplay } from "@/src/utils/metadata/filterRenderableMetadata";
 
+interface MetadataOverviewProps {
+  metadata: Record<string, string>;
+}
+
 // Designs use DS Link component but I wonder if we can get away with not using them for the
 // Items page since the manifests are returning the links
 const StructuredCollectionsList = (rawCollections) => {
@@ -35,16 +39,14 @@ const StructuredCollectionsList = (rawCollections) => {
   );
 };
 
-const MetadataOverview = ({ metadata }) => {
-  const typedMetadata = metadata as Record<string, string>;
-
+const MetadataOverview = ({ metadata }: MetadataOverviewProps) => {
   return (
     <>
       <Box>
         <Heading size="heading6" marginBottom="xs">
           Item data
         </Heading>
-        {Object.entries(typedMetadata).map(([field, value]) => {
+        {Object.entries(metadata).map(([field, value]) => {
           if (field === "collection") {
             const collections = value.split("<br>");
             return (

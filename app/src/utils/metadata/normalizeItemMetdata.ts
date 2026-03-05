@@ -10,6 +10,7 @@ export function normalizeItemMetadataFromManifest(
 ): NormalizedItemMetadata {
   return {
     title: raw["Title"]?.[0] || "",
+    altTitle: joinWithBr(raw["Alt Title"]),
     collection: joinWithBr(raw["Collection"]),
     names: joinWithBr(raw["Names"]),
     origin: joinWithBr(raw["Dates / Origin"]),
