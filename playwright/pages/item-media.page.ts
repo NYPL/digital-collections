@@ -3,26 +3,6 @@ import { Locator, Page, expect } from "@playwright/test";
 export default class ItemMediaPage {
   readonly page: Page;
 
-  // static readonly IMAGE_UUID = "4387c9f0-c53c-012f-9924-58d385a7bc34";
-  // static readonly VIDEO_UUID = "09a14bf0-0382-0131-8ec7-3c075448cc4b";
-  // static readonly PUBLICDOMAIN_UUID = "ddaef250-c54d-012f-2b56-58d385a7bc34";
-  // static readonly IMAGE_IMAGEID = "821487";
-
-  // static readonly IMAGE_UUID = "9ed6a200-c5fe-012f-51eb-58d385a7bc34";
-  // static readonly IMAGE_IMAGEID = "404083";
-  // static readonly VIDEO_UUID = "9d0b0200-e378-0130-c01b-3c075448cc4b";
-  // static readonly PUBLICDOMAIN_UUID = "c4649390-c6df-012f-fcd9-58d385a7bc34";
-
-  // static readonly IMAGE_UUID = "f2416750-5530-0135-9b00-1bd2ebeab8de";
-  // static readonly IMAGE_IMAGEID = "57366147";
-  // static readonly VIDEO_UUID = "27e5bd00-e378-0130-2025-3c075448cc4b";
-  // static readonly PUBLICDOMAIN_UUID = "79149800-ea2a-0133-d30f-00505686d14e";
-
-  // static readonly IMAGE_UUID = "1235c2d0-e8ff-0131-dd75-58d385a7b928";
-  // static readonly IMAGE_IMAGEID = "5146225";
-  // static readonly VIDEO_UUID = "93547140-f876-0130-3a9e-3c075448cc4b";
-  // static readonly PUBLICDOMAIN_UUID = "100d2590-996a-0139-4432-0242ac11000";
-
   static readonly IMAGE_UUID = "072bf850-7692-0137-124d-0e5a0d71995d";
   static readonly IMAGE_IMAGEID = "58053562";
   static readonly VIDEO_UUID = "93547140-f876-0130-3a9e-3c075448cc4b";
