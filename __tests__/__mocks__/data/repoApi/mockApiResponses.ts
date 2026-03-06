@@ -232,7 +232,7 @@ export const mockItemResponse = {
     sortString: {
       $: "0000000001|0000000011|0000000430|0000000001",
     },
-    shuffleLink: {
+    itemLink: {
       $: "http://digitalcollections.nypl.org/items/510d47d9-7c7c-a3d9-e040-e00a18064a99",
     },
     highResLink: {
