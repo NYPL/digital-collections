@@ -5,7 +5,7 @@ export class AboutPage {
   static aboutUrl: string = "/about";
 
   // navigation menu
-  readonly items: Locator;
+  readonly shuffle: Locator;
   readonly collections: Locator;
   readonly divisions: Locator;
   readonly about: Locator;
@@ -18,7 +18,7 @@ export class AboutPage {
 
   // links
   readonly searchLink: Locator;
-  readonly itemLink: Locator;
+  readonly shuffleLink: Locator;
   readonly collectionLink: Locator;
   readonly divisionLink: Locator;
   readonly nyplDigitalCollectionsPlatformLink: Locator;
@@ -53,8 +53,8 @@ export class AboutPage {
   constructor(page: Page) {
     this.page = page;
     // navigation menu
-    this.items = page.getByRole("link", {
-      name: "Items",
+    this.shuffle = page.getByRole("link", {
+      name: "Shuffle",
       exact: true,
     });
 
@@ -77,7 +77,7 @@ export class AboutPage {
 
     // links
     this.searchLink = page.getByRole("link", { name: "search", exact: true });
-    this.itemLink = page.getByRole("link", { name: "items", exact: true });
+    this.shuffleLink = page.getByRole("link", { name: "shuffle", exact: true });
     this.collectionLink = page.getByRole("link", {
       name: "collections",
       exact: true,
