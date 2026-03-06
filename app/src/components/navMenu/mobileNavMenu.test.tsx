@@ -13,19 +13,19 @@ describe("Mobile nav menu component", () => {
     const { getByTitle, getByText } = render(<MobileNavMenu />);
     fireEvent.click(screen.getByLabelText("Open Navigation"));
     expect(getByTitle("close icon")).toBeInTheDocument();
-    expect(getByText("Items")).toBeInTheDocument();
+    expect(getByText("Shuffle")).toBeInTheDocument();
 
     fireEvent.click(screen.getByLabelText("Close Navigation"));
-    const menuItems = screen.queryAllByText("Items");
+    const menuItems = screen.queryAllByText("Shuffle");
     expect(menuItems).toHaveLength(0);
   });
 
   it("has links", () => {
     render(<MobileNavMenu />);
     fireEvent.click(screen.getByLabelText("Open Navigation"));
-    expect(screen.getByLabelText("Items")).toHaveAttribute(
+    expect(screen.getByLabelText("Shuffle")).toHaveAttribute(
       "href",
-      `/search/index`
+      `/shuffle`
     );
     expect(screen.getByLabelText("Divisions")).toHaveAttribute(
       "href",
