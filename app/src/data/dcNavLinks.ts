@@ -4,10 +4,6 @@ export const dcNavLinks = [
     text: "Shuffle",
   },
   {
-    href: `/search/index`,
-    text: "Items",
-  },
-  {
     href: `/collections`,
     text: "Collections",
   },
