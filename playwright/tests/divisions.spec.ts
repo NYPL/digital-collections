@@ -7,7 +7,7 @@ test.beforeEach(async ({ page }) => {
 
 test("verify navigation menu on division page", async ({ page }) => {
   const divisionsPage = new DivisionsPage(page);
-  await expect(divisionsPage.items).toBeVisible();
+  await expect(divisionsPage.shuffle).toBeVisible();
   await expect(divisionsPage.collections).toBeVisible();
   await expect(divisionsPage.divisions).toBeVisible();
   await expect(divisionsPage.about).toBeVisible();
