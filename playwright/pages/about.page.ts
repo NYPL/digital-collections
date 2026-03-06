@@ -18,7 +18,7 @@ export class AboutPage {
 
   // links
   readonly searchLink: Locator;
-  readonly shuffleLink: Locator;
+  readonly itemLink: Locator;
   readonly collectionLink: Locator;
   readonly divisionLink: Locator;
   readonly nyplDigitalCollectionsPlatformLink: Locator;
@@ -77,7 +77,7 @@ export class AboutPage {
 
     // links
     this.searchLink = page.getByRole("link", { name: "search", exact: true });
-    this.shuffleLink = page.getByRole("link", { name: "shuffle", exact: true });
+    this.itemLink = page.getByRole("link", { name: "items", exact: true });
     this.collectionLink = page.getByRole("link", {
       name: "collections",
       exact: true,

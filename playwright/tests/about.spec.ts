@@ -24,7 +24,7 @@ test("verify search bar, search button, public domain checkbox on about page", a
 
 test("verify links on about page", async ({ page }) => {
   const aboutPage = new AboutPage(page);
-  await expect(aboutPage.shuffleLink).toBeVisible();
+  await expect(aboutPage.itemLink).toBeVisible();
   await expect(aboutPage.collectionLink).toBeVisible();
   await expect(aboutPage.divisionLink).toBeVisible();
   await expect(aboutPage.browseItemsLink).toBeVisible();
