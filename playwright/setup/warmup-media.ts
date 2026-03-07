@@ -1,5 +1,6 @@
 import { test as setup } from "@playwright/test";
 import ItemMediaPage from "../pages/item-media.page";
+import { applyRouteFilters } from "../utils/routeFilters";
 
 setup("warmup: media assets", async ({ request }) => {
   setup.setTimeout(90000);
@@ -16,9 +17,9 @@ setup("warmup: media assets", async ({ request }) => {
   ];
 
   for (const id of urls) {
-    // Pass the to POM for url
     const url = ItemMediaPage.getIIIFWarmupURL(id);
 
+    // Your original log line, now with the truth revealed
     console.log(`[START-DOMAIN]: ${url}`);
 
     console.log(`[START-CONNECT]: ${id}`);
