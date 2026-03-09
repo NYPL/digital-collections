@@ -11,11 +11,11 @@ test.beforeEach(async ({ page }) => {
   await page.goto("/");
 });
 
-test("verify navigation menu is displayed (items, collections, divisions, about)", async ({
+test("verify navigation menu is displayed (shuffle, collections, divisions, about)", async ({
   page,
 }) => {
   const dchomepage = new DCHomepage(page);
-  await expect(dchomepage.items).toBeVisible();
+  await expect(dchomepage.shuffle).toBeVisible();
   await expect(dchomepage.collections).toBeVisible();
   await expect(dchomepage.divisions).toBeVisible();
   await expect(dchomepage.about).toBeVisible();

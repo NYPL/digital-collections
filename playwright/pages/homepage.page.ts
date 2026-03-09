@@ -3,7 +3,7 @@ import { Locator, Page } from "@playwright/test";
 export class DCHomepage {
   private readonly page: Page;
   //navigation menu
-  readonly items: Locator;
+  readonly shuffle: Locator;
   readonly collections: Locator;
   readonly divisions: Locator;
   readonly about: Locator;
@@ -66,7 +66,7 @@ export class DCHomepage {
   constructor(page: Page) {
     //navigation menu
     this.page = page;
-    this.items = this.page.getByRole("link", { name: "Items" });
+    this.shuffle = this.page.getByRole("link", { name: "Shuffle" });
     this.collections = this.page.getByRole("link", {
       name: "Collections",
       exact: true,
