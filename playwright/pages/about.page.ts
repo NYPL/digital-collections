@@ -5,7 +5,7 @@ export class AboutPage {
   static aboutUrl: string = "/about";
 
   // navigation menu
-  readonly items: Locator;
+  readonly shuffle: Locator;
   readonly collections: Locator;
   readonly divisions: Locator;
   readonly about: Locator;
@@ -53,8 +53,8 @@ export class AboutPage {
   constructor(page: Page) {
     this.page = page;
     // navigation menu
-    this.items = page.getByRole("link", {
-      name: "Items",
+    this.shuffle = page.getByRole("link", {
+      name: "Shuffle",
       exact: true,
     });
 
