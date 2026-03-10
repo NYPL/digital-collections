@@ -23,7 +23,6 @@ export class CollectionsApi {
     const apiUrl = `${process.env.COLLECTIONS_API_URL}/captures/${uuid}/metadata`;
     return await fetchApi({
       apiUrl: apiUrl,
-      options: { isRepoApi: false },
     });
   }
 
@@ -31,7 +30,6 @@ export class CollectionsApi {
     const apiUrl = `${process.env.COLLECTIONS_API_URL}/items/${uuid}/citations`;
     return await fetchApi({
       apiUrl: apiUrl,
-      options: { isRepoApi: false },
     });
   }
 
@@ -49,7 +47,6 @@ export class CollectionsApi {
     let apiUrl = `${process.env.COLLECTIONS_API_URL}/collections?page=${page}&perPage=${perPage}&sort=${sort}&keyword=${keyword}`;
     const response = await fetchApi({
       apiUrl: apiUrl,
-      options: { isRepoApi: false },
     });
     return response;
   }
@@ -58,7 +55,6 @@ export class CollectionsApi {
     let apiUrl = `${process.env.COLLECTIONS_API_URL}/collections/${uuid}`;
     const response = await fetchApi({
       apiUrl: apiUrl,
-      options: { isRepoApi: false },
     });
     return response;
   }
@@ -67,7 +63,6 @@ export class CollectionsApi {
     let apiUrl = `${process.env.COLLECTIONS_API_URL}/collections/${uuid}/children`;
     const response = await fetchApi({
       apiUrl: apiUrl,
-      options: { isRepoApi: false },
     });
     return response;
   }
@@ -88,7 +83,6 @@ export class CollectionsApi {
     }
     return await fetchApi({
       apiUrl: apiUrl,
-      options: { isRepoApi: false },
     });
   }
 
@@ -96,7 +90,6 @@ export class CollectionsApi {
     const apiUrl = `${process.env.COLLECTIONS_API_URL}/items/total`;
     const response = await fetchApi({
       apiUrl: apiUrl,
-      options: { isRepoApi: false },
     });
 
     const fallbackCount = defaultFeaturedItems.numberOfDigitizedItems;
@@ -148,9 +141,6 @@ export class CollectionsApi {
     const apiUrl = `${process.env.COLLECTIONS_API_URL}/items/featured`;
     return await fetchApi({
       apiUrl: apiUrl,
-      options: {
-        isRepoApi: false,
-      },
     });
   }
 
@@ -160,7 +150,7 @@ export class CollectionsApi {
   ): Promise<APIItem> {
     return await fetchApi({
       apiUrl: `${process.env.COLLECTIONS_API_URL}/items/${uuid}`,
-      options: { isRepoApi: false, clientIP: clientIP },
+      options: { clientIP: clientIP },
     });
   }
 
@@ -178,9 +168,6 @@ export class CollectionsApi {
     const apiUrl = `${process.env.COLLECTIONS_API_URL}/collections?genre=${slug}&sort=${sort}&page=${pageNum}&perPage=${perPage}`;
     return await fetchApi({
       apiUrl: apiUrl,
-      options: {
-        isRepoApi: false,
-      },
     });
   }
 
@@ -188,7 +175,6 @@ export class CollectionsApi {
     const apiUrl = `${process.env.COLLECTIONS_API_URL}/shuffle`;
     return await fetchApi({
       apiUrl: apiUrl,
-      options: { isRepoApi: false },
     });
   }
 
@@ -231,7 +217,6 @@ export class CollectionsApi {
 
     const response = await fetchApi({
       apiUrl: apiUrl,
-      options: { isRepoApi: false },
     });
     return response;
   }
@@ -240,7 +225,7 @@ export class CollectionsApi {
     let apiUrl = `${process.env.COLLECTIONS_API_URL}/manifests/${uuid}`;
     const response = await fetchApi({
       apiUrl: apiUrl,
-      options: { isRepoApi: false, clientIP: clientIP },
+      options: { clientIP: clientIP },
     });
     return response;
   }
@@ -256,7 +241,6 @@ export class CollectionsApi {
     const response = await fetchApi({
       apiUrl: apiUrl,
       options: {
-        isRepoApi: false,
         method: "POST",
         body: { uuids },
       },

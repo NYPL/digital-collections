@@ -18,11 +18,9 @@ describe("Collections API methods", () => {
       expect(fetchApi as jest.Mock).toHaveBeenCalledTimes(2);
       expect(fetchApi as jest.Mock).toHaveBeenNthCalledWith(1, {
         apiUrl: `${process.env.COLLECTIONS_API_URL}/items/featured`,
-        options: { isRepoApi: false },
       });
       expect(fetchApi as jest.Mock).toHaveBeenNthCalledWith(2, {
         apiUrl: `${process.env.COLLECTIONS_API_URL}/items/total`,
-        options: { isRepoApi: false },
       });
       // Fallback data.
       expect(result.numberOfDigitizedItems).toEqual("1,059,731");
@@ -44,7 +42,6 @@ describe("Collections API methods", () => {
 
       expect(fetchApi).toHaveBeenCalledWith({
         apiUrl: `${process.env.COLLECTIONS_API_URL}/collections?page=2&perPage=48&sort=date-asc&keyword=cat`,
-        options: { isRepoApi: false },
       });
 
       expect(collections).toEqual(mockCollectionsResponse);
@@ -61,7 +58,6 @@ describe("Collections API methods", () => {
 
       expect(fetchApi).toHaveBeenCalledWith({
         apiUrl: `${process.env.COLLECTIONS_API_URL}/collections?page=1&perPage=48&sort=relevance&keyword=`,
-        options: { isRepoApi: false },
       });
 
       expect(collections).toEqual(mockCollectionsResponse);
@@ -82,7 +78,6 @@ describe("Collections API methods", () => {
 
       expect(fetchApi as jest.Mock).toHaveBeenCalledWith({
         apiUrl: `${process.env.COLLECTIONS_API_URL}/divisions/testSlug?page=1&per_page=3`,
-        options: { isRepoApi: false },
       });
     });
 
@@ -91,7 +86,6 @@ describe("Collections API methods", () => {
 
       expect(fetchApi as jest.Mock).toHaveBeenCalledWith({
         apiUrl: `${process.env.COLLECTIONS_API_URL}/divisions`,
-        options: { isRepoApi: false },
       });
     });
 
@@ -157,7 +151,6 @@ describe("Collections API methods", () => {
       const item = await CollectionsApi.getRandomFeaturedItem();
       expect(fetchApi as jest.Mock).toHaveBeenCalledWith({
         apiUrl: `${process.env.COLLECTIONS_API_URL}/items/featured`,
-        options: { isRepoApi: false },
       });
       expect(item).toEqual(mockFeaturedItemResponse);
       expect(item).toHaveProperty("title");
@@ -176,7 +169,6 @@ describe("Collections API methods", () => {
       const imageData = await CollectionsApi.getFeaturedImage();
       expect(fetchApi as jest.Mock).toHaveBeenCalledWith({
         apiUrl: `${process.env.COLLECTIONS_API_URL}/items/featured`,
-        options: { isRepoApi: false },
       });
 
       expect(imageData.imageID).toEqual("482815");
@@ -242,7 +234,6 @@ describe("Collections API methods", () => {
       const result = await CollectionsApi.getNumDigitizedItems();
       expect(fetchApi as jest.Mock).toHaveBeenCalledWith({
         apiUrl: `${process.env.COLLECTIONS_API_URL}/items/total`,
-        options: { isRepoApi: false },
       });
       expect(result).toEqual("78");
     });
@@ -340,9 +331,6 @@ describe("Collections API methods", () => {
 
       expect(fetchApi as jest.Mock).toHaveBeenCalledWith({
         apiUrl: `${process.env.COLLECTIONS_API_URL}/collections?genre=testSlug&sort=items-count&page=1&perPage=3`,
-        options: {
-          isRepoApi: false,
-        },
       });
     });
 
@@ -368,9 +356,6 @@ describe("Collections API methods", () => {
       await CollectionsApi.getLaneData({ slug: "testSlug" });
       expect(fetchApi as jest.Mock).toHaveBeenCalledWith({
         apiUrl: `${process.env.COLLECTIONS_API_URL}/collections?genre=testSlug&sort=items-count&page=1&perPage=48`,
-        options: {
-          isRepoApi: false,
-        },
       });
     });
   });
