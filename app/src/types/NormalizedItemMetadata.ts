@@ -1,6 +1,6 @@
 export type NormalizedItemMetadata = {
   title: string;
-  altTitle?: string;
+  additionalTitles?: string;
   names?: string;
   collection?: string;
   origin: string;
