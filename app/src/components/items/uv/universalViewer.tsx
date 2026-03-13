@@ -37,12 +37,6 @@ const UniversalViewer: React.FC<UniversalViewerProps> = React.memo(
     const searchParams = useSearchParams();
     const { setCurrentCanvasIndex } = useCanvasContext();
 
-    function updateCanvasIndex(newCanvasIndex: number) {
-      const stringifiedParams = searchParams.toString();
-      const urlSearchParams = new URLSearchParams(stringifiedParams);
-      urlSearchParams.set("canvasIndex", newCanvasIndex.toString());
-      window.history.pushState(null, "", `?${urlSearchParams}`);
-    }
     const handleOnClick = (e) => {
       if (e.target.className === "openseadragon-canvas") {
         const viewPortButtons = Array.from(
@@ -261,7 +255,6 @@ const UniversalViewer: React.FC<UniversalViewerProps> = React.memo(
 
     useEvent(uv, BaseEvents.CANVAS_INDEX_CHANGE, (i) => {
       if (onChangeCanvas) {
-        updateCanvasIndex(i);
         setCurrentCanvasIndex(i);
 
         if (lastIndex.current !== i) {
