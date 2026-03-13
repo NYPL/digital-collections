@@ -8,7 +8,6 @@ import { PlyrPlayer } from "../plyr/dynamic";
 
 interface ItemProps {
   item: ItemModel;
-  canvasIndex: number;
 }
 
 const uvConfig = {
@@ -57,7 +56,7 @@ const uvConfig = {
   },
 };
 
-const ItemMediaViewer = ({ item, canvasIndex }: ItemProps) => {
+const ItemMediaViewer = ({ item }: ItemProps) => {
   let viewer;
   let contentType = item.contentType;
   const captureUuidToIdx = Object.fromEntries(
@@ -69,7 +68,6 @@ const ItemMediaViewer = ({ item, canvasIndex }: ItemProps) => {
       <>
         <UniversalViewer
           manifestId={item.manifestURL}
-          canvasIndex={canvasIndex || 0}
           captureUuidToIdx={captureUuidToIdx}
           config={uvConfig}
           onChangeCanvas={(manifest, canvas) => {
