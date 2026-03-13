@@ -106,8 +106,6 @@ export default async function ItemViewer({ params, searchParams }: ItemProps) {
   // only allow canvasIndex to be in the range of 0...item.imageIds.length (number of canvases)
   const imageIDs = item.imageIDs || [];
   const maxIndex = imageIDs.length - 1;
-  const rawIndex = searchParams.canvasIndex || 0;
-  const clampedCanvasIndex = Math.max(0, Math.min(rawIndex, maxIndex));
   const breadcrumbData = formatItemBreadcrumbs(item);
   return (
     <PageLayout
@@ -127,7 +125,6 @@ export default async function ItemViewer({ params, searchParams }: ItemProps) {
         citationsData={citationsData}
         uuid={params.uuid}
         itemDetail={itemData}
-        canvasIndex={clampedCanvasIndex}
       />
     </PageLayout>
   );
