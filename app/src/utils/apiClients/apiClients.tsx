@@ -54,6 +54,30 @@ export class CollectionsApi {
     return response;
   }
 
+  /**
+   * Fetches paginated facet options for a single facet from the collections API.
+   * @param facet - The facet name to fetch (eg. "publisher", "topic").
+   * @param params - Optional params for keyword, page and perPage.
+   */
+  static async getFacetOptions(
+    facet: string,
+    {
+      keyword = "",
+      page = 1,
+      perPage = 10,
+    }: { keyword?: string; page?: number; perPage?: number } = {}
+  ) {
+    const qParam = keyword ? `?q=${encodeURIComponent(keyword)}` : "";
+    const pageParam = `${qParam ? "&" : "?"}page=${page}&perPage=${perPage}`;
+    const apiUrl = `${process.env.COLLECTIONS_API_URL}/search/facets/${facet}${qParam}${pageParam}`;
+    const response = await fetchApi({
+      apiUrl: apiUrl,
+      options: { isRepoApi: false },
+    });
+    console.log("Facet options response: ", response);
+    return response;
+  }
+
   static async getCollectionData(uuid: string) {
     let apiUrl = `${process.env.COLLECTIONS_API_URL}/collections/${uuid}`;
     const response = await fetchApi({
@@ -233,6 +257,7 @@ export class CollectionsApi {
       apiUrl: apiUrl,
       options: { isRepoApi: false },
     });
+    // console.log("Search API response: ", response);
     return response;
   }
 
