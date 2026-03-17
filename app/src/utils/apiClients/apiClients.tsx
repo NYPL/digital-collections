@@ -55,26 +55,19 @@ export class CollectionsApi {
   }
 
   /**
-   * Fetches paginated facet options for a single facet from the collections API.
-   * @param facet - The facet name to fetch (eg. "publisher", "topic").
-   * @param params - Optional params for keyword, page and perPage.
+   * Fetches facet options for a single facet from the collections API.
+   * The endpoint supports keyword filtering via `q`, and returns all matches.
    */
   static async getFacetOptions(
     facet: string,
-    {
-      keyword = "",
-      page = 1,
-      perPage = 10,
-    }: { keyword?: string; page?: number; perPage?: number } = {}
+    { keyword = "" }: { keyword?: string } = {}
   ) {
     const qParam = keyword ? `?q=${encodeURIComponent(keyword)}` : "";
-    const pageParam = `${qParam ? "&" : "?"}page=${page}&perPage=${perPage}`;
-    const apiUrl = `${process.env.COLLECTIONS_API_URL}/search/facets/${facet}${qParam}${pageParam}`;
+    const apiUrl = `${process.env.COLLECTIONS_API_URL}/search/facets/${facet}${qParam}`;
     const response = await fetchApi({
       apiUrl: apiUrl,
       options: { isRepoApi: false },
     });
-    console.log("Facet options response: ", response);
     return response;
   }
 
