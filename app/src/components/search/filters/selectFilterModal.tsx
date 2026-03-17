@@ -85,7 +85,10 @@ const SelectFilterModal = forwardRef<HTMLButtonElement, SelectFilterModalProps>(
     };
 
     const pageCount = Math.ceil(totalOptions / itemsPerPage) || 1;
-    const currentOptions = facetOptions;
+    const currentOptions = facetOptions.slice(
+      (currentPage - 1) * itemsPerPage,
+      currentPage * itemsPerPage
+    );
 
     useEffect(() => {
       if (liveRegionRef.current) {
@@ -98,8 +101,8 @@ const SelectFilterModal = forwardRef<HTMLButtonElement, SelectFilterModalProps>(
       setCurrentPage(1);
     }, [searchText]);
 
-    // Fetch facet options from our internal app route so the external API
-    // request happens on the server.
+    // Fetch all facet matches from our internal app route so external API
+    // requests happen on the server. Pagination is handled client-side.
     useEffect(() => {
       let mounted = true;
       let debounce: any = null;
@@ -109,8 +112,6 @@ const SelectFilterModal = forwardRef<HTMLButtonElement, SelectFilterModalProps>(
         try {
           const queryParams = new URLSearchParams();
           if (searchText) queryParams.set("q", searchText);
-          queryParams.set("page", String(currentPage));
-          queryParams.set("perPage", String(itemsPerPage));
 
           const response = await fetch(
             `/api/search/facets/${encodeURIComponent(
@@ -156,7 +157,7 @@ const SelectFilterModal = forwardRef<HTMLButtonElement, SelectFilterModalProps>(
         mounted = false;
         if (debounce) clearTimeout(debounce);
       };
-    }, [isOpen, currentPage, searchText, filter.name]);
+    }, [isOpen, searchText, filter.name]);
 
     const handleOpen = () => {
       modalOnOpen();
