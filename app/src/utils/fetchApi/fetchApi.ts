@@ -1,4 +1,4 @@
-import logger from "logger";
+// import logger from "logger";
 
 /**
  * Makes a GET or POST request to Repo/Collections API and returns the response.
@@ -80,7 +80,7 @@ export const fetchApi = async ({
       next,
     })) as Response;
   } catch (error) {
-    logger.error(error);
+    console.error(error);
     throw new Error(error.message);
   }
   if (response.ok) {

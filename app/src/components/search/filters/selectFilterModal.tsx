@@ -61,6 +61,13 @@ const SelectFilterModal = forwardRef<HTMLButtonElement, SelectFilterModalProps>(
     const [searchText, setSearchText] = useState("");
     const [currentPage, setCurrentPage] = useState(1);
     const itemsPerPage = 10;
+    const [facetOptions, setFacetOptions] = useState<AvailableFilterOption[]>(
+      filter.options || []
+    );
+    const [totalOptions, setTotalOptions] = useState<number>(
+      filter.options?.length || 0
+    );
+    const [isLoadingOptions, setIsLoadingOptions] = useState(false);
 
     // Whether modal closing should focus on open or closed dropdown.
     const [focusOutside, setFocusOutside] = useState(false);
@@ -77,26 +84,79 @@ const SelectFilterModal = forwardRef<HTMLButtonElement, SelectFilterModalProps>(
       push(`${pathname}?${queryString}`);
     };
 
-    const filteredOptions = filter.options.filter((option) =>
-      option.name.toLowerCase().includes(searchText.toLowerCase())
-    );
-
-    const pageCount = Math.ceil(filteredOptions.length / itemsPerPage);
-
-    const currentOptions = filteredOptions.slice(
-      (currentPage - 1) * itemsPerPage,
-      currentPage * itemsPerPage
-    );
+    const pageCount = Math.ceil(totalOptions / itemsPerPage) || 1;
+    const currentOptions = facetOptions;
 
     useEffect(() => {
       if (liveRegionRef.current) {
-        liveRegionRef.current.textContent = `${filteredOptions.length} options available`;
+        liveRegionRef.current.textContent = `${totalOptions} options available`;
       }
-    }, [filteredOptions.length]);
+    }, [totalOptions]);
 
+    // Reset page when search text changes.
     useEffect(() => {
       setCurrentPage(1);
     }, [searchText]);
+
+    // Fetch facet options from our internal app route so the external API
+    // request happens on the server.
+    useEffect(() => {
+      let mounted = true;
+      let debounce: any = null;
+
+      const fetchOptions = async () => {
+        setIsLoadingOptions(true);
+        try {
+          const queryParams = new URLSearchParams();
+          if (searchText) queryParams.set("q", searchText);
+          queryParams.set("page", String(currentPage));
+          queryParams.set("perPage", String(itemsPerPage));
+
+          const response = await fetch(
+            `/api/search/facets/${encodeURIComponent(
+              filter.name
+            )}?${queryParams.toString()}`
+          );
+          const res = await response.json();
+
+          // Flexible parsing of backend response
+          const options =
+            res?.data || res?.options || res?.items || res?.facets || res || [];
+
+          const parsedOptions: AvailableFilterOption[] = Array.isArray(options)
+            ? options
+            : options?.results || [];
+
+          const total =
+            res?.total ||
+            res?.count ||
+            res?.total_count ||
+            parsedOptions.length;
+
+          if (mounted) {
+            setFacetOptions(parsedOptions);
+            setTotalOptions(Number(total) || parsedOptions.length);
+          }
+        } catch (e) {
+          if (mounted) {
+            setFacetOptions([]);
+            setTotalOptions(0);
+          }
+        } finally {
+          if (mounted) setIsLoadingOptions(false);
+        }
+      };
+
+      if (isOpen) {
+        // debounce search changes
+        debounce = setTimeout(fetchOptions, 250);
+      }
+
+      return () => {
+        mounted = false;
+        if (debounce) clearTimeout(debounce);
+      };
+    }, [isOpen, currentPage, searchText, filter.name]);
 
     const handleOpen = () => {
       modalOnOpen();
@@ -232,7 +292,7 @@ const SelectFilterModal = forwardRef<HTMLButtonElement, SelectFilterModalProps>(
                   showHelperInvalidText={false}
                   onChange={(newSelection: string) => {
                     selected =
-                      filter.options.find(
+                      facetOptions.find(
                         (option) => option.name === newSelection
                       ) || null;
                     setModalCurrent(selected);
