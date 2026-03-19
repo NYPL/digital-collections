@@ -62,6 +62,8 @@ const UniversalViewer: React.FC<UniversalViewerProps> = React.memo(
       []
     );
 
+    console.log("MANIFEST");
+    console.log(manifestId);
     const uv = useUniversalViewer(ref, options);
 
     useEffect(() => {
@@ -74,6 +76,7 @@ const UniversalViewer: React.FC<UniversalViewerProps> = React.memo(
       // } catch {}
 
       let mo: MutationObserver | undefined;
+      console.log("HERE IS THE UV");
       console.log(typeof uv);
       console.log(uv);
 
