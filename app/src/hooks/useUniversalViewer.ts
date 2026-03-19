@@ -29,7 +29,7 @@ export function useUniversalViewer(
         currentUv.dispose();
       };
     }
-  }, []);
+  }, [options]);
 
   return uv;
 }

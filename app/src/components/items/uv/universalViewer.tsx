@@ -59,7 +59,7 @@ const UniversalViewer: React.FC<UniversalViewerProps> = React.memo(
         canvasIndex: canvasIndex,
         embedded: true,
       }),
-      []
+      [manifestId, canvasIndex]
     );
 
     console.log("MANIFEST");
