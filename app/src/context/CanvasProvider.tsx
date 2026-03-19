@@ -26,6 +26,7 @@ export const CanvasProvider = ({ children }: { children: React.ReactNode }) => {
     (index: number) => {
       const params = new URLSearchParams(searchParams.toString());
       params.set("canvasIndex", index.toString());
+      console.log(`Rerouting to canvas ${index}`);
 
       // This updates the URL without a full page reload
       router.push(`${pathname}?${params.toString()}`);
