@@ -25,7 +25,7 @@ const lanesData = {
         },
         {
           uuid: "924921a0-3cd0-0136-c557-0af54bc5b55e",
-          title: "Reform Advocate",
+          title: "The Reform Advocate",
           url: "https://digitalcollections.nypl.org/collections/the-reform-advocate#/?tab=navigation",
           imageID: "57880025",
         },
