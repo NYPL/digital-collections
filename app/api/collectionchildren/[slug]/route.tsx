@@ -69,7 +69,7 @@ async function fetchPage(
   const apiUrl = `${process.env.COLLECTIONS_API_URL}/collections/${uuid}/children?page=${page}&perPage=${PAGESIZE}`;
   const response = await fetchApi({
     apiUrl,
-    options: { isRepoApi: false, next: { revalidate: oneMonth } },
+    options: { next: { revalidate: oneMonth } },
   });
   return response;
 }
