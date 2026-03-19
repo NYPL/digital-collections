@@ -86,7 +86,7 @@ export class DCHomepage {
 
     //collections
     this.recentlyDigitizedCollection = this.page.getByRole("link", {
-      name: "Reform Advocate",
+      name: "The Reform Advocate",
       exact: true,
     });
     this.farmSecurityAdministrationPhotographsCollection = this.page.locator(
