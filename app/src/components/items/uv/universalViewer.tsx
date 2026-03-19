@@ -75,8 +75,11 @@ const UniversalViewer: React.FC<UniversalViewerProps> = React.memo(
 
       let mo: MutationObserver | undefined;
       console.log(typeof uv);
+      console.log(uv);
 
       if (uv) {
+        console.log(lastIndex.current);
+        console.log(canvasIndex);
         if (lastIndex.current !== canvasIndex) {
           uv._assignedContentHandler?.publish(
             BaseEvents.CANVAS_INDEX_CHANGE,
