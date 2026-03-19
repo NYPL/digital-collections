@@ -1,5 +1,6 @@
 export const metadataFieldToDisplay: Record<string, string> = {
   title: "Title",
+  additionalTitles: "Additional Titles",
   collection: "Collection",
   names: "Names",
   origin: "Date / Origin",

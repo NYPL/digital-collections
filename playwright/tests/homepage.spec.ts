@@ -11,11 +11,11 @@ test.beforeEach(async ({ page }) => {
   await page.goto("/");
 });
 
-test("verify navigation menu is displayed (items, collections, divisions, about)", async ({
+test("verify navigation menu is displayed (shuffle, collections, divisions, about)", async ({
   page,
 }) => {
   const dchomepage = new DCHomepage(page);
-  await expect(dchomepage.items).toBeVisible();
+  await expect(dchomepage.shuffle).toBeVisible();
   await expect(dchomepage.collections).toBeVisible();
   await expect(dchomepage.divisions).toBeVisible();
   await expect(dchomepage.about).toBeVisible();
@@ -34,15 +34,19 @@ test("verify public domain link is visible", async ({ page }) => {
 
 test("verify collections and item count", async ({ page }) => {
   const dchomepage = new DCHomepage(page);
-  await expect(dchomepage.posadaCollection).toBeVisible();
-  await expect(dchomepage.posadaCollectionItems).not.toHaveText("0 items");
+  await expect(dchomepage.recentlyDigitizedCollection).toBeVisible();
+  await expect(dchomepage.recentlyDigitizedCollectionItems).not.toHaveText(
+    "0 items"
+  );
   await expect(
     dchomepage.farmSecurityAdministrationPhotographsCollection
   ).toBeVisible();
   await expect(
     dchomepage.farmSecurityAdministrationPhotographsCollectionItems
   ).not.toHaveText("0 items");
-  await expect(dchomepage.posadaCollectionItems).not.toHaveText("NaN items");
+  await expect(dchomepage.recentlyDigitizedCollectionItems).not.toHaveText(
+    "NaN items"
+  );
   await expect(
     dchomepage.farmSecurityAdministrationPhotographsCollectionItems
   ).not.toHaveText("NaN items");

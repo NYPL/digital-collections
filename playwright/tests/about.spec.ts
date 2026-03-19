@@ -7,7 +7,7 @@ test.beforeEach(async ({ page }) => {
 
 test("verify navigation menu on about page", async ({ page }) => {
   const aboutPage = new AboutPage(page);
-  await expect(aboutPage.items).toBeVisible();
+  await expect(aboutPage.shuffle).toBeVisible();
   await expect(aboutPage.collections).toBeVisible();
   await expect(aboutPage.divisions).toBeVisible();
   await expect(aboutPage.about).toBeVisible();

@@ -4,7 +4,7 @@ export class DivisionsPage {
   private readonly page: Page;
   readonly seeMore: Locator;
   readonly seeMoreLink: Locator;
-  readonly items: Locator;
+  readonly shuffle: Locator;
   readonly collections: Locator;
   readonly divisions: Locator;
   readonly about: Locator;
@@ -73,9 +73,9 @@ export class DivisionsPage {
     ];
     this.seeMoreLink = this.page.getByRole("link", { name: "See more" });
 
-    this.items = this.page
+    this.shuffle = this.page
       .getByRole("navigation", { name: "Header links" })
-      .getByLabel("Items");
+      .getByLabel("Shuffle");
     this.collections = this.page
       .getByRole("navigation", { name: "Header links" })
       .getByLabel("Collections");

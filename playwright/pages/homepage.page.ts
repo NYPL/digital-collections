@@ -3,7 +3,7 @@ import { Locator, Page } from "@playwright/test";
 export class DCHomepage {
   private readonly page: Page;
   //navigation menu
-  readonly items: Locator;
+  readonly shuffle: Locator;
   readonly collections: Locator;
   readonly divisions: Locator;
   readonly about: Locator;
@@ -27,11 +27,11 @@ export class DCHomepage {
   readonly fliersAndEphemeraSeeMoreLink: Locator;
 
   //collections on homepage
-  readonly posadaCollection: Locator;
+  readonly recentlyDigitizedCollection: Locator;
   readonly farmSecurityAdministrationPhotographsCollection: Locator;
 
   //collections' items count
-  readonly posadaCollectionItems: Locator;
+  readonly recentlyDigitizedCollectionItems: Locator;
   readonly farmSecurityAdministrationPhotographsCollectionItems: Locator;
 
   //featured section
@@ -66,7 +66,7 @@ export class DCHomepage {
   constructor(page: Page) {
     //navigation menu
     this.page = page;
-    this.items = this.page.getByRole("link", { name: "Items" });
+    this.shuffle = this.page.getByRole("link", { name: "Shuffle" });
     this.collections = this.page.getByRole("link", {
       name: "Collections",
       exact: true,
@@ -85,8 +85,8 @@ export class DCHomepage {
     });
 
     //collections
-    this.posadaCollection = this.page.getByRole("link", {
-      name: "Posada Collection",
+    this.recentlyDigitizedCollection = this.page.getByRole("link", {
+      name: "Reform Advocate",
       exact: true,
     });
     this.farmSecurityAdministrationPhotographsCollection = this.page.locator(
@@ -95,8 +95,8 @@ export class DCHomepage {
 
     //collections' items total count
     //these locators are used to verify that the collections have items
-    this.posadaCollectionItems = this.page.locator(
-      "#item-count-posada-collection-0"
+    this.recentlyDigitizedCollectionItems = this.page.locator(
+      "#item-count-reform-advocate-3"
     );
     this.farmSecurityAdministrationPhotographsCollectionItems =
       this.page.locator(
