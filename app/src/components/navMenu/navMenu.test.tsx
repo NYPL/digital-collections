@@ -6,7 +6,7 @@ import NavMenu from "./navMenu";
 describe("Nav menu component", () => {
   it("renders nav menu component", () => {
     render(<NavMenu render={1} />);
-    expect(screen.getByText("Items")).toBeInTheDocument;
+    expect(screen.getByText("Shuffle")).toBeInTheDocument;
     expect(screen.getByText("Collections")).toBeInTheDocument;
     expect(screen.getByText("Divisions")).toBeInTheDocument;
     expect(screen.getByText("About")).toBeInTheDocument;
@@ -14,7 +14,7 @@ describe("Nav menu component", () => {
 
   it("has links", () => {
     const { getByLabelText } = render(<NavMenu render={1} />);
-    expect(getByLabelText("Items")).toHaveAttribute("href", `/search/index`);
+    expect(getByLabelText("Shuffle")).toHaveAttribute("href", `/shuffle`);
     expect(getByLabelText("Divisions")).toHaveAttribute("href", `/divisions`);
     expect(getByLabelText("Collections")).toHaveAttribute(
       "href",
