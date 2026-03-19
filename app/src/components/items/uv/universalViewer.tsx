@@ -65,6 +65,7 @@ const UniversalViewer: React.FC<UniversalViewerProps> = React.memo(
     const uv = useUniversalViewer(ref, options);
 
     useEffect(() => {
+      console.log("USE EFFECT IN VIEWER");
       // OPTIONAL: wipe UV prefs in dev so old settings don't override you; I kept having issues making changes.
       // try {
       //   Object.keys(localStorage)
