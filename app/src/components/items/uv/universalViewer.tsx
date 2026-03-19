@@ -20,6 +20,9 @@ export type UniversalViewerProps = {
 // pulled most of this code from: https://codesandbox.io/p/sandbox/uv-nextjs-example-239ff5?file=%2Fcomponents%2FUniversalViewer.tsx%3A39%2C1-49%2C8
 const UniversalViewer: React.FC<UniversalViewerProps> = React.memo(
   ({ manifestId, captureUuidToIdx, canvasIndex, onChangeCanvas, config }) => {
+    const searchParams = useSearchParams();
+    const { setCurrentCanvasIndex } = useCanvasContext();
+
     // Try to parse a capture uuid from the url hash for OG-style capture links
     // These links come with a hash like '#/?uuid=xxxx', so to convert to params,
     // we strip off the first 3 chars
@@ -28,14 +31,9 @@ const UniversalViewer: React.FC<UniversalViewerProps> = React.memo(
     if (captureUuid) {
       const captureIdx = captureUuidToIdx[captureUuid];
       if (captureIdx) {
-        window.location.replace(
-          window.location.pathname + `?canvasIndex=${captureIdx}`
-        );
+        setCurrentCanvasIndex(captureIdx);
       }
     }
-
-    const searchParams = useSearchParams();
-    const { setCurrentCanvasIndex } = useCanvasContext();
 
     const handleOnClick = (e) => {
       if (e.target.className === "openseadragon-canvas") {
@@ -76,11 +74,11 @@ const UniversalViewer: React.FC<UniversalViewerProps> = React.memo(
 
       let mo: MutationObserver | undefined;
 
-      if (uv && (canvasIndex || canvasIndex === 0)) {
+      if (uv) {
         if (lastIndex.current !== canvasIndex) {
           uv._assignedContentHandler?.publish(
             BaseEvents.CANVAS_INDEX_CHANGE,
-            canvasIndex
+            canvasIndex ?? 0
           );
           lastIndex.current = canvasIndex;
         }
@@ -254,6 +252,8 @@ const UniversalViewer: React.FC<UniversalViewerProps> = React.memo(
     }, [canvasIndex, uv]);
 
     useEvent(uv, BaseEvents.CANVAS_INDEX_CHANGE, (i) => {
+      console.log("Index Changed");
+      console.log(onChangeCanvas);
       if (onChangeCanvas) {
         setCurrentCanvasIndex(i);
 
