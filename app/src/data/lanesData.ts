@@ -6,10 +6,10 @@ const lanesData = {
       rank: 0,
       collections: [
         {
-          uuid: "60932400-20f2-0138-8583-05c43d448773",
-          title: "Posada Collection",
-          url: "https://digitalcollections.nypl.org/collections/posada-collection#/?tab=navigation",
-          imageID: "58270299",
+          uuid: "90d41660-53a5-0130-2430-58d385a7b928",
+          title: "Opportunity: journal of Negro life",
+          url: "https://digitalcollections.nypl.org/collections/opportunity#/?tab=navigation",
+          imageID: "58864967",
         },
         {
           uuid: "66d899e0-b7b9-013c-626c-0242ac110002",
@@ -18,16 +18,16 @@ const lanesData = {
           imageID: "58887224",
         },
         {
-          uuid: "6b6532b0-5df7-013b-36f8-0242ac110002",
-          title: "Austin Hansen photograph collection",
-          url: "https://digitalcollections.nypl.org/collections/austin-hansen-photograph-collection#/?tab=navigation",
-          imageID: "58300996",
-        },
-        {
           uuid: "5b996640-c31c-0139-0bac-0242ac110004",
           title: "Arthur Alfonso Schomburg papers",
           url: "https://digitalcollections.nypl.org/collections/arthur-alfonso-schomburg-papers#/?tab=navigation",
           imageID: "58591658",
+        },
+        {
+          uuid: "924921a0-3cd0-0136-c557-0af54bc5b55e",
+          title: "Reform Advocate",
+          url: "https://digitalcollections.nypl.org/collections/the-reform-advocate#/?tab=navigation",
+          imageID: "57880025",
         },
       ],
     },
