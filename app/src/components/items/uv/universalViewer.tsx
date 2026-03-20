@@ -90,7 +90,8 @@ const UniversalViewer: React.FC<UniversalViewerProps> = React.memo(
       if (uv) {
         console.log(lastIndex.current);
         console.log(canvasIndex);
-        if (isFirstLoad || lastIndex.current !== indexToSet) {
+        console.log(isFirstLoad.current);
+        if (isFirstLoad.current || lastIndex.current !== indexToSet) {
           uv.on("created", () => {
             console.log("PUBLISH ON CREATE");
             uv._assignedContentHandler?.publish(
