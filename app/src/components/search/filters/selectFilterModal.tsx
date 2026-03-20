@@ -120,23 +120,12 @@ const SelectFilterModal = forwardRef<HTMLButtonElement, SelectFilterModalProps>(
           );
           const res = await response.json();
 
-          // Flexible parsing of backend response
-          const options =
-            res?.data || res?.options || res?.items || res?.facets || res || [];
-
-          const parsedOptions: AvailableFilterOption[] = Array.isArray(options)
-            ? options
-            : options?.results || [];
-
-          const total =
-            res?.total ||
-            res?.count ||
-            res?.total_count ||
-            parsedOptions.length;
+          const parsedOptions: AvailableFilterOption[] = res?.facets ?? [];
+          const total = parsedOptions.length;
 
           if (mounted) {
             setFacetOptions(parsedOptions);
-            setTotalOptions(Number(total) || parsedOptions.length);
+            setTotalOptions(total);
           }
         } catch (e) {
           if (mounted) {
