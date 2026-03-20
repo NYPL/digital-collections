@@ -53,6 +53,7 @@ const UniversalViewer: React.FC<UniversalViewerProps> = React.memo(
 
     const ref = useRef<HTMLDivElement>(null);
     const lastIndex = useRef<number>();
+    const isFirstLoad = useRef(true);
     const options = useMemo(
       () => ({
         manifest: manifestId,
@@ -80,15 +81,28 @@ const UniversalViewer: React.FC<UniversalViewerProps> = React.memo(
       console.log(typeof uv);
       console.log(uv);
 
+      if (!uv) {
+        isFirstLoad.current = true;
+        return;
+      }
+      const indexToSet = canvasIndex ?? 0;
+
       if (uv) {
         console.log(lastIndex.current);
         console.log(canvasIndex);
-        if (lastIndex.current !== canvasIndex) {
+        if (isFirstLoad || lastIndex.current !== indexToSet) {
+          uv.on("created", () => {
+            uv._assignedContentHandler?.publish(
+              BaseEvents.CANVAS_INDEX_CHANGE,
+              indexToSet
+            );
+          });
           uv._assignedContentHandler?.publish(
             BaseEvents.CANVAS_INDEX_CHANGE,
-            canvasIndex ?? 0
+            indexToSet
           );
           lastIndex.current = canvasIndex;
+          isFirstLoad.current = false;
         }
       }
 
