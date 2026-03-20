@@ -27,11 +27,11 @@ export class DCHomepage {
   readonly fliersAndEphemeraSeeMoreLink: Locator;
 
   //collections on homepage
-  readonly posadaCollection: Locator;
+  readonly recentlyDigitizedCollection: Locator;
   readonly farmSecurityAdministrationPhotographsCollection: Locator;
 
   //collections' items count
-  readonly posadaCollectionItems: Locator;
+  readonly recentlyDigitizedCollectionItems: Locator;
   readonly farmSecurityAdministrationPhotographsCollectionItems: Locator;
 
   //featured section
@@ -85,8 +85,8 @@ export class DCHomepage {
     });
 
     //collections
-    this.posadaCollection = this.page.getByRole("link", {
-      name: "Posada Collection",
+    this.recentlyDigitizedCollection = this.page.getByRole("link", {
+      name: "Reform Advocate",
       exact: true,
     });
     this.farmSecurityAdministrationPhotographsCollection = this.page.locator(
@@ -95,8 +95,8 @@ export class DCHomepage {
 
     //collections' items total count
     //these locators are used to verify that the collections have items
-    this.posadaCollectionItems = this.page.locator(
-      "#item-count-posada-collection-0"
+    this.recentlyDigitizedCollectionItems = this.page.locator(
+      "#item-count-reform-advocate-3"
     );
     this.farmSecurityAdministrationPhotographsCollectionItems =
       this.page.locator(

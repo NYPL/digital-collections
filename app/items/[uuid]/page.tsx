@@ -20,12 +20,6 @@ type ItemProps = {
 
 let item;
 
-const getItemManifest = async (uuid: string) => {
-  const clientIP = await getClientIP();
-  const data = await CollectionsApi.getManifestForItemUUID(uuid, clientIP);
-  return data;
-};
-
 const getItemData = async (uuid: string) => {
   const clientIP = await getClientIP();
   try {
