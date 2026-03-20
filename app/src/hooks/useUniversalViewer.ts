@@ -32,9 +32,10 @@ export function useUniversalViewer(
 
       return () => {
         currentUv.dispose();
+        setUv(undefined);
       };
     }
-  }, [manifestId]);
+  }, [ref, manifestId]);
 
   return uv;
 }
