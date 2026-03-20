@@ -62,8 +62,8 @@ export class CollectionsApi {
     facet: string,
     { keyword = "" }: { keyword?: string } = {}
   ) {
-    const qParam = keyword ? `?q=${encodeURIComponent(keyword)}` : "";
-    const apiUrl = `${process.env.COLLECTIONS_API_URL}/search/facets/${facet}${qParam}`;
+    const query = keyword ? `?q=${encodeURIComponent(keyword)}` : "";
+    const apiUrl = `${process.env.COLLECTIONS_API_URL}/search/facets/${facet}${query}`;
     const response = await fetchApi({
       apiUrl: apiUrl,
       options: { isRepoApi: false },
