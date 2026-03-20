@@ -45,6 +45,26 @@ describe("SelectFilterModal", () => {
     ],
   };
 
+  beforeEach(() => {
+    global.fetch = jest.fn().mockImplementation((url: string) => {
+      const urlObj = new URL(url, "http://localhost");
+      const query = urlObj.searchParams.get("q") || "";
+      const options = mockFilter.options;
+      const facets = query
+        ? options.filter((option) =>
+            option.name.toLowerCase().includes(query.toLowerCase())
+          )
+        : options;
+      return Promise.resolve({
+        json: () => Promise.resolve({ facets }),
+      });
+    });
+  });
+
+  afterEach(() => {
+    jest.restoreAllMocks();
+  });
+
   let mockManager = new GeneralSearchManager({
     initialPage: 1,
     initialSort: DEFAULT_SEARCH_SORT,
