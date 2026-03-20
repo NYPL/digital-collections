@@ -88,6 +88,15 @@ const UniversalViewer: React.FC<UniversalViewerProps> = React.memo(
       const indexToSet = canvasIndex ?? 0;
 
       if (uv) {
+        uv.on("success", () => {
+          console.log("SUCCESS");
+        });
+        uv.on("created", () => {
+          console.log("CREATED");
+        });
+        uv.on("configure", () => {
+          console.log("CONFIGURE");
+        });
         console.log(lastIndex.current);
         console.log(canvasIndex);
         console.log(isFirstLoad.current);
