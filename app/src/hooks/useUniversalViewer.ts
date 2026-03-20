@@ -20,6 +20,7 @@ export function useUniversalViewer(
   canvasIndex: number
 ) {
   const [uv, setUv] = useState<Viewer>();
+  const [isReady, setIsReady] = useState(false);
 
   useEffect(() => {
     const options = {
@@ -29,13 +30,17 @@ export function useUniversalViewer(
     if (ref.current) {
       const currentUv = init(ref.current, options);
       setUv(currentUv);
+      currentUv.on("success", () => {
+        setIsReady(true);
+      });
 
       return () => {
         currentUv.dispose();
         setUv(undefined);
+        setIsReady(false);
       };
     }
   }, [ref, manifestId]);
 
-  return uv;
+  return { uv, isReady };
 }

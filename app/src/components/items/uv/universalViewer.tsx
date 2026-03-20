@@ -65,7 +65,11 @@ const UniversalViewer: React.FC<UniversalViewerProps> = React.memo(
 
     console.log("MANIFEST");
     console.log(manifestId);
-    const uv = useUniversalViewer(ref, manifestId, canvasIndex || 0);
+    const { uv, isReady } = useUniversalViewer(
+      ref,
+      manifestId,
+      canvasIndex || 0
+    );
 
     useEffect(() => {
       console.log("USE EFFECT IN VIEWER");
@@ -81,7 +85,7 @@ const UniversalViewer: React.FC<UniversalViewerProps> = React.memo(
       console.log(typeof uv);
       console.log(uv);
 
-      if (!uv) {
+      if (!uv || !isReady) {
         isFirstLoad.current = true;
         return;
       }
@@ -283,7 +287,7 @@ const UniversalViewer: React.FC<UniversalViewerProps> = React.memo(
           mo?.disconnect();
         } catch {}
       };
-    }, [canvasIndex, uv]);
+    }, [canvasIndex, uv, isReady]);
 
     useEvent(uv, BaseEvents.CANVAS_INDEX_CHANGE, (i) => {
       console.log("Index Changed");
