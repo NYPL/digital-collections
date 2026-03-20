@@ -33,6 +33,9 @@ export function useUniversalViewer(
       currentUv.on("success", () => {
         setIsReady(true);
       });
+      currentUv.on("configure", () => {
+        setIsReady(true);
+      });
 
       return () => {
         currentUv.dispose();
