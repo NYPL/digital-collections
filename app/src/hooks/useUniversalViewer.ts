@@ -16,11 +16,16 @@ export function useEvent(
 
 export function useUniversalViewer(
   ref: React.RefObject<HTMLDivElement>,
-  options: any
+  manifestId: string,
+  canvasIndex: number
 ) {
   const [uv, setUv] = useState<Viewer>();
 
   useEffect(() => {
+    const options = {
+      manifest: manifestId,
+      canvasIndex: canvasIndex,
+    };
     if (ref.current) {
       const currentUv = init(ref.current, options);
       setUv(currentUv);
@@ -29,7 +34,7 @@ export function useUniversalViewer(
         currentUv.dispose();
       };
     }
-  }, [options]);
+  }, [manifestId]);
 
   return uv;
 }

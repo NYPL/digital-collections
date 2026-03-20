@@ -64,7 +64,7 @@ const UniversalViewer: React.FC<UniversalViewerProps> = React.memo(
 
     console.log("MANIFEST");
     console.log(manifestId);
-    const uv = useUniversalViewer(ref, options);
+    const uv = useUniversalViewer(ref, manifestId, canvasIndex || 0);
 
     useEffect(() => {
       console.log("USE EFFECT IN VIEWER");
