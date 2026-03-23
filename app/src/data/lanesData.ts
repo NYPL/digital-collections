@@ -9,7 +9,7 @@ const lanesData = {
           uuid: "90d41660-53a5-0130-2430-58d385a7b928",
           title: "Opportunity: journal of Negro life",
           url: "https://digitalcollections.nypl.org/collections/opportunity#/?tab=navigation",
-          imageID: "58864967",
+          imageID: "58886276",
         },
         {
           uuid: "66d899e0-b7b9-013c-626c-0242ac110002",
