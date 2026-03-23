@@ -18,7 +18,7 @@ import {
 } from "@nypl/design-system-react-components";
 import DCSearchBar from "../dcSearchBar";
 import { headerBreakpoints } from "@/src/utils/breakpoints";
-import { usePathname, useRouter } from "next/navigation";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { SearchManager } from "@/src/utils/searchManager/searchManager";
 import {
   AvailableFilter,
@@ -64,9 +64,6 @@ const SelectFilterModal = forwardRef<HTMLButtonElement, SelectFilterModalProps>(
     const [facetOptions, setFacetOptions] = useState<AvailableFilterOption[]>(
       filter.options || []
     );
-    const [totalOptions, setTotalOptions] = useState<number>(
-      filter.options?.length || 0
-    );
     const [isLoadingOptions, setIsLoadingOptions] = useState(false);
 
     // Whether modal closing should focus on open or closed dropdown.
@@ -80,57 +77,56 @@ const SelectFilterModal = forwardRef<HTMLButtonElement, SelectFilterModalProps>(
 
     const { push } = useRouter();
     const pathname = usePathname();
+    const searchParams = useSearchParams();
     const updateURL = async (queryString) => {
       push(`${pathname}?${queryString}`);
     };
 
-    const pageCount = Math.ceil(totalOptions / itemsPerPage) || 1;
-    const currentOptions = facetOptions.slice(
+    // Client-side filtering of fetched facet options by modal search text.
+    const filteredOptions = facetOptions.filter((option) =>
+      option.name.toLowerCase().includes(searchText.toLowerCase())
+    );
+
+    const pageCount = Math.ceil(filteredOptions.length / itemsPerPage) || 1;
+    const currentOptions = filteredOptions.slice(
       (currentPage - 1) * itemsPerPage,
       currentPage * itemsPerPage
     );
 
     useEffect(() => {
       if (liveRegionRef.current) {
-        liveRegionRef.current.textContent = `${totalOptions} options available`;
+        liveRegionRef.current.textContent = `${filteredOptions.length} options available`;
       }
-    }, [totalOptions]);
+    }, [filteredOptions.length]);
 
     // Reset page when search text changes.
     useEffect(() => {
       setCurrentPage(1);
     }, [searchText]);
 
-    // Fetch all facet matches from our internal app route so external API
-    // requests happen on the server. Pagination is handled client-side.
+    // Fetch all facet options scoped to the current DC search params.
+    // Pagination and text filtering are handled client-side.
     useEffect(() => {
       let mounted = true;
-      let debounce: any = null;
 
       const fetchOptions = async () => {
         setIsLoadingOptions(true);
         try {
-          const queryParams = new URLSearchParams();
-          if (searchText) queryParams.set("q", searchText);
-
           const response = await fetch(
             `/api/search/facets/${encodeURIComponent(
               filter.name
-            )}?${queryParams.toString()}`
+            )}?${searchParams.toString()}`
           );
           const res = await response.json();
 
           const parsedOptions: AvailableFilterOption[] = res?.facets ?? [];
-          const total = parsedOptions.length;
 
           if (mounted) {
             setFacetOptions(parsedOptions);
-            setTotalOptions(total);
           }
         } catch (e) {
           if (mounted) {
             setFacetOptions([]);
-            setTotalOptions(0);
           }
         } finally {
           if (mounted) setIsLoadingOptions(false);
@@ -138,15 +134,13 @@ const SelectFilterModal = forwardRef<HTMLButtonElement, SelectFilterModalProps>(
       };
 
       if (isOpen) {
-        // debounce search changes
-        debounce = setTimeout(fetchOptions, 250);
+        fetchOptions();
       }
 
       return () => {
         mounted = false;
-        if (debounce) clearTimeout(debounce);
       };
-    }, [isOpen, searchText, filter.name]);
+    }, [isOpen, filter.name, searchParams.toString()]);
 
     const handleOpen = () => {
       modalOnOpen();
@@ -282,7 +276,7 @@ const SelectFilterModal = forwardRef<HTMLButtonElement, SelectFilterModalProps>(
                   showHelperInvalidText={false}
                   onChange={(newSelection: string) => {
                     selected =
-                      facetOptions.find(
+                      filteredOptions.find(
                         (option) => option.name === newSelection
                       ) || null;
                     setModalCurrent(selected);

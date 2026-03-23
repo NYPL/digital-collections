@@ -7,12 +7,10 @@ export const GET = async (
 ) => {
   const { facet } = params;
   const url = new URL(request.url);
-  const q = url.searchParams.get("q") || "";
+  const queryString = url.searchParams.toString();
 
   try {
-    const response = await CollectionsApi.getFacetOptions(facet, {
-      keyword: q,
-    });
+    const response = await CollectionsApi.getFacetOptions(facet, queryString);
     return NextResponse.json(response, { status: 200 });
   } catch (error: any) {
     return NextResponse.json(
@@ -21,5 +19,3 @@ export const GET = async (
     );
   }
 };
-
-// Example: /api/search/facets/publisher?q=shakespeare
