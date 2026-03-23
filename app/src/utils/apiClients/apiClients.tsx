@@ -53,13 +53,10 @@ export class CollectionsApi {
 
   /**
    * Fetches facet options for a single facet from the collections API.
-   * The endpoint supports keyword filtering via `q`, and returns all matches.
+   * Accepts the DC search query string (q, filters, sort, etc.) to scope results.
    */
-  static async getFacetOptions(
-    facet: string,
-    { keyword = "" }: { keyword?: string } = {}
-  ) {
-    const query = keyword ? `?q=${encodeURIComponent(keyword)}` : "";
+  static async getFacetOptions(facet: string, queryString = "") {
+    const query = queryString ? `?${queryString}` : "";
     const apiUrl = `${process.env.COLLECTIONS_API_URL}/search/facets/${facet}${query}`;
     const response = await fetchApi({
       apiUrl: apiUrl,
