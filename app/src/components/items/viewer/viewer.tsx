@@ -2,7 +2,7 @@
 
 import { ItemModel } from "../../../models/item";
 import React from "react";
-import { UniversalViewer } from "../uv/universalViewerLazy";
+import UniversalViewer from "../uv/universalViewer";
 import "universalviewer/dist/esm/index.css";
 import { PlyrPlayer } from "../plyr/dynamic";
 
