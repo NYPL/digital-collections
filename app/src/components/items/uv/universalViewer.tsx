@@ -288,7 +288,8 @@ const UniversalViewer: React.FC<UniversalViewerProps> = React.memo(
         />
       </>
     );
-  }
+  },
+  (prevProps, nextProps) => prevProps.manifestId === nextProps.manifestId
 );
 
 UniversalViewer.displayName = "UniversalViewer";
