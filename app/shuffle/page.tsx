@@ -1,3 +1,4 @@
+import ShufflePage from "@/src/components/pages/shufflePage/shufflePage";
 import { CollectionsApi } from "@/src/utils/apiClients/apiClients";
 import { Metadata } from "next";
 import { headers } from "next/headers";
@@ -13,5 +14,5 @@ export default async function Shuffle() {
   await headers();
 
   const url: string = await CollectionsApi.getRandomCollectionOrItem();
-  return redirect(url);
+  return <ShufflePage redirectPath={url} />;
 }

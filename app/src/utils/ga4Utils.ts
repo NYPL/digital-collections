@@ -58,6 +58,16 @@ export const trackAVProgress = (
   });
 };
 
+export const trackCTA = (text: string, url: string, type: string) => {
+  const dataLayer = window["dataLayer"] || [];
+  dataLayer.push({
+    event: "cta_click",
+    click_text: text,
+    click_url: url,
+    click_type: type,
+  });
+};
+
 export const trackSearchResults = (
   searchResultsLayout: "grid" | "list",
   filterNames: string[],
