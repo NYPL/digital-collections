@@ -86,7 +86,7 @@ export class DCHomepage {
 
     //collections
     this.recentlyDigitizedCollection = this.page.getByRole("link", {
-      name: "Reform Advocate",
+      name: "The Reform Advocate",
       exact: true,
     });
     this.farmSecurityAdministrationPhotographsCollection = this.page.locator(
@@ -96,7 +96,7 @@ export class DCHomepage {
     //collections' items total count
     //these locators are used to verify that the collections have items
     this.recentlyDigitizedCollectionItems = this.page.locator(
-      "#item-count-reform-advocate-3"
+      "#item-count-the-reform-advocate-3"
     );
     this.farmSecurityAdministrationPhotographsCollectionItems =
       this.page.locator(
