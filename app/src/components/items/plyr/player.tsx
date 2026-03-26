@@ -31,14 +31,6 @@ const Player = ({ title, sources, captions, type }: PlyrProps) => {
   const buttonRefs = useRef<(HTMLButtonElement | null)[]>([]);
   const plyrRef = useRef<APITypes>(null);
 
-  function updateCanvasIndex(newCanvasIndex: number) {
-    setCurrentCanvasIndex(newCanvasIndex);
-    const stringifiedParams = searchParams.toString();
-    const urlSearchParams = new URLSearchParams(stringifiedParams);
-    urlSearchParams.set("canvasIndex", newCanvasIndex.toString());
-    window.history.pushState(null, "", `?${urlSearchParams}`);
-  }
-
   let source;
 
   // if query param is present
@@ -115,7 +107,7 @@ const Player = ({ title, sources, captions, type }: PlyrProps) => {
                   id={`item-canvas-${index + 1}-button`}
                   ref={(el) => (buttonRefs.current[index] = el)}
                   onClick={() => {
-                    updateCanvasIndex(index);
+                    setCurrentCanvasIndex(index);
                   }}
                 >
                   {truncateString(title, 20)} ({index + 1})

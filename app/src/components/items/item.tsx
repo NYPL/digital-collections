@@ -20,14 +20,13 @@ import {
 
 interface ItemProps {
   item: ItemModel;
-  canvasIndex: number; //for when/if this is a query param
 }
 
 const renderViewer = (item) => {
   return item.hasItems && !item.isRestricted;
 };
 
-const Item = ({ item, canvasIndex }: ItemProps) => {
+const Item = ({ item }: ItemProps) => {
   return (
     <CanvasProvider>
       <Box marginTop="-3em">
@@ -36,7 +35,7 @@ const Item = ({ item, canvasIndex }: ItemProps) => {
             <Heading level="h1" paddingBottom="s">
               {item.title}
             </Heading>
-            <ItemMediaViewer item={item} canvasIndex={canvasIndex} />
+            <ItemMediaViewer item={item} />
           </>
         ) : (
           <>
