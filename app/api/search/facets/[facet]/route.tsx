@@ -1,15 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
 import { CollectionsApi } from "@/src/utils/apiClients/apiClients";
-import { Filter } from "@/src/types/FilterType";
-
-export interface SearchParamsType {
-  q: string;
-  filters: Filter[];
-}
-
-export type SearchProps = {
-  searchParams: SearchParamsType;
-};
 
 export const GET = async (
   request: NextRequest,
