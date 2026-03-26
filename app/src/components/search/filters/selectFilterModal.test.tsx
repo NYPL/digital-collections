@@ -28,6 +28,9 @@ jest.mock("next/navigation", () => ({
     push: jest.fn(),
   })),
   usePathname: jest.fn(),
+  useSearchParams: jest.fn(() => ({
+    toString: jest.fn(),
+  })),
 }));
 
 describe("SelectFilterModal", () => {
