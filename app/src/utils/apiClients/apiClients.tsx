@@ -233,16 +233,6 @@ export class CollectionsApi {
     const response = await fetchApi({
       apiUrl: apiUrl,
     });
-    // console.log("Search API response: ", response);
-    return response;
-  }
-
-  static async getManifestForItemUUID(uuid: string, clientIP: string | null) {
-    let apiUrl = `${process.env.COLLECTIONS_API_URL}/manifests/${uuid}`;
-    const response = await fetchApi({
-      apiUrl: apiUrl,
-      options: { clientIP: clientIP },
-    });
     return response;
   }
 
