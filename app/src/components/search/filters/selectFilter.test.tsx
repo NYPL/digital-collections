@@ -5,7 +5,7 @@ import {
   DEFAULT_SEARCH_SORT,
   DEFAULT_SEARCH_TERM,
 } from "@/src/config/constants";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { AvailableFilter } from "@/src/types/AvailableFilterType";
 
 const mockAvailableFilter: AvailableFilter = {
@@ -30,6 +30,9 @@ jest.mock("next/navigation", () => ({
     push: jest.fn(),
   })),
   usePathname: jest.fn(),
+  useSearchParams: jest.fn(() => ({
+    toString: jest.fn(),
+  })),
 }));
 
 let mockManager = new GeneralSearchManager({
