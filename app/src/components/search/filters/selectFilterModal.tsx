@@ -64,7 +64,6 @@ const SelectFilterModal = forwardRef<HTMLButtonElement, SelectFilterModalProps>(
     const [facetOptions, setFacetOptions] = useState<AvailableFilterOption[]>(
       filter.options || []
     );
-    const [isLoadingOptions, setIsLoadingOptions] = useState(false);
 
     // Whether modal closing should focus on open or closed dropdown.
     const [focusOutside, setFocusOutside] = useState(false);
@@ -106,21 +105,17 @@ const SelectFilterModal = forwardRef<HTMLButtonElement, SelectFilterModalProps>(
 
     // Fetch all facet options scoped to the current DC search params.
     // Pagination and text filtering are handled client-side.
+    const queryString = searchParams.toString();
     useEffect(() => {
       let mounted = true;
 
       const fetchOptions = async () => {
-        setIsLoadingOptions(true);
         try {
-          const response = await fetch(
-            `/api/search/facets/${encodeURIComponent(
-              filter.name
-            )}?${searchParams.toString()}`
+          const parsedOptions = await fetchFacetOptions(
+            filter.name,
+            searchText,
+            queryString
           );
-          const res = await response.json();
-
-          const parsedOptions: AvailableFilterOption[] = res?.facets ?? [];
-
           if (mounted) {
             setFacetOptions(parsedOptions);
           }
@@ -128,8 +123,6 @@ const SelectFilterModal = forwardRef<HTMLButtonElement, SelectFilterModalProps>(
           if (mounted) {
             setFacetOptions([]);
           }
-        } finally {
-          if (mounted) setIsLoadingOptions(false);
         }
       };
 
@@ -140,7 +133,7 @@ const SelectFilterModal = forwardRef<HTMLButtonElement, SelectFilterModalProps>(
       return () => {
         mounted = false;
       };
-    }, [isOpen, filter.name, searchParams.toString()]);
+    }, [isOpen, filter.name, queryString]);
 
     const handleOpen = () => {
       modalOnOpen();
@@ -367,6 +360,21 @@ const SelectFilterModal = forwardRef<HTMLButtonElement, SelectFilterModalProps>(
     );
   }
 );
+
+const fetchFacetOptions = async (
+  facet: string,
+  q: string,
+  filters: string
+): Promise<AvailableFilterOption[]> => {
+  const response = await fetch(
+    `/api/search/facets/${encodeURIComponent(filter.name)}?${queryString}`
+  );
+  if (!response.ok) {
+    throw new Error("Failed to fetch facet options");
+  }
+  const res = await response.json();
+  return res?.facets ?? [];
+};
 
 SelectFilterModal.displayName = "SelectFilterModal";
 export default SelectFilterModal;
