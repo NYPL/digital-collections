@@ -7,6 +7,7 @@ import React, { useEffect, useMemo, useRef } from "react";
 import { IIIFEvents as BaseEvents, IIIFURLAdapter } from "universalviewer";
 import { useRouter, usePathname, useSearchParams } from "next/navigation";
 import { useCanvasContext } from "../../../context/CanvasProvider";
+import "universalviewer/dist/esm/index.css";
 
 export type UniversalViewerProps = {
   config?: any;
