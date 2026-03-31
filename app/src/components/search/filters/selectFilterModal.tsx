@@ -113,7 +113,6 @@ const SelectFilterModal = forwardRef<HTMLButtonElement, SelectFilterModalProps>(
         try {
           const parsedOptions = await fetchFacetOptions(
             filter.name,
-            searchText,
             queryString
           );
           if (mounted) {
@@ -363,11 +362,10 @@ const SelectFilterModal = forwardRef<HTMLButtonElement, SelectFilterModalProps>(
 
 const fetchFacetOptions = async (
   facet: string,
-  q: string,
-  filters: string
+  queryString: string
 ): Promise<AvailableFilterOption[]> => {
   const response = await fetch(
-    `/api/search/facets/${encodeURIComponent(filter.name)}?${queryString}`
+    `/api/search/facets/${encodeURIComponent(facet)}?${queryString}`
   );
   if (!response.ok) {
     throw new Error("Failed to fetch facet options");
