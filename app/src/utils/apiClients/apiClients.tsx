@@ -52,8 +52,8 @@ export class CollectionsApi {
   }
 
   /**
-   * Fetches facet options for a single facet from the collections API.
-   * Accepts the DC search query string (q, filters, sort, etc.) to scope results.
+   * Fetches facet options for a single facet from the collections API, taking
+   * the `q` keyword string and already applied `filters`
    */
   static async getFacetOptions(facet: string, q: string, filters: string) {
     const filterString = filterStringToCollectionApiFilterString(filters);
