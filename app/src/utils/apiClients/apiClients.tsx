@@ -51,6 +51,21 @@ export class CollectionsApi {
     return response;
   }
 
+  /**
+   * Fetches facet options for a single facet from the collections API, taking
+   * the `q` keyword string and already applied `filters`
+   */
+  static async getFacetOptions(facet: string, q: string, filters: string) {
+    const filterString = filterStringToCollectionApiFilterString(filters);
+    const filterURL = filters.length > 0 ? `&${filterString}` : "";
+    const query = `?q=${encodeURIComponent(q)}${filterURL}`;
+    const apiUrl = `${process.env.COLLECTIONS_API_URL}/search/facets/${facet}${query}`;
+    const response = await fetchApi({
+      apiUrl: apiUrl,
+    });
+    return response;
+  }
+
   static async getCollectionData(uuid: string) {
     let apiUrl = `${process.env.COLLECTIONS_API_URL}/collections/${uuid}`;
     const response = await fetchApi({
