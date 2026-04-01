@@ -59,6 +59,7 @@ describe("SelectFilterModal", () => {
           )
         : options;
       return Promise.resolve({
+        ok: true,
         json: () => Promise.resolve({ facets }),
       });
     });
