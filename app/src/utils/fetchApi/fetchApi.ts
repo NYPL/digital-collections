@@ -1,5 +1,3 @@
-import logger from "logger";
-
 /**
  * Makes a GET or POST request to Repo/Collections API and returns the response.
  * Times out at 10 seconds to prevent 504 crash.
@@ -67,7 +65,7 @@ export const fetchApi = async ({
       next,
     })) as Response;
   } catch (error) {
-    logger.error(error);
+    console.error(error);
     throw new Error(error.message);
   }
   if (response.ok) {
