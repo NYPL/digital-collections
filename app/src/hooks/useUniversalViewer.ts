@@ -1,5 +1,5 @@
 import React, { useLayoutEffect, useEffect, useState } from "react";
-import { init, Viewer } from "universalviewer";
+import type { Viewer } from "universalviewer";
 
 export function useEvent(
   // from code came from https://codesandbox.io/p/sandbox/uv-nextjs-example-239ff5?file=%2Flib%2Fuse-universalviewer.ts%3A9%2C26
@@ -19,8 +19,12 @@ export function useUniversalViewer(
   options: any
 ) {
   const [uv, setUv] = useState<Viewer>();
-
+  const windowIsLoaded = typeof window !== "undefined";
   useEffect(() => {
+    if (!windowIsLoaded) {
+      return undefined;
+    }
+    const { init } = require("universalviewer");
     if (ref.current) {
       const currentUv = init(ref.current, options);
       setUv(currentUv);
@@ -29,7 +33,7 @@ export function useUniversalViewer(
         currentUv.dispose();
       };
     }
-  }, [ref]);
+  }, [ref, windowIsLoaded]);
 
   return uv;
 }
