@@ -17,7 +17,6 @@ export type UniversalViewerProps = {
 // just use this.
 const IIIFEvents = {
   CANVAS_INDEX_CHANGE: "canvasIndexChange",
-  DOWNLOAD: "download",
   SHOW_OVERLAY: "showOverlay",
 };
 
@@ -72,8 +71,7 @@ const UniversalViewer: React.FC<UniversalViewerProps> = React.memo(
     useEffect(() => {
       if (uv) {
         uv._assignedContentHandler?.publish(
-          //BaseEvents.CANVAS_INDEX_CHANGE,
-          "canvasIndexChange",
+          IIIFEvents.CANVAS_INDEX_CHANGE,
           canvasIndex
         );
       }
@@ -246,10 +244,6 @@ const UniversalViewer: React.FC<UniversalViewerProps> = React.memo(
           mo?.disconnect();
         } catch {}
       };
-    });
-
-    useEvent(uv, IIIFEvents.DOWNLOAD, (i) => {
-      console.log("blah i ", i);
     });
 
     return (
