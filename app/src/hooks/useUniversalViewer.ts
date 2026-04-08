@@ -19,13 +19,13 @@ export function useUniversalViewer(
   options: any
 ) {
   const [uv, setUv] = useState<Viewer>();
-  const windowIsLoaded = typeof window !== "undefined";
+
+  const windowIsReady = typeof window !== "undefined";
+
   useEffect(() => {
-    if (!windowIsLoaded) {
-      return undefined;
-    }
-    const { init } = require("universalviewer");
+    if (!windowIsReady) return;
     if (ref.current) {
+      const { init } = require("universalviewer");
       const currentUv = init(ref.current, options);
       setUv(currentUv);
 
@@ -33,7 +33,7 @@ export function useUniversalViewer(
         currentUv.dispose();
       };
     }
-  }, [ref, windowIsLoaded]);
+  }, [ref, windowIsReady]);
 
   return uv;
 }
