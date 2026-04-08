@@ -63,6 +63,17 @@ const UniversalViewer: React.FC<UniversalViewerProps> = React.memo(
     );
 
     const uv = useUniversalViewer(ref, options);
+    useEffect(() => {
+      if (uv) {
+        uv._assignedContentHandler?.publish(
+          // Should be IIIFEvents.CANVAS_INDEX_CHANGE
+          // but we can't safely import the universalViewer at the top level
+          "canvasIndexChange",
+          canvasIndex
+        );
+      }
+    }, [canvasIndex, uv]);
+
     function pruneDownloadButtons() {
       const host =
         document.querySelector(".uv-iiif-extension-host") || document;
@@ -242,7 +253,6 @@ const UniversalViewer: React.FC<UniversalViewerProps> = React.memo(
         />
         <UniversalViewerClientLogic
           uv={uv}
-          canvasIndex={canvasIndex}
           onCanvasChange={(canvasIndex) => {
             setCurrentCanvasIndex(canvasIndex);
             pruneDownloadButtons();
