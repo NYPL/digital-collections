@@ -4,7 +4,6 @@ import {
   useEvent,
 } from "../../../hooks/useUniversalViewer";
 import React, { useEffect, useMemo, useRef } from "react";
-import { useRouter, usePathname, useSearchParams } from "next/navigation";
 import { useCanvasContext } from "../../../context/CanvasProvider";
 
 export type UniversalViewerProps = {
@@ -89,8 +88,6 @@ const UniversalViewer: React.FC<UniversalViewerProps> = React.memo(
       nodes.forEach((el) => {
         const text = (el.textContent || "").trim().toLowerCase();
         const isWholeImage = text.startsWith("whole image");
-        console.log(text);
-        console.log(isWholeImage);
 
         if (isWholeImage) {
           const li = el.closest("li");
@@ -99,8 +96,6 @@ const UniversalViewer: React.FC<UniversalViewerProps> = React.memo(
           } else {
             (el as HTMLElement).style.display = "none";
           }
-          // Uncomment to verify what got hidden:
-          console.log("[UV prune] hid", text, el);
         }
       });
     }
