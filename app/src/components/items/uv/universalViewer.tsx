@@ -4,7 +4,6 @@ import {
   useEvent,
 } from "../../../hooks/useUniversalViewer";
 import React, { useEffect, useMemo, useRef } from "react";
-import { IIIFEvents as BaseEvents, IIIFURLAdapter } from "universalviewer";
 import { useRouter, usePathname, useSearchParams } from "next/navigation";
 import { useCanvasContext } from "../../../context/CanvasProvider";
 
@@ -65,7 +64,8 @@ const UniversalViewer: React.FC<UniversalViewerProps> = React.memo(
     useEffect(() => {
       if (uv) {
         uv._assignedContentHandler?.publish(
-          BaseEvents.CANVAS_INDEX_CHANGE,
+          //BaseEvents.CANVAS_INDEX_CHANGE,
+          "canvasIndexChange",
           canvasIndex
         );
       }
@@ -240,11 +240,11 @@ const UniversalViewer: React.FC<UniversalViewerProps> = React.memo(
       };
     }, [canvasIndex, uv]);
 
-    useEvent(uv, BaseEvents.CANVAS_INDEX_CHANGE, (i) => {
+    useEvent(uv, "canvasIndexChange", (i) => {
       setCurrentCanvasIndex(i);
     });
 
-    useEvent(uv, BaseEvents.DOWNLOAD, (i) => {
+    useEvent(uv, "download", (i) => {
       console.log("blah i ", i);
     });
 
