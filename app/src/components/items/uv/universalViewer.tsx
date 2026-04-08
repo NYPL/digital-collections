@@ -13,6 +13,15 @@ export type UniversalViewerProps = {
   captureUuidToIdx: { [uuid: string]: number };
 };
 
+// A copy of https://github.com/UniversalViewer/universalviewer/blob/1f2a35d3eda54854ef19d951afb8121ef8d8e6a0/src/content-handlers/iiif/IIIFEvents.ts
+// We need to figure out a way to not have to import universalviewer during server rendering, but until then,
+// just use this.
+const IIIFEvents = {
+  CANVAS_INDEX_CHANGE: "canvasIndexChange",
+  DOWNLOAD: "download",
+  SHOW_OVERLAY: "showOverlay",
+};
+
 // pulled most of this code from: https://codesandbox.io/p/sandbox/uv-nextjs-example-239ff5?file=%2Fcomponents%2FUniversalViewer.tsx%3A39%2C1-49%2C8
 const UniversalViewer: React.FC<UniversalViewerProps> = React.memo(
   ({ manifestId, captureUuidToIdx, config }) => {
@@ -227,11 +236,11 @@ const UniversalViewer: React.FC<UniversalViewerProps> = React.memo(
       }
     }, [canvasIndex, uv]);
 
-    useEvent(uv, "canvasIndexChange", (i) => {
+    useEvent(uv, IIIFEvents.CANVAS_INDEX_CHANGE, (i) => {
       setCurrentCanvasIndex(i);
     });
 
-    useEvent(uv, "showOverlay", () => {
+    useEvent(uv, IIIFEvents.SHOW_OVERLAY, () => {
       let mo: MutationObserver | undefined;
       try {
         mo = new MutationObserver(() => pruneDownloadButtons());
@@ -244,7 +253,7 @@ const UniversalViewer: React.FC<UniversalViewerProps> = React.memo(
       };
     });
 
-    useEvent(uv, "download", (i) => {
+    useEvent(uv, IIIFEvents.DOWNLOAD, (i) => {
       console.log("blah i ", i);
     });
 
