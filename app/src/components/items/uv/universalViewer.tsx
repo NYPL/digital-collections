@@ -17,20 +17,22 @@ export type UniversalViewerProps = {
 // pulled most of this code from: https://codesandbox.io/p/sandbox/uv-nextjs-example-239ff5?file=%2Fcomponents%2FUniversalViewer.tsx%3A39%2C1-49%2C8
 const UniversalViewer: React.FC<UniversalViewerProps> = React.memo(
   ({ manifestId, captureUuidToIdx, config }) => {
-    // Try to parse a capture uuid from the url hash for OG-style capture links
-    // These links come with a hash like '#/?uuid=xxxx', so to convert to params,
-    // we strip off the first 3 chars
-    const hash = window.location.hash.slice(3);
-    const captureUuid = new URLSearchParams(hash).get("uuid");
     const { currentCanvasIndex, setCurrentCanvasIndex } = useCanvasContext();
     const canvasIndex = currentCanvasIndex;
 
-    if (captureUuid) {
-      const captureIdx = captureUuidToIdx[captureUuid];
-      if (captureIdx) {
-        setCurrentCanvasIndex(captureIdx);
+    useEffect(() => {
+      // Try to parse a capture uuid from the url hash for OG-style capture links
+      // These links come with a hash like '#/?uuid=xxxx', so to convert to params,
+      // we strip off the first 3 chars
+      const hash = window.location.hash.slice(3);
+      const captureUuid = new URLSearchParams(hash).get("uuid");
+      if (captureUuid) {
+        const captureIdx = captureUuidToIdx[captureUuid];
+        if (captureIdx) {
+          setCurrentCanvasIndex(captureIdx);
+        }
       }
-    }
+    });
 
     const handleOnClick = (e) => {
       if (e.target.className === "openseadragon-canvas") {
