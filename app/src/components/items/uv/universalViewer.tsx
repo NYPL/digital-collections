@@ -1,8 +1,10 @@
 "use client";
-import { useUniversalViewer } from "../../../hooks/useUniversalViewer";
+import {
+  useUniversalViewer,
+  useEvent,
+} from "../../../hooks/useUniversalViewer";
 import React, { useEffect, useMemo, useRef } from "react";
 import { useCanvasContext } from "../../../context/CanvasProvider";
-import dynamic from "next/dynamic";
 
 export type UniversalViewerProps = {
   config?: any;
@@ -10,30 +12,32 @@ export type UniversalViewerProps = {
   captureUuidToIdx: { [uuid: string]: number };
 };
 
-const UniversalViewerClientLogic = dynamic(
-  () => import("./universalViewerClientLogic"),
-  { ssr: false }
-);
+// A copy of https://github.com/UniversalViewer/universalviewer/blob/1f2a35d3eda54854ef19d951afb8121ef8d8e6a0/src/content-handlers/iiif/IIIFEvents.ts
+// We need to figure out a way to not have to import universalviewer during server rendering, but until then,
+// just use this.
+const IIIFEvents = {
+  CANVAS_INDEX_CHANGE: "canvasIndexChange",
+  SHOW_OVERLAY: "showOverlay",
+};
 
 // pulled most of this code from: https://codesandbox.io/p/sandbox/uv-nextjs-example-239ff5?file=%2Fcomponents%2FUniversalViewer.tsx%3A39%2C1-49%2C8
 const UniversalViewer: React.FC<UniversalViewerProps> = React.memo(
   ({ manifestId, captureUuidToIdx, config }) => {
     const { currentCanvasIndex, setCurrentCanvasIndex } = useCanvasContext();
     const canvasIndex = currentCanvasIndex;
+
     useEffect(() => {
       // Try to parse a capture uuid from the url hash for OG-style capture links
       // These links come with a hash like '#/?uuid=xxxx', so to convert to params,
       // we strip off the first 3 chars
       const hash = window.location.hash.slice(3);
       const captureUuid = new URLSearchParams(hash).get("uuid");
-
       if (captureUuid) {
         const captureIdx = captureUuidToIdx[captureUuid];
         if (captureIdx) {
           setCurrentCanvasIndex(captureIdx);
         }
       }
-      // eslint-disable-next-line react-hooks/exhaustive-deps
     });
 
     const handleOnClick = (e) => {
@@ -63,6 +67,16 @@ const UniversalViewer: React.FC<UniversalViewerProps> = React.memo(
     );
 
     const uv = useUniversalViewer(ref, options);
+
+    useEffect(() => {
+      if (uv) {
+        uv._assignedContentHandler?.publish(
+          IIIFEvents.CANVAS_INDEX_CHANGE,
+          canvasIndex
+        );
+      }
+    }, [canvasIndex, uv]);
+
     function pruneDownloadButtons() {
       const host =
         document.querySelector(".uv-iiif-extension-host") || document;
@@ -80,8 +94,6 @@ const UniversalViewer: React.FC<UniversalViewerProps> = React.memo(
           } else {
             (el as HTMLElement).style.display = "none";
           }
-          // Uncomment to verify what got hidden:
-          // console.log("[UV prune] hid", text, el);
         }
       });
     }
@@ -91,6 +103,7 @@ const UniversalViewer: React.FC<UniversalViewerProps> = React.memo(
 
       if (uv) {
         // Hide specific default download options by button/anchor text. Right now, just "Whole imiage".
+
         // override config using an inline json object
         uv.on("configure", function ({ config, cb }) {
           console.log("config on uv.on(configure) is : ", config);
@@ -212,25 +225,26 @@ const UniversalViewer: React.FC<UniversalViewerProps> = React.memo(
             },
             [uv]
           );
-
-          // Initial pass (in case the dialog already exists)
-          pruneDownloadButtons();
-
-          // Watch for dialog render/changes and re-prune
-          try {
-            mo = new MutationObserver(() => pruneDownloadButtons());
-            mo.observe(document.body, { subtree: true, childList: true });
-          } catch {}
         });
       }
+    }, [canvasIndex, uv]);
 
-      // cleanup: disconnect observer on unmount / dependency change
+    useEvent(uv, IIIFEvents.CANVAS_INDEX_CHANGE, (i) => {
+      setCurrentCanvasIndex(i);
+    });
+
+    useEvent(uv, IIIFEvents.SHOW_OVERLAY, () => {
+      let mo: MutationObserver | undefined;
+      try {
+        mo = new MutationObserver(() => pruneDownloadButtons());
+        mo.observe(document.body, { subtree: true, childList: true });
+      } catch {}
       return () => {
         try {
           mo?.disconnect();
         } catch {}
       };
-    }, [canvasIndex, uv]);
+    });
 
     return (
       <>
@@ -239,14 +253,6 @@ const UniversalViewer: React.FC<UniversalViewerProps> = React.memo(
           onClick={(e) => handleOnClick(e)}
           style={{ height: 500 }}
           ref={ref}
-        />
-        <UniversalViewerClientLogic
-          uv={uv}
-          canvasIndex={canvasIndex}
-          onCanvasChange={(canvasIndex) => {
-            setCurrentCanvasIndex(canvasIndex);
-            pruneDownloadButtons();
-          }}
         />
       </>
     );
