@@ -57,36 +57,19 @@ const uvConfig = {
 };
 
 const ItemMediaViewer = ({ item }: ItemProps) => {
-  let viewer;
-  let contentType = item.contentType;
   const captureUuidToIdx = Object.fromEntries(
     item.captures.map((capture) => [capture.uuid, capture.orderInSequence - 1])
   );
 
-  if (item.isImage) {
-    viewer = (
-      <>
-        <UniversalViewer
-          manifestId={item.manifestURL}
-          captureUuidToIdx={captureUuidToIdx}
-          config={uvConfig}
-        />
-      </>
-    );
-  } else {
-    viewer = (
-      <>
-        <PlyrPlayer
-          title={item.title}
-          sources={item.mediaFiles}
-          captions={item.captions}
-          type={item.contentType}
-        />
-      </>
-    );
-  }
-
-  return viewer;
+  return (
+    <>
+      <UniversalViewer
+        manifestId={item.manifestURL}
+        captureUuidToIdx={captureUuidToIdx}
+        config={uvConfig}
+      />
+    </>
+  );
 };
 
 export default ItemMediaViewer;
