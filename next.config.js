@@ -1,6 +1,7 @@
 /** @type {import('next').NextConfig} */
 // This is found in the codebase example but both seem to work and send data
 // correctly. Keep the above but can use the bottom for debugging.
+const CopyPlugin = require("copy-webpack-plugin");
 const nrExternals = require("newrelic/load-externals");
 
 const nextConfig = {
@@ -44,6 +45,24 @@ const nextConfig = {
     if (process.env.NEW_RELIC_APP_NAME) {
       nrExternals(config);
     }
+    config.plugins.push(
+      new CopyPlugin({
+        patterns: [
+          {
+            from: "./node_modules/universalviewer/dist/uv.html",
+            to: "./static/",
+          },
+          {
+            from: "./node_modules/universalviewer/dist/uv.css",
+            to: "./static/",
+          },
+          {
+            from: "./node_modules/universalviewer/dist/umd/",
+            to: "./static/umd",
+          },
+        ],
+      })
+    );
     return config;
   },
 };
