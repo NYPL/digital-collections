@@ -16,6 +16,7 @@ import {
 } from "../utils/metadata/generateCitations";
 import { APIItem } from "../types/CollectionsAPI";
 import { PlyrCaption } from "../components/items/plyr/player";
+import allMapsData from "../data/maps/allmaps";
 
 // https://github.com/jptmoore/maniiifest
 // other resources:
@@ -55,6 +56,7 @@ export class ItemModel {
   subcollectionName: string | null;
   permittedLocationText: string;
   captures: CaptureModel[];
+  isInAllMaps: boolean;
 
   constructor(uuid: string, itemDetail: APIItem, citationData?: any) {
     this.uuid = uuid;
@@ -215,5 +217,10 @@ export class ItemModel {
       capture.mediaFileUrl ? [capture.mediaFileUrl] : []
     );
     this.captions = this.captures.flatMap((capture) => capture.captions || []);
+
+    // TO DO: make API Call to get Item UUID from Capture UUID or vise/versa
+    this.isInAllMaps =
+      this.metadata.typeOfResource === "cartographic" &&
+      !!allMapsData.find((obj) => obj.uuid === this.uuid);
   }
 }
