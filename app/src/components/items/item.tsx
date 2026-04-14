@@ -27,6 +27,7 @@ const renderViewer = (item) => {
 };
 
 const Item = ({ item }: ItemProps) => {
+  console.log("Item has AllMaps:", item.isInAllMaps);
   return (
     <CanvasProvider>
       <Box marginTop="-3em">
@@ -53,6 +54,18 @@ const Item = ({ item }: ItemProps) => {
               Learn more.
             </Link>{" "}
           </Text>
+          {item.isInAllMaps ? (
+            <Link
+              type="buttonSecondary"
+              href={`/items/${item.uuid}`}
+              // href={`/maps/${item.uuid}`}
+              marginBottom="xs"
+            >
+              View in map warper
+            </Link>
+          ) : (
+            <></>
+          )}
         </HStack>
         <HorizontalRule marginTop="xs" marginBottom="m" />
         <ItemOverview item={item} />
