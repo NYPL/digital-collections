@@ -27,7 +27,6 @@ const renderViewer = (item) => {
 };
 
 const Item = ({ item }: ItemProps) => {
-  console.log("Item has AllMaps:", item.isInAllMaps);
   return (
     <CanvasProvider>
       <Box marginTop="-3em">
