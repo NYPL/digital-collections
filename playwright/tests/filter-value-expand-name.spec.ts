@@ -30,7 +30,7 @@ test.describe.serial("Results Page Name Filter Pagination", () => {
 
     // Assign to global variable and load the page object
     filterPage = new FilterValueExpandedPage(page);
-    await filterPage.loadPage(FilterValueExpandedPage.searchResultsUrl);
+    await filterPage.loadPage(FilterValueExpandedPage.nameResultsUrl);
 
     // Given I am on a results page for a search for "print"
     // And the URL matches "<url>"
@@ -74,9 +74,9 @@ test.describe.serial("Results Page Name Filter Pagination", () => {
     ).toBeVisible();
 
     // Name List Displays 10 names
-    await expect(
-      filterPage.valueExpandedModal.getByRole("listitem")
-    ).toHaveCount(10);
+    await expect(filterPage.valueExpandedModal.getByRole("radio")).toHaveCount(
+      10
+    );
 
     // Action Buttons: "Close" and "Confirm"
     await expect(
@@ -89,39 +89,34 @@ test.describe.serial("Results Page Name Filter Pagination", () => {
 
   test("Pagination bar should display the correct sequence", async () => {
     // Scope pagination buttons to the modal to avoid matching elements in the background
-    const paginationNav = filterPage.valueExpandedModal.getByRole("navigation");
+    const paginationNav = filterPage.valueExpandedModal.getByRole(
+      "navigation",
+      { name: "Pagination" }
+    );
 
     // Page 1 should be current
-    const page1Btn = paginationNav.getByRole("button", {
+    const page1Btn = paginationNav.getByRole("link", {
       name: "Page 1",
       exact: true,
     });
     await expect(page1Btn).toHaveAttribute("aria-current", "page");
 
-    // Pages 2, 3, 4, 5 should be enabled
-    for (let i = 2; i <= 5; i++) {
-      const pageBtn = paginationNav.getByRole("button", {
-        name: `Page ${i}`,
-        exact: true,
-      });
-      await expect(pageBtn).toBeEnabled();
-    }
-
-    // Ellipsis should be disabled/visible
-    const ellipsis = paginationNav.getByText("...", { exact: true });
-    await expect(ellipsis).toBeVisible();
-
-    // [4-digit number] page should be enabled
-    const lastPageBtn = paginationNav.getByRole("button", {
-      name: /Page \d{4}/,
-    });
+    // Last page should be enabled
+    const lastPageBtn = paginationNav
+      .getByRole("link", {
+        name: /Page \d+/,
+      })
+      .last();
     await expect(lastPageBtn).toBeEnabled();
 
     // Next button should be enabled
-    const nextBtn = paginationNav.getByRole("button", {
-      name: "Next",
-      exact: true,
+    const nextBtn = paginationNav.getByRole("link", {
+      name: /Next page/i,
     });
     await expect(nextBtn).toBeEnabled();
+  });
+
+  test("Pagination updates dynamically and allows navigation past page 10", async () => {
+    await filterPage.verifyPaginationPastPage10();
   });
 });
