@@ -6,7 +6,6 @@ import ItemMediaViewer from "./viewer/viewer";
 import ItemMediaViewerFallback from "./viewer/fallback";
 import ItemOverview from "./overview/overview";
 import { CanvasProvider } from "../../context/CanvasProvider";
-
 import {
   Heading,
   Banner,
@@ -17,6 +16,7 @@ import {
   HorizontalRule,
   HStack,
 } from "@nypl/design-system-react-components";
+import AllMapsViewer from "./maps/allMaps";
 
 interface ItemProps {
   item: ItemModel;
@@ -35,7 +35,15 @@ const Item = ({ item }: ItemProps) => {
             <Heading level="h1" paddingBottom="s">
               {item.title}
             </Heading>
-            <ItemMediaViewer item={item} />
+            {/* if item is in AllMapsViewer and query param is viewAs=map, <AllMapsViewer item={item} /> else <ItemMediaViewer item={item} /> */}
+            {item.isInAllMaps ? (
+              <AllMapsViewer item={item} />
+            ) : (
+              <ItemMediaViewer item={item} />
+            )}
+            {/* if item is in AllMapsViewer, <AllMapsViewer item={item} /> else <ItemMediaViewer item={item} /> */}
+            {/* <ItemMediaViewer item={item} /> */}
+            {/* if item is in AllMapsViewer, <AllMapsViewer item={item} /> */}
           </>
         ) : (
           <>
@@ -53,18 +61,6 @@ const Item = ({ item }: ItemProps) => {
               Learn more.
             </Link>{" "}
           </Text>
-          {item.isInAllMaps ? (
-            <Link
-              type="buttonSecondary"
-              href={`/items/${item.uuid}`}
-              // href={`/maps/${item.uuid}`}
-              marginBottom="xs"
-            >
-              View in map warper
-            </Link>
-          ) : (
-            <></>
-          )}
         </HStack>
         <HorizontalRule marginTop="xs" marginBottom="m" />
         <ItemOverview item={item} />
