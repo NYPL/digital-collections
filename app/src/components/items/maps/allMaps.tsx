@@ -28,8 +28,13 @@ const AllMapsViewer = ({ item }: ItemProps) => {
           preserveDrawingBuffer: true,
         },
       });
-      console.log("item image ID in all maps viewer", item.imageIDs[0]);
-      const iiif_url = `https://iiif.nypl.org/iiif/2/${item.imageIDs[0]}/info.json`;
+      console.log(
+        "item image ID in all maps viewer",
+        item.imageIDs ? item.imageIDs[0] : null
+      );
+      const iiif_url = item.imageIDs
+        ? `https://iiif.nypl.org/iiif/2/${item.imageIDs[0]}/info.json`
+        : null;
       const annotationUrl = `https://annotations.allmaps.org/?url=${iiif_url}`;
       const warpedMapLayer = new WarpedMapLayer();
       map.on("load", () => {
