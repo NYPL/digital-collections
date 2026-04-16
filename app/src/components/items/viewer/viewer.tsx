@@ -5,6 +5,8 @@ import React from "react";
 import UniversalViewer from "../uv/universalViewer";
 import "universalviewer/dist/esm/index.css";
 import { PlyrPlayer } from "../plyr/dynamic";
+import AllMapsViewer from "../maps/allMaps";
+import { useCanvasContext } from "../../../context/CanvasProvider";
 
 interface ItemProps {
   item: ItemModel;
@@ -62,6 +64,7 @@ const ItemMediaViewer = ({ item }: ItemProps) => {
   const captureUuidToIdx = Object.fromEntries(
     item.captures.map((capture) => [capture.uuid, capture.orderInSequence - 1])
   );
+  const { isMapView } = useCanvasContext();
 
   if (item.isImage) {
     viewer = (
@@ -71,6 +74,7 @@ const ItemMediaViewer = ({ item }: ItemProps) => {
           captureUuidToIdx={captureUuidToIdx}
           config={uvConfig}
         />
+        {item.isInAllMaps && isMapView ? <AllMapsViewer item={item} /> : <></>}
       </>
     );
   } else {
