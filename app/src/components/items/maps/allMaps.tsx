@@ -24,6 +24,7 @@ const AllMapsViewer = ({ item }: ItemProps) => {
       center: [-73.931016, 40.79532],
       zoom: 10.7,
       maxPitch: 0,
+      attributionControl: false,
       canvasContextAttributes: {
         preserveDrawingBuffer: true,
       },
@@ -47,7 +48,7 @@ const AllMapsViewer = ({ item }: ItemProps) => {
         templateColumns="repeat(8, 1fr)"
         gap="grid.default"
       >
-        <GridItem rowSpan={2} colSpan={5}>
+        <GridItem rowSpan={2} colSpan={5} marginBottom={"m"}>
           <div id="map" style={{ width: "700px", height: "700px" }} />
         </GridItem>
       </Grid>
