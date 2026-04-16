@@ -5,9 +5,11 @@ import {
   Text,
   Button,
 } from "@nypl/design-system-react-components";
-// import { useCanvasContext } from "../../../../context/CanvasProvider";
+import { useCanvasContext } from "../../../../context/CanvasProvider";
 
 const ExternalLinksOverview = ({ catalogLink, archivesLink, isInAllMaps }) => {
+  const { isMapView, handleMapViewToggle } = useCanvasContext();
+
   return (
     <>
       <Box marginBottom="m">
@@ -46,16 +48,13 @@ const ExternalLinksOverview = ({ catalogLink, archivesLink, isInAllMaps }) => {
 
         {isInAllMaps ? (
           <Button
-            onClick={() => {
-              console.log("map view button clicked");
-            }}
+            onClick={handleMapViewToggle}
             id={"all-maps-btn"}
             aria-label={`view in All Maps Viewer`}
             variant="secondary"
             display={"inline"}
           >
-            {`View on Map`}
-            {/* {isMapView ? 'Close Map' : 'View on Map'} */}
+            {isMapView ? "Close Map" : "View on Map"}
           </Button>
         ) : (
           <></>

@@ -5,7 +5,7 @@ import React from "react";
 import ItemMediaViewer from "./viewer/viewer";
 import ItemMediaViewerFallback from "./viewer/fallback";
 import ItemOverview from "./overview/overview";
-import { CanvasProvider } from "../../context/CanvasProvider";
+import { CanvasProvider, useCanvasContext } from "../../context/CanvasProvider";
 import {
   Heading,
   Banner,
@@ -36,11 +36,12 @@ const Item = ({ item }: ItemProps) => {
               {item.title}
             </Heading>
             {/* if item is in AllMapsViewer and query param is viewAs=map, <AllMapsViewer item={item} /> else <ItemMediaViewer item={item} /> */}
-            {item.isInAllMaps ? (
+            {/* {item.isInAllMaps && isMapView ? (
               <AllMapsViewer item={item} />
             ) : (
               <ItemMediaViewer item={item} />
-            )}
+            )} */}
+            <ItemMediaViewer item={item} />
             {/* if item is in AllMapsViewer, <AllMapsViewer item={item} /> else <ItemMediaViewer item={item} /> */}
             {/* <ItemMediaViewer item={item} /> */}
             {/* if item is in AllMapsViewer, <AllMapsViewer item={item} /> */}

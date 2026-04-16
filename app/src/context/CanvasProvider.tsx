@@ -6,6 +6,8 @@ import React, { createContext, useContext, useCallback } from "react";
 interface CanvasContextType {
   currentCanvasIndex: number;
   setCurrentCanvasIndex: (index: number) => void;
+  isMapView: boolean;
+  handleMapViewToggle: () => void;
 }
 
 const CanvasContext = createContext<CanvasContextType | undefined>(undefined);
@@ -33,9 +35,35 @@ export const CanvasProvider = ({ children }: { children: React.ReactNode }) => {
     [searchParams, pathname, router]
   );
 
+  const isMapView = searchParams.get("viewAs") === "map";
+
+  const handleMapViewToggle = useCallback(() => {
+    const newSearchParams = new URLSearchParams(searchParams.toString());
+    console.log(
+      "toggling map view. current params are: ",
+      searchParams.toString()
+    );
+    if (isMapView) {
+      newSearchParams.delete("viewAs");
+    } else {
+      newSearchParams.set("viewAs", "map");
+      console.log(
+        "enabling map view. new params are: ",
+        newSearchParams.toString()
+      );
+    }
+
+    router.push(`${pathname}?${newSearchParams.toString()}`, { scroll: false });
+  }, [pathname, router, searchParams]);
+
   return (
     <CanvasContext.Provider
-      value={{ currentCanvasIndex, setCurrentCanvasIndex }}
+      value={{
+        currentCanvasIndex,
+        setCurrentCanvasIndex,
+        isMapView,
+        handleMapViewToggle,
+      }}
     >
       {children}
     </CanvasContext.Provider>
