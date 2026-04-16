@@ -4,7 +4,7 @@ import { applyRouteFilters } from "../utils/routeFilters";
 
 let filterPage: FilterValueExpandedPage;
 
-test.describe.serial("Results Page Name Filter Pagination", () => {
+test.describe.serial("View all names filter", () => {
   // Runs ONCE to create the shared, filtered page context.
 
   /**
@@ -41,7 +41,7 @@ test.describe.serial("Results Page Name Filter Pagination", () => {
     await filterPage.page.context().close();
   });
 
-  test("Navigate to the full names list modal", async () => {
+  test("Opening the full names list and clicking view-all-names", async () => {
     // Then I should see a "Name" filter under the "Refine your search" heading
     await expect(filterPage.nameFilter).toBeVisible();
 
@@ -52,7 +52,7 @@ test.describe.serial("Results Page Name Filter Pagination", () => {
     await expect(filterPage.viewAllNamesButton).toBeVisible();
   });
 
-  test("Access the expanded names modal and verify elements", async () => {
+  test("Should display the expanded names modal", async () => {
     // When I click the "View all names" button at the bottom of the modal
     await filterPage.viewAllNamesButton.click();
 
@@ -87,7 +87,7 @@ test.describe.serial("Results Page Name Filter Pagination", () => {
     ).toBeVisible();
   });
 
-  test("Pagination bar should display the correct sequence", async () => {
+  test("Pagination links should display the correct sequence", async () => {
     // Scope pagination buttons to the modal to avoid matching elements in the background
     const paginationNav = filterPage.valueExpandedModal.getByRole(
       "navigation",
