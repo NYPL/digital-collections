@@ -1,6 +1,13 @@
-import { Box, Heading, Link, Text } from "@nypl/design-system-react-components";
+import {
+  Box,
+  Heading,
+  Link,
+  Text,
+  Button,
+} from "@nypl/design-system-react-components";
+// import { useCanvasContext } from "../../../../context/CanvasProvider";
 
-const ExternalLinksOverview = ({ catalogLink, archivesLink }) => {
+const ExternalLinksOverview = ({ catalogLink, archivesLink, isInAllMaps }) => {
   return (
     <>
       <Box marginBottom="m">
@@ -31,9 +38,27 @@ const ExternalLinksOverview = ({ catalogLink, archivesLink }) => {
             target="_blank"
             aria-label={`view in catalog`}
             variant="buttonSecondary"
+            marginRight="xs"
           >
             Research Catalog
           </Link>
+        )}
+
+        {isInAllMaps ? (
+          <Button
+            onClick={() => {
+              console.log("map view button clicked");
+            }}
+            id={"all-maps-btn"}
+            aria-label={`view in All Maps Viewer`}
+            variant="secondary"
+            display={"inline"}
+          >
+            {`View on Map`}
+            {/* {isMapView ? 'Close Map' : 'View on Map'} */}
+          </Button>
+        ) : (
+          <></>
         )}
       </Box>
     </>
