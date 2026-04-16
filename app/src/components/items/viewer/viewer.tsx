@@ -7,6 +7,7 @@ import "universalviewer/dist/esm/index.css";
 import { PlyrPlayer } from "../plyr/dynamic";
 import AllMapsViewer from "../maps/allMaps";
 import { useCanvasContext } from "../../../context/CanvasProvider";
+import { Grid, GridItem } from "@nypl/design-system-react-components";
 
 interface ItemProps {
   item: ItemModel;
@@ -69,12 +70,37 @@ const ItemMediaViewer = ({ item }: ItemProps) => {
   if (item.isImage) {
     viewer = (
       <>
-        <UniversalViewer
-          manifestId={item.manifestURL}
-          captureUuidToIdx={captureUuidToIdx}
-          config={uvConfig}
-        />
-        {item.isInAllMaps && isMapView ? <AllMapsViewer item={item} /> : <></>}
+        <Grid
+          height="700px"
+          templateRows="repeat(2, 1fr)"
+          templateColumns="repeat(8, 1fr)"
+          gap="grid.default"
+        >
+          {item.isInAllMaps && isMapView ? (
+            <>
+              <GridItem rowSpan={2} colSpan={4}>
+                <UniversalViewer
+                  manifestId={item.manifestURL}
+                  captureUuidToIdx={captureUuidToIdx}
+                  config={uvConfig}
+                />
+              </GridItem>
+              <GridItem rowSpan={2} colSpan={4}>
+                <AllMapsViewer item={item} />
+              </GridItem>
+            </>
+          ) : (
+            <>
+              <GridItem rowSpan={2} colSpan={8}>
+                <UniversalViewer
+                  manifestId={item.manifestURL}
+                  captureUuidToIdx={captureUuidToIdx}
+                  config={uvConfig}
+                />
+              </GridItem>
+            </>
+          )}
+        </Grid>
       </>
     );
   } else {

@@ -35,16 +35,7 @@ const Item = ({ item }: ItemProps) => {
             <Heading level="h1" paddingBottom="s">
               {item.title}
             </Heading>
-            {/* if item is in AllMapsViewer and query param is viewAs=map, <AllMapsViewer item={item} /> else <ItemMediaViewer item={item} /> */}
-            {/* {item.isInAllMaps && isMapView ? (
-              <AllMapsViewer item={item} />
-            ) : (
-              <ItemMediaViewer item={item} />
-            )} */}
             <ItemMediaViewer item={item} />
-            {/* if item is in AllMapsViewer, <AllMapsViewer item={item} /> else <ItemMediaViewer item={item} /> */}
-            {/* <ItemMediaViewer item={item} /> */}
-            {/* if item is in AllMapsViewer, <AllMapsViewer item={item} /> */}
           </>
         ) : (
           <>

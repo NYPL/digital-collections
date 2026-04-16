@@ -69,6 +69,25 @@ const UniversalViewer: React.FC<UniversalViewerProps> = React.memo(
     const uv = useUniversalViewer(ref, options);
 
     useEffect(() => {
+      const container = ref.current;
+      if (!container) return;
+
+      // The UniversalViewer/OpenSeadragon instance doesn't automatically
+      // resize when its container does. We can use a ResizeObserver to
+      // watch for container size changes and dispatch a window resize event,
+      // which UV/OSD listens for to trigger its internal resize logic.
+      const resizeObserver = new ResizeObserver(() => {
+        window.dispatchEvent(new Event("resize"));
+      });
+
+      resizeObserver.observe(container);
+
+      return () => {
+        resizeObserver.disconnect();
+      };
+    }, []);
+
+    useEffect(() => {
       if (uv) {
         uv._assignedContentHandler?.publish(
           IIIFEvents.CANVAS_INDEX_CHANGE,
@@ -251,7 +270,7 @@ const UniversalViewer: React.FC<UniversalViewerProps> = React.memo(
         <div
           className="uv"
           onClick={(e) => handleOnClick(e)}
-          style={{ height: 500 }}
+          style={{ height: "100%" }}
           ref={ref}
         />
       </>
