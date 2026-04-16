@@ -34,9 +34,9 @@ export class FilterValueExpandedPage extends SearchPage {
     });
     const radios = this.valueExpandedModal.getByRole("radio");
 
-    let lastRadioOldText = await radios.last().textContent();
+    let lastRadioOldValue = await radios.last().getAttribute("value");
 
-    // Iterate through pages 5 to 10 in a single forward pass
+    // Iterate through pages 5 to 10
     for (let i = 5; i <= 10; i++) {
       const pageBtn = paginationNav.getByRole("link", {
         name: `Page ${i}`,
@@ -44,12 +44,12 @@ export class FilterValueExpandedPage extends SearchPage {
       });
       await pageBtn.click();
 
-      // 1. Verify pagination navigation (active state)
+      // 1. Verify pagination navigation's active state
       await expect(pageBtn).toHaveAttribute("aria-current", "page");
 
       // 2. Verify name refresh (concurrently with navigation)
-      await expect(radios.last()).not.toHaveText(lastRadioOldText || "");
-      lastRadioOldText = await radios.last().textContent();
+      await expect(radios.last()).not.toHaveAttribute(lastRadioOldValue || "");
+      lastRadioOldValue = await radios.last().getAttribute("value");
 
       // 3. Verify gap structure shifts correctly at specific pages
       if (i === 5) {
@@ -75,7 +75,7 @@ export class FilterValueExpandedPage extends SearchPage {
       }
     }
 
-    // Verify page 11 appears and is clickable (Testing the fix for the old page 10 cut-off)
+    // Verify page 11 appears and is clickable
     const page11Btn = paginationNav.getByRole("link", {
       name: "Page 11",
       exact: true,
