@@ -144,6 +144,15 @@ export function middleware(req: NextRequest) {
     modified = true;
   }
 
+  // Keep qparser values limited to supported parser types.
+  if (searchParams.has("qparser")) {
+    const qparser = searchParams.get("qparser");
+    if (qparser !== "dismax" && qparser !== "edismax") {
+      searchParams.set("qparser", "dismax");
+      modified = true;
+    }
+  }
+
   // Transform filters into an object
   const filtersObj: Record<string, string[]> = {};
 
@@ -207,7 +216,14 @@ export function middleware(req: NextRequest) {
   if (itemsMatch) {
     allowedParams = new Set(["type", "canvasIndex", "uuid", "cv"]);
   } else {
-    allowedParams = new Set(["q", "sort", "page", "filters", "viewMode"]);
+    allowedParams = new Set([
+      "q",
+      "sort",
+      "page",
+      "filters",
+      "viewMode",
+      "qparser",
+    ]);
   }
 
   // Remove all other params except allowed ones

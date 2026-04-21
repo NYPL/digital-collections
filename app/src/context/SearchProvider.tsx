@@ -15,7 +15,9 @@ import {
   DEFAULT_VIEW_MODE,
 } from "../config/constants";
 import {
+  DEFAULT_QPARSER,
   GeneralSearchManager,
+  isValidQParser,
   SearchManager,
   stringToFilter,
 } from "../utils/searchManager/searchManager";
@@ -35,6 +37,7 @@ export const SearchProvider = ({
 }) => {
   const urlSearchParams = useSearchParams();
   const viewModeFromUrl = urlSearchParams.get("viewMode");
+  const qparserFromUrl = urlSearchParams.get("qparser");
   const validViewMode = (
     mode: string | null | undefined
   ): mode is "grid" | "list" => {
@@ -53,9 +56,16 @@ export const SearchProvider = ({
   const lastFilterRef = useRef<string | null>(null);
 
   const searchManager = useMemo(() => {
+    const initialQparser = isValidQParser(qparserFromUrl)
+      ? qparserFromUrl
+      : isValidQParser(searchParams?.qparser)
+      ? searchParams.qparser
+      : DEFAULT_QPARSER;
+
     const manager = new GeneralSearchManager({
       initialPage: Number(searchParams?.page) || DEFAULT_PAGE_NUM,
       initialSort: searchParams?.sort || DEFAULT_SEARCH_SORT,
+      initialQparser: initialQparser,
       initialFilters: stringToFilter(searchParams?.filters),
       defaultSort: DEFAULT_SEARCH_SORT,
       initialKeywords: searchParams?.q || DEFAULT_SEARCH_TERM,
@@ -68,10 +78,12 @@ export const SearchProvider = ({
   }, [
     searchParams?.page,
     searchParams?.sort,
+    searchParams?.qparser,
     searchParams?.filters,
     searchParams?.q,
     searchParams?.availableFilters,
     searchParams?.viewMode,
+    qparserFromUrl,
     viewModeFromUrl,
     initialViewMode,
   ]);

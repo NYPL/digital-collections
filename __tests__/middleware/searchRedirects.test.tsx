@@ -138,6 +138,29 @@ it("maintains page", () => {
   expect(response).toBe("next response");
 });
 
+it("maintains valid qparser", () => {
+  const request = {
+    nextUrl: new URL("http://localhost/search/index?q=test&qparser=edismax"),
+  } as NextRequest;
+  const response = middleware(request);
+
+  expect(NextResponse.next).toHaveBeenCalled();
+  expect(response).toBe("next response");
+});
+
+it("normalizes invalid qparser", () => {
+  const request = {
+    nextUrl: new URL("http://localhost/search/index?q=test&qparser=invalid"),
+  } as NextRequest;
+  const response = middleware(request);
+
+  expect(NextResponse.redirect).toHaveBeenCalledWith(
+    "http://localhost/search/index?q=test&qparser=dismax",
+    301
+  );
+  expect(response).toBe("redirect response");
+});
+
 it("transforms a filter", () => {
   const request = {
     nextUrl: new URL(

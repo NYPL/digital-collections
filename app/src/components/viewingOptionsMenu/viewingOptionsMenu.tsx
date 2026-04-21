@@ -1,5 +1,8 @@
 import { sendLayoutSelectedEvent } from "@/src/utils/ga4Utils";
-import { SearchManager } from "@/src/utils/searchManager/searchManager";
+import {
+  QParserType,
+  SearchManager,
+} from "@/src/utils/searchManager/searchManager";
 import {
   Menu,
   Icon,
@@ -14,6 +17,7 @@ type ViewingOptionsMenuProps = {
   setFiltersExpanded?: React.Dispatch<React.SetStateAction<boolean>>;
   sort: string;
   showViewModeButtons?: boolean;
+  showQparserToggle?: boolean;
 };
 
 const ViewingOptionsMenu = ({
@@ -23,6 +27,7 @@ const ViewingOptionsMenu = ({
   options,
   sort,
   showViewModeButtons = true,
+  showQparserToggle = false,
 }: ViewingOptionsMenuProps) => {
   const layoutSelectHandler = (viewMode: "grid" | "list"): (() => void) => {
     return () => {
@@ -38,6 +43,20 @@ const ViewingOptionsMenu = ({
       updateURL(queryString);
     };
   };
+
+  const qparserSelectHandler = (qparser: QParserType): (() => void) => {
+    return () => {
+      if (searchManager.qparser === qparser) {
+        return;
+      }
+      if (setFiltersExpanded) {
+        setFiltersExpanded(false);
+      }
+      searchManager.setLastFilter(`${qparser}-qparser-button`);
+      updateURL(searchManager.handleQparserChange(qparser));
+    };
+  };
+
   return (
     <div style={{ display: "flex", alignItems: "center", gap: "4px" }}>
       <Menu
@@ -112,6 +131,52 @@ const ViewingOptionsMenu = ({
               size="large"
               aria-hidden="true"
             />
+          </Button>
+        </ButtonGroup>
+      )}
+      {showQparserToggle && (
+        <ButtonGroup
+          sx={{
+            marginLeft: "xxs",
+            gap: "0px",
+            outline: "1px solid var(--nypl-colors-ui-border-default)",
+            outlineOffset: "-1px",
+            height: "40px",
+            padding: "4px",
+            borderRadius: "2px",
+          }}
+          aria-label="Query parser"
+        >
+          <Button
+            variant={searchManager.qparser === "dismax" ? "primary" : "text"}
+            aria-pressed={searchManager.qparser === "dismax"}
+            onClick={qparserSelectHandler("dismax")}
+            sx={{
+              fontSize: "desktop.body.body2",
+              lineHeight: "unset",
+              minWidth: "unset",
+              paddingInline: "xs",
+              height: "auto",
+            }}
+            aria-label="Use dismax query parser"
+          >
+            dismax
+          </Button>
+          <Button
+            variant={searchManager.qparser === "edismax" ? "primary" : "text"}
+            aria-pressed={searchManager.qparser === "edismax"}
+            onClick={qparserSelectHandler("edismax")}
+            sx={{
+              fontSize: "desktop.body.body2",
+              lineHeight: "unset",
+              minWidth: "unset",
+              paddingInline: "xs",
+              height: "auto",
+              marginLeft: "4px",
+            }}
+            aria-label="Use edismax query parser"
+          >
+            edismax
           </Button>
         </ButtonGroup>
       )}

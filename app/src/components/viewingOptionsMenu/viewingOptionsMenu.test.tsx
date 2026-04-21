@@ -77,4 +77,21 @@ describe("ViewingOptionsMenu", () => {
     fireEvent.click(screen.getByText("Date"));
     expect(updateURL).toHaveBeenCalledWith("sort=date");
   });
+
+  it("calls updateURL when qparser selection changes", () => {
+    render(
+      <ViewingOptionsMenu
+        updateURL={updateURL}
+        searchManager={manager}
+        sort={manager.sort}
+        options={options}
+        showQparserToggle
+      />
+    );
+
+    fireEvent.click(
+      screen.getByRole("button", { name: "Use edismax query parser" })
+    );
+    expect(updateURL).toHaveBeenCalledWith("qparser=edismax");
+  });
 });

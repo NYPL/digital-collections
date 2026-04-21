@@ -14,17 +14,26 @@ import {
 import { capitalize } from "../utils";
 import { MutableRefObject } from "react";
 
+export type QParserType = "dismax" | "edismax";
+export const DEFAULT_QPARSER: QParserType = "dismax";
+
+export const isValidQParser = (qparser: string | null | undefined) => {
+  return qparser === "dismax" || qparser === "edismax";
+};
+
 export interface SearchManager {
   handleSearchSubmit(enforceSort?: string): string;
   handleKeywordChange(value: string): void;
   handlePageChange(pageNumber: number): string;
   handleSortChange(id: string): string;
+  handleQparserChange(qparser: QParserType): string;
   handleViewModeChange(mode: "grid" | "list"): string;
   handleAddFilter(newFilters: Filter[] | Filter): string;
   handleRemoveFilter(filtersToRemove: Filter[] | Filter): string;
   clearAllFilters(): string;
   get keywords(): string;
   get sort(): string;
+  get qparser(): QParserType;
   get page(): number;
   get viewMode(): "grid" | "list";
   get filters(): Filter[];
@@ -36,6 +45,7 @@ export interface SearchManager {
 abstract class BaseSearchManager implements SearchManager {
   protected currentPage: number;
   protected currentSort: string;
+  protected currentQparser: QParserType;
   protected defaultSort: string;
   protected currentKeywords: string;
   protected currentFilters: Set<string>;
@@ -46,12 +56,14 @@ abstract class BaseSearchManager implements SearchManager {
   abstract handlePageChange(pageNumber: number): string;
   abstract handleSortChange(id: string): string;
   abstract handleSearchSubmit(enforceSort?: string): string;
+  abstract handleQparserChange(qparser: QParserType): string;
   abstract getQueryString(paramsObject: Record<string, any>): string;
 
   constructor(config: {
     initialPage: number;
     initialSort: string;
     defaultSort: string;
+    initialQparser?: QParserType;
     initialFilters?: Filter[];
     initialKeywords: string;
     initialAvailableFilters?: Record<string, AvailableFilterOption[]>;
@@ -60,6 +72,7 @@ abstract class BaseSearchManager implements SearchManager {
   }) {
     this.currentPage = config.initialPage;
     this.currentSort = config.initialSort;
+    this.currentQparser = config.initialQparser || DEFAULT_QPARSER;
     this.defaultSort = config.defaultSort;
     this.currentFilters = new Set(
       (config.initialFilters || []).map((filter) => JSON.stringify(filter))
@@ -80,6 +93,10 @@ abstract class BaseSearchManager implements SearchManager {
 
   get sort() {
     return this.currentSort;
+  }
+
+  get qparser() {
+    return this.currentQparser;
   }
 
   get page() {
@@ -132,6 +149,7 @@ abstract class BaseSearchManager implements SearchManager {
     return this.getQueryString({
       q: this.currentKeywords,
       sort: this.currentSort,
+      qparser: this.currentQparser,
       page: DEFAULT_PAGE_NUM,
       filters: filterToString(this.filters),
       viewMode: this.currentViewMode,
@@ -155,6 +173,7 @@ abstract class BaseSearchManager implements SearchManager {
     return this.getQueryString({
       q: this.currentKeywords,
       sort: this.currentSort,
+      qparser: this.currentQparser,
       page: DEFAULT_PAGE_NUM,
       filters: filterToString(this.filters),
       viewMode: this.currentViewMode,
@@ -169,6 +188,7 @@ abstract class BaseSearchManager implements SearchManager {
     return this.getQueryString({
       q: this.currentKeywords,
       sort: this.currentSort,
+      qparser: this.currentQparser,
       page: this.currentPage,
       filters: filterToString(this.filters),
       viewMode: mode,
@@ -180,6 +200,7 @@ abstract class BaseSearchManager implements SearchManager {
     return this.getQueryString({
       q: this.currentKeywords,
       sort: this.currentSort,
+      qparser: this.currentQparser,
       page: DEFAULT_PAGE_NUM,
       filters: filterToString(DEFAULT_FILTERS),
       viewMode: this.currentViewMode,
@@ -195,6 +216,7 @@ export class GeneralSearchManager extends BaseSearchManager {
     return this.getQueryString({
       q: this.currentKeywords,
       sort: this.currentSort,
+      qparser: this.currentQparser,
       page: this.currentPage,
     });
   }
@@ -204,6 +226,7 @@ export class GeneralSearchManager extends BaseSearchManager {
     return this.getQueryString({
       q: this.currentKeywords,
       sort: this.currentSort,
+      qparser: this.currentQparser,
       page: pageNumber,
       filters: filterToString(this.filters),
       viewMode: this.currentViewMode,
@@ -216,6 +239,20 @@ export class GeneralSearchManager extends BaseSearchManager {
     return this.getQueryString({
       q: this.currentKeywords,
       sort: sort,
+      qparser: this.currentQparser,
+      page: this.currentPage,
+      filters: filterToString(this.filters),
+      viewMode: this.currentViewMode,
+    });
+  }
+
+  handleQparserChange(qparser: QParserType) {
+    this.currentQparser = qparser;
+    this.currentPage = DEFAULT_PAGE_NUM;
+    return this.getQueryString({
+      q: this.currentKeywords,
+      sort: this.currentSort,
+      qparser: this.currentQparser,
       page: this.currentPage,
       filters: filterToString(this.filters),
       viewMode: this.currentViewMode,
@@ -245,6 +282,9 @@ export class GeneralSearchManager extends BaseSearchManager {
           break;
         case "viewMode":
           isDefault = false;
+          break;
+        case "qparser":
+          isDefault = value === DEFAULT_QPARSER;
           break;
       }
 
@@ -264,6 +304,7 @@ export class CollectionSearchManager extends BaseSearchManager {
     return this.getQueryString({
       q: this.currentKeywords,
       sort: this.currentSort,
+      qparser: this.currentQparser,
       page: this.currentPage,
     });
   }
@@ -273,7 +314,20 @@ export class CollectionSearchManager extends BaseSearchManager {
     return this.getQueryString({
       q: this.currentKeywords,
       sort: this.currentSort,
+      qparser: this.currentQparser,
       page: pageNumber,
+      viewMode: this.currentViewMode,
+    });
+  }
+
+  handleQparserChange(qparser: QParserType) {
+    this.currentQparser = qparser;
+    this.currentPage = DEFAULT_PAGE_NUM;
+    return this.getQueryString({
+      q: this.currentKeywords,
+      sort: this.currentSort,
+      qparser: this.currentQparser,
+      page: this.currentPage,
       viewMode: this.currentViewMode,
     });
   }
@@ -283,6 +337,7 @@ export class CollectionSearchManager extends BaseSearchManager {
     return this.getQueryString({
       q: this.currentKeywords,
       sort: sort,
+      qparser: this.currentQparser,
       page: this.currentPage,
       viewMode: this.currentViewMode,
     });
@@ -321,6 +376,9 @@ export class CollectionSearchManager extends BaseSearchManager {
           break;
         case "viewMode":
           isDefault = false;
+          break;
+        case "qparser":
+          isDefault = value === DEFAULT_QPARSER;
           break;
       }
 

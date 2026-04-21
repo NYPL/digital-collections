@@ -212,12 +212,14 @@ export class CollectionsApi {
     filters = DEFAULT_FILTERS,
     page = DEFAULT_PAGE_NUM,
     perPage = CARDS_PER_PAGE,
+    qparser = "dismax",
   }: {
     keyword?: string;
     sort?: string;
     filters?: Filter[];
     page?: number;
     perPage?: number;
+    qparser?: string;
   } = {}): Promise<any> {
     let filterString = filterStringToCollectionApiFilterString(
       filters.toString()
@@ -228,7 +230,7 @@ export class CollectionsApi {
       process.env.COLLECTIONS_API_URL
     }/search/?q=${encodeURIComponent(
       keyword
-    )}${filterURL}&sort=${sort}&page=${page}&perPage=${perPage}`;
+    )}${filterURL}&sort=${sort}&page=${page}&perPage=${perPage}&qparser=${qparser}`;
 
     const response = await fetchApi({
       apiUrl: apiUrl,

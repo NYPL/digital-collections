@@ -40,6 +40,11 @@ describe("SearchManager", () => {
       expect(result).toBe("sort=date-asc");
     });
 
+    it("should handle qparser change", () => {
+      const result = manager.handleQparserChange("edismax");
+      expect(result).toBe("qparser=edismax");
+    });
+
     it("should handle adding a filter", () => {
       const filter: Filter = { filter: "topic", value: "art" };
       const result = manager.handleAddFilter(filter);
@@ -84,6 +89,11 @@ describe("SearchManager", () => {
     it("should drop sort=relevance if selected", () => {
       const result = manager.handleSortChange("relevance");
       expect(result).toBe("q=test");
+    });
+
+    it("should include non-default qparser", () => {
+      const result = manager.handleQparserChange("edismax");
+      expect(result).toBe("q=test&qparser=edismax");
     });
 
     it("should handle page change", () => {

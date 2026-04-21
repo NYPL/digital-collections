@@ -217,13 +217,25 @@ const SearchPage = ({
                 setFiltersExpanded={setFiltersExpanded}
                 updateURL={updateURL}
                 showViewModeButtons={isLargerThanSmallTablet}
+                showQparserToggle
               />{" "}
             </>
           ) : (
-            <NoResultsFound
-              searchTerm={searchResults.keyword}
-              page={searchResults.page}
-            />
+            <>
+              <NoResultsFound
+                searchTerm={searchResults.keyword}
+                page={searchResults.page}
+              />
+              <ViewingOptionsMenu
+                options={SEARCH_SORT_LABELS}
+                sort={searchResults.sort}
+                searchManager={searchManager}
+                setFiltersExpanded={setFiltersExpanded}
+                updateURL={updateURL}
+                showViewModeButtons={false}
+                showQparserToggle
+              />
+            </>
           )}
         </Flex>
         {searchResults.numResults > 0 && (

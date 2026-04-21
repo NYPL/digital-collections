@@ -6,12 +6,18 @@ import SearchPage from "@/src/components/pages/searchPage/searchPage";
 import { Filter } from "@/src/types/FilterType";
 import { AvailableFilter } from "@/src/types/AvailableFilterType";
 import { revalidatePath } from "next/cache";
+import {
+  DEFAULT_QPARSER,
+  isValidQParser,
+  QParserType,
+} from "@/src/utils/searchManager/searchManager";
 
 export interface SearchParamsType {
   q: string;
   sort: string;
   filters: Filter[];
   page: number;
+  qparser?: QParserType;
   availableFilters?: AvailableFilter[];
   viewMode: "grid" | "list";
 }
@@ -30,17 +36,22 @@ export type SearchProps = {
 export default async function Search({ searchParams }: SearchProps) {
   revalidatePath("/search/index");
   const pageName = searchParams.q ? "search-results" : "all-items";
+  const qparser = isValidQParser(searchParams.qparser)
+    ? searchParams.qparser
+    : DEFAULT_QPARSER;
 
   const searchResults = await CollectionsApi.getSearchData({
     keyword: searchParams.q,
     sort: searchParams.sort,
     filters: searchParams.filters,
     page: searchParams.page,
+    qparser,
   });
 
   // Add available filters from response into searchParams
   const updatedSearchParams = {
     ...searchParams,
+    qparser,
     availableFilters: searchResults.availableFilters,
   };
 
