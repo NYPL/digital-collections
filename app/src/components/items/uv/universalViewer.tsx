@@ -5,6 +5,7 @@ import {
 } from "../../../hooks/useUniversalViewer";
 import React, { useEffect, useMemo, useRef } from "react";
 import { useCanvasContext } from "../../../context/CanvasProvider";
+import "universalviewer/dist/esm/index.css";
 
 export type UniversalViewerProps = {
   config?: any;
