@@ -20,7 +20,7 @@ export const trackGa4PageView = (
 
 export const sendDownloadEvent = (
   fileName: string,
-  extension: string,
+  extension?: string,
   division?: string,
   collection?: string,
   subcollection?: string
@@ -29,7 +29,7 @@ export const sendDownloadEvent = (
   dataLayer.push({
     event: "file_download",
     file_name: fileName,
-    file_extension: extension,
+    file_extension: extension ?? GA_NOT_SET,
     division_center: division ? division : GA_NOT_SET,
     collection: collection ? collection : GA_NOT_SET,
     subcollection: subcollection ? subcollection : GA_NOT_SET,
