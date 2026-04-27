@@ -64,6 +64,9 @@ export class FilterValueExpandedPage extends SearchPage {
         ).toBeVisible();
       } else if (i === 6) {
         await expect(
+          paginationNav.getByRole("link", { name: "Page 4", exact: true })
+        ).not.toBeVisible();
+        await expect(
           paginationNav.getByRole("link", { name: "Page 5", exact: true })
         ).toBeVisible();
         await expect(
