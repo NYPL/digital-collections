@@ -18,7 +18,6 @@ export type UniversalViewerProps = {
 // just use this.
 const IIIFEvents = {
   CANVAS_INDEX_CHANGE: "canvasIndexChange",
-  SHOW_OVERLAY: "showOverlay",
 };
 
 // pulled most of this code from: https://codesandbox.io/p/sandbox/uv-nextjs-example-239ff5?file=%2Fcomponents%2FUniversalViewer.tsx%3A39%2C1-49%2C8
@@ -78,33 +77,8 @@ const UniversalViewer: React.FC<UniversalViewerProps> = React.memo(
       }
     }, [canvasIndex, uv]);
 
-    function pruneDownloadButtons() {
-      const host =
-        document.querySelector(".uv-iiif-extension-host") || document;
-      const nodes = host.querySelectorAll<HTMLElement>(
-        "li.option.single > button, li.option.single button, li.option.single > a, li.option.single a"
-      );
-      nodes.forEach((el) => {
-        const text = (el.textContent || "").trim().toLowerCase();
-        const isWholeImage = text.startsWith("whole image");
-
-        if (isWholeImage) {
-          const li = el.closest("li");
-          if (li instanceof HTMLElement) {
-            li.style.display = "none";
-          } else {
-            (el as HTMLElement).style.display = "none";
-          }
-        }
-      });
-    }
-
     useEffect(() => {
-      let mo: MutationObserver | undefined;
-
       if (uv) {
-        // Hide specific default download options by button/anchor text. Right now, just "Whole imiage".
-
         // override config using an inline json object
         uv.on("configure", function ({ config, cb }) {
           cb(uvConfig, [uv]);
@@ -114,19 +88,6 @@ const UniversalViewer: React.FC<UniversalViewerProps> = React.memo(
 
     useEvent(uv, IIIFEvents.CANVAS_INDEX_CHANGE, (i) => {
       setCurrentCanvasIndex(i);
-    });
-
-    useEvent(uv, IIIFEvents.SHOW_OVERLAY, () => {
-      let mo: MutationObserver | undefined;
-      try {
-        mo = new MutationObserver(() => pruneDownloadButtons());
-        mo.observe(document.body, { subtree: true, childList: true });
-      } catch {}
-      return () => {
-        try {
-          mo?.disconnect();
-        } catch {}
-      };
     });
 
     return (
