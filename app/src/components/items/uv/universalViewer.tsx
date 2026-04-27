@@ -6,6 +6,7 @@ import {
 import uvConfig from "./uvConfig.json";
 import React, { useEffect, useMemo, useRef } from "react";
 import { useCanvasContext } from "../../../context/CanvasProvider";
+import { sendDownloadEvent } from "@/src/utils/ga4Utils";
 
 export type UniversalViewerProps = {
   config?: any;
@@ -18,6 +19,7 @@ export type UniversalViewerProps = {
 // just use this.
 const IIIFEvents = {
   CANVAS_INDEX_CHANGE: "canvasIndexChange",
+  DOWNLOAD: "download",
 };
 
 // pulled most of this code from: https://codesandbox.io/p/sandbox/uv-nextjs-example-239ff5?file=%2Fcomponents%2FUniversalViewer.tsx%3A39%2C1-49%2C8
@@ -89,6 +91,27 @@ const UniversalViewer: React.FC<UniversalViewerProps> = React.memo(
     useEvent(uv, IIIFEvents.CANVAS_INDEX_CHANGE, (i) => {
       setCurrentCanvasIndex(i);
     });
+
+    useEvent(uv, IIIFEvents.DOWNLOAD, ({ label }) => {
+      const fileInfo = parseUVDownloadFilename(label);
+      if (fileInfo) {
+        sendDownloadEvent(fileInfo.name, fileInfo.extension);
+      } else {
+        console.log(`Could not parse file info from label ${label}`);
+        sendDownloadEvent(label);
+      }
+    });
+
+    const parseUVDownloadFilename = (fileLabel: string) => {
+      const match = fileLabel.match(/^(.*)\s\((.*)\)$/);
+      if (match) {
+        return {
+          name: match[1],
+          extension: match[2],
+        };
+      }
+      return null;
+    };
 
     return (
       <>
