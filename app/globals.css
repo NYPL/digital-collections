@@ -26,6 +26,16 @@ mark {
     z-index: 10000 !important;
 }
 
+.uv-iiif-extension-host .download .sr-only {
+ /*uv css sets this to 'absolute', overriding with 'static' shows the 'download' label */
+  position: static !important;
+}
+
+.uv-iiif-extension-host .share .sr-only {
+ /*uv css sets this to 'absolute', overriding with 'static' shows the 'share' label */
+  position: static !important;
+}
+
 .plyr__video-wrapper{
   height: 500px !important;
 }
