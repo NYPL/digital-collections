@@ -75,7 +75,7 @@ export class FilterValueExpandedPage extends SearchPage {
       }
     }
 
-    // Verify page 11 appears and is clickable
+    // Verify page 11 appears and is that it is clickable
     const page11Btn = paginationNav.getByRole("link", {
       name: "Page 11",
       exact: true,
