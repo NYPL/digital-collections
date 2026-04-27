@@ -132,7 +132,9 @@
     },
     "downloadDialogue": {
       "options": {
-        "downloadCurrentViewEnabled": false
+        "downloadCurrentViewEnabled": false,
+        "downloadWholeImageHighResEnabled": false,
+        "downloadWholeImageLowResEnabled": false
       }
     }
   }
