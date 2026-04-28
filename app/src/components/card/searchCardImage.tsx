@@ -2,8 +2,14 @@ import Image from "next/image";
 import React from "react";
 import { useState } from "react";
 import { Box } from "@nypl/design-system-react-components";
+import SearchCardType from "@/src/types/SearchCardType";
 
-export const SearchCardImage = ({ record, viewMode }) => {
+type SearchCardImageProps = {
+  record: SearchCardType;
+  viewMode: "grid" | "list";
+};
+
+export const SearchCardImage = ({ record, viewMode }: SearchCardImageProps) => {
   const [imageSrc, setImageSrc] = useState(
     record.videoThumbnail || (record.imageID ? record.imageURL : "/noImage.png")
   );
