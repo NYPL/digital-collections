@@ -10,8 +10,14 @@ type SearchCardImageProps = {
 };
 
 export const SearchCardImage = ({ record, viewMode }: SearchCardImageProps) => {
+  const fallbackImageSrc = {
+    Image: "/noImage.png",
+    Audio: "/noAudio.png",
+    Video: "/noVideo.png",
+  }[record.contentType ?? "Image"];
   const [imageSrc, setImageSrc] = useState(
-    record.videoThumbnail || (record.imageID ? record.imageURL : "/noImage.png")
+    record.videoThumbnail ||
+      (record.imageID ? record.imageURL : fallbackImageSrc)
   );
 
   return (
@@ -51,7 +57,7 @@ export const SearchCardImage = ({ record, viewMode }: SearchCardImageProps) => {
           console.warn(
             `SearchCardImage: Card image failed to load, fallback image loaded instead. ImageURL: ${record.imageURL}`
           );
-          setImageSrc("/noImage.png");
+          setImageSrc(fallbackImageSrc);
         }}
       />
     </Box>
