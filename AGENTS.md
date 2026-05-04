@@ -9,9 +9,9 @@ workspace-level `AGENTS.md` and `dapa-dev-docs/docs/`.
 Digital Collections uses the **NYPL Reservoir Design System**:
 
 - **Package:** `@nypl/design-system-react-components`
-- **Pinned version:** `3.6.3` (see `package.json`)
+- **Pinned version:** `4.0.2` (see `package.json`)
 - **GitHub:** https://github.com/NYPL/nypl-design-system
-- **Storybook / component docs:** https://nypl.github.io/nypl-design-system/reservoir/v3/
+- **Storybook / component docs:** https://nypl.github.io/nypl-design-system/reservoir/v4/
 
 When proposing or reviewing UI changes:
 
