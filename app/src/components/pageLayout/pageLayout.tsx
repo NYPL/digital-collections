@@ -16,6 +16,7 @@ import { SearchParamsType } from "@/search/index/page";
 import { SearchProvider } from "@/src/context/SearchProvider";
 import { CollectionSearchParamsType } from "@/collections/[uuid]/page";
 import { trackGa4PageView } from "@/src/utils/ga4Utils";
+import { AnalyticsDataProvider } from "@/src/context/AnalyticsDataProvider";
 
 interface PageLayoutProps {
   activePage: string;
@@ -57,37 +58,39 @@ const PageLayout = ({
       <DSProvider>
         <SearchProvider searchParams={searchParams}>
           <FeedbackProvider>
-            <SkipNavigation />
-            <Header />
-            {activePage === "home" ||
-            activePage === "about" ||
-            activePage === "notFound" ||
-            activePage === "serverError" ||
-            activePage === "search" ? (
-              children
-            ) : (
-              <>
-                <Breadcrumbs
-                  variant="digitalCollections"
-                  breadcrumbsData={breadcrumbs || []}
-                  aria-label={activePage}
-                />
-                {/* TODO: Move to TemplateAppContainer once spacing is more flexible.  --> */}
-                <Box
-                  id="mainContent"
-                  sx={{
-                    margin: "auto",
-                    maxWidth: "1280px",
-                    paddingLeft: responsivePadding,
-                    paddingRight: responsivePadding,
-                    paddingTop: "64px",
-                    paddingBottom: "64px",
-                  }}
-                >
-                  {children as JSX.Element}
-                </Box>
-              </>
-            )}
+            <AnalyticsDataProvider data={ga4Data ?? {}}>
+              <SkipNavigation />
+              <Header />
+              {activePage === "home" ||
+              activePage === "about" ||
+              activePage === "notFound" ||
+              activePage === "serverError" ||
+              activePage === "search" ? (
+                children
+              ) : (
+                <>
+                  <Breadcrumbs
+                    variant="digitalCollections"
+                    breadcrumbsData={breadcrumbs || []}
+                    aria-label={activePage}
+                  />
+                  {/* TODO: Move to TemplateAppContainer once spacing is more flexible.  --> */}
+                  <Box
+                    id="mainContent"
+                    sx={{
+                      margin: "auto",
+                      maxWidth: "1280px",
+                      paddingLeft: responsivePadding,
+                      paddingRight: responsivePadding,
+                      paddingTop: "64px",
+                      paddingBottom: "64px",
+                    }}
+                  >
+                    {children as JSX.Element}
+                  </Box>
+                </>
+              )}
+            </AnalyticsDataProvider>
           </FeedbackProvider>
         </SearchProvider>
       </DSProvider>
