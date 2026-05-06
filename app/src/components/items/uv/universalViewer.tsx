@@ -97,24 +97,15 @@ const UniversalViewer: React.FC<UniversalViewerProps> = React.memo(
 
     useEvent(uv, IIIFEvents.DOWNLOAD, ({ label }) => {
       const fileInfo = parseUVDownloadFilename(label);
-      if (fileInfo) {
-        sendDownloadEvent(
-          fileInfo.name,
-          fileInfo.extension,
-          analyticsData.division,
-          analyticsData.collection,
-          analyticsData.subCollection
-        );
-      } else {
+      const ga4Data = {
+        fileName: fileInfo ? fileInfo.name : label,
+        extension: fileInfo?.extension ?? undefined,
+        ...analyticsData,
+      };
+      if (!fileInfo) {
         console.log(`Could not parse file info from label ${label}`);
-        sendDownloadEvent(
-          label,
-          undefined,
-          analyticsData.division,
-          analyticsData.collection,
-          analyticsData.subCollection
-        );
       }
+      sendDownloadEvent(ga4Data);
     });
 
     const parseUVDownloadFilename = (fileLabel: string) => {
