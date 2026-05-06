@@ -41,13 +41,7 @@ const PageLayout = ({
   // Track page view events to Google Analytics
   useEffect(() => {
     if (ga4Data) {
-      trackGa4PageView(
-        ga4Data.division,
-        ga4Data.collection,
-        ga4Data.subcollection,
-        ga4Data.contentType,
-        ga4Data.resourceType
-      );
+      trackGa4PageView(ga4Data);
     }
   });
 
