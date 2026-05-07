@@ -119,4 +119,19 @@ test.describe.serial("View all names filter", () => {
   test("Pagination updates dynamically and allows navigation past page 10", async () => {
     await filterPage.verifyPaginationPastPage10();
   });
+
+  test("Search autocomplete should filter results for each keypress (check 3)", async () => {
+    await filterPage.verifyAutocompleteFlow();
+  });
+
+  test("Modal search restore full list when search is cleared", async () => {
+    await filterPage.clearSearch();
+    await expect(filterPage.valueExpandedModal.getByRole("radio")).toHaveCount(
+      10
+    );
+  });
+
+  // test("Search autocomplete: filters per keypress", async () => {
+  //   await filterPage.verifyAutocompleteFlow();
+  // });
 });

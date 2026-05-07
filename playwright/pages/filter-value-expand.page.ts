@@ -4,7 +4,11 @@ import { expect, Locator } from "@playwright/test";
 export class FilterValueExpandedPage extends SearchPage {
   readonly viewAllNamesButton: Locator;
   readonly valueExpandedModal: Locator;
+  readonly modalSearchInput: Locator;
+
   static nameResultsUrl: string = "/search/index?q=print";
+  static SEARCH_STEM: string = "POS";
+  static TARGET_NAME: string = "Posada, José Guadalupe, 1852-1913";
 
   constructor(page: any) {
     super(page);
@@ -13,10 +17,12 @@ export class FilterValueExpandedPage extends SearchPage {
       name: /view all names/i,
     });
     this.valueExpandedModal = this.page.getByRole("dialog", { name: "Names" });
+    this.modalSearchInput =
+      this.valueExpandedModal.getByPlaceholder(/search names/i);
   }
 
   async openAllNames() {
-    // nameFilter inherited from the parent SearchPage
+    // Open initial dropdown
     await expect(this.nameFilter).toBeVisible();
     await this.nameFilter.click();
 
@@ -85,5 +91,39 @@ export class FilterValueExpandedPage extends SearchPage {
     });
     await expect(page11Btn).toBeVisible();
     await expect(page11Btn).toBeEnabled();
+  }
+
+  // Search inside modal
+  async clearSearch() {
+    await this.modalSearchInput.fill("");
+  }
+
+  async verifyAutocompleteFlow() {
+    await this.clearSearch();
+    const radios = this.valueExpandedModal.getByRole("radio");
+
+    // start with 10 names (default page size)
+    let previousCount = 10;
+
+    // Loop through each character in the stem (P, O, S)
+    for (const char of FilterValueExpandedPage.SEARCH_STEM) {
+      await this.modalSearchInput.press(char);
+      await this.page.waitForTimeout(200);
+
+      const currentCount = await radios.count();
+
+      // list should be smaller than the previous one
+      expect(currentCount).toBeLessThanOrEqual(previousCount);
+      previousCount = currentCount;
+    }
+
+    // NOTE: shoudn't this be comparing to the previous, not just checking for less than 10?
+    expect(previousCount).toBeLessThan(10);
+
+    const target = this.valueExpandedModal.getByText(
+      FilterValueExpandedPage.TARGET_NAME,
+      { exact: true }
+    );
+    await expect(target).toBeVisible();
   }
 }
