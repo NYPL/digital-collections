@@ -9,7 +9,6 @@ const { suggestions } = mockSuggestResponse;
 describe("SearchSuggestions", () => {
   const defaultProps = {
     suggestions,
-    query: "crom",
     activeIndex: -1,
     onSelect: jest.fn(),
     listboxId: "dc-search-suggestions",
@@ -45,24 +44,25 @@ describe("SearchSuggestions", () => {
     });
   });
 
-  it("highlights the matching prefix inside a <mark> element", () => {
+  it("highlights matched words from Solr highlight snippets", () => {
     render(<SearchSuggestions {...defaultProps} />);
-    // The first suggestion "Cromwell Family Papers" starts with "Crom" (case-insensitive)
-    const mark = screen.getByRole("listbox").querySelector("mark");
-    expect(mark).not.toBeNull();
-    expect(mark?.textContent).toBe("Crom");
+    // "Cromwell" is wrapped in <em> in the Title highlight for the first two suggestions
+    const marks = screen.getByRole("listbox").querySelectorAll("mark");
+    // First two suggestions have Title highlights; third does not
+    expect(marks.length).toBeGreaterThanOrEqual(2);
+    expect(marks[0].textContent).toBe("Cromwell");
   });
 
-  it("does not render a <mark> when the title does not start with the query", () => {
+  it("renders the full title with no <mark> when highlights are empty", () => {
     render(
       <SearchSuggestions
         {...defaultProps}
-        // query is "xyz" — no title starts with it
-        query="xyz"
+        suggestions={[{ ...suggestions[2], highlights: {} }]}
       />
     );
-    const marks = document.querySelectorAll("mark");
-    expect(marks).toHaveLength(0);
+    // "Cromwell Avenue, Bronx" has no Title highlight — title rendered plain
+    expect(screen.getByText("Cromwell Avenue, Bronx")).toBeInTheDocument();
+    expect(document.querySelectorAll("mark")).toHaveLength(0);
   });
 
   it("calls onSelect with the suggestion title on mousedown", () => {

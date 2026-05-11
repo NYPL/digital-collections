@@ -151,7 +151,6 @@ const Search = () => {
         {isOpen && (
           <SearchSuggestions
             suggestions={suggestions}
-            query={keywords}
             activeIndex={activeIndex}
             onSelect={handleSuggestionSelect}
             listboxId={LISTBOX_ID}
