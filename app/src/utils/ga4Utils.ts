@@ -1,38 +1,54 @@
 const GA_NOT_SET = "Not set";
 
-export const trackGa4PageView = (
-  division?: string,
-  collection?: string,
-  subCollection?: string,
-  contentType?: string,
-  resourceType?: string
-) => {
+interface GA4BaseData {
+  division?: string;
+  collection?: string;
+  subCollection?: string;
+}
+
+interface PageViewData extends GA4BaseData {
+  contentType?: string;
+  resourceType?: string;
+}
+
+export const trackGa4PageView = ({
+  division = GA_NOT_SET,
+  collection = GA_NOT_SET,
+  subCollection = GA_NOT_SET,
+  contentType = GA_NOT_SET,
+  resourceType = GA_NOT_SET,
+}: PageViewData) => {
   const dataLayer = window["dataLayer"] || [];
   dataLayer.push({
     event: "page_view",
-    division_center: division ? division : GA_NOT_SET,
-    collection: collection ? collection : GA_NOT_SET,
-    subcollection: subCollection ? subCollection : GA_NOT_SET,
-    dc_content_type: contentType ?? GA_NOT_SET,
-    dc_resource_type: resourceType ?? GA_NOT_SET,
+    division_center: division,
+    collection: collection,
+    subcollection: subCollection,
+    dc_content_type: contentType,
+    dc_resource_type: resourceType,
   });
 };
 
-export const sendDownloadEvent = (
-  fileName: string,
-  extension?: string,
-  division?: string,
-  collection?: string,
-  subcollection?: string
-) => {
+interface DownloadData extends GA4BaseData {
+  fileName: string;
+  extension?: string;
+}
+
+export const sendDownloadEvent = ({
+  fileName,
+  extension = GA_NOT_SET,
+  division = GA_NOT_SET,
+  collection = GA_NOT_SET,
+  subCollection = GA_NOT_SET,
+}: DownloadData) => {
   const dataLayer = window["dataLayer"] || [];
   dataLayer.push({
     event: "file_download",
     file_name: fileName,
-    file_extension: extension ?? GA_NOT_SET,
-    division_center: division ? division : GA_NOT_SET,
-    collection: collection ? collection : GA_NOT_SET,
-    subcollection: subcollection ? subcollection : GA_NOT_SET,
+    file_extension: extension,
+    division_center: division,
+    collection: collection,
+    subcollection: subCollection,
   });
 };
 
