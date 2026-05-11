@@ -1,43 +1,21 @@
 "use client";
 import React from "react";
 import { Box, Text } from "@nypl/design-system-react-components";
+import parse from "html-react-parser";
+import { formatHighlightText, highlightTitleWords } from "@/src/utils/utils";
 
 export type SuggestResult = {
   uuid: string;
   title: string;
   type: "Item" | "Collection";
+  highlights: Record<string, string[]>;
 };
 
 interface SearchSuggestionsProps {
   suggestions: SuggestResult[];
-  query: string;
   activeIndex: number;
   onSelect: (title: string) => void;
   listboxId: string;
-}
-
-/**
- * Wraps the matched prefix in a <mark> element and leaves the rest as-is.
- * Falls back to the full title string when no prefix match is found.
- */
-function highlightPrefix(title: string, query: string): React.ReactNode {
-  if (!query || !title.toLowerCase().startsWith(query.toLowerCase())) {
-    return title;
-  }
-  return (
-    <>
-      <mark
-        style={{
-          background: "transparent",
-          fontWeight: "bold",
-          padding: 0,
-        }}
-      >
-        {title.slice(0, query.length)}
-      </mark>
-      {title.slice(query.length)}
-    </>
-  );
 }
 
 /**
@@ -56,7 +34,6 @@ function highlightPrefix(title: string, query: string): React.ReactNode {
  */
 const SearchSuggestions = ({
   suggestions,
-  query,
   activeIndex,
   onSelect,
   listboxId,
@@ -113,7 +90,12 @@ const SearchSuggestions = ({
                 textOverflow: "ellipsis",
               }}
             >
-              {highlightPrefix(suggestion.title, query)}
+              {parse(
+                highlightTitleWords(
+                  suggestion.title,
+                  formatHighlightText(suggestion.highlights ?? {})
+                )
+              )}
             </Text>
           </Box>
         );
