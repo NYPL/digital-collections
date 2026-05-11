@@ -1,4 +1,5 @@
 import { capitalize } from "@/src/utils/utils";
+import { trackCTA } from "@/src/utils/ga4Utils";
 import {
   Flex,
   Heading,
@@ -253,9 +254,11 @@ const CollectionMetadata = ({ data }: { data: CollectionMetadataProps }) => {
               <Button
                 variant="secondary"
                 id="finding-aid-btn"
-                onClick={() =>
-                  window.open(`https://archives.nypl.org/${mssID}`, "_blank")
-                }
+                onClick={() => {
+                  const url = `https://archives.nypl.org/${mssID}`;
+                  trackCTA("Finding aid", url, "Collection Page Finding Aid");
+                  window.open(url, "_blank");
+                }}
               >
                 Finding aid
               </Button>
@@ -264,12 +267,15 @@ const CollectionMetadata = ({ data }: { data: CollectionMetadataProps }) => {
               <Button
                 variant="secondary"
                 id="catalog-btn"
-                onClick={() =>
-                  window.open(
-                    `https://www.nypl.org/research/research-catalog/bib/${bNumbers[0]}`,
-                    "_blank"
-                  )
-                }
+                onClick={() => {
+                  const url = `https://www.nypl.org/research/research-catalog/bib/${bNumbers[0]}`;
+                  trackCTA(
+                    "Catalog record",
+                    url,
+                    "Collection Page Catalog Record"
+                  );
+                  window.open(url, "_blank");
+                }}
               >
                 Catalog record
               </Button>
