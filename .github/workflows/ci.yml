@@ -17,8 +17,8 @@ jobs:
     env:
       CI: true
     steps:
-      - uses: actions/checkout@v4
-      - name: Use Node.js 18.x
+      - uses: actions/checkout@v6
+      - name: Use Node.js 22.x
         uses: actions/setup-node@v3
         with:
           node-version: 22
@@ -35,11 +35,11 @@ jobs:
     env:
       CI: true
     steps:
-      - uses: actions/checkout@v4
-      - name: Use Node.js 18
+      - uses: actions/checkout@v6
+      - name: Use Node.js 22
         uses: actions/setup-node@v3
         with:
-          node-version: 18
+          node-version: 22
       - name: Cache and install node modules
         uses: bahmutov/npm-install@v1
       - name: Test
