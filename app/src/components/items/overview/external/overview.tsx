@@ -1,4 +1,5 @@
 import { Box, Heading, Link, Text } from "@nypl/design-system-react-components";
+import { trackCTA } from "@/src/utils/ga4Utils";
 
 const ExternalLinksOverview = ({ catalogLink, archivesLink }) => {
   return (
@@ -19,6 +20,9 @@ const ExternalLinksOverview = ({ catalogLink, archivesLink }) => {
             aria-label={`view finding aid`}
             variant="buttonSecondary"
             marginRight="xs"
+            onClick={() =>
+              trackCTA("Finding Aid", archivesLink, "Item Page Finding Aid")
+            }
           >
             Finding Aid
           </Link>
@@ -31,6 +35,13 @@ const ExternalLinksOverview = ({ catalogLink, archivesLink }) => {
             target="_blank"
             aria-label={`view in catalog`}
             variant="buttonSecondary"
+            onClick={() =>
+              trackCTA(
+                "Research Catalog",
+                catalogLink,
+                "Item Page Research Catalog"
+              )
+            }
           >
             Research Catalog
           </Link>
