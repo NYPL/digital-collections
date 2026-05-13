@@ -7,6 +7,7 @@ import uvConfig from "./uvConfig.json";
 import React, { useEffect, useMemo, useRef } from "react";
 import { useCanvasContext } from "../../../context/CanvasProvider";
 import { sendDownloadEvent } from "@/src/utils/ga4Utils";
+import { useAnalyticsDataContext } from "@/src/context/AnalyticsDataProvider";
 
 export type UniversalViewerProps = {
   config?: any;
@@ -92,14 +93,19 @@ const UniversalViewer: React.FC<UniversalViewerProps> = React.memo(
       setCurrentCanvasIndex(i);
     });
 
+    const analyticsData = useAnalyticsDataContext();
+
     useEvent(uv, IIIFEvents.DOWNLOAD, ({ label }) => {
       const fileInfo = parseUVDownloadFilename(label);
-      if (fileInfo) {
-        sendDownloadEvent(fileInfo.name, fileInfo.extension);
-      } else {
+      const ga4Data = {
+        fileName: fileInfo ? fileInfo.name : label,
+        extension: fileInfo?.extension ?? undefined,
+        ...analyticsData,
+      };
+      if (!fileInfo) {
         console.log(`Could not parse file info from label ${label}`);
-        sendDownloadEvent(label);
       }
+      sendDownloadEvent(ga4Data);
     });
 
     const parseUVDownloadFilename = (fileLabel: string) => {
