@@ -20,11 +20,6 @@
     "test:watch": "jest --watch --config=jest.config.ts",
     "test:ci": "jest --ci --config=jest.config.ts",
     "prepare": "husky install",
-    "homepageImageLoadingTestQa": "node test/homepageImageLoadingTest.js",
-    "homepageImageLoadingTestProd": "node test/homepageImageLoadingTest.js --prod",
-    "homepageFeaturedImageLoadingTestQa": "node test/homepageFeaturedImageLoadingTest.js",
-    "homepageFeaturedImageLoadingTestProd": "node test/homepageFeaturedImageLoadingTest.js --prod",
-    "legacyHomepageImageLoadingTestProd": "node test/legacyHomepageImageLoadingTest.js --prod",
     "playwright": "npx playwright test",
     "playwright:ui": "npx playwright test --ui"
   },
