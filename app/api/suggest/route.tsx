@@ -11,7 +11,7 @@ export const GET = async (req: NextRequest) => {
 
   const apiUrl = `${
     process.env.COLLECTIONS_API_URL
-  }/search/suggest?q=${encodeURIComponent(q)}`;
+  }/search/suggestions?q=${encodeURIComponent(q)}`;
 
   try {
     const res = await fetch(apiUrl, {

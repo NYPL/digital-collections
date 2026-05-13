@@ -40,7 +40,7 @@ describe("GET /api/suggest", () => {
     const data = await res.json();
 
     expect(global.fetch).toHaveBeenCalledWith(
-      "http://collections-api.test/search/suggest?q=crom",
+      "http://collections-api.test/search/suggestions?q=crom",
       {
         headers: { "x-nypl-collections-api-key": "test-token" },
       }
