@@ -100,30 +100,72 @@ export class FilterValueExpandedPage extends SearchPage {
 
   async verifyAutocompleteFlow() {
     await this.clearSearch();
-    const radios = this.valueExpandedModal.getByRole("radio");
+    const paginationNav = this.valueExpandedModal.getByRole("navigation", {
+      name: "Pagination",
+    });
 
-    // start with 10 names (default page size)
-    let previousCount = 10;
+    // Get the starting "Last Page" number (e.g., 1167)
+    const getLastPageNumber = async () => {
+      const lastPageLink = paginationNav
+        .getByRole("link", { name: /Page \d+/ })
+        .last();
+      const label = await lastPageLink.innerText(); // e.g., "Page 1167"
+      return parseInt(label.replace("Page ", ""), 10);
+    };
+
+    const initialLastPage = await getLastPageNumber();
+    let previousLastPage = initialLastPage;
 
     // Loop through each character in the stem (P, O, S)
     for (const char of FilterValueExpandedPage.SEARCH_STEM) {
       await this.modalSearchInput.press(char);
-      await this.page.waitForTimeout(200);
+      await this.page.waitForTimeout(400); // Give the pagination a moment to rebuild
 
-      const currentCount = await radios.count();
+      const currentLastPage = await getLastPageNumber();
 
-      // list should be smaller than the previous one
-      expect(currentCount).toBeLessThanOrEqual(previousCount);
-      previousCount = currentCount;
+      // Total number of pages (ie "Last Page" number) should drop
+      if (char === FilterValueExpandedPage.SEARCH_STEM[0]) {
+        expect(currentLastPage).toBeLessThan(initialLastPage);
+      }
+      expect(currentLastPage).toBeLessThanOrEqual(previousLastPage);
+
+      previousLastPage = currentLastPage;
     }
 
-    // NOTE: shoudn't this be comparing to the previous, not just checking for less than 10?
-    expect(previousCount).toBeLessThan(10);
-
+    // Full "pos" stem should return a single name in this case "Posada"
     const target = this.valueExpandedModal.getByText(
       FilterValueExpandedPage.TARGET_NAME,
       { exact: true }
     );
     await expect(target).toBeVisible();
   }
+
+  // async verifyAutocompleteFlow() {
+  //   await this.clearSearch();
+  //   const radios = this.valueExpandedModal.getByRole("radio");
+
+  //   // start with 10 names (default page size)
+  //   let previousCount = 10;
+
+  //   // Loop through each character in the stem (P, O, S)
+  //   for (const char of FilterValueExpandedPage.SEARCH_STEM) {
+  //     await this.modalSearchInput.press(char);
+  //     await this.page.waitForTimeout(200);
+
+  //     const currentCount = await radios.count();
+
+  //     // list should be smaller than the previous one
+  //     expect(currentCount).toBeLessThanOrEqual(previousCount);
+  //     previousCount = currentCount;
+  //   }
+
+  //   // NOTE: shoudn't this be comparing to the previous, not just checking for less than 10?
+  //   expect(previousCount).toBeLessThan(10);
+
+  //   const target = this.valueExpandedModal.getByText(
+  //     FilterValueExpandedPage.TARGET_NAME,
+  //     { exact: true }
+  //   );
+  //   await expect(target).toBeVisible();
+  // }
 }
