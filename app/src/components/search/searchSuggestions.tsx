@@ -18,20 +18,6 @@ interface SearchSuggestionsProps {
   listboxId: string;
 }
 
-/**
- * Accessible suggestion dropdown for the global search bar.
- *
- * ARIA pattern: ARIA 1.2 Combobox / Listbox popup.
- * - Container: role="listbox" with a labelled id
- * - Each item: role="option", aria-selected, unique id for aria-activedescendant
- *
- * The parent input must have:
- *   role="combobox"
- *   aria-expanded={isOpen}
- *   aria-autocomplete="list"
- *   aria-controls={listboxId}
- *   aria-activedescendant={activeOptionId | undefined}
- */
 const SearchSuggestions = ({
   suggestions,
   activeIndex,
