@@ -31,36 +31,22 @@ test.describe.serial("View all names filter", () => {
     // Assign to global variable and load the page object
     filterPage = new FilterValueExpandedPage(page);
     await filterPage.loadPage(FilterValueExpandedPage.nameResultsUrl);
-
-    // Given I am on a results page for a search for "print"
-    // And the URL matches "<url>"
   });
 
-  // Teardown: Close the entire context to free up resources
   test.afterAll(async () => {
     await filterPage.page.context().close();
   });
 
-  test("Opening the full names list and clicking view-all-names", async () => {
-    // Then I should see a "Name" filter under the "Refine your search" heading
+  test("Open full names list and click view-all-names", async () => {
     await expect(filterPage.nameFilter).toBeVisible();
-
-    // When I click on the "Name" box
     await filterPage.nameFilter.click();
-
-    // Then a "List of Names" modal should open (this represents the initial dropdown)
     await expect(filterPage.viewAllNamesButton).toBeVisible();
   });
 
   test("Should display the expanded names modal", async () => {
-    // When I click the "View all names" button at the bottom of the modal
     await filterPage.viewAllNamesButton.click();
-
-    // Then a new expanded modal should open
     await expect(filterPage.valueExpandedModal).toBeVisible();
 
-    // And the expanded modal should contain the following elements:
-    // Heading
     await expect(
       filterPage.valueExpandedModal.getByRole("heading", {
         name: "Names",
@@ -68,17 +54,15 @@ test.describe.serial("View all names filter", () => {
       })
     ).toBeVisible();
 
-    // Search Bar ("search names" input)
     await expect(
       filterPage.valueExpandedModal.getByPlaceholder(/search names/i)
     ).toBeVisible();
 
-    // Name List Displays 10 names
+    // Name List should Display 10 names
     await expect(filterPage.valueExpandedModal.getByRole("radio")).toHaveCount(
       10
     );
 
-    // Action Buttons: "Close" and "Confirm"
     await expect(
       filterPage.valueExpandedModal.getByRole("button", { name: /close/i })
     ).toBeVisible();
@@ -88,32 +72,7 @@ test.describe.serial("View all names filter", () => {
   });
 
   test("Pagination links should display the correct sequence", async () => {
-    // Scope pagination buttons to the modal to avoid matching elements in the background
-    const paginationNav = filterPage.valueExpandedModal.getByRole(
-      "navigation",
-      { name: "Pagination" }
-    );
-
-    // Page 1 should be current
-    const page1Btn = paginationNav.getByRole("link", {
-      name: "Page 1",
-      exact: true,
-    });
-    await expect(page1Btn).toHaveAttribute("aria-current", "page");
-
-    // Last page should be enabled
-    const lastPageBtn = paginationNav
-      .getByRole("link", {
-        name: /Page \d+/,
-      })
-      .last();
-    await expect(lastPageBtn).toBeEnabled();
-
-    // Next button should be enabled
-    const nextBtn = paginationNav.getByRole("link", {
-      name: /Next page/i,
-    });
-    await expect(nextBtn).toBeEnabled();
+    await filterPage.verifyInitialPagination();
   });
 
   test("Pagination updates dynamically and allows navigation past page 10", async () => {
@@ -130,8 +89,4 @@ test.describe.serial("View all names filter", () => {
       10
     );
   });
-
-  // test("Search autocomplete: filters per keypress", async () => {
-  //   await filterPage.verifyAutocompleteFlow();
-  // });
 });
