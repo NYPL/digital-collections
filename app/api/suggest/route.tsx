@@ -22,12 +22,18 @@ export const GET = async (req: NextRequest) => {
     });
 
     if (!res.ok) {
-      return NextResponse.json({ suggestions: [] });
+      return NextResponse.json(
+        { error: `collections-api responded with ${res.status}` },
+        { status: 500 }
+      );
     }
 
     const data = await res.json();
     return NextResponse.json(data);
-  } catch {
-    return NextResponse.json({ suggestions: [] });
+  } catch (err) {
+    return NextResponse.json(
+      { error: err instanceof Error ? err.message : "unexpected error" },
+      { status: 500 }
+    );
   }
 };

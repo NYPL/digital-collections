@@ -49,7 +49,7 @@ describe("GET /api/suggest", () => {
     expect(data).toEqual({ suggestions: mockSuggestions });
   });
 
-  it("returns empty suggestions when the upstream response is not ok", async () => {
+  it("returns 500 when the upstream response is not ok", async () => {
     global.fetch = jest.fn().mockResolvedValue({
       ok: false,
       status: 503,
@@ -57,19 +57,19 @@ describe("GET /api/suggest", () => {
 
     const res = await GET(makeRequest("crom"));
     const data = await res.json();
-    expect(res.status).toBe(200);
-    expect(data).toEqual({ suggestions: [] });
+    expect(res.status).toBe(500);
+    expect(data).toHaveProperty("error");
   });
 
-  it("returns empty suggestions when the upstream fetch throws", async () => {
+  it("returns 500 when the upstream fetch throws", async () => {
     global.fetch = jest
       .fn()
       .mockRejectedValue(new Error("network error")) as jest.Mock;
 
     const res = await GET(makeRequest("crom"));
     const data = await res.json();
-    expect(res.status).toBe(200);
-    expect(data).toEqual({ suggestions: [] });
+    expect(res.status).toBe(500);
+    expect(data).toHaveProperty("error", "network error");
   });
 
   it("URL-encodes the query parameter before forwarding", async () => {

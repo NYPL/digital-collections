@@ -34,6 +34,11 @@ const Search = () => {
         const res = await fetch(
           `/api/suggest?q=${encodeURIComponent(keywords)}`
         );
+        if (!res.ok) {
+          setSuggestions([]);
+          setIsOpen(false);
+          return;
+        }
         const data = await res.json();
         const results: SuggestResult[] = data.suggestions ?? [];
         setSuggestions(results);
