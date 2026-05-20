@@ -43,33 +43,41 @@ test.describe.serial("View all names filter", () => {
     await expect(filterPage.viewAllNamesButton).toBeVisible();
   });
 
-  test("Should display the expanded names modal", async () => {
-    await filterPage.viewAllNamesButton.click();
-    await expect(filterPage.valueExpandedModal).toBeVisible();
-
-    await expect(
-      filterPage.valueExpandedModal.getByRole("heading", {
-        name: "Names",
-        exact: true,
-      })
-    ).toBeVisible();
-
-    await expect(
-      filterPage.valueExpandedModal.getByPlaceholder(/search names/i)
-    ).toBeVisible();
-
-    // Name List should Display 10 names
-    await expect(filterPage.valueExpandedModal.getByRole("radio")).toHaveCount(
-      10
-    );
-
-    await expect(
-      filterPage.valueExpandedModal.getByRole("button", { name: /close/i })
-    ).toBeVisible();
-    await expect(
-      filterPage.valueExpandedModal.getByRole("button", { name: /confirm/i })
-    ).toBeVisible();
+  test("Should open expanded names modal and show a close-button", async () => {
+    await filterPage.verifyExpandedNamesModal();
   });
+
+  test("Should display default names list", async () => {
+    await filterPage.verifyDefaultNamesList();
+  });
+
+  // test("Should display the expanded names modal", async () => {
+  //   await filterPage.viewAllNamesButton.click();
+  //   await expect(filterPage.valueExpandedModal).toBeVisible();
+
+  //   await expect(
+  //     filterPage.valueExpandedModal.getByRole("heading", {
+  //       name: "Names",
+  //       exact: true,
+  //     })
+  //   ).toBeVisible();
+
+  //   await expect(
+  //     filterPage.valueExpandedModal.getByPlaceholder(/search names/i)
+  //   ).toBeVisible();
+
+  //   // Name List should Display 10 names
+  //   await expect(filterPage.valueExpandedModal.getByRole("radio")).toHaveCount(
+  //     10
+  //   );
+
+  //   await expect(
+  //     filterPage.valueExpandedModal.getByRole("button", { name: /close/i })
+  //   ).toBeVisible();
+  //   await expect(
+  //     filterPage.valueExpandedModal.getByRole("button", { name: /confirm/i })
+  //   ).toBeVisible();
+  // });
 
   test("Pagination links should display the correct sequence", async () => {
     await filterPage.verifyInitialPagination();
