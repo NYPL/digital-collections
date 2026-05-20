@@ -34,7 +34,7 @@ export class FilterValueExpandedPage extends SearchPage {
     await expect(this.valueExpandedModal).toBeVisible();
   }
 
-  async verifyPaginationPastPage10() {
+  async verifyPagination() {
     const paginationNav = this.valueExpandedModal.getByRole("navigation", {
       name: "Pagination",
     });
