@@ -1,5 +1,5 @@
 import SearchPage from "./search.page";
-import { expect, Locator } from "@playwright/test";
+import { expect, Locator, Page } from "@playwright/test";
 
 export class FilterValueExpandedPage extends SearchPage {
   readonly viewAllNamesButton: Locator;
@@ -10,7 +10,7 @@ export class FilterValueExpandedPage extends SearchPage {
   static SEARCH_STEM: string = "POS";
   static TARGET_NAME: string = "Posada, José Guadalupe, 1852-1913";
 
-  constructor(page: any) {
+  constructor(page: Page) {
     super(page);
 
     this.viewAllNamesButton = this.page.getByRole("button", {
