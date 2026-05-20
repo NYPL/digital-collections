@@ -76,7 +76,7 @@ test.describe.serial("View all names filter", () => {
   });
 
   test("Pagination updates dynamically and allows navigation past page 10", async () => {
-    await filterPage.verifyPaginationPastPage10();
+    await filterPage.verifyPagination();
   });
 
   test("Search autocomplete should filter results for each keypress (check 3)", async () => {
