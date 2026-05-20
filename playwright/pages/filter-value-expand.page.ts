@@ -34,6 +34,33 @@ export class FilterValueExpandedPage extends SearchPage {
     await expect(this.valueExpandedModal).toBeVisible();
   }
 
+  async verifyExpandedNamesModal() {
+    await this.viewAllNamesButton.click();
+    await expect(this.valueExpandedModal).toBeVisible();
+
+    await expect(
+      this.valueExpandedModal.getByRole("heading", {
+        name: "Names",
+        exact: true,
+      })
+    ).toBeVisible();
+
+    await expect(
+      this.valueExpandedModal.getByPlaceholder(/search names/i)
+    ).toBeVisible();
+
+    await expect(
+      this.valueExpandedModal.getByRole("button", { name: /close/i })
+    ).toBeVisible();
+    await expect(
+      this.valueExpandedModal.getByRole("button", { name: /confirm/i })
+    ).toBeVisible();
+  }
+
+  async verifyDefaultNamesList() {
+    await expect(this.valueExpandedModal.getByRole("radio")).toHaveCount(10);
+  }
+
   async verifyPagination() {
     const paginationNav = this.valueExpandedModal.getByRole("navigation", {
       name: "Pagination",
