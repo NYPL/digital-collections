@@ -133,7 +133,10 @@ export class FilterValueExpandedPage extends SearchPage {
     // Loop through each character in the stem (e.g. "P", "O", "S")
     for (const char of FilterValueExpandedPage.SEARCH_STEM) {
       await this.modalSearchInput.press(char);
-      await this.page.waitForTimeout(400); // Give the pagination a moment to rebuild
+
+      await expect(
+        this.valueExpandedModal.locator("nav[aria-label='Pagination']")
+      ).not.toContainText(`Page ${previousLastPage}`);
 
       const currentLastPage = await this.getLastPageNumber();
 
