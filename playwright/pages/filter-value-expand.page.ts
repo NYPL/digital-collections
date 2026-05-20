@@ -87,7 +87,7 @@ export class FilterValueExpandedPage extends SearchPage {
       );
       lastRadioOldValue = await radios.last().getAttribute("value");
 
-      // 3. Verify gap structure shifts correctly at specific pages
+      // 3. Verify display shifts correctly at specific pages
       if (i === 5) {
         await expect(
           paginationNav.getByRole("link", { name: "Page 2", exact: true })

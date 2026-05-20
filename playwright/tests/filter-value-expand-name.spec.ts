@@ -51,39 +51,11 @@ test.describe.serial("View all names filter", () => {
     await filterPage.verifyDefaultNamesList();
   });
 
-  // test("Should display the expanded names modal", async () => {
-  //   await filterPage.viewAllNamesButton.click();
-  //   await expect(filterPage.valueExpandedModal).toBeVisible();
-
-  //   await expect(
-  //     filterPage.valueExpandedModal.getByRole("heading", {
-  //       name: "Names",
-  //       exact: true,
-  //     })
-  //   ).toBeVisible();
-
-  //   await expect(
-  //     filterPage.valueExpandedModal.getByPlaceholder(/search names/i)
-  //   ).toBeVisible();
-
-  //   // Name List should Display 10 names
-  //   await expect(filterPage.valueExpandedModal.getByRole("radio")).toHaveCount(
-  //     10
-  //   );
-
-  //   await expect(
-  //     filterPage.valueExpandedModal.getByRole("button", { name: /close/i })
-  //   ).toBeVisible();
-  //   await expect(
-  //     filterPage.valueExpandedModal.getByRole("button", { name: /confirm/i })
-  //   ).toBeVisible();
-  // });
-
   test("Pagination links should display the correct sequence", async () => {
     await filterPage.verifyInitialPagination();
   });
 
-  test("Pagination updates dynamically and allows navigation past page 10", async () => {
+  test("Pagination updates dynamically", async () => {
     await filterPage.verifyPagination();
   });
 
