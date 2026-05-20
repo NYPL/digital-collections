@@ -54,7 +54,14 @@ export class FilterValueExpandedPage extends SearchPage {
       await expect(pageBtn).toHaveAttribute("aria-current", "page");
 
       // 2. Verify name refresh (concurrently with navigation)
-      await expect(radios.last()).not.toHaveAttribute(lastRadioOldValue || "");
+
+      // await expect(radios.last()).not.toHaveAttribute(lastRadioOldValue || "");
+      // lastRadioOldValue = await radios.last().getAttribute("value");
+
+      await expect(radios.last()).not.toHaveAttribute(
+        "value",
+        lastRadioOldValue || ""
+      );
       lastRadioOldValue = await radios.last().getAttribute("value");
 
       // 3. Verify gap structure shifts correctly at specific pages
