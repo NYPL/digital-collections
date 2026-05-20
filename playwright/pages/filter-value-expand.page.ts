@@ -9,6 +9,7 @@ export class FilterValueExpandedPage extends SearchPage {
   static nameResultsUrl: string = "/search/index?q=print";
   static SEARCH_STEM: string = "POS";
   static TARGET_NAME: string = "Posada, José Guadalupe, 1852-1913";
+  static NAMESLIST_COUNT = 10;
 
   constructor(page: Page) {
     super(page);
@@ -58,7 +59,9 @@ export class FilterValueExpandedPage extends SearchPage {
   }
 
   async verifyDefaultNamesList() {
-    await expect(this.valueExpandedModal.getByRole("radio")).toHaveCount(10);
+    await expect(this.valueExpandedModal.getByRole("radio")).toHaveCount(
+      FilterValueExpandedPage.NAMESLIST_COUNT
+    );
   }
 
   async verifyPagination() {
