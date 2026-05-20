@@ -5,17 +5,16 @@ import PageLayout from "../../src/components/pageLayout/pageLayout";
 import { imageURL } from "../../src/utils/utils";
 import { ItemModel } from "../../src/models/item";
 import { ItemPage } from "@/src/components/pages/itemPage/itemPage";
-import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import { CollectionsApi } from "@/src/utils/apiClients/apiClients";
 import { extractAllAnchorsFromHTML } from "@/src/utils/metadata/extractAnchorHrefs";
 
 type ItemProps = {
-  params: {
+  params: Promise<{
     uuid: string;
     item: ItemModel;
-  };
-  searchParams: { canvasIndex: number }; //TODO: possibly remove this, since we are using state
+  }>;
+  searchParams: Promise<{ canvasIndex: number }>; //TODO: possibly remove this, since we are using state
 };
 
 let item;
@@ -41,13 +40,14 @@ const getClientIP = async () => {
 export async function generateMetadata({
   params,
 }: ItemProps): Promise<Metadata> {
-  const itemDetail = await getItemData(params.uuid);
+  const resolvedParams = await params;
+  const itemDetail = await getItemData(resolvedParams.uuid);
   // If we get no item data, this ends up being a canvas redirect anyway
   if (!itemDetail) {
     return {};
   }
-  const item = new ItemModel(params.uuid, itemDetail);
-  params.item = item;
+  const item = new ItemModel(resolvedParams.uuid, itemDetail);
+  resolvedParams.item = item;
   const title = item.title;
   return {
     title: `${title} - NYPL Digital Collections`, //should be item title
@@ -88,20 +88,20 @@ function formatItemBreadcrumbs(item: ItemModel) {
 }
 
 export default async function ItemViewer({ params, searchParams }: ItemProps) {
-  revalidatePath("/");
-  console.log("params are: ", params);
+  const { uuid } = await params;
+  console.log("params are: ", { uuid });
   const [citationsData, itemData] = await Promise.all([
-    CollectionsApi.getCitationsData(params.uuid),
-    getItemData(params.uuid),
+    CollectionsApi.getCitationsData(uuid),
+    getItemData(uuid),
   ]);
   if (!itemData) {
-    const capture = await CollectionsApi.getCaptureMetadata(params.uuid);
+    const capture = await CollectionsApi.getCaptureMetadata(uuid);
     redirect(
       `/items/${capture.itemUuid}?canvasIndex=${capture.orderInSequence - 1}`
     );
   }
 
-  const item = new ItemModel(params.uuid, itemData);
+  const item = new ItemModel(uuid, itemData);
 
   // only allow canvasIndex to be in the range of 0...item.imageIds.length (number of canvases)
   const imageIDs = item.imageIDs || [];
@@ -123,7 +123,7 @@ export default async function ItemViewer({ params, searchParams }: ItemProps) {
     >
       <ItemPage
         citationsData={citationsData}
-        uuid={params.uuid}
+        uuid={uuid}
         itemDetail={itemData}
       />
     </PageLayout>

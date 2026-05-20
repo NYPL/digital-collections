@@ -7,14 +7,15 @@ import { Suspense } from "react";
 import { redirect } from "next/navigation";
 
 export type DivisionProps = {
-  params: { slug: string };
-  searchParams: { page: number };
+  params: Promise<{ slug: string }>;
+  searchParams: Promise<{ page: number }>;
 };
 
 export async function generateMetadata({
   params,
 }: DivisionProps): Promise<Metadata> {
-  const slug = slugToString(params.slug);
+  const { slug: rawSlug } = await params;
+  const slug = slugToString(rawSlug);
   return {
     title: `${slug} - NYPL Digital Collections`,
     openGraph: {
@@ -27,9 +28,11 @@ export default async function Division({
   params,
   searchParams,
 }: DivisionProps) {
+  const { slug } = await params;
+  const resolvedSearchParams = await searchParams;
   const data = await CollectionsApi.getDivisionData({
-    slug: params.slug,
-    pageNum: searchParams.page,
+    slug,
+    pageNum: resolvedSearchParams.page,
   });
 
   return (

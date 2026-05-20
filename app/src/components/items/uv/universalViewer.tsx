@@ -1,4 +1,5 @@
 "use client";
+import "universalviewer/dist/esm/index.css";
 import {
   useUniversalViewer,
   useEvent,

@@ -2,10 +2,11 @@ import { NextResponse, NextRequest } from "next/server";
 import lanesData from "../../../src/data/lanesData";
 
 export const GET = async (
-  request: NextRequest,
-  { params }: { params: { slug: string } }
+  _request: NextRequest,
+  { params }: { params: Promise<{ slug: string }> }
 ) => {
-  const slugData = lanesData.lanes.find((lane) => lane.slug === params.slug);
+  const { slug } = await params;
+  const slugData = lanesData.lanes.find((lane) => lane.slug === slug);
 
   if (slugData) {
     return NextResponse.json(

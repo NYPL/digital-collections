@@ -2,8 +2,7 @@ import { NextRequest } from "next/server";
 import { fetchApi } from "@/src/utils/fetchApi/fetchApi";
 import { CARDS_PER_PAGE } from "@/src/config/constants";
 
-const oneMonth = 60 * 60 * 24 * 30;
-export const revalidate = oneMonth;
+export const revalidate = 2592000; // 30 days
 
 const PAGESIZE = 50;
 
@@ -22,10 +21,10 @@ interface CollectionChild {
 }
 
 export async function GET(
-  req: NextRequest,
-  { params }: { params: { slug: string } }
+  _req: NextRequest,
+  { params }: { params: Promise<{ slug: string }> }
 ) {
-  const uuid = params.slug;
+  const { slug: uuid } = await params;
 
   if (!uuid) {
     return new Response(JSON.stringify({ error: "Missing or invalid UUID" }), {
@@ -69,7 +68,7 @@ async function fetchPage(
   const apiUrl = `${process.env.COLLECTIONS_API_URL}/collections/${uuid}/children?page=${page}&perPage=${PAGESIZE}`;
   const response = await fetchApi({
     apiUrl,
-    options: { next: { revalidate: oneMonth } },
+    options: { next: { revalidate: 2592000 } },
   });
   return response;
 }

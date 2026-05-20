@@ -5,7 +5,6 @@ import { Metadata } from "next";
 import SearchPage from "@/src/components/pages/searchPage/searchPage";
 import { Filter } from "@/src/types/FilterType";
 import { AvailableFilter } from "@/src/types/AvailableFilterType";
-import { revalidatePath } from "next/cache";
 
 export interface SearchParamsType {
   q: string;
@@ -24,23 +23,23 @@ export const metadata: Metadata = {
 };
 
 export type SearchProps = {
-  searchParams: SearchParamsType;
+  searchParams: Promise<SearchParamsType>;
 };
 
 export default async function Search({ searchParams }: SearchProps) {
-  revalidatePath("/search/index");
-  const pageName = searchParams.q ? "search-results" : "all-items";
+  const resolvedSearchParams = await searchParams;
+  const pageName = resolvedSearchParams.q ? "search-results" : "all-items";
 
   const searchResults = await CollectionsApi.getSearchData({
-    keyword: searchParams.q,
-    sort: searchParams.sort,
-    filters: searchParams.filters,
-    page: searchParams.page,
+    keyword: resolvedSearchParams.q,
+    sort: resolvedSearchParams.sort,
+    filters: resolvedSearchParams.filters,
+    page: resolvedSearchParams.page,
   });
 
   // Add available filters from response into searchParams
   const updatedSearchParams = {
-    ...searchParams,
+    ...resolvedSearchParams,
     availableFilters: searchResults.availableFilters,
   };
 

@@ -2,9 +2,8 @@
 
 import { ItemModel } from "../../../models/item";
 import React from "react";
-import UniversalViewer from "../uv/universalViewer";
+import { UniversalViewerDynamic as UniversalViewer } from "../uv/dynamic";
 import uvConfig from "../uv/uvConfig.json";
-import "universalviewer/dist/esm/index.css";
 import { PlyrPlayer } from "../plyr/dynamic";
 
 interface ItemProps {

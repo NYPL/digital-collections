@@ -6,14 +6,15 @@ import { CollectionsApi } from "@/src/utils/apiClients/apiClients";
 import { redirect } from "next/navigation";
 
 type LaneProps = {
-  params: { slug: string };
-  searchParams: { page: number };
+  params: Promise<{ slug: string }>;
+  searchParams: Promise<{ page: number }>;
 };
 
 export async function generateMetadata({
   params,
 }: LaneProps): Promise<Metadata> {
-  const title = slugToString(params.slug);
+  const { slug } = await params;
+  const title = slugToString(slug);
   return {
     title: `${title} - NYPL Digital Collections`,
     openGraph: {
@@ -23,12 +24,14 @@ export async function generateMetadata({
 }
 
 export default async function Lane({ params, searchParams }: LaneProps) {
+  const { slug } = await params;
+  const resolvedSearchParams = await searchParams;
   const data = await CollectionsApi.getLaneData({
-    slug: params.slug.replace(/-/g, " "),
+    slug: slug.replace(/-/g, " "),
     sort: "items-count",
-    pageNum: searchParams.page,
+    pageNum: resolvedSearchParams.page,
   });
-  const currentPage = Number(searchParams.page) || 1;
+  const currentPage = Number(resolvedSearchParams.page) || 1;
 
   return <CollectionLanePage data={data} currentPage={currentPage} />;
 }

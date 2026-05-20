@@ -16,14 +16,14 @@ export type CollectionSearchParamsType = {
 };
 
 type CollectionProps = {
-  params: { uuid: string };
-  searchParams: CollectionSearchParamsType;
+  params: Promise<{ uuid: string }>;
+  searchParams: Promise<CollectionSearchParamsType>;
 };
 
 export async function generateMetadata({
   params,
 }: CollectionProps): Promise<Metadata> {
-  const slug = params.uuid;
+  const { uuid: slug } = await params;
   const collectionData = await CollectionsApi.getCollectionData(slug);
   const title = collectionData?.title ?? slug;
 
@@ -47,22 +47,24 @@ export default async function Collection({
   params,
   searchParams,
 }: CollectionProps) {
-  let collectionData = await CollectionsApi.getCollectionData(params.uuid);
+  const { uuid } = await params;
+  const resolvedSearchParams = await searchParams;
+  let collectionData = await CollectionsApi.getCollectionData(uuid);
 
   // Add collection filter to every search.
   let filters;
-  if (searchParams.filters) {
+  if (resolvedSearchParams.filters) {
     filters = `${
-      searchParams?.filters ? searchParams?.filters : ""
+      resolvedSearchParams?.filters ? resolvedSearchParams?.filters : ""
     }[collection=${collectionData.uuid}]`;
   } else {
     filters = `[collection=${collectionData.uuid}]`;
   }
 
   const searchResults = await CollectionsApi.getSearchData({
-    keyword: searchParams.q,
-    sort: searchParams.sort ? searchParams.sort : "sequence",
-    page: searchParams.page,
+    keyword: resolvedSearchParams.q,
+    sort: resolvedSearchParams.sort ? resolvedSearchParams.sort : "sequence",
+    page: resolvedSearchParams.page,
     filters,
   });
 
@@ -71,7 +73,7 @@ export default async function Collection({
     searchResults.availableFilters || {};
 
   const updatedSearchParams = {
-    ...searchParams,
+    ...resolvedSearchParams,
     availableFilters: filteredAvailableFilters,
   };
   return (
@@ -82,7 +84,7 @@ export default async function Collection({
         { text: "Collections", url: "/collections" },
         {
           text: `${collectionData.title}`,
-          url: `/collections/${params.uuid}`,
+          url: `/collections/${uuid}`,
         },
       ]}
       ga4Data={{

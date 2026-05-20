@@ -4,12 +4,11 @@ import { CollectionsPage } from "../src/components/pages/collectionsPage/collect
 import { CollectionsApi } from "@/src/utils/apiClients/apiClients";
 import { redirect } from "next/navigation";
 import PageLayout from "@/src/components/pageLayout/pageLayout";
-import { revalidatePath } from "next/cache";
 import { CollectionSearchParamsType } from "./[uuid]/page";
 
 export type CollectionsProps = {
-  params: { slug: string };
-  searchParams: CollectionSearchParamsType;
+  params: Promise<{ slug: string }>;
+  searchParams: Promise<CollectionSearchParamsType>;
 };
 
 export const metadata: Metadata = {
@@ -20,12 +19,12 @@ export const metadata: Metadata = {
 };
 
 export default async function Collections({ searchParams }: CollectionsProps) {
-  revalidatePath("/collections", "page");
+  const resolvedSearchParams = await searchParams;
 
   const data = await CollectionsApi.getCollectionsData({
-    keyword: searchParams.q,
-    sort: searchParams.sort,
-    page: searchParams.page,
+    keyword: resolvedSearchParams.q,
+    sort: resolvedSearchParams.sort,
+    page: resolvedSearchParams.page,
   });
 
   // Repo API returns 404s within the data.

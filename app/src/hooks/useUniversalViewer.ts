@@ -24,15 +24,22 @@ export function useUniversalViewer(
 
   useEffect(() => {
     if (!windowIsReady) return;
-    if (ref.current) {
-      const { init } = require("universalviewer");
-      const currentUv = init(ref.current, options);
-      setUv(currentUv);
+    if (!ref.current) return;
 
-      return () => {
-        currentUv.dispose();
-      };
-    }
+    let disposed = false;
+    let currentUv: Viewer | undefined;
+
+    import("universalviewer").then(({ init }) => {
+      if (!disposed && ref.current) {
+        currentUv = init(ref.current, options);
+        setUv(currentUv);
+      }
+    });
+
+    return () => {
+      disposed = true;
+      currentUv?.dispose();
+    };
   }, [ref, windowIsReady]);
 
   return uv;
