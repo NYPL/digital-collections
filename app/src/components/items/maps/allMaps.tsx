@@ -2,6 +2,7 @@
 import React, { useEffect, useRef } from "react";
 import { Map } from "maplibre-gl";
 import { WarpedMapLayer } from "@allmaps/maplibre";
+import { generateId } from "@allmaps/id";
 import { Heading, Text, Link } from "@nypl/design-system-react-components";
 import { ItemModel } from "@/src/models/item";
 
@@ -16,7 +17,9 @@ const AllMapsViewer = ({ item }: ItemProps) => {
     let map: Map | undefined;
     let resizeObserver: ResizeObserver | undefined;
 
-    if (mapContainer.current) {
+    const initializeMap = async () => {
+      if (!mapContainer.current) return;
+
       map = new Map({
         container: mapContainer.current,
         style: "https://basemaps.cartocdn.com/gl/voyager-gl-style/style.json",
@@ -28,15 +31,22 @@ const AllMapsViewer = ({ item }: ItemProps) => {
           preserveDrawingBuffer: true,
         },
       });
-      console.log(
-        "item image ID in all maps viewer",
-        item.imageIDs ? item.imageIDs[0] : null
+
+      const captureWithMapData = item.captures.find(
+        (capture) => capture.hasAllMapsData
       );
-      const iiif_url = item.imageIDs
-        ? `https://iiif.nypl.org/iiif/2/${item.imageIDs[0]}/info.json`
+      const imageId = captureWithMapData?.imageId;
+      console.log("using this imageId for the allmaps viewer: ", imageId);
+
+      const iiif_url = imageId
+        ? `https://iiif.nypl.org/iiif/2/${imageId}`
         : null;
-      const annotationUrl = `https://annotations.allmaps.org/?url=${iiif_url}`;
+
+      // generateId is async and returns a Promise
+      const hashed_iiif_image_id = await generateId(iiif_url);
+      const annotationUrl = `https://annotations.allmaps.org/images/${hashed_iiif_image_id}`;
       const warpedMapLayer = new WarpedMapLayer();
+
       map.on("load", () => {
         map?.addLayer(warpedMapLayer);
         warpedMapLayer.addGeoreferenceAnnotationByUrl(annotationUrl);
@@ -46,12 +56,15 @@ const AllMapsViewer = ({ item }: ItemProps) => {
         map?.resize();
       });
       resizeObserver.observe(mapContainer.current);
-    }
+    };
+
+    initializeMap();
+
     return () => {
       resizeObserver?.disconnect();
       map?.remove();
     };
-  }, []);
+  }, [item]);
 
   return <div ref={mapContainer} style={{ width: "100%", height: "100%" }} />;
 };

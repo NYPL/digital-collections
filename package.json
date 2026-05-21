@@ -41,6 +41,7 @@
     "trailingComma": "es5"
   },
   "dependencies": {
+    "@allmaps/id": "^1.0.0-beta.37",
     "@allmaps/maplibre": "^1.0.0-beta.42",
     "@types/react": "18.2.21",
     "@types/react-dom": "18.2.7",
