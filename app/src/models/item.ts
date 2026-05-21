@@ -16,7 +16,6 @@ import {
 } from "../utils/metadata/generateCitations";
 import { APIItem } from "../types/CollectionsAPI";
 import { PlyrCaption } from "../components/items/plyr/player";
-import allMapsData from "../data/maps/data";
 
 // https://github.com/jptmoore/maniiifest
 // other resources:
@@ -29,6 +28,7 @@ export class CaptureModel {
   mediaFileUrl: string | null;
   captions: PlyrCaption[] | null;
   orderInSequence: number;
+  hasAllMapsData: boolean;
 }
 
 // TO DO: add isCartographic for map stuff
@@ -218,6 +218,6 @@ export class ItemModel {
     );
     this.captions = this.captures.flatMap((capture) => capture.captions || []);
 
-    this.isInAllMaps = !!allMapsData.find((obj) => obj.uuid === this.uuid);
+    this.isInAllMaps = itemDetail.hasAllMapsData;
   }
 }

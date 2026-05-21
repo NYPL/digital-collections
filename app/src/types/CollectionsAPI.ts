@@ -6,6 +6,7 @@ export interface APICapture {
   mediaFileUrl: string | null;
   orderInSequence: number;
   captions: PlyrCaption[] | null;
+  hasAllMapsData: boolean;
 }
 
 export interface APIItem {
@@ -19,4 +20,5 @@ export interface APIItem {
   citationResourceType: string | null;
   captures: APICapture[];
   manifestMetadata: any;
+  hasAllMapsData: boolean;
 }
