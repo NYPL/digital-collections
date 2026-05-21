@@ -8,6 +8,7 @@ export interface SearchCardType {
   url: string;
   imageID: string;
   imageURL: string;
+  videoThumbnail: string | null;
   recordType: SearchResultRecordType;
   numberOfDigitizedItems: number;
   containsOnSiteMaterial: boolean;

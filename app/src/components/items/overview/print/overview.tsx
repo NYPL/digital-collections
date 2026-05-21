@@ -18,6 +18,7 @@ import parse from "html-react-parser";
 import { headerBreakpoints } from "@/src/utils/breakpoints";
 import React, { forwardRef } from "react";
 import { useCanvasContext } from "../../../../context/CanvasProvider";
+import { trackCTA } from "@/src/utils/ga4Utils";
 
 const PrintOverview = ({ buyable, imageIDs }) => {
   const { currentCanvasIndex } = useCanvasContext();
@@ -46,6 +47,10 @@ const PrintOverview = ({ buyable, imageIDs }) => {
               target="_blank"
               aria-label={`order print`}
               variant="buttonSecondary"
+              onClick={() => {
+                const url = `https://archivea.studio/?id=${imageID}`;
+                trackCTA("Order Print", url, "Item Page Order Print");
+              }}
             >
               Order Print
             </Link>

@@ -6,6 +6,7 @@ import {
   Button,
 } from "@nypl/design-system-react-components";
 import { useCanvasContext } from "../../../../context/CanvasProvider";
+import { trackCTA } from "@/src/utils/ga4Utils";
 
 const ExternalLinksOverview = ({ catalogLink, archivesLink, isInAllMaps }) => {
   const { isMapView, handleMapViewToggle } = useCanvasContext();
@@ -28,6 +29,9 @@ const ExternalLinksOverview = ({ catalogLink, archivesLink, isInAllMaps }) => {
             aria-label={`view finding aid`}
             variant="buttonSecondary"
             marginRight="xs"
+            onClick={() =>
+              trackCTA("Finding Aid", archivesLink, "Item Page Finding Aid")
+            }
           >
             Finding Aid
           </Link>
@@ -41,6 +45,13 @@ const ExternalLinksOverview = ({ catalogLink, archivesLink, isInAllMaps }) => {
             aria-label={`view in catalog`}
             variant="buttonSecondary"
             marginRight="xs"
+            onClick={() =>
+              trackCTA(
+                "Research Catalog",
+                catalogLink,
+                "Item Page Research Catalog"
+              )
+            }
           >
             Research Catalog
           </Link>
