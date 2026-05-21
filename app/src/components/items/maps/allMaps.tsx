@@ -47,9 +47,25 @@ const AllMapsViewer = ({ item }: ItemProps) => {
       const annotationUrl = `https://annotations.allmaps.org/images/${hashed_iiif_image_id}`;
       const warpedMapLayer = new WarpedMapLayer();
 
-      map.on("load", () => {
-        map?.addLayer(warpedMapLayer);
-        warpedMapLayer.addGeoreferenceAnnotationByUrl(annotationUrl);
+      map.on("load", async () => {
+        if (!map) return;
+        map.addLayer(warpedMapLayer);
+
+        try {
+          // Wait for the annotation to be loaded so we can get its bounds
+          await warpedMapLayer.addGeoreferenceAnnotationByUrl(annotationUrl);
+          const bounds = warpedMapLayer.getBounds();
+
+          if (bounds) {
+            map.fitBounds(bounds, {
+              padding: 50, // Add some space around the map
+              animate: true,
+              duration: 1000,
+            });
+          }
+        } catch (error) {
+          console.error("Error loading AllMaps annotation:", error);
+        }
       });
 
       resizeObserver = new ResizeObserver(() => {
