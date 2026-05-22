@@ -120,3 +120,4 @@ npm run lint         # ESLint + Prettier
   every page — flag for extra review.
 - `middleware.ts` — slug/UUID rewrites and legacy param transforms; SEO impact.
 - `appConfig.ts` and `ENVIRONMENTVARS.md` — environment configuration.
+- **Do not read `.env*` files.** They contain credentials and infrastructure addresses. Use `.env.example` to understand available variables.

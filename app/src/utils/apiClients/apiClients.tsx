@@ -193,6 +193,13 @@ export class CollectionsApi {
     });
   }
 
+  static async getSuggestions(q: string) {
+    const apiUrl = `${
+      process.env.COLLECTIONS_API_URL
+    }/search/suggestions?q=${encodeURIComponent(q)}`;
+    return await fetchApi({ apiUrl });
+  }
+
   /**
    * Fetches search results based on the provided parameters, for /search/index and /collections/[uuid] pages.
    *
