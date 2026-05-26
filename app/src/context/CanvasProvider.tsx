@@ -1,7 +1,7 @@
 "use client";
 
 import { useRouter, useSearchParams, usePathname } from "next/navigation";
-import React, { createContext, useContext, useCallback, useState } from "react";
+import React, { createContext, useContext, useCallback } from "react";
 
 interface CanvasContextType {
   currentCanvasIndex: number;
@@ -16,8 +16,6 @@ export const CanvasProvider = ({ children }: { children: React.ReactNode }) => {
   const router = useRouter();
   const pathname = usePathname();
   const searchParams = useSearchParams();
-
-  const [isMapView, setIsMapView] = useState(false);
 
   // 1. Read directly from URL
   const currentCanvasIndex = parseInt(
@@ -37,9 +35,26 @@ export const CanvasProvider = ({ children }: { children: React.ReactNode }) => {
     [searchParams, pathname, router]
   );
 
+  const isMapView = searchParams.get("viewAs") === "map";
+
   const handleMapViewToggle = useCallback(() => {
-    setIsMapView((prev) => !prev);
-  }, []);
+    const newSearchParams = new URLSearchParams(searchParams.toString());
+    console.log(
+      "toggling map view. current params are: ",
+      searchParams.toString()
+    );
+    if (isMapView) {
+      newSearchParams.delete("viewAs");
+    } else {
+      newSearchParams.set("viewAs", "map");
+      console.log(
+        "enabling map view. new params are: ",
+        newSearchParams.toString()
+      );
+    }
+
+    router.push(`${pathname}?${newSearchParams.toString()}`, { scroll: false });
+  }, [pathname, router, searchParams]);
 
   return (
     <CanvasContext.Provider
