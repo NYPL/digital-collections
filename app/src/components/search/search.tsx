@@ -116,6 +116,12 @@ const Search = () => {
   const activeDescendant =
     activeIndex >= 0 ? `${LISTBOX_ID}-option-${activeIndex}` : undefined;
 
+  const statusMessage = isOpen
+    ? `${suggestions.length} suggestion${
+        suggestions.length === 1 ? "" : "s"
+      } available. Use up and down arrow keys to navigate.`
+    : "";
+
   return (
     <Box
       id="search-wrapper"
@@ -129,6 +135,24 @@ const Search = () => {
         },
       }}
     >
+      {/* Visually hidden live region announces suggestion availability to screen readers */}
+      <Box
+        aria-live="polite"
+        aria-atomic="true"
+        sx={{
+          position: "absolute",
+          width: "1px",
+          height: "1px",
+          padding: 0,
+          margin: "-1px",
+          overflow: "hidden",
+          clip: "rect(0,0,0,0)",
+          whiteSpace: "nowrap",
+          border: 0,
+        }}
+      >
+        {statusMessage}
+      </Box>
       {/* position="relative" creates the stacking context for the absolute dropdown */}
       <Box position="relative">
         <DCSearchBar
