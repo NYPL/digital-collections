@@ -15,7 +15,7 @@ type ItemProps = {
     uuid: string;
     item: ItemModel;
   };
-  searchParams: { canvasIndex: number };
+  searchParams: { canvasIndex: number }; //TODO: possibly remove this, since we are using state
 };
 
 let item;
