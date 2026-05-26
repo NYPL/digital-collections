@@ -205,7 +205,7 @@ export function middleware(req: NextRequest) {
   }
 
   if (itemsMatch) {
-    allowedParams = new Set(["type", "canvasIndex", "uuid", "cv"]);
+    allowedParams = new Set(["type", "canvasIndex", "uuid", "cv", "viewAs"]);
   } else {
     allowedParams = new Set(["q", "sort", "page", "filters", "viewMode"]);
   }
