@@ -6,7 +6,7 @@ import UniversalViewer from "../uv/universalViewer";
 import uvConfig from "../uv/uvConfig.json";
 import "universalviewer/dist/esm/index.css";
 import { PlyrPlayer } from "../plyr/dynamic";
-import AllMapsViewer from "../maps/allMaps";
+import { AllMapsViewer } from "../maps/dynamic";
 import { useCanvasContext } from "../../../context/CanvasProvider";
 import { Grid, GridItem } from "@nypl/design-system-react-components";
 
