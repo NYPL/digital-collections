@@ -80,7 +80,7 @@ const AllMapsViewer = ({ item }: ItemProps) => {
       resizeObserver?.disconnect();
       map?.remove();
     };
-  }, [item]);
+  }, [item.uuid]);
 
   return <div ref={mapContainer} style={{ width: "100%", height: "100%" }} />;
 };
