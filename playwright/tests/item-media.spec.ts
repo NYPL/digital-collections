@@ -40,9 +40,7 @@ test.describe("Verify Video Viewer Controls", () => {
   });
 });
 
-// FIXME:  Temporarily bypassing this due to UV change on download icon/description
-
-test.describe.fixme("Verify Download Actions", () => {
+test.describe("Verify Download Actions", () => {
   test.beforeEach(async ({ page }) => {
     itemMediaPage = new ItemMediaPage(page, "IMAGE");
     await itemMediaPage.loadPage(ItemMediaPage.IMAGE_UUID);
