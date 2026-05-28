@@ -35,7 +35,7 @@ test.describe.serial("View all names filter", () => {
     await filterPage.page.context().close();
   });
 
-  test("Open full names list and click view-all-names", async () => {
+  test("Names dropdown should open and display view-all-names button", async () => {
     await filterPage.openAllNames();
   });
 
@@ -59,7 +59,7 @@ test.describe.serial("View all names filter", () => {
     await filterPage.verifyAutocompleteFlow();
   });
 
-  test("Modal search restore full list when search is cleared", async () => {
+  test("Modal search restores full list when search is cleared", async () => {
     await filterPage.clearSearch();
     await expect(filterPage.valueExpandedModal.getByRole("radio")).toHaveCount(
       10
