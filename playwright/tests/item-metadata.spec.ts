@@ -7,9 +7,7 @@ test.beforeEach(async ({ page }) => {
   itemMetadataPage = new ItemMetadataPage(page);
 });
 
-// FIXME: Temporarily blocking this check for Default Test Record. It's a map, which is currently blocked by a Collections API mismatch.
-
-test.describe.fixme("Verify Default Test Record", () => {
+test.describe("Verify Default Test Record", () => {
   test.beforeEach(async ({ page }) => {
     await itemMetadataPage.loadScenario("DEFAULT");
   });
