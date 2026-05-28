@@ -16,8 +16,6 @@ test.describe.serial("View all names filter", () => {
   2. Resource efficiency: Uses single worker instead of 6 parallel workers
   3. User journey testing: Simulates realistic workflow of opening modal once and applying multiple filters in sequence
   4. State accumulation: Each filter builds on previous selections
-
-  Alternative considered: Single comprehensive test, but rejected because individual filter
   */
 
   test.beforeAll(async ({ browser }) => {
