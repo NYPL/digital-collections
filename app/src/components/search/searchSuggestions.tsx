@@ -54,6 +54,7 @@ const SearchSuggestions = ({
             role="option"
             id={`${listboxId}-option-${i}`}
             aria-selected={isActive}
+            aria-label={suggestion.title}
             onMouseDown={(e: React.MouseEvent) => {
               // Prevent the input from losing focus before the click completes.
               e.preventDefault();
