@@ -36,9 +36,7 @@ test.describe.serial("View all names filter", () => {
   });
 
   test("Open full names list and click view-all-names", async () => {
-    await expect(filterPage.nameFilter).toBeVisible();
-    await filterPage.nameFilter.click();
-    await expect(filterPage.viewAllNamesButton).toBeVisible();
+    await filterPage.openAllNames();
   });
 
   test("Should open expanded names modal and show a close-button", async () => {
