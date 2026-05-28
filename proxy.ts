@@ -21,7 +21,7 @@ const filterMap = {
   "root-collection": "collection",
 };
 
-export function middleware(req: NextRequest) {
+export function proxy(req: NextRequest) {
   const url = req.nextUrl;
   const pathname = url.pathname;
 

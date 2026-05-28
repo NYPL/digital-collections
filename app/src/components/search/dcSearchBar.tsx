@@ -1,4 +1,4 @@
-import React, { forwardRef } from "react";
+import React, { forwardRef, type JSX } from "react";
 import { chakra, ChakraComponent } from "@chakra-ui/react";
 import {
   TextInput,

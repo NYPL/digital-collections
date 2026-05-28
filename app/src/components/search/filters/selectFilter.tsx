@@ -87,9 +87,9 @@ const SelectFilterComponent = ({
   };
 
   // Refs for programmatic focus.
-  const accordionButtonRef: React.RefObject<HTMLButtonElement> =
+  const accordionButtonRef: React.RefObject<HTMLButtonElement | null> =
     useRef<HTMLButtonElement>(null);
-  const containerRef: React.RefObject<HTMLDivElement> =
+  const containerRef: React.RefObject<HTMLDivElement | null> =
     useRef<HTMLDivElement>(null);
 
   // Tells the dropdown to close if user focus leaves.
