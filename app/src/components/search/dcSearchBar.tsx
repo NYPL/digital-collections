@@ -5,6 +5,7 @@ import {
   Box,
   Button,
   Icon,
+  type AutoCompleteValues,
 } from "@nypl/design-system-react-components";
 import { headerBreakpoints } from "@/src/utils/breakpoints";
 
@@ -34,6 +35,20 @@ export type TextInputProps = {
   placeholder?: string;
   /** Populates the value of the input/textarea elements */
   value?: string;
+  /** Sets the HTML autocomplete attribute on the input. Pass "off" to suppress browser suggestions. */
+  autoComplete?: AutoCompleteValues;
+  /** Keyboard handler forwarded to the underlying <input>. Runs before the default Enter-to-submit. */
+  onKeyDown?: React.KeyboardEventHandler<HTMLInputElement>;
+  /** Additional aria/role attributes forwarded directly to the underlying <input> element. */
+  additionalInputProps?: Pick<
+    React.InputHTMLAttributes<HTMLInputElement>,
+    | "role"
+    | "aria-expanded"
+    | "aria-autocomplete"
+    | "aria-controls"
+    | "aria-activedescendant"
+    | "aria-haspopup"
+  >;
 };
 
 export interface SearchBarProps {
@@ -104,8 +119,12 @@ const SearchBarComponent = forwardRef<HTMLDivElement, SearchBarProps>(
         textInputVariant="searchBar"
         type="text"
         value={textInputProps?.value}
+        autoComplete={textInputProps?.autoComplete}
+        {...textInputProps?.additionalInputProps}
         onKeyDown={(event) => {
-          if (event.key === "Enter") {
+          // Allow parent to handle first (e.g. suggestion selection with preventDefault)
+          textInputProps?.onKeyDown?.(event);
+          if (event.key === "Enter" && !event.defaultPrevented) {
             onSubmit(event);
           }
         }}
@@ -184,7 +203,6 @@ const SearchBarComponent = forwardRef<HTMLDivElement, SearchBarProps>(
       <Box
         role="search"
         aria-label={labelText}
-        aria-autocomplete={showButton ? undefined : "list"}
         sx={{
           display: "flex",
           marginBottom: {
