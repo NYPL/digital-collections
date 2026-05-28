@@ -36,7 +36,6 @@ export class FilterValueExpandedPage extends SearchPage {
   }
 
   async verifyExpandedNamesModal() {
-    await this.viewAllNamesButton.click();
     await expect(this.valueExpandedModal).toBeVisible();
 
     await expect(
