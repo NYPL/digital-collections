@@ -4,12 +4,6 @@
 const nrExternals = require("newrelic/load-externals");
 
 const nextConfig = {
-  experimental: {
-    // Without this setting, the Next.js compilation step will routinely
-    // try to import files such as `LICENSE` from the `newrelic` module.
-    // See https://nextjs.org/docs/app/api-reference/next-config-js/serverComponentsExternalPackages.
-    serverComponentsExternalPackages: ["newrelic"],
-  },
   reactStrictMode: false,
   env: {
     APP_ENV: process.env.APP_ENV,
@@ -36,16 +30,22 @@ const nextConfig = {
     deviceSizes: [480, 768, 1024, 1280],
   },
   generateEtags: false,
+
+  // Without this setting, the Next.js compilation step will routinely
+  // try to import files such as `LICENSE` from the `newrelic` module.
+  // See https://nextjs.org/docs/app/api-reference/next-config-js/serverComponentsExternalPackages.
+  serverExternalPackages: ["newrelic"],
+
   // In order for newrelic to effectively instrument a Next.js application,
   // the modules that newrelic supports should not be mangled by webpack. Thus,
   // we need to "externalize" all of the modules that newrelic supports.
-
   webpack: (config) => {
     if (process.env.NEW_RELIC_APP_NAME) {
       nrExternals(config);
     }
     return config;
   },
+  turbopack: {},
 };
 
 module.exports = nextConfig;
