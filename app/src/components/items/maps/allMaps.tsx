@@ -38,13 +38,13 @@ const AllMapsViewer = ({ item }: ItemProps) => {
       const imageId = captureWithMapData?.imageId;
       console.log("using this imageId for the allmaps viewer: ", imageId);
 
-      const iiif_url = imageId
+      const iiifUrl = imageId
         ? `https://iiif.nypl.org/iiif/2/${imageId}`
         : null;
 
       // generateId is async and returns a Promise
-      const hashed_iiif_image_id = await generateId(iiif_url);
-      const annotationUrl = `https://annotations.allmaps.org/images/${hashed_iiif_image_id}`;
+      const hashedIiifImageId = await generateId(iiifUrl);
+      const annotationUrl = `https://annotations.allmaps.org/images/${hashedIiifImageId}`;
       const warpedMapLayer = new WarpedMapLayer();
 
       map.on("load", async () => {
