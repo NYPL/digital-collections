@@ -5,11 +5,11 @@ import {
   Text,
   Button,
 } from "@nypl/design-system-react-components";
-import { useCanvasContext } from "../../../../context/CanvasProvider";
+import { useMapViewContext } from "../../../../context/MapViewProvider";
 import { trackCTA } from "@/src/utils/ga4Utils";
 
 const ExternalLinksOverview = ({ catalogLink, archivesLink, isInAllMaps }) => {
-  const { isMapView, handleMapViewToggle } = useCanvasContext();
+  const { isMapView, handleMapViewToggle } = useMapViewContext();
 
   return (
     <>

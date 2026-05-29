@@ -6,8 +6,6 @@ import React, { createContext, useContext, useCallback, useState } from "react";
 interface CanvasContextType {
   currentCanvasIndex: number;
   setCurrentCanvasIndex: (index: number) => void;
-  isMapView: boolean;
-  handleMapViewToggle: () => void;
 }
 
 const CanvasContext = createContext<CanvasContextType | undefined>(undefined);
@@ -16,8 +14,6 @@ export const CanvasProvider = ({ children }: { children: React.ReactNode }) => {
   const router = useRouter();
   const pathname = usePathname();
   const searchParams = useSearchParams();
-
-  const [isMapView, setIsMapView] = useState(false);
 
   // 1. Read directly from URL
   const currentCanvasIndex = parseInt(
@@ -37,17 +33,11 @@ export const CanvasProvider = ({ children }: { children: React.ReactNode }) => {
     [searchParams, pathname, router]
   );
 
-  const handleMapViewToggle = useCallback(() => {
-    setIsMapView((prev) => !prev);
-  }, []);
-
   return (
     <CanvasContext.Provider
       value={{
         currentCanvasIndex,
         setCurrentCanvasIndex,
-        isMapView,
-        handleMapViewToggle,
       }}
     >
       {children}
