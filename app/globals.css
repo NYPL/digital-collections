@@ -39,3 +39,19 @@ mark {
 .plyr__video-wrapper{
   height: 500px !important;
 }
+
+/* MapLibre Control Fixes */
+.maplibregl-control-container,
+.maplibregl-ctrl-top-right,
+.maplibregl-ctrl-top-left,
+.maplibregl-ctrl-bottom-right,
+.maplibregl-ctrl-bottom-left {
+  z-index: 10000 !important;
+  pointer-events: auto !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+}
+
+.maplibregl-ctrl {
+  z-index: 10001 !important;
+}
