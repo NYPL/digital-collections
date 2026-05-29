@@ -7,7 +7,7 @@ import uvConfig from "../uv/uvConfig.json";
 import "universalviewer/dist/esm/index.css";
 import { PlyrPlayer } from "../plyr/dynamic";
 import { AllMapsViewer } from "../maps/dynamic";
-import { useCanvasContext } from "../../../context/CanvasProvider";
+import { useMapViewContext } from "../../../context/MapViewProvider";
 import { Grid, GridItem } from "@nypl/design-system-react-components";
 
 interface ItemProps {
@@ -20,7 +20,7 @@ const ItemMediaViewer = ({ item }: ItemProps) => {
   const captureUuidToIdx = Object.fromEntries(
     item.captures.map((capture) => [capture.uuid, capture.orderInSequence - 1])
   );
-  const { isMapView } = useCanvasContext();
+  const { isMapView } = useMapViewContext();
 
   if (item.isImage) {
     viewer = (
