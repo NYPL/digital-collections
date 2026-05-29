@@ -7,9 +7,11 @@ import {
 } from "@nypl/design-system-react-components";
 import { useMapViewContext } from "../../../../context/MapViewProvider";
 import { trackCTA } from "@/src/utils/ga4Utils";
+import useBreakpoints from "@/src/hooks/useBreakpoints";
 
 const ExternalLinksOverview = ({ catalogLink, archivesLink, isInAllMaps }) => {
   const { isMapView, handleMapViewToggle } = useMapViewContext();
+  const { isLargerThanSmallTablet } = useBreakpoints();
 
   return (
     <>
@@ -57,7 +59,7 @@ const ExternalLinksOverview = ({ catalogLink, archivesLink, isInAllMaps }) => {
           </Link>
         )}
 
-        {isInAllMaps ? (
+        {isInAllMaps && isLargerThanSmallTablet ? (
           <Button
             onClick={handleMapViewToggle}
             id={"all-maps-btn"}
