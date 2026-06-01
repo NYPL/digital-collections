@@ -23,18 +23,8 @@ export interface UseSearchComboboxReturn {
 
 /**
  * Manages all combobox state and side effects for the search typeahead.
- *
- * Owns: suggestion fetching (debounced), open/close state, keyboard navigation,
- * click-outside detection, and ARIA attribute injection.
- *
- * ARIA note: the DS TextInput spreads additionalInputProps onto its wrapper div,
- * not the native <input>. This hook sets combobox attributes directly on the
- * input via querySelector so they land on the correct element.
- *
- * Keyboard note: aria-activedescendant is intentionally omitted. Instead,
- * ArrowDown moves real DOM focus to the option element so VoiceOver reads its
- * content directly rather than re-reading the typed input value.
  */
+
 export function useSearchCombobox({
   keywords,
   listboxId,
