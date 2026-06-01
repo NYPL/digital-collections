@@ -16,6 +16,9 @@ interface SearchSuggestionsProps {
   activeIndex: number;
   onSelect: (title: string) => void;
   listboxId: string;
+  onActiveIndexChange: (i: number) => void;
+  onClose: () => void;
+  returnFocusToInput: () => void;
 }
 
 const SearchSuggestions = ({
@@ -23,14 +26,60 @@ const SearchSuggestions = ({
   activeIndex,
   onSelect,
   listboxId,
+  onActiveIndexChange,
+  onClose,
+  returnFocusToInput,
 }: SearchSuggestionsProps) => {
   if (!suggestions.length) return null;
+
+  const handleListboxKeyDown = (e: React.KeyboardEvent<HTMLDivElement>) => {
+    const options = Array.from(
+      e.currentTarget.querySelectorAll<HTMLElement>('[role="option"]')
+    );
+    const currentIdx = options.indexOf(document.activeElement as HTMLElement);
+
+    switch (e.key) {
+      case "ArrowDown": {
+        e.preventDefault();
+        const nextIdx = Math.min(currentIdx + 1, suggestions.length - 1);
+        onActiveIndexChange(nextIdx);
+        options[nextIdx]?.focus();
+        break;
+      }
+      case "ArrowUp": {
+        e.preventDefault();
+        if (currentIdx <= 0) {
+          onActiveIndexChange(-1);
+          returnFocusToInput();
+        } else {
+          const prevIdx = currentIdx - 1;
+          onActiveIndexChange(prevIdx);
+          options[prevIdx]?.focus();
+        }
+        break;
+      }
+      case "Enter": {
+        e.preventDefault();
+        if (currentIdx >= 0) {
+          onSelect(suggestions[currentIdx].title);
+        }
+        break;
+      }
+      case "Escape": {
+        e.preventDefault();
+        onClose();
+        returnFocusToInput();
+        break;
+      }
+    }
+  };
 
   return (
     <Box
       role="listbox"
       id={listboxId}
       aria-label="Search suggestions"
+      onKeyDown={handleListboxKeyDown}
       sx={{
         position: "absolute",
         top: "100%",
@@ -55,6 +104,8 @@ const SearchSuggestions = ({
             id={`${listboxId}-option-${i}`}
             aria-selected={isActive}
             aria-label={suggestion.title}
+            tabIndex={-1}
+            onFocus={() => onActiveIndexChange(i)}
             onMouseDown={(e: React.MouseEvent) => {
               // Prevent the input from losing focus before the click completes.
               e.preventDefault();

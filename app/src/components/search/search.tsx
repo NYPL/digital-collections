@@ -76,6 +76,22 @@ const Search = () => {
     return () => document.removeEventListener("mousedown", handleOutsideClick);
   }, [isOpen]);
 
+  // Imperatively set combobox ARIA attributes on the actual <input> element.
+  // The DS TextInput spreads additionalInputProps onto its wrapper div, not the
+  // input itself, so we must use the DOM directly.
+  useEffect(() => {
+    const input = wrapperRef.current?.querySelector<HTMLInputElement>("input");
+    if (!input) return;
+    input.setAttribute("role", "combobox");
+    input.setAttribute("aria-haspopup", "listbox");
+    input.setAttribute("aria-autocomplete", "list");
+    input.setAttribute("aria-controls", LISTBOX_ID);
+    input.setAttribute("aria-expanded", String(isOpen));
+    // aria-activedescendant is not used — real DOM focus moves to options so
+    // VoiceOver reads the focused element directly instead of the typed input value.
+    input.removeAttribute("aria-activedescendant");
+  }, [isOpen]);
+
   const handleSubmit = (event) => {
     event.preventDefault();
     closeSuggestions();
@@ -102,37 +118,32 @@ const Search = () => {
     setPublicDomainOnly(isChecked);
   };
 
+  const returnFocusToInput = () => {
+    wrapperRef.current?.querySelector<HTMLInputElement>("input")?.focus();
+  };
+
   /**
    * Keyboard handler for the combobox input.
-   * Runs before dcSearchBar's Enter-to-submit handler so preventDefault()
-   * prevents the form submission when a suggestion is being accepted.
+   * ArrowDown moves real DOM focus to the first suggestion so VoiceOver reads
+   * the focused option directly. ArrowUp/Enter within the list are handled by
+   * the listbox. Runs before dcSearchBar's Enter-to-submit handler.
    */
   const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
     if (!isOpen) return;
     switch (event.key) {
-      case "ArrowDown":
+      case "ArrowDown": {
         event.preventDefault();
-        setActiveIndex((i) => Math.min(i + 1, suggestions.length - 1));
+        const newIndex = Math.min(activeIndex + 1, suggestions.length - 1);
+        setActiveIndex(newIndex);
+        document.getElementById(`${LISTBOX_ID}-option-${newIndex}`)?.focus();
         break;
-      case "ArrowUp":
-        event.preventDefault();
-        setActiveIndex((i) => Math.max(i - 1, -1));
-        break;
-      case "Enter":
-        if (activeIndex >= 0) {
-          event.preventDefault();
-          handleSuggestionSelect(suggestions[activeIndex].title);
-        }
-        break;
+      }
       case "Escape":
         event.preventDefault();
         closeSuggestions();
         break;
     }
   };
-
-  const activeDescendant =
-    activeIndex >= 0 ? `${LISTBOX_ID}-option-${activeIndex}` : undefined;
 
   const statusMessage = isOpen
     ? `${suggestions.length} suggestion${
@@ -190,13 +201,6 @@ const Search = () => {
               closeSuggestions();
             },
             onKeyDown: handleKeyDown,
-            additionalInputProps: {
-              role: "combobox",
-              "aria-expanded": isOpen,
-              "aria-autocomplete": "list",
-              "aria-controls": LISTBOX_ID,
-              "aria-activedescendant": activeDescendant,
-            },
           }}
           onSubmit={(e) => handleSubmit(e)}
         />
@@ -206,6 +210,9 @@ const Search = () => {
             activeIndex={activeIndex}
             onSelect={handleSuggestionSelect}
             listboxId={LISTBOX_ID}
+            onActiveIndexChange={setActiveIndex}
+            onClose={closeSuggestions}
+            returnFocusToInput={returnFocusToInput}
           />
         )}
       </Box>
