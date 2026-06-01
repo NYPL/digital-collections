@@ -1,4 +1,4 @@
-import { Box, Button, Collapse } from "@chakra-ui/react";
+import { Steps, Box, Button, Collapsible } from "@chakra-ui/react";
 import {
   Flex,
   Icon,
@@ -94,7 +94,9 @@ const AccordionTree = ({
                 {...(item.hasSubContainers
                   ? { "aria-expanded": item.isOpen }
                   : {})}
-                sx={{ zIndex: "0 !important" }}
+                css={{
+                  zIndex: "0 !important"
+                }}
                 id={item.uuid}
                 aria-current={item.uuid === targetUuid ? "true" : undefined}
               >
@@ -117,15 +119,17 @@ const AccordionTree = ({
                 </Flex>
               </Button>
               {item.hasSubContainers && item.children && (
-                <Collapse in={item.isOpen}>
-                  <ul style={{ margin: 0 }}>
-                    <AccordionTree
-                      targetUuid={targetUuid}
-                      items={item.children}
-                      toggle={toggle}
-                    />
-                  </ul>
-                </Collapse>
+                <Collapsible.Root open={item.isOpen}>
+                  <Collapsible.Content>
+                    <ul style={{ margin: 0 }}>
+                      <AccordionTree
+                        targetUuid={targetUuid}
+                        items={item.children}
+                        toggle={toggle}
+                      />
+                    </ul>
+                  </Collapsible.Content>
+                </Collapsible.Root>
               )}
             </Box>
           </li>

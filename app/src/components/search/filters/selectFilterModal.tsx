@@ -1,11 +1,5 @@
 import { forwardRef, useState, useEffect, useRef, RefObject } from "react";
-import {
-  Modal,
-  ModalContent,
-  ModalHeader,
-  ModalOverlay,
-  useDisclosure,
-} from "@chakra-ui/react";
+import { Steps, useDisclosure, Dialog, Portal } from "@chakra-ui/react";
 import { availableFilterOptions } from "./selectFilter";
 import {
   Button,
@@ -54,7 +48,7 @@ const SelectFilterModal = forwardRef<HTMLButtonElement, SelectFilterModalProps>(
       searchManager,
     } = props;
     const {
-      isOpen,
+      open,
       onOpen: modalOnOpen,
       onClose: modalOnClose,
     } = useDisclosure();
@@ -165,195 +159,201 @@ const SelectFilterModal = forwardRef<HTMLButtonElement, SelectFilterModalProps>(
         >{`View all ${filter.name.toLowerCase()}${
           filter.name === "Publishers" ? "" : "s"
         }`}</Button>
-        <Modal
-          finalFocusRef={
-            focusOutside
-              ? (accordionButtonRef as RefObject<FocusableElement | null>)
-              : viewMoreButtonRef
-          }
-          isOpen={isOpen}
-          onClose={() => {
-            if (modalCurrent && focusOutside) {
-              searchManager.setLastFilter(
-                `accordion-button-select-${filter.name}`
-              );
-              updateURL(
-                searchManager.handleAddFilter([
-                  {
-                    filter: filter.name,
-                    value: modalCurrent?.name!,
-                  },
-                ])
-              );
+        <Dialog.Root
+          finalFocusEl={() => (focusOutside ? (accordionButtonRef as RefObject<FocusableElement | null>) : viewMoreButtonRef).current}
+          open={isOpen}
+          onOpenChange={e => {
+            if (!e.open) {
+              if (modalCurrent && focusOutside) {
+                searchManager.setLastFilter(
+                  `accordion-button-select-${filter.name}`
+                );
+                updateURL(
+                  searchManager.handleAddFilter([
+                    {
+                      filter: filter.name,
+                      value: modalCurrent?.name!,
+                    },
+                  ])
+                );
+              }
+              handleClose(false);
             }
-            handleClose(false);
           }}
         >
-          <ModalOverlay />
-          <ModalContent sx={{ borderRadius: "4px" }}>
-            <Box
-              sx={{
-                bg: "ui.bg.default",
-                borderRadius: "4px 4px 0px 0px",
-                borderBottom: "1px solid",
-                borderColor: "ui.border.default",
-                marginBottom: "s",
-              }}
-            >
-              <ModalHeader padding="0">
-                <Heading
-                  size="heading5"
-                  paddingTop="xs"
-                  paddingLeft="s"
-                  marginBottom="xs"
-                >
-                  {`${capitalize(filter.name)}s`}
-                </Heading>
-              </ModalHeader>
-            </Box>
-            <Box paddingLeft="m" paddingRight="m">
-              <DCSearchBar
-                showButton={false}
-                id={`search-${filter.name}-options`}
-                labelText={`Search ${filter.name}${
-                  filter.name === "Publishers" ? "" : "s"
-                }`}
-                maxWrapperWidth="400px"
-                textInputProps={{
-                  id: "filter-search-text",
-                  isClearable: true,
-                  labelText: `${filter.name} search`,
-                  isClearableCallback: () => setSearchText(""),
-                  name: "filter_keywords",
-                  placeholder: `Search ${filter.name.toLowerCase()}${
-                    filter.name === "Publishers" ? "" : "s"
-                  }`,
-                  onChange: (e) => setSearchText(e.target.value),
-                }}
-                onSubmit={() => {}}
-              />
-              <div
-                id="search-live-region"
-                ref={liveRegionRef}
-                aria-live="polite"
-                style={{
-                  position: "absolute",
-                  width: "1px",
-                  height: "1px",
-                  margin: "-1px",
-                  padding: 0,
-                  overflow: "hidden",
-                  clip: "rect(0,0,0,0)",
-                  border: 0,
-                }}
-              />
-              <Box
-                sx={{
-                  marginTop: "s",
-                  border: "1px solid",
-                  borderColor: "ui.border.hover",
-                  padding: "s",
-                  minHeight: "394px",
-                }}
-              >
-                <RadioGroup
-                  isFullWidth
-                  sx={{ marginBottom: "-8px" }}
-                  id={`${filter.name}-options`}
-                  labelText={`${filter.name} filter options`}
-                  showLabel={false}
-                  name={filter.name}
-                  defaultValue={modalCurrent?.name ?? ""}
-                  showHelperInvalidText={false}
-                  onChange={(newSelection: string) => {
-                    selected =
-                      filteredOptions.find(
-                        (option) => option.name === newSelection
-                      ) || null;
-                    setModalCurrent(selected);
-                  }}
-                >
-                  {availableFilterOptions(currentOptions, filter.name)}
-                </RadioGroup>
-              </Box>
-              <Flex>
-                <Pagination
-                  id="filter-pagination-id"
-                  currentPage={currentPage}
-                  initialPage={1}
-                  pageCount={pageCount}
-                  onPageChange={(page) => {
-                    setCurrentPage(page);
-                  }}
+          <Portal>
+
+            <Dialog.Backdrop />
+            <Dialog.Positioner>
+              <Dialog.Content css={{
+                borderRadius: "4px"
+              }}>
+                <Box
                   sx={{
-                    paddingTop: "m",
-                    justifyContent: "center",
-                    svg: {
-                      _visited: {
-                        _disabled: { fill: "ui.disabled.primary !important" },
-                      },
-                    },
-
-                    a: {
-                      _disabled: {
-                        color: "ui.disabled.primary",
-                        pointerEvents: "none",
-                        svg: { fill: "ui.disabled.primary !important" },
-                      },
-                    },
-                  }}
-                />
-              </Flex>
-
-              <ButtonGroup padding="m" marginX="auto">
-                <Button
-                  variant="secondary"
-                  onClick={() => {
-                    handleClose(false);
-                    setModalCurrent(current);
-                  }}
-                  id="close-button"
-                >
-                  Close
-                </Button>
-                <Button
-                  id="confirm-button"
-                  isDisabled={!modalCurrent}
-                  onClick={() => {
-                    handleClose(true);
-                    searchManager.setLastFilter(
-                      `accordion-button-select-${filter.name}`
-                    );
-                    if (filter.name === "collection") {
-                      const [collectionTitle, collectionUuid] =
-                        modalCurrent?.name!.split("||") ?? [];
-                      updateURL(
-                        searchManager.handleAddFilter([
-                          {
-                            filter: filter.name,
-                            value: collectionUuid,
-                          },
-                        ])
-                      );
-                    } else {
-                      updateURL(
-                        searchManager.handleAddFilter([
-                          {
-                            filter: filter.name,
-                            value: modalCurrent?.name!,
-                          },
-                        ])
-                      );
-                    }
-                    setModalCurrent(current);
+                    bg: "ui.bg.default",
+                    borderRadius: "4px 4px 0px 0px",
+                    borderBottom: "1px solid",
+                    borderColor: "ui.border.default",
+                    marginBottom: "s",
                   }}
                 >
-                  Confirm
-                </Button>
-              </ButtonGroup>
-            </Box>
-          </ModalContent>
-        </Modal>
+                  <Dialog.Header padding="0">
+                    <Heading
+                      size="heading5"
+                      paddingTop="xs"
+                      paddingLeft="s"
+                      marginBottom="xs"
+                    >
+                      {`${capitalize(filter.name)}s`}
+                    </Heading>
+                  </Dialog.Header>
+                </Box>
+                <Box paddingLeft="m" paddingRight="m">
+                  <DCSearchBar
+                    showButton={false}
+                    id={`search-${filter.name}-options`}
+                    labelText={`Search ${filter.name}${
+                      filter.name === "Publishers" ? "" : "s"
+                    }`}
+                    maxWrapperWidth="400px"
+                    textInputProps={{
+                      id: "filter-search-text",
+                      isClearable: true,
+                      labelText: `${filter.name} search`,
+                      isClearableCallback: () => setSearchText(""),
+                      name: "filter_keywords",
+                      placeholder: `Search ${filter.name.toLowerCase()}${
+                        filter.name === "Publishers" ? "" : "s"
+                      }`,
+                      onChange: (e) => setSearchText(e.target.value),
+                    }}
+                    onSubmit={() => {}}
+                  />
+                  <div
+                    id="search-live-region"
+                    ref={liveRegionRef}
+                    aria-live="polite"
+                    style={{
+                      position: "absolute",
+                      width: "1px",
+                      height: "1px",
+                      margin: "-1px",
+                      padding: 0,
+                      overflow: "hidden",
+                      clip: "rect(0,0,0,0)",
+                      border: 0,
+                    }}
+                  />
+                  <Box
+                    sx={{
+                      marginTop: "s",
+                      border: "1px solid",
+                      borderColor: "ui.border.hover",
+                      padding: "s",
+                      minHeight: "394px",
+                    }}
+                  >
+                    <RadioGroup
+                      isFullWidth
+                      sx={{ marginBottom: "-8px" }}
+                      id={`${filter.name}-options`}
+                      labelText={`${filter.name} filter options`}
+                      showLabel={false}
+                      name={filter.name}
+                      defaultValue={modalCurrent?.name ?? ""}
+                      showHelperInvalidText={false}
+                      onChange={(newSelection: string) => {
+                        selected =
+                          filteredOptions.find(
+                            (option) => option.name === newSelection
+                          ) || null;
+                        setModalCurrent(selected);
+                      }}
+                    >
+                      {availableFilterOptions(currentOptions, filter.name)}
+                    </RadioGroup>
+                  </Box>
+                  <Flex>
+                    <Pagination
+                      id="filter-pagination-id"
+                      currentPage={currentPage}
+                      initialPage={1}
+                      pageCount={pageCount}
+                      onPageChange={(page) => {
+                        setCurrentPage(page);
+                      }}
+                      sx={{
+                        paddingTop: "m",
+                        justifyContent: "center",
+                        svg: {
+                          _visited: {
+                            _disabled: { fill: "ui.disabled.primary !important" },
+                          },
+                        },
+
+                        a: {
+                          _disabled: {
+                            color: "ui.disabled.primary",
+                            pointerEvents: "none",
+                            svg: { fill: "ui.disabled.primary !important" },
+                          },
+                        },
+                      }}
+                    />
+                  </Flex>
+
+                  <ButtonGroup padding="m" marginX="auto">
+                    <Button
+                      variant="secondary"
+                      onClick={() => {
+                        handleClose(false);
+                        setModalCurrent(current);
+                      }}
+                      id="close-button"
+                    >
+                      Close
+                    </Button>
+                    <Button
+                      id="confirm-button"
+                      isDisabled={!modalCurrent}
+                      onClick={() => {
+                        handleClose(true);
+                        searchManager.setLastFilter(
+                          `accordion-button-select-${filter.name}`
+                        );
+                        if (filter.name === "collection") {
+                          const [collectionTitle, collectionUuid] =
+                            modalCurrent?.name!.split("||") ?? [];
+                          updateURL(
+                            searchManager.handleAddFilter([
+                              {
+                                filter: filter.name,
+                                value: collectionUuid,
+                              },
+                            ])
+                          );
+                        } else {
+                          updateURL(
+                            searchManager.handleAddFilter([
+                              {
+                                filter: filter.name,
+                                value: modalCurrent?.name!,
+                              },
+                            ])
+                          );
+                        }
+                        setModalCurrent(current);
+                      }}
+                    >
+                      Confirm
+                    </Button>
+                  </ButtonGroup>
+                </Box>
+              </Dialog.Content>
+            </Dialog.Positioner>
+
+          </Portal>
+        </Dialog.Root>
       </>
     );
   }

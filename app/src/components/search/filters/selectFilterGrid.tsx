@@ -1,4 +1,4 @@
-import { Grid } from "@chakra-ui/react";
+import { Steps, Grid } from "@chakra-ui/react";
 import SelectFilter from "./selectFilter";
 import { headerBreakpoints } from "@/src/utils/breakpoints";
 import { SearchManager } from "@/src/utils/searchManager/searchManager";
@@ -21,14 +21,16 @@ const SelectFilterGrid = ({
 
   return (
     <Grid
-      sx={{
+      css={{
         gridTemplateColumns: "repeat(1, 1fr)",
+
         [`@media screen and (min-width: ${headerBreakpoints.lgMobile}px)`]: {
           gridTemplateColumns: "repeat(2, 1fr)",
         },
+
         [`@media screen and (min-width: ${headerBreakpoints.lgTablet}px)`]: {
           gridTemplateColumns: "repeat(4, 1fr)",
-        },
+        }
       }}
       gap="s"
       marginBottom="s"

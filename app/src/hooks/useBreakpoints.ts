@@ -1,4 +1,4 @@
-import { useMediaQuery } from "@chakra-ui/react";
+import { Steps, useMediaQuery } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
 
 /**

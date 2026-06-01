@@ -1,13 +1,5 @@
 import { headerBreakpoints } from "@/src/utils/breakpoints";
-import {
-  Accordion as ChakraAccordion,
-  AccordionButton,
-  AccordionItem,
-  AccordionPanel,
-  Box,
-  chakra,
-  ChakraComponent,
-} from "@chakra-ui/react";
+import { Steps, Accordion, Box, chakra, ChakraComponent } from "@chakra-ui/react";
 import { Icon, AccordionDataProps } from "@nypl/design-system-react-components";
 import React, { forwardRef, useEffect, useRef, useState } from "react";
 
@@ -71,10 +63,10 @@ const FilterAccordionComponent = forwardRef<
   const finalAriaLabel = accordionItem.ariaLabel || ariaLabel || "";
 
   return (
-    <ChakraAccordion
+    <Accordion.Root
       allowToggle
       index={isExpanded ? 0 : -1}
-      onChange={(expandedIdx: number | number[]) => {
+      onValueChange={(expandedIdx: number | number[]) => {
         const open = Array.isArray(expandedIdx)
           ? expandedIdx.length > 0
           : expandedIdx === 0;
@@ -86,10 +78,10 @@ const FilterAccordionComponent = forwardRef<
       ref={ref}
       {...rest}
     >
-      <AccordionItem id={id} position="relative">
+      <Accordion.Item value={id} position="relative">
         {({ isExpanded }) => (
           <>
-            <AccordionButton
+            <Accordion.ItemTrigger
               aria-label={finalAriaLabel}
               id={id}
               ref={buttonRef}
@@ -107,9 +99,9 @@ const FilterAccordionComponent = forwardRef<
                 {accordionItem.label}
               </Box>
               {getIcon(isExpanded)}
-            </AccordionButton>
+            </Accordion.ItemTrigger>
             {isExpanded && (
-              <AccordionPanel
+              <Accordion.ItemContent
                 id={`${id}-panel`}
                 overflow="auto"
                 sx={{
@@ -120,15 +112,14 @@ const FilterAccordionComponent = forwardRef<
                       zIndex: "1",
                       width: "100%",
                     },
-                }}
-              >
-                {accordionItem.panel}
-              </AccordionPanel>
+                }}><Accordion.ItemBody>
+                  {accordionItem.panel}
+                </Accordion.ItemBody></Accordion.ItemContent>
             )}
           </>
         )}
-      </AccordionItem>
-    </ChakraAccordion>
+      </Accordion.Item>
+    </Accordion.Root>
   );
 });
 

@@ -9,7 +9,7 @@ import {
   HorizontalRule,
   FocusLock,
 } from "@nypl/design-system-react-components";
-import React, { useRef, useState } from "react";
+import React, { RefObject, useEffect, useRef, useState } from "react";
 
 const listItems = dcNavLinks.map(({ href, text }) => (
   <Link
@@ -42,7 +42,11 @@ const MobileNavMenu = () => {
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const ref = useRef<HTMLDivElement>(null);
 
-  useCloseDropDown(setIsOpen, ref);
+  useEffect(() => {
+    if (ref.current) {
+      useCloseDropDown(setIsOpen, ref as RefObject<HTMLDivElement>);
+    }
+  }, [ref]);
 
   return (
     <Box ref={ref}>

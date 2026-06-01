@@ -1,4 +1,12 @@
-import { chakra, ChakraComponent, useMergeRefs } from "@chakra-ui/react";
+/*
+ MIGRATION NOTE: The following Chakra UI hooks have been removed.
+ Please replace them with the suggested alternatives:
+
+//   - useMergeRefs: Use react-use: useMergeRefs
+
+ See: https://chakra-ui.com/docs/get-started/migration#hooks
+*/
+import { Steps, chakra, ChakraComponent } from "@chakra-ui/react";
 import {
   Box,
   RadioGroup,

@@ -1,4 +1,4 @@
-import { Button } from "@chakra-ui/react";
+import { Steps, Button } from "@chakra-ui/react";
 import { Text, Box, Icon } from "@nypl/design-system-react-components";
 import { useState, useRef, useEffect } from "react";
 

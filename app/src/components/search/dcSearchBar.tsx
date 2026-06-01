@@ -1,5 +1,5 @@
 import React, { forwardRef, type JSX } from "react";
-import { chakra, ChakraComponent } from "@chakra-ui/react";
+import { Steps, chakra, ChakraComponent } from "@chakra-ui/react";
 import {
   TextInput,
   Box,
@@ -74,10 +74,12 @@ export interface SearchBarProps {
   maxWrapperWidth?: string;
   /** Sets if submit button displays (for autocomplete search). */
   showButton?: boolean;
+  sx?: Object;
+  className?: string;
 }
 
 const SearchBarComponent = forwardRef<HTMLDivElement, SearchBarProps>(
-  (props, ref?) => {
+  (props, ref) => {
     const {
       id,
       isDisabled = false,
@@ -88,6 +90,7 @@ const SearchBarComponent = forwardRef<HTMLDivElement, SearchBarProps>(
       labelText,
       maxWrapperWidth,
       showButton = true,
+      className,
     } = props;
 
     const stateProps = {
@@ -201,6 +204,8 @@ const SearchBarComponent = forwardRef<HTMLDivElement, SearchBarProps>(
 
     return (
       <Box
+        ref={ref}
+        className={className}
         role="search"
         aria-label={labelText}
         sx={{
@@ -249,6 +254,6 @@ export const DCSearchBar: ChakraComponent<
     SearchBarProps & React.RefAttributes<HTMLDivElement>
   >,
   SearchBarProps
-> = chakra(SearchBarComponent, { shouldForwardProp: () => true });
+> = chakra(SearchBarComponent);
 
 export default DCSearchBar;

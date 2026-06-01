@@ -10,7 +10,6 @@ import React, { useEffect, type JSX } from "react";
 import { type PropsWithChildren } from "react";
 import Header from "../header/header";
 import Script from "next/script";
-import { BreadcrumbsDataProps } from "@nypl/design-system-react-components/dist/src/components/Breadcrumbs/Breadcrumbs";
 import { FeedbackProvider } from "@/src/context/FeedbackProvider";
 import { SearchParamsType } from "@/search/index/page";
 import { SearchProvider } from "@/src/context/SearchProvider";

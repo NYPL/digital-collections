@@ -1,6 +1,6 @@
 import MetadataOverview from "./metadata/overview";
 
-import { SimpleGrid as ChakraSimpleGrid } from "@chakra-ui/react";
+import { Steps, SimpleGrid as ChakraSimpleGrid } from "@chakra-ui/react";
 import { HorizontalRule } from "@nypl/design-system-react-components";
 import React, { forwardRef } from "react";
 import { headerBreakpoints } from "@/src/utils/breakpoints";
@@ -19,13 +19,14 @@ const ItemOverview = ({ item }: ItemOverviewProps) => {
     <>
       <ChakraSimpleGrid
         marginTop="m"
-        sx={{
+        css={{
           [`@media screen and (min-width: ${headerBreakpoints.lgMobile}px)`]: {
             gridTemplateColumns: `repeat(1, minmax(0, 1fr))`,
           },
+
           [`@media screen and (min-width: ${headerBreakpoints.lgTablet}px)`]: {
             gridTemplateColumns: `repeat(2, minmax(0, 1fr))`,
-          },
+          }
         }}
       >
         <ExternalLinksOverview
@@ -40,13 +41,14 @@ const ItemOverview = ({ item }: ItemOverviewProps) => {
       </ChakraSimpleGrid>
       <HorizontalRule marginTop="xs" marginBottom="m" />
       <ChakraSimpleGrid
-        sx={{
+        css={{
           [`@media screen and (min-width: ${headerBreakpoints.lgMobile}px)`]: {
             gridTemplateColumns: `repeat(1, minmax(0, 1fr))`,
           },
+
           [`@media screen and (min-width: ${headerBreakpoints.lgTablet}px)`]: {
             gridTemplateColumns: `repeat(2, minmax(0, 1fr))`,
-          },
+          }
         }}
       >
         <MetadataOverview metadata={item.renderableMetadata} />

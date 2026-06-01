@@ -30,9 +30,7 @@ export const DateFilter = forwardRef<TextInputRefType, DateFilterProps>(
       if (input === null || input === "") {
         return true;
       }
-      return (
-        /^\d{1,4}$/.test(input) && Number(input) >= 0 && Number(input) <= 9999
-      );
+      return (/^\d{1,4}$/.test(input) && Number(input) >= 0 && Number(input) <= 9999);
     };
 
     const startFilter = searchManager.filters.find(

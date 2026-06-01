@@ -1,8 +1,4 @@
-import {
-  chakra,
-  SimpleGrid as ChakraSimpleGrid,
-  ChakraComponent,
-} from "@chakra-ui/react";
+import { Steps, chakra, SimpleGrid as ChakraSimpleGrid, ChakraComponent } from "@chakra-ui/react";
 import {
   Box,
   Flex,
@@ -26,13 +22,14 @@ const PrintOverview = ({ buyable, imageIDs }) => {
   return (
     <>
       <ChakraSimpleGrid
-        sx={{
+        css={{
           [`@media screen and (min-width: ${headerBreakpoints.lgMobile}px)`]: {
             gridTemplateColumns: `repeat(1, minmax(0, 1fr))`,
           },
+
           [`@media screen and (min-width: ${headerBreakpoints.lgTablet}px)`]: {
             gridTemplateColumns: `repeat(2, minmax(0, 1fr))`,
-          },
+          }
         }}
       >
         {buyable && (

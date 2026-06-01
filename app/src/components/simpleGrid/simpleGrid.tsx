@@ -1,8 +1,4 @@
-import {
-  chakra,
-  SimpleGrid as ChakraSimpleGrid,
-  ChakraComponent,
-} from "@chakra-ui/react";
+import { Steps, chakra, SimpleGrid as ChakraSimpleGrid, ChakraComponent } from "@chakra-ui/react";
 import React, { forwardRef } from "react";
 import { headerBreakpoints } from "@/src/utils/breakpoints";
 
@@ -43,13 +39,14 @@ const SimpleGridComponent = forwardRef<
       tabIndex={-1}
       ref={ref}
       {...rest}
-      sx={{
+      css={{
         [`@media screen and (min-width: ${headerBreakpoints.lgMobile}px)`]: {
           gridTemplateColumns: `repeat(2, minmax(0, 1fr))`,
         },
+
         [`@media screen and (min-width: ${headerBreakpoints.lgTablet}px)`]: {
           gridTemplateColumns: `repeat(4, minmax(0, 1fr))`,
-        },
+        }
       }}
     >
       {children}
