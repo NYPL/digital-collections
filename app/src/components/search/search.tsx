@@ -1,6 +1,6 @@
 //@ts-no-check
 "use client";
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { Box } from "@nypl/design-system-react-components";
 import { useRouter } from "next/navigation";
 import PublicDomainFilter from "../publicDomainFilter/publicDomainFilter";
@@ -21,6 +21,7 @@ const Search = () => {
   const [suggestions, setSuggestions] = useState<SuggestResult[]>([]);
   const [activeIndex, setActiveIndex] = useState(-1);
   const [isOpen, setIsOpen] = useState(false);
+  const wrapperRef = useRef<HTMLDivElement>(null);
 
   // Fetch suggestions with debounce whenever the keyword changes.
   useEffect(() => {
@@ -57,6 +58,23 @@ const Search = () => {
     setIsOpen(false);
     setActiveIndex(-1);
   };
+
+  // Close suggestions when the user clicks outside the search component.
+  useEffect(() => {
+    if (!isOpen) return;
+    const handleOutsideClick = (event: MouseEvent) => {
+      if (
+        wrapperRef.current &&
+        !wrapperRef.current.contains(event.target as Node)
+      ) {
+        setSuggestions([]);
+        setIsOpen(false);
+        setActiveIndex(-1);
+      }
+    };
+    document.addEventListener("mousedown", handleOutsideClick);
+    return () => document.removeEventListener("mousedown", handleOutsideClick);
+  }, [isOpen]);
 
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -154,7 +172,7 @@ const Search = () => {
         {statusMessage}
       </Box>
       {/* position="relative" creates the stacking context for the absolute dropdown */}
-      <Box position="relative">
+      <Box position="relative" ref={wrapperRef}>
         <DCSearchBar
           id="searchbar"
           labelText="Search Digital Collections"
@@ -166,6 +184,11 @@ const Search = () => {
             value: keywords,
             placeholder: "Search keyword(s)",
             autoComplete: "off",
+            isClearable: true,
+            isClearableCallback: () => {
+              setKeywords("");
+              closeSuggestions();
+            },
             onKeyDown: handleKeyDown,
             additionalInputProps: {
               role: "combobox",
