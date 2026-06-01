@@ -1,6 +1,7 @@
 "use client";
 import React, { useEffect, useRef } from "react";
-import { Map } from "maplibre-gl";
+import { Map, NavigationControl, FullscreenControl } from "maplibre-gl";
+import "maplibre-gl/dist/maplibre-gl.css";
 import { WarpedMapLayer } from "@allmaps/maplibre";
 import { generateId } from "@allmaps/id";
 import { Heading, Text, Link } from "@nypl/design-system-react-components";
@@ -31,6 +32,9 @@ const AllMapsViewer = ({ item }: ItemProps) => {
           preserveDrawingBuffer: true,
         },
       });
+
+      map.addControl(new NavigationControl(), "top-right");
+      map.addControl(new FullscreenControl(), "top-right");
 
       const captureWithMapData = item.captures.find(
         (capture) => capture.hasAllMapsData
@@ -82,7 +86,15 @@ const AllMapsViewer = ({ item }: ItemProps) => {
     };
   }, [item.uuid]);
 
-  return <div ref={mapContainer} style={{ width: "100%", height: "100%" }} />;
+  return (
+    <div
+      ref={mapContainer}
+      style={{
+        width: "100%",
+        height: "100%",
+      }}
+    />
+  );
 };
 
 export default AllMapsViewer;
