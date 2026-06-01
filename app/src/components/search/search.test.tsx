@@ -38,7 +38,7 @@ describe("Search component", () => {
       target: { value: "test word" },
     });
 
-    const searchButton = screen.getByRole("button");
+    const searchButton = screen.getByRole("button", { name: "Search" });
 
     fireEvent.click(searchButton);
 
@@ -56,7 +56,7 @@ describe("Search component", () => {
 
     fireEvent.click(checkbox);
 
-    const searchButton = screen.getByRole("button");
+    const searchButton = screen.getByRole("button", { name: "Search" });
 
     fireEvent.click(searchButton);
 
