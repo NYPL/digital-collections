@@ -31,6 +31,7 @@ const ItemOverview = ({ item }: ItemOverviewProps) => {
         <ExternalLinksOverview
           catalogLink={item.catalogLink}
           archivesLink={item.archivesLink}
+          isInAllMaps={item.isInAllMaps}
         />
         {item.isImage ? (
           <PrintOverview buyable={item.buyable} imageIDs={item.imageIDs} />
