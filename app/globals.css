@@ -39,3 +39,11 @@ mark {
 .plyr__video-wrapper{
   height: 500px !important;
 }
+
+.maplibregl-control-container,
+.maplibregl-ctrl-top-right,
+.maplibregl-ctrl-top-left,
+.maplibregl-ctrl-bottom-right,
+.maplibregl-ctrl-bottom-left {
+  z-index: 10000 !important;
+}
