@@ -17,6 +17,12 @@ import { CollectionSearchParamsType } from "@/collections/[uuid]/page";
 import { trackGa4PageView } from "@/src/utils/ga4Utils";
 import { AnalyticsDataProvider } from "@/src/context/AnalyticsDataProvider";
 
+interface BreadcrumbsDataProps {
+  text: string;
+  url: string;
+}
+
+
 interface PageLayoutProps {
   activePage: string;
   breadcrumbs?: BreadcrumbsDataProps[];
