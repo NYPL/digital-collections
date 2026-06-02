@@ -87,50 +87,17 @@ export default class ItemMediaPage {
     }
   }
 
-  // Downloads
-
-  // Opens and verifies download overlay modal
-  async openDownloadMenu(): Promise<void> {
-    await this.downloadButton.click({ force: true });
-
-    // Wait for the popup to be visible
-    await this.downloadOptionSmall.waitFor({ state: "visible" });
-
-    await expect(this.downloadOptionSmall).toBeEnabled();
-  }
-
-  // Dismisses  download overlay and verifies it is removed from the view.
-  async closeDownloadMenu(): Promise<void> {
-    await this.closeOverlayButton.click();
-    await expect(this.downloadOverlay).not.toBeVisible();
-  }
-
-  // NEW VERSION:
+  // OLD VERSION
   // // Downloads
 
   // // Opens and verifies download overlay modal
   // async openDownloadMenu(): Promise<void> {
-  //   await this.downloadButton.waitFor({ state: "visible" });
+  //   await this.downloadButton.click({ force: true });
 
-  //   // Retry click up to 5 times if the browser swallows the DOM click event
-  //   for (let attempt = 1; attempt <= 5; attempt++) {
-  //     await this.downloadButton.click({ force: true });
+  //   // Wait for the popup to be visible
+  //   await this.downloadOptionSmall.waitFor({ state: "visible" });
 
-  //     try {
-  //       // Leave a short 750ms pause per click.
-  //       // If download options show up, the try block succeeds.
-  //       await this.downloadOptionSmall.waitFor({
-  //         state: "visible",
-  //         timeout: 750,
-  //       });
-  //       await expect(this.downloadOptionSmall).toBeEnabled();
-  //       return;
-  //     } catch (error) {
-  //       console.warn(`Retrying download menu trigger: attempt ${attempt}/5`);
-  //     }
-  //   }
-
-  //   throw new Error("Failed to open the download menu after 5 attempts.");
+  //   await expect(this.downloadOptionSmall).toBeEnabled();
   // }
 
   // // Dismisses  download overlay and verifies it is removed from the view.
@@ -138,6 +105,39 @@ export default class ItemMediaPage {
   //   await this.closeOverlayButton.click();
   //   await expect(this.downloadOverlay).not.toBeVisible();
   // }
+
+  // Downloads
+
+  // Opens and verifies download overlay modal
+  async openDownloadMenu(): Promise<void> {
+    await this.downloadButton.waitFor({ state: "visible" });
+
+    // Retry click up to 5 times if the browser swallows the DOM click event
+    for (let attempt = 1; attempt <= 5; attempt++) {
+      await this.downloadButton.click({ force: true });
+
+      try {
+        // Leave a short 750ms pause per click.
+        // If download options show up, the try block succeeds.
+        await this.downloadOptionSmall.waitFor({
+          state: "visible",
+          timeout: 750,
+        });
+        await expect(this.downloadOptionSmall).toBeEnabled();
+        return;
+      } catch (error) {
+        console.warn(`Retrying download menu trigger: attempt ${attempt}/5`);
+      }
+    }
+
+    throw new Error("Failed to open the download menu after 5 attempts.");
+  }
+
+  // Dismisses  download overlay and verifies it is removed from the view.
+  async closeDownloadMenu(): Promise<void> {
+    await this.closeOverlayButton.click();
+    await expect(this.downloadOverlay).not.toBeVisible();
+  }
 
   // Purchase Print
 
