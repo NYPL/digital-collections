@@ -87,25 +87,6 @@ export default class ItemMediaPage {
     }
   }
 
-  // OLD VERSION
-  // // Downloads
-
-  // // Opens and verifies download overlay modal
-  // async openDownloadMenu(): Promise<void> {
-  //   await this.downloadButton.click({ force: true });
-
-  //   // Wait for the popup to be visible
-  //   await this.downloadOptionSmall.waitFor({ state: "visible" });
-
-  //   await expect(this.downloadOptionSmall).toBeEnabled();
-  // }
-
-  // // Dismisses  download overlay and verifies it is removed from the view.
-  // async closeDownloadMenu(): Promise<void> {
-  //   await this.closeOverlayButton.click();
-  //   await expect(this.downloadOverlay).not.toBeVisible();
-  // }
-
   // Downloads
 
   // Opens and verifies download overlay modal
