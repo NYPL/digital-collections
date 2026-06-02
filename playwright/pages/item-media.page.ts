@@ -91,7 +91,7 @@ export default class ItemMediaPage {
 
   // Opens and verifies download overlay modal
   async openDownloadMenu(): Promise<void> {
-    await this.downloadButton.click();
+    await this.downloadButton.click({ force: true });
 
     // Wait for the popup to be visible
     await this.downloadOptionSmall.waitFor({ state: "visible" });
