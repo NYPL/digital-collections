@@ -93,8 +93,8 @@ export default class ItemMediaPage {
   async openDownloadMenu(): Promise<void> {
     await this.downloadButton.waitFor({ state: "visible" });
 
-    // Retry click up to 5 times if the browser swallows the DOM click event
-    for (let attempt = 1; attempt <= 5; attempt++) {
+    // Retry click up to 3 times if the browser temporarily swallows the DOM click event
+    for (let attempt = 1; attempt <= 3; attempt++) {
       await this.downloadButton.click({ force: true });
 
       try {
