@@ -94,7 +94,7 @@ export default class ItemMediaPage {
     await this.downloadButton.waitFor({ state: "visible" });
 
     // Retry click up to 3 times if the browser temporarily swallows the DOM click event
-    for (let attempt = 1; attempt <= 3; attempt++) {
+    for (let attempt = 1; attempt <= 5; attempt++) {
       await this.downloadButton.click({ force: true });
 
       try {
