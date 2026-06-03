@@ -40,9 +40,6 @@ test.describe("Verify Video Viewer Controls", () => {
   });
 });
 
-// FIXME: dl modal is not showing correct links within playwright even though they can be observed
-// manually on localhost.
-
 test.describe("Verify Download Actions", () => {
   test.beforeEach(async ({ page }) => {
     itemMediaPage = new ItemMediaPage(page, "IMAGE");
