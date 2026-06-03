@@ -6,17 +6,21 @@ import {
   Box,
   useResponsiveSpacing,
 } from "@nypl/design-system-react-components";
-import React, { useEffect } from "react";
+import React, { Suspense, useEffect, type JSX } from "react";
 import { type PropsWithChildren } from "react";
 import Header from "../header/header";
 import Script from "next/script";
-import { BreadcrumbsDataProps } from "@nypl/design-system-react-components/dist/src/components/Breadcrumbs/Breadcrumbs";
 import { FeedbackProvider } from "@/src/context/FeedbackProvider";
-import { SearchParamsType } from "@/search/index/page";
+import type { SearchParamsType } from "@/search/index/page";
 import { SearchProvider } from "@/src/context/SearchProvider";
-import { CollectionSearchParamsType } from "@/collections/[uuid]/page";
+import type { CollectionSearchParamsType } from "@/collections/[uuid]/page";
 import { trackGa4PageView } from "@/src/utils/ga4Utils";
 import { AnalyticsDataProvider } from "@/src/context/AnalyticsDataProvider";
+
+interface BreadcrumbsDataProps {
+  text: string;
+  url: string;
+}
 
 interface PageLayoutProps {
   activePage: string;

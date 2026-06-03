@@ -5,7 +5,6 @@ import { Metadata } from "next";
 import SearchPage from "@/src/components/pages/searchPage/searchPage";
 import { Filter } from "@/src/types/FilterType";
 import { AvailableFilter } from "@/src/types/AvailableFilterType";
-import { revalidatePath } from "next/cache";
 
 export interface SearchParamsType {
   q: string;
@@ -16,6 +15,8 @@ export interface SearchParamsType {
   viewMode: "grid" | "list";
 }
 
+export const dynamic = "force-dynamic";
+
 export const metadata: Metadata = {
   title: "Search results - NYPL Digital Collections",
   openGraph: {
@@ -24,11 +25,12 @@ export const metadata: Metadata = {
 };
 
 export type SearchProps = {
-  searchParams: SearchParamsType;
+  searchParams: Promise<SearchParamsType>;
 };
 
-export default async function Search({ searchParams }: SearchProps) {
-  revalidatePath("/search/index");
+export default async function Search(props: SearchProps) {
+  const searchParams = await props.searchParams;
+
   const pageName = searchParams.q ? "search-results" : "all-items";
 
   const searchResults = await CollectionsApi.getSearchData({

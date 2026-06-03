@@ -3,7 +3,7 @@ import { fetchApi } from "@/src/utils/fetchApi/fetchApi";
 import { CARDS_PER_PAGE } from "@/src/config/constants";
 
 const oneMonth = 60 * 60 * 24 * 30;
-export const revalidate = oneMonth;
+//export const revalidate = oneMonth;
 
 const PAGESIZE = 50;
 
@@ -23,8 +23,9 @@ interface CollectionChild {
 
 export async function GET(
   req: NextRequest,
-  { params }: { params: { slug: string } }
+  ctx: { params: Promise<{ slug: string }> }
 ) {
+  const params = await ctx.params;
   const uuid = params.slug;
 
   if (!uuid) {

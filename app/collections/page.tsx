@@ -4,13 +4,14 @@ import { CollectionsPage } from "../src/components/pages/collectionsPage/collect
 import { CollectionsApi } from "@/src/utils/apiClients/apiClients";
 import { redirect } from "next/navigation";
 import PageLayout from "@/src/components/pageLayout/pageLayout";
-import { revalidatePath } from "next/cache";
 import { CollectionSearchParamsType } from "./[uuid]/page";
 
 export type CollectionsProps = {
-  params: { slug: string };
-  searchParams: CollectionSearchParamsType;
+  params: Promise<{ slug: string }>;
+  searchParams: Promise<CollectionSearchParamsType>;
 };
+
+export const dynamic = "force-dynamic";
 
 export const metadata: Metadata = {
   title: "Collections - NYPL Digital Collections",
@@ -19,8 +20,8 @@ export const metadata: Metadata = {
   },
 };
 
-export default async function Collections({ searchParams }: CollectionsProps) {
-  revalidatePath("/collections", "page");
+export default async function Collections(props: CollectionsProps) {
+  const searchParams = await props.searchParams;
 
   const data = await CollectionsApi.getCollectionsData({
     keyword: searchParams.q,

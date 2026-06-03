@@ -3,8 +3,9 @@ import lanesData from "../../../src/data/lanesData";
 
 export const GET = async (
   request: NextRequest,
-  { params }: { params: { slug: string } }
+  ctx: { params: Promise<{ slug: string }> }
 ) => {
+  const params = await ctx.params;
   const slugData = lanesData.lanes.find((lane) => lane.slug === params.slug);
 
   if (slugData) {

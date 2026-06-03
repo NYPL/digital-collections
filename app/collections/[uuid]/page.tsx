@@ -16,13 +16,14 @@ export type CollectionSearchParamsType = {
 };
 
 type CollectionProps = {
-  params: { uuid: string };
-  searchParams: CollectionSearchParamsType;
+  params: Promise<{ uuid: string }>;
+  searchParams: Promise<CollectionSearchParamsType>;
 };
 
-export async function generateMetadata({
-  params,
-}: CollectionProps): Promise<Metadata> {
+export async function generateMetadata(
+  props: CollectionProps
+): Promise<Metadata> {
+  const params = await props.params;
   const slug = params.uuid;
   const collectionData = await CollectionsApi.getCollectionData(slug);
   const title = collectionData?.title ?? slug;
@@ -43,10 +44,10 @@ export async function generateMetadata({
   };
 }
 
-export default async function Collection({
-  params,
-  searchParams,
-}: CollectionProps) {
+export default async function Collection(props: CollectionProps) {
+  const params = await props.params;
+  const searchParams = await props.searchParams;
+
   let collectionData = await CollectionsApi.getCollectionData(params.uuid);
 
   // Add collection filter to every search.
