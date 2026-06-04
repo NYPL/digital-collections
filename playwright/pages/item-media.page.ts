@@ -90,11 +90,10 @@ export default class ItemMediaPage {
   // Downloads
 
   // Opens and verifies download overlay modal
-
   async openDownloadMenu(): Promise<void> {
     await this.downloadButton.waitFor({ state: "visible" });
 
-    // Retry click up to 3 times if the browser temporarily swallows the DOM click event
+    // Retry click up to 5 times if the browser temporarily swallows the DOM click event
     for (let attempt = 1; attempt <= 5; attempt++) {
       await this.downloadButton.click({ force: true });
 
@@ -107,9 +106,7 @@ export default class ItemMediaPage {
         });
         await expect(this.downloadOptionSmall).toBeEnabled();
         return;
-      } catch (error) {
-        console.warn(`Retrying download menu trigger: attempt ${attempt}/5`);
-      }
+      } catch (error) {}
     }
 
     throw new Error("Failed to open the download menu after 5 attempts.");
