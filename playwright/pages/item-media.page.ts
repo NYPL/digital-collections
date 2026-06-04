@@ -91,7 +91,6 @@ export default class ItemMediaPage {
 
   // Opens and verifies download overlay modal
 
-  // NEW Option 1.0
   async openDownloadMenu(): Promise<void> {
     await this.downloadButton.waitFor({ state: "visible" });
 
@@ -115,41 +114,6 @@ export default class ItemMediaPage {
 
     throw new Error("Failed to open the download menu after 5 attempts.");
   }
-
-  // NEW Option 2.0
-  //   async openDownloadMenu(): Promise<void> {
-  //     await this.downloadButton.waitFor({ state: "visible" });
-
-  //     await expect(async () => {
-  //       await this.downloadButton.click({ force: true });
-  //       await expect(this.downloadOptionSmall).toBeVisible();
-  //     }).toPass({ timeout: 5000, intervals: [750] });
-
-  //     await expect(this.downloadOptionSmall).toBeEnabled();
-  // }
-
-  // NEW Option 2.0 - with logging
-  // async openDownloadMenu(): Promise<void> {
-  //   await this.downloadButton.waitFor({ state: "visible" });
-
-  //   const capturedErrors: Error[] = []; // Diagnostics bucket
-
-  //   await expect(async () => {
-  //     try {
-  //       await this.downloadButton.click({ force: true });
-  //       await expect(this.downloadOptionSmall).toBeVisible();
-  //     } catch (error) {
-  //       // 1. Capture the exact error (TypeError, Network crash, or Locator timeout)
-  //       capturedErrors.push(error as Error);
-  //       console.warn(`[DEBUG LOG] Attempt failed with: ${(error as Error).message}`);
-
-  //       // 2. Crucial: Re-throw it so toPass() knows to keep retrying
-  //       throw error;
-  //     }
-  //   }).toPass({ timeout: 20000, intervals: [750] });
-
-  //   await expect(this.downloadOptionSmall).toBeEnabled();
-  // }
 
   // Dismisses  download overlay and verifies it is removed from the view.
   async closeDownloadMenu(): Promise<void> {
