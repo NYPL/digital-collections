@@ -1,10 +1,10 @@
 import { expect, Locator, Page } from "@playwright/test";
 
-export class ItemMapOverlayPage {
+export default class ItemMapOverlayPage {
   readonly page: Page;
 
-  static readonly MAP1_UUID = "8b2b3160-c5d5-012f-d95c-58d385a7bc34";
-  static readonly MAP2_UUID = "25a47180-c55f-012f-3759-58d385a7bc34";
+  static readonly MAP1_UUID = "417fe160-c603-012f-4183-58d385a7bc34";
+  static readonly MAP2_UUID = "blablablablablablablablablablablabla";
 
   readonly mapToggleButton: Locator;
   readonly mapViewerContainer: Locator;
