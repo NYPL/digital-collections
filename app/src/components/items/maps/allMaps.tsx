@@ -6,6 +6,7 @@ import { WarpedMapLayer } from "@allmaps/maplibre";
 import { generateId } from "@allmaps/id";
 import { Heading, Text, Link } from "@nypl/design-system-react-components";
 import { ItemModel } from "@/src/models/item";
+import { OpacityControl } from "./OpacityControl";
 
 interface ItemProps {
   item: ItemModel;
@@ -50,6 +51,8 @@ const AllMapsViewer = ({ item }: ItemProps) => {
       const hashedIiifImageId = await generateId(iiifUrl);
       const annotationUrl = `https://annotations.allmaps.org/images/${hashedIiifImageId}`;
       const warpedMapLayer = new WarpedMapLayer();
+
+      map.addControl(new OpacityControl(warpedMapLayer), "top-right");
 
       map.on("load", async () => {
         if (!map) return;
