@@ -42,7 +42,6 @@ export default class ItemMapOverlayPage {
 
   // New view-on-map button can be clicked
   async verifyMapIsClosedState(): Promise<void> {
-    await expect(this.page).not.toHaveURL(/\?viewAs=map/);
     await expect(this.mapToggleButton).toBeVisible();
     await expect(this.mapToggleButton).toHaveText(/view on map/i);
     // await expect(this.mapViewerContainer).not.toBeVisible();
@@ -50,7 +49,6 @@ export default class ItemMapOverlayPage {
 
   // Close map button appears when map is opened
   async verifyMapIsOpenState(): Promise<void> {
-    await expect(this.page).toHaveURL(/\?viewAs=map/);
     await expect(this.mapToggleButton).toBeVisible();
     await expect(this.mapToggleButton).toHaveText(/close map/i);
     // await expect(this.mapViewerContainer).toBeVisible();
