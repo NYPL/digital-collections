@@ -40,7 +40,8 @@ const AllMapsViewer = ({ item }: ItemProps) => {
       const captureWithMapData = item.captures.find(
         (capture) => capture.hasAllMapsData
       );
-      const imageId = captureWithMapData?.imageId;
+      const imageId = captureWithMapData?.imageId?.trim() || null;
+
       console.log("using this imageId for the allmaps viewer: ", imageId);
 
       const iiifUrl = imageId
