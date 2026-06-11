@@ -21,12 +21,12 @@ const Search = () => {
   const {
     suggestions,
     activeIndex,
-    setActiveIndex,
     isOpen,
+    isTouch,
     wrapperRef,
     closeSuggestions,
-    returnFocusToInput,
     handleKeyDown,
+    handleWrapperBlur,
     statusMessage,
   } = useSearchCombobox({ keywords, listboxId: LISTBOX_ID });
 
@@ -46,6 +46,17 @@ const Search = () => {
     closeSuggestions();
     searchManager.setLastFilter(null);
     router.push(`/search/index?q=${encodeURIComponent(title)}`);
+  };
+
+  // When the user has navigated to a suggestion with arrow keys, Enter should
+  // select it rather than submit the typed query.
+  const handleInputKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
+    if (event.key === "Enter" && activeIndex >= 0 && suggestions[activeIndex]) {
+      event.preventDefault();
+      handleSuggestionSelect(suggestions[activeIndex].title);
+      return;
+    }
+    handleKeyDown(event);
   };
 
   const handleTextChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -88,7 +99,7 @@ const Search = () => {
         {statusMessage}
       </Box>
       {/* position="relative" creates the stacking context for the absolute dropdown */}
-      <Box position="relative" ref={wrapperRef}>
+      <Box position="relative" ref={wrapperRef} onBlur={handleWrapperBlur}>
         <DCSearchBar
           id="searchbar"
           labelText="Search Digital Collections"
@@ -105,19 +116,18 @@ const Search = () => {
               setKeywords("");
               closeSuggestions();
             },
-            onKeyDown: handleKeyDown,
+            onKeyDown: handleInputKeyDown,
           }}
           onSubmit={(e) => handleSubmit(e)}
         />
         {isOpen && (
           <SearchSuggestions
             suggestions={suggestions}
-            activeIndex={activeIndex}
             onSelect={handleSuggestionSelect}
             listboxId={LISTBOX_ID}
-            onActiveIndexChange={setActiveIndex}
             onClose={closeSuggestions}
-            returnFocusToInput={returnFocusToInput}
+            activeIndex={activeIndex}
+            isTouch={isTouch}
           />
         )}
       </Box>
