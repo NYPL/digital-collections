@@ -3,6 +3,34 @@ import React from "react";
 import { createRoot, Root } from "react-dom/client";
 import { Icon, DSProvider } from "@nypl/design-system-react-components";
 
+const STYLES = {
+  container: {
+    width: "29px",
+    padding: "4px 0 8px 0",
+    display: "flex",
+    flexDirection: "column" as const,
+    alignItems: "center",
+    gap: "4px",
+  },
+  iconContainer: {
+    width: "24px",
+    height: "24px",
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  slider: {
+    width: "20px",
+    height: "80px",
+    cursor: "pointer",
+    display: "block",
+    outline: "none",
+    writingMode: "vertical-lr" as const,
+    direction: "rtl" as const,
+    accentColor: "#333333",
+  },
+};
+
 /**
  * A custom MapLibre control to change the opacity of an AllMaps WarpedMapLayer.
  */
@@ -20,19 +48,10 @@ export class OpacityControl implements IControl {
     this._map = map;
     this._container = document.createElement("div");
     this._container.className = "maplibregl-ctrl maplibregl-ctrl-group";
-    this._container.style.width = "29px";
-    this._container.style.padding = "4px 0 8px 0";
-    this._container.style.display = "flex";
-    this._container.style.flexDirection = "column";
-    this._container.style.alignItems = "center";
-    this._container.style.gap = "4px";
+    Object.assign(this._container.style, STYLES.container);
 
     const iconContainer = document.createElement("div");
-    iconContainer.style.width = "24px";
-    iconContainer.style.height = "24px";
-    iconContainer.style.display = "flex";
-    iconContainer.style.alignItems = "center";
-    iconContainer.style.justifyContent = "center";
+    Object.assign(iconContainer.style, STYLES.iconContainer);
 
     this._container.appendChild(iconContainer);
 
@@ -49,16 +68,7 @@ export class OpacityControl implements IControl {
     slider.max = "1";
     slider.step = "0.01";
     slider.value = "1";
-    slider.style.width = "20px";
-    slider.style.height = "80px";
-    slider.style.cursor = "pointer";
-    slider.style.display = "block";
-    slider.style.outline = "none";
-    // @ts-ignore - appearance and writing-mode for vertical slider
-    slider.style.appearance = "slider-vertical";
-    slider.style.webkitAppearance = "slider-vertical";
-    slider.style.writingMode = "bt-lr";
-    slider.style.accentColor = "#333333";
+    Object.assign(slider.style, STYLES.slider);
 
     slider.addEventListener("input", (e) => {
       const opacity = parseFloat((e.target as HTMLInputElement).value);
