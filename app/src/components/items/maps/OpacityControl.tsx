@@ -1,4 +1,7 @@
 import { IControl, Map } from "maplibre-gl";
+import React from "react";
+import { createRoot, Root } from "react-dom/client";
+import { Icon, DSProvider } from "@nypl/design-system-react-components";
 
 /**
  * A custom MapLibre control to change the opacity of an AllMaps WarpedMapLayer.
@@ -7,6 +10,7 @@ export class OpacityControl implements IControl {
   private _map: Map | undefined;
   private _container: HTMLDivElement | undefined;
   private _warpedMapLayer: any;
+  private _root: Root | undefined;
 
   constructor(warpedMapLayer: any) {
     this._warpedMapLayer = warpedMapLayer;
@@ -17,7 +21,7 @@ export class OpacityControl implements IControl {
     this._container = document.createElement("div");
     this._container.className = "maplibregl-ctrl maplibregl-ctrl-group";
     this._container.style.width = "29px";
-    this._container.style.padding = "8px 0";
+    this._container.style.padding = "4px 0 8px 0";
     this._container.style.display = "flex";
     this._container.style.flexDirection = "column";
     this._container.style.alignItems = "center";
@@ -29,13 +33,15 @@ export class OpacityControl implements IControl {
     iconContainer.style.display = "flex";
     iconContainer.style.alignItems = "center";
     iconContainer.style.justifyContent = "center";
-    iconContainer.innerHTML = `
-      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#333333" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-        <polygon points="12 2 2 7 12 12 22 7 12 2"></polygon>
-        <polyline points="2 17 12 22 22 17"></polyline>
-        <polyline points="2 12 12 17 22 12"></polyline>
-      </svg>
-    `;
+
+    this._container.appendChild(iconContainer);
+
+    this._root = createRoot(iconContainer);
+    this._root.render(
+      <DSProvider>
+        <Icon name="mapsLayers" size="medium" title="Opacity control" />
+      </DSProvider>
+    );
 
     const slider = document.createElement("input");
     slider.type = "range";
@@ -47,7 +53,6 @@ export class OpacityControl implements IControl {
     slider.style.height = "80px";
     slider.style.cursor = "pointer";
     slider.style.display = "block";
-    slider.style.marginTop = "4px";
     slider.style.outline = "none";
     // @ts-ignore - appearance and writing-mode for vertical slider
     slider.style.appearance = "slider-vertical";
@@ -60,13 +65,13 @@ export class OpacityControl implements IControl {
       this._warpedMapLayer.setOpacity(opacity);
     });
 
-    this._container.appendChild(iconContainer);
     this._container.appendChild(slider);
 
     return this._container;
   }
 
   onRemove() {
+    this._root?.unmount();
     this._container?.parentNode?.removeChild(this._container);
     this._map = undefined;
   }
