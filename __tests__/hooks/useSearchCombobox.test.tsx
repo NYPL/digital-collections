@@ -35,12 +35,18 @@ interface TestComboboxProps {
 }
 
 function TestCombobox({ keywords }: TestComboboxProps) {
-  const { suggestions, isOpen, wrapperRef, handleKeyDown, statusMessage } =
-    useSearchCombobox({ keywords, listboxId: LISTBOX_ID });
+  const {
+    suggestions,
+    isOpen,
+    wrapperRef,
+    handleKeyDown,
+    handleWrapperBlur,
+    statusMessage,
+  } = useSearchCombobox({ keywords, listboxId: LISTBOX_ID });
 
   return (
     <div>
-      <div data-testid="wrapper" ref={wrapperRef}>
+      <div data-testid="wrapper" ref={wrapperRef} onBlur={handleWrapperBlur}>
         <input data-testid="search-input" onKeyDown={handleKeyDown} readOnly />
         {isOpen &&
           suggestions.map((s, i) => (
@@ -222,7 +228,7 @@ describe("useSearchCombobox", () => {
       );
       await runDebounceAndFlush();
       expect(result.current.statusMessage).toBe(
-        "2 suggestions available. Use up and down arrow keys to navigate."
+        "2 suggestions available below."
       );
     });
 
@@ -233,7 +239,7 @@ describe("useSearchCombobox", () => {
       );
       await runDebounceAndFlush();
       expect(result.current.statusMessage).toBe(
-        "1 suggestion available. Use up and down arrow keys to navigate."
+        "1 suggestion available below."
       );
     });
 
@@ -281,19 +287,24 @@ describe("useSearchCombobox", () => {
       expect(result.current.isOpen).toBe(false);
     });
 
-    it("ArrowDown focuses the matching option element in the DOM", async () => {
+    it("ArrowDown sets aria-activedescendant on the input to option-0", async () => {
       mockFetchSuccess();
       render(<TestCombobox keywords="crom" />);
       await runDebounceAndFlush();
 
       const input = screen.getByTestId("search-input");
+      input.focus(); // simulate user already typing in the field
       fireEvent.keyDown(input, { key: "ArrowDown" });
 
-      const firstOption = document.getElementById(`${LISTBOX_ID}-option-0`);
-      expect(document.activeElement).toBe(firstOption);
+      // Focus stays on the input; VoiceOver reads the option via aria-activedescendant.
+      expect(document.activeElement).toBe(input);
+      expect(input).toHaveAttribute(
+        "aria-activedescendant",
+        `${LISTBOX_ID}-option-0`
+      );
     });
 
-    it("ArrowDown increments activeIndex in the returned state", async () => {
+    it("ArrowDown increments activeIndex (used for aria-activedescendant)", async () => {
       mockFetchSuccess();
       const { result } = renderHook(() =>
         useSearchCombobox({ keywords: "crom", listboxId: LISTBOX_ID })
@@ -307,26 +318,37 @@ describe("useSearchCombobox", () => {
 
       act(() => result.current.handleKeyDown(event));
 
+      // activeIndex is 0; the ARIA useEffect will set aria-activedescendant
+      // on the input so VoiceOver reads the option without a context switch.
       expect(result.current.activeIndex).toBe(0);
     });
 
-    it("ArrowDown does not exceed the last option index", async () => {
+    it("ArrowDown clamps at the last option; ArrowUp decrements", async () => {
       mockFetchSuccess([mockSuggestions[0]]); // only 1 result
       const { result } = renderHook(() =>
         useSearchCombobox({ keywords: "crom", listboxId: LISTBOX_ID })
       );
       await runDebounceAndFlush();
-      // Force activeIndex to the last item.
-      act(() => result.current.setActiveIndex(0));
 
-      const event = {
+      const down = {
         key: "ArrowDown",
         preventDefault: jest.fn(),
       } as unknown as React.KeyboardEvent<HTMLInputElement>;
+      const up = {
+        key: "ArrowUp",
+        preventDefault: jest.fn(),
+      } as unknown as React.KeyboardEvent<HTMLInputElement>;
 
-      act(() => result.current.handleKeyDown(event));
-
+      act(() => result.current.handleKeyDown(down));
       expect(result.current.activeIndex).toBe(0);
+
+      // Pressing ArrowDown again at the end should stay clamped at 0.
+      act(() => result.current.handleKeyDown(down));
+      expect(result.current.activeIndex).toBe(0);
+
+      // ArrowUp from 0 goes to -1 (no active item; input retains focus).
+      act(() => result.current.handleKeyDown(up));
+      expect(result.current.activeIndex).toBe(-1);
     });
   });
 
@@ -402,6 +424,40 @@ describe("useSearchCombobox", () => {
   });
 
   // -------------------------------------------------------------------------
+  describe("onBlur close (desktop)", () => {
+    it("closes suggestions when focus leaves the wrapper", async () => {
+      mockFetchSuccess();
+      render(<TestCombobox keywords="crom" />);
+      await runDebounceAndFlush();
+
+      expect(screen.getAllByRole("option")).toHaveLength(2);
+
+      // Simulate focus leaving the wrapper entirely (relatedTarget outside).
+      fireEvent.blur(screen.getByTestId("wrapper"), {
+        relatedTarget: screen.getByTestId("outside"),
+      });
+
+      expect(screen.queryAllByRole("option")).toHaveLength(0);
+    });
+
+    it("does not close when focus moves between elements inside the wrapper", async () => {
+      mockFetchSuccess();
+      render(<TestCombobox keywords="crom" />);
+      await runDebounceAndFlush();
+
+      const input = screen.getByTestId("search-input");
+      const firstOption = document.getElementById(`${LISTBOX_ID}-option-0`)!;
+
+      // Focus moves from input to first option — still inside the wrapper.
+      fireEvent.blur(screen.getByTestId("wrapper"), {
+        relatedTarget: firstOption,
+      });
+
+      expect(screen.getAllByRole("option")).toHaveLength(2);
+    });
+  });
+
+  // -------------------------------------------------------------------------
   describe("statusMessage live region", () => {
     it("announces suggestion count in the live region when results arrive", async () => {
       mockFetchSuccess();
@@ -409,7 +465,7 @@ describe("useSearchCombobox", () => {
       await runDebounceAndFlush();
 
       expect(screen.getByTestId("live-region")).toHaveTextContent(
-        "2 suggestions available. Use up and down arrow keys to navigate."
+        "2 suggestions available below."
       );
     });
 

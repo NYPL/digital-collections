@@ -14,10 +14,12 @@ export interface UseSearchComboboxReturn {
   activeIndex: number;
   setActiveIndex: React.Dispatch<React.SetStateAction<number>>;
   isOpen: boolean;
+  isTouch: boolean;
   wrapperRef: React.RefObject<HTMLDivElement>;
   closeSuggestions: () => void;
   returnFocusToInput: () => void;
   handleKeyDown: (event: React.KeyboardEvent<HTMLInputElement>) => void;
+  handleWrapperBlur: (event: React.FocusEvent<HTMLDivElement>) => void;
   statusMessage: string;
 }
 
@@ -32,7 +34,13 @@ export function useSearchCombobox({
   const [suggestions, setSuggestions] = useState<SuggestResult[]>([]);
   const [activeIndex, setActiveIndex] = useState(-1);
   const [isOpen, setIsOpen] = useState(false);
+  const [isTouch, setIsTouch] = useState(false);
   const wrapperRef = useRef<HTMLDivElement>(null);
+
+  // Detect coarse-pointer (touch) devices on mount.
+  useEffect(() => {
+    setIsTouch(window.matchMedia("(pointer: coarse)").matches);
+  }, []);
 
   // Fetch suggestions with debounce whenever the keyword changes.
   useEffect(() => {
@@ -96,12 +104,34 @@ export function useSearchCombobox({
     input.setAttribute("aria-autocomplete", "list");
     input.setAttribute("aria-controls", listboxId);
     input.setAttribute("aria-expanded", String(isOpen));
-    input.removeAttribute("aria-activedescendant");
-  }, [isOpen, listboxId]);
+    // With aria-activedescendant, focus stays on the input and VoiceOver reads
+    // the referenced option. This avoids the combobox→listbox context switch
+    // that causes VoiceOver to restart its announcement (the "stutter").
+    if (activeIndex >= 0) {
+      input.setAttribute(
+        "aria-activedescendant",
+        `${listboxId}-option-${activeIndex}`
+      );
+    } else {
+      input.removeAttribute("aria-activedescendant");
+    }
+  }, [isOpen, listboxId, activeIndex]);
 
   const returnFocusToInput = useCallback(() => {
     wrapperRef.current?.querySelector<HTMLInputElement>("input")?.focus();
   }, []);
+
+  // Close the listbox when focus leaves the component on non-touch devices.
+  // Touch devices use a Close button instead because onBlur fires too eagerly
+  // when a screen reader moves focus to options, closing the list prematurely.
+  const handleWrapperBlur = useCallback(
+    (event: React.FocusEvent<HTMLDivElement>) => {
+      if (!isOpen || isTouch) return;
+      if (event.currentTarget.contains(event.relatedTarget as Node)) return;
+      closeSuggestions();
+    },
+    [isOpen, isTouch, closeSuggestions]
+  );
 
   const handleKeyDown = useCallback(
     (event: React.KeyboardEvent<HTMLInputElement>) => {
@@ -109,9 +139,12 @@ export function useSearchCombobox({
       switch (event.key) {
         case "ArrowDown": {
           event.preventDefault();
-          const newIndex = Math.min(activeIndex + 1, suggestions.length - 1);
-          setActiveIndex(newIndex);
-          document.getElementById(`${listboxId}-option-${newIndex}`)?.focus();
+          setActiveIndex((prev) => Math.min(prev + 1, suggestions.length - 1));
+          break;
+        }
+        case "ArrowUp": {
+          event.preventDefault();
+          setActiveIndex((prev) => Math.max(prev - 1, -1));
           break;
         }
         case "Escape":
@@ -120,13 +153,13 @@ export function useSearchCombobox({
           break;
       }
     },
-    [isOpen, activeIndex, suggestions.length, listboxId, closeSuggestions]
+    [isOpen, suggestions.length, closeSuggestions]
   );
 
   const statusMessage = isOpen
     ? `${suggestions.length} suggestion${
         suggestions.length === 1 ? "" : "s"
-      } available. Use up and down arrow keys to navigate.`
+      } available below.`
     : "";
 
   return {
@@ -134,10 +167,12 @@ export function useSearchCombobox({
     activeIndex,
     setActiveIndex,
     isOpen,
+    isTouch,
     wrapperRef,
     closeSuggestions,
     returnFocusToInput,
     handleKeyDown,
+    handleWrapperBlur,
     statusMessage,
   };
 }
