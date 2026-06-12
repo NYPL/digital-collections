@@ -4,13 +4,42 @@ import { defineConfig, devices } from "@playwright/test";
  * Read environment variables from file.
  * https://github.com/motdotla/dotenv
  */
-// import dotenv from 'dotenv';
-// import path from 'path';
+import dotenv from "dotenv";
+import path from "path";
 // dotenv.config({ path: path.resolve(__dirname, '.env') });
+
+const parsedEnv =
+  dotenv.config({ path: path.resolve(__dirname, ".env.local") }).parsed || {};
 
 /**
  * See https://playwright.dev/docs/test-configuration.
  */
+
+const headlessOptimization = process.env.OPT === "true";
+
+export const HEADLESS_OPTIMIZATION_FLAGS =
+  process.platform === "darwin"
+    ? [
+        // --- LOCAL MAC SILICON ACCELERATION ---
+        "--disable-background-timer-throttling",
+        "--disable-backgrounding-occluded-windows",
+        "--disable-renderer-backgrounding",
+        "--disable-dev-shm-usage",
+        "--no-sandbox",
+        "--enable-gpu",
+        "--use-gl=angle",
+        "--use-angle=metal",
+      ]
+    : [
+        // --- LINUX, ETC CI ACCELERATION ---
+        "--disable-background-timer-throttling",
+        "--disable-backgrounding-occluded-windows",
+        "--disable-renderer-backgrounding",
+        "--disable-dev-shm-usage",
+        "--no-sandbox",
+        // Linux CI handles headless canvas rendering via software wrappers (gl=egl or swiftshader)
+        //'--use-gl=egl'
+      ];
 
 export default defineConfig({
   testDir: "./playwright",
@@ -35,6 +64,10 @@ export default defineConfig({
 
     /* Collect trace when retrying the failed test. See https://playwright.dev/docs/trace-viewer */
     trace: "on-first-retry",
+    /* set optional flags to optimize headless chromedriver visual interactions*/
+    launchOptions: {
+      args: headlessOptimization ? HEADLESS_OPTIMIZATION_FLAGS : [],
+    },
   },
 
   /* Configure projects for major browsers */
