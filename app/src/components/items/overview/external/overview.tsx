@@ -62,7 +62,6 @@ const ExternalLinksOverview = ({ catalogLink, archivesLink, isInAllMaps }) => {
         {isInAllMaps && isLargerThanSmallTablet ? (
           <Button
             onClick={() => {
-              handleMapViewToggle();
               // Only track the CTA if we're switching to the map view, not if we're closing it
               if (!isMapView) {
                 trackCTA(
@@ -71,6 +70,7 @@ const ExternalLinksOverview = ({ catalogLink, archivesLink, isInAllMaps }) => {
                   "Item Page View on Map"
                 );
               }
+              handleMapViewToggle();
             }}
             id={"all-maps-btn"}
             aria-label={`view in All Maps Viewer`}
