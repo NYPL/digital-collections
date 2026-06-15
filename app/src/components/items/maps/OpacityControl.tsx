@@ -1,8 +1,7 @@
 import { IControl, Map } from "maplibre-gl";
 import { WarpedMapLayer } from "@allmaps/maplibre";
 import React from "react";
-import { createRoot, Root } from "react-dom/client";
-import { Icon, DSProvider } from "@nypl/design-system-react-components";
+import { Icon } from "@nypl/design-system-react-components";
 
 const STYLES = {
   container: {
@@ -32,9 +31,7 @@ const STYLES = {
   },
 };
 
-type WarpedMapLayer = typeof WarpedMapLayer;
-
-const OpacityControlComponent = ({
+export const OpacityControlComponent = ({
   warpedMapLayer,
 }: {
   warpedMapLayer: WarpedMapLayer;
@@ -42,26 +39,24 @@ const OpacityControlComponent = ({
   const [opacity, setOpacity] = React.useState(1);
 
   return (
-    <DSProvider>
-      <div style={STYLES.container}>
-        <div style={STYLES.iconContainer}>
-          <Icon name="mapsLayers" size="medium" title="Opacity control" />
-        </div>
-        <input
-          type="range"
-          min="0"
-          max="1"
-          step="0.01"
-          value={opacity}
-          style={STYLES.slider}
-          onInput={(e) => {
-            const val = parseFloat(e.currentTarget.value);
-            setOpacity(val);
-            warpedMapLayer.setOpacity(val);
-          }}
-        />
+    <div style={STYLES.container}>
+      <div style={STYLES.iconContainer}>
+        <Icon name="mapsLayers" size="medium" title="Opacity control" />
       </div>
-    </DSProvider>
+      <input
+        type="range"
+        min="0"
+        max="1"
+        step="0.01"
+        value={opacity}
+        style={STYLES.slider}
+        onInput={(e) => {
+          const val = parseFloat(e.currentTarget.value);
+          setOpacity(val);
+          warpedMapLayer.setOpacity(val);
+        }}
+      />
+    </div>
   );
 };
 
@@ -69,31 +64,20 @@ const OpacityControlComponent = ({
  * A custom MapLibre control to change the opacity of an AllMaps WarpedMapLayer.
  */
 export class OpacityControl implements IControl {
-  private _map: Map | undefined;
   private _container: HTMLDivElement | undefined;
-  private _warpedMapLayer: WarpedMapLayer | undefined;
-  private _root: Root | undefined;
 
-  constructor(warpedMapLayer: WarpedMapLayer) {
-    this._warpedMapLayer = warpedMapLayer;
-  }
-
-  onAdd(map: Map) {
-    this._map = map;
+  onAdd() {
     this._container = document.createElement("div");
     this._container.className = "maplibregl-ctrl maplibregl-ctrl-group";
-
-    this._root = createRoot(this._container);
-    this._root.render(
-      <OpacityControlComponent warpedMapLayer={this._warpedMapLayer} />
-    );
-
     return this._container;
   }
 
   onRemove() {
-    this._root?.unmount();
     this._container?.parentNode?.removeChild(this._container);
-    this._map = undefined;
+    this._container = undefined;
+  }
+
+  getElement() {
+    return this._container;
   }
 }
