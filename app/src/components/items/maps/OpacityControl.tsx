@@ -31,6 +31,8 @@ const STYLES = {
   },
 };
 
+type WarpedMapLayer = typeof WarpedMapLayer;
+
 export const OpacityControlComponent = ({
   warpedMapLayer,
 }: {
