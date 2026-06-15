@@ -7,7 +7,11 @@ import { WarpedMapLayer } from "@allmaps/maplibre";
 import { generateId } from "@allmaps/id";
 import { Heading, Text, Link } from "@nypl/design-system-react-components";
 import { ItemModel } from "@/src/models/item";
-import { OpacityControl, OpacityControlComponent } from "./OpacityControl";
+import {
+  OpacityControl,
+  OpacityControlComponent,
+  WarpedMapLayerType,
+} from "./OpacityControl";
 
 interface ItemProps {
   item: ItemModel;
@@ -17,7 +21,7 @@ const AllMapsViewer = ({ item }: ItemProps) => {
   const mapContainer = useRef<HTMLDivElement>(null);
   const [opacityControlContainer, setOpacityControlContainer] =
     useState<HTMLDivElement | null>(null);
-  const warpedMapLayerRef = useRef<WarpedMapLayer | null>(null);
+  const warpedMapLayerRef = useRef<WarpedMapLayerType | null>(null);
 
   useEffect(() => {
     let map: Map | undefined;

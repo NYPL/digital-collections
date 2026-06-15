@@ -31,12 +31,12 @@ const STYLES = {
   },
 };
 
-type WarpedMapLayer = typeof WarpedMapLayer;
+export type WarpedMapLayerType = InstanceType<typeof WarpedMapLayer>;
 
 export const OpacityControlComponent = ({
   warpedMapLayer,
 }: {
-  warpedMapLayer: WarpedMapLayer;
+  warpedMapLayer: WarpedMapLayerType;
 }) => {
   const [opacity, setOpacity] = React.useState(1);
 
