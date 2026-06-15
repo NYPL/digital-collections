@@ -73,6 +73,22 @@ describe("SearchSuggestions", () => {
     expect(onSelect).toHaveBeenCalledWith(suggestions[0].title);
   });
 
+  it("renders a touch-only close control labeled 'Close list'", () => {
+    render(<SearchSuggestions {...defaultProps} isTouch={true} />);
+    expect(
+      screen.getByRole("button", { name: "Close list" })
+    ).toBeInTheDocument();
+  });
+
+  it("calls onClose when the touch close control is clicked", () => {
+    const onClose = jest.fn();
+    render(
+      <SearchSuggestions {...defaultProps} isTouch={true} onClose={onClose} />
+    );
+    fireEvent.click(screen.getByRole("button", { name: "Close list" }));
+    expect(onClose).toHaveBeenCalledTimes(1);
+  });
+
   it("passes axe accessibility check", async () => {
     /**
      * Wrap in a combobox input so the listbox has a valid owner in the
