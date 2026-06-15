@@ -25,6 +25,7 @@ const Search = () => {
     isTouch,
     wrapperRef,
     closeSuggestions,
+    returnFocusToInput,
     handleKeyDown,
     handleWrapperBlur,
     statusMessage,
@@ -125,7 +126,10 @@ const Search = () => {
             suggestions={suggestions}
             onSelect={handleSuggestionSelect}
             listboxId={LISTBOX_ID}
-            onClose={closeSuggestions}
+            onClose={() => {
+              closeSuggestions();
+              returnFocusToInput();
+            }}
             activeIndex={activeIndex}
             isTouch={isTouch}
           />

@@ -99,6 +99,7 @@ const SearchSuggestions = ({
         <Button
           id={`${listboxId}-close-btn`}
           variant="text"
+          aria-label="Close list"
           onClick={() => {
             onClose();
           }}
