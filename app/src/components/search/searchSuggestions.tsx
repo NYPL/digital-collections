@@ -56,6 +56,7 @@ const SearchSuggestions = ({
             key={suggestion.uuid}
             role="option"
             id={`${listboxId}-option-${i}`}
+            tabIndex={-1}
             aria-selected={activeIndex === i}
             aria-label={suggestion.title}
             onMouseDown={(e: React.MouseEvent) => {
