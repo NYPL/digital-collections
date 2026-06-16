@@ -7,6 +7,8 @@ import { generateId } from "@allmaps/id";
 import { Heading, Text, Link } from "@nypl/design-system-react-components";
 import { ItemModel } from "@/src/models/item";
 
+console.log("AllMapsViewer component loaded");
+
 interface ItemProps {
   item: ItemModel;
 }
