@@ -11,6 +11,7 @@ describe("SearchSuggestions", () => {
     suggestions,
     activeIndex: -1,
     onSelect: jest.fn(),
+    onClose: jest.fn(),
     listboxId: "dc-search-suggestions",
   };
 
@@ -41,6 +42,14 @@ describe("SearchSuggestions", () => {
     const options = screen.getAllByRole("option");
     options.forEach((opt, i) => {
       expect(opt).toHaveAttribute("id", `dc-search-suggestions-option-${i}`);
+    });
+  });
+
+  it("sets tabindex='-1' on each option for TalkBack navigation", () => {
+    render(<SearchSuggestions {...defaultProps} />);
+    const options = screen.getAllByRole("option");
+    options.forEach((opt) => {
+      expect(opt).toHaveAttribute("tabindex", "-1");
     });
   });
 
