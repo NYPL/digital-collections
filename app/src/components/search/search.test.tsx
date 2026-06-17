@@ -1,5 +1,5 @@
 import React from "react";
-import { render, fireEvent, screen } from "@testing-library/react";
+import { render, fireEvent, screen, act } from "@testing-library/react";
 import "@testing-library/jest-dom";
 import Search from "./search";
 import { useSearchParams, useRouter } from "next/navigation";
@@ -24,6 +24,10 @@ const component = (
   </SearchProvider>
 );
 describe("Search component", () => {
+  beforeEach(() => {
+    jest.clearAllMocks();
+  });
+
   it("renders Search component", () => {
     const { getAllByLabelText, getByPlaceholderText } = render(component);
     expect(
@@ -63,5 +67,50 @@ describe("Search component", () => {
     expect(mockRouter.push).toHaveBeenCalledWith(
       "/search/index?q=test%20words&filters%5Brights%5D=pd"
     );
+  });
+
+  it("submits on Enter when no suggestion is active", () => {
+    render(component);
+
+    const input = screen.getByPlaceholderText("Search keyword(s)");
+    fireEvent.change(input, { target: { value: "ab" } });
+    fireEvent.keyDown(input, { key: "Enter" });
+
+    expect(mockRouter.push).toHaveBeenCalledWith("/search/index?q=ab");
+  });
+
+  it("populates the input on Enter when a suggestion is active and does not submit", async () => {
+    jest.useFakeTimers();
+    global.fetch = jest.fn().mockResolvedValue({
+      ok: true,
+      json: async () => ({
+        suggestions: [
+          {
+            uuid: "a1",
+            title: "Cromwell Family Papers",
+            type: "Collection",
+            highlights: {},
+          },
+        ],
+      }),
+    }) as jest.Mock;
+
+    render(component);
+
+    const input = screen.getByPlaceholderText("Search keyword(s)");
+    fireEvent.change(input, { target: { value: "crom" } });
+
+    await act(async () => {
+      jest.runAllTimers();
+      await Promise.resolve();
+    });
+
+    fireEvent.keyDown(input, { key: "ArrowDown" });
+    fireEvent.keyDown(input, { key: "Enter" });
+
+    expect(input).toHaveValue("Cromwell Family Papers");
+    expect(mockRouter.push).not.toHaveBeenCalled();
+
+    jest.useRealTimers();
   });
 });
