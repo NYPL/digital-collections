@@ -76,7 +76,7 @@ export class DCHomepage {
 
     //search box and button
     this.searchBar = this.page.getByPlaceholder("Search keyword(s)");
-    this.searchButton = this.page.getByRole("button", { name: "Search" });
+    this.searchButton = this.page.locator("#searchbar-button-searchbar");
 
     // public domain
 
