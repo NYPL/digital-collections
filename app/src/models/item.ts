@@ -28,6 +28,7 @@ export class CaptureModel {
   mediaFileUrl: string | null;
   captions: PlyrCaption[] | null;
   orderInSequence: number;
+  hasAllMapsData: boolean;
 }
 
 // TO DO: add isCartographic for map stuff
@@ -55,6 +56,7 @@ export class ItemModel {
   subcollectionName: string | null;
   permittedLocationText: string;
   captures: CaptureModel[];
+  isInAllMaps: boolean;
 
   constructor(uuid: string, itemDetail: APIItem, citationData?: any) {
     this.uuid = uuid;
@@ -215,5 +217,7 @@ export class ItemModel {
       capture.mediaFileUrl ? [capture.mediaFileUrl] : []
     );
     this.captions = this.captures.flatMap((capture) => capture.captions || []);
+
+    this.isInAllMaps = itemDetail.hasAllMapsData;
   }
 }
