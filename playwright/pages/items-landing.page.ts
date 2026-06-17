@@ -25,7 +25,7 @@ export default class ItemsLandingPage {
       .locator("a[href*='/items/'], a[href*='/collections/']")
       .first();
     this.searchBar = this.page.getByPlaceholder("Search keyword(s)");
-    this.searchButton = this.page.getByRole("button", { name: "Search" });
+    this.searchButton = this.page.locator("#searchbar-button-searchbar");
     this.refineHeading = this.page.getByRole("heading", {
       name: "Refine your search",
     });
