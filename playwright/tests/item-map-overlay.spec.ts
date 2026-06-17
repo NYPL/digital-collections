@@ -43,9 +43,8 @@ test.describe.serial("Dynamic Maps Display", () => {
       test("button text should say 'close map'", async ({}, testInfo) => {
         await itemMapOverlay.toggleMapView();
         await itemMapOverlay.verifyMapIsOpenState();
-
-        // give map time to render/refresh
-        await new Promise((resolve) => setTimeout(resolve, 5000));
+        // wait for map overlay to be stable to proceed
+        await itemMapOverlay.waitForMapReady();
       });
 
       test("AllMaps overlay should now be displayed", async ({}, testInfo) => {

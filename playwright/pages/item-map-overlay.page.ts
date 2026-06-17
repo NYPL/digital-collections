@@ -63,6 +63,17 @@ export default class ItemMapOverlayPage {
     await expect(this.mapToggleButton).toHaveText(/close map/i);
   }
 
+  async waitForMapReady(): Promise<void> {
+    const canvasContainer = this.page.locator(".maplibregl-canvas-container");
+
+    await expect(
+      canvasContainer,
+      "Map failed to reach 'interactive' state"
+    ).toHaveClass(/maplibregl-interactive/, {
+      timeout: 10_000,
+    });
+  }
+
   // Zoom in functions
   async verifyZoomIn(): Promise<void> {
     await this.mapViewerContainer.scrollIntoViewIfNeeded();
