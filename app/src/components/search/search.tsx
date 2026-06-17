@@ -54,7 +54,8 @@ const Search = () => {
   const handleInputKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
     if (event.key === "Enter" && activeIndex >= 0 && suggestions[activeIndex]) {
       event.preventDefault();
-      handleSuggestionSelect(suggestions[activeIndex].title);
+      setKeywords(suggestions[activeIndex].title);
+      closeSuggestions();
       return;
     }
     handleKeyDown(event);
