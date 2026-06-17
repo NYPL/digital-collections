@@ -40,14 +40,14 @@ test.describe.serial("Dynamic Maps Display", () => {
     });
 
     test.describe("After button is clicked", () => {
-      test("button text should say 'close map'", async ({}, testInfo) => {
+      test("button text should say 'close map'", async () => {
         await itemMapOverlay.toggleMapView();
         await itemMapOverlay.verifyMapIsOpenState();
         // wait for map overlay to be stable to proceed
         await itemMapOverlay.waitForMapReady();
       });
 
-      test("AllMaps overlay should now be displayed", async ({}, testInfo) => {
+      test("AllMaps overlay should now be displayed", async () => {
         await itemMapOverlay.verifyMapIsOpenState();
       });
 
@@ -63,7 +63,7 @@ test.describe.serial("Dynamic Maps Display", () => {
     });
 
     test.describe("After map is closed", () => {
-      test("button text should say 'view map'", async ({}, testInfo) => {
+      test("button text should say 'view map'", async () => {
         await itemMapOverlay.toggleMapView();
         await itemMapOverlay.verifyMapIsClosedState();
       });
