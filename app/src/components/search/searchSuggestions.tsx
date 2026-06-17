@@ -69,10 +69,6 @@ const SearchSuggestions = ({
               py: "xs",
               cursor: "pointer",
               bg: "ui.white",
-              // Use CSS pseudo-classes for highlighting so that no Chakra class
-              // change occurs on the focused element. A class mutation on the
-              // focused element causes VoiceOver to interrupt and re-read it
-              // (the stutter). State-driven bg caused exactly that.
               "&:hover": { bg: "ui.bg.hover" },
               "&[aria-selected='true']": { bg: "ui.bg.hover" },
             }}
@@ -101,9 +97,7 @@ const SearchSuggestions = ({
           id={`${listboxId}-close-btn`}
           variant="text"
           aria-label="Close list"
-          onClick={() => {
-            onClose();
-          }}
+          onClick={onClose}
           sx={{
             display: "block",
             width: "100%",
