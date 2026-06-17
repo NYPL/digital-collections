@@ -67,7 +67,7 @@ export class AboutPage {
 
     // search box
     this.searchBar = page.getByPlaceholder("Search keyword(s)");
-    this.searchButton = page.getByRole("button", { name: "Search" });
+    this.searchButton = page.locator("#searchbar-button-searchbar");
     this.publicDomaincheckbox = page.getByLabel("Public domain");
 
     // public domain
