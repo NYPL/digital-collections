@@ -33,7 +33,7 @@ export function useSearchCombobox({
 }: UseSearchComboboxOptions): UseSearchComboboxReturn {
   const [suggestions, setSuggestions] = useState<SuggestResult[]>([]);
   const [activeIndex, setActiveIndex] = useState(-1);
-  const [isOpen, setIsOpen] = useState(false);
+  const isOpen = suggestions.length > 0;
   const [isTouch, setIsTouch] = useState(false);
   const wrapperRef = useRef<HTMLDivElement>(null);
 
@@ -46,7 +46,6 @@ export function useSearchCombobox({
   useEffect(() => {
     if (keywords.length < MIN_SUGGEST_CHARS) {
       setSuggestions([]);
-      setIsOpen(false);
       return;
     }
     const timer = setTimeout(async () => {
@@ -56,17 +55,14 @@ export function useSearchCombobox({
         );
         if (!res.ok) {
           setSuggestions([]);
-          setIsOpen(false);
           return;
         }
         const data = await res.json();
         const results: SuggestResult[] = data.suggestions ?? [];
         setSuggestions(results);
-        setIsOpen(results.length > 0);
         setActiveIndex(-1);
       } catch {
         setSuggestions([]);
-        setIsOpen(false);
       }
     }, DEBOUNCE_MS);
     return () => clearTimeout(timer);
@@ -74,7 +70,6 @@ export function useSearchCombobox({
 
   const closeSuggestions = useCallback(() => {
     setSuggestions([]);
-    setIsOpen(false);
     setActiveIndex(-1);
   }, []);
 
