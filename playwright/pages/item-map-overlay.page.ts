@@ -68,24 +68,26 @@ export default class ItemMapOverlayPage {
     await this.mapViewerContainer.scrollIntoViewIfNeeded();
     await expect(this.zoomInButton).toBeVisible();
 
-    // click the zoom-in button until we reach a non-active state
-    const MAX_ZOOM_ATTEMPTS = 12;
-
-    for (let i = 0; i < MAX_ZOOM_ATTEMPTS; i++) {
-      const isDisabled = await this.zoomInButton.getAttribute("aria-disabled");
-
-      if (isDisabled === "true") {
-        break;
-      }
-
-      // wait for apx a sec and try again
-      await this.zoomInButton.click({ force: true });
-      await this.page.waitForTimeout(1500);
-    }
-    // verify we broke out of loop due to a match and not to max attemps reached
-    await expect(this.zoomInButton).toHaveAttribute("aria-disabled", "true", {
-      timeout: 1000,
-    });
+    // Keep clicking zoom-in until MapLibre reports max zoom (aria-disabled="true").
+    // expect.poll re-runs the callback until it passes or the timeout elapses,
+    // so there's no fixed sleep or manual attempt counter needed
+    await expect
+      .poll(
+        async () => {
+          const disabled =
+            (await this.zoomInButton.getAttribute("aria-disabled")) === "true";
+          if (!disabled) {
+            await this.zoomInButton.click({ force: true });
+          }
+          return disabled;
+        },
+        {
+          message: "zoom-in button never reached max zoom (aria-disabled=true)",
+          timeout: 20_000,
+          intervals: [500, 1000, 1500], // backoff between polls
+        }
+      )
+      .toBe(true);
   }
 
   // Zoom out functions
