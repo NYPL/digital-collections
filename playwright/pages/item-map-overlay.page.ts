@@ -58,7 +58,7 @@ export default class ItemMapOverlayPage {
   }
 
   // Close-map button appears when map is in open state
-  async verifyMapIsOpenState(): Promise<void> {
+  async verifyButtonIsInOpenState(): Promise<void> {
     await expect(this.mapToggleButton).toBeVisible();
     await expect(this.mapToggleButton).toHaveText(/close map/i);
   }
