@@ -1,7 +1,7 @@
 "use client";
 
 import { useRouter, useSearchParams, usePathname } from "next/navigation";
-import React, { createContext, useContext, useCallback } from "react";
+import React, { createContext, useContext, useCallback, useState } from "react";
 
 interface CanvasContextType {
   currentCanvasIndex: number;
@@ -35,7 +35,10 @@ export const CanvasProvider = ({ children }: { children: React.ReactNode }) => {
 
   return (
     <CanvasContext.Provider
-      value={{ currentCanvasIndex, setCurrentCanvasIndex }}
+      value={{
+        currentCanvasIndex,
+        setCurrentCanvasIndex,
+      }}
     >
       {children}
     </CanvasContext.Provider>

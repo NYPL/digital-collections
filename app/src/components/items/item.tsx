@@ -6,7 +6,7 @@ import ItemMediaViewer from "./viewer/viewer";
 import ItemMediaViewerFallback from "./viewer/fallback";
 import ItemOverview from "./overview/overview";
 import { CanvasProvider } from "../../context/CanvasProvider";
-
+import { MapViewProvider } from "../../context/MapViewProvider";
 import {
   Heading,
   Banner,
@@ -17,6 +17,7 @@ import {
   HorizontalRule,
   HStack,
 } from "@nypl/design-system-react-components";
+import AllMapsViewer from "./maps/allMaps";
 
 interface ItemProps {
   item: ItemModel;
@@ -29,34 +30,36 @@ const renderViewer = (item) => {
 const Item = ({ item }: ItemProps) => {
   return (
     <CanvasProvider>
-      <Box marginTop="-3em">
-        {renderViewer(item) ? (
-          <>
-            <Heading level="h1" paddingBottom="s">
-              {item.title}
-            </Heading>
-            <ItemMediaViewer item={item} />
-          </>
-        ) : (
-          <>
-            <ItemMediaViewerFallback item={item} />
-            <Heading level="h1">{item.title}</Heading>
-          </>
-        )}
-        {/* TODO: horizontally align Icon with Text with breakpoints */}
-        <HStack marginTop="xs" direction="row">
-          <Icon name="actionInfo" size="large" />
-          <Text marginTop="1em" paddingBottom="s">
-            Our collections include some content that may be harmful or
-            difficult to view.{" "}
-            <Link href="https://digitalcollections.nypl.org/about#nypl_harmful_content_statement">
-              Learn more.
-            </Link>{" "}
-          </Text>
-        </HStack>
-        <HorizontalRule marginTop="xs" marginBottom="m" />
-        <ItemOverview item={item} />
-      </Box>
+      <MapViewProvider>
+        <Box marginTop="-3em">
+          {renderViewer(item) ? (
+            <>
+              <Heading level="h1" paddingBottom="s">
+                {item.title}
+              </Heading>
+              <ItemMediaViewer item={item} />
+            </>
+          ) : (
+            <>
+              <ItemMediaViewerFallback item={item} />
+              <Heading level="h1">{item.title}</Heading>
+            </>
+          )}
+          {/* TODO: horizontally align Icon with Text with breakpoints */}
+          <HStack marginTop="xs" direction="row">
+            <Icon name="actionInfo" size="large" />
+            <Text marginTop="1em" paddingBottom="s">
+              Our collections include some content that may be harmful or
+              difficult to view.{" "}
+              <Link href="https://digitalcollections.nypl.org/about#nypl_harmful_content_statement">
+                Learn more.
+              </Link>{" "}
+            </Text>
+          </HStack>
+          <HorizontalRule marginTop="xs" marginBottom="m" />
+          <ItemOverview item={item} />
+        </Box>
+      </MapViewProvider>
     </CanvasProvider>
   );
 };
