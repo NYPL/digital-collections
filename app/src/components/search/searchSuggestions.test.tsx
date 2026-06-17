@@ -11,6 +11,7 @@ describe("SearchSuggestions", () => {
     suggestions,
     activeIndex: -1,
     onSelect: jest.fn(),
+    onClose: jest.fn(),
     listboxId: "dc-search-suggestions",
   };
 
@@ -44,6 +45,14 @@ describe("SearchSuggestions", () => {
     });
   });
 
+  it("sets tabindex='-1' on each option for TalkBack navigation", () => {
+    render(<SearchSuggestions {...defaultProps} />);
+    const options = screen.getAllByRole("option");
+    options.forEach((opt) => {
+      expect(opt).toHaveAttribute("tabindex", "-1");
+    });
+  });
+
   it("highlights matched words from Solr highlight snippets", () => {
     render(<SearchSuggestions {...defaultProps} />);
     // "Cromwell" is wrapped in <em> in the Title highlight for the first two suggestions
@@ -71,6 +80,22 @@ describe("SearchSuggestions", () => {
     const options = screen.getAllByRole("option");
     fireEvent.mouseDown(options[0]);
     expect(onSelect).toHaveBeenCalledWith(suggestions[0].title);
+  });
+
+  it("renders a touch-only close control labeled 'Close list'", () => {
+    render(<SearchSuggestions {...defaultProps} isTouch={true} />);
+    expect(
+      screen.getByRole("button", { name: "Close list" })
+    ).toBeInTheDocument();
+  });
+
+  it("calls onClose when the touch close control is clicked", () => {
+    const onClose = jest.fn();
+    render(
+      <SearchSuggestions {...defaultProps} isTouch={true} onClose={onClose} />
+    );
+    fireEvent.click(screen.getByRole("button", { name: "Close list" }));
+    expect(onClose).toHaveBeenCalledTimes(1);
   });
 
   it("passes axe accessibility check", async () => {
