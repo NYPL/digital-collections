@@ -21,9 +21,10 @@ export default class ItemMapOverlayPage {
       name: /data source/i,
     });
 
-    // find button in parent (data source block) that contains "map"
-    this.mapToggleButton = dataSourceHeading
-      .locator("..")
+    this.mapToggleButton = this.page
+      .locator("*")
+      .filter({ has: dataSourceHeading })
+      .last()
       .getByRole("button", { name: /map/i });
 
     // map overlay UX locators
