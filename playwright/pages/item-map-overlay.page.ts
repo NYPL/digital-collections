@@ -37,7 +37,6 @@ export default class ItemMapOverlayPage {
   }
 
   async loadPage(gotoPage: string): Promise<void> {
-    // await this.page.setViewportSize({ width: 1280, height: 4000 });
     await this.page.goto(gotoPage);
   }
 
