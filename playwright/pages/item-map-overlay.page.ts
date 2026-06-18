@@ -8,8 +8,6 @@ export default class ItemMapOverlayPage {
   readonly mapCanvas: Locator;
   readonly zoomInButton: Locator;
   readonly zoomOutButton: Locator;
-  readonly compassButton: Locator;
-  readonly compassIcon: Locator;
   static readonly MAP1_UUID = "417fe160-c603-012f-4183-58d385a7bc34";
 
   static itemMapUrl: string = "/items/" + this.MAP1_UUID;
@@ -36,10 +34,6 @@ export default class ItemMapOverlayPage {
     this.zoomOutButton = this.mapViewerContainer.getByRole("button", {
       name: "Zoom out",
     });
-    this.compassButton = this.mapViewerContainer.getByRole("button", {
-      name: /drag to rotate map/i,
-    });
-    this.compassIcon = this.compassButton.locator(".maplibregl-ctrl-icon");
   }
 
   async loadPage(gotoPage: string): Promise<void> {
