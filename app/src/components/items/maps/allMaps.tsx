@@ -1,11 +1,17 @@
 "use client";
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
+import { createPortal } from "react-dom";
 import { Map, NavigationControl, FullscreenControl } from "maplibre-gl";
 import "maplibre-gl/dist/maplibre-gl.css";
 import { WarpedMapLayer } from "@allmaps/maplibre";
 import { generateId } from "@allmaps/id";
 import { Heading, Text, Link } from "@nypl/design-system-react-components";
 import { ItemModel } from "@/src/models/item";
+import {
+  OpacityControl,
+  OpacityControlComponent,
+  WarpedMapLayerType,
+} from "./OpacityControl";
 
 interface ItemProps {
   item: ItemModel;
@@ -13,6 +19,9 @@ interface ItemProps {
 
 const AllMapsViewer = ({ item }: ItemProps) => {
   const mapContainer = useRef<HTMLDivElement>(null);
+  const [opacityControlContainer, setOpacityControlContainer] =
+    useState<HTMLDivElement | null>(null);
+  const warpedMapLayerRef = useRef<WarpedMapLayerType | null>(null);
 
   useEffect(() => {
     let map: Map | undefined;
@@ -50,6 +59,11 @@ const AllMapsViewer = ({ item }: ItemProps) => {
       const hashedIiifImageId = await generateId(iiifUrl);
       const annotationUrl = `https://annotations.allmaps.org/images/${hashedIiifImageId}`;
       const warpedMapLayer = new WarpedMapLayer();
+      warpedMapLayerRef.current = warpedMapLayer;
+
+      const opacityControl = new OpacityControl();
+      map.addControl(opacityControl, "top-right");
+      setOpacityControlContainer(opacityControl.getElement() || null);
 
       map.on("load", async () => {
         if (!map) return;
@@ -83,6 +97,8 @@ const AllMapsViewer = ({ item }: ItemProps) => {
     return () => {
       resizeObserver?.disconnect();
       map?.remove();
+      setOpacityControlContainer(null);
+      warpedMapLayerRef.current = null;
     };
   }, [item.uuid]);
 
@@ -93,7 +109,16 @@ const AllMapsViewer = ({ item }: ItemProps) => {
         width: "100%",
         height: "100%",
       }}
-    />
+    >
+      {opacityControlContainer &&
+        warpedMapLayerRef.current &&
+        createPortal(
+          <OpacityControlComponent
+            warpedMapLayer={warpedMapLayerRef.current}
+          />,
+          opacityControlContainer
+        )}
+    </div>
   );
 };
 

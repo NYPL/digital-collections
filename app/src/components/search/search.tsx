@@ -1,62 +1,35 @@
 //@ts-no-check
 "use client";
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { Box } from "@nypl/design-system-react-components";
 import { useRouter } from "next/navigation";
 import PublicDomainFilter from "../publicDomainFilter/publicDomainFilter";
 import { headerBreakpoints } from "../../utils/breakpoints";
 import DCSearchBar from "./dcSearchBar";
 import { useSearchContext } from "@/src/context/SearchProvider";
-import SearchSuggestions, { type SuggestResult } from "./searchSuggestions";
+import SearchSuggestions from "./searchSuggestions";
+import { useSearchCombobox } from "@/src/hooks/useSearchCombobox";
 
 const LISTBOX_ID = "dc-search-suggestions";
-const MIN_SUGGEST_CHARS = 3;
-const DEBOUNCE_MS = 300;
 
 const Search = () => {
   const { searchManager } = useSearchContext();
   const router = useRouter();
   const [keywords, setKeywords] = useState("");
   const [publicDomainOnly, setPublicDomainOnly] = useState(false);
-  const [suggestions, setSuggestions] = useState<SuggestResult[]>([]);
-  const [activeIndex, setActiveIndex] = useState(-1);
-  const [isOpen, setIsOpen] = useState(false);
 
-  // Fetch suggestions with debounce whenever the keyword changes.
-  useEffect(() => {
-    if (keywords.length < MIN_SUGGEST_CHARS) {
-      setSuggestions([]);
-      setIsOpen(false);
-      return;
-    }
-    const timer = setTimeout(async () => {
-      try {
-        const res = await fetch(
-          `/api/suggest?q=${encodeURIComponent(keywords)}`
-        );
-        if (!res.ok) {
-          setSuggestions([]);
-          setIsOpen(false);
-          return;
-        }
-        const data = await res.json();
-        const results: SuggestResult[] = data.suggestions ?? [];
-        setSuggestions(results);
-        setIsOpen(results.length > 0);
-        setActiveIndex(-1);
-      } catch {
-        setSuggestions([]);
-        setIsOpen(false);
-      }
-    }, DEBOUNCE_MS);
-    return () => clearTimeout(timer);
-  }, [keywords]);
-
-  const closeSuggestions = () => {
-    setSuggestions([]);
-    setIsOpen(false);
-    setActiveIndex(-1);
-  };
+  const {
+    suggestions,
+    activeIndex,
+    isOpen,
+    isTouch,
+    wrapperRef,
+    closeSuggestions,
+    returnFocusToInput,
+    handleKeyDown,
+    handleWrapperBlur,
+    statusMessage,
+  } = useSearchCombobox({ keywords, listboxId: LISTBOX_ID });
 
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -76,6 +49,18 @@ const Search = () => {
     router.push(`/search/index?q=${encodeURIComponent(title)}`);
   };
 
+  // When the user has navigated to a suggestion with arrow keys, Enter should
+  // select it rather than submit the typed query.
+  const handleInputKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
+    if (event.key === "Enter" && activeIndex >= 0 && suggestions[activeIndex]) {
+      event.preventDefault();
+      setKeywords(suggestions[activeIndex].title);
+      closeSuggestions();
+      return;
+    }
+    handleKeyDown(event);
+  };
+
   const handleTextChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setKeywords(event.target.value);
   };
@@ -83,38 +68,6 @@ const Search = () => {
   const handleCheckChange = (isChecked: boolean): void => {
     setPublicDomainOnly(isChecked);
   };
-
-  /**
-   * Keyboard handler for the combobox input.
-   * Runs before dcSearchBar's Enter-to-submit handler so preventDefault()
-   * prevents the form submission when a suggestion is being accepted.
-   */
-  const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
-    if (!isOpen) return;
-    switch (event.key) {
-      case "ArrowDown":
-        event.preventDefault();
-        setActiveIndex((i) => Math.min(i + 1, suggestions.length - 1));
-        break;
-      case "ArrowUp":
-        event.preventDefault();
-        setActiveIndex((i) => Math.max(i - 1, -1));
-        break;
-      case "Enter":
-        if (activeIndex >= 0) {
-          event.preventDefault();
-          handleSuggestionSelect(suggestions[activeIndex].title);
-        }
-        break;
-      case "Escape":
-        event.preventDefault();
-        closeSuggestions();
-        break;
-    }
-  };
-
-  const activeDescendant =
-    activeIndex >= 0 ? `${LISTBOX_ID}-option-${activeIndex}` : undefined;
 
   return (
     <Box
@@ -129,8 +82,26 @@ const Search = () => {
         },
       }}
     >
+      {/* Visually hidden live region announces suggestion availability to screen readers */}
+      <Box
+        aria-live="polite"
+        aria-atomic="true"
+        sx={{
+          position: "absolute",
+          width: "1px",
+          height: "1px",
+          padding: 0,
+          margin: "-1px",
+          overflow: "hidden",
+          clip: "rect(0,0,0,0)",
+          whiteSpace: "nowrap",
+          border: 0,
+        }}
+      >
+        {statusMessage}
+      </Box>
       {/* position="relative" creates the stacking context for the absolute dropdown */}
-      <Box position="relative">
+      <Box position="relative" ref={wrapperRef} onBlur={handleWrapperBlur}>
         <DCSearchBar
           id="searchbar"
           labelText="Search Digital Collections"
@@ -142,23 +113,26 @@ const Search = () => {
             value: keywords,
             placeholder: "Search keyword(s)",
             autoComplete: "off",
-            onKeyDown: handleKeyDown,
-            additionalInputProps: {
-              role: "combobox",
-              "aria-expanded": isOpen,
-              "aria-autocomplete": "list",
-              "aria-controls": LISTBOX_ID,
-              "aria-activedescendant": activeDescendant,
+            isClearable: true,
+            isClearableCallback: () => {
+              setKeywords("");
+              closeSuggestions();
             },
+            onKeyDown: handleInputKeyDown,
           }}
           onSubmit={(e) => handleSubmit(e)}
         />
         {isOpen && (
           <SearchSuggestions
             suggestions={suggestions}
-            activeIndex={activeIndex}
             onSelect={handleSuggestionSelect}
             listboxId={LISTBOX_ID}
+            onClose={() => {
+              closeSuggestions();
+              returnFocusToInput();
+            }}
+            activeIndex={activeIndex}
+            isTouch={isTouch}
           />
         )}
       </Box>
