@@ -82,7 +82,7 @@ export default class SearchPage {
     // replace with homepage locators
     this.searchKeyword = "map of scandinavia";
     this.searchBar = this.page.getByPlaceholder(/search/i);
-    this.searchButton = this.page.getByRole("button", { name: "Search" });
+    this.searchButton = this.page.locator("#searchbar-button-searchbar");
 
     // search results
     this.resultsHeading = this.page.getByRole("heading", {
