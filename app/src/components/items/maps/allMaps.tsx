@@ -54,6 +54,9 @@ const AllMapsViewer = ({ item }: ItemProps) => {
       map.addControl(new NavigationControl(), "top-right");
       map.addControl(new FullscreenControl(), "top-right");
 
+      // if current canvas index isn't in the map, it doesn't have Allmaps data,
+      // so we need to set it to the first canvas index that does have Allmaps data
+      // and redirect the page accordingly
       let captureToDisplay = canvasIndexToCaptureMap[currentCanvasIndex];
       if (!canvasIndexToCaptureMap[currentCanvasIndex]) {
         const firstEntry = Object.entries(canvasIndexToCaptureMap)[0];
@@ -61,9 +64,6 @@ const AllMapsViewer = ({ item }: ItemProps) => {
         captureToDisplay = firstEntry[1];
       }
 
-      const captureWithMapData = item.captures.find(
-        (capture) => capture.hasAllMapsData
-      );
       const imageId = captureToDisplay?.imageId;
       console.log("using this imageId for the allmaps viewer: ", imageId);
 
@@ -116,7 +116,7 @@ const AllMapsViewer = ({ item }: ItemProps) => {
       setOpacityControlContainer(null);
       warpedMapLayerRef.current = null;
     };
-  }, [item.uuid]);
+  }, [item.uuid, currentCanvasIndex]);
 
   return (
     <div
