@@ -1,6 +1,7 @@
 import { CollectionsApi } from "./apiClients";
 import { fetchApi } from "../fetchApi/fetchApi";
 import defaultFeaturedItem from "@/src/data/defaultFeaturedItemData";
+import featuredContentData from "@/src/data/featuredContentData";
 import {
   mockCollectionsResponse,
   mockFeaturedItemResponse,
@@ -134,7 +135,7 @@ describe("Collections API methods", () => {
       );
       const result = await CollectionsApi.getHomePageData();
       expect(fetchApi as jest.Mock).toHaveBeenCalled();
-      expect([0, 1]).toContain(result.randomNumber);
+      expect([0, 1, 2]).toContain(result.randomNumber);
       expect(result.lanesWithNumItems.length).toEqual(7);
       // Fallback data (all 0s).
       expect(
