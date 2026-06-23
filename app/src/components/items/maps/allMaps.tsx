@@ -1,7 +1,7 @@
 "use client";
 import React, { useEffect, useRef, useState } from "react";
 import { createPortal } from "react-dom";
-import { Map, NavigationControl, FullscreenControl } from "maplibre-gl";
+import { Map, NavigationControl, FullscreenControl, LngLat } from "maplibre-gl";
 import "maplibre-gl/dist/maplibre-gl.css";
 import { WarpedMapLayer } from "@allmaps/maplibre";
 import { generateId } from "@allmaps/id";
@@ -32,6 +32,8 @@ const AllMapsViewer = ({ item }: ItemProps) => {
     capturesWithMapData.map((capture) => [capture.orderInSequence - 1, capture])
   );
 
+  let mapCenter = new LngLat(-73.931016, 40.79532); // Default center coordinates
+
   useEffect(() => {
     let map: Map | undefined;
     let resizeObserver: ResizeObserver | undefined;
@@ -42,7 +44,7 @@ const AllMapsViewer = ({ item }: ItemProps) => {
       map = new Map({
         container: mapContainer.current,
         style: "https://basemaps.cartocdn.com/gl/voyager-gl-style/style.json",
-        center: [-73.931016, 40.79532],
+        center: mapCenter,
         zoom: 10.7,
         maxPitch: 0,
         attributionControl: false,
@@ -96,6 +98,7 @@ const AllMapsViewer = ({ item }: ItemProps) => {
               animate: true,
               duration: 1000,
             });
+            mapCenter = map.getCenter(); // Do this so that each time the map is re-rendered, it will be centered on the last center point
           }
         } catch (error) {
           console.error("Error loading AllMaps annotation:", error);
