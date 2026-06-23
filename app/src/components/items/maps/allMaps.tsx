@@ -33,6 +33,7 @@ const AllMapsViewer = ({ item }: ItemProps) => {
   );
 
   let mapCenter = new LngLat(-73.931016, 40.79532); // Default center coordinates
+  console.log("initializing map center: ", JSON.stringify(mapCenter));
 
   useEffect(() => {
     let map: Map | undefined;
