@@ -41,6 +41,10 @@ const AllMapsViewer = ({ item }: ItemProps) => {
     const initializeMap = async () => {
       if (!mapContainer.current) return;
 
+      console.log(
+        "map center before map initialization: ",
+        JSON.stringify(mapCenter)
+      );
       map = new Map({
         container: mapContainer.current,
         style: "https://basemaps.cartocdn.com/gl/voyager-gl-style/style.json",
@@ -99,6 +103,10 @@ const AllMapsViewer = ({ item }: ItemProps) => {
               duration: 1000,
             });
             mapCenter = map.getCenter(); // Do this so that each time the map is re-rendered, it will be centered on the last center point
+            console.log(
+              "map center after fitBounds: ",
+              JSON.stringify(mapCenter)
+            );
           }
         } catch (error) {
           console.error("Error loading AllMaps annotation:", error);
