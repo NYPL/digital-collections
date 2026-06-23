@@ -5,6 +5,7 @@ import { Map, NavigationControl, FullscreenControl } from "maplibre-gl";
 import "maplibre-gl/dist/maplibre-gl.css";
 import { WarpedMapLayer } from "@allmaps/maplibre";
 import { generateId } from "@allmaps/id";
+import { useCanvasContext } from "../../../context/CanvasProvider";
 import { Heading, Text, Link } from "@nypl/design-system-react-components";
 import { ItemModel } from "@/src/models/item";
 import {
@@ -22,6 +23,14 @@ const AllMapsViewer = ({ item }: ItemProps) => {
   const [opacityControlContainer, setOpacityControlContainer] =
     useState<HTMLDivElement | null>(null);
   const warpedMapLayerRef = useRef<WarpedMapLayerType | null>(null);
+  const { currentCanvasIndex, setCurrentCanvasIndex } = useCanvasContext();
+
+  const capturesWithMapData = item.captures.filter(
+    (capture) => capture.hasAllMapsData
+  );
+  const canvasIndexToCaptureMap = Object.fromEntries(
+    capturesWithMapData.map((capture) => [capture.orderInSequence - 1, capture])
+  );
 
   useEffect(() => {
     let map: Map | undefined;
@@ -45,10 +54,17 @@ const AllMapsViewer = ({ item }: ItemProps) => {
       map.addControl(new NavigationControl(), "top-right");
       map.addControl(new FullscreenControl(), "top-right");
 
+      let captureToDisplay = canvasIndexToCaptureMap[currentCanvasIndex];
+      if (!canvasIndexToCaptureMap[currentCanvasIndex]) {
+        const firstEntry = Object.entries(canvasIndexToCaptureMap)[0];
+        setCurrentCanvasIndex(Number(firstEntry[0]));
+        captureToDisplay = firstEntry[1];
+      }
+
       const captureWithMapData = item.captures.find(
         (capture) => capture.hasAllMapsData
       );
-      const imageId = captureWithMapData?.imageId;
+      const imageId = captureToDisplay?.imageId;
       console.log("using this imageId for the allmaps viewer: ", imageId);
 
       const iiifUrl = imageId
