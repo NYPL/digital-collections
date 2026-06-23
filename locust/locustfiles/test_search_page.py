@@ -26,9 +26,9 @@ class SearchPageUser(HttpUser):
             "dance",
             "ellis island",
         ]
+        search_term = random.choice(search_terms)
+        search_term = search_term.replace(" ", "+")        
         for i in range(1, 6):
-            search_term = random.choice(search_terms)
-            search_term = search_term.replace(" ", "+")
             page = i
             query_string = f"?keywords={search_term}&page={page}"
             path = f"{SEARCH_PAGE_PATH}{query_string}"
