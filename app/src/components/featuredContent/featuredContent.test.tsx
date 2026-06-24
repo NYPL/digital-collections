@@ -5,7 +5,7 @@ import FeaturedContentComponent from "./featuredContent";
 describe("Featured Content component renders with expected props", () => {
   it("renders 250 Years of the United States content", async () => {
     render(<FeaturedContentComponent randomNumber={0} />);
-    const component = screen.getByTestId("featured-content-2");
+    const component = screen.getByTestId("featured-content-0");
     await waitFor(() => {
       expect(
         within(component).getByText(
