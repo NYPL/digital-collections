@@ -4,7 +4,7 @@ import { mockCollectionLanes } from "./mockCollectionLanes";
 export const mockHomePageMainContent = {
   swimLaneData: {
     lanesWithNumItems: mockCollectionLanes.lanesWithNumItems,
-    randomNumber: 1,
+    randomNumber: 0,
   },
   featuredItemData: {
     featuredItem: {
