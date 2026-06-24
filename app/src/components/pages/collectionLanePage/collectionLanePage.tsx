@@ -4,6 +4,7 @@ import {
   Heading,
   HorizontalRule,
   Pagination,
+  Flex,
 } from "@nypl/design-system-react-components";
 import {
   useParams,
@@ -21,6 +22,13 @@ import { CardsGrid } from "../../grids/cardsGrid";
 import React, { useEffect, useRef, useState } from "react";
 import PageLayout from "../../pageLayout/pageLayout";
 import LaneLoading from "../../lane/laneLoading";
+import ViewingOptionsMenu from "../../viewingOptionsMenu/viewingOptionsMenu";
+import { GeneralSearchManager } from "../../../utils/searchManager/searchManager";
+import {
+  RESULTS_PER_PAGE_OPTIONS,
+  DEFAULT_PAGE_NUM,
+} from "../../../config/constants";
+import useBreakpoints from "../../../hooks/useBreakpoints";
 
 export default function CollectionLanePage({ data }: any) {
   const params = useParams();
@@ -30,12 +38,19 @@ export default function CollectionLanePage({ data }: any) {
 
   const pathname = usePathname();
   const queryParams = useSearchParams();
+  const { isLargerThanSmallTablet } = useBreakpoints();
 
   const [currentPage, setCurrentPage] = useState(
     Number(queryParams.get("page")) || 1
   );
 
   const { push } = useRouter();
+
+  const collectionSearchManager = new GeneralSearchManager({
+    initialPage: Number(queryParams.get("page")) || DEFAULT_PAGE_NUM,
+    initialPerPage: Number(queryParams.get("perPage")) || undefined,
+    lastFilterRef: useRef<string | null>(null),
+  });
 
   const totalPages = totalNumPages(data.numResults, data.perPage);
 
@@ -51,6 +66,15 @@ export default function CollectionLanePage({ data }: any) {
     setTimeout(() => {
       setIsLoaded(true);
       headingRef.current?.focus();
+    }, 2000);
+  };
+
+  const updateURL = (queryString: string) => {
+    const newUrl = `${pathname}?${queryString}`;
+    setIsLoaded(false);
+    push(newUrl);
+    setTimeout(() => {
+      setIsLoaded(true);
     }, 2000);
   };
 
@@ -80,17 +104,43 @@ export default function CollectionLanePage({ data }: any) {
         <Heading sx={{ marginBottom: 0 }} level="h1" id={slug} text={title} />
       </Box>
       <HorizontalRule sx={{ marginTop: "xxl", marginBottom: "xxl" }} />
-      <Heading
-        size="heading5"
-        sx={{ marginBottom: "l" }}
-        ref={headingRef}
-        tabIndex={-1}
-        id={slug}
-        width="max-content"
+      <Flex
+        sx={{
+          gap: "m",
+          flexDirection: "row",
+          justifyContent: "space-between",
+          alignItems: "flex-start",
+          marginBottom: "l",
+        }}
       >
-        {`Displaying ${displayResults(data.numResults, data.perPage, data.page)}
-        results`}
-      </Heading>
+        <Heading
+          size="heading5"
+          sx={{ margin: 0 }}
+          aria-live="polite"
+          aria-atomic="true"
+          ref={headingRef}
+          tabIndex={-1}
+          id={slug}
+        >
+          {`Displaying ${displayResults(
+            data.numResults,
+            data.perPage,
+            data.page
+          )} results`}
+        </Heading>
+        <ViewingOptionsMenu
+          options={{}}
+          searchManager={collectionSearchManager}
+          sort=""
+          perPageOptions={
+            isLargerThanSmallTablet ? RESULTS_PER_PAGE_OPTIONS : []
+          }
+          updateURL={updateURL}
+          setFiltersExpanded={() => {}}
+          showViewModeButtons={false}
+          hideSortFilter
+        />
+      </Flex>
       {isLoaded ? (
         <CardsGrid records={data.collections} />
       ) : (
