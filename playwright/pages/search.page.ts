@@ -169,12 +169,12 @@ export default class SearchPage {
     this.availablePublicDomain = this.page
       .locator("label")
       .filter({ hasText: "Public domain" });
-    this.availableOnline = this.page.getByRole("radio", {
-      name: "Available online",
-    });
-    this.availableOnsite = this.page.getByRole("radio", {
-      name: "Contains on-site materials",
-    });
+    this.availableOnline = this.page
+      .locator("label")
+      .filter({ hasText: "Available online" });
+    this.availableOnsite = this.page
+      .locator("label")
+      .filter({ hasText: "Contains on-site materials" });
     this.showFilters = this.page.getByRole("button", {
       name: "See all filter options",
     });
@@ -200,44 +200,46 @@ export default class SearchPage {
       .getByRole("button", { name: "Clear filters" });
 
     // sort search results
-    this.sortButton = this.page.locator("#sort-menu");
-    this.sortByRelevance = this.page.getByRole("menuitem", {
-      name: "Relevance",
+    this.sortButton = this.page.getByRole("button", {
+      name: /^Sort by:/,
+    });
+    this.sortByRelevance = this.page.getByText("Relevance", {
+      exact: true,
     });
     this.sortByRelevanceSelected = this.page.getByRole("button", {
       name: "Sort by: Relevance",
     });
-    this.sortByNewest = this.page.getByRole("menuitem", {
-      name: "Newest to oldest",
+    this.sortByNewest = this.page.getByText("Newest to oldest", {
+      exact: true,
     });
     this.sortByNewestSelected = this.page.getByRole("button", {
       name: "Sort by: Newest to oldest",
     });
-    this.sortByOldest = this.page.getByRole("menuitem", {
-      name: "Oldest to newest",
+    this.sortByOldest = this.page.getByText("Oldest to newest", {
+      exact: true,
     });
     this.sortByOldestSelected = this.page.getByRole("button", {
       name: "Sort by: Oldest to newest",
     });
-    this.sortByAlpha = this.page.getByRole("menuitem", {
-      name: "Title A to Z",
+    this.sortByAlpha = this.page.getByText("Title A to Z", {
+      exact: true,
     });
     this.sortByAlphaSelected = this.page.getByRole("button", {
       name: "Sort by: Title A to Z",
     });
-    this.sortByReverseAlpha = this.page.getByRole("menuitem", {
-      name: "Title Z to A",
+    this.sortByReverseAlpha = this.page.getByText("Title Z to A", {
+      exact: true,
     });
     this.sortByReverseAlphaSelected = this.page.getByRole("button", {
       name: "Sort by: Title Z to A",
     });
-    this.sortByCollections = this.page.getByRole("menuitem", {
-      name: "Collections first",
+    this.sortByCollections = this.page.getByText("Collections first", {
+      exact: true,
     });
     this.sortByCollectionsSelected = this.page.getByRole("button", {
       name: "Sort by: Collections first",
     });
-    this.sortByItems = this.page.getByRole("menuitem", { name: "Items first" });
+    this.sortByItems = this.page.getByText("Items first", { exact: true });
     this.sortByItemsSelected = this.page.getByRole("button", {
       name: "Sort by: Items first",
     });
