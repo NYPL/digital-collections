@@ -46,7 +46,10 @@ const Search = () => {
     setKeywords(title);
     closeSuggestions();
     searchManager.setLastFilter(null);
-    router.push(`/search/index?q=${encodeURIComponent(title)}`);
+    const searchUrl =
+      `/search/index?q=${encodeURIComponent(title)}` +
+      (publicDomainOnly ? `&filters%5Brights%5D=pd` : "");
+    router.push(searchUrl);
   };
 
   // When the user has navigated to a suggestion with arrow keys, Enter should
