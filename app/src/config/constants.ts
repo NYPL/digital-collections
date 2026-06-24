@@ -8,6 +8,7 @@ export const TRUNCATED_CARD_LENGTH = 80;
 export const TRUNCATED_SEARCH_CARD_LENGTH = 140;
 
 export const CARDS_PER_PAGE = 48;
+export const RESULTS_PER_PAGE_OPTIONS = [48, 96];
 
 export const DEFAULT_PAGE_NUM = 1;
 export const DEFAULT_COLLECTION_SORT = "relevance";

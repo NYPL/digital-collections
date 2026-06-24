@@ -19,7 +19,6 @@ import { CardsGrid } from "../../grids/cardsGrid";
 import { totalNumPages, displayResults } from "../../../utils/utils";
 import { Lane as DCLane } from "../../lane/lane";
 import LaneLoading from "../../lane/laneLoading";
-import { CARDS_PER_PAGE } from "@/src/config/constants";
 
 export default function DivisionPage({ data }: any) {
   const params = useParams();
@@ -36,10 +35,10 @@ export default function DivisionPage({ data }: any) {
 
   const { push } = useRouter();
 
-  const totalPages = totalNumPages(data.numFound, CARDS_PER_PAGE);
+  const totalPages = totalNumPages(data.numFound, data.perPage);
 
   const updatePageURL = async (pageNumber: number) => {
-    const params = new URLSearchParams();
+    const params = new URLSearchParams(queryParams.toString());
     params.set("page", pageNumber.toString());
     setCurrentPage(pageNumber);
     const url = `${pathname}?${params.toString()}#${data.slug}`;

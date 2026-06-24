@@ -8,7 +8,10 @@ import {
   Icon,
 } from "@nypl/design-system-react-components";
 import React, { useEffect, useRef, useState } from "react";
-import { CARDS_PER_PAGE, SEARCH_SORT_LABELS } from "@/src/config/constants";
+import {
+  SEARCH_SORT_LABELS,
+  RESULTS_PER_PAGE_OPTIONS,
+} from "@/src/config/constants";
 import { displayResults, totalNumPages } from "@/src/utils/utils";
 import Filters from "../../search/filters/filters";
 import { useSearchContext } from "@/src/context/SearchProvider";
@@ -32,9 +35,10 @@ const SearchPage = ({
   searchResults: SearchResultsType;
 }) => {
   const { searchManager } = useSearchContext();
+  const currentPerPage = searchResults.perPage || searchManager.perPage;
   const totalPages = totalNumPages(
     searchResults.numResults.toString(),
-    CARDS_PER_PAGE
+    currentPerPage
   );
   const { push } = useRouter();
   const pathname = usePathname();
@@ -126,7 +130,7 @@ const SearchPage = ({
               >
                 {`Displaying ${displayResults(
                   searchResults.numResults,
-                  CARDS_PER_PAGE,
+                  currentPerPage,
                   searchResults.page
                 )}
             results ${
@@ -207,13 +211,14 @@ const SearchPage = ({
                 margin="0"
               >{`Displaying ${displayResults(
                 searchResults.numResults,
-                CARDS_PER_PAGE,
+                currentPerPage,
                 searchManager.page
               )} results`}</Heading>
               <ViewingOptionsMenu
                 options={SEARCH_SORT_LABELS}
                 sort={searchResults.sort}
                 searchManager={searchManager}
+                perPageOptions={RESULTS_PER_PAGE_OPTIONS}
                 setFiltersExpanded={setFiltersExpanded}
                 updateURL={updateURL}
                 showViewModeButtons={isLargerThanSmallTablet}
