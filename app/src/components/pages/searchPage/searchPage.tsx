@@ -47,7 +47,10 @@ const SearchPage = ({
   const isFirstLoad = useRef<boolean>(false);
   const [isLoaded, setIsLoaded] = useState(false);
   const [filtersExpanded, setFiltersExpanded] = useState(false);
-  const { isLargerThanSmallTablet } = useBreakpoints();
+  const { isLargerThanSmallTablet, isLargerThanLargeMobile } = useBreakpoints();
+  const effectiveViewMode = isLargerThanLargeMobile
+    ? searchManager.viewMode
+    : "list";
 
   const updateURL = async (queryString: string) => {
     const currentQueryString = window.location.search;
@@ -218,7 +221,9 @@ const SearchPage = ({
                 options={SEARCH_SORT_LABELS}
                 sort={searchResults.sort}
                 searchManager={searchManager}
-                perPageOptions={RESULTS_PER_PAGE_OPTIONS}
+                perPageOptions={
+                  isLargerThanSmallTablet ? RESULTS_PER_PAGE_OPTIONS : []
+                }
                 setFiltersExpanded={setFiltersExpanded}
                 updateURL={updateURL}
                 showViewModeButtons={isLargerThanSmallTablet}
@@ -237,8 +242,9 @@ const SearchPage = ({
               <SearchCardsGrid
                 keywords={searchResults.keyword}
                 results={searchResults.results}
-                viewMode={searchManager.viewMode}
+                viewMode={effectiveViewMode}
                 numColumns={4}
+                largeMobileColumns={2}
               />
             ) : (
               [...Array(12)].map((_, index) => (

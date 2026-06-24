@@ -10,11 +10,13 @@ const SearchCardsGrid = ({
   keywords,
   viewMode,
   numColumns,
+  largeMobileColumns,
 }: {
   results: SearchResultType[];
   keywords: string;
   viewMode: "grid" | "list";
   numColumns: number;
+  largeMobileColumns?: number;
 }) => {
   const {
     isLargerThanLargeTablet,
@@ -25,6 +27,9 @@ const SearchCardsGrid = ({
   const getResponsiveColumns = () => {
     if (viewMode === "list") return 1;
     if (!isLargerThanLargeMobile) return 1;
+    if (isLargerThanLargeMobile && !isLargerThanSmallTablet) {
+      return largeMobileColumns ?? numColumns;
+    }
     if (isLargerThanSmallTablet && !isLargerThanLargeTablet) return 2;
     return numColumns;
   };
