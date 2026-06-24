@@ -16,7 +16,6 @@ type ViewingOptionsMenuProps = {
   setFiltersExpanded?: React.Dispatch<React.SetStateAction<boolean>>;
   sort: string;
   showViewModeButtons?: boolean;
-  hideSortFilter?: boolean;
 };
 
 const ViewingOptionsMenu = ({
@@ -27,7 +26,6 @@ const ViewingOptionsMenu = ({
   perPageOptions = [],
   sort,
   showViewModeButtons = true,
-  hideSortFilter = false,
 }: ViewingOptionsMenuProps) => {
   const layoutSelectHandler = (viewMode: "grid" | "list"): (() => void) => {
     return () => {
@@ -45,28 +43,26 @@ const ViewingOptionsMenu = ({
   };
   return (
     <div style={{ display: "flex", alignItems: "center", gap: "4px" }}>
-      {!hideSortFilter && (
-        <Menu
-          key={sort}
-          id="sort-menu"
-          showLabel
-          selectedItem={sort}
-          labelText={`Sort by: ${options[sort]}`}
-          labelAsAriaLabel
-          listItemsData={Object.entries(options).map(([id, label]) => ({
-            id,
-            label,
-            onClick: () => {
-              if (setFiltersExpanded) {
-                setFiltersExpanded(false);
-              }
-              searchManager.setLastFilter("menu-button-sort-menu");
-              updateURL(searchManager.handleSortChange(id));
-            },
-            type: "action",
-          }))}
-        />
-      )}
+      <Menu
+        key={sort}
+        id="sort-menu"
+        showLabel
+        selectedItem={sort}
+        labelText={`Sort by: ${options[sort]}`}
+        labelAsAriaLabel
+        listItemsData={Object.entries(options).map(([id, label]) => ({
+          id,
+          label,
+          onClick: () => {
+            if (setFiltersExpanded) {
+              setFiltersExpanded(false);
+            }
+            searchManager.setLastFilter("menu-button-sort-menu");
+            updateURL(searchManager.handleSortChange(id));
+          },
+          type: "action",
+        }))}
+      />
       {perPageOptions.length > 0 && (
         <Box
           sx={{

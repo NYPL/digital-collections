@@ -4,6 +4,7 @@ import {
   Heading,
   HorizontalRule,
   Link,
+  Menu,
   Pagination,
   Flex,
 } from "@nypl/design-system-react-components";
@@ -20,13 +21,18 @@ import { CardsGrid } from "../../grids/cardsGrid";
 import { totalNumPages, displayResults } from "../../../utils/utils";
 import { Lane as DCLane } from "../../lane/lane";
 import LaneLoading from "../../lane/laneLoading";
-import ViewingOptionsMenu from "../../viewingOptionsMenu/viewingOptionsMenu";
-import { GeneralSearchManager } from "../../../utils/searchManager/searchManager";
 import {
   RESULTS_PER_PAGE_OPTIONS,
-  DEFAULT_PAGE_NUM,
+  CARDS_PER_PAGE,
 } from "../../../config/constants";
-import useBreakpoints from "../../../hooks/useBreakpoints";
+
+const PER_PAGE = "perPage";
+
+const getStoredPerPage = (): number | undefined => {
+  if (typeof window === "undefined") return undefined;
+  const stored = Number(localStorage.getItem(PER_PAGE));
+  return Number.isInteger(stored) && stored > 0 ? stored : undefined;
+};
 
 export default function DivisionPage({ data }: any) {
   const params = useParams();
@@ -36,19 +42,15 @@ export default function DivisionPage({ data }: any) {
   const pathname = usePathname();
   const queryParams = useSearchParams();
   const headingRef = useRef<HTMLHeadingElement>(null);
-  const { isLargerThanSmallTablet } = useBreakpoints();
-
   const [currentPage, setCurrentPage] = useState(
     Number(queryParams.get("page")) || 1
   );
 
-  const { push } = useRouter();
+  const [currentPerPage, setCurrentPerPage] = useState(
+    Number(queryParams.get("perPage")) || getStoredPerPage() || CARDS_PER_PAGE
+  );
 
-  const collectionSearchManager = new GeneralSearchManager({
-    initialPage: Number(queryParams.get("page")) || DEFAULT_PAGE_NUM,
-    initialPerPage: Number(queryParams.get("perPage")) || undefined,
-    lastFilterRef: useRef<string | null>(null),
-  });
+  const { push } = useRouter();
 
   const totalPages = totalNumPages(data.numFound, data.perPage);
 
@@ -154,18 +156,36 @@ export default function DivisionPage({ data }: any) {
             data.page
           )} results`}
         </Heading>
-        <ViewingOptionsMenu
-          options={{}}
-          searchManager={collectionSearchManager}
-          sort=""
-          perPageOptions={
-            isLargerThanSmallTablet ? RESULTS_PER_PAGE_OPTIONS : []
-          }
-          updateURL={updateURL}
-          setFiltersExpanded={() => {}}
-          showViewModeButtons={false}
-          hideSortFilter
-        />
+        <Box
+          sx={{
+            display: "none",
+            "@media screen and (min-width: 768px)": { display: "block" },
+          }}
+        >
+          <Menu
+            key={`per-page-${currentPerPage}`}
+            id="results-per-page-menu"
+            showLabel
+            selectedItem={currentPerPage.toString()}
+            labelText={`Results per page: ${currentPerPage}`}
+            labelAsAriaLabel
+            listItemsData={RESULTS_PER_PAGE_OPTIONS.map((value) => ({
+              id: value.toString(),
+              label: value.toString(),
+              onClick: () => {
+                setCurrentPerPage(value);
+                if (typeof window !== "undefined") {
+                  localStorage.setItem(PER_PAGE, String(value));
+                }
+                const newParams = new URLSearchParams(queryParams.toString());
+                newParams.set("perPage", String(value));
+                newParams.set("page", "1");
+                updateURL(newParams.toString());
+              },
+              type: "action",
+            }))}
+          />
+        </Box>
       </Flex>
 
       <Heading level="h2" size="heading3" style={{ width: "fit-content" }}>
