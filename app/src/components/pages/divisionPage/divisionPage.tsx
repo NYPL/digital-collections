@@ -5,6 +5,7 @@ import {
   HorizontalRule,
   Link,
   Pagination,
+  Flex,
 } from "@nypl/design-system-react-components";
 import {
   useParams,
@@ -19,6 +20,13 @@ import { CardsGrid } from "../../grids/cardsGrid";
 import { totalNumPages, displayResults } from "../../../utils/utils";
 import { Lane as DCLane } from "../../lane/lane";
 import LaneLoading from "../../lane/laneLoading";
+import ViewingOptionsMenu from "../../viewingOptionsMenu/viewingOptionsMenu";
+import { GeneralSearchManager } from "../../../utils/searchManager/searchManager";
+import {
+  RESULTS_PER_PAGE_OPTIONS,
+  DEFAULT_PAGE_NUM,
+} from "../../../config/constants";
+import useBreakpoints from "../../../hooks/useBreakpoints";
 
 export default function DivisionPage({ data }: any) {
   const params = useParams();
@@ -28,12 +36,19 @@ export default function DivisionPage({ data }: any) {
   const pathname = usePathname();
   const queryParams = useSearchParams();
   const headingRef = useRef<HTMLHeadingElement>(null);
+  const { isLargerThanSmallTablet } = useBreakpoints();
 
   const [currentPage, setCurrentPage] = useState(
     Number(queryParams.get("page")) || 1
   );
 
   const { push } = useRouter();
+
+  const collectionSearchManager = new GeneralSearchManager({
+    initialPage: Number(queryParams.get("page")) || DEFAULT_PAGE_NUM,
+    initialPerPage: Number(queryParams.get("perPage")) || undefined,
+    lastFilterRef: useRef<string | null>(null),
+  });
 
   const totalPages = totalNumPages(data.numFound, data.perPage);
 
@@ -47,6 +62,15 @@ export default function DivisionPage({ data }: any) {
     setTimeout(() => {
       setIsLoaded(true);
       headingRef.current?.focus();
+    }, 2000);
+  };
+
+  const updateURL = (queryString: string) => {
+    const newUrl = `${pathname}?${queryString}#${data.slug}`;
+    setIsLoaded(false);
+    push(newUrl);
+    setTimeout(() => {
+      setIsLoaded(true);
     }, 2000);
   };
 
@@ -106,17 +130,43 @@ export default function DivisionPage({ data }: any) {
       )}
       <HorizontalRule sx={{ marginTop: "xxl", marginBottom: "xxl" }} />
 
-      <Heading
-        size="heading5"
-        sx={{ marginBottom: "l" }}
-        ref={headingRef}
-        tabIndex={-1}
-        id={slug}
-        width="max-content"
+      <Flex
+        sx={{
+          gap: "m",
+          flexDirection: "row",
+          justifyContent: "space-between",
+          alignItems: "flex-start",
+          marginBottom: "l",
+        }}
       >
-        {`Displaying ${displayResults(data.numFound, data.perPage, data.page)}
-        results`}
-      </Heading>
+        <Heading
+          size="heading5"
+          sx={{ margin: 0 }}
+          aria-live="polite"
+          aria-atomic="true"
+          ref={headingRef}
+          tabIndex={-1}
+          id={slug}
+        >
+          {`Displaying ${displayResults(
+            data.numFound,
+            data.perPage,
+            data.page
+          )} results`}
+        </Heading>
+        <ViewingOptionsMenu
+          options={{}}
+          searchManager={collectionSearchManager}
+          sort=""
+          perPageOptions={
+            isLargerThanSmallTablet ? RESULTS_PER_PAGE_OPTIONS : []
+          }
+          updateURL={updateURL}
+          setFiltersExpanded={() => {}}
+          showViewModeButtons={false}
+          hideSortFilter
+        />
+      </Flex>
 
       <Heading level="h2" size="heading3" style={{ width: "fit-content" }}>
         {`Collections in the ${data.name}`}
