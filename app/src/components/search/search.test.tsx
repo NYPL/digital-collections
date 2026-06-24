@@ -113,4 +113,46 @@ describe("Search component", () => {
 
     jest.useRealTimers();
   });
+
+  it("applies public domain filter when selecting a suggestion", async () => {
+    jest.useFakeTimers();
+    global.fetch = jest.fn().mockResolvedValue({
+      ok: true,
+      json: async () => ({
+        suggestions: [
+          {
+            uuid: "a1",
+            title: "Cromwell Family Papers",
+            type: "Collection",
+            highlights: {},
+          },
+        ],
+      }),
+    }) as jest.Mock;
+
+    render(component);
+
+    // Enable the public domain filter
+    const checkbox = screen.getByLabelText(/Search only public domain/i);
+    fireEvent.click(checkbox);
+
+    // Type in the search field to get suggestions
+    const input = screen.getByPlaceholderText("Search keyword(s)");
+    fireEvent.change(input, { target: { value: "crom" } });
+
+    await act(async () => {
+      jest.runAllTimers();
+      await Promise.resolve();
+    });
+
+    // Click on the suggestion
+    const suggestion = screen.getByText("Cromwell Family Papers");
+    fireEvent.mouseDown(suggestion);
+
+    expect(mockRouter.push).toHaveBeenCalledWith(
+      "/search/index?q=Cromwell%20Family%20Papers&filters%5Brights%5D=pd"
+    );
+
+    jest.useRealTimers();
+  });
 });
