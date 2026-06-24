@@ -12,6 +12,10 @@ import {
 import { Filter } from "@/src/types/FilterType";
 
 describe("SearchManager", () => {
+  beforeEach(() => {
+    localStorage.clear();
+  });
+
   describe("GeneralSearchManager individual params", () => {
     let manager: GeneralSearchManager;
 
@@ -257,6 +261,36 @@ describe("SearchManager", () => {
       expect(
         filterToString([{ filter: "format", value: "Long Is land" }])
       ).toBe("[format=Long Is land]");
+    });
+  });
+
+  describe("perPage persistence", () => {
+    it("uses stored perPage when initialPerPage is not provided", () => {
+      localStorage.setItem("perPage", "96");
+
+      const manager = new GeneralSearchManager({
+        initialPage: 1,
+        initialSort: DEFAULT_SEARCH_SORT,
+        defaultSort: DEFAULT_SEARCH_SORT,
+        initialFilters: [],
+        initialKeywords: DEFAULT_SEARCH_TERM,
+      });
+
+      expect(manager.perPage).toBe(96);
+    });
+
+    it("persists perPage when changed", () => {
+      const manager = new GeneralSearchManager({
+        initialPage: 1,
+        initialSort: DEFAULT_SEARCH_SORT,
+        defaultSort: DEFAULT_SEARCH_SORT,
+        initialFilters: [],
+        initialKeywords: DEFAULT_SEARCH_TERM,
+      });
+
+      manager.handlePerPageChange(96);
+
+      expect(localStorage.getItem("perPage")).toBe("96");
     });
   });
 });
