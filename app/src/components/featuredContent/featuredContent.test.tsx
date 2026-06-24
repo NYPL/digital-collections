@@ -51,7 +51,7 @@ describe("Featured Content component renders with expected props", () => {
       ).toBeInTheDocument();
       expect(within(component).getByRole("img")).toHaveAttribute(
         "src",
-        "/250-years.webp"
+        "/250years.png"
       );
 
       const button = within(component).getByTestId(

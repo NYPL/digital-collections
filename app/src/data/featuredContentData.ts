@@ -32,7 +32,7 @@ const featuredContentData: FeaturedContentDataType[] = [
     buttonId: "featured-learn-more-250-years",
     ariaLabel:
       "Learn more about 250 Years of the United States at The New York Public Library",
-    imgSrc: "/250-years.webp",
+    imgSrc: "/250years.png",
     imgAlt:
       "250 Years of the United States at The New York Public Library banner",
   },
