@@ -21,7 +21,6 @@ import { CardsGrid } from "../../grids/cardsGrid";
 import React, { useEffect, useRef, useState } from "react";
 import PageLayout from "../../pageLayout/pageLayout";
 import LaneLoading from "../../lane/laneLoading";
-import { CARDS_PER_PAGE } from "@/src/config/constants";
 
 export default function CollectionLanePage({ data }: any) {
   const params = useParams();
@@ -38,12 +37,12 @@ export default function CollectionLanePage({ data }: any) {
 
   const { push } = useRouter();
 
-  const totalPages = totalNumPages(data.numResults, CARDS_PER_PAGE);
+  const totalPages = totalNumPages(data.numResults, data.perPage);
 
   const headingRef = useRef<HTMLHeadingElement>(null);
 
   const updatePageURL = async (pageNumber: number) => {
-    const params = new URLSearchParams();
+    const params = new URLSearchParams(queryParams.toString());
     params.set("page", pageNumber.toString());
     setCurrentPage(pageNumber);
     const url = `${pathname}?${params.toString()}`;

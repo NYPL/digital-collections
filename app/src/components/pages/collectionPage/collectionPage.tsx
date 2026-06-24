@@ -14,10 +14,10 @@ import { CollectionSearch } from "../../search/collectionSearch";
 import { MobileSearchBanner } from "../../mobileSearchBanner/mobileSearchBanner";
 import { displayResults, totalNumPages } from "@/src/utils/utils";
 import {
-  CARDS_PER_PAGE,
   COLLECTION_LANDING_SORT_LABELS,
   DEFAULT_PAGE_NUM,
   DEFAULT_SEARCH_TERM,
+  RESULTS_PER_PAGE_OPTIONS,
 } from "@/src/config/constants";
 import SearchCardsGrid from "../../grids/searchCardsGrid";
 import {
@@ -62,6 +62,7 @@ const CollectionPage = ({
 
   const collectionSearchManager = new GeneralSearchManager({
     initialPage: Number(searchParams?.page) || DEFAULT_PAGE_NUM,
+    initialPerPage: Number(searchParams?.perPage) || undefined,
     initialSort: searchParams.sort || "sequence",
     defaultSort: "sequence",
     initialFilters: stringToFilter(searchParams?.filters),
@@ -73,12 +74,21 @@ const CollectionPage = ({
 
   const totalPages = totalNumPages(
     searchResults.numResults.toString(),
-    CARDS_PER_PAGE
+    searchResults.perPage || collectionSearchManager.perPage
   );
   const { push } = useRouter();
   const pathname = usePathname();
 
-  const updateURL = async (queryString) => {
+  const updateURL = async (queryString: string) => {
+    const currentQueryString = window.location.search;
+    if (
+      currentQueryString === queryString ||
+      currentQueryString === `?${queryString}`
+    ) {
+      headingRef.current?.focus();
+      return;
+    }
+
     setIsLoaded(false);
     push(`${pathname}?${queryString}`, { scroll: false });
   };
@@ -220,13 +230,14 @@ const CollectionPage = ({
                     margin="0"
                   >{`Displaying ${displayResults(
                     searchResults.numResults,
-                    CARDS_PER_PAGE,
+                    searchResults.perPage || collectionSearchManager.perPage,
                     collectionSearchManager.page
                   )} results`}</Heading>
                   <ViewingOptionsMenu
                     options={COLLECTION_LANDING_SORT_LABELS}
                     searchManager={collectionSearchManager}
                     sort={searchResults.sort}
+                    perPageOptions={RESULTS_PER_PAGE_OPTIONS}
                     updateURL={updateURL}
                     setFiltersExpanded={setFiltersExpanded}
                     showViewModeButtons={isLargerThanSmallTablet}

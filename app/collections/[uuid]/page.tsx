@@ -11,6 +11,7 @@ export type CollectionSearchParamsType = {
   sort: string;
   filters: string;
   page: number;
+  perPage?: number;
   availableFilters?: Record<string, AvailableFilterOption[]>;
   viewMode?: "grid" | "list";
 };
@@ -63,6 +64,7 @@ export default async function Collection({
     keyword: searchParams.q,
     sort: searchParams.sort ? searchParams.sort : "sequence",
     page: searchParams.page,
+    perPage: searchParams.perPage,
     filters,
   });
 

@@ -5,12 +5,14 @@ import {
   Icon,
   Button,
   ButtonGroup,
+  Box,
 } from "@nypl/design-system-react-components";
 
 type ViewingOptionsMenuProps = {
   updateURL: (queryString: string) => Promise<void>;
   searchManager: SearchManager;
   options: Record<string, string>;
+  perPageOptions?: number[];
   setFiltersExpanded?: React.Dispatch<React.SetStateAction<boolean>>;
   sort: string;
   showViewModeButtons?: boolean;
@@ -21,6 +23,7 @@ const ViewingOptionsMenu = ({
   setFiltersExpanded,
   searchManager,
   options,
+  perPageOptions = [],
   sort,
   showViewModeButtons = true,
 }: ViewingOptionsMenuProps) => {
@@ -60,6 +63,37 @@ const ViewingOptionsMenu = ({
           type: "action",
         }))}
       />
+      {perPageOptions.length > 0 && (
+        <Box
+          sx={{
+            display: "none",
+            "@media screen and (min-width: 600px)": { display: "block" },
+          }}
+        >
+          <Menu
+            key={`per-page-${searchManager.perPage}`}
+            id="results-per-page-menu"
+            showLabel
+            selectedItem={searchManager.perPage.toString()}
+            labelText={`Results per page: ${searchManager.perPage}`}
+            labelAsAriaLabel
+            listItemsData={perPageOptions.map((value) => ({
+              id: value.toString(),
+              label: value.toString(),
+              onClick: () => {
+                if (setFiltersExpanded) {
+                  setFiltersExpanded(false);
+                }
+                searchManager.setLastFilter(
+                  "menu-button-results-per-page-menu"
+                );
+                updateURL(searchManager.handlePerPageChange(value));
+              },
+              type: "action",
+            }))}
+          />
+        </Box>
+      )}
       {showViewModeButtons && (
         <ButtonGroup
           sx={{

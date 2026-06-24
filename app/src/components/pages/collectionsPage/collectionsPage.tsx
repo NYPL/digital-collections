@@ -19,6 +19,7 @@ import {
   DEFAULT_SEARCH_TERM,
   COLLECTION_SORT_LABELS,
   DEFAULT_SEARCH_SORT,
+  RESULTS_PER_PAGE_OPTIONS,
 } from "@/src/config/constants";
 import { CollectionSearchManager } from "@/src/utils/searchManager/searchManager";
 import { headerBreakpoints } from "@/src/utils/breakpoints";
@@ -43,6 +44,7 @@ export function CollectionsPage({ data, collectionsSearchParams }) {
 
   const collectionsSearchManager = new CollectionSearchManager({
     initialPage: Number(collectionsSearchParams?.page) || DEFAULT_PAGE_NUM,
+    initialPerPage: Number(collectionsSearchParams?.perPage) || undefined,
     initialSort: collectionsSearchParams?.sort || DEFAULT_COLLECTION_SORT,
     defaultSort: DEFAULT_COLLECTION_SORT,
     initialKeywords: collectionsSearchParams?.q || DEFAULT_SEARCH_TERM,
@@ -179,6 +181,7 @@ export function CollectionsPage({ data, collectionsSearchParams }) {
             options={COLLECTION_SORT_LABELS}
             sort={data.sort}
             searchManager={collectionsSearchManager}
+            perPageOptions={RESULTS_PER_PAGE_OPTIONS}
             updateURL={updateURL}
             showViewModeButtons={false}
           />
