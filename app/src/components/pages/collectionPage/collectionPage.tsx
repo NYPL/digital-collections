@@ -58,7 +58,7 @@ const CollectionPage = ({
   const [filtersExpanded, setFiltersExpanded] = useState(false);
   const [renderCollectionStructure, setRenderCollectionStructure] =
     useState(true);
-  const { isLargerThanSmallTablet } = useBreakpoints();
+  const { isLargerThanSmallTablet, isLargerThanLargeMobile } = useBreakpoints();
 
   const collectionSearchManager = new GeneralSearchManager({
     initialPage: Number(searchParams?.page) || DEFAULT_PAGE_NUM,
@@ -71,6 +71,9 @@ const CollectionPage = ({
     lastFilterRef: useRef<string | null>(null),
     initialViewMode: searchParams?.viewMode,
   });
+  const effectiveViewMode = isLargerThanLargeMobile
+    ? collectionSearchManager.viewMode
+    : "list";
 
   const totalPages = totalNumPages(
     searchResults.numResults.toString(),
@@ -237,7 +240,9 @@ const CollectionPage = ({
                     options={COLLECTION_LANDING_SORT_LABELS}
                     searchManager={collectionSearchManager}
                     sort={searchResults.sort}
-                    perPageOptions={RESULTS_PER_PAGE_OPTIONS}
+                    perPageOptions={
+                      isLargerThanSmallTablet ? RESULTS_PER_PAGE_OPTIONS : []
+                    }
                     updateURL={updateURL}
                     setFiltersExpanded={setFiltersExpanded}
                     showViewModeButtons={isLargerThanSmallTablet}
@@ -252,7 +257,7 @@ const CollectionPage = ({
                   <SearchCardsGrid
                     keywords={searchResults.keyword}
                     results={searchResults.results}
-                    viewMode={collectionSearchManager.viewMode}
+                    viewMode={effectiveViewMode}
                     numColumns={renderCollectionStructure ? 3 : 4}
                   />
                 ) : (

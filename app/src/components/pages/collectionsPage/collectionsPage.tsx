@@ -26,9 +26,11 @@ import { headerBreakpoints } from "@/src/utils/breakpoints";
 import DCSearchBar from "../../search/dcSearchBar";
 import ViewingOptionsMenu from "../../viewingOptionsMenu/viewingOptionsMenu";
 import useSearchAnalytics from "@/src/hooks/useSearchAnalytics";
+import useBreakpoints from "@/src/hooks/useBreakpoints";
 
 export function CollectionsPage({ data, collectionsSearchParams }) {
   const { push } = useRouter();
+  const { isLargerThanSmallTablet } = useBreakpoints();
   const pathname = usePathname();
   const headingRef = useRef<HTMLHeadingElement>(null);
   const isFirstLoad = useRef<boolean>(false);
@@ -181,7 +183,9 @@ export function CollectionsPage({ data, collectionsSearchParams }) {
             options={COLLECTION_SORT_LABELS}
             sort={data.sort}
             searchManager={collectionsSearchManager}
-            perPageOptions={RESULTS_PER_PAGE_OPTIONS}
+            perPageOptions={
+              isLargerThanSmallTablet ? RESULTS_PER_PAGE_OPTIONS : []
+            }
             updateURL={updateURL}
             showViewModeButtons={false}
           />
