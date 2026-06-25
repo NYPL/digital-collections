@@ -13,18 +13,9 @@ test.describe("choose specific sort options", () => {
 
     // page is fully loaded, so sort is safe to click now
     await searchPage.sortButton.click();
-
-    // moving this to test-blocks to isolate dependencies
-    // await searchPage.sortButton.click();
-
-    // static text is not a good indicator that page is fully loaded
-    // await expect(searchPage.refineHeading).toBeVisible();
   });
 
   test("sorts search results by relevance", async ({ page }) => {
-    //await expect(searchPage.sortByRelevance).toBeVisible();
-    // await searchPage.sortButton.click();
-
     await expect(async () => {
       await searchPage.sortByRelevance.click({ force: true });
       await expect(searchPage.sortByRelevanceSelected).toBeVisible();
@@ -34,12 +25,16 @@ test.describe("choose specific sort options", () => {
     });
   });
 
-  test.skip("sorts search results by age", async ({ page }) => {
+  test("sorts search results by age", async ({ page }) => {
     await expect(searchPage.sortByNewest).toBeVisible();
     await expect(searchPage.sortByOldest).toBeVisible();
-    await searchPage.sortByNewest.click({ force: true });
-    await expect(searchPage.sortByNewestSelected).toBeVisible({
-      timeout: 20000,
+
+    await expect(async () => {
+      await searchPage.sortByNewest.click({ force: true });
+      await expect(searchPage.sortByNewestSelected).toBeVisible();
+    }).toPass({
+      timeout: 10000,
+      intervals: [200, 500, 10000],
     });
   });
 
