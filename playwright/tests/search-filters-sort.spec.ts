@@ -15,6 +15,7 @@ test.describe("choose specific sort options", () => {
     }).toPass({ timeout: 10000 });
   });
 
+  // BOILERPLATE that didn't work
   // test.describe("choose specific sort options", () => {
   //   test.beforeEach(async ({ page }) => {
   //     searchPage = new SearchPage(page);
