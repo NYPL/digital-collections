@@ -38,18 +38,23 @@ test.describe("choose specific sort options", () => {
     });
   });
 
-  test.skip("sorts search results alphabetically", async ({ page }) => {
+  test("sorts search results alphabetically", async ({ page }) => {
     await expect(searchPage.sortByAlpha).toBeVisible();
     await expect(searchPage.sortByReverseAlpha).toBeVisible();
-    await searchPage.sortByAlpha.click({ force: true });
-    await expect(searchPage.sortByAlphaSelected).toBeVisible({
-      timeout: 20000,
+
+    await expect(async () => {
+      await searchPage.sortByAlpha.click({ force: true });
+      await expect(searchPage.sortByAlphaSelected).toBeVisible();
+    }).toPass({
+      timeout: 10000,
+      intervals: [200, 500, 10000],
     });
   });
 
-  test.skip("sorts search results by type", async ({ page }) => {
+  test("sorts search results by type", async ({ page }) => {
     await expect(searchPage.sortByCollections).toBeVisible();
     await expect(searchPage.sortByItems).toBeVisible();
+
     await searchPage.sortByCollections.click({ force: true });
     await expect(searchPage.sortByCollectionsSelected).toBeVisible({
       timeout: 20000,
