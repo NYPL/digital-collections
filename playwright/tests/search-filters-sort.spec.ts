@@ -12,10 +12,7 @@ test.describe("choose specific sort options", () => {
     await expect(async () => {
       await searchPage.sortButton.click();
       await expect(searchPage.refineHeading).toBeVisible();
-    }).toPass({
-      timeout: 10000,
-      intervals: [200, 500, 1000],
-    });
+    }).toPass({ timeout: 10000 });
   });
 
   test("sorts search results by relevance", async ({ page }) => {
@@ -25,10 +22,7 @@ test.describe("choose specific sort options", () => {
     await expect(async () => {
       await searchPage.sortByRelevance.click({ force: true });
       await expect(searchPage.sortByRelevanceSelected).toBeVisible();
-    }).toPass({
-      timeout: 10000,
-      intervals: [200, 500, 1000],
-    });
+    }).toPass({ timeout: 10000 });
   });
 
   test("sorts search results by age", async ({ page }) => {
