@@ -11,6 +11,9 @@ test.describe("choose specific sort options", () => {
     // force test-runner on CI to wait until cards actually 'paint,' whatever that means.
     await expect(searchPage.allCards.first()).toBeVisible();
 
+    // page is fully loaded, so sort is safe to click now
+    await searchPage.sortButton.click();
+
     // moving this to test-blocks to isolate dependencies
     // await searchPage.sortButton.click();
 
@@ -20,8 +23,7 @@ test.describe("choose specific sort options", () => {
 
   test("sorts search results by relevance", async ({ page }) => {
     //await expect(searchPage.sortByRelevance).toBeVisible();
-
-    await searchPage.sortButton.click();
+    // await searchPage.sortButton.click();
 
     await expect(async () => {
       await searchPage.sortByRelevance.click({ force: true });
