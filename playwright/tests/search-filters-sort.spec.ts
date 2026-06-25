@@ -20,19 +20,6 @@ test.describe("choose specific sort options", () => {
     await expect(searchPage.sortByRelevanceSelected).toBeVisible({});
   });
 
-  // test("sorts search results by relevance", async ({ page }) => {
-  //   //await expect(searchPage.sortByRelevance).toBeVisible();
-  //   // await searchPage.sortButton.click();
-
-  //   await expect(async () => {
-  //     await searchPage.sortByRelevance.click({ force: true });
-  //     await expect(searchPage.sortByRelevanceSelected).toBeVisible();
-  //   }).toPass({
-  //     timeout: 10000,
-  //     intervals: [200, 500, 10000],
-  //   });
-  // });
-
   test("sorts search results by age", async ({ page }) => {
     await expect(searchPage.sortByNewest).toBeVisible();
     await expect(searchPage.sortByOldest).toBeVisible();
