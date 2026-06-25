@@ -8,15 +8,27 @@ test.describe("choose specific sort options", () => {
     searchPage = new SearchPage(page);
     await searchPage.loadPage(SearchPage.searchResultsUrl);
 
-    // Add polling to open-menu click
+    // Check the menu opening by tracking a real menu item
     await expect(async () => {
       await searchPage.sortButton.click();
-      await expect(searchPage.refineHeading).toBeVisible();
+      await expect(searchPage.sortByRelevance).toBeVisible();
     }).toPass({ timeout: 10000 });
   });
 
+  // test.describe("choose specific sort options", () => {
+  //   test.beforeEach(async ({ page }) => {
+  //     searchPage = new SearchPage(page);
+  //     await searchPage.loadPage(SearchPage.searchResultsUrl);
+
+  //     // Add polling to open-menu click
+  //     await expect(async () => {
+  //       await searchPage.sortButton.click();
+  //       await expect(searchPage.refineHeading).toBeVisible();
+  //     }).toPass({ timeout: 10000 });
+  //   });
+
   test("sorts search results by relevance", async ({ page }) => {
-    await expect(searchPage.sortByRelevance).toBeVisible();
+    // await expect(searchPage.sortByRelevance).toBeVisible();
 
     // Add polling to menu selection
     await expect(async () => {
