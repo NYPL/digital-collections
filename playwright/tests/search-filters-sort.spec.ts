@@ -34,36 +34,27 @@ test.describe("choose specific sort options", () => {
   test("sorts search results by age", async ({ page }) => {
     await expect(searchPage.sortByNewest).toBeVisible();
     await expect(searchPage.sortByOldest).toBeVisible();
-    await expect(async () => {
-      await searchPage.sortByNewest.click({ force: true });
-      await expect(searchPage.sortByNewestSelected).toBeVisible();
-    }).toPass({
-      timeout: 10000,
-      intervals: [200, 500, 1000],
+    await searchPage.sortByNewest.click({ force: true });
+    await expect(searchPage.sortByNewestSelected).toBeVisible({
+      timeout: 20000,
     });
   });
 
   test("sorts search results alphabetically", async ({ page }) => {
     await expect(searchPage.sortByAlpha).toBeVisible();
     await expect(searchPage.sortByReverseAlpha).toBeVisible();
-    await expect(async () => {
-      await searchPage.sortByAlpha.click({ force: true });
-      await expect(searchPage.sortByAlphaSelected).toBeVisible();
-    }).toPass({
-      timeout: 10000,
-      intervals: [200, 500, 1000],
+    await searchPage.sortByAlpha.click({ force: true });
+    await expect(searchPage.sortByAlphaSelected).toBeVisible({
+      timeout: 20000,
     });
   });
 
   test("sorts search results by type", async ({ page }) => {
     await expect(searchPage.sortByCollections).toBeVisible();
     await expect(searchPage.sortByItems).toBeVisible();
-    await expect(async () => {
-      await searchPage.sortByCollections.click({ force: true });
-      await expect(searchPage.sortByCollectionsSelected).toBeVisible();
-    }).toPass({
-      timeout: 10000,
-      intervals: [200, 500, 1000],
+    await searchPage.sortByCollections.click({ force: true });
+    await expect(searchPage.sortByCollectionsSelected).toBeVisible({
+      timeout: 20000,
     });
   });
 });
