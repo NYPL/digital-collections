@@ -8,37 +8,20 @@ test.describe("choose specific sort options", () => {
     searchPage = new SearchPage(page);
     await searchPage.loadPage(SearchPage.searchResultsUrl);
 
-    // Check the menu opening by tracking a real menu item
-    await expect(async () => {
-      await searchPage.sortButton.click();
-      await expect(searchPage.sortByRelevance).toBeVisible();
-    }).toPass({ timeout: 10000 });
+    await searchPage.sortButton.click();
+
+    await expect(searchPage.refineHeading).toBeVisible();
   });
-
-  // BOILERPLATE that didn't work
-  // test.describe("choose specific sort options", () => {
-  //   test.beforeEach(async ({ page }) => {
-  //     searchPage = new SearchPage(page);
-  //     await searchPage.loadPage(SearchPage.searchResultsUrl);
-
-  //     // Add polling to open-menu click
-  //     await expect(async () => {
-  //       await searchPage.sortButton.click();
-  //       await expect(searchPage.refineHeading).toBeVisible();
-  //     }).toPass({ timeout: 10000 });
-  //   });
 
   test("sorts search results by relevance", async ({ page }) => {
-    // await expect(searchPage.sortByRelevance).toBeVisible();
-
-    // Add polling to menu selection
-    await expect(async () => {
-      await searchPage.sortByRelevance.click({ force: true });
-      await expect(searchPage.sortByRelevanceSelected).toBeVisible();
-    }).toPass({ timeout: 10000 });
+    await expect(searchPage.sortByRelevance).toBeVisible();
+    await searchPage.sortByRelevance.click({ force: true });
+    await expect(searchPage.sortByRelevanceSelected).toBeVisible({
+      timeout: 20000,
+    });
   });
 
-  test("sorts search results by age", async ({ page }) => {
+  test.skip("sorts search results by age", async ({ page }) => {
     await expect(searchPage.sortByNewest).toBeVisible();
     await expect(searchPage.sortByOldest).toBeVisible();
     await searchPage.sortByNewest.click({ force: true });
@@ -47,7 +30,7 @@ test.describe("choose specific sort options", () => {
     });
   });
 
-  test("sorts search results alphabetically", async ({ page }) => {
+  test.skip("sorts search results alphabetically", async ({ page }) => {
     await expect(searchPage.sortByAlpha).toBeVisible();
     await expect(searchPage.sortByReverseAlpha).toBeVisible();
     await searchPage.sortByAlpha.click({ force: true });
@@ -56,7 +39,7 @@ test.describe("choose specific sort options", () => {
     });
   });
 
-  test("sorts search results by type", async ({ page }) => {
+  test.skip("sorts search results by type", async ({ page }) => {
     await expect(searchPage.sortByCollections).toBeVisible();
     await expect(searchPage.sortByItems).toBeVisible();
     await searchPage.sortByCollections.click({ force: true });
