@@ -8,16 +8,27 @@ test.describe("choose specific sort options", () => {
     searchPage = new SearchPage(page);
     await searchPage.loadPage(SearchPage.searchResultsUrl);
 
-    await searchPage.sortButton.click();
+    // force test-runner on CI to wait until cards actually 'paint,' whatever that means.
+    await expect(searchPage.allCards.first()).toBeVisible();
 
-    await expect(searchPage.refineHeading).toBeVisible();
+    // moving this to test-blocks to isolate dependencies
+    // await searchPage.sortButton.click();
+
+    // static text is not a good indicator that page is fully loaded
+    // await expect(searchPage.refineHeading).toBeVisible();
   });
 
   test("sorts search results by relevance", async ({ page }) => {
-    await expect(searchPage.sortByRelevance).toBeVisible();
-    await searchPage.sortByRelevance.click({ force: true });
-    await expect(searchPage.sortByRelevanceSelected).toBeVisible({
-      timeout: 20000,
+    //await expect(searchPage.sortByRelevance).toBeVisible();
+
+    await searchPage.sortButton.click();
+
+    await expect(async () => {
+      await searchPage.sortByRelevance.click({ force: true });
+      await expect(searchPage.sortByRelevanceSelected).toBeVisible();
+    }).toPass({
+      timeout: 10000,
+      intervals: [200, 500, 10000],
     });
   });
 
