@@ -16,9 +16,6 @@ test.describe("choose specific sort options", () => {
   });
 
   test("sorts search results by relevance", async ({ page }) => {
-    //await expect(searchPage.sortByRelevance).toBeVisible();
-    // await searchPage.sortButton.click();
-
     await expect(async () => {
       await searchPage.sortByRelevance.click({ force: true });
       await expect(searchPage.sortByRelevanceSelected).toBeVisible();
