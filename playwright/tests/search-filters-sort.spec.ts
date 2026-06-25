@@ -8,17 +8,21 @@ test.describe("choose specific sort options", () => {
     searchPage = new SearchPage(page);
     await searchPage.loadPage(SearchPage.searchResultsUrl);
 
-    await searchPage.sortButton.click();
-
-    await expect(searchPage.refineHeading).toBeVisible();
+    // Add polling to open-menu click
+    await expect(async () => {
+      await searchPage.sortButton.click();
+      await expect(searchPage.refineHeading).toBeVisible();
+    }).toPass({ timeout: 10000 });
   });
 
   test("sorts search results by relevance", async ({ page }) => {
     await expect(searchPage.sortByRelevance).toBeVisible();
-    await searchPage.sortByRelevance.click({ force: true });
-    await expect(searchPage.sortByRelevanceSelected).toBeVisible({
-      timeout: 20000,
-    });
+
+    // Add polling to menu selection
+    await expect(async () => {
+      await searchPage.sortByRelevance.click({ force: true });
+      await expect(searchPage.sortByRelevanceSelected).toBeVisible();
+    }).toPass({ timeout: 20000 });
   });
 
   test("sorts search results by age", async ({ page }) => {
