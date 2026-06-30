@@ -28,7 +28,7 @@ export type SearchProps = {
 };
 
 export default async function Search(props: SearchProps) {
-  revalidatePath("/search/index");
+  //revalidatePath("/search/index");
   const searchParams = await props.searchParams;
   const pageName = searchParams.q ? "search-results" : "all-items";
 

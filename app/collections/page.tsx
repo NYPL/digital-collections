@@ -20,7 +20,7 @@ export const metadata: Metadata = {
 };
 
 export default async function Collections(props: CollectionsProps) {
-  revalidatePath("/collections", "page");
+  //revalidatePath("/collections", "page");
   const params = await props.params;
   const searchParams = await props.searchParams;
 

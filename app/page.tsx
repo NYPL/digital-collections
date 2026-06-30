@@ -4,7 +4,7 @@ import { FeaturedItemDataType } from "../app/src/types/FeaturedItemDataType";
 import { revalidatePath } from "next/cache";
 
 export default async function Home() {
-  revalidatePath("/");
+  //revalidatePath("/");
   const swimLaneData = await CollectionsApi.getHomePageData();
   const featuredItemData: FeaturedItemDataType =
     await CollectionsApi.getFeaturedItemData();
