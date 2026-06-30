@@ -38,8 +38,8 @@
   "dependencies": {
     "@allmaps/id": "^1.0.0-beta.37",
     "@allmaps/maplibre": "^1.0.0-beta.42",
-    "@types/react": "18.3.0",
-    "@types/react-dom": "18.3.0",
+    "@types/react": "18.2.0",
+    "@types/react-dom": "18.2.0",
     "dotenv": "16.4.5",
     "eslint": "8.56.0",
     "googleapis": "129.0.0",
@@ -51,8 +51,8 @@
     "next": "15.5.9",
     "npm": "11.9.0",
     "plyr-react": "5.3.0",
-    "react": "18.3.0",
-    "react-dom": "18.3.0",
+    "react": "18.2.0",
+    "react-dom": "18.2.0",
     "sharp": "0.33.5",
     "ts-node": "10.9.1",
     "typescript": "4.9.5",
@@ -86,7 +86,7 @@
   },
   "overrides": {
     "nwsapi": "2.2.13",
-    "react": "18.3.0",
-    "react-dom": "18.3.0"
+    "react": "18.2.0",
+    "react-dom": "18.2.0"
   }
 }
