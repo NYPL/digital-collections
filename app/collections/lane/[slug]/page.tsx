@@ -6,13 +6,12 @@ import { CollectionsApi } from "@/src/utils/apiClients/apiClients";
 import { redirect } from "next/navigation";
 
 type LaneProps = {
-  params: { slug: string };
-  searchParams: { page: number };
+  params: Promise<{ slug: string }>;
+  searchParams: Promise<{ page: number }>;
 };
 
-export async function generateMetadata({
-  params,
-}: LaneProps): Promise<Metadata> {
+export async function generateMetadata(props: LaneProps): Promise<Metadata> {
+  const params = await props.params;
   const title = slugToString(params.slug);
   return {
     title: `${title} - NYPL Digital Collections`,
@@ -22,7 +21,10 @@ export async function generateMetadata({
   };
 }
 
-export default async function Lane({ params, searchParams }: LaneProps) {
+export default async function Lane(props: LaneProps) {
+  const params = await props.params;
+  const searchParams = await props.searchParams;
+
   const data = await CollectionsApi.getLaneData({
     slug: params.slug.replace(/-/g, " "),
     sort: "items-count",
