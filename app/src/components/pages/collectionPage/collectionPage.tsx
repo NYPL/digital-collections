@@ -262,7 +262,12 @@ const CollectionPage = ({
                   />
                 ) : (
                   [...Array(12)].map((_, index) => (
-                    <SearchCardGridLoading id={index} key={index} />
+                    <SearchCardGridLoading
+                      id={index}
+                      key={index}
+                      viewMode={effectiveViewMode}
+                      numColumns={renderCollectionStructure ? 3 : 4}
+                    />
                   ))
                 )}
                 <Box
