@@ -34,6 +34,7 @@ jobs:
         run: npm run build
 
       - name: Run Playwright tests
+        # Explicitly enforce Chromium
         run: npm run playwright -- --project=chromium
 
       - uses: actions/upload-artifact@v4
