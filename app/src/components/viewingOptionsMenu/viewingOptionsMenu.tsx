@@ -16,6 +16,9 @@ type ViewingOptionsMenuProps = {
   setFiltersExpanded?: React.Dispatch<React.SetStateAction<boolean>>;
   sort: string;
   showViewModeButtons?: boolean;
+  showSortMenu?: boolean;
+  sortMenuId?: string;
+  perPageMenuId?: string;
 };
 
 const ViewingOptionsMenu = ({
@@ -26,6 +29,9 @@ const ViewingOptionsMenu = ({
   perPageOptions = [],
   sort,
   showViewModeButtons = true,
+  showSortMenu = true,
+  sortMenuId = "sort-menu",
+  perPageMenuId = "results-per-page-menu",
 }: ViewingOptionsMenuProps) => {
   const layoutSelectHandler = (viewMode: "grid" | "list"): (() => void) => {
     return () => {
@@ -43,26 +49,28 @@ const ViewingOptionsMenu = ({
   };
   return (
     <div style={{ display: "flex", alignItems: "center", gap: "4px" }}>
-      <Menu
-        key={sort}
-        id="sort-menu"
-        showLabel
-        selectedItem={sort}
-        labelText={`Sort by: ${options[sort]}`}
-        labelAsAriaLabel
-        listItemsData={Object.entries(options).map(([id, label]) => ({
-          id,
-          label,
-          onClick: () => {
-            if (setFiltersExpanded) {
-              setFiltersExpanded(false);
-            }
-            searchManager.setLastFilter("menu-button-sort-menu");
-            updateURL(searchManager.handleSortChange(id));
-          },
-          type: "action",
-        }))}
-      />
+      {showSortMenu && (
+        <Menu
+          key={`${sortMenuId}-${sort}`}
+          id={sortMenuId}
+          showLabel
+          selectedItem={sort}
+          labelText={`Sort by: ${options[sort]}`}
+          labelAsAriaLabel
+          listItemsData={Object.entries(options).map(([id, label]) => ({
+            id,
+            label,
+            onClick: () => {
+              if (setFiltersExpanded) {
+                setFiltersExpanded(false);
+              }
+              searchManager.setLastFilter(`menu-button-${sortMenuId}`);
+              updateURL(searchManager.handleSortChange(id));
+            },
+            type: "action",
+          }))}
+        />
+      )}
       {perPageOptions.length > 0 && (
         <Box
           sx={{
@@ -71,8 +79,8 @@ const ViewingOptionsMenu = ({
           }}
         >
           <Menu
-            key={`per-page-${searchManager.perPage}`}
-            id="results-per-page-menu"
+            key={`${perPageMenuId}-${searchManager.perPage}`}
+            id={perPageMenuId}
             showLabel
             selectedItem={searchManager.perPage.toString()}
             labelText={`Results per page: ${searchManager.perPage}`}
@@ -84,9 +92,7 @@ const ViewingOptionsMenu = ({
                 if (setFiltersExpanded) {
                   setFiltersExpanded(false);
                 }
-                searchManager.setLastFilter(
-                  "menu-button-results-per-page-menu"
-                );
+                searchManager.setLastFilter(`menu-button-${perPageMenuId}`);
                 updateURL(searchManager.handlePerPageChange(value));
               },
               type: "action",

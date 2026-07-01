@@ -191,7 +191,7 @@ const CollectionPage = ({
         <Flex
           gap="xxl"
           sx={{
-            flexDir: { base: "column", md: "row" },
+            flexDir: { base: "column", lg: "row" },
           }}
         >
           <CollectionStructure
@@ -200,14 +200,14 @@ const CollectionPage = ({
             searchManager={collectionSearchManager}
             setRenderCollectionStructure={setRenderCollectionStructure}
           />
-          <Box width="100%">
+          <Box width="100%" minWidth={0} flex="1 1 0">
             <CollectionSearch
               searchManager={collectionSearchManager}
               key={searchResults.keyword.length}
             />
             <Flex
               sx={{
-                [`@media screen and (min-width: ${headerBreakpoints.smTablet}px)`]:
+                [`@media screen and (min-width: ${headerBreakpoints.lgTablet}px)`]:
                   {
                     flexDir: "row",
                     marginBottom: "s",
@@ -265,31 +265,33 @@ const CollectionPage = ({
                     <SearchCardGridLoading id={index} key={index} />
                   ))
                 )}
-                <Flex
-                  paddingLeft="s"
-                  paddingRight="s"
+                <Box
                   marginTop="xxl"
                   marginBottom="xxl"
                   sx={{
-                    "> a": {
-                      marginTop: "xl",
-                      justifyContent: "end",
-                    },
-                    paddingLeft: "s",
-                    paddingRight: "s",
+                    display: "grid",
+                    gap: "m",
+                    gridTemplateColumns: "1fr",
+                    alignItems: "center",
                     [`@media screen and (min-width: ${headerBreakpoints.lgMobile}px)`]:
                       {
-                        "> a": {
-                          marginTop: "0",
-                        },
-                        flexDir: "row",
-                        paddingLeft: 0,
-                        paddingRight: 0,
+                        gridTemplateColumns: "1fr auto 1fr",
                       },
-                    flexDir: "column-reverse",
                   }}
                 >
-                  {searchResults.results?.length > 0 && <BackToTopLink />}
+                  <Box
+                    sx={{
+                      justifySelf: "start",
+                      order: 2,
+                      [`@media screen and (min-width: ${headerBreakpoints.lgMobile}px)`]:
+                        {
+                          order: 1,
+                        },
+                    }}
+                  >
+                    {searchResults.results?.length > 0 && <BackToTopLink />}
+                  </Box>
+
                   <Pagination
                     id="pagination-id"
                     initialPage={1}
@@ -303,14 +305,37 @@ const CollectionPage = ({
                       );
                     }}
                     sx={{
+                      justifySelf: "center",
                       justifyContent: "center",
+                      order: 1,
                       [`@media screen and (min-width: ${headerBreakpoints.lgMobile}px)`]:
                         {
-                          justifyContent: "flex-end",
+                          order: 2,
                         },
                     }}
                   />
-                </Flex>
+
+                  <Box
+                    sx={{
+                      justifySelf: "end",
+                      order: 3,
+                    }}
+                  >
+                    {isLargerThanSmallTablet && (
+                      <ViewingOptionsMenu
+                        options={COLLECTION_LANDING_SORT_LABELS}
+                        searchManager={collectionSearchManager}
+                        sort={searchResults.sort}
+                        perPageOptions={RESULTS_PER_PAGE_OPTIONS}
+                        updateURL={updateURL}
+                        setFiltersExpanded={setFiltersExpanded}
+                        showSortMenu={false}
+                        showViewModeButtons={false}
+                        perPageMenuId="results-per-page-menu-bottom"
+                      />
+                    )}
+                  </Box>
+                </Box>
               </>
             ) : (
               <NoResultsFound
