@@ -15,17 +15,6 @@ import {
 import { capitalize } from "../utils";
 import { MutableRefObject } from "react";
 
-const PER_PAGE_STORAGE_KEY = "perPage";
-
-const getStoredPerPage = (): number | undefined => {
-  if (typeof window === "undefined") return undefined;
-
-  const storedPerPage = Number(localStorage.getItem(PER_PAGE_STORAGE_KEY));
-  return Number.isInteger(storedPerPage) && storedPerPage > 0
-    ? storedPerPage
-    : undefined;
-};
-
 export interface SearchManager {
   handleSearchSubmit(enforceSort?: string): string;
   handleKeywordChange(value: string): void;
@@ -75,13 +64,7 @@ abstract class BaseSearchManager implements SearchManager {
     initialViewMode?: "grid" | "list";
   }) {
     this.currentPage = config.initialPage;
-    const storedPerPage = getStoredPerPage();
-    this.currentPerPage =
-      config.initialPerPage || storedPerPage || CARDS_PER_PAGE;
-
-    if (typeof window !== "undefined") {
-      localStorage.setItem(PER_PAGE_STORAGE_KEY, String(this.currentPerPage));
-    }
+    this.currentPerPage = config.initialPerPage || CARDS_PER_PAGE;
 
     this.currentSort = config.initialSort;
     this.defaultSort = config.defaultSort;
@@ -207,9 +190,6 @@ abstract class BaseSearchManager implements SearchManager {
   }
 
   handlePerPageChange(perPage: number) {
-    if (typeof window !== "undefined") {
-      localStorage.setItem(PER_PAGE_STORAGE_KEY, String(perPage));
-    }
     this.currentPerPage = perPage;
     this.currentPage = DEFAULT_PAGE_NUM;
     return this.getQueryString({
