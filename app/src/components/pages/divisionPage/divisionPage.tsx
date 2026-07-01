@@ -26,14 +26,6 @@ import {
   CARDS_PER_PAGE,
 } from "../../../config/constants";
 
-const PER_PAGE = "perPage";
-
-const getStoredPerPage = (): number | undefined => {
-  if (typeof window === "undefined") return undefined;
-  const stored = Number(localStorage.getItem(PER_PAGE));
-  return Number.isInteger(stored) && stored > 0 ? stored : undefined;
-};
-
 export default function DivisionPage({ data }: any) {
   const params = useParams();
   const slug = params.slug as string;
@@ -47,7 +39,7 @@ export default function DivisionPage({ data }: any) {
   );
 
   const [currentPerPage, setCurrentPerPage] = useState(
-    Number(queryParams.get("perPage")) || getStoredPerPage() || CARDS_PER_PAGE
+    Number(queryParams.get("perPage")) || CARDS_PER_PAGE
   );
 
   const { push } = useRouter();
@@ -174,9 +166,6 @@ export default function DivisionPage({ data }: any) {
               label: value.toString(),
               onClick: () => {
                 setCurrentPerPage(value);
-                if (typeof window !== "undefined") {
-                  localStorage.setItem(PER_PAGE, String(value));
-                }
                 const newParams = new URLSearchParams(queryParams.toString());
                 newParams.set("perPage", String(value));
                 newParams.set("page", "1");
