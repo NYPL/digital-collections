@@ -188,7 +188,7 @@ const SearchPage = ({
         />
         <Flex
           sx={{
-            [`@media screen and (min-width: ${headerBreakpoints.smTablet}px)`]:
+            [`@media screen and (min-width: ${headerBreakpoints.lgTablet}px)`]:
               {
                 flexDir: "row",
                 marginBottom: "s",
@@ -252,31 +252,33 @@ const SearchPage = ({
               ))
             )}
 
-            <Flex
-              paddingLeft="s"
-              paddingRight="s"
+            <Box
               marginTop="xxl"
               marginBottom="xxl"
               sx={{
-                "> a": {
-                  marginTop: "xl",
-                  justifyContent: "end",
-                },
-                paddingLeft: "s",
-                paddingRight: "s",
+                display: "grid",
+                gap: "m",
+                gridTemplateColumns: "1fr",
+                alignItems: "center",
                 [`@media screen and (min-width: ${headerBreakpoints.lgMobile}px)`]:
                   {
-                    "> a": {
-                      marginTop: "0",
-                    },
-                    flexDir: "row",
-                    paddingLeft: 0,
-                    paddingRight: 0,
+                    gridTemplateColumns: "1fr auto 1fr",
                   },
-                flexDir: "column-reverse",
               }}
             >
-              {searchResults.results?.length > 0 && <BackToTopLink />}{" "}
+              <Box
+                sx={{
+                  justifySelf: "start",
+                  order: 2,
+                  [`@media screen and (min-width: ${headerBreakpoints.lgMobile}px)`]:
+                    {
+                      order: 1,
+                    },
+                }}
+              >
+                {searchResults.results?.length > 0 && <BackToTopLink />}
+              </Box>
+
               <Pagination
                 id="pagination-id"
                 initialPage={searchManager.page}
@@ -288,14 +290,37 @@ const SearchPage = ({
                   updateURL(searchManager.handlePageChange(newPage));
                 }}
                 sx={{
+                  justifySelf: "center",
                   justifyContent: "center",
+                  order: 1,
                   [`@media screen and (min-width: ${headerBreakpoints.lgMobile}px)`]:
                     {
-                      justifyContent: "flex-end",
+                      order: 2,
                     },
                 }}
               />
-            </Flex>
+
+              <Box
+                sx={{
+                  justifySelf: "end",
+                  order: 3,
+                }}
+              >
+                {isLargerThanSmallTablet && (
+                  <ViewingOptionsMenu
+                    options={SEARCH_SORT_LABELS}
+                    sort={searchResults.sort}
+                    searchManager={searchManager}
+                    perPageOptions={RESULTS_PER_PAGE_OPTIONS}
+                    setFiltersExpanded={setFiltersExpanded}
+                    updateURL={updateURL}
+                    showSortMenu={false}
+                    showViewModeButtons={false}
+                    perPageMenuId="results-per-page-menu-bottom"
+                  />
+                )}
+              </Box>
+            </Box>
           </>
         )}
       </Box>
