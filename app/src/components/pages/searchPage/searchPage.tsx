@@ -248,7 +248,13 @@ const SearchPage = ({
               />
             ) : (
               [...Array(12)].map((_, index) => (
-                <SearchCardGridLoading id={index} key={index} />
+                <SearchCardGridLoading
+                  id={index}
+                  key={index}
+                  viewMode={effectiveViewMode}
+                  numColumns={4}
+                  largeMobileColumns={2}
+                />
               ))
             )}
 
