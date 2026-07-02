@@ -25,6 +25,8 @@ import {
   RESULTS_PER_PAGE_OPTIONS,
   CARDS_PER_PAGE,
 } from "../../../config/constants";
+import BackToTopLink from "../../backToTopLink/backToTopLink";
+import useBreakpoints from "@/src/hooks/useBreakpoints";
 
 export default function DivisionPage({ data }: any) {
   const params = useParams();
@@ -43,6 +45,7 @@ export default function DivisionPage({ data }: any) {
   );
 
   const { push } = useRouter();
+  const { isLargerThanSmallTablet } = useBreakpoints();
 
   const totalPages = totalNumPages(data.numFound, data.perPage);
 
@@ -151,7 +154,10 @@ export default function DivisionPage({ data }: any) {
         <Box
           sx={{
             display: "none",
-            "@media screen and (min-width: 768px)": { display: "block" },
+            [`@media screen and (min-width: ${headerBreakpoints.smTablet}px)`]:
+              {
+                display: "block",
+              },
           }}
         >
           <Menu
@@ -195,19 +201,111 @@ export default function DivisionPage({ data }: any) {
           ))
       )}
       {totalPages > 1 && (
-        <Pagination
-          id="pagination-id"
-          initialPage={currentPage}
-          currentPage={currentPage}
-          pageCount={totalPages}
-          onPageChange={updatePageURL}
+        <Box
+          marginTop="xxl"
+          marginBottom="xxl"
           sx={{
-            display: "flex",
-            justifyContent: "center",
-            gap: "s",
-            marginTop: "xxl",
+            display: "grid",
+            gap: "m",
+            gridTemplateColumns: "1fr",
+            alignItems: "center",
+            [`@media screen and (min-width: ${headerBreakpoints.lgMobile}px)`]:
+              {
+                gridTemplateColumns: "repeat(2, minmax(0, 1fr))",
+              },
+            [`@media screen and (min-width: ${headerBreakpoints.lgTablet}px)`]:
+              {
+                gridTemplateColumns: "1fr",
+              },
+            [`@media screen and (min-width: ${headerBreakpoints.desktop}px)`]: {
+              gridTemplateColumns: "1fr auto 1fr",
+            },
           }}
-        />
+        >
+          <Box
+            sx={{
+              justifySelf: "center",
+              order: 2,
+              [`@media screen and (min-width: ${headerBreakpoints.lgMobile}px)`]:
+                {
+                  order: 2,
+                  gridColumn: "1 / -1",
+                  justifySelf: "center",
+                },
+              [`@media screen and (min-width: ${headerBreakpoints.desktop}px)`]:
+                {
+                  order: 1,
+                  gridColumn: "auto",
+                  justifySelf: "start",
+                },
+            }}
+          >
+            <BackToTopLink />
+          </Box>
+
+          <Pagination
+            id="pagination-id"
+            initialPage={currentPage}
+            currentPage={currentPage}
+            pageCount={totalPages}
+            onPageChange={updatePageURL}
+            sx={{
+              justifySelf: "center",
+              justifyContent: "center",
+              order: 1,
+              [`@media screen and (min-width: ${headerBreakpoints.lgMobile}px)`]:
+                {
+                  order: 1,
+                  gridColumn: "1 / -1",
+                },
+              [`@media screen and (min-width: ${headerBreakpoints.desktop}px)`]:
+                {
+                  order: 2,
+                  gridColumn: "auto",
+                },
+            }}
+          />
+
+          <Box
+            sx={{
+              order: 3,
+              justifySelf: "center",
+              gridColumn: "1 / -1",
+              [`@media screen and (min-width: ${headerBreakpoints.desktop}px)`]:
+                {
+                  justifySelf: "end",
+                  gridColumn: "auto",
+                },
+            }}
+          >
+            <Box>
+              {isLargerThanSmallTablet && (
+                <Menu
+                  key={`per-page-bottom-${currentPerPage}`}
+                  id="results-per-page-menu-bottom"
+                  showLabel
+                  selectedItem={currentPerPage.toString()}
+                  labelText={`Results per page: ${currentPerPage}`}
+                  labelAsAriaLabel
+                  listItemsData={RESULTS_PER_PAGE_OPTIONS.map((value) => ({
+                    id: value.toString(),
+                    label: value.toString(),
+                    onClick: () => {
+                      setCurrentPerPage(value);
+                      const newParams = new URLSearchParams(
+                        queryParams.toString()
+                      );
+                      newParams.set("perPage", String(value));
+                      newParams.set("page", "1");
+                      updateURL(newParams.toString());
+                    },
+                    type: "action",
+                  }))}
+                />
+              )}
+            </Box>
+          </Box>
+        </Box>
       )}
     </PageLayout>
   );
