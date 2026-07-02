@@ -275,17 +275,29 @@ const CollectionPage = ({
                     alignItems: "center",
                     [`@media screen and (min-width: ${headerBreakpoints.lgMobile}px)`]:
                       {
+                        gridTemplateColumns: "repeat(2, minmax(0, 1fr))",
+                      },
+                    [`@media screen and (min-width: ${headerBreakpoints.desktop}px)`]:
+                      {
                         gridTemplateColumns: "1fr auto 1fr",
                       },
                   }}
                 >
                   <Box
                     sx={{
-                      justifySelf: "start",
+                      justifySelf: "center",
                       order: 2,
                       [`@media screen and (min-width: ${headerBreakpoints.lgMobile}px)`]:
                         {
+                          order: 2,
+                          gridColumn: "1 / -1",
+                          justifySelf: "center",
+                        },
+                      [`@media screen and (min-width: ${headerBreakpoints.desktop}px)`]:
+                        {
                           order: 1,
+                          gridColumn: "auto",
+                          justifySelf: "start",
                         },
                     }}
                   >
@@ -310,7 +322,13 @@ const CollectionPage = ({
                       order: 1,
                       [`@media screen and (min-width: ${headerBreakpoints.lgMobile}px)`]:
                         {
+                          order: 1,
+                          gridColumn: "1 / -1",
+                        },
+                      [`@media screen and (min-width: ${headerBreakpoints.desktop}px)`]:
+                        {
                           order: 2,
+                          gridColumn: "auto",
                         },
                     }}
                   />
