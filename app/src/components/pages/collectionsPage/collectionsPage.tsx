@@ -27,6 +27,7 @@ import DCSearchBar from "../../search/dcSearchBar";
 import ViewingOptionsMenu from "../../viewingOptionsMenu/viewingOptionsMenu";
 import useSearchAnalytics from "@/src/hooks/useSearchAnalytics";
 import useBreakpoints from "@/src/hooks/useBreakpoints";
+import BackToTopLink from "../../backToTopLink/backToTopLink";
 
 export function CollectionsPage({ data, collectionsSearchParams }) {
   const { push } = useRouter();
@@ -207,22 +208,100 @@ export function CollectionsPage({ data, collectionsSearchParams }) {
         ))
       )}
       {totalPages > 1 && (
-        <Pagination
-          id="pagination-id"
-          currentPage={collectionsSearchManager.page}
-          initialPage={collectionsSearchManager.page}
-          pageCount={totalPages}
-          onPageChange={(newPage) => {
-            collectionsSearchManager.setLastFilter(null);
-            updateURL(collectionsSearchManager.handlePageChange(newPage));
-          }}
+        <Box
+          marginTop="xxl"
+          marginBottom="xxl"
           sx={{
-            display: "flex",
-            justifyContent: "center",
-            gap: "s",
-            marginTop: "xxl",
+            display: "grid",
+            gap: "m",
+            gridTemplateColumns: "1fr",
+            alignItems: "center",
+            [`@media screen and (min-width: ${headerBreakpoints.lgMobile}px)`]:
+              {
+                gridTemplateColumns: "repeat(2, minmax(0, 1fr))",
+              },
+            [`@media screen and (min-width: ${headerBreakpoints.lgTablet}px)`]:
+              {
+                gridTemplateColumns: "1fr",
+              },
+            [`@media screen and (min-width: ${headerBreakpoints.desktop}px)`]: {
+              gridTemplateColumns: "1fr auto 1fr",
+            },
           }}
-        />
+        >
+          <Box
+            sx={{
+              justifySelf: "center",
+              order: 2,
+              [`@media screen and (min-width: ${headerBreakpoints.lgMobile}px)`]:
+                {
+                  order: 2,
+                  gridColumn: "1 / -1",
+                  justifySelf: "center",
+                },
+              [`@media screen and (min-width: ${headerBreakpoints.desktop}px)`]:
+                {
+                  order: 1,
+                  gridColumn: "auto",
+                  justifySelf: "start",
+                },
+            }}
+          >
+            <BackToTopLink />
+          </Box>
+
+          <Pagination
+            id="pagination-id"
+            currentPage={collectionsSearchManager.page}
+            initialPage={collectionsSearchManager.page}
+            pageCount={totalPages}
+            onPageChange={(newPage) => {
+              collectionsSearchManager.setLastFilter(null);
+              updateURL(collectionsSearchManager.handlePageChange(newPage));
+            }}
+            sx={{
+              justifySelf: "center",
+              justifyContent: "center",
+              order: 1,
+              [`@media screen and (min-width: ${headerBreakpoints.lgMobile}px)`]:
+                {
+                  order: 1,
+                  gridColumn: "1 / -1",
+                },
+              [`@media screen and (min-width: ${headerBreakpoints.desktop}px)`]:
+                {
+                  order: 2,
+                  gridColumn: "auto",
+                },
+            }}
+          />
+
+          <Box
+            sx={{
+              order: 3,
+              justifySelf: "center",
+              gridColumn: "1 / -1",
+              [`@media screen and (min-width: ${headerBreakpoints.desktop}px)`]:
+                {
+                  justifySelf: "end",
+                  gridColumn: "auto",
+                },
+            }}
+          >
+            {isLargerThanSmallTablet && (
+              <ViewingOptionsMenu
+                options={COLLECTION_SORT_LABELS}
+                sort={data.sort}
+                searchManager={collectionsSearchManager}
+                perPageOptions={RESULTS_PER_PAGE_OPTIONS}
+                updateURL={updateURL}
+                showSortMenu={false}
+                showViewModeButtons={false}
+                perPageMenuId="results-per-page-menu-bottom"
+              />
+            )}
+          </Box>
+        </Box>
       )}
     </>
   );
