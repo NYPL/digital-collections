@@ -4,7 +4,6 @@ import {
   Heading,
   HorizontalRule,
   Menu,
-  Pagination,
   Flex,
 } from "@nypl/design-system-react-components";
 import {
@@ -27,14 +26,8 @@ import {
   RESULTS_PER_PAGE_OPTIONS,
   CARDS_PER_PAGE,
 } from "../../../config/constants";
-
-const PER_PAGE = "perPage";
-
-const getStoredPerPage = (): number | undefined => {
-  if (typeof window === "undefined") return undefined;
-  const stored = Number(localStorage.getItem(PER_PAGE));
-  return Number.isInteger(stored) && stored > 0 ? stored : undefined;
-};
+import useBreakpoints from "@/src/hooks/useBreakpoints";
+import BottomPaginationSection from "../../bottomPaginationSection/bottomPaginationSection";
 
 export default function CollectionLanePage({ data }: any) {
   const params = useParams();
@@ -50,10 +43,11 @@ export default function CollectionLanePage({ data }: any) {
   );
 
   const [currentPerPage, setCurrentPerPage] = useState(
-    Number(queryParams.get("perPage")) || getStoredPerPage() || CARDS_PER_PAGE
+    Number(queryParams.get("perPage")) || CARDS_PER_PAGE
   );
 
   const { push } = useRouter();
+  const { isLargerThanSmallTablet } = useBreakpoints();
 
   const totalPages = totalNumPages(data.numResults, data.perPage);
 
@@ -134,7 +128,10 @@ export default function CollectionLanePage({ data }: any) {
         <Box
           sx={{
             display: "none",
-            "@media screen and (min-width: 768px)": { display: "block" },
+            [`@media screen and (min-width: ${headerBreakpoints.smTablet}px)`]:
+              {
+                display: "block",
+              },
           }}
         >
           <Menu
@@ -149,9 +146,6 @@ export default function CollectionLanePage({ data }: any) {
               label: value.toString(),
               onClick: () => {
                 setCurrentPerPage(value);
-                if (typeof window !== "undefined") {
-                  localStorage.setItem(PER_PAGE, String(value));
-                }
                 const newParams = new URLSearchParams(queryParams.toString());
                 newParams.set("perPage", String(value));
                 newParams.set("page", "1");
@@ -176,18 +170,37 @@ export default function CollectionLanePage({ data }: any) {
           ))
       )}
       {totalPages > 1 && (
-        <Pagination
-          id="pagination-id"
-          initialPage={currentPage}
+        <BottomPaginationSection
           currentPage={currentPage}
+          initialPage={currentPage}
           pageCount={totalPages}
           onPageChange={updatePageURL}
-          sx={{
-            display: "flex",
-            justifyContent: "center",
-            gap: "s",
-            marginTop: "xxl",
-          }}
+          rightContent={
+            isLargerThanSmallTablet ? (
+              <Menu
+                key={`per-page-bottom-${currentPerPage}`}
+                id="results-per-page-menu-bottom"
+                showLabel
+                selectedItem={currentPerPage.toString()}
+                labelText={`Results per page: ${currentPerPage}`}
+                labelAsAriaLabel
+                listItemsData={RESULTS_PER_PAGE_OPTIONS.map((value) => ({
+                  id: value.toString(),
+                  label: value.toString(),
+                  onClick: () => {
+                    setCurrentPerPage(value);
+                    const newParams = new URLSearchParams(
+                      queryParams.toString()
+                    );
+                    newParams.set("perPage", String(value));
+                    newParams.set("page", "1");
+                    updateURL(newParams.toString());
+                  },
+                  type: "action",
+                }))}
+              />
+            ) : null
+          }
         />
       )}
     </PageLayout>

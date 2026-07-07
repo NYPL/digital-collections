@@ -4,7 +4,6 @@ import {
   Box,
   Heading,
   HorizontalRule,
-  Pagination,
   Flex,
   Spacer,
 } from "@nypl/design-system-react-components";
@@ -27,6 +26,7 @@ import DCSearchBar from "../../search/dcSearchBar";
 import ViewingOptionsMenu from "../../viewingOptionsMenu/viewingOptionsMenu";
 import useSearchAnalytics from "@/src/hooks/useSearchAnalytics";
 import useBreakpoints from "@/src/hooks/useBreakpoints";
+import BottomPaginationSection from "../../bottomPaginationSection/bottomPaginationSection";
 
 export function CollectionsPage({ data, collectionsSearchParams }) {
   const { push } = useRouter();
@@ -207,8 +207,7 @@ export function CollectionsPage({ data, collectionsSearchParams }) {
         ))
       )}
       {totalPages > 1 && (
-        <Pagination
-          id="pagination-id"
+        <BottomPaginationSection
           currentPage={collectionsSearchManager.page}
           initialPage={collectionsSearchManager.page}
           pageCount={totalPages}
@@ -216,12 +215,20 @@ export function CollectionsPage({ data, collectionsSearchParams }) {
             collectionsSearchManager.setLastFilter(null);
             updateURL(collectionsSearchManager.handlePageChange(newPage));
           }}
-          sx={{
-            display: "flex",
-            justifyContent: "center",
-            gap: "s",
-            marginTop: "xxl",
-          }}
+          rightContent={
+            isLargerThanSmallTablet ? (
+              <ViewingOptionsMenu
+                options={COLLECTION_SORT_LABELS}
+                sort={data.sort}
+                searchManager={collectionsSearchManager}
+                perPageOptions={RESULTS_PER_PAGE_OPTIONS}
+                updateURL={updateURL}
+                showSortMenu={false}
+                showViewModeButtons={false}
+                perPageMenuId="results-per-page-menu-bottom"
+              />
+            ) : null
+          }
         />
       )}
     </>

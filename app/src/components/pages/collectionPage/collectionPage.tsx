@@ -5,7 +5,6 @@ import {
   Flex,
   Link,
   Icon,
-  Pagination,
 } from "@nypl/design-system-react-components";
 import React, { useEffect, useRef, useState } from "react";
 import Filters from "../../search/filters/filters";
@@ -30,7 +29,6 @@ import ActiveFilters from "../../search/filters/activeFilters";
 import NoResultsFound from "../../results/noResultsFound";
 import SearchCardGridLoading from "../../grids/searchCardGridLoading";
 import CollectionStructure from "../../collectionStructure/collectionStructure";
-import BackToTopLink from "../../backToTopLink/backToTopLink";
 import CollectionMetadata, {
   CollectionMetadataProps,
 } from "../../collectionMetadata/collectionMetadata";
@@ -40,6 +38,7 @@ import { useSubcollectionRedirect } from "@/src/hooks/useSubcollectionRedirect";
 import { CollectionSearchParamsType } from "@/collections/[uuid]/page";
 import useBreakpoints from "@/src/hooks/useBreakpoints";
 import useSearchAnalytics from "@/src/hooks/useSearchAnalytics";
+import BottomPaginationSection from "../../bottomPaginationSection/bottomPaginationSection";
 
 type CollectionPageProps = {
   searchResults: SearchResultsType;
@@ -270,63 +269,20 @@ const CollectionPage = ({
                     />
                   ))
                 )}
-                <Box
-                  marginTop="xxl"
-                  marginBottom="xxl"
-                  sx={{
-                    display: "grid",
-                    gap: "m",
-                    gridTemplateColumns: "1fr",
-                    alignItems: "center",
-                    [`@media screen and (min-width: ${headerBreakpoints.lgMobile}px)`]:
-                      {
-                        gridTemplateColumns: "1fr auto 1fr",
-                      },
+
+                <BottomPaginationSection
+                  currentPage={collectionSearchManager.page}
+                  initialPage={1}
+                  pageCount={totalPages}
+                  onPageChange={(newPage) => {
+                    collectionSearchManager.setLastFilter(null);
+                    setIsLoaded(false);
+                    updateURL(
+                      collectionSearchManager.handlePageChange(newPage)
+                    );
                   }}
-                >
-                  <Box
-                    sx={{
-                      justifySelf: "start",
-                      order: 2,
-                      [`@media screen and (min-width: ${headerBreakpoints.lgMobile}px)`]:
-                        {
-                          order: 1,
-                        },
-                    }}
-                  >
-                    {searchResults.results?.length > 0 && <BackToTopLink />}
-                  </Box>
-
-                  <Pagination
-                    id="pagination-id"
-                    initialPage={1}
-                    currentPage={collectionSearchManager.page}
-                    pageCount={totalPages}
-                    onPageChange={(newPage) => {
-                      collectionSearchManager.setLastFilter(null);
-                      setIsLoaded(false);
-                      updateURL(
-                        collectionSearchManager.handlePageChange(newPage)
-                      );
-                    }}
-                    sx={{
-                      justifySelf: "center",
-                      justifyContent: "center",
-                      order: 1,
-                      [`@media screen and (min-width: ${headerBreakpoints.lgMobile}px)`]:
-                        {
-                          order: 2,
-                        },
-                    }}
-                  />
-
-                  <Box
-                    sx={{
-                      justifySelf: "end",
-                      order: 3,
-                    }}
-                  >
-                    {isLargerThanSmallTablet && (
+                  rightContent={
+                    isLargerThanSmallTablet ? (
                       <ViewingOptionsMenu
                         options={COLLECTION_LANDING_SORT_LABELS}
                         searchManager={collectionSearchManager}
@@ -338,9 +294,9 @@ const CollectionPage = ({
                         showViewModeButtons={false}
                         perPageMenuId="results-per-page-menu-bottom"
                       />
-                    )}
-                  </Box>
-                </Box>
+                    ) : null
+                  }
+                />
               </>
             ) : (
               <NoResultsFound
