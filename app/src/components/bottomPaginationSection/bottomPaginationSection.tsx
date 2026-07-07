@@ -22,6 +22,8 @@ const BottomPaginationSection = ({
   paginationId = "pagination-id",
   rightContent,
 }: BottomPaginationSectionProps) => {
+  const hasRightContent = Boolean(rightContent);
+
   return (
     <Box
       marginTop="xxl"
@@ -31,11 +33,8 @@ const BottomPaginationSection = ({
         gap: "m",
         gridTemplateColumns: "1fr",
         alignItems: "center",
-        [`@media screen and (min-width: ${headerBreakpoints.lgMobile}px)`]: {
+        [`@media screen and (min-width: ${headerBreakpoints.smTablet}px)`]: {
           gridTemplateColumns: "repeat(2, minmax(0, 1fr))",
-        },
-        [`@media screen and (min-width: ${headerBreakpoints.lgTablet}px)`]: {
-          gridTemplateColumns: "1fr",
         },
         [`@media screen and (min-width: ${headerBreakpoints.desktop}px)`]: {
           gridTemplateColumns: "1fr auto 1fr",
@@ -46,10 +45,10 @@ const BottomPaginationSection = ({
         sx={{
           justifySelf: "center",
           order: 2,
-          [`@media screen and (min-width: ${headerBreakpoints.lgMobile}px)`]: {
+          [`@media screen and (min-width: ${headerBreakpoints.smTablet}px)`]: {
             order: 2,
-            gridColumn: "1 / -1",
-            justifySelf: "center",
+            gridColumn: hasRightContent ? "auto" : "1 / -1",
+            justifySelf: hasRightContent ? "start" : "center",
           },
           [`@media screen and (min-width: ${headerBreakpoints.desktop}px)`]: {
             order: 1,
@@ -71,7 +70,7 @@ const BottomPaginationSection = ({
           justifySelf: "center",
           justifyContent: "center",
           order: 1,
-          [`@media screen and (min-width: ${headerBreakpoints.lgMobile}px)`]: {
+          [`@media screen and (min-width: ${headerBreakpoints.smTablet}px)`]: {
             order: 1,
             gridColumn: "1 / -1",
           },
@@ -88,6 +87,11 @@ const BottomPaginationSection = ({
             order: 3,
             justifySelf: "center",
             gridColumn: "1 / -1",
+            [`@media screen and (min-width: ${headerBreakpoints.smTablet}px)`]:
+              {
+                justifySelf: "end",
+                gridColumn: "auto",
+              },
             [`@media screen and (min-width: ${headerBreakpoints.desktop}px)`]: {
               justifySelf: "end",
               gridColumn: "auto",
