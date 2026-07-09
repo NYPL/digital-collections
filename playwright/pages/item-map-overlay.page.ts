@@ -8,7 +8,7 @@ export default class ItemMapOverlayPage {
   readonly mapCanvas: Locator;
   readonly zoomInButton: Locator;
   readonly zoomOutButton: Locator;
-  static readonly MAP1_UUID = "417fe160-c603-012f-4183-58d385a7bc34";
+  static readonly MAP1_UUID = "0c564b50-c5ab-012f-6cbb-58d385a7bc34";
 
   static itemMapUrl: string = "/items/" + this.MAP1_UUID;
 
