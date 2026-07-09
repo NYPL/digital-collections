@@ -88,7 +88,8 @@ export const trackSearchResults = (
   searchResultsLayout: "grid" | "list",
   filterNames: string[],
   searchType?: string,
-  searchTerm?: string
+  searchTerm?: string,
+  numResults?: number
 ) => {
   const dataLayer = window["dataLayer"] || [];
   const layout = upperGridViewLayoutParam(searchResultsLayout);
@@ -102,6 +103,9 @@ export const trackSearchResults = (
   }
   if (filterNames.length > 0) {
     data["filter_name"] = filterNames.join("|");
+  }
+  if (numResults !== undefined) {
+    data["results_count"] = numResults;
   }
   dataLayer.push(data);
 };
