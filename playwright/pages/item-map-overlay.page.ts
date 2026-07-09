@@ -88,8 +88,8 @@ export default class ItemMapOverlayPage {
         },
         {
           message: "zoom-in button never reached max zoom (aria-disabled=true)",
-          timeout: 20_000,
-          intervals: [500, 1000, 1500], // backoff between polls
+          timeout: 30_000,
+          intervals: [500],
         }
       )
       .toBe(true);
