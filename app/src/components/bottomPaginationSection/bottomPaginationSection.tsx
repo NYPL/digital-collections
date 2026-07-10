@@ -54,7 +54,7 @@ const BottomPaginationSection = ({
             order: 2,
             display: "block",
             gridColumn: hasRightContent ? "auto" : "1 / -1",
-            justifySelf: hasRightContent ? "center" : "end",
+            justifySelf: hasRightContent ? "start" : "end",
             "> a": {
               marginLeft: 0,
             },
@@ -62,7 +62,7 @@ const BottomPaginationSection = ({
           [`@media screen and (min-width: ${headerBreakpoints.desktop}px)`]: {
             order: 1,
             gridColumn: "auto",
-            justifySelf: "center",
+            justifySelf: "start",
           },
         }}
       >
@@ -76,8 +76,8 @@ const BottomPaginationSection = ({
         pageCount={pageCount}
         onPageChange={onPageChange}
         sx={{
-          justifySelf: "stretch",
-          justifyContent: "flex-end",
+          justifySelf: "center",
+          justifyContent: "center",
           order: 1,
           [`@media screen and (min-width: ${headerBreakpoints.smTablet}px)`]: {
             order: 1,
