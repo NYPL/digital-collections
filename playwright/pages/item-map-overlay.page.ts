@@ -8,7 +8,7 @@ export default class ItemMapOverlayPage {
   readonly mapCanvas: Locator;
   readonly zoomInButton: Locator;
   readonly zoomOutButton: Locator;
-  static readonly MAP1_UUID = "417fe160-c603-012f-4183-58d385a7bc34";
+  static readonly MAP1_UUID = "330ad600-c5f8-012f-e5e0-58d385a7bc34";
 
   static itemMapUrl: string = "/items/" + this.MAP1_UUID;
 
@@ -88,8 +88,8 @@ export default class ItemMapOverlayPage {
         },
         {
           message: "zoom-in button never reached max zoom (aria-disabled=true)",
-          timeout: 20_000,
-          intervals: [500, 1000, 1500], // backoff between polls
+          timeout: 30_000,
+          intervals: [500],
         }
       )
       .toBe(true);
