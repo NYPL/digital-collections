@@ -123,7 +123,7 @@ const CollectionPage = ({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [searchResults]);
 
-  useSearchAnalytics(collectionSearchManager);
+  useSearchAnalytics(collectionSearchManager, searchResults.numResults);
 
   return (
     <Box id="collectionsPageContent">
