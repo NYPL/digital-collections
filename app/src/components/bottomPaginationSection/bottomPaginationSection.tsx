@@ -46,12 +46,18 @@ const BottomPaginationSection = ({
           justifySelf: "stretch",
           display: "flex",
           justifyContent: "flex-end",
+          "> a": {
+            marginLeft: "auto",
+          },
           order: 2,
           [`@media screen and (min-width: ${headerBreakpoints.smTablet}px)`]: {
             order: 2,
             display: "block",
             gridColumn: hasRightContent ? "auto" : "1 / -1",
             justifySelf: hasRightContent ? "center" : "end",
+            "> a": {
+              marginLeft: 0,
+            },
           },
           [`@media screen and (min-width: ${headerBreakpoints.desktop}px)`]: {
             order: 1,
