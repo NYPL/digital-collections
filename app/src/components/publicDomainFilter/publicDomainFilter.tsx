@@ -6,15 +6,28 @@ import {
   Text,
 } from "@nypl/design-system-react-components";
 import { PublicDomainFilterProps } from "../../types/props/PublicDomainFilterProps";
+import { trackCTA } from "@/src/utils/ga4Utils";
 
 const PublicDomainFilter = ({ onCheckChange }: PublicDomainFilterProps) => {
   const [isChecked, setIsChecked] = useState(false);
   const checkboxRef = useRef<HTMLInputElement>(null);
 
+  const publicDomainCTALink = "/about#public_domain";
+
   const text = (
     <>
       Search only public domain.{" "}
-      <Link hasVisitedState={false} href="/about#public_domain">
+      <Link
+        hasVisitedState={false}
+        href={publicDomainCTALink}
+        onClick={() =>
+          trackCTA(
+            "What is public domain?",
+            publicDomainCTALink,
+            "Digital Collections - What is public domain?"
+          )
+        }
+      >
         What is public domain?
       </Link>
     </>
