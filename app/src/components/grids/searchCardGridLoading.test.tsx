@@ -11,14 +11,7 @@ describe("SearchCardGridLoading", () => {
   });
 
   it("renders grid-style loading cards when view mode is grid", () => {
-    render(
-      <SearchCardGridLoading
-        id={1}
-        viewMode="grid"
-        numColumns={4}
-        largeMobileColumns={2}
-      />
-    );
+    render(<SearchCardGridLoading id={1} viewMode="grid" numColumns={4} />);
 
     expect(screen.getAllByTestId("search-card-skeleton-loader")).toHaveLength(
       12

@@ -1,5 +1,6 @@
 import { sendLayoutSelectedEvent } from "@/src/utils/ga4Utils";
 import { SearchManager } from "@/src/utils/searchManager/searchManager";
+import type { Dispatch, SetStateAction } from "react";
 import {
   Menu,
   Icon,
@@ -13,12 +14,13 @@ type ViewingOptionsMenuProps = {
   searchManager: SearchManager;
   options: Record<string, string>;
   perPageOptions?: number[];
-  setFiltersExpanded?: React.Dispatch<React.SetStateAction<boolean>>;
+  setFiltersExpanded?: Dispatch<SetStateAction<boolean>>;
   sort: string;
   showViewModeButtons?: boolean;
   showSortMenu?: boolean;
   sortMenuId?: string;
   perPageMenuId?: string;
+  onViewModeChangeStart?: (viewMode: "grid" | "list") => void;
 };
 
 const ViewingOptionsMenu = ({
@@ -32,13 +34,15 @@ const ViewingOptionsMenu = ({
   showSortMenu = true,
   sortMenuId = "sort-menu",
   perPageMenuId = "results-per-page-menu",
+  onViewModeChangeStart,
 }: ViewingOptionsMenuProps) => {
   const layoutSelectHandler = (viewMode: "grid" | "list"): (() => void) => {
     return () => {
-      if (searchManager.viewMode == viewMode) {
+      if (searchManager.viewMode === viewMode) {
         return;
       }
       sendLayoutSelectedEvent(viewMode);
+      onViewModeChangeStart?.(viewMode);
       if (setFiltersExpanded) {
         setFiltersExpanded(false);
       }
@@ -112,8 +116,8 @@ const ViewingOptionsMenu = ({
           }}
         >
           <Button
-            variant={searchManager.viewMode == "grid" ? "primary" : "text"}
-            aria-pressed={searchManager.viewMode == "grid" ? true : false}
+            variant={searchManager.viewMode === "grid" ? "primary" : "text"}
+            aria-pressed={searchManager.viewMode === "grid"}
             onClick={layoutSelectHandler("grid")}
             sx={{
               padding: "inherit",
@@ -133,8 +137,8 @@ const ViewingOptionsMenu = ({
           </Button>
 
           <Button
-            variant={searchManager.viewMode == "list" ? "primary" : "text"}
-            aria-pressed={searchManager.viewMode == "list" ? true : false}
+            variant={searchManager.viewMode === "list" ? "primary" : "text"}
+            aria-pressed={searchManager.viewMode === "list"}
             onClick={layoutSelectHandler("list")}
             sx={{
               padding: "inherit",
