@@ -75,6 +75,22 @@ describe("ViewingOptionsMenu", () => {
     );
 
     fireEvent.click(screen.getByText("Date"));
-    expect(updateURL).toHaveBeenCalledWith("sort=date");
+    expect(updateURL).toHaveBeenCalledWith("sort=date&perPage=48");
+  });
+
+  it("shows a results-per-page menu and updates query when selected", async () => {
+    render(
+      <ViewingOptionsMenu
+        updateURL={updateURL}
+        searchManager={manager}
+        sort={manager.sort}
+        options={options}
+        perPageOptions={[48, 96]}
+      />
+    );
+
+    expect(screen.getByText("Results per page: 48")).toBeInTheDocument();
+    fireEvent.click(screen.getByText("96"));
+    expect(updateURL).toHaveBeenCalledWith("perPage=96");
   });
 });

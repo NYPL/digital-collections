@@ -84,7 +84,7 @@ export class CollectionsApi {
   }
 
   static async getDivisionData({
-    pageNum = 1,
+    pageNum = DEFAULT_PAGE_NUM,
     perPage = CARDS_PER_PAGE,
     slug,
   }: {
@@ -173,7 +173,7 @@ export class CollectionsApi {
   static async getLaneData({
     slug,
     sort = "items-count",
-    pageNum = 1,
+    pageNum = DEFAULT_PAGE_NUM,
     perPage = CARDS_PER_PAGE,
   }: {
     slug: string;
