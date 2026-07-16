@@ -98,7 +98,7 @@ const SearchPage = ({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [searchResults, searchManager.viewMode]);
 
-  useSearchAnalytics(searchManager);
+  useSearchAnalytics(searchManager, searchResults.numResults);
   useSubcollectionRedirect();
 
   return (
