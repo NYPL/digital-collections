@@ -4,38 +4,19 @@ import {
   SimpleGrid,
 } from "@nypl/design-system-react-components";
 import React from "react";
-import useBreakpoints from "@/src/hooks/useBreakpoints";
 
 type SearchCardGridLoadingProps = {
   id: number;
   viewMode: "grid" | "list";
   numColumns?: number;
-  largeMobileColumns?: number;
 };
 
 export default function SearchCardGridLoading({
   id,
   viewMode,
   numColumns = 4,
-  largeMobileColumns,
 }: SearchCardGridLoadingProps) {
-  const {
-    isLargerThanLargeTablet,
-    isLargerThanSmallTablet,
-    isLargerThanLargeMobile,
-  } = useBreakpoints();
-
-  const getResponsiveColumns = () => {
-    if (viewMode === "list") return 1;
-    if (!isLargerThanLargeMobile) return 1;
-    if (isLargerThanLargeMobile && !isLargerThanSmallTablet) {
-      return largeMobileColumns ?? numColumns;
-    }
-    if (isLargerThanSmallTablet && !isLargerThanLargeTablet) return 2;
-    return numColumns;
-  };
-
-  const responsiveColumns = getResponsiveColumns();
+  const responsiveColumns = viewMode === "list" ? 1 : numColumns;
   const loaderCount = viewMode === "grid" ? 12 : 4;
 
   return (
