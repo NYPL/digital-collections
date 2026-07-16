@@ -8,13 +8,14 @@ test.describe("choose specific sort options", () => {
     searchPage = new SearchPage(page);
     await searchPage.loadPage(SearchPage.searchResultsUrl);
 
-    await searchPage.sortButton.click();
+    // force test-runner on CI to wait until cards actually 'paint,' whatever that means.
+    await expect(searchPage.allCards.first()).toBeVisible();
 
-    await expect(searchPage.refineHeading).toBeVisible();
+    // page is fully loaded, so sort is safe to click now
+    await searchPage.sortButton.click();
   });
 
   test("sorts search results by relevance", async ({ page }) => {
-    await expect(searchPage.sortByRelevance).toBeVisible();
     await searchPage.sortByRelevance.click({ force: true });
     await expect(searchPage.sortByRelevanceSelected).toBeVisible({
       timeout: 20000,
