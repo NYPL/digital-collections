@@ -3,7 +3,7 @@ const GA_NOT_SET = "Not set";
 interface GA4BaseData {
   division?: string;
   collection?: string;
-  subCollection?: string;
+  subcollection?: string;
 }
 
 interface PageViewData extends GA4BaseData {
@@ -14,7 +14,7 @@ interface PageViewData extends GA4BaseData {
 export const trackGa4PageView = ({
   division = GA_NOT_SET,
   collection = GA_NOT_SET,
-  subCollection = GA_NOT_SET,
+  subcollection = GA_NOT_SET,
   contentType = GA_NOT_SET,
   resourceType = GA_NOT_SET,
 }: PageViewData) => {
@@ -23,7 +23,7 @@ export const trackGa4PageView = ({
     event: "page_view",
     division_center: division,
     collection: collection,
-    subcollection: subCollection,
+    subcollection: subcollection,
     dc_content_type: contentType,
     dc_resource_type: resourceType,
   });
@@ -39,7 +39,7 @@ export const sendDownloadEvent = ({
   extension = GA_NOT_SET,
   division = GA_NOT_SET,
   collection = GA_NOT_SET,
-  subCollection = GA_NOT_SET,
+  subcollection = GA_NOT_SET,
 }: DownloadData) => {
   const dataLayer = window["dataLayer"] || [];
   dataLayer.push({
@@ -48,7 +48,7 @@ export const sendDownloadEvent = ({
     file_extension: extension,
     division_center: division,
     collection: collection,
-    subcollection: subCollection,
+    subcollection: subcollection,
   });
 };
 
@@ -88,7 +88,8 @@ export const trackSearchResults = (
   searchResultsLayout: "grid" | "list",
   filterNames: string[],
   searchType?: string,
-  searchTerm?: string
+  searchTerm?: string,
+  numResults?: number
 ) => {
   const dataLayer = window["dataLayer"] || [];
   const layout = upperGridViewLayoutParam(searchResultsLayout);
@@ -102,6 +103,9 @@ export const trackSearchResults = (
   }
   if (filterNames.length > 0) {
     data["filter_name"] = filterNames.join("|");
+  }
+  if (numResults !== undefined) {
+    data["results_count"] = numResults;
   }
   dataLayer.push(data);
 };

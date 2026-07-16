@@ -142,8 +142,8 @@ export default function CollectionLanePage({ data }: any) {
             labelText={`Results per page: ${currentPerPage}`}
             labelAsAriaLabel
             listItemsData={RESULTS_PER_PAGE_OPTIONS.map((value) => ({
-              id: value.toString(),
-              label: value.toString(),
+              id: `per-page-option-${value.toString()}`,
+              label: `per-page-option-${value.toString()}`,
               onClick: () => {
                 setCurrentPerPage(value);
                 const newParams = new URLSearchParams(queryParams.toString());
@@ -185,8 +185,8 @@ export default function CollectionLanePage({ data }: any) {
                 labelText={`Results per page: ${currentPerPage}`}
                 labelAsAriaLabel
                 listItemsData={RESULTS_PER_PAGE_OPTIONS.map((value) => ({
-                  id: value.toString(),
-                  label: value.toString(),
+                  id: `per-page-option-${value.toString()}`,
+                  label: `per-page-option-${value.toString()}`,
                   onClick: () => {
                     setCurrentPerPage(value);
                     const newParams = new URLSearchParams(

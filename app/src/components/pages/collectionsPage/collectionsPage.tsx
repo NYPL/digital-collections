@@ -97,7 +97,7 @@ export function CollectionsPage({ data, collectionsSearchParams }) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [collections]);
 
-  useSearchAnalytics(collectionsSearchManager);
+  useSearchAnalytics(collectionsSearchManager, data.numResults);
 
   return (
     <>

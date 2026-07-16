@@ -43,12 +43,21 @@ const BottomPaginationSection = ({
     >
       <Box
         sx={{
-          justifySelf: "center",
+          justifySelf: "stretch",
+          display: "flex",
+          justifyContent: "flex-end",
+          "> a": {
+            marginLeft: "auto",
+          },
           order: 2,
           [`@media screen and (min-width: ${headerBreakpoints.smTablet}px)`]: {
             order: 2,
+            display: "block",
             gridColumn: hasRightContent ? "auto" : "1 / -1",
-            justifySelf: hasRightContent ? "start" : "center",
+            justifySelf: hasRightContent ? "start" : "end",
+            "> a": {
+              marginLeft: 0,
+            },
           },
           [`@media screen and (min-width: ${headerBreakpoints.desktop}px)`]: {
             order: 1,
@@ -73,6 +82,7 @@ const BottomPaginationSection = ({
           [`@media screen and (min-width: ${headerBreakpoints.smTablet}px)`]: {
             order: 1,
             gridColumn: "1 / -1",
+            justifyContent: "center",
           },
           [`@media screen and (min-width: ${headerBreakpoints.desktop}px)`]: {
             order: 2,
