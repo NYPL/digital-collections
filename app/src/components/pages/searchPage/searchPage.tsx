@@ -27,6 +27,7 @@ import { useSubcollectionRedirect } from "@/src/hooks/useSubcollectionRedirect";
 import useBreakpoints from "@/src/hooks/useBreakpoints";
 import useSearchAnalytics from "@/src/hooks/useSearchAnalytics";
 import BottomPaginationSection from "../../bottomPaginationSection/bottomPaginationSection";
+import { resolveGridColumns } from "@/src/utils/gridColumns";
 
 const SearchPage = ({
   searchResults,
@@ -46,10 +47,40 @@ const SearchPage = ({
   const isFirstLoad = useRef<boolean>(false);
   const [isLoaded, setIsLoaded] = useState(false);
   const [filtersExpanded, setFiltersExpanded] = useState(false);
-  const { isLargerThanSmallTablet, isLargerThanLargeMobile } = useBreakpoints();
-  const effectiveViewMode = isLargerThanLargeMobile
-    ? searchManager.viewMode
-    : "list";
+  const [pendingViewMode, setPendingViewMode] = useState<
+    "grid" | "list" | null
+  >(null);
+  const [pendingNumColumns, setPendingNumColumns] = useState<number | null>(
+    null
+  );
+  const {
+    isLargerThanSmallTablet,
+    isLargerThanLargeMobile,
+    isLargerThanLargeTablet,
+  } = useBreakpoints();
+  const baseGridColumns = 4;
+  const largeMobileGridColumns = 2;
+  const [isBreakpointsHydrated, setIsBreakpointsHydrated] = useState(false);
+
+  useEffect(() => {
+    setIsBreakpointsHydrated(true);
+  }, []);
+
+  const effectiveViewMode =
+    isBreakpointsHydrated && !isLargerThanLargeMobile
+      ? "list"
+      : pendingViewMode || searchManager.viewMode;
+
+  const effectiveNumColumns =
+    pendingNumColumns ??
+    resolveGridColumns({
+      viewMode: effectiveViewMode,
+      baseColumns: baseGridColumns,
+      largeMobileColumns: largeMobileGridColumns,
+      isLargerThanLargeMobile,
+      isLargerThanSmallTablet,
+      isLargerThanLargeTablet,
+    });
 
   const updateURL = async (queryString: string) => {
     const currentQueryString = window.location.search;
@@ -69,6 +100,8 @@ const SearchPage = ({
 
   useEffect(() => {
     setIsLoaded(true);
+    setPendingViewMode(null);
+    setPendingNumColumns(null);
     let didFocusElement = false;
     if (
       (searchManager.lastFilterRef?.current &&
@@ -226,6 +259,18 @@ const SearchPage = ({
                 setFiltersExpanded={setFiltersExpanded}
                 updateURL={updateURL}
                 showViewModeButtons={isLargerThanSmallTablet}
+                onViewModeChangeStart={(viewMode) => {
+                  setPendingViewMode(viewMode);
+                  const nextColumns = resolveGridColumns({
+                    viewMode,
+                    baseColumns: baseGridColumns,
+                    largeMobileColumns: largeMobileGridColumns,
+                    isLargerThanLargeMobile,
+                    isLargerThanSmallTablet,
+                    isLargerThanLargeTablet,
+                  });
+                  setPendingNumColumns(nextColumns);
+                }}
               />{" "}
             </>
           ) : (
@@ -242,8 +287,9 @@ const SearchPage = ({
                 keywords={searchResults.keyword}
                 results={searchResults.results}
                 viewMode={effectiveViewMode}
-                numColumns={4}
-                largeMobileColumns={2}
+                numColumns={baseGridColumns}
+                largeMobileColumns={largeMobileGridColumns}
+                resolvedColumns={effectiveNumColumns}
               />
             ) : (
               [...Array(12)].map((_, index) => (
@@ -251,8 +297,7 @@ const SearchPage = ({
                   id={index}
                   key={index}
                   viewMode={effectiveViewMode}
-                  numColumns={4}
-                  largeMobileColumns={2}
+                  numColumns={effectiveNumColumns}
                 />
               ))
             )}
