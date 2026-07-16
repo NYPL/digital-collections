@@ -1,4 +1,5 @@
 import {
+  CARDS_PER_PAGE,
   DEFAULT_COLLECTION_SORT,
   DEFAULT_PAGE_NUM,
   DEFAULT_SEARCH_TERM,
@@ -18,6 +19,7 @@ export interface SearchManager {
   handleSearchSubmit(enforceSort?: string): string;
   handleKeywordChange(value: string): void;
   handlePageChange(pageNumber: number): string;
+  handlePerPageChange(perPage: number): string;
   handleSortChange(id: string): string;
   handleViewModeChange(mode: "grid" | "list"): string;
   handleAddFilter(newFilters: Filter[] | Filter): string;
@@ -26,6 +28,7 @@ export interface SearchManager {
   get keywords(): string;
   get sort(): string;
   get page(): number;
+  get perPage(): number;
   get viewMode(): "grid" | "list";
   get filters(): Filter[];
   get availableFilters(): AvailableFilter[];
@@ -35,6 +38,7 @@ export interface SearchManager {
 
 abstract class BaseSearchManager implements SearchManager {
   protected currentPage: number;
+  protected currentPerPage: number;
   protected currentSort: string;
   protected defaultSort: string;
   protected currentKeywords: string;
@@ -50,6 +54,7 @@ abstract class BaseSearchManager implements SearchManager {
 
   constructor(config: {
     initialPage: number;
+    initialPerPage?: number;
     initialSort: string;
     defaultSort: string;
     initialFilters?: Filter[];
@@ -59,6 +64,8 @@ abstract class BaseSearchManager implements SearchManager {
     initialViewMode?: "grid" | "list";
   }) {
     this.currentPage = config.initialPage;
+    this.currentPerPage = config.initialPerPage || CARDS_PER_PAGE;
+
     this.currentSort = config.initialSort;
     this.defaultSort = config.defaultSort;
     this.currentFilters = new Set(
@@ -84,6 +91,10 @@ abstract class BaseSearchManager implements SearchManager {
 
   get page() {
     return this.currentPage;
+  }
+
+  get perPage() {
+    return this.currentPerPage;
   }
 
   get filters(): Filter[] {
@@ -133,6 +144,7 @@ abstract class BaseSearchManager implements SearchManager {
       q: this.currentKeywords,
       sort: this.currentSort,
       page: DEFAULT_PAGE_NUM,
+      perPage: this.currentPerPage,
       filters: filterToString(this.filters),
       viewMode: this.currentViewMode,
     });
@@ -156,6 +168,7 @@ abstract class BaseSearchManager implements SearchManager {
       q: this.currentKeywords,
       sort: this.currentSort,
       page: DEFAULT_PAGE_NUM,
+      perPage: this.currentPerPage,
       filters: filterToString(this.filters),
       viewMode: this.currentViewMode,
     });
@@ -170,8 +183,22 @@ abstract class BaseSearchManager implements SearchManager {
       q: this.currentKeywords,
       sort: this.currentSort,
       page: this.currentPage,
+      perPage: this.currentPerPage,
       filters: filterToString(this.filters),
       viewMode: mode,
+    });
+  }
+
+  handlePerPageChange(perPage: number) {
+    this.currentPerPage = perPage;
+    this.currentPage = DEFAULT_PAGE_NUM;
+    return this.getQueryString({
+      q: this.currentKeywords,
+      sort: this.currentSort,
+      page: this.currentPage,
+      perPage,
+      filters: filterToString(this.filters),
+      viewMode: this.currentViewMode,
     });
   }
 
@@ -181,6 +208,7 @@ abstract class BaseSearchManager implements SearchManager {
       q: this.currentKeywords,
       sort: this.currentSort,
       page: DEFAULT_PAGE_NUM,
+      perPage: this.currentPerPage,
       filters: filterToString(DEFAULT_FILTERS),
       viewMode: this.currentViewMode,
     });
@@ -196,6 +224,7 @@ export class GeneralSearchManager extends BaseSearchManager {
       q: this.currentKeywords,
       sort: this.currentSort,
       page: this.currentPage,
+      perPage: this.currentPerPage,
     });
   }
 
@@ -205,6 +234,7 @@ export class GeneralSearchManager extends BaseSearchManager {
       q: this.currentKeywords,
       sort: this.currentSort,
       page: pageNumber,
+      perPage: this.currentPerPage,
       filters: filterToString(this.filters),
       viewMode: this.currentViewMode,
     });
@@ -217,6 +247,7 @@ export class GeneralSearchManager extends BaseSearchManager {
       q: this.currentKeywords,
       sort: sort,
       page: this.currentPage,
+      perPage: this.currentPerPage,
       filters: filterToString(this.filters),
       viewMode: this.currentViewMode,
     });
@@ -239,6 +270,9 @@ export class GeneralSearchManager extends BaseSearchManager {
           break;
         case "sort":
           isDefault = value === this.defaultSort;
+          break;
+        case "perPage":
+          isDefault = false;
           break;
         case "filters":
           isDefault = value === "";
@@ -265,6 +299,7 @@ export class CollectionSearchManager extends BaseSearchManager {
       q: this.currentKeywords,
       sort: this.currentSort,
       page: this.currentPage,
+      perPage: this.currentPerPage,
     });
   }
 
@@ -274,6 +309,7 @@ export class CollectionSearchManager extends BaseSearchManager {
       q: this.currentKeywords,
       sort: this.currentSort,
       page: pageNumber,
+      perPage: this.currentPerPage,
       viewMode: this.currentViewMode,
     });
   }
@@ -284,6 +320,7 @@ export class CollectionSearchManager extends BaseSearchManager {
       q: this.currentKeywords,
       sort: sort,
       page: this.currentPage,
+      perPage: this.currentPerPage,
       viewMode: this.currentViewMode,
     });
   }
@@ -294,7 +331,20 @@ export class CollectionSearchManager extends BaseSearchManager {
       q: this.currentKeywords,
       sort: this.currentSort,
       page: this.currentPage,
+      perPage: this.currentPerPage,
       viewMode: mode,
+    });
+  }
+
+  handlePerPageChange(perPage: number) {
+    this.currentPerPage = perPage;
+    this.currentPage = DEFAULT_PAGE_NUM;
+    return this.getQueryString({
+      q: this.currentKeywords,
+      sort: this.currentSort,
+      page: this.currentPage,
+      perPage,
+      viewMode: this.currentViewMode,
     });
   }
 
@@ -315,6 +365,9 @@ export class CollectionSearchManager extends BaseSearchManager {
           break;
         case "sort":
           isDefault = value === this.defaultSort;
+          break;
+        case "perPage":
+          isDefault = false;
           break;
         case "filters":
           isDefault = value === "";

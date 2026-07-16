@@ -5,7 +5,6 @@ import {
   Flex,
   Link,
   Icon,
-  Pagination,
 } from "@nypl/design-system-react-components";
 import React, { useEffect, useRef, useState } from "react";
 import Filters from "../../search/filters/filters";
@@ -14,10 +13,10 @@ import { CollectionSearch } from "../../search/collectionSearch";
 import { MobileSearchBanner } from "../../mobileSearchBanner/mobileSearchBanner";
 import { displayResults, totalNumPages } from "@/src/utils/utils";
 import {
-  CARDS_PER_PAGE,
   COLLECTION_LANDING_SORT_LABELS,
   DEFAULT_PAGE_NUM,
   DEFAULT_SEARCH_TERM,
+  RESULTS_PER_PAGE_OPTIONS,
 } from "@/src/config/constants";
 import SearchCardsGrid from "../../grids/searchCardsGrid";
 import {
@@ -30,7 +29,6 @@ import ActiveFilters from "../../search/filters/activeFilters";
 import NoResultsFound from "../../results/noResultsFound";
 import SearchCardGridLoading from "../../grids/searchCardGridLoading";
 import CollectionStructure from "../../collectionStructure/collectionStructure";
-import BackToTopLink from "../../backToTopLink/backToTopLink";
 import CollectionMetadata, {
   CollectionMetadataProps,
 } from "../../collectionMetadata/collectionMetadata";
@@ -40,6 +38,7 @@ import { useSubcollectionRedirect } from "@/src/hooks/useSubcollectionRedirect";
 import { CollectionSearchParamsType } from "@/collections/[uuid]/page";
 import useBreakpoints from "@/src/hooks/useBreakpoints";
 import useSearchAnalytics from "@/src/hooks/useSearchAnalytics";
+import BottomPaginationSection from "../../bottomPaginationSection/bottomPaginationSection";
 
 type CollectionPageProps = {
   searchResults: SearchResultsType;
@@ -58,10 +57,11 @@ const CollectionPage = ({
   const [filtersExpanded, setFiltersExpanded] = useState(false);
   const [renderCollectionStructure, setRenderCollectionStructure] =
     useState(true);
-  const { isLargerThanSmallTablet } = useBreakpoints();
+  const { isLargerThanSmallTablet, isLargerThanLargeMobile } = useBreakpoints();
 
   const collectionSearchManager = new GeneralSearchManager({
     initialPage: Number(searchParams?.page) || DEFAULT_PAGE_NUM,
+    initialPerPage: Number(searchParams?.perPage) || undefined,
     initialSort: searchParams.sort || "sequence",
     defaultSort: "sequence",
     initialFilters: stringToFilter(searchParams?.filters),
@@ -70,15 +70,27 @@ const CollectionPage = ({
     lastFilterRef: useRef<string | null>(null),
     initialViewMode: searchParams?.viewMode,
   });
+  const effectiveViewMode = isLargerThanLargeMobile
+    ? collectionSearchManager.viewMode
+    : "list";
 
   const totalPages = totalNumPages(
     searchResults.numResults.toString(),
-    CARDS_PER_PAGE
+    searchResults.perPage || collectionSearchManager.perPage
   );
   const { push } = useRouter();
   const pathname = usePathname();
 
-  const updateURL = async (queryString) => {
+  const updateURL = async (queryString: string) => {
+    const currentQueryString = window.location.search;
+    if (
+      currentQueryString === queryString ||
+      currentQueryString === `?${queryString}`
+    ) {
+      headingRef.current?.focus();
+      return;
+    }
+
     setIsLoaded(false);
     push(`${pathname}?${queryString}`, { scroll: false });
   };
@@ -178,7 +190,7 @@ const CollectionPage = ({
         <Flex
           gap="xxl"
           sx={{
-            flexDir: { base: "column", md: "row" },
+            flexDir: { base: "column", lg: "row" },
           }}
         >
           <CollectionStructure
@@ -187,14 +199,14 @@ const CollectionPage = ({
             searchManager={collectionSearchManager}
             setRenderCollectionStructure={setRenderCollectionStructure}
           />
-          <Box width="100%">
+          <Box width="100%" minWidth={0} flex="1 1 0">
             <CollectionSearch
               searchManager={collectionSearchManager}
               key={searchResults.keyword.length}
             />
             <Flex
               sx={{
-                [`@media screen and (min-width: ${headerBreakpoints.smTablet}px)`]:
+                [`@media screen and (min-width: ${headerBreakpoints.lgTablet}px)`]:
                   {
                     flexDir: "row",
                     marginBottom: "s",
@@ -220,13 +232,16 @@ const CollectionPage = ({
                     margin="0"
                   >{`Displaying ${displayResults(
                     searchResults.numResults,
-                    CARDS_PER_PAGE,
+                    searchResults.perPage || collectionSearchManager.perPage,
                     collectionSearchManager.page
                   )} results`}</Heading>
                   <ViewingOptionsMenu
                     options={COLLECTION_LANDING_SORT_LABELS}
                     searchManager={collectionSearchManager}
                     sort={searchResults.sort}
+                    perPageOptions={
+                      isLargerThanSmallTablet ? RESULTS_PER_PAGE_OPTIONS : []
+                    }
                     updateURL={updateURL}
                     setFiltersExpanded={setFiltersExpanded}
                     showViewModeButtons={isLargerThanSmallTablet}
@@ -241,7 +256,7 @@ const CollectionPage = ({
                   <SearchCardsGrid
                     keywords={searchResults.keyword}
                     results={searchResults.results}
-                    viewMode={collectionSearchManager.viewMode}
+                    viewMode={effectiveViewMode}
                     numColumns={renderCollectionStructure ? 3 : 4}
                   />
                 ) : (
@@ -249,52 +264,34 @@ const CollectionPage = ({
                     <SearchCardGridLoading id={index} key={index} />
                   ))
                 )}
-                <Flex
-                  paddingLeft="s"
-                  paddingRight="s"
-                  marginTop="xxl"
-                  marginBottom="xxl"
-                  sx={{
-                    "> a": {
-                      marginTop: "xl",
-                      justifyContent: "end",
-                    },
-                    paddingLeft: "s",
-                    paddingRight: "s",
-                    [`@media screen and (min-width: ${headerBreakpoints.lgMobile}px)`]:
-                      {
-                        "> a": {
-                          marginTop: "0",
-                        },
-                        flexDir: "row",
-                        paddingLeft: 0,
-                        paddingRight: 0,
-                      },
-                    flexDir: "column-reverse",
+
+                <BottomPaginationSection
+                  currentPage={collectionSearchManager.page}
+                  initialPage={1}
+                  pageCount={totalPages}
+                  onPageChange={(newPage) => {
+                    collectionSearchManager.setLastFilter(null);
+                    setIsLoaded(false);
+                    updateURL(
+                      collectionSearchManager.handlePageChange(newPage)
+                    );
                   }}
-                >
-                  {searchResults.results?.length > 0 && <BackToTopLink />}
-                  <Pagination
-                    id="pagination-id"
-                    initialPage={1}
-                    currentPage={collectionSearchManager.page}
-                    pageCount={totalPages}
-                    onPageChange={(newPage) => {
-                      collectionSearchManager.setLastFilter(null);
-                      setIsLoaded(false);
-                      updateURL(
-                        collectionSearchManager.handlePageChange(newPage)
-                      );
-                    }}
-                    sx={{
-                      justifyContent: "center",
-                      [`@media screen and (min-width: ${headerBreakpoints.lgMobile}px)`]:
-                        {
-                          justifyContent: "flex-end",
-                        },
-                    }}
-                  />
-                </Flex>
+                  rightContent={
+                    isLargerThanSmallTablet ? (
+                      <ViewingOptionsMenu
+                        options={COLLECTION_LANDING_SORT_LABELS}
+                        searchManager={collectionSearchManager}
+                        sort={searchResults.sort}
+                        perPageOptions={RESULTS_PER_PAGE_OPTIONS}
+                        updateURL={updateURL}
+                        setFiltersExpanded={setFiltersExpanded}
+                        showSortMenu={false}
+                        showViewModeButtons={false}
+                        perPageMenuId="results-per-page-menu-bottom"
+                      />
+                    ) : null
+                  }
+                />
               </>
             ) : (
               <NoResultsFound
