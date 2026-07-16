@@ -43,7 +43,7 @@ const PageLayout = ({
     if (ga4Data) {
       trackGa4PageView(ga4Data);
     }
-  });
+  }, [ga4Data]);
 
   const { responsivePadding } = useResponsiveSpacing();
 
