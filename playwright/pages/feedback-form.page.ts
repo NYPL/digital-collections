@@ -26,7 +26,7 @@ export default class FeedbackModal extends DCHomepage {
   }
 
   // setup mock
-  async setupNetworkMock() {
+  async setupNetworkMock(): Promise<void> {
     await this.feedbackPage.route("**/api/feedback", async (route) => {
       const payload = route.request().postDataJSON();
       expect(payload).toMatchObject({ comment: this.defaultComment });
@@ -39,19 +39,26 @@ export default class FeedbackModal extends DCHomepage {
   }
 
   // check input fills correctly for comments box
-  async verifyCharacterCounterUpdates() {
+  async verifyCharacterCounterUpdates(): Promise<void> {
     await this.feedbackTextArea.fill(this.defaultComment);
     await expect(this.charCount).toHaveText(this.expectedRemainingChars);
   }
 
   // check comment, correction, and bug categories
-  async verifySuccessfulSubmission(categoryLocator: Locator): Promise<void> {
+  // allows custom comment to be added in spec for later integration with dev sheets
+  async verifySuccessfulSubmission(
+    categoryLocator: Locator,
+    customComment?: string
+  ): Promise<void> {
     await this.feedbackPage
       .locator("label")
       .filter({ has: categoryLocator })
       .click();
 
-    await this.feedbackTextArea.fill(this.defaultComment);
+    // Use the custom timestamped comment if provided, otherwise fallback to default
+    const commentToFill = customComment ?? this.defaultComment;
+    await this.feedbackTextArea.fill(commentToFill);
+
     await this.feedbackSubmitButton.click();
     await expect(this.successBanner).toBeVisible();
   }
