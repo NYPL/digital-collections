@@ -90,7 +90,28 @@ describe("ViewingOptionsMenu", () => {
     );
 
     expect(screen.getByText("Results per page: 48")).toBeInTheDocument();
-    fireEvent.click(screen.getByText("96"));
+    fireEvent.click(screen.getByText("per-page-option-96"));
     expect(updateURL).toHaveBeenCalledWith("perPage=96");
+  });
+
+  it("notifies future view mode before navigation", () => {
+    const onViewModeChangeStart = jest.fn();
+
+    render(
+      <ViewingOptionsMenu
+        updateURL={updateURL}
+        searchManager={manager}
+        sort={manager.sort}
+        options={options}
+        onViewModeChangeStart={onViewModeChangeStart}
+      />
+    );
+
+    fireEvent.click(screen.getByLabelText("list view"));
+
+    expect(onViewModeChangeStart).toHaveBeenCalledWith("list");
+    expect(updateURL).toHaveBeenCalledWith(
+      expect.stringContaining("viewMode=list")
+    );
   });
 });

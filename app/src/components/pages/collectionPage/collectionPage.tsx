@@ -39,6 +39,7 @@ import { CollectionSearchParamsType } from "@/collections/[uuid]/page";
 import useBreakpoints from "@/src/hooks/useBreakpoints";
 import useSearchAnalytics from "@/src/hooks/useSearchAnalytics";
 import BottomPaginationSection from "../../bottomPaginationSection/bottomPaginationSection";
+import { resolveGridColumns } from "@/src/utils/gridColumns";
 
 type CollectionPageProps = {
   searchResults: SearchResultsType;
@@ -57,7 +58,23 @@ const CollectionPage = ({
   const [filtersExpanded, setFiltersExpanded] = useState(false);
   const [renderCollectionStructure, setRenderCollectionStructure] =
     useState(true);
-  const { isLargerThanSmallTablet, isLargerThanLargeMobile } = useBreakpoints();
+  const [pendingViewMode, setPendingViewMode] = useState<
+    "grid" | "list" | null
+  >(null);
+  const [pendingNumColumns, setPendingNumColumns] = useState<number | null>(
+    null
+  );
+  const {
+    isLargerThanSmallTablet,
+    isLargerThanLargeMobile,
+    isLargerThanLargeTablet,
+  } = useBreakpoints();
+  const baseGridColumns = renderCollectionStructure ? 3 : 4;
+  const [isBreakpointsHydrated, setIsBreakpointsHydrated] = useState(false);
+
+  useEffect(() => {
+    setIsBreakpointsHydrated(true);
+  }, []);
 
   const collectionSearchManager = new GeneralSearchManager({
     initialPage: Number(searchParams?.page) || DEFAULT_PAGE_NUM,
@@ -70,9 +87,20 @@ const CollectionPage = ({
     lastFilterRef: useRef<string | null>(null),
     initialViewMode: searchParams?.viewMode,
   });
-  const effectiveViewMode = isLargerThanLargeMobile
-    ? collectionSearchManager.viewMode
-    : "list";
+  const effectiveViewMode =
+    isBreakpointsHydrated && !isLargerThanLargeMobile
+      ? "list"
+      : pendingViewMode || collectionSearchManager.viewMode;
+
+  const effectiveNumColumns =
+    pendingNumColumns ??
+    resolveGridColumns({
+      viewMode: effectiveViewMode,
+      baseColumns: baseGridColumns,
+      isLargerThanLargeMobile,
+      isLargerThanSmallTablet,
+      isLargerThanLargeTablet,
+    });
 
   const totalPages = totalNumPages(
     searchResults.numResults.toString(),
@@ -105,6 +133,8 @@ const CollectionPage = ({
 
   useEffect(() => {
     setIsLoaded(true);
+    setPendingViewMode(null);
+    setPendingNumColumns(null);
     let didFocusElement = false;
 
     if (
@@ -245,6 +275,17 @@ const CollectionPage = ({
                     updateURL={updateURL}
                     setFiltersExpanded={setFiltersExpanded}
                     showViewModeButtons={isLargerThanSmallTablet}
+                    onViewModeChangeStart={(viewMode) => {
+                      setPendingViewMode(viewMode);
+                      const nextColumns = resolveGridColumns({
+                        viewMode,
+                        baseColumns: baseGridColumns,
+                        isLargerThanLargeMobile,
+                        isLargerThanSmallTablet,
+                        isLargerThanLargeTablet,
+                      });
+                      setPendingNumColumns(nextColumns);
+                    }}
                   />
                 </>
               )}
@@ -257,11 +298,17 @@ const CollectionPage = ({
                     keywords={searchResults.keyword}
                     results={searchResults.results}
                     viewMode={effectiveViewMode}
-                    numColumns={renderCollectionStructure ? 3 : 4}
+                    numColumns={baseGridColumns}
+                    resolvedColumns={effectiveNumColumns}
                   />
                 ) : (
                   [...Array(12)].map((_, index) => (
-                    <SearchCardGridLoading id={index} key={index} />
+                    <SearchCardGridLoading
+                      id={index}
+                      key={index}
+                      viewMode={effectiveViewMode}
+                      numColumns={effectiveNumColumns}
+                    />
                   ))
                 )}
 
