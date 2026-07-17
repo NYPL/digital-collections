@@ -4,7 +4,8 @@ import {
   Heading,
   HorizontalRule,
   Link,
-  Pagination,
+  Menu,
+  Flex,
 } from "@nypl/design-system-react-components";
 import {
   useParams,
@@ -19,7 +20,12 @@ import { CardsGrid } from "../../grids/cardsGrid";
 import { totalNumPages, displayResults } from "../../../utils/utils";
 import { Lane as DCLane } from "../../lane/lane";
 import LaneLoading from "../../lane/laneLoading";
-import { CARDS_PER_PAGE } from "@/src/config/constants";
+import {
+  RESULTS_PER_PAGE_OPTIONS,
+  CARDS_PER_PAGE,
+} from "../../../config/constants";
+import useBreakpoints from "@/src/hooks/useBreakpoints";
+import BottomPaginationSection from "../../bottomPaginationSection/bottomPaginationSection";
 
 export default function DivisionPage({ data }: any) {
   const params = useParams();
@@ -29,17 +35,21 @@ export default function DivisionPage({ data }: any) {
   const pathname = usePathname();
   const queryParams = useSearchParams();
   const headingRef = useRef<HTMLHeadingElement>(null);
-
   const [currentPage, setCurrentPage] = useState(
     Number(queryParams.get("page")) || 1
   );
 
-  const { push } = useRouter();
+  const [currentPerPage, setCurrentPerPage] = useState(
+    Number(queryParams.get("perPage")) || CARDS_PER_PAGE
+  );
 
-  const totalPages = totalNumPages(data.numFound, CARDS_PER_PAGE);
+  const { push } = useRouter();
+  const { isLargerThanSmallTablet } = useBreakpoints();
+
+  const totalPages = totalNumPages(data.numFound, data.perPage);
 
   const updatePageURL = async (pageNumber: number) => {
-    const params = new URLSearchParams();
+    const params = new URLSearchParams(queryParams.toString());
     params.set("page", pageNumber.toString());
     setCurrentPage(pageNumber);
     const url = `${pathname}?${params.toString()}#${data.slug}`;
@@ -48,6 +58,15 @@ export default function DivisionPage({ data }: any) {
     setTimeout(() => {
       setIsLoaded(true);
       headingRef.current?.focus();
+    }, 2000);
+  };
+
+  const updateURL = (queryString: string) => {
+    const newUrl = `${pathname}?${queryString}#${data.slug}`;
+    setIsLoaded(false);
+    push(newUrl);
+    setTimeout(() => {
+      setIsLoaded(true);
     }, 2000);
   };
 
@@ -107,17 +126,61 @@ export default function DivisionPage({ data }: any) {
       )}
       <HorizontalRule sx={{ marginTop: "xxl", marginBottom: "xxl" }} />
 
-      <Heading
-        size="heading5"
-        sx={{ marginBottom: "l" }}
-        ref={headingRef}
-        tabIndex={-1}
-        id={slug}
-        width="max-content"
+      <Flex
+        sx={{
+          gap: "m",
+          flexDirection: "row",
+          justifyContent: "space-between",
+          alignItems: "flex-start",
+          marginBottom: "l",
+        }}
       >
-        {`Displaying ${displayResults(data.numFound, data.perPage, data.page)}
-        results`}
-      </Heading>
+        <Heading
+          size="heading5"
+          sx={{ margin: 0 }}
+          aria-live="polite"
+          aria-atomic="true"
+          ref={headingRef}
+          tabIndex={-1}
+          id={slug}
+        >
+          {`Displaying ${displayResults(
+            data.numFound,
+            data.perPage,
+            data.page
+          )} results`}
+        </Heading>
+        <Box
+          sx={{
+            display: "none",
+            [`@media screen and (min-width: ${headerBreakpoints.smTablet}px)`]:
+              {
+                display: "block",
+              },
+          }}
+        >
+          <Menu
+            key={`per-page-${currentPerPage}`}
+            id="results-per-page-menu"
+            showLabel
+            selectedItem={currentPerPage.toString()}
+            labelText={`Results per page: ${currentPerPage}`}
+            labelAsAriaLabel
+            listItemsData={RESULTS_PER_PAGE_OPTIONS.map((value) => ({
+              id: `per-page-option-${value.toString()}`,
+              label: `per-page-option-${value.toString()}`,
+              onClick: () => {
+                setCurrentPerPage(value);
+                const newParams = new URLSearchParams(queryParams.toString());
+                newParams.set("perPage", String(value));
+                newParams.set("page", "1");
+                updateURL(newParams.toString());
+              },
+              type: "action",
+            }))}
+          />
+        </Box>
+      </Flex>
 
       <Heading level="h2" size="heading3" style={{ width: "fit-content" }}>
         {`Collections in the ${data.name}`}
@@ -137,18 +200,37 @@ export default function DivisionPage({ data }: any) {
           ))
       )}
       {totalPages > 1 && (
-        <Pagination
-          id="pagination-id"
-          initialPage={currentPage}
+        <BottomPaginationSection
           currentPage={currentPage}
+          initialPage={currentPage}
           pageCount={totalPages}
           onPageChange={updatePageURL}
-          sx={{
-            display: "flex",
-            justifyContent: "center",
-            gap: "s",
-            marginTop: "xxl",
-          }}
+          rightContent={
+            isLargerThanSmallTablet ? (
+              <Menu
+                key={`per-page-bottom-${currentPerPage}`}
+                id="results-per-page-menu-bottom"
+                showLabel
+                selectedItem={currentPerPage.toString()}
+                labelText={`Results per page: ${currentPerPage}`}
+                labelAsAriaLabel
+                listItemsData={RESULTS_PER_PAGE_OPTIONS.map((value) => ({
+                  id: `per-page-option-${value.toString()}`,
+                  label: `per-page-option-${value.toString()}`,
+                  onClick: () => {
+                    setCurrentPerPage(value);
+                    const newParams = new URLSearchParams(
+                      queryParams.toString()
+                    );
+                    newParams.set("perPage", String(value));
+                    newParams.set("page", "1");
+                    updateURL(newParams.toString());
+                  },
+                  type: "action",
+                }))}
+              />
+            ) : null
+          }
         />
       )}
     </PageLayout>
