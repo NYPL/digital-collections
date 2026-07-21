@@ -85,6 +85,7 @@
     "puppeteer": "22.15.0"
   },
   "overrides": {
-    "nwsapi": "2.2.13"
+    "nwsapi": "2.2.13",
+    "xmldom": "@xmldom/xmldom@~0.7.7"
   }
 }
