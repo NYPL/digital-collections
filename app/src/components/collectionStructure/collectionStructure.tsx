@@ -357,7 +357,7 @@ const CollectionStructure = ({
         layout="column"
         showHeading
         showImage={false}
-        width="425px"
+        width="300px"
         marginY="0"
       />
     );
