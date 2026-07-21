@@ -85,6 +85,7 @@
   },
   "overrides": {
     "nwsapi": "2.2.13",
-    "xmldom": "@xmldom/xmldom@~0.7.7"
+    "xmldom": "@xmldom/xmldom@~0.7.7",
+    "happy-dom": "20.0.0"
   }
 }
