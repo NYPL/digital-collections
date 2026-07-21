@@ -42,11 +42,15 @@ test.describe("Feedback UX & Integration Tests", () => {
     // Placeholder runs the 3 types of test: comment, bug, correction
     // and checks test account to verify all were received correctly.
 
-    // Integration test block (No Mock)
-    test("should successfully submit a comment", async () => {
-      const timestamp = new Date().toISOString();
-      const liveTestComment = `TEST - QA Integration Test - ${timestamp}`;
+    let liveTestComment: string;
 
+    test.beforeEach(async () => {
+      const timestamp = new Date().toISOString();
+      liveTestComment = `TEST - QA Integration Test - ${timestamp}`;
+    });
+
+    // Integration test block (No Mocks)
+    test("should successfully submit a comment", async () => {
       // Allow API call to go through
       await feedbackModal.verifySuccessfulSubmission(
         feedbackModal.feedbackCommentRadioButton,
@@ -56,13 +60,15 @@ test.describe("Feedback UX & Integration Tests", () => {
 
     test("should successfully submit a bug report", async () => {
       await feedbackModal.verifySuccessfulSubmission(
-        feedbackModal.feedbackBugRadioButton
+        feedbackModal.feedbackBugRadioButton,
+        liveTestComment
       );
     });
 
     test("should successfully submit a correction", async () => {
       await feedbackModal.verifySuccessfulSubmission(
-        feedbackModal.feedbackCorrectionRadioButton
+        feedbackModal.feedbackCorrectionRadioButton,
+        liveTestComment
       );
     });
   });
