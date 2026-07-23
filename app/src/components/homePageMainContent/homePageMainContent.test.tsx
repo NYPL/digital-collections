@@ -8,7 +8,7 @@ describe("homePageMainContent", () => {
     render(
       <HomePageMainContent
         swimlanes={mockHomePageMainContent.swimLaneData.lanesWithNumItems}
-        randomNumber={1}
+        randomNumber={0}
       />
     );
 

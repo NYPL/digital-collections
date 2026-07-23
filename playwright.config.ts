@@ -4,13 +4,39 @@ import { defineConfig, devices } from "@playwright/test";
  * Read environment variables from file.
  * https://github.com/motdotla/dotenv
  */
-// import dotenv from 'dotenv';
-// import path from 'path';
-// dotenv.config({ path: path.resolve(__dirname, '.env') });
+import dotenv from "dotenv";
+import path from "path";
 
+// dotenv.config({ path: path.resolve(__dirname, '.env') });
 /**
  * See https://playwright.dev/docs/test-configuration.
  */
+
+const headlessOptimization = process.env.OPT === "true";
+
+export const HEADLESS_OPTIMIZATION_FLAGS =
+  process.platform === "darwin"
+    ? [
+        // --- LOCAL MAC SILICON ACCELERATION ---
+        "--disable-background-timer-throttling",
+        "--disable-backgrounding-occluded-windows",
+        "--disable-renderer-backgrounding",
+        "--disable-dev-shm-usage",
+        "--no-sandbox",
+        "--enable-gpu",
+        "--use-gl=angle",
+        "--use-angle=metal",
+      ]
+    : [
+        // --- LINUX, ETC CI ACCELERATION ---
+        "--disable-background-timer-throttling",
+        "--disable-backgrounding-occluded-windows",
+        "--disable-renderer-backgrounding",
+        "--disable-dev-shm-usage",
+        "--no-sandbox",
+        // Linux CI handles headless canvas rendering via software wrappers (gl=egl or swiftshader)
+        //'--use-gl=egl'
+      ];
 
 export default defineConfig({
   testDir: "./playwright",
@@ -35,47 +61,64 @@ export default defineConfig({
 
     /* Collect trace when retrying the failed test. See https://playwright.dev/docs/trace-viewer */
     trace: "on-first-retry",
+    /* set optional flags to optimize headless chromedriver visual interactions*/
+    launchOptions: {
+      args: headlessOptimization ? HEADLESS_OPTIMIZATION_FLAGS : [],
+    },
   },
 
   /* Configure projects for major browsers */
-  projects: [
-    {
-      name: "chromium",
-      use: {
-        ...devices["Desktop Chrome"],
-      },
-    },
+  projects: process.env.CI
+    ? [
+        // --- CI WORKFLOW: ONLY RUN CHROMIUM BY DEFAULT ---
+        {
+          name: "chromium",
+          use: {
+            ...devices["Desktop Chrome"],
+          },
+        },
+      ]
+    : [
+        // --- LOCAL DEV WORKFLOW: ALLOW ALL BROWSERS ---
+        {
+          name: "chromium",
+          use: {
+            ...devices["Desktop Chrome"],
+          },
+        },
+        {
+          name: "firefox",
+          use: {
+            ...devices["Desktop Firefox"],
+          },
+        },
+        {
+          name: "webkit",
+          use: {
+            ...devices["Desktop Safari"],
+          },
+        },
 
-    // {
-    //   name: "firefox",
-    //   use: { ...devices["Desktop Firefox"] },
-    // },
+        /* Test against mobile viewports. */
+        // {
+        //   name: 'Mobile Chrome',
+        //   use: { ...devices['Pixel 5'] },
+        // },
+        // {
+        //   name: 'Mobile Safari',
+        //   use: { ...devices['iPhone 12'] },
+        // },
 
-    // {
-    //   name: "webkit",
-    //   use: { ...devices["Desktop Safari"] },
-    // },
-
-    /* Test against mobile viewports. */
-    // {
-    //   name: 'Mobile Chrome',
-    //   use: { ...devices['Pixel 5'] },
-    // },
-    // {
-    //   name: 'Mobile Safari',
-    //   use: { ...devices['iPhone 12'] },
-    // },
-
-    /* Test against branded browsers. */
-    // {
-    //   name: 'Microsoft Edge',
-    //   use: { ...devices['Desktop Edge'], channel: 'msedge' },
-    // },
-    // {
-    //   name: 'Google Chrome',
-    //   use: { ...devices['Desktop Chrome'], channel: 'chrome' },
-    // },
-  ],
+        /* Test against branded browsers. */
+        // {
+        //   name: 'Microsoft Edge',
+        //   use: { ...devices['Desktop Edge'], channel: 'msedge' },
+        // },
+        // {
+        //   name: 'Google Chrome',
+        //   use: { ...devices['Desktop Chrome'], channel: 'chrome' },
+        // },
+      ],
 
   /* Run your local dev server before starting the tests */
   webServer: {

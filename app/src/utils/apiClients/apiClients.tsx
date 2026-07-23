@@ -17,6 +17,7 @@ import {
 import { fetchApi } from "../fetchApi/fetchApi";
 import { Filter } from "../../types/FilterType";
 import { APIItem } from "@/src/types/CollectionsAPI";
+import featuredContentData from "@/src/data/featuredContentData";
 
 export class CollectionsApi {
   static async getCaptureMetadata(uuid: string) {
@@ -83,7 +84,7 @@ export class CollectionsApi {
   }
 
   static async getDivisionData({
-    pageNum = 1,
+    pageNum = DEFAULT_PAGE_NUM,
     perPage = CARDS_PER_PAGE,
     slug,
   }: {
@@ -172,7 +173,7 @@ export class CollectionsApi {
   static async getLaneData({
     slug,
     sort = "items-count",
-    pageNum = 1,
+    pageNum = DEFAULT_PAGE_NUM,
     perPage = CARDS_PER_PAGE,
   }: {
     slug: string;
@@ -191,6 +192,13 @@ export class CollectionsApi {
     return await fetchApi({
       apiUrl: apiUrl,
     });
+  }
+
+  static async getSuggestions(q: string) {
+    const apiUrl = `${
+      process.env.COLLECTIONS_API_URL
+    }/search/suggestions?q=${encodeURIComponent(q)}`;
+    return await fetchApi({ apiUrl });
   }
 
   /**
@@ -256,7 +264,8 @@ export class CollectionsApi {
   }
 
   static async getHomePageData() {
-    const randomNumber = Math.floor(Math.random() * 2);
+    const numFeaturedContentEntries = featuredContentData.length;
+    const randomNumber = Math.floor(Math.random() * numFeaturedContentEntries);
     const lanes: LaneDataType[] = data.lanes as unknown as LaneDataType[];
 
     // Get all the UUIDs from the collections

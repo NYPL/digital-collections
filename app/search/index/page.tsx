@@ -12,6 +12,7 @@ export interface SearchParamsType {
   sort: string;
   filters: Filter[];
   page: number;
+  perPage?: number;
   availableFilters?: AvailableFilter[];
   viewMode: "grid" | "list";
 }
@@ -36,6 +37,7 @@ export default async function Search({ searchParams }: SearchProps) {
     sort: searchParams.sort,
     filters: searchParams.filters,
     page: searchParams.page,
+    perPage: searchParams.perPage,
   });
 
   // Add available filters from response into searchParams

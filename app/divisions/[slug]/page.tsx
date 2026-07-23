@@ -8,7 +8,7 @@ import { redirect } from "next/navigation";
 
 export type DivisionProps = {
   params: { slug: string };
-  searchParams: { page: number };
+  searchParams: { page: number; perPage?: number };
 };
 
 export async function generateMetadata({
@@ -30,6 +30,7 @@ export default async function Division({
   const data = await CollectionsApi.getDivisionData({
     slug: params.slug,
     pageNum: searchParams.page,
+    perPage: searchParams.perPage,
   });
 
   return (

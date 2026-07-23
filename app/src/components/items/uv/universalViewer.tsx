@@ -3,9 +3,11 @@ import {
   useUniversalViewer,
   useEvent,
 } from "../../../hooks/useUniversalViewer";
+import uvConfig from "./uvConfig.json";
 import React, { useEffect, useMemo, useRef } from "react";
 import { useCanvasContext } from "../../../context/CanvasProvider";
-import uvConfig from "../../../../../public/uvConfig.json";
+import { sendDownloadEvent } from "@/src/utils/ga4Utils";
+import { useAnalyticsDataContext } from "@/src/context/AnalyticsDataProvider";
 
 export type UniversalViewerProps = {
   config?: any;
@@ -18,7 +20,7 @@ export type UniversalViewerProps = {
 // just use this.
 const IIIFEvents = {
   CANVAS_INDEX_CHANGE: "canvasIndexChange",
-  SHOW_OVERLAY: "showOverlay",
+  DOWNLOAD: "download",
 };
 
 // pulled most of this code from: https://codesandbox.io/p/sandbox/uv-nextjs-example-239ff5?file=%2Fcomponents%2FUniversalViewer.tsx%3A39%2C1-49%2C8
@@ -70,6 +72,25 @@ const UniversalViewer: React.FC<UniversalViewerProps> = React.memo(
     const uv = useUniversalViewer(ref, options);
 
     useEffect(() => {
+      const container = ref.current;
+      if (!container) return;
+
+      // The UniversalViewer/OpenSeadragon instance doesn't automatically
+      // resize when its container does. We can use a ResizeObserver to
+      // watch for container size changes and dispatch a window resize event,
+      // which UV/OSD listens for to trigger its internal resize logic.
+      const resizeObserver = new ResizeObserver(() => {
+        window.dispatchEvent(new Event("resize"));
+      });
+
+      resizeObserver.observe(container);
+
+      return () => {
+        resizeObserver.disconnect();
+      };
+    }, []);
+
+    useEffect(() => {
       if (uv) {
         uv._assignedContentHandler?.publish(
           IIIFEvents.CANVAS_INDEX_CHANGE,
@@ -78,30 +99,7 @@ const UniversalViewer: React.FC<UniversalViewerProps> = React.memo(
       }
     }, [canvasIndex, uv]);
 
-    function pruneDownloadButtons() {
-      const host =
-        document.querySelector(".uv-iiif-extension-host") || document;
-      const nodes = host.querySelectorAll<HTMLElement>(
-        "li.option.single > button, li.option.single button, li.option.single > a, li.option.single a"
-      );
-      nodes.forEach((el) => {
-        const text = (el.textContent || "").trim().toLowerCase();
-        const isWholeImage = text.startsWith("whole image");
-
-        if (isWholeImage) {
-          const li = el.closest("li");
-          if (li instanceof HTMLElement) {
-            li.style.display = "none";
-          } else {
-            (el as HTMLElement).style.display = "none";
-          }
-        }
-      });
-    }
-
     useEffect(() => {
-      let mo: MutationObserver | undefined;
-
       if (uv) {
         // override config using an inline json object
         uv.on("configure", function ({ config, cb }) {
@@ -114,25 +112,38 @@ const UniversalViewer: React.FC<UniversalViewerProps> = React.memo(
       setCurrentCanvasIndex(i);
     });
 
-    useEvent(uv, IIIFEvents.SHOW_OVERLAY, () => {
-      let mo: MutationObserver | undefined;
-      try {
-        mo = new MutationObserver(() => pruneDownloadButtons());
-        mo.observe(document.body, { subtree: true, childList: true });
-      } catch {}
-      return () => {
-        try {
-          mo?.disconnect();
-        } catch {}
+    const analyticsData = useAnalyticsDataContext();
+
+    useEvent(uv, IIIFEvents.DOWNLOAD, ({ label }) => {
+      const fileInfo = parseUVDownloadFilename(label);
+      const ga4Data = {
+        fileName: fileInfo ? fileInfo.name : label,
+        extension: fileInfo?.extension ?? undefined,
+        ...analyticsData,
       };
+      if (!fileInfo) {
+        console.log(`Could not parse file info from label ${label}`);
+      }
+      sendDownloadEvent(ga4Data);
     });
+
+    const parseUVDownloadFilename = (fileLabel: string) => {
+      const match = fileLabel.match(/^(.*)\s\((.*)\)$/);
+      if (match) {
+        return {
+          name: match[1],
+          extension: match[2],
+        };
+      }
+      return null;
+    };
 
     return (
       <>
         <div
           className="uv"
           onClick={(e) => handleOnClick(e)}
-          style={{ height: 500 }}
+          style={{ height: "100%" }}
           ref={ref}
         />
       </>

@@ -4,7 +4,6 @@ import {
   Box,
   Heading,
   HorizontalRule,
-  Pagination,
   Flex,
   Spacer,
 } from "@nypl/design-system-react-components";
@@ -19,15 +18,19 @@ import {
   DEFAULT_SEARCH_TERM,
   COLLECTION_SORT_LABELS,
   DEFAULT_SEARCH_SORT,
+  RESULTS_PER_PAGE_OPTIONS,
 } from "@/src/config/constants";
 import { CollectionSearchManager } from "@/src/utils/searchManager/searchManager";
 import { headerBreakpoints } from "@/src/utils/breakpoints";
 import DCSearchBar from "../../search/dcSearchBar";
 import ViewingOptionsMenu from "../../viewingOptionsMenu/viewingOptionsMenu";
 import useSearchAnalytics from "@/src/hooks/useSearchAnalytics";
+import useBreakpoints from "@/src/hooks/useBreakpoints";
+import BottomPaginationSection from "../../bottomPaginationSection/bottomPaginationSection";
 
 export function CollectionsPage({ data, collectionsSearchParams }) {
   const { push } = useRouter();
+  const { isLargerThanSmallTablet } = useBreakpoints();
   const pathname = usePathname();
   const headingRef = useRef<HTMLHeadingElement>(null);
   const isFirstLoad = useRef<boolean>(false);
@@ -43,6 +46,7 @@ export function CollectionsPage({ data, collectionsSearchParams }) {
 
   const collectionsSearchManager = new CollectionSearchManager({
     initialPage: Number(collectionsSearchParams?.page) || DEFAULT_PAGE_NUM,
+    initialPerPage: Number(collectionsSearchParams?.perPage) || undefined,
     initialSort: collectionsSearchParams?.sort || DEFAULT_COLLECTION_SORT,
     defaultSort: DEFAULT_COLLECTION_SORT,
     initialKeywords: collectionsSearchParams?.q || DEFAULT_SEARCH_TERM,
@@ -93,7 +97,7 @@ export function CollectionsPage({ data, collectionsSearchParams }) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [collections]);
 
-  useSearchAnalytics(collectionsSearchManager);
+  useSearchAnalytics(collectionsSearchManager, data.numResults);
 
   return (
     <>
@@ -179,6 +183,9 @@ export function CollectionsPage({ data, collectionsSearchParams }) {
             options={COLLECTION_SORT_LABELS}
             sort={data.sort}
             searchManager={collectionsSearchManager}
+            perPageOptions={
+              isLargerThanSmallTablet ? RESULTS_PER_PAGE_OPTIONS : []
+            }
             updateURL={updateURL}
             showViewModeButtons={false}
           />
@@ -200,8 +207,7 @@ export function CollectionsPage({ data, collectionsSearchParams }) {
         ))
       )}
       {totalPages > 1 && (
-        <Pagination
-          id="pagination-id"
+        <BottomPaginationSection
           currentPage={collectionsSearchManager.page}
           initialPage={collectionsSearchManager.page}
           pageCount={totalPages}
@@ -209,12 +215,20 @@ export function CollectionsPage({ data, collectionsSearchParams }) {
             collectionsSearchManager.setLastFilter(null);
             updateURL(collectionsSearchManager.handlePageChange(newPage));
           }}
-          sx={{
-            display: "flex",
-            justifyContent: "center",
-            gap: "s",
-            marginTop: "xxl",
-          }}
+          rightContent={
+            isLargerThanSmallTablet ? (
+              <ViewingOptionsMenu
+                options={COLLECTION_SORT_LABELS}
+                sort={data.sort}
+                searchManager={collectionsSearchManager}
+                perPageOptions={RESULTS_PER_PAGE_OPTIONS}
+                updateURL={updateURL}
+                showSortMenu={false}
+                showViewModeButtons={false}
+                perPageMenuId="results-per-page-menu-bottom"
+              />
+            ) : null
+          }
         />
       )}
     </>

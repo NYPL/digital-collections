@@ -1,10 +1,12 @@
 import { CollectionsApi } from "./apiClients";
 import { fetchApi } from "../fetchApi/fetchApi";
 import defaultFeaturedItem from "@/src/data/defaultFeaturedItemData";
+import featuredContentData from "@/src/data/featuredContentData";
 import {
   mockCollectionsResponse,
   mockFeaturedItemResponse,
 } from "__tests__/__mocks__/data/collectionsApi/mockCollectionsResponse";
+
 jest.mock("../fetchApi/fetchApi");
 
 beforeEach(() => {
@@ -134,7 +136,9 @@ describe("Collections API methods", () => {
       );
       const result = await CollectionsApi.getHomePageData();
       expect(fetchApi as jest.Mock).toHaveBeenCalled();
-      expect([0, 1]).toContain(result.randomNumber);
+      expect([...Array(featuredContentData.length).keys()]).toContain(
+        result.randomNumber
+      );
       expect(result.lanesWithNumItems.length).toEqual(7);
       // Fallback data (all 0s).
       expect(
