@@ -25,7 +25,6 @@ This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next
 ### Deploying
 
 - [Github Actions](#github-actions)
-- [Branches and AWS configuration](#branches-and-aws-configuration)
 - [Git workflow](#git-workflow)
 - [Versioning and naming](#release-naming-strategy)
 - [Deployments](#deployments)
