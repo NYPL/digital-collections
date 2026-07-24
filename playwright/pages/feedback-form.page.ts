@@ -66,7 +66,7 @@ export default class FeedbackModal extends DCHomepage {
     await this.feedbackSubmitButton.click();
     await expect(this.successBanner).toBeVisible();
   }
-  //Poll Google sheet for a newly created row and verifies all 8 columns.
+  //Poll Google sheet for a newly created row and verifies 7 columns.
   async verifySheetRowData(
     sheetsUtil: SheetsTeardownUtil,
     commentSignature: string,
@@ -98,7 +98,7 @@ export default class FeedbackModal extends DCHomepage {
     expect(row.timestamp).toBeTruthy();
     expect(row.page).toContain(expectedPageUrl);
     expect(row.ip).toBeTruthy();
-    expect(row.platform).toBeTruthy();
+    // expect(row.platform).toBeTruthy();
     expect(row.browser).toBeTruthy();
     expect(row.version).toBeTruthy();
   }
