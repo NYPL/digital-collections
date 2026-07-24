@@ -63,7 +63,7 @@ test.describe("Feedback UX & Integration Tests", () => {
       createdSignatures.push(liveTestComment);
     });
 
-    // Integration tests run against DEV or Prod sheet
+    // Integration tests run against DEV sheet
     test("should successfully submit a comment", async () => {
       await feedbackModal.verifySuccessfulSubmission(
         feedbackModal.feedbackCommentRadioButton,
