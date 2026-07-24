@@ -416,19 +416,8 @@ New Relic logs need to be in a `useEffect` because we have to check that New Rel
 
 All pushes to this repo will be checked with `npm test` and `npm lint`.
 QA deployments are automatically triggered by pushing changes to the qa branch. qa is deployed to AWS via Github Actions.
-Production deployments for this repo require a PR to the production branch. Once merged, production is deployed to AWS via Github Actions.
 
-## Branches and AWS environments
-
-This app is currently on a reverse proxy with ["old" Digital Collections](https://github.com/NYPL/digitalreadingroom), which is no longer being updated. The [reverse proxy repo](https://github.com/NYPL/nypl-dc-rp) configuration sets which paths are redirected to old and new (for QA and production).
-
-Our branches (in order of stability are):
-
-| Branch     | Environment | AWS Account    | Cluster                | Link To Application                                                                |
-| :--------- | :---------- | :------------- | :--------------------- | :--------------------------------------------------------------------------------- |
-| main       | development |                |                        | [localhost:3000](http://localhost:3000)                                            |
-| qa         | qa          | nypl-dams-dev  | dc-frontend-qa         | [https://qa-digitalcollections.nypl.org/](https://qa-digitalcollections.nypl.org/) |
-| production | production  | nypl-dams-prod | new-digitalcollections | [https://digitalcollections.nypl.org/](https://digitalcollections.nypl.org/)       |
+When releases are published via GitHub releases, a Github action is triggered to deploy the released code to production. (Our Github releases are based off the `qa` branch by default. You do not have to interact with a `production` or `main` branch when deploying code to production.)
 
 ## Git workflow
 
@@ -440,30 +429,11 @@ Our branches (in order of stability are):
 3.  Create a pull request of the `feature` branch _into_ `qa`.
 4.  After a feature branch has approved accessibility review and VQA, merge `feature` branch into `qa` for testing. Merging can be done manually or with a pull request. Pushing the changes to the remote branch will automatically trigger a deployment to the `qa` environment.
 
-    4a. If you introduced a new path in your PR, update the reverse proxy QA configuration so that it will be accessible in the `qa` environment.
-
-5.  After QA has tested and approved cut a `release` branch off of `qa` using our Release Naming Strategy. Please see Release Naming Strategy for details on how we plan to number our releases during the initial rollout of this project.
-
-    `git checkout -b release/x.y.z`.
-
-    (see tagged releases or changelog for last version)
-
-6.  Update CHANGELOG.md in release branch by moving updates from unreleased into the new release section.
-
-    ie. `## [2.4.13] - 04-21-2023`
-
-7.  Commit and push changes to release branch.
-8.  The `production` branch is protected. When the release is ready, create a pull request to merge `release` branch to `production`. Pushing to `production` will automatically deploy to the production environment.
-9.  Immediately after merging release to production, finish the release. This is done by backmerging the release to `qa` and `main` followed by creating the tags/release on github using these commands:
-
-    `$ git tag -a x.y.z`
-    `$ git push origin --tags`
-
-    9a. If you introduced a new path in your PR, update the reverse proxy production configuration (merging the change you already made in 4a!) so it will be accessible in the `production` environment.
+For deploying code on `qa` to production, see the "Deployments" section below.
 
 ### Release naming strategy
 
-This project is in the middle of its development. We will use a custom versioning system inspired by Semantic Versioning while we migrate the functionality of the digitalreadingroom app to this app. Once all of the initial phases (as defined in the [Product Brief](https://docs.google.com/document/d/187LA6VjOaDdXA6xRZYv_gqgNzJcAyuSPIZoenVH2L3w)) are complete, this repo will use [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
+This repo uses [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ### Versioning system
 
@@ -475,7 +445,7 @@ Format: MAJOR.MINOR.PATCH
 
 ### Deployments
 
-PR previews and `main` are all deployed to Vercel. Merges to `main` trigger automatic deployments to Vercel.
+PR previews are deployed to Vercel.
 
 QA deployments are automatically triggered by pushing changes to the `qa` branch. `qa` is deployed to AWS [via Github Actions](https://github.com/NYPL/digital-collections/blob/production/.github/workflows/deploy_qa.yml).
 
@@ -487,7 +457,7 @@ Production deployments are done using Github releases, using the following proce
       - The `version-num` should be a version bump of the previous release tag, following semantic versioning
   4. Make sure the 'Previous tag' is set to the tag of the prior release
   5. Hit 'Generate release notes' to populate the release description
-  6. Name the new release `Release - ${version-num}`
+  6. Name the new release `Release ${version-num}`
   7. Finally, hit publish release and observe the deployment in github actions
 
 ### Summary of project phases
