@@ -1,6 +1,7 @@
 import { test, expect } from "../base";
 import { AboutPage } from "../pages/about.page";
 import FeedbackModal from "../pages/feedback-form.page";
+import { SheetsTeardownUtil } from "../utils/feedbackSetupTeardown";
 
 test.describe("Feedback UX & Integration Tests", () => {
   let feedbackModal: FeedbackModal;
@@ -39,22 +40,41 @@ test.describe("Feedback UX & Integration Tests", () => {
     });
   });
   test.describe("Verify Feedback data", () => {
-    // Placeholder runs the 3 types of test: comment, bug, correction
-    // and checks test account to verify all were received correctly.
-
+    let sheetsUtil: SheetsTeardownUtil;
     let liveTestComment: string;
+    const createdSignatures: string[] = [];
+
+    test.beforeAll(async () => {
+      sheetsUtil = new SheetsTeardownUtil();
+      // Guardrail check executes once before running live integration tests
+      await sheetsUtil.assertIsDevSpreadsheet();
+    });
+
+    test.afterAll(async () => {
+      // Clean up all rows generated across integration test runs
+      if (createdSignatures.length > 0) {
+        await sheetsUtil.deleteTestRows(createdSignatures);
+      }
+    });
 
     test.beforeEach(async () => {
       const timestamp = new Date().toISOString();
       liveTestComment = `TEST - QA Integration Test - ${timestamp}`;
+      createdSignatures.push(liveTestComment);
     });
 
-    // Integration test block (No Mocks)
+    // Integration tests (No Mocks -> Real Sheet Verification via POM)
     test("should successfully submit a comment", async () => {
-      // Allow API call to go through
       await feedbackModal.verifySuccessfulSubmission(
         feedbackModal.feedbackCommentRadioButton,
         liveTestComment
+      );
+
+      await feedbackModal.verifySheetRowData(
+        sheetsUtil,
+        liveTestComment,
+        "comment",
+        AboutPage.aboutUrl
       );
     });
 
@@ -63,12 +83,26 @@ test.describe("Feedback UX & Integration Tests", () => {
         feedbackModal.feedbackBugRadioButton,
         liveTestComment
       );
+
+      await feedbackModal.verifySheetRowData(
+        sheetsUtil,
+        liveTestComment,
+        "bug",
+        AboutPage.aboutUrl
+      );
     });
 
     test("should successfully submit a correction", async () => {
       await feedbackModal.verifySuccessfulSubmission(
         feedbackModal.feedbackCorrectionRadioButton,
         liveTestComment
+      );
+
+      await feedbackModal.verifySheetRowData(
+        sheetsUtil,
+        liveTestComment,
+        "correction",
+        AboutPage.aboutUrl
       );
     });
   });
