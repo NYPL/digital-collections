@@ -417,7 +417,7 @@ New Relic logs need to be in a `useEffect` because we have to check that New Rel
 All pushes to this repo will be checked with `npm test` and `npm lint`.
 QA deployments are automatically triggered by pushing changes to the qa branch. qa is deployed to AWS via Github Actions.
 
-When releases are published via GitHub releases, a Github action is triggered to deploy the released code to production.
+When releases are published via GitHub releases, a Github action is triggered to deploy the released code to production. (Our Github releases are based off the `qa` branch by default. You do not have to interact with a `production` or `main` branch when deploying code to production.)
 
 ## Git workflow
 
@@ -445,7 +445,7 @@ Format: MAJOR.MINOR.PATCH
 
 ### Deployments
 
-PR previews and `main` are all deployed to Vercel. Merges to `main` trigger automatic deployments to Vercel.
+PR previews are deployed to Vercel.
 
 QA deployments are automatically triggered by pushing changes to the `qa` branch. `qa` is deployed to AWS [via Github Actions](https://github.com/NYPL/digital-collections/blob/production/.github/workflows/deploy_qa.yml).
 
