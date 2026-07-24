@@ -46,12 +46,12 @@ test.describe("Feedback UX & Integration Tests", () => {
 
     test.beforeAll(async () => {
       sheetsUtil = new SheetsTeardownUtil();
-      // Guardrail check executes once before running live integration tests
+      // Guardrail check executes once before running live integration tests on sheet
       await sheetsUtil.assertIsDevSpreadsheet();
     });
 
     test.afterAll(async () => {
-      // Clean up all rows generated across integration test runs
+      // Clean up any rows generated across integration test runs
       if (createdSignatures.length > 0) {
         await sheetsUtil.deleteTestRows(createdSignatures);
       }
@@ -63,7 +63,7 @@ test.describe("Feedback UX & Integration Tests", () => {
       createdSignatures.push(liveTestComment);
     });
 
-    // Integration tests (No Mocks -> Real Sheet Verification via POM)
+    // Integration tests run against DEV or Prod sheet
     test("should successfully submit a comment", async () => {
       await feedbackModal.verifySuccessfulSubmission(
         feedbackModal.feedbackCommentRadioButton,
