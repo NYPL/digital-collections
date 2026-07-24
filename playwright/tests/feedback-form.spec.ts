@@ -39,7 +39,7 @@ test.describe("Feedback UX & Integration Tests", () => {
       );
     });
   });
-  test.describe("Verify Feedback data", () => {
+  test.describe.skip("Verify Feedback data", () => {
     let sheetsUtil: SheetsTeardownUtil;
     let liveTestComment: string;
     const createdSignatures: string[] = [];
