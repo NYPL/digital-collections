@@ -16,6 +16,51 @@ describe("SearchManager", () => {
     localStorage.clear();
   });
 
+  describe("perPage local storage", () => {
+    it("uses localStorage perPage when URL does not provide one", () => {
+      localStorage.setItem("perPage", "96");
+
+      const manager = new GeneralSearchManager({
+        initialPage: 1,
+        initialSort: DEFAULT_SEARCH_SORT,
+        defaultSort: DEFAULT_SEARCH_SORT,
+        initialFilters: [],
+        initialKeywords: DEFAULT_SEARCH_TERM,
+      });
+
+      expect(manager.perPage).toBe(96);
+    });
+
+    it("prefers URL perPage over localStorage perPage", () => {
+      localStorage.setItem("perPage", "96");
+
+      const manager = new GeneralSearchManager({
+        initialPage: 1,
+        initialPerPage: 192,
+        initialSort: DEFAULT_SEARCH_SORT,
+        defaultSort: DEFAULT_SEARCH_SORT,
+        initialFilters: [],
+        initialKeywords: DEFAULT_SEARCH_TERM,
+      });
+
+      expect(manager.perPage).toBe(192);
+      expect(localStorage.getItem("perPage")).toBe("192");
+    });
+
+    it("persists perPage changes in localStorage", () => {
+      const manager = new GeneralSearchManager({
+        initialPage: 1,
+        initialSort: DEFAULT_SEARCH_SORT,
+        defaultSort: DEFAULT_SEARCH_SORT,
+        initialFilters: [],
+        initialKeywords: DEFAULT_SEARCH_TERM,
+      });
+
+      manager.handlePerPageChange(96);
+      expect(localStorage.getItem("perPage")).toBe("96");
+    });
+  });
+
   describe("GeneralSearchManager individual params", () => {
     let manager: GeneralSearchManager;
 

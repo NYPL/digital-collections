@@ -15,6 +15,32 @@ import {
 import { capitalize } from "../utils";
 import { MutableRefObject } from "react";
 
+const VIEW_MODE_STORAGE_KEY = "viewMode";
+const PER_PAGE_STORAGE_KEY = "perPage";
+
+const getStorageItem = (key: string): string | null => {
+  if (typeof window === "undefined") return null;
+  return localStorage.getItem(key);
+};
+
+const setStorageItem = (key: string, value: string): void => {
+  if (typeof window === "undefined") return;
+  localStorage.setItem(key, value);
+};
+
+const getPerPageFromStorage = (): number | undefined => {
+  const storedPerPage = getStorageItem(PER_PAGE_STORAGE_KEY);
+  const parsedPerPage = Number(storedPerPage);
+
+  return Number.isFinite(parsedPerPage) && parsedPerPage > 0
+    ? parsedPerPage
+    : undefined;
+};
+
+const setPerPageInStorage = (perPage: number): void => {
+  setStorageItem(PER_PAGE_STORAGE_KEY, perPage.toString());
+};
+
 export interface SearchManager {
   handleSearchSubmit(enforceSort?: string): string;
   handleKeywordChange(value: string): void;
@@ -64,7 +90,9 @@ abstract class BaseSearchManager implements SearchManager {
     initialViewMode?: "grid" | "list";
   }) {
     this.currentPage = config.initialPage;
-    this.currentPerPage = config.initialPerPage || CARDS_PER_PAGE;
+    this.currentPerPage =
+      config.initialPerPage || getPerPageFromStorage() || CARDS_PER_PAGE;
+    setPerPageInStorage(this.currentPerPage);
 
     this.currentSort = config.initialSort;
     this.defaultSort = config.defaultSort;
@@ -108,13 +136,12 @@ abstract class BaseSearchManager implements SearchManager {
   }
 
   get viewMode() {
-    if (typeof window !== "undefined") {
-      const cachedViewMode = localStorage.getItem("viewMode") as
-        | "grid"
-        | "list";
-      if (!this.currentViewMode && cachedViewMode) {
-        return cachedViewMode;
-      }
+    const cachedViewMode = getStorageItem(VIEW_MODE_STORAGE_KEY) as
+      | "grid"
+      | "list"
+      | null;
+    if (!this.currentViewMode && cachedViewMode) {
+      return cachedViewMode;
     }
     return this.currentViewMode || DEFAULT_VIEW_MODE;
   }
@@ -175,9 +202,7 @@ abstract class BaseSearchManager implements SearchManager {
   }
 
   handleViewModeChange(mode: "grid" | "list") {
-    if (typeof window !== "undefined") {
-      localStorage.setItem("viewMode", mode);
-    }
+    setStorageItem(VIEW_MODE_STORAGE_KEY, mode);
     this.currentViewMode = mode;
     return this.getQueryString({
       q: this.currentKeywords,
@@ -191,6 +216,7 @@ abstract class BaseSearchManager implements SearchManager {
 
   handlePerPageChange(perPage: number) {
     this.currentPerPage = perPage;
+    setPerPageInStorage(perPage);
     this.currentPage = DEFAULT_PAGE_NUM;
     return this.getQueryString({
       q: this.currentKeywords,
@@ -338,6 +364,7 @@ export class CollectionSearchManager extends BaseSearchManager {
 
   handlePerPageChange(perPage: number) {
     this.currentPerPage = perPage;
+    setPerPageInStorage(perPage);
     this.currentPage = DEFAULT_PAGE_NUM;
     return this.getQueryString({
       q: this.currentKeywords,

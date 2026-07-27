@@ -26,6 +26,7 @@ const component = (
 describe("Search component", () => {
   beforeEach(() => {
     jest.clearAllMocks();
+    localStorage.clear();
   });
 
   it("renders Search component", () => {
@@ -46,7 +47,25 @@ describe("Search component", () => {
 
     fireEvent.click(searchButton);
 
-    expect(mockRouter.push).toHaveBeenCalledWith(`/search/index?q=test%20word`);
+    expect(mockRouter.push).toHaveBeenCalledWith(
+      `/search/index?q=test+word&perPage=48`
+    );
+  });
+
+  it("uses persisted perPage value when submitting", () => {
+    localStorage.setItem("perPage", "96");
+
+    const { getByPlaceholderText } = render(component);
+    fireEvent.change(getByPlaceholderText("Search keyword(s)"), {
+      target: { value: "test word" },
+    });
+
+    const searchButton = screen.getByRole("button", { name: "Search" });
+    fireEvent.click(searchButton);
+
+    expect(mockRouter.push).toHaveBeenCalledWith(
+      `/search/index?q=test+word&perPage=96`
+    );
   });
 
   it("applies filter correctly", () => {
@@ -65,7 +84,7 @@ describe("Search component", () => {
     fireEvent.click(searchButton);
 
     expect(mockRouter.push).toHaveBeenCalledWith(
-      "/search/index?q=test%20words&filters%5Brights%5D=pd"
+      "/search/index?q=test+words&perPage=48&filters%5Brights%5D=pd"
     );
   });
 
@@ -76,7 +95,9 @@ describe("Search component", () => {
     fireEvent.change(input, { target: { value: "ab" } });
     fireEvent.keyDown(input, { key: "Enter" });
 
-    expect(mockRouter.push).toHaveBeenCalledWith("/search/index?q=ab");
+    expect(mockRouter.push).toHaveBeenCalledWith(
+      "/search/index?q=ab&perPage=48"
+    );
   });
 
   it("populates the input on Enter when a suggestion is active and does not submit", async () => {
@@ -150,7 +171,7 @@ describe("Search component", () => {
     fireEvent.mouseDown(suggestion);
 
     expect(mockRouter.push).toHaveBeenCalledWith(
-      "/search/index?q=Cromwell%20Family%20Papers&filters%5Brights%5D=pd"
+      "/search/index?q=Cromwell+Family+Papers&perPage=48&filters%5Brights%5D=pd"
     );
 
     jest.useRealTimers();
