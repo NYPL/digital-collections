@@ -70,15 +70,18 @@ export class SheetsTeardownUtil {
 
   public async assertIsDevSpreadsheet(): Promise<void> {
     const { fileTitle, tabName, rows } = await this.getActiveSheetData("A:A");
-
-    console.log(`\n==================================================`);
-    console.log(`SAFETY INSPECTION REPORT`);
-    console.log(`==================================================`);
-    console.log(`Spreadsheet ID : ${this.spreadsheetId}`);
-    console.log(`File Title     : "${fileTitle}"`);
-    console.log(`Active Tab     : "${tabName}"`);
+    console.log(`[GUARDRAIL] Confirmed DEV sheet ("${fileTitle}")`);
     console.log(
-      `Current Rows   : ${rows.length} / ${MAX_ALLOWED_DEV_ROWS} max allowed`
+      `[Spreadsheet ID] ${
+        this.spreadsheetId
+          ? `${this.spreadsheetId.slice(0, 4)}*****${this.spreadsheetId.slice(
+              -4
+            )}`
+          : "N/A"
+      }`
+    );
+    console.log(
+      `[Current Rows] ${rows.length} / ${MAX_ALLOWED_DEV_ROWS} max rows allowed`
     );
 
     if (fileTitle === KNOWN_PROD_TITLE || fileTitle !== EXPECTED_DEV_TITLE) {
@@ -92,9 +95,6 @@ export class SheetsTeardownUtil {
         `GUARDRAIL FAILURE: Sheet has ${rows.length} rows (Limit: ${MAX_ALLOWED_DEV_ROWS}). Aborting!`
       );
     }
-
-    console.log(`RESULT: Guardrails Passed! Confirmed DEV sheet.`);
-    console.log(`==================================================\n`);
   }
 
   // Fetch and map 7 target columns for a row matching the signature.
@@ -131,11 +131,6 @@ export class SheetsTeardownUtil {
       return;
     }
 
-    console.log(`==================================================`);
-    console.log(`TEARDOWN PROCESS STARTING`);
-    console.log(`==================================================`);
-    console.log(`Searching Column B for signatures:`, commentSignatures);
-
     const { tabName, numericSheetId, rows } =
       await this.getActiveSheetData("A:Z");
 
@@ -156,11 +151,12 @@ export class SheetsTeardownUtil {
 
     if (matchedRowsInfo.length === 0) {
       console.log(`[INFO] No matching rows found for deletion.`);
-      console.log(`==================================================\n`);
       return;
     }
 
-    console.log(`\nFOUND ${matchedRowsInfo.length} MATCHING ROW(S) TO DELETE:`);
+    console.log(
+      `\n[FOUND] ${matchedRowsInfo.length} MATCHING ROW(S) TO DELETE:`
+    );
     matchedRowsInfo.forEach((item) => {
       console.log(
         `  - Sheet Row ${item.index + 1} (Zero-index ${item.index}): "${
@@ -194,8 +190,7 @@ export class SheetsTeardownUtil {
     });
 
     console.log(
-      `SUCCESS: Deleted ${rowIndices.length} row(s) from tab "${tabName}".`
+      `[TEARDOWN] Deleted ${rowIndices.length} row(s) from tab "${tabName}".`
     );
-    console.log(`==================================================\n`);
   }
 }
