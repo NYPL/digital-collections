@@ -100,7 +100,12 @@ const SearchPage = ({
   };
 
   useEffect(() => {
-    if (urlSearchParams.has("perPage")) {
+    const hasPerPageInUrl =
+      typeof urlSearchParams?.has === "function"
+        ? urlSearchParams.has("perPage")
+        : Boolean(urlSearchParams?.get?.("perPage"));
+
+    if (hasPerPageInUrl) {
       return;
     }
 
