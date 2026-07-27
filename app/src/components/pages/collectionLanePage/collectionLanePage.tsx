@@ -143,7 +143,7 @@ export default function CollectionLanePage({ data }: any) {
             labelAsAriaLabel
             listItemsData={RESULTS_PER_PAGE_OPTIONS.map((value) => ({
               id: `per-page-option-${value.toString()}`,
-              label: `per-page-option-${value.toString()}`,
+              label: value.toString(),
               onClick: () => {
                 setCurrentPerPage(value);
                 const newParams = new URLSearchParams(queryParams.toString());
@@ -186,7 +186,7 @@ export default function CollectionLanePage({ data }: any) {
                 labelAsAriaLabel
                 listItemsData={RESULTS_PER_PAGE_OPTIONS.map((value) => ({
                   id: `per-page-option-${value.toString()}`,
-                  label: `per-page-option-${value.toString()}`,
+                  label: value.toString(),
                   onClick: () => {
                     setCurrentPerPage(value);
                     const newParams = new URLSearchParams(
