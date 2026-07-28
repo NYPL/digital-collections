@@ -1,8 +1,9 @@
 import { test, expect } from "../base";
 import { AboutPage } from "../pages/about.page";
 import FeedbackModal from "../pages/feedback-form.page";
+import { SheetsTeardownUtil } from "../utils/feedbackSetupTeardown";
 
-test.describe("Verify Feedback Controls", () => {
+test.describe("Feedback UX & Integration Tests", () => {
   let feedbackModal: FeedbackModal;
 
   test.beforeEach(async ({ page }) => {
@@ -12,28 +13,97 @@ test.describe("Verify Feedback Controls", () => {
     await feedbackModal.open();
   });
 
-  test("should dynamically update the character counter", async () => {
-    await feedbackModal.verifyCharacterCounterUpdates();
-  });
+  test.describe("Verify UX Feedback Controls", () => {
+    test("should dynamically update the character counter", async () => {
+      await feedbackModal.verifyCharacterCounterUpdates();
+    });
 
-  test("should successfully submit a bug report", async () => {
-    await feedbackModal.setupNetworkMock();
-    await feedbackModal.verifySuccessfulSubmission(
-      feedbackModal.feedbackBugRadioButton
-    );
-  });
+    test("should successfully submit a bug report", async () => {
+      await feedbackModal.setupNetworkMock();
+      await feedbackModal.verifySuccessfulSubmission(
+        feedbackModal.feedbackBugRadioButton
+      );
+    });
 
-  test("should successfully submit a comment", async () => {
-    await feedbackModal.setupNetworkMock();
-    await feedbackModal.verifySuccessfulSubmission(
-      feedbackModal.feedbackCommentRadioButton
-    );
-  });
+    test("should successfully submit a comment", async () => {
+      await feedbackModal.setupNetworkMock();
+      await feedbackModal.verifySuccessfulSubmission(
+        feedbackModal.feedbackCommentRadioButton
+      );
+    });
 
-  test("should successfully submit a correction", async () => {
-    await feedbackModal.setupNetworkMock();
-    await feedbackModal.verifySuccessfulSubmission(
-      feedbackModal.feedbackCorrectionRadioButton
-    );
+    test("should successfully submit a correction", async () => {
+      await feedbackModal.setupNetworkMock();
+      await feedbackModal.verifySuccessfulSubmission(
+        feedbackModal.feedbackCorrectionRadioButton
+      );
+    });
+  });
+  test.describe.skip("Verify Feedback data", () => {
+    let sheetsUtil: SheetsTeardownUtil;
+    let liveTestComment: string;
+    const createdSignatures: string[] = [];
+
+    test.beforeAll(async () => {
+      sheetsUtil = new SheetsTeardownUtil();
+      // Guardrail check executes once before running live integration tests on sheet
+      await sheetsUtil.assertIsDevSpreadsheet();
+    });
+
+    test.afterAll(async () => {
+      // Clean up any rows generated across integration test runs
+      if (createdSignatures.length > 0) {
+        await sheetsUtil.deleteTestRows(createdSignatures);
+      }
+    });
+
+    test.beforeEach(async () => {
+      const timestamp = new Date().toISOString();
+      liveTestComment = `TEST - QA Integration Test - ${timestamp}`;
+      createdSignatures.push(liveTestComment);
+    });
+
+    // Integration tests run against DEV sheet
+    test("should successfully submit a comment", async () => {
+      await feedbackModal.verifySuccessfulSubmission(
+        feedbackModal.feedbackCommentRadioButton,
+        liveTestComment
+      );
+
+      await feedbackModal.verifySheetRowData(
+        sheetsUtil,
+        liveTestComment,
+        "comment",
+        AboutPage.aboutUrl
+      );
+    });
+
+    test("should successfully submit a bug report", async () => {
+      await feedbackModal.verifySuccessfulSubmission(
+        feedbackModal.feedbackBugRadioButton,
+        liveTestComment
+      );
+
+      await feedbackModal.verifySheetRowData(
+        sheetsUtil,
+        liveTestComment,
+        "bug",
+        AboutPage.aboutUrl
+      );
+    });
+
+    test("should successfully submit a correction", async () => {
+      await feedbackModal.verifySuccessfulSubmission(
+        feedbackModal.feedbackCorrectionRadioButton,
+        liveTestComment
+      );
+
+      await feedbackModal.verifySheetRowData(
+        sheetsUtil,
+        liveTestComment,
+        "correction",
+        AboutPage.aboutUrl
+      );
+    });
   });
 });
