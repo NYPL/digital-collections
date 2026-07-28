@@ -11,7 +11,6 @@ export interface SheetRowData {
 }
 
 const EXPECTED_DEV_TITLE = "AUTOMATED-DEV-FEEDBACK-SHEET-DONT-TOUCH";
-const KNOWN_PROD_TITLE = "NULL";
 const MAX_ALLOWED_DEV_ROWS = 50;
 
 export class SheetsTeardownUtil {
@@ -84,7 +83,7 @@ export class SheetsTeardownUtil {
       `[Current Rows] ${rows.length} / ${MAX_ALLOWED_DEV_ROWS} max rows allowed`
     );
 
-    if (fileTitle === KNOWN_PROD_TITLE || fileTitle !== EXPECTED_DEV_TITLE) {
+    if (fileTitle !== EXPECTED_DEV_TITLE) {
       throw new Error(
         `GUARDRAIL FAILURE: Sheet title is "${fileTitle}", expected "${EXPECTED_DEV_TITLE}". Aborting!`
       );
