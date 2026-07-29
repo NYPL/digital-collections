@@ -39,7 +39,8 @@ test.describe("Feedback UX & Integration Tests", () => {
       );
     });
   });
-  test.describe.skip("Verify Feedback data", () => {
+
+  test.describe("Verify Feedback data", () => {
     let sheetsUtil: SheetsTeardownUtil;
     let liveTestComment: string;
     const createdSignatures: string[] = [];
@@ -55,6 +56,7 @@ test.describe("Feedback UX & Integration Tests", () => {
       if (createdSignatures.length > 0) {
         await sheetsUtil.deleteTestRows(createdSignatures);
       }
+      await sheetsUtil.logFinalRowCount();
     });
 
     test.beforeEach(async () => {

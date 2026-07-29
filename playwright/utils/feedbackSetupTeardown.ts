@@ -66,7 +66,10 @@ export class SheetsTeardownUtil {
 
   public async assertIsDevSpreadsheet(): Promise<void> {
     const { fileTitle, tabName, rows } = await this.getActiveSheetData("A:A");
-    console.log(`[GUARDRAIL] Confirmed DEV sheet ("${fileTitle}")`);
+    const maskedTitle = fileTitle
+      ? `${fileTitle.slice(0, 4)}*****${fileTitle.slice(-4)}`
+      : "UNKNOWN";
+    console.log(`[GUARDRAIL] Sheet found is: ("${maskedTitle}")`);
     console.log(
       `[Spreadsheet ID] ${
         this.spreadsheetId
@@ -82,7 +85,7 @@ export class SheetsTeardownUtil {
 
     if (fileTitle !== EXPECTED_DEV_TITLE) {
       throw new Error(
-        `GUARDRAIL FAILURE: Sheet title is "${fileTitle}", expected "${EXPECTED_DEV_TITLE}". Aborting!`
+        `GUARDRAIL FAILURE: Sheet title is "${maskedTitle}", expected "${EXPECTED_DEV_TITLE}". Aborting!`
       );
     }
 
@@ -186,5 +189,10 @@ export class SheetsTeardownUtil {
     console.log(
       `[TEARDOWN] Deleted ${rowIndices.length} row(s) from tab "${tabName}".`
     );
+  }
+
+  public async logFinalRowCount(): Promise<void> {
+    const { rows } = await this.getActiveSheetData("A:A");
+    console.log(`[TEARDOWN] Final row count: ${rows.length}`);
   }
 }
