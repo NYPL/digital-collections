@@ -15,17 +15,16 @@ const MAX_ALLOWED_DEV_ROWS = 50;
 
 export class SheetsTeardownUtil {
   private spreadsheetId: string;
+  private sheets: ReturnType<typeof google.sheets>;
 
   constructor() {
-    this.spreadsheetId = process.env.SPREADSHEET_ID || "";
+    this.spreadsheetId = process.env.SPREADSHEET_ID!;
     if (!this.spreadsheetId) {
       throw new Error(
         "SAFETY ERROR: SPREADSHEET_ID environment variable is missing."
       );
     }
-  }
 
-  private getSheetsClient() {
     const auth = new google.auth.GoogleAuth({
       credentials: {
         client_email: process.env.GOOGLE_SHEETS_CLIENT_EMAIL,
@@ -37,13 +36,11 @@ export class SheetsTeardownUtil {
       scopes: ["https://www.googleapis.com/auth/spreadsheets"],
     });
 
-    return google.sheets({ version: "v4", auth });
+    this.sheets = google.sheets({ version: "v4", auth });
   }
 
   private async getActiveSheetData(rangeColumn: string = "A:Z") {
-    const sheets = this.getSheetsClient();
-
-    const meta = await sheets.spreadsheets.get({
+    const meta = await this.sheets.spreadsheets.get({
       spreadsheetId: this.spreadsheetId,
     });
 
@@ -54,7 +51,7 @@ export class SheetsTeardownUtil {
       throw new Error("ERROR: Could not find any tabs in this spreadsheet.");
     }
 
-    const data = await sheets.spreadsheets.values.get({
+    const data = await this.sheets.spreadsheets.values.get({
       spreadsheetId: this.spreadsheetId,
       range: `'${activeSheet.title}'!${rangeColumn}`,
     });
@@ -170,9 +167,7 @@ export class SheetsTeardownUtil {
 
     console.log(`\nExecuting batch deletion request (bottom-to-top)...`);
 
-    const sheets = this.getSheetsClient();
-
-    await sheets.spreadsheets.batchUpdate({
+    await this.sheets.spreadsheets.batchUpdate({
       spreadsheetId: this.spreadsheetId,
       requestBody: {
         requests: rowIndices.map((idx) => ({
