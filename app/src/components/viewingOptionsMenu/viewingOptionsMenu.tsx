@@ -91,7 +91,7 @@ const ViewingOptionsMenu = ({
             labelAsAriaLabel
             listItemsData={perPageOptions.map((value) => ({
               id: `per-page-option-${value.toString()}`,
-              label: `per-page-option-${value.toString()}`,
+              label: value.toString(),
               onClick: () => {
                 if (setFiltersExpanded) {
                   setFiltersExpanded(false);

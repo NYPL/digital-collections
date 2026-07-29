@@ -90,7 +90,10 @@ describe("ViewingOptionsMenu", () => {
     );
 
     expect(screen.getByText("Results per page: 48")).toBeInTheDocument();
-    fireEvent.click(screen.getByText("per-page-option-96"));
+    fireEvent.click(screen.getByText("Results per page: 48"));
+    const perPageOption = await screen.findByText("96");
+    expect(screen.queryByText("per-page-option-96")).not.toBeInTheDocument();
+    fireEvent.click(perPageOption);
     expect(updateURL).toHaveBeenCalledWith("perPage=96");
   });
 
