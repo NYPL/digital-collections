@@ -41,6 +41,8 @@ test.describe("Feedback UX & Integration Tests", () => {
   });
 
   test.describe("Verify Feedback data", () => {
+    // Run sequentially to preserve sheet state
+    test.describe.configure({ mode: "serial" });
     let sheetsUtil: SheetsTeardownUtil;
     let liveTestComment: string;
     const createdSignatures: string[] = [];
