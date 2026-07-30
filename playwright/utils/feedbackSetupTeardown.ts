@@ -110,7 +110,7 @@ export class SheetsTeardownUtil {
       return null;
     }
 
-    const [type, feedback, timestamp, page, ip, platform, browser, version] =
+    const [type, feedback, timestamp, page, ip, _platform, browser, version] =
       matchedRow;
 
     return {

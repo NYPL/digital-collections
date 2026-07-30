@@ -91,14 +91,13 @@ export default class FeedbackModal extends DCHomepage {
       .not.toBeNull();
 
     // Explicitly tell Typescript that expect.poll ensured rowData is populated
-    const row = rowData!; // Or: rowData as SheetRowData
+    const row = rowData!;
 
     expect(row.type).toBe(expectedType);
     expect(row.feedback).toBe(commentSignature);
     expect(row.timestamp).toBeTruthy();
     expect(row.page).toContain(expectedPageUrl);
     expect(row.ip).toBeTruthy();
-    // expect(row.platform).toBeTruthy();
     expect(row.browser).toBeTruthy();
     expect(row.version).toBeTruthy();
   }
