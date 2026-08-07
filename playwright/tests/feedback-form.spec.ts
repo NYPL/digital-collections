@@ -63,7 +63,8 @@ test.describe("Feedback UX & Integration Tests", () => {
 
     test.beforeEach(async () => {
       const timestamp = new Date().toISOString();
-      liveTestComment = `TEST - QA Integration Test - ${timestamp}`;
+      const uniqueId = crypto.randomUUID().slice(0, 8);
+      liveTestComment = `TEST - QA Integration Test - ${timestamp} - [${uniqueId}]`;
       createdSignatures.push(liveTestComment);
     });
 
