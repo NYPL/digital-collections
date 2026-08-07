@@ -15,6 +15,28 @@ import { CollectionCardDataType } from "../../types/CollectionCardDataType";
 import { Offset } from "@/src/hooks/useTooltipOffset";
 import { stringToSlug } from "@/src/utils/utils";
 import CardImage from "./cardImage";
+
+const withPerPageParam = (url: string, isCollection: boolean) => {
+  if (!isCollection || typeof window === "undefined") {
+    return url;
+  }
+
+  const currentPerPage = new URLSearchParams(window.location.search).get(
+    "perPage"
+  );
+
+  if (!currentPerPage) {
+    return url;
+  }
+
+  const [baseUrl, hashFragment] = url.split("#");
+  const separator = baseUrl.includes("?") ? "&" : "?";
+  const nextUrl = `${baseUrl}${separator}perPage=${encodeURIComponent(
+    currentPerPage
+  )}`;
+
+  return hashFragment ? `${nextUrl}#${hashFragment}` : nextUrl;
+};
 export interface DCCardProps {
   tooltipOffset?: Offset;
   id: string;
@@ -37,6 +59,7 @@ export const Card = forwardRef<HTMLDivElement, DCCardProps>(
   ) => {
     const truncatedTitle = record.title.length > TRUNCATED_CARD_LENGTH;
     const isCollection = isCollectionCardDataType(record);
+    const mainActionLink = withPerPageParam(record.url, isCollection);
     const identifier = slug
       ? `${slug}-${id}`
       : `${stringToSlug(record.title)}-${id}`; // should probably truncate
@@ -46,7 +69,7 @@ export const Card = forwardRef<HTMLDivElement, DCCardProps>(
         ref={ref}
         key={record.imageID}
         id={`card-${identifier}`}
-        mainActionLink={record.url}
+        mainActionLink={mainActionLink}
         imageProps={{
           component: (
             <CardImage
