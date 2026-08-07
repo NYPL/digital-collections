@@ -21,7 +21,7 @@ export class SheetsTeardownUtil {
     this.spreadsheetId = process.env.SPREADSHEET_ID!;
     if (!this.spreadsheetId) {
       throw new Error(
-        "SAFETY ERROR: SPREADSHEET_ID environment variable is missing."
+        "SAFETY ERROR: SPREADSHEET_ID environment variable missing."
       );
     }
 
@@ -69,7 +69,7 @@ export class SheetsTeardownUtil {
     const maskedTitle = fileTitle
       ? `${fileTitle.slice(0, 4)}*****${fileTitle.slice(-4)}`
       : "UNKNOWN";
-    console.log(`[GUARDRAIL] Sheet found is: ("${maskedTitle}")`);
+    console.log(`[GUARDRAIL] Sheet found: ("${maskedTitle}")`);
     console.log(
       `[Spreadsheet ID] ${
         this.spreadsheetId
@@ -85,7 +85,7 @@ export class SheetsTeardownUtil {
 
     if (fileTitle !== EXPECTED_DEV_TITLE) {
       throw new Error(
-        `GUARDRAIL FAILURE: Sheet title is "${maskedTitle}", expected "${EXPECTED_DEV_TITLE}". Aborting!`
+        `GUARDRAIL FAILURE: Sheet title "${maskedTitle}", expected "${EXPECTED_DEV_TITLE}". Aborting!`
       );
     }
 
