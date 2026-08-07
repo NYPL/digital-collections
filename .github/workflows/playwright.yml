@@ -13,6 +13,9 @@ jobs:
       COLLECTIONS_API_URL: ${{ secrets.QA_COLLECTIONS_API_URL }}
       COLLECTIONS_API_AUTH_TOKEN: ${{ secrets.QA_COLLECTIONS_API_AUTH_TOKEN }}
       NEW_RELIC_ENABLED: false
+      SPREADSHEET_ID: ${{ secrets.SPREADSHEET_ID }}
+      GOOGLE_SHEETS_CLIENT_EMAIL: ${{ secrets.GOOGLE_SHEETS_CLIENT_EMAIL }}
+      GOOGLE_SHEETS_PRIVATE_KEY: ${{ secrets.GOOGLE_SHEETS_PRIVATE_KEY }}
 
     steps:
       - uses: actions/checkout@v6

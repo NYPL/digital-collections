@@ -1,5 +1,9 @@
 import { expect, Locator, Page } from "@playwright/test";
 import { DCHomepage } from "./homepage.page";
+import {
+  SheetsTeardownUtil,
+  SheetRowData,
+} from "../utils/feedbackSetupTeardown";
 
 export default class FeedbackModal extends DCHomepage {
   readonly feedbackPage: Page;
@@ -61,5 +65,40 @@ export default class FeedbackModal extends DCHomepage {
 
     await this.feedbackSubmitButton.click();
     await expect(this.successBanner).toBeVisible();
+  }
+  //Poll Google sheet for a newly created row and verifies 7 columns.
+  async verifySheetRowData(
+    sheetsUtil: SheetsTeardownUtil,
+    commentSignature: string,
+    expectedType: "comment" | "bug" | "correction",
+    expectedPageUrl: string
+  ): Promise<void> {
+    let rowData: SheetRowData | null = null;
+
+    // 1. Poll until Google Sheets receives the row
+    await expect
+      .poll(
+        async () => {
+          rowData = await sheetsUtil.getRowBySignature(commentSignature);
+          return rowData;
+        },
+        {
+          message: `Timed out waiting for feedback row signature: "${commentSignature}"`,
+          timeout: 15000,
+          intervals: [1000, 2000],
+        }
+      )
+      .not.toBeNull();
+
+    // Explicitly tell Typescript that expect.poll ensured rowData is populated
+    const row = rowData!;
+
+    expect(row.type).toBe(expectedType);
+    expect(row.feedback).toBe(commentSignature);
+    expect(row.timestamp).toBeTruthy();
+    expect(row.page).toContain(expectedPageUrl);
+    expect(row.ip).toBeTruthy();
+    expect(row.browser).toBeTruthy();
+    expect(row.version).toBeTruthy();
   }
 }
