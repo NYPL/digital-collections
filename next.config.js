@@ -37,6 +37,15 @@ const nextConfig = {
     deviceSizes: [480, 768, 1024, 1280],
   },
   generateEtags: false,
+  async redirects() {
+    return [
+      {
+        source: "/uv.html",
+        destination: "/_next/static/uv.html",
+        permanent: true,
+      },
+    ];
+  },
   // In order for newrelic to effectively instrument a Next.js application,
   // the modules that newrelic supports should not be mangled by webpack. Thus,
   // we need to "externalize" all of the modules that newrelic supports.
