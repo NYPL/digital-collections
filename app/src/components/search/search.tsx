@@ -35,11 +35,13 @@ const Search = () => {
     event.preventDefault();
     closeSuggestions();
     searchManager.setLastFilter(null);
+    const storedPerPage =
+      localStorage.getItem("perPage") || searchManager.perPage.toString();
     const params = new URLSearchParams();
     if (keywords.length > 0) {
       params.set("q", keywords);
     }
-    params.set("perPage", searchManager.perPage.toString());
+    params.set("perPage", storedPerPage);
     if (publicDomainOnly) {
       params.set("filters[rights]", "pd");
     }
@@ -51,9 +53,11 @@ const Search = () => {
     setKeywords(title);
     closeSuggestions();
     searchManager.setLastFilter(null);
+    const storedPerPage =
+      localStorage.getItem("perPage") || searchManager.perPage.toString();
     const params = new URLSearchParams();
     params.set("q", title);
-    params.set("perPage", searchManager.perPage.toString());
+    params.set("perPage", storedPerPage);
     if (publicDomainOnly) {
       params.set("filters[rights]", "pd");
     }
