@@ -14,7 +14,7 @@ import {
 import { displayResults, totalNumPages } from "@/src/utils/utils";
 import Filters from "../../search/filters/filters";
 import { useSearchContext } from "@/src/context/SearchProvider";
-import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import SearchCardsGrid from "../../grids/searchCardsGrid";
 import { headerBreakpoints } from "@/src/utils/breakpoints";
 import { MobileSearchBanner } from "../../mobileSearchBanner/mobileSearchBanner";
@@ -28,6 +28,7 @@ import useBreakpoints from "@/src/hooks/useBreakpoints";
 import useSearchAnalytics from "@/src/hooks/useSearchAnalytics";
 import BottomPaginationSection from "../../bottomPaginationSection/bottomPaginationSection";
 import { resolveGridColumns } from "@/src/utils/gridColumns";
+import { usePerPageNormalization } from "@/src/hooks/usePerPageNormalization";
 
 const SearchPage = ({
   searchResults,
@@ -42,7 +43,6 @@ const SearchPage = ({
   );
   const { push } = useRouter();
   const pathname = usePathname();
-  const urlSearchParams = useSearchParams();
   const headingRef = useRef<HTMLHeadingElement>(null);
   const refineHeadingRef = useRef<HTMLHeadingElement>(null);
   const isFirstLoad = useRef<boolean>(false);
@@ -99,29 +99,14 @@ const SearchPage = ({
     }
   };
 
-  useEffect(() => {
-    const hasPerPageInUrl =
-      typeof urlSearchParams?.has === "function"
-        ? urlSearchParams.has("perPage")
-        : Boolean(urlSearchParams?.get?.("perPage"));
-
-    if (hasPerPageInUrl) {
-      return;
-    }
-
-    if (searchManager.perPage !== searchResults.perPage) {
-      const query = searchManager.handlePageChange(searchResults.page);
-      setIsLoaded(false);
-      push(`${pathname}?${query}`);
-    }
-  }, [
+  usePerPageNormalization({
+    serverPerPage: searchResults.perPage,
+    serverPage: searchResults.page,
+    searchManager,
     pathname,
     push,
-    searchManager,
-    searchResults.page,
-    searchResults.perPage,
-    urlSearchParams,
-  ]);
+    setIsLoaded,
+  });
 
   useEffect(() => {
     setIsLoaded(true);

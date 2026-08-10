@@ -27,6 +27,7 @@ import ViewingOptionsMenu from "../../viewingOptionsMenu/viewingOptionsMenu";
 import useSearchAnalytics from "@/src/hooks/useSearchAnalytics";
 import useBreakpoints from "@/src/hooks/useBreakpoints";
 import BottomPaginationSection from "../../bottomPaginationSection/bottomPaginationSection";
+import { usePerPageNormalization } from "@/src/hooks/usePerPageNormalization";
 
 export function CollectionsPage({ data, collectionsSearchParams }) {
   const { push } = useRouter();
@@ -67,6 +68,15 @@ export function CollectionsPage({ data, collectionsSearchParams }) {
       push(newUrl);
     }
   };
+
+  usePerPageNormalization({
+    serverPerPage: data.perPage,
+    serverPage: data.page || DEFAULT_PAGE_NUM,
+    searchManager: collectionsSearchManager,
+    pathname,
+    push,
+    setIsLoaded,
+  });
 
   useEffect(() => {
     setIsLoaded(true);

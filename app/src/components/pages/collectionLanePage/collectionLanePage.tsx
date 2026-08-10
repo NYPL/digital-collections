@@ -42,9 +42,7 @@ export default function CollectionLanePage({ data }: any) {
     Number(queryParams.get("page")) || 1
   );
 
-  const [currentPerPage, setCurrentPerPage] = useState(
-    Number(queryParams.get("perPage")) || CARDS_PER_PAGE
-  );
+  const currentPerPage = Number(queryParams.get("perPage")) || CARDS_PER_PAGE;
 
   const { push } = useRouter();
   const { isLargerThanSmallTablet } = useBreakpoints();
@@ -77,6 +75,19 @@ export default function CollectionLanePage({ data }: any) {
 
   useEffect(() => {
     setIsLoaded(true);
+  }, []);
+
+  useEffect(() => {
+    if (!queryParams.get("perPage")) {
+      const stored = localStorage.getItem("perPage");
+      if (stored && Number(stored) !== data.perPage) {
+        const newParams = new URLSearchParams(queryParams.toString());
+        newParams.set("perPage", stored);
+        if (typeof push === "function") {
+          push(`${pathname}?${newParams.toString()}`);
+        }
+      }
+    }
   }, []);
 
   return (
@@ -145,7 +156,7 @@ export default function CollectionLanePage({ data }: any) {
               id: `per-page-option-${value.toString()}`,
               label: value.toString(),
               onClick: () => {
-                setCurrentPerPage(value);
+                localStorage.setItem("perPage", value.toString());
                 const newParams = new URLSearchParams(queryParams.toString());
                 newParams.set("perPage", String(value));
                 newParams.set("page", "1");
@@ -188,7 +199,7 @@ export default function CollectionLanePage({ data }: any) {
                   id: `per-page-option-${value.toString()}`,
                   label: value.toString(),
                   onClick: () => {
-                    setCurrentPerPage(value);
+                    localStorage.setItem("perPage", value.toString());
                     const newParams = new URLSearchParams(
                       queryParams.toString()
                     );

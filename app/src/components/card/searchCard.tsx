@@ -24,14 +24,14 @@ import parse from "html-react-parser";
 import type { Highlight } from "@/src/types/HighlightType";
 import SearchCardImage from "./searchCardImage";
 
-const withPerPageParam = (url: string, recordType: SearchResultRecordType) => {
-  if (recordType !== "Collection" || typeof window === "undefined") {
+const withPerPageParam = (url: string) => {
+  if (typeof window === "undefined") {
     return url;
   }
 
-  const currentPerPage = new URLSearchParams(window.location.search).get(
-    "perPage"
-  );
+  const currentPerPage =
+    new URLSearchParams(window.location.search).get("perPage") ||
+    localStorage.getItem("perPage");
 
   if (!currentPerPage) {
     return url;
@@ -143,7 +143,10 @@ export const SearchCard = ({
   numColumns,
 }: SearchCardProps) => {
   const truncatedTitle = result.title.length > TRUNCATED_SEARCH_CARD_LENGTH;
-  const mainActionLink = withPerPageParam(result.url, result.recordType);
+  const mainActionLink =
+    result.recordType === "Collection"
+      ? withPerPageParam(result.url)
+      : result.url;
 
   const highlightedTitle = highlightTitleWords(result.title, result.highlights);
 
