@@ -40,6 +40,7 @@
     "@allmaps/maplibre": "^1.0.0-beta.42",
     "@types/react": "18.2.21",
     "@types/react-dom": "18.2.7",
+    "copy-webpack-plugin": "14.0.0",
     "dotenv": "16.4.5",
     "eslint": "8.56.0",
     "googleapis": "129.0.0",
