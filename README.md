@@ -310,7 +310,7 @@ npm run homepageImageLoadingTestProd
 
 The test waits for the 24 swim lane images to load, including the 12 that load after scrolling, and has succeeded if it does not time out. It simulates a single user loading the homepage one time.
 
-Playwright test automation
+### Playwright test automation
 
 Install Playwright
 
@@ -353,6 +353,19 @@ Run a specific test function
 ```
 npx playwright test -g **"has title"** --project=chromium
 ```
+
+
+### Playwright Environment for Local Integration Tests
+
+Playwright feedback integration tests, for example, run against a **dedicated DEV Google Sheet** to prevent test data from polluting the Production feedback data.
+
+Quick setup:
+
+1. Open your root .env.local file
+2. Ensure you `SPREADSHEET_ID` points to the **DEV** spreadsheet.  Do not use the Production sheet ID.
+
+> Note: _If you run Playwright feedback tests locally while pointing to the Production sheet ID, the `assertIsDevSpreadsheet` guardrail will automatically abort the test run to prevent accidental writes or deletions in Prod._
+
 
 ## Linting and formatting
 
