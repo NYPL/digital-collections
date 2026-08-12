@@ -1,3 +1,4 @@
+const CopyPlugin = require("copy-webpack-plugin");
 /** @type {import('next').NextConfig} */
 // This is found in the codebase example but both seem to work and send data
 // correctly. Keep the above but can use the bottom for debugging.
@@ -36,14 +37,40 @@ const nextConfig = {
     deviceSizes: [480, 768, 1024, 1280],
   },
   generateEtags: false,
+  async redirects() {
+    return [
+      {
+        source: "/uv.html",
+        destination: "/_next/static/uv.html",
+        permanent: true,
+      },
+    ];
+  },
   // In order for newrelic to effectively instrument a Next.js application,
   // the modules that newrelic supports should not be mangled by webpack. Thus,
   // we need to "externalize" all of the modules that newrelic supports.
-
   webpack: (config) => {
     if (process.env.NEW_RELIC_APP_NAME) {
       nrExternals(config);
     }
+    config.plugins.push(
+      new CopyPlugin({
+        patterns: [
+          {
+            from: "./node_modules/universalviewer/dist/uv.html",
+            to: "./static/",
+          },
+          {
+            from: "./node_modules/universalviewer/dist/uv.css",
+            to: "./static/",
+          },
+          {
+            from: "./node_modules/universalviewer/dist/umd/",
+            to: "./static/umd",
+          },
+        ],
+      })
+    );
     return config;
   },
 };
