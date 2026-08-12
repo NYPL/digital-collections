@@ -84,7 +84,6 @@ function formatItemBreadcrumbs(item: ItemModel) {
 }
 
 export default async function ItemViewer(props: ItemProps) {
-  revalidatePath("/");
   const params = await props.params;
   console.log("params are: ", params);
   const [citationsData, itemData] = await Promise.all([
