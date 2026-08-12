@@ -362,7 +362,7 @@ Playwright feedback integration tests, for example, run against a **dedicated DE
 Quick setup:
 
 1. Open your root .env.local file
-2. Ensure you `SPREADSHEET_ID` points to the **DEV** spreadsheet.  Do not use the Production sheet ID.
+2. Ensure your `SPREADSHEET_ID` points to the **DEV** spreadsheet.  Do not use the Production sheet ID.
 
 > Note: _If you run Playwright feedback tests locally while pointing to the Production sheet ID, the `assertIsDevSpreadsheet` guardrail will automatically abort the test run to prevent accidental writes or deletions in Prod._
 
