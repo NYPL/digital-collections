@@ -357,7 +357,7 @@ npx playwright test -g **"has title"** --project=chromium
 
 ### Playwright Environment for Local Integration Tests
 
-Playwright feedback integration tests, for example, run against a **dedicated DEV Google Sheet** to prevent test data from polluting the Production feedback data.
+Playwright's feedback-form integration tests, for example, run against a dedicated **DEV Google Sheet** to prevent test data from polluting the Production feedback data.
 
 Quick setup:
 
