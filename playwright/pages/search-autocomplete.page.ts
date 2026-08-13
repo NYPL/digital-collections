@@ -9,7 +9,7 @@ export class SearchAutosuggestPage extends SearchPage {
   readonly allOptions: Locator;
   readonly pageBody: Locator;
 
-  static readonly SUGGEST_QUERY = "TODO_REPLACE_WITH_KNOWN_TERM";
+  static readonly SUGGEST_QUERY = "farm";
   static readonly SHORT_QUERY = "fa";
 
   constructor(page: Page) {
