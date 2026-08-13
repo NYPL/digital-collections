@@ -16,14 +16,14 @@ import { Offset } from "@/src/hooks/useTooltipOffset";
 import { stringToSlug } from "@/src/utils/utils";
 import CardImage from "./cardImage";
 
-const withPerPageParam = (url: string, isCollection: boolean) => {
-  if (!isCollection || typeof window === "undefined") {
+const withPerPageParam = (url: string) => {
+  if (typeof window === "undefined") {
     return url;
   }
 
-  const currentPerPage = new URLSearchParams(window.location.search).get(
-    "perPage"
-  );
+  const currentPerPage =
+    new URLSearchParams(window.location.search).get("perPage") ||
+    localStorage.getItem("perPage");
 
   if (!currentPerPage) {
     return url;
@@ -59,7 +59,9 @@ export const Card = forwardRef<HTMLDivElement, DCCardProps>(
   ) => {
     const truncatedTitle = record.title.length > TRUNCATED_CARD_LENGTH;
     const isCollection = isCollectionCardDataType(record);
-    const mainActionLink = withPerPageParam(record.url, isCollection);
+    const mainActionLink = isCollection
+      ? withPerPageParam(record.url)
+      : record.url;
     const identifier = slug
       ? `${slug}-${id}`
       : `${stringToSlug(record.title)}-${id}`; // should probably truncate

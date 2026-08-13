@@ -40,6 +40,7 @@ import useBreakpoints from "@/src/hooks/useBreakpoints";
 import useSearchAnalytics from "@/src/hooks/useSearchAnalytics";
 import BottomPaginationSection from "../../bottomPaginationSection/bottomPaginationSection";
 import { resolveGridColumns } from "@/src/utils/gridColumns";
+import { usePerPageNormalization } from "@/src/hooks/usePerPageNormalization";
 
 type CollectionPageProps = {
   searchResults: SearchResultsType;
@@ -130,6 +131,15 @@ const CollectionPage = ({
       localStorage.setItem("viewMode", searchParams.viewMode);
     }
   }, [searchParams?.viewMode]);
+
+  usePerPageNormalization({
+    serverPerPage: searchResults.perPage,
+    serverPage: searchResults.page || DEFAULT_PAGE_NUM,
+    searchManager: collectionSearchManager,
+    pathname,
+    push,
+    setIsLoaded,
+  });
 
   useEffect(() => {
     setIsLoaded(true);
