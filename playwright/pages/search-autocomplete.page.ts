@@ -20,11 +20,13 @@ export class SearchAutosuggestPage extends SearchPage {
     });
 
     this.searchBar = searchContainer.getByRole("combobox");
-    this.searchButton = searchContainer.getByRole("button", {
-      name: /search/i,
+    this.searchButton = this.page.getByRole("button", {
+      name: "Search",
+      exact: true,
     });
 
-    this.suggestionsListbox = searchContainer.getByRole("listbox");
+    // Unscoped page-level listbox locator handles dynamic scrolldown rendering outside the search div
+    this.suggestionsListbox = this.page.getByRole("listbox");
     this.firstOption = this.suggestionsListbox.getByRole("option").first();
     this.allOptions = this.suggestionsListbox.getByRole("option");
     this.pageBody = this.page.locator("body");
@@ -103,8 +105,14 @@ export class SearchAutosuggestPage extends SearchPage {
   }
 
   async verifyNavigatedToSearchResults(expectedQuery: string) {
-    await this.page.waitForURL(/\/search\/index\?q=/);
-    const actualQuery = new URL(this.page.url()).searchParams.get("q");
-    expect(actualQuery).toBe(expectedQuery);
+    await expect(this.page).toHaveURL(/\/search\/index\?q=/);
+
+    await expect(
+      this.page.getByRole("heading", {
+        name: new RegExp(
+          `Displaying \\d+-\\d+ of \\d+ results for "${expectedQuery}"`
+        ),
+      })
+    ).toBeVisible();
   }
 }
