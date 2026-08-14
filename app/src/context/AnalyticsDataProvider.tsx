@@ -5,7 +5,7 @@ import React, { createContext, useContext, useCallback } from "react";
 interface AnalyticsDataContextType {
   division?: string;
   collection?: string;
-  subCollection?: string;
+  subcollection?: string;
 }
 
 const AnalyticsDataContext = createContext<

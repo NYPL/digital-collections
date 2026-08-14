@@ -1,14 +1,16 @@
 "use client";
 import {
   Box,
-  Pagination,
   Heading,
   Flex,
   Link,
   Icon,
 } from "@nypl/design-system-react-components";
 import React, { useEffect, useRef, useState } from "react";
-import { CARDS_PER_PAGE, SEARCH_SORT_LABELS } from "@/src/config/constants";
+import {
+  SEARCH_SORT_LABELS,
+  RESULTS_PER_PAGE_OPTIONS,
+} from "@/src/config/constants";
 import { displayResults, totalNumPages } from "@/src/utils/utils";
 import Filters from "../../search/filters/filters";
 import { useSearchContext } from "@/src/context/SearchProvider";
@@ -20,11 +22,13 @@ import ViewingOptionsMenu from "../../viewingOptionsMenu/viewingOptionsMenu";
 import ActiveFilters from "../../search/filters/activeFilters";
 import NoResultsFound from "../../results/noResultsFound";
 import SearchCardGridLoading from "../../grids/searchCardGridLoading";
-import BackToTopLink from "../../backToTopLink/backToTopLink";
 import { SearchResultsType } from "@/src/types/SearchResultsType";
 import { useSubcollectionRedirect } from "@/src/hooks/useSubcollectionRedirect";
 import useBreakpoints from "@/src/hooks/useBreakpoints";
 import useSearchAnalytics from "@/src/hooks/useSearchAnalytics";
+import BottomPaginationSection from "../../bottomPaginationSection/bottomPaginationSection";
+import { resolveGridColumns } from "@/src/utils/gridColumns";
+import { usePerPageNormalization } from "@/src/hooks/usePerPageNormalization";
 
 const SearchPage = ({
   searchResults,
@@ -32,9 +36,10 @@ const SearchPage = ({
   searchResults: SearchResultsType;
 }) => {
   const { searchManager } = useSearchContext();
+  const currentPerPage = searchResults.perPage || searchManager.perPage;
   const totalPages = totalNumPages(
     searchResults.numResults.toString(),
-    CARDS_PER_PAGE
+    currentPerPage
   );
   const { push } = useRouter();
   const pathname = usePathname();
@@ -43,7 +48,40 @@ const SearchPage = ({
   const isFirstLoad = useRef<boolean>(false);
   const [isLoaded, setIsLoaded] = useState(false);
   const [filtersExpanded, setFiltersExpanded] = useState(false);
-  const { isLargerThanSmallTablet } = useBreakpoints();
+  const [pendingViewMode, setPendingViewMode] = useState<
+    "grid" | "list" | null
+  >(null);
+  const [pendingNumColumns, setPendingNumColumns] = useState<number | null>(
+    null
+  );
+  const {
+    isLargerThanSmallTablet,
+    isLargerThanLargeMobile,
+    isLargerThanLargeTablet,
+  } = useBreakpoints();
+  const baseGridColumns = 4;
+  const largeMobileGridColumns = 2;
+  const [isBreakpointsHydrated, setIsBreakpointsHydrated] = useState(false);
+
+  useEffect(() => {
+    setIsBreakpointsHydrated(true);
+  }, []);
+
+  const effectiveViewMode =
+    isBreakpointsHydrated && !isLargerThanLargeMobile
+      ? "list"
+      : pendingViewMode || searchManager.viewMode;
+
+  const effectiveNumColumns =
+    pendingNumColumns ??
+    resolveGridColumns({
+      viewMode: effectiveViewMode,
+      baseColumns: baseGridColumns,
+      largeMobileColumns: largeMobileGridColumns,
+      isLargerThanLargeMobile,
+      isLargerThanSmallTablet,
+      isLargerThanLargeTablet,
+    });
 
   const updateURL = async (queryString: string) => {
     const currentQueryString = window.location.search;
@@ -61,8 +99,19 @@ const SearchPage = ({
     }
   };
 
+  usePerPageNormalization({
+    serverPerPage: searchResults.perPage,
+    serverPage: searchResults.page,
+    searchManager,
+    pathname,
+    push,
+    setIsLoaded,
+  });
+
   useEffect(() => {
     setIsLoaded(true);
+    setPendingViewMode(null);
+    setPendingNumColumns(null);
     let didFocusElement = false;
     if (
       (searchManager.lastFilterRef?.current &&
@@ -92,7 +141,7 @@ const SearchPage = ({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [searchResults, searchManager.viewMode]);
 
-  useSearchAnalytics(searchManager);
+  useSearchAnalytics(searchManager, searchResults.numResults);
   useSubcollectionRedirect();
 
   return (
@@ -126,7 +175,7 @@ const SearchPage = ({
               >
                 {`Displaying ${displayResults(
                   searchResults.numResults,
-                  CARDS_PER_PAGE,
+                  currentPerPage,
                   searchResults.page
                 )}
             results ${
@@ -181,7 +230,7 @@ const SearchPage = ({
         />
         <Flex
           sx={{
-            [`@media screen and (min-width: ${headerBreakpoints.smTablet}px)`]:
+            [`@media screen and (min-width: ${headerBreakpoints.lgTablet}px)`]:
               {
                 flexDir: "row",
                 marginBottom: "s",
@@ -207,16 +256,31 @@ const SearchPage = ({
                 margin="0"
               >{`Displaying ${displayResults(
                 searchResults.numResults,
-                CARDS_PER_PAGE,
+                currentPerPage,
                 searchManager.page
               )} results`}</Heading>
               <ViewingOptionsMenu
                 options={SEARCH_SORT_LABELS}
                 sort={searchResults.sort}
                 searchManager={searchManager}
+                perPageOptions={
+                  isLargerThanSmallTablet ? RESULTS_PER_PAGE_OPTIONS : []
+                }
                 setFiltersExpanded={setFiltersExpanded}
                 updateURL={updateURL}
                 showViewModeButtons={isLargerThanSmallTablet}
+                onViewModeChangeStart={(viewMode) => {
+                  setPendingViewMode(viewMode);
+                  const nextColumns = resolveGridColumns({
+                    viewMode,
+                    baseColumns: baseGridColumns,
+                    largeMobileColumns: largeMobileGridColumns,
+                    isLargerThanLargeMobile,
+                    isLargerThanSmallTablet,
+                    isLargerThanLargeTablet,
+                  });
+                  setPendingNumColumns(nextColumns);
+                }}
               />{" "}
             </>
           ) : (
@@ -232,59 +296,47 @@ const SearchPage = ({
               <SearchCardsGrid
                 keywords={searchResults.keyword}
                 results={searchResults.results}
-                viewMode={searchManager.viewMode}
-                numColumns={4}
+                viewMode={effectiveViewMode}
+                numColumns={baseGridColumns}
+                largeMobileColumns={largeMobileGridColumns}
+                resolvedColumns={effectiveNumColumns}
               />
             ) : (
               [...Array(12)].map((_, index) => (
-                <SearchCardGridLoading id={index} key={index} />
+                <SearchCardGridLoading
+                  id={index}
+                  key={index}
+                  viewMode={effectiveViewMode}
+                  numColumns={effectiveNumColumns}
+                />
               ))
             )}
 
-            <Flex
-              paddingLeft="s"
-              paddingRight="s"
-              marginTop="xxl"
-              marginBottom="xxl"
-              sx={{
-                "> a": {
-                  marginTop: "xl",
-                  justifyContent: "end",
-                },
-                paddingLeft: "s",
-                paddingRight: "s",
-                [`@media screen and (min-width: ${headerBreakpoints.lgMobile}px)`]:
-                  {
-                    "> a": {
-                      marginTop: "0",
-                    },
-                    flexDir: "row",
-                    paddingLeft: 0,
-                    paddingRight: 0,
-                  },
-                flexDir: "column-reverse",
+            <BottomPaginationSection
+              currentPage={searchManager.page}
+              initialPage={searchManager.page}
+              pageCount={totalPages}
+              onPageChange={(newPage) => {
+                setFiltersExpanded(false);
+                searchManager.setLastFilter(null);
+                updateURL(searchManager.handlePageChange(newPage));
               }}
-            >
-              {searchResults.results?.length > 0 && <BackToTopLink />}{" "}
-              <Pagination
-                id="pagination-id"
-                initialPage={searchManager.page}
-                currentPage={searchManager.page}
-                pageCount={totalPages}
-                onPageChange={(newPage) => {
-                  setFiltersExpanded(false);
-                  searchManager.setLastFilter(null);
-                  updateURL(searchManager.handlePageChange(newPage));
-                }}
-                sx={{
-                  justifyContent: "center",
-                  [`@media screen and (min-width: ${headerBreakpoints.lgMobile}px)`]:
-                    {
-                      justifyContent: "flex-end",
-                    },
-                }}
-              />
-            </Flex>
+              rightContent={
+                isLargerThanSmallTablet ? (
+                  <ViewingOptionsMenu
+                    options={SEARCH_SORT_LABELS}
+                    sort={searchResults.sort}
+                    searchManager={searchManager}
+                    perPageOptions={RESULTS_PER_PAGE_OPTIONS}
+                    setFiltersExpanded={setFiltersExpanded}
+                    updateURL={updateURL}
+                    showSortMenu={false}
+                    showViewModeButtons={false}
+                    perPageMenuId="results-per-page-menu-bottom"
+                  />
+                ) : null
+              }
+            />
           </>
         )}
       </Box>

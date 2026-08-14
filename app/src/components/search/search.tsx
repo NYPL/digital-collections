@@ -35,10 +35,17 @@ const Search = () => {
     event.preventDefault();
     closeSuggestions();
     searchManager.setLastFilter(null);
-    const searchUrl =
-      `/search/index?` +
-      (keywords.length > 0 ? `q=${encodeURIComponent(keywords)}` : "") +
-      (publicDomainOnly ? `&filters%5Brights%5D=pd` : "");
+    const storedPerPage =
+      localStorage.getItem("perPage") || searchManager.perPage.toString();
+    const params = new URLSearchParams();
+    if (keywords.length > 0) {
+      params.set("q", keywords);
+    }
+    params.set("perPage", storedPerPage);
+    if (publicDomainOnly) {
+      params.set("filters[rights]", "pd");
+    }
+    const searchUrl = `/search/index?${params.toString()}`;
     router.push(searchUrl);
   };
 
@@ -46,9 +53,15 @@ const Search = () => {
     setKeywords(title);
     closeSuggestions();
     searchManager.setLastFilter(null);
-    const searchUrl =
-      `/search/index?q=${encodeURIComponent(title)}` +
-      (publicDomainOnly ? `&filters%5Brights%5D=pd` : "");
+    const storedPerPage =
+      localStorage.getItem("perPage") || searchManager.perPage.toString();
+    const params = new URLSearchParams();
+    params.set("q", title);
+    params.set("perPage", storedPerPage);
+    if (publicDomainOnly) {
+      params.set("filters[rights]", "pd");
+    }
+    const searchUrl = `/search/index?${params.toString()}`;
     router.push(searchUrl);
   };
 

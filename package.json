@@ -40,12 +40,12 @@
     "@allmaps/maplibre": "^1.0.0-beta.42",
     "@types/react": "18.2.0",
     "@types/react-dom": "18.2.0",
+    "copy-webpack-plugin": "14.0.0",
     "dotenv": "16.4.5",
     "eslint": "8.56.0",
     "googleapis": "129.0.0",
     "html-react-parser": "5.2.2",
     "mapbox-gl": "^3.21.0",
-    "maplibre": "^0.0.1-security",
     "maplibre-gl": "^5.23.0",
     "newrelic": "12.5.1",
     "next": "15.5.9",
@@ -87,6 +87,9 @@
   "overrides": {
     "nwsapi": "2.2.13",
     "react": "18.2.0",
-    "react-dom": "18.2.0"
+    "react-dom": "18.2.0",
+    "xmldom": "@xmldom/xmldom@~0.7.7",
+    "happy-dom": "20.8.9",
+    "tar": "7.5.19"
   }
 }

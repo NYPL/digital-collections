@@ -24,6 +24,28 @@ import parse from "html-react-parser";
 import type { Highlight } from "@/src/types/HighlightType";
 import SearchCardImage from "./searchCardImage";
 
+const withPerPageParam = (url: string) => {
+  if (typeof window === "undefined") {
+    return url;
+  }
+
+  const currentPerPage =
+    new URLSearchParams(window.location.search).get("perPage") ||
+    localStorage.getItem("perPage");
+
+  if (!currentPerPage) {
+    return url;
+  }
+
+  const [baseUrl, hashFragment] = url.split("#");
+  const separator = baseUrl.includes("?") ? "&" : "?";
+  const nextUrl = `${baseUrl}${separator}perPage=${encodeURIComponent(
+    currentPerPage
+  )}`;
+
+  return hashFragment ? `${nextUrl}#${hashFragment}` : nextUrl;
+};
+
 export interface SearchCardProps {
   result: SearchCardType;
   keywords: string;
@@ -121,6 +143,10 @@ export const SearchCard = ({
   numColumns,
 }: SearchCardProps) => {
   const truncatedTitle = result.title.length > TRUNCATED_SEARCH_CARD_LENGTH;
+  const mainActionLink =
+    result.recordType === "Collection"
+      ? withPerPageParam(result.url)
+      : result.url;
 
   const highlightedTitle = highlightTitleWords(result.title, result.highlights);
 
@@ -136,7 +162,7 @@ export const SearchCard = ({
           />
         ),
       }}
-      mainActionLink={result.url}
+      mainActionLink={mainActionLink}
       layout={viewMode === "list" ? "row" : "column"}
       maxWidth="945px"
     >

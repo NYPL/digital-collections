@@ -108,8 +108,8 @@ export default async function ItemViewer(props: ItemProps) {
       activePage="item"
       breadcrumbs={breadcrumbData}
       ga4Data={{
-        division: breadcrumbData[1]?.text,
-        collection: breadcrumbData[2]?.text,
+        division: item.breadcrumbData?.division?.text,
+        collection: item.breadcrumbData?.collection?.text,
         subcollection: item.subcollectionName ?? undefined,
         contentType: item.contentType,
         resourceType: extractAllAnchorsFromHTML(item.typeOfResource)

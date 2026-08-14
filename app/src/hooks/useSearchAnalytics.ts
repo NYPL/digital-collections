@@ -2,7 +2,10 @@ import { useEffect } from "react";
 import { SearchManager } from "../utils/searchManager/searchManager";
 import { trackSearchResults } from "../utils/ga4Utils";
 
-const useSearchAnalytics = (searchManager: SearchManager) => {
+const useSearchAnalytics = (
+  searchManager: SearchManager,
+  numResults?: number
+) => {
   const filters = searchManager.filters;
   const filterNames = filters.map((f) => f.filter) ?? undefined;
   const keywords = searchManager.keywords ?? undefined;
@@ -14,6 +17,7 @@ const useSearchAnalytics = (searchManager: SearchManager) => {
     filterNames: filterNames,
     searchType: searchType,
     keywords: keywords,
+    numResults: numResults,
   });
 
   useEffect(() => {
@@ -21,7 +25,8 @@ const useSearchAnalytics = (searchManager: SearchManager) => {
       searchManager.viewMode,
       filterNames,
       searchType,
-      keywords
+      keywords,
+      numResults
     );
   }, [changeHash]);
 };

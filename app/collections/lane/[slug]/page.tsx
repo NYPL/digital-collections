@@ -7,7 +7,7 @@ import { redirect } from "next/navigation";
 
 type LaneProps = {
   params: Promise<{ slug: string }>;
-  searchParams: Promise<{ page: number }>;
+  searchParams: Promise<{ page: number; perPage?: number }>;
 };
 
 export async function generateMetadata(props: LaneProps): Promise<Metadata> {
@@ -29,6 +29,7 @@ export default async function Lane(props: LaneProps) {
     slug: params.slug.replace(/-/g, " "),
     sort: "items-count",
     pageNum: searchParams.page,
+    perPage: searchParams.perPage,
   });
   const currentPage = Number(searchParams.page) || 1;
 

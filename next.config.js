@@ -1,3 +1,4 @@
+const CopyPlugin = require("copy-webpack-plugin");
 /** @type {import('next').NextConfig} */
 // This is found in the codebase example but both seem to work and send data
 // correctly. Keep the above but can use the bottom for debugging.
@@ -30,6 +31,15 @@ const nextConfig = {
     deviceSizes: [480, 768, 1024, 1280],
   },
   generateEtags: false,
+  async redirects() {
+    return [
+      {
+        source: "/uv.html",
+        destination: "/_next/static/uv.html",
+        permanent: true,
+      },
+    ];
+  },
   // Without this setting, the Next.js compilation step will routinely
   // try to import files such as `LICENSE` from the `newrelic` module.
   // See https://nextjs.org/docs/app/api-reference/next-config-js/serverComponentsExternalPackages.
@@ -41,6 +51,24 @@ const nextConfig = {
     if (process.env.NEW_RELIC_APP_NAME) {
       nrExternals(config);
     }
+    config.plugins.push(
+      new CopyPlugin({
+        patterns: [
+          {
+            from: "./node_modules/universalviewer/dist/uv.html",
+            to: "./static/",
+          },
+          {
+            from: "./node_modules/universalviewer/dist/uv.css",
+            to: "./static/",
+          },
+          {
+            from: "./node_modules/universalviewer/dist/umd/",
+            to: "./static/umd",
+          },
+        ],
+      })
+    );
     return config;
   },
 };

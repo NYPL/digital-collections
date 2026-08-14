@@ -55,6 +55,7 @@ export const SearchProvider = ({
   const searchManager = useMemo(() => {
     const manager = new GeneralSearchManager({
       initialPage: Number(searchParams?.page) || DEFAULT_PAGE_NUM,
+      initialPerPage: Number(searchParams?.perPage) || undefined,
       initialSort: searchParams?.sort || DEFAULT_SEARCH_SORT,
       initialFilters: stringToFilter(searchParams?.filters),
       defaultSort: DEFAULT_SEARCH_SORT,
@@ -67,12 +68,11 @@ export const SearchProvider = ({
     return manager;
   }, [
     searchParams?.page,
+    searchParams?.perPage,
     searchParams?.sort,
     searchParams?.filters,
     searchParams?.q,
     searchParams?.availableFilters,
-    searchParams?.viewMode,
-    viewModeFromUrl,
     initialViewMode,
   ]);
 
@@ -92,7 +92,7 @@ export const SearchProvider = ({
     } else {
       searchManager.handleViewModeChange(initialViewMode || DEFAULT_VIEW_MODE);
     }
-  }, [viewModeFromUrl, searchManager.viewMode, searchManager]);
+  }, [viewModeFromUrl, searchManager.viewMode, searchManager, initialViewMode]);
 
   return (
     <SearchContext.Provider value={{ searchManager }}>

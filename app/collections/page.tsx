@@ -28,6 +28,7 @@ export default async function Collections(props: CollectionsProps) {
     keyword: searchParams.q,
     sort: searchParams.sort,
     page: searchParams.page,
+    perPage: searchParams.perPage,
   });
 
   // Repo API returns 404s within the data.
