@@ -81,10 +81,10 @@ export class SearchAutosuggestPage extends SearchPage {
     const title = (await this.firstOption.innerText()).trim();
 
     // Downshift combobox interaction: 1st Enter commits option
-    await this.page.keyboard.press("Enter");
+    await this.pressEnter();
 
     // 2nd Enter submits form, this is required by Chakra UX
-    await this.page.keyboard.press("Enter");
+    await this.pressEnter();
 
     return title;
   }
