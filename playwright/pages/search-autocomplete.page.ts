@@ -10,6 +10,7 @@ export class SearchAutosuggestPage extends SearchPage {
   readonly pageBody: Locator;
 
   static readonly SUGGEST_QUERY = "farm";
+  static readonly BOUNDARY_QUERY = "far";
   static readonly SHORT_QUERY = "fa";
 
   constructor(page: Page) {

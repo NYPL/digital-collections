@@ -16,6 +16,11 @@ test.describe("Search autosuggest dropdown", () => {
     await autosuggestPage.verifyDropdownNotVisible();
   });
 
+  test("shows dropdown after typing exactly 3 characters", async () => {
+    await autosuggestPage.typeQuery(SearchAutosuggestPage.BOUNDARY_QUERY);
+    await autosuggestPage.verifyDropdownVisible();
+  });
+
   test("shows dropdown after typing 3+ characters", async () => {
     await autosuggestPage.typeAndWaitForSuggestions(
       SearchAutosuggestPage.SUGGEST_QUERY
