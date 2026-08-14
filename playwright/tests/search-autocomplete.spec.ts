@@ -1,6 +1,5 @@
 import { test } from "../base";
 import { SearchAutosuggestPage } from "../pages/search-autocomplete.page";
-import { applyRouteFilters } from "../utils/routeFilters";
 
 test.describe("Search autosuggest dropdown", () => {
   let autosuggestPage: SearchAutosuggestPage;
