@@ -71,8 +71,20 @@ export class SearchAutosuggestPage extends SearchPage {
 
   async selectFirstSuggestionViaKeyboard(): Promise<string> {
     await this.pressArrowDown();
+
+    // Make sure the first suggestion is selected and committed to the DOM before pressing Enter
+    await expect(this.allOptions.first()).toHaveAttribute(
+      "aria-selected",
+      "true"
+    );
     const title = (await this.firstOption.innerText()).trim();
-    await this.pressEnter();
+
+    // Downshift combobox interaction: 1st Enter commits option
+    await this.page.keyboard.press("Enter");
+
+    // 2nd Enter submits form, this is required by Chakra UX
+    await this.page.keyboard.press("Enter");
+
     return title;
   }
 
