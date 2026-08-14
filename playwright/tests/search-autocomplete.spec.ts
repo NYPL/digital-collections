@@ -7,7 +7,7 @@ test.describe("Search autosuggest dropdown", () => {
 
   test.beforeEach(async ({ page }) => {
     autosuggestPage = new SearchAutosuggestPage(page);
-    await autosuggestPage.loadPage("/");
+    await autosuggestPage.loadPage("/about");
     await autosuggestPage.verifySearchBarVisible();
   });
 
