@@ -1,5 +1,5 @@
 import { test } from "../base";
-import { SearchAutosuggestPage } from "../pages/search-autocomplete.page";
+import { SearchAutosuggestPage } from "../pages/search-autosuggest.page";
 
 test.describe("Search autosuggest dropdown", () => {
   let autosuggestPage: SearchAutosuggestPage;
