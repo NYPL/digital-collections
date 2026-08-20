@@ -121,11 +121,9 @@ export class SearchAutosuggestPage extends SearchPage {
     await expect(this.page).toHaveURL(/\/search\/index\?q=/);
 
     await expect(
-      this.page.getByRole("heading", {
-        name: new RegExp(
-          `Displaying \\d+-\\d+ of \\d+ results for "${expectedQuery}"`
-        ),
-      })
+      this.page
+        .getByRole("heading", { name: /Displaying \d+-\d+ of \d+/ })
+        .filter({ hasText: `results for "${expectedQuery}"` })
     ).toBeVisible();
   }
 }
