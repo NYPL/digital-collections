@@ -61,6 +61,13 @@ export const sendLayoutSelectedEvent = (viewMode: "grid" | "list") => {
   });
 };
 
+export const sendFailedUVImageLoadEvent = () => {
+  const dataLayer = window["dataLayer"] || [];
+  dataLayer.push({
+    event: "uv_image_load_error",
+  });
+};
+
 export const trackAVProgress = (
   mediaType: string,
   mediaName: string,

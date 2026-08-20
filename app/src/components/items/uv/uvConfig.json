@@ -1,4 +1,7 @@
 {
+  "content": {
+    "authorisationFailedMessage": "We are having some trouble loading images, please try refreshing the page"
+  },
   "options": {
     "footerPanelEnabled": true,
     "pagingEnabled": true,
