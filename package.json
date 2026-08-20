@@ -62,7 +62,7 @@
     "winston": "3.9.0"
   },
   "devDependencies": {
-    "@nypl/design-system-react-components": "4.4.3-rc3",
+    "@nypl/design-system-react-components": "4.5.0",
     "@playwright/test": "1.58.2",
     "@testing-library/jest-dom": "6.1.4",
     "@testing-library/react": "14.0.0",
