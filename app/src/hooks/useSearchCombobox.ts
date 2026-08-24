@@ -59,7 +59,13 @@ export function useSearchCombobox({
         }
         const data = await res.json();
         const results: SuggestResult[] = data.suggestions ?? [];
-        setSuggestions(results);
+        const seen = new Set<string>();
+        const deduped = results.filter((r) => {
+          if (seen.has(r.title)) return false;
+          seen.add(r.title);
+          return true;
+        });
+        setSuggestions(deduped);
         setActiveIndex(-1);
       } catch {
         setSuggestions([]);

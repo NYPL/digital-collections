@@ -165,6 +165,25 @@ describe("useSearchCombobox", () => {
       expect(result.current.activeIndex).toBe(-1);
     });
 
+    it("deduplicates suggestions with the same title, keeping first occurrence", async () => {
+      const duplicates: SuggestResult[] = [
+        { uuid: "d1", title: "cat", type: "Item", highlights: {} },
+        { uuid: "d2", title: "cat", type: "Item", highlights: {} },
+        { uuid: "d3", title: "cat", type: "Item", highlights: {} },
+        { uuid: "d4", title: "Hamlet (cat)", type: "Item", highlights: {} },
+        { uuid: "d5", title: "cat", type: "Item", highlights: {} },
+      ];
+      mockFetchSuccess(duplicates);
+      const { result } = renderHook(() =>
+        useSearchCombobox({ keywords: "cat", listboxId: LISTBOX_ID })
+      );
+      await runDebounceAndFlush();
+      expect(result.current.suggestions).toEqual([
+        { uuid: "d1", title: "cat", type: "Item", highlights: {} },
+        { uuid: "d4", title: "Hamlet (cat)", type: "Item", highlights: {} },
+      ]);
+    });
+
     it("clears suggestions and closes when the upstream response is not ok", async () => {
       mockFetchError();
       const { result } = renderHook(() =>
