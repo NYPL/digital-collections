@@ -25,11 +25,12 @@ export const metadata: Metadata = {
 };
 
 export type SearchProps = {
-  searchParams: SearchParamsType;
+  searchParams: Promise<SearchParamsType>;
 };
 
-export default async function Search({ searchParams }: SearchProps) {
-  revalidatePath("/search/index");
+export default async function Search(props: SearchProps) {
+  //revalidatePath("/search/index");
+  const searchParams = await props.searchParams;
   const pageName = searchParams.q ? "search-results" : "all-items";
 
   const searchResults = await CollectionsApi.getSearchData({
