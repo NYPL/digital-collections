@@ -1,5 +1,5 @@
 import SearchPage from "./search.page";
-import { expect, Locator, Page } from "@playwright/test";
+import { expect, Locator, Page, Response } from "@playwright/test";
 
 export class PaginationPage extends SearchPage {
   static readonly COLLECTION_WITH_200_PLUS_ITEMS_URL: string =
@@ -42,31 +42,20 @@ export class PaginationPage extends SearchPage {
     gotoPage: string,
     key: string,
     value: string
-  ): Promise<Page> {
-    const context = await this.page
-      .context()
-      .browser()!
-      .newContext({
-        viewport: { width: 1280, height: 800 },
-      });
-    const newPage = await context.newPage();
-    await newPage.addInitScript(
-      ({ k, v }) => {
-        window.localStorage.setItem(k, v);
-      },
-      { k: key, v: value }
+  ): Promise<void> {
+    await this.page.addInitScript(
+      ([k, v]) => localStorage.setItem(k, v),
+      [key, value]
     );
-
-    await newPage.goto(gotoPage);
-    return newPage;
+    await this.loadPage(gotoPage);
   }
 
   pageLink(pageNumber: number): Locator {
     return this.page.getByRole("link", { name: `Page ${pageNumber}` });
   }
 
-  async waitForRscNav(paramName: string, value: string) {
-    return this.page.waitForResponse(
+  async waitForRscNav(paramName: string, value: string): Promise<Response> {
+    return await this.page.waitForResponse(
       (resp) =>
         resp.request().headers()["rsc"] === "1" &&
         new URL(resp.url()).searchParams.get(paramName) === value
@@ -135,8 +124,11 @@ export class PaginationPage extends SearchPage {
     expect(count).toBeLessThanOrEqual(maxCount);
   }
 
-  verifyUrlContainsParam(param: string, value: string | number): void {
-    expect(this.page.url()).toContain(`${param}=${value}`);
+  async verifyUrlContainsParam(
+    param: string,
+    value: string | number
+  ): Promise<void> {
+    await expect(this.page).toHaveURL(new RegExp(`${param}=${value}`));
   }
 
   async verifyPerPageMenuText(value: number): Promise<void> {

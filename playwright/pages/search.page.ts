@@ -8,7 +8,6 @@ export default class SearchPage {
   readonly perPageMenuButton: Locator;
   readonly resultsHeadingGeneric: Locator;
   readonly previousPageLink: Locator;
-  readonly nextPageLink: Locator;
 
   // pagination constants
   static readonly PER_PAGE = {
