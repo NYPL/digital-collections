@@ -1,9 +1,7 @@
 import SearchPage from "./search.page";
 import { expect, Locator, Page } from "@playwright/test";
 
-export default class PaginationPage {
-  readonly page: Page;
-
+export class PaginationPage extends SearchPage {
   static readonly COLLECTION_WITH_200_PLUS_ITEMS_URL: string =
     "/collections/TODO-REPLACE-WITH-REAL-UUID";
   static readonly COLLECTIONS_LANDING_URL: string = "/collections";
@@ -18,14 +16,15 @@ export default class PaginationPage {
   readonly collectionStructureHeading: Locator;
 
   constructor(page: Page) {
-    this.page = page;
+    super(page);
+
     this.perPageMenuButton = this.page.locator("#results-per-page-menu");
     this.paginationNav = this.page.getByTestId("ds-pagination");
     this.previousPageLink = this.page.getByRole("link", {
       name: "Previous page",
     });
     this.nextPageLink = this.page.getByRole("link", { name: "Next page" });
-    this.currentPageLink = this.page.getByRole("link", { current: "page" });
+    this.currentPageLink = this.paginationNav.locator('a[aria-current="page"]');
     this.allCollectionCards = this.page.getByTestId("ds-card");
     this.collectionStructureHeading = this.page.getByRole("heading", {
       name: "Collection structure",
