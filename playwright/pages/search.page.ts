@@ -266,14 +266,8 @@ export default class SearchPage {
       name: "Sort by: Items first",
     });
 
-    // // just using locators
-    // this.gridViewButton = this.page.locator('button:has(#grid-menu-icon)');
-    // this.listViewButton = this.page.locator('button:has(#list-menu-icon)');
-    // this.allCards = this.page.getByTestId("ds-card");
-
-    // more playwright-y
     this.gridViewButton = this.page
-      .getByRole("button", { name: /grid/i }) // Matches "Grid View", "Grid", "Grid images", etc.
+      .getByRole("button", { name: /grid/i })
       .filter({ has: this.page.locator("#grid-menu-icon") });
     this.listViewButton = this.page
       .getByRole("button", { name: /list/i })
