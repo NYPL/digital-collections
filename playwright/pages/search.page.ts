@@ -5,6 +5,28 @@ export default class SearchPage {
   readonly searchKeyword: string;
   readonly searchBar: Locator;
   readonly searchButton: Locator;
+  readonly perPageMenuButton: Locator;
+  readonly resultsHeadingGeneric: Locator;
+  readonly previousPageLink: Locator;
+  readonly nextPageLink: Locator;
+
+  // pagination constants
+  static readonly PER_PAGE = {
+    DEFAULT: 48,
+    EXPANDED: 96,
+    DEFAULT_STR: "48",
+    EXPANDED_STR: "96",
+  } as const;
+
+  static readonly STORAGE_KEYS = {
+    PER_PAGE: "perPage",
+  } as const;
+
+  static readonly QUERY_PARAMS = {
+    PER_PAGE: "perPage",
+    PAGE: "page",
+    QUERY: "q",
+  } as const;
 
   // search results
   static searchResultsUrl: string = "/search/index?q=map%20of%20scandinavia";
