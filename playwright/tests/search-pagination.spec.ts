@@ -11,7 +11,7 @@ test.describe("Search pagination and per-page options", () => {
   });
 
   test("defaults to 48 per page on initial load", async () => {
-    await paginationPage.loadPage(SearchPage.searchResultsUrl);
+    await paginationPage.loadPage(SearchPage.largeResultsUrl);
     await paginationPage.verifyPerPageMenuText(SearchPage.PER_PAGE.DEFAULT);
     await paginationPage.verifyCollectionCardCountLessThanOrEqual(
       SearchPage.PER_PAGE.DEFAULT
@@ -19,7 +19,7 @@ test.describe("Search pagination and per-page options", () => {
   });
 
   test("selecting 96 per page updates grid, URL, and RSC request", async () => {
-    await paginationPage.loadPage(SearchPage.searchResultsUrl);
+    await paginationPage.loadPage(SearchPage.largeResultsUrl);
     const rscPromise = paginationPage.waitForRscNav(
       SearchPage.QUERY_PARAMS.PER_PAGE,
       SearchPage.PER_PAGE.EXPANDED_STR
@@ -38,7 +38,7 @@ test.describe("Search pagination and per-page options", () => {
 
   test("changing per-page option on page 2 resets navigation to page 1", async () => {
     await paginationPage.loadPage(
-      `${SearchPage.searchResultsUrl}&${SearchPage.QUERY_PARAMS.PAGE}=2`
+      `${SearchPage.largeResultsUrl}&${SearchPage.QUERY_PARAMS.PAGE}=2`
     );
     await paginationPage.selectPerPage(SearchPage.PER_PAGE.EXPANDED);
 
@@ -54,7 +54,7 @@ test.describe("Search pagination and per-page options", () => {
 
   test("retains 96 per page in localStorage after page reload", async () => {
     await paginationPage.loadWithLocalStorage(
-      SearchPage.searchResultsUrl,
+      SearchPage.largeResultsUrl,
       SearchPage.STORAGE_KEYS.PER_PAGE,
       SearchPage.PER_PAGE.EXPANDED_STR
     );
@@ -65,13 +65,13 @@ test.describe("Search pagination and per-page options", () => {
 
   test("pre-selects 96 in per-page menu on direct URL load", async () => {
     await paginationPage.loadPage(
-      `${SearchPage.searchResultsUrl}&${SearchPage.QUERY_PARAMS.PER_PAGE}=96`
+      `${SearchPage.largeResultsUrl}&${SearchPage.QUERY_PARAMS.PER_PAGE}=96`
     );
     await paginationPage.verifyPerPageMenuText(SearchPage.PER_PAGE.EXPANDED);
   });
 
   test("preserves list view mode when changing per-page option", async () => {
-    await paginationPage.loadPage(SearchPage.searchResultsUrl);
+    await paginationPage.loadPage(SearchPage.largeResultsUrl);
     await paginationPage.toggleView("list");
 
     await paginationPage.selectPerPage(SearchPage.PER_PAGE.EXPANDED);
@@ -83,7 +83,7 @@ test.describe("Search pagination and per-page options", () => {
     page,
   }) => {
     await page.setViewportSize({ width: 375, height: 667 });
-    await paginationPage.loadPage(SearchPage.searchResultsUrl);
+    await paginationPage.loadPage(SearchPage.largeResultsUrl);
     await paginationPage.verifyPerPageMenuHidden();
   });
 
@@ -99,7 +99,7 @@ test.describe("Search pagination and per-page options", () => {
 
   test("retains 96 per page when submitting a new search query", async () => {
     await paginationPage.loadWithLocalStorage(
-      SearchPage.searchResultsUrl,
+      SearchPage.largeResultsUrl,
       SearchPage.STORAGE_KEYS.PER_PAGE,
       SearchPage.PER_PAGE.EXPANDED_STR
     );
@@ -114,7 +114,7 @@ test.describe("Search pagination and per-page options", () => {
 
   test("preserves 96 per page when clicking collection card from search results", async () => {
     await paginationPage.loadWithLocalStorage(
-      SearchPage.searchResultsUrl,
+      SearchPage.largeResultsUrl,
       SearchPage.STORAGE_KEYS.PER_PAGE,
       SearchPage.PER_PAGE.EXPANDED_STR
     );
@@ -160,7 +160,7 @@ test.describe("Search pagination and per-page options", () => {
 
   test("syncs per-page preference when navigating from search to collections", async () => {
     await paginationPage.loadWithLocalStorage(
-      SearchPage.searchResultsUrl,
+      SearchPage.largeResultsUrl,
       SearchPage.STORAGE_KEYS.PER_PAGE,
       SearchPage.PER_PAGE.EXPANDED_STR
     );
