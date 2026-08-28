@@ -104,6 +104,10 @@ export default class SearchPage {
     this.searchKeyword = "map of scandinavia";
     this.searchBar = this.page.getByPlaceholder(/search/i);
     this.searchButton = this.page.locator("#searchbar-button-searchbar");
+    this.perPageMenuButton = this.page.locator("#results-per-page-menu");
+    this.previousPageLink = this.page.getByRole("link", {
+      name: "Previous page",
+    });
 
     // search results
     this.resultsHeading = this.page.getByRole("heading", {
@@ -111,6 +115,11 @@ export default class SearchPage {
         `^Displaying \\d+-\\d+ of \\d+ results for "${this.searchKeyword}"$`
       ),
     });
+
+    this.resultsHeadingGeneric = this.page.getByRole("heading", {
+      name: /^Displaying \d+-\d+ of \d+ results/,
+    });
+
     this.firstItemResult = page.locator("a[href*='/items/']").first();
     this.firstKeywordResult = page
       .getByRole("link", { name: this.searchKeyword })

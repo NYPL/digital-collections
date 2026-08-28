@@ -34,8 +34,11 @@ test.describe("Search pagination and per-page options", () => {
     );
     await paginationPage.selectPerPage(SearchPage.PER_PAGE.EXPANDED);
 
+    // 1. Verify pagination control state
     await expect(paginationPage.currentPageLink).toHaveText("1");
-    await expect(paginationPage.resultsHeadingGeneric).toHaveText(
+
+    // 2. Scope to the active summary heading and give the network/re-render time to settle
+    await expect(paginationPage.resultsHeadingGeneric.first()).toHaveText(
       /Displaying 1-96 of/
     );
   });
