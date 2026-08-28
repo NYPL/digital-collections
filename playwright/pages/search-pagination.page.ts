@@ -53,42 +53,6 @@ export class PaginationPage extends SearchPage {
     await this.loadPage(gotoPage);
   }
 
-  // async selectPerPage(count: number | string): Promise<void> {
-  //   await this.perPageMenuButton.click();
-  //   await this.page
-  //     .getByRole("menuitem", { name: count.toString(), exact: true })
-  //     .first()
-  //     .click();
-  // }
-
-  // async selectPerPage(count: number | string): Promise<void> {
-  //   await this.perPageMenuButton.click();
-  //   await Promise.all([
-  //     this.page.waitForNavigation({ waitUntil: "domcontentloaded" }).catch(() => {}),
-  //     this.page
-  //       .getByRole("menuitem", { name: count.toString(), exact: true })
-  //       .first()
-  //       .click(),
-  //   ]);
-  // }
-
-  // async selectPerPage(count: number | string): Promise<void> {
-  //   // 1. Click the trigger menu button
-  //   await this.perPageMenuButton.click();
-
-  //   // 2. Locate the menu item
-  //   const menuItem = this.page.getByRole("menuitem", {
-  //     name: count.toString(),
-  //     exact: true,
-  //   });
-
-  //   // 3. VERIFY: Is it visible before clicking?
-  //   await expect(menuItem).toBeVisible({ timeout: 2000 });
-
-  //   // 4. Perform the click
-  //   await menuItem.click();
-  // }
-
   async selectPerPage(count: number | string): Promise<void> {
     await this.perPageMenuButton.click();
     const menuItem = this.page
