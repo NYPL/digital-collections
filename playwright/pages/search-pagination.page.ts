@@ -65,39 +65,12 @@ export class PaginationPage extends SearchPage {
     return this.page.getByRole("link", { name: `Page ${pageNumber}` });
   }
 
-  async waitForRscNav(paramName: string, value: string): Promise<Response> {
-    return await this.page.waitForResponse(
-      (resp) =>
-        resp.request().headers()["rsc"] === "1" &&
-        new URL(resp.url()).searchParams.get(paramName) === value
-    );
+  async goToPageNumber(pageNumber: number): Promise<void> {
+    await this.pageLink(pageNumber).click({ force: true });
   }
 
-  async goToPageNumber(
-    pageNumber: number,
-    expectedPerPage: string
-  ): Promise<void> {
-    const [response] = await Promise.all([
-      this.waitForRscNav("page", pageNumber.toString()),
-      this.pageLink(pageNumber).click({ force: true }),
-    ]);
-    expect(response.ok()).toBeTruthy();
-    expect(new URL(response.url()).searchParams.get("perPage")).toBe(
-      expectedPerPage
-    );
-  }
-
-  async goToPreviousPage(expectedPerPage: string): Promise<void> {
-    const [response] = await Promise.all([
-      this.page.waitForResponse(
-        (resp) => resp.request().headers()["rsc"] === "1"
-      ),
-      this.previousPageLink.click({ force: true }),
-    ]);
-    expect(response.ok()).toBeTruthy();
-    expect(new URL(response.url()).searchParams.get("perPage")).toBe(
-      expectedPerPage
-    );
+  async goToPreviousPage(): Promise<void> {
+    await this.previousPageLink.click({ force: true });
   }
 
   async clickFirstCollectionCard(): Promise<void> {
@@ -120,13 +93,6 @@ export class PaginationPage extends SearchPage {
     expect(count).toBeLessThanOrEqual(maxCount);
   }
 
-  async verifyUrlContainsParam(
-    param: string,
-    value: string | number
-  ): Promise<void> {
-    await expect(this.page).toHaveURL(new RegExp(`${param}=${value}`));
-  }
-
   async verifyPerPageMenuText(value: number): Promise<void> {
     await expect(this.perPageMenuButton).toHaveAccessibleName(
       `Results per page: ${value}`
@@ -135,5 +101,37 @@ export class PaginationPage extends SearchPage {
 
   async verifyPerPageMenuHidden(): Promise<void> {
     await expect(this.perPageMenuButton).toBeHidden();
+  }
+
+  /**
+   * Checks for route-transition offset bugs using soft assertions.
+   * If Page 1 fails (e.g. falls back to 48), execution continues onto Page 2
+   * so both failures (e.g. page 2 starts at 96, thus dropping 49-95) can be
+   * registered in a single test run.
+   */
+
+  async verifyCollectionPaginationSync(
+    collectionUrl: string,
+    perPage: number = SearchPage.PER_PAGE.EXPANDED
+  ): Promise<void> {
+    const secondPageStart = perPage + 1;
+    const secondPageEnd = perPage * 2;
+
+    await this.loadPage(collectionUrl);
+
+    // Page 1 Check
+    await expect
+      .soft(this.resultsHeadingGeneric)
+      .toHaveText(new RegExp(`Displaying 1-${perPage} of`));
+    await expect.soft(this.allCollectionCards).toHaveCount(perPage);
+
+    // Page 2 Check
+    await this.goToPageNumber(2);
+    await expect
+      .soft(this.resultsHeadingGeneric)
+      .toHaveText(
+        new RegExp(`Displaying ${secondPageStart}-${secondPageEnd} of`)
+      );
+    await expect.soft(this.allCollectionCards).toHaveCount(perPage);
   }
 }

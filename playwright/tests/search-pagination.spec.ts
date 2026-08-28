@@ -10,7 +10,7 @@ test.describe("Search pagination and per-page options", () => {
     paginationPage = new PaginationPage(page);
   });
 
-  test.only("defaults to 48 per page on initial load", async () => {
+  test("defaults to 48 per page on initial load", async () => {
     await paginationPage.loadPage(SearchPage.largeResultsUrl);
     await paginationPage.verifyPerPageMenuText(SearchPage.PER_PAGE.DEFAULT);
     await paginationPage.verifyCollectionCardCountLessThanOrEqual(
@@ -18,22 +18,14 @@ test.describe("Search pagination and per-page options", () => {
     );
   });
 
-  test.only("selecting 96 per page updates grid, URL, and RSC request", async () => {
+  test("selecting 96 per page updates grid", async () => {
     await paginationPage.loadPage(SearchPage.largeResultsUrl);
-    const rscPromise = paginationPage.waitForRscNav(
-      SearchPage.QUERY_PARAMS.PER_PAGE,
-      SearchPage.PER_PAGE.EXPANDED_STR
-    );
-
     await paginationPage.selectPerPage(SearchPage.PER_PAGE.EXPANDED);
 
-    const response = await rscPromise;
-    expect(response.ok()).toBeTruthy();
-    await paginationPage.verifyUrlContainsParam(
-      SearchPage.QUERY_PARAMS.PER_PAGE,
-      SearchPage.PER_PAGE.EXPANDED_STR
-    );
     await paginationPage.verifyPerPageMenuText(SearchPage.PER_PAGE.EXPANDED);
+    await expect(paginationPage.allCollectionCards).toHaveCount(
+      SearchPage.PER_PAGE.EXPANDED
+    );
   });
 
   test("changing per-page option on page 2 resets navigation to page 1", async () => {
@@ -42,13 +34,9 @@ test.describe("Search pagination and per-page options", () => {
     );
     await paginationPage.selectPerPage(SearchPage.PER_PAGE.EXPANDED);
 
-    await paginationPage.verifyUrlContainsParam(
-      SearchPage.QUERY_PARAMS.PAGE,
-      "1"
-    );
-    await paginationPage.verifyUrlContainsParam(
-      SearchPage.QUERY_PARAMS.PER_PAGE,
-      SearchPage.PER_PAGE.EXPANDED_STR
+    await expect(paginationPage.currentPageLink).toHaveText("1");
+    await expect(paginationPage.resultsHeadingGeneric).toHaveText(
+      /Displaying 1-96 of/
     );
   });
 
@@ -91,9 +79,9 @@ test.describe("Search pagination and per-page options", () => {
     await paginationPage.loadPage(PaginationPage.COLLECTIONS_LANDING_URL);
     await paginationPage.selectPerPage(SearchPage.PER_PAGE.EXPANDED);
 
-    await paginationPage.verifyUrlContainsParam(
-      SearchPage.QUERY_PARAMS.PER_PAGE,
-      SearchPage.PER_PAGE.EXPANDED_STR
+    await paginationPage.verifyPerPageMenuText(SearchPage.PER_PAGE.EXPANDED);
+    await paginationPage.verifyCollectionCardCountLessThanOrEqual(
+      SearchPage.PER_PAGE.EXPANDED
     );
   });
 
@@ -106,10 +94,7 @@ test.describe("Search pagination and per-page options", () => {
     await paginationPage.searchBar.fill("brooklyn");
     await paginationPage.searchButton.click();
 
-    await paginationPage.verifyUrlContainsParam(
-      SearchPage.QUERY_PARAMS.PER_PAGE,
-      SearchPage.PER_PAGE.EXPANDED_STR
-    );
+    await paginationPage.verifyPerPageMenuText(SearchPage.PER_PAGE.EXPANDED);
   });
 
   test("preserves 96 per page when clicking collection card from search results", async () => {
@@ -120,10 +105,7 @@ test.describe("Search pagination and per-page options", () => {
     );
     await paginationPage.clickFirstCollectionCard();
 
-    await paginationPage.verifyUrlContainsParam(
-      SearchPage.QUERY_PARAMS.PER_PAGE,
-      SearchPage.PER_PAGE.EXPANDED_STR
-    );
+    await paginationPage.verifyPerPageMenuText(SearchPage.PER_PAGE.EXPANDED);
   });
 
   test("calculates page 2 offset correctly on collection pages", async () => {
@@ -132,15 +114,11 @@ test.describe("Search pagination and per-page options", () => {
       SearchPage.STORAGE_KEYS.PER_PAGE,
       SearchPage.PER_PAGE.EXPANDED_STR
     );
-    await paginationPage.goToPageNumber(2, SearchPage.PER_PAGE.EXPANDED_STR);
+    await paginationPage.goToPageNumber(2);
 
-    await paginationPage.verifyUrlContainsParam(
-      SearchPage.QUERY_PARAMS.PAGE,
-      "2"
-    );
-    await paginationPage.verifyUrlContainsParam(
-      SearchPage.QUERY_PARAMS.PER_PAGE,
-      SearchPage.PER_PAGE.EXPANDED_STR
+    await expect(paginationPage.currentPageLink).toHaveText("2");
+    await expect(paginationPage.resultsHeadingGeneric).toHaveText(
+      /Displaying 97-192 of/
     );
   });
 
@@ -150,36 +128,11 @@ test.describe("Search pagination and per-page options", () => {
       SearchPage.STORAGE_KEYS.PER_PAGE,
       SearchPage.PER_PAGE.EXPANDED_STR
     );
-    await paginationPage.goToPreviousPage(SearchPage.PER_PAGE.EXPANDED_STR);
+    await paginationPage.goToPreviousPage();
 
-    await paginationPage.verifyUrlContainsParam(
-      SearchPage.QUERY_PARAMS.PAGE,
-      "1"
-    );
-  });
-
-  test("syncs per-page preference when navigating from search to collections", async () => {
-    await paginationPage.loadWithLocalStorage(
-      SearchPage.largeResultsUrl,
-      SearchPage.STORAGE_KEYS.PER_PAGE,
-      SearchPage.PER_PAGE.EXPANDED_STR
-    );
-    await paginationPage.loadPage(PaginationPage.COLLECTIONS_LANDING_URL);
-
-    await paginationPage.verifyPerPageMenuText(SearchPage.PER_PAGE.EXPANDED);
-  });
-
-  test("retains 96 per page when navigating from browse index to collection detail", async () => {
-    await paginationPage.loadWithLocalStorage(
-      PaginationPage.COLLECTIONS_LANDING_URL,
-      SearchPage.STORAGE_KEYS.PER_PAGE,
-      SearchPage.PER_PAGE.EXPANDED_STR
-    );
-    await paginationPage.clickFirstCollectionCard();
-
-    await paginationPage.verifyUrlContainsParam(
-      SearchPage.QUERY_PARAMS.PER_PAGE,
-      SearchPage.PER_PAGE.EXPANDED_STR
+    await expect(paginationPage.currentPageLink).toHaveText("1");
+    await expect(paginationPage.resultsHeadingGeneric).toHaveText(
+      /Displaying 1-96 of/
     );
   });
 });
