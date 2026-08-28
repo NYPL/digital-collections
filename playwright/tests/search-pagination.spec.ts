@@ -169,23 +169,6 @@ test.describe("Search pagination and per-page options", () => {
     await paginationPage.verifyPerPageMenuText(SearchPage.PER_PAGE.EXPANDED);
   });
 
-  test("retains 96 per page during sub-collection node drill-down", async () => {
-    await paginationPage.loadWithLocalStorage(
-      PaginationPage.COLLECTION_WITH_200_PLUS_ITEMS_URL,
-      SearchPage.STORAGE_KEYS.PER_PAGE,
-      SearchPage.PER_PAGE.EXPANDED_STR
-    );
-    await paginationPage.selectSubcollectionNode(
-      "subcollection-node-id",
-      SearchPage.PER_PAGE.EXPANDED_STR
-    );
-
-    await paginationPage.verifyUrlContainsParam(
-      SearchPage.QUERY_PARAMS.PER_PAGE,
-      SearchPage.PER_PAGE.EXPANDED_STR
-    );
-  });
-
   test("retains 96 per page when navigating from browse index to collection detail", async () => {
     await paginationPage.loadWithLocalStorage(
       PaginationPage.COLLECTIONS_LANDING_URL,

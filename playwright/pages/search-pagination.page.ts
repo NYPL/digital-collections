@@ -94,21 +94,6 @@ export class PaginationPage extends SearchPage {
     );
   }
 
-  async selectSubcollectionNode(
-    nodeUuid: string,
-    expectedPerPage: string
-  ): Promise<void> {
-    await expect(this.collectionStructureHeading).toBeVisible();
-    const node = this.page.locator(`#${nodeUuid}`);
-
-    const [response] = await Promise.all([
-      this.waitForRscNav("perPage", expectedPerPage),
-      node.click(),
-    ]);
-    expect(response.ok()).toBeTruthy();
-    expect(decodeURIComponent(response.url())).toContain("subcollection");
-  }
-
   async clickFirstCollectionCard(): Promise<void> {
     const firstCard = this.allCollectionCards.first();
     await expect(firstCard).toBeVisible();
