@@ -20,7 +20,8 @@ export class PaginationPage extends SearchPage {
 
     this.perPageMenuButton = this.page
       .locator("#results-per-page-menu")
-      .first();
+      .first()
+      .getByRole("button");
     this.paginationNav = this.page.getByTestId("ds-pagination");
     this.previousPageLink = this.page.getByRole("link", {
       name: "Previous page",
@@ -55,7 +56,7 @@ export class PaginationPage extends SearchPage {
   async selectPerPage(count: number | string): Promise<void> {
     await this.perPageMenuButton.click();
     await this.page
-      .getByRole("option", { name: count.toString() })
+      .getByRole("menuitem", { name: count.toString(), exact: true })
       .first()
       .click();
   }
@@ -127,7 +128,7 @@ export class PaginationPage extends SearchPage {
   }
 
   async verifyPerPageMenuText(value: number): Promise<void> {
-    await expect(this.perPageMenuButton).toContainText(
+    await expect(this.perPageMenuButton).toHaveAccessibleName(
       `Results per page: ${value}`
     );
   }
