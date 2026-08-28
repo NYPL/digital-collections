@@ -78,20 +78,6 @@ test.describe("Search pagination and per-page options", () => {
     await paginationPage.verifyPerPageMenuHidden();
   });
 
-  // test("handles 96 per-page selection on collections landing page", async () => {
-  //   await paginationPage.loadPage(PaginationPage.COLLECTIONS_LANDING_URL);
-  //   await paginationPage.selectPerPage(SearchPage.PER_PAGE.EXPANDED);
-
-  //   // Verify state via the generic results heading instead of the non-changing dropdown text
-  //   await expect(paginationPage.resultsHeadingGeneric.first()).toContainText(
-  //     /Displaying 1-96 of/
-  //   );
-
-  //   await paginationPage.verifyCollectionCardCountLessThanOrEqual(
-  //     SearchPage.PER_PAGE.EXPANDED
-  //   );
-  // });
-
   test("handles 96 per-page selection on collections landing page", async () => {
     await paginationPage.loadPage(PaginationPage.COLLECTIONS_LANDING_URL);
 
@@ -147,7 +133,7 @@ test.describe("Search pagination and per-page options", () => {
     );
   });
 
-  test.skip("returns cleanly to page 1 when clicking previous page link", async () => {
+  test("returns cleanly to page 1 when clicking previous page link", async () => {
     await paginationPage.loadWithLocalStorage(
       `${PaginationPage.COLLECTION_WITH_200_PLUS_ITEMS_URL}?${SearchPage.QUERY_PARAMS.PAGE}=2`,
       SearchPage.STORAGE_KEYS.PER_PAGE,
