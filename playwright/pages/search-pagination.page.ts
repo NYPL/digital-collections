@@ -50,6 +50,11 @@ export class PaginationPage extends SearchPage {
     await this.loadPage(gotoPage);
   }
 
+  async selectPerPage(count: number | string): Promise<void> {
+    await this.perPageMenuButton.click();
+    await this.page.getByRole("option", { name: count.toString() }).click();
+  }
+
   pageLink(pageNumber: number): Locator {
     return this.page.getByRole("link", { name: `Page ${pageNumber}` });
   }
@@ -135,5 +140,9 @@ export class PaginationPage extends SearchPage {
     await expect(this.perPageMenuButton).toHaveAccessibleName(
       `Results per page: ${value}`
     );
+  }
+
+  async verifyPerPageMenuHidden(): Promise<void> {
+    await expect(this.perPageMenuButton).toBeHidden();
   }
 }
