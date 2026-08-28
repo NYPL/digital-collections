@@ -18,7 +18,9 @@ export class PaginationPage extends SearchPage {
   constructor(page: Page) {
     super(page);
 
-    this.perPageMenuButton = this.page.locator("#results-per-page-menu");
+    this.perPageMenuButton = this.page
+      .locator("#results-per-page-menu")
+      .first();
     this.paginationNav = this.page.getByTestId("ds-pagination");
     this.previousPageLink = this.page.getByRole("link", {
       name: "Previous page",
@@ -52,7 +54,10 @@ export class PaginationPage extends SearchPage {
 
   async selectPerPage(count: number | string): Promise<void> {
     await this.perPageMenuButton.click();
-    await this.page.getByRole("option", { name: count.toString() }).click();
+    await this.page
+      .getByRole("option", { name: count.toString() })
+      .first()
+      .click();
   }
 
   pageLink(pageNumber: number): Locator {
