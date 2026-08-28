@@ -10,7 +10,7 @@ test.describe("Search pagination and per-page options", () => {
     paginationPage = new PaginationPage(page);
   });
 
-  test("defaults to 48 per page on initial load", async () => {
+  test.only("defaults to 48 per page on initial load", async () => {
     await paginationPage.loadPage(SearchPage.largeResultsUrl);
     await paginationPage.verifyPerPageMenuText(SearchPage.PER_PAGE.DEFAULT);
     await paginationPage.verifyCollectionCardCountLessThanOrEqual(
@@ -18,7 +18,7 @@ test.describe("Search pagination and per-page options", () => {
     );
   });
 
-  test("selecting 96 per page updates grid, URL, and RSC request", async () => {
+  test.only("selecting 96 per page updates grid, URL, and RSC request", async () => {
     await paginationPage.loadPage(SearchPage.largeResultsUrl);
     const rscPromise = paginationPage.waitForRscNav(
       SearchPage.QUERY_PARAMS.PER_PAGE,

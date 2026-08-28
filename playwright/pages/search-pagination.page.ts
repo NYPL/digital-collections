@@ -122,7 +122,7 @@ export class PaginationPage extends SearchPage {
   }
 
   async verifyPerPageMenuText(value: number): Promise<void> {
-    await expect(this.perPageMenuButton).toHaveAccessibleName(
+    await expect(this.perPageMenuButton).toContainText(
       `Results per page: ${value}`
     );
   }
