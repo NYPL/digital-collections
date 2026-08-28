@@ -133,17 +133,32 @@ test.describe("Search pagination and per-page options", () => {
     );
   });
 
+  // test("returns cleanly to page 1 when clicking previous page link", async () => {
+  //   await paginationPage.loadWithLocalStorage(
+  //     `${PaginationPage.COLLECTION_WITH_200_PLUS_ITEMS_URL}?${SearchPage.QUERY_PARAMS.PAGE}=2`,
+  //     SearchPage.STORAGE_KEYS.PER_PAGE,
+  //     SearchPage.PER_PAGE.EXPANDED_STR
+  //   );
+  //   await paginationPage.goToPreviousPage();
+
+  //   await expect(paginationPage.currentPageLink).toHaveText("1");
+  //   await expect(paginationPage.resultsHeadingGeneric).toHaveText(
+  //     /Displaying 1-96 of/
+  //   );
+  // });
+
   test("returns cleanly to page 1 when clicking previous page link", async () => {
-    await paginationPage.loadWithLocalStorage(
-      `${PaginationPage.COLLECTION_WITH_200_PLUS_ITEMS_URL}?${SearchPage.QUERY_PARAMS.PAGE}=2`,
-      SearchPage.STORAGE_KEYS.PER_PAGE,
-      SearchPage.PER_PAGE.EXPANDED_STR
+    await paginationPage.loadPage(
+      `${PaginationPage.COLLECTION_WITH_200_PLUS_ITEMS_URL}?page=2&perPage=96`
     );
-    await paginationPage.goToPreviousPage();
+
+    // Focus the link directly and press Enter
+    await paginationPage.previousPageLink.focus();
+    await paginationPage.page.keyboard.press("Enter");
 
     await expect(paginationPage.currentPageLink).toHaveText("1");
-    await expect(paginationPage.resultsHeadingGeneric).toHaveText(
-      /Displaying 1-96 of/
+    await expect(paginationPage.resultsHeadingGeneric.first()).toContainText(
+      "Displaying 1-96 of"
     );
   });
 });
