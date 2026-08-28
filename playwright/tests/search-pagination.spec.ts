@@ -82,7 +82,11 @@ test.describe("Search pagination and per-page options", () => {
     await paginationPage.loadPage(PaginationPage.COLLECTIONS_LANDING_URL);
     await paginationPage.selectPerPage(SearchPage.PER_PAGE.EXPANDED);
 
-    await paginationPage.verifyPerPageMenuText(SearchPage.PER_PAGE.EXPANDED);
+    // Verify state via the generic results heading instead of the non-changing dropdown text
+    await expect(paginationPage.resultsHeadingGeneric.first()).toHaveText(
+      /Displaying 1-96 of/
+    );
+
     await paginationPage.verifyCollectionCardCountLessThanOrEqual(
       SearchPage.PER_PAGE.EXPANDED
     );
