@@ -3,7 +3,7 @@ import { expect, Locator, Page, Response } from "@playwright/test";
 
 export class PaginationPage extends SearchPage {
   static readonly COLLECTION_WITH_200_PLUS_ITEMS_URL: string =
-    "/collections/TODO-REPLACE-WITH-REAL-UUID";
+    "/collections/80fa1460-c52f-012f-be77-58d385a7bc34";
   static readonly COLLECTIONS_LANDING_URL: string = "/collections";
 
   // --- LOCATORS ---
