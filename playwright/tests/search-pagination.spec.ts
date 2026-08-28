@@ -147,60 +147,14 @@ test.describe("Search pagination and per-page options", () => {
   //   );
   // });
 
-  // test("returns cleanly to page 1 when clicking previous page link", async () => {
-  //   await paginationPage.loadPage(
-  //     `${PaginationPage.COLLECTION_WITH_200_PLUS_ITEMS_URL}?page=2&perPage=96`
-  //   );
-
-  //   // Focus the link directly and press Enter
-  //   await paginationPage.previousPageLink.focus();
-  //   await paginationPage.page.keyboard.press("Enter");
-
-  //   await expect(paginationPage.currentPageLink).toHaveText("1");
-  //   await expect(paginationPage.resultsHeadingGeneric.first()).toContainText(
-  //     "Displaying 1-96 of"
-  //   );
-  // });
-
-  // test("returns cleanly to page 1 when clicking previous page link", async () => {
-  //   await paginationPage.loadPage(
-  //     `${PaginationPage.COLLECTION_WITH_200_PLUS_ITEMS_URL}?page=2&perPage=96`
-  //   );
-
-  //   const prevLink = paginationPage.page.getByRole("link", {
-  //     name: "Previous page",
-  //   });
-
-  //   // 1. Scroll pagination explicitly into view so React layout and listeners settle
-  //   await prevLink.scrollIntoViewIfNeeded();
-
-  //   // 2. Dispatch a cancelable click event on the text span to kill the href="#" jump
-  //   await prevLink.locator("span").evaluate((el) => {
-  //     el.dispatchEvent(
-  //       new MouseEvent("click", { bubbles: true, cancelable: true })
-  //     );
-  //   });
-
-  //   // 3. Assert page 1 state
-  //   await expect(paginationPage.currentPageLink).toHaveText("1");
-  //   await expect(paginationPage.resultsHeadingGeneric.first()).toContainText(
-  //     "Displaying 1-96 of"
-  //   );
-  // });
-
   test.skip("returns cleanly to page 1 when clicking previous page link", async () => {
     await paginationPage.loadPage(
       `${PaginationPage.COLLECTION_WITH_200_PLUS_ITEMS_URL}?page=2&perPage=96`
     );
 
-    await paginationPage.page.waitForFunction(() =>
-      Boolean(window.next?.router)
-    );
-
-    // Click explicit Page 1 link
-    await paginationPage.page
-      .getByRole("link", { name: "Page 1", exact: true })
-      .click();
+    // Focus the link directly and press Enter
+    await paginationPage.previousPageLink.focus();
+    await paginationPage.page.keyboard.press("Enter");
 
     await expect(paginationPage.currentPageLink).toHaveText("1");
     await expect(paginationPage.resultsHeadingGeneric.first()).toContainText(
