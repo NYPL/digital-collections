@@ -18,15 +18,14 @@ test.describe("Search pagination and per-page options", () => {
     );
   });
 
-  test("selecting 96 per page updates grid, URL, and fires RSC request", async () => {
+  test("selecting 96 per page updates grid, URL, and RSC request", async () => {
     await paginationPage.loadPage(SearchPage.searchResultsUrl);
     const rscPromise = paginationPage.waitForRscNav(
       SearchPage.QUERY_PARAMS.PER_PAGE,
       SearchPage.PER_PAGE.EXPANDED_STR
     );
 
-    await paginationPage.perPageMenuButton.click();
-    await paginationPage.page.getByRole("option", { name: "96" }).click();
+    await paginationPage.selectPerPage(SearchPage.PER_PAGE.EXPANDED);
 
     const response = await rscPromise;
     expect(response.ok()).toBeTruthy();
@@ -41,8 +40,7 @@ test.describe("Search pagination and per-page options", () => {
     await paginationPage.loadPage(
       `${SearchPage.searchResultsUrl}&${SearchPage.QUERY_PARAMS.PAGE}=2`
     );
-    await paginationPage.perPageMenuButton.click();
-    await paginationPage.page.getByRole("option", { name: "96" }).click();
+    await paginationPage.selectPerPage(SearchPage.PER_PAGE.EXPANDED);
 
     await paginationPage.verifyUrlContainsParam(
       SearchPage.QUERY_PARAMS.PAGE,
@@ -76,8 +74,7 @@ test.describe("Search pagination and per-page options", () => {
     await paginationPage.loadPage(SearchPage.searchResultsUrl);
     await paginationPage.toggleView("list");
 
-    await paginationPage.perPageMenuButton.click();
-    await paginationPage.page.getByRole("option", { name: "96" }).click();
+    await paginationPage.selectPerPage(SearchPage.PER_PAGE.EXPANDED);
 
     await paginationPage.verifyLayout("list");
   });
@@ -87,13 +84,12 @@ test.describe("Search pagination and per-page options", () => {
   }) => {
     await page.setViewportSize({ width: 375, height: 667 });
     await paginationPage.loadPage(SearchPage.searchResultsUrl);
-    await expect(paginationPage.perPageMenuButton).toBeHidden();
+    await paginationPage.verifyPerPageMenuHidden();
   });
 
   test("handles 96 per-page selection on collections landing page", async () => {
     await paginationPage.loadPage(PaginationPage.COLLECTIONS_LANDING_URL);
-    await paginationPage.perPageMenuButton.click();
-    await paginationPage.page.getByRole("option", { name: "96" }).click();
+    await paginationPage.selectPerPage(SearchPage.PER_PAGE.EXPANDED);
 
     await paginationPage.verifyUrlContainsParam(
       SearchPage.QUERY_PARAMS.PER_PAGE,
