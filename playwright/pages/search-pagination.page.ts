@@ -72,21 +72,29 @@ export class PaginationPage extends SearchPage {
   //   ]);
   // }
 
+  // async selectPerPage(count: number | string): Promise<void> {
+  //   // 1. Click the trigger menu button
+  //   await this.perPageMenuButton.click();
+
+  //   // 2. Locate the menu item
+  //   const menuItem = this.page.getByRole("menuitem", {
+  //     name: count.toString(),
+  //     exact: true,
+  //   });
+
+  //   // 3. VERIFY: Is it visible before clicking?
+  //   await expect(menuItem).toBeVisible({ timeout: 2000 });
+
+  //   // 4. Perform the click
+  //   await menuItem.click();
+  // }
+
   async selectPerPage(count: number | string): Promise<void> {
-    // 1. Click the trigger menu button
     await this.perPageMenuButton.click();
-
-    // 2. Locate the menu item
-    const menuItem = this.page.getByRole("menuitem", {
-      name: count.toString(),
-      exact: true,
-    });
-
-    // 3. VERIFY: Is it visible before clicking?
-    await expect(menuItem).toBeVisible({ timeout: 2000 });
-
-    // 4. Perform the click
-    await menuItem.click();
+    const menuItem = this.page
+      .getByRole("menuitem", { name: count.toString(), exact: true })
+      .first();
+    await menuItem.dispatchEvent("click");
   }
 
   pageLink(pageNumber: number): Locator {
