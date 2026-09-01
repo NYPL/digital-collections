@@ -203,7 +203,7 @@ const CollectionPage = ({
               marginBottom: "m",
             }}
           >
-            {collectionData.title}
+            <span className="notranslate">{collectionData.title}</span>
           </Heading>
           <Filters
             headingText="Refine your results"

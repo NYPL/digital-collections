@@ -181,7 +181,7 @@ export const SearchCard = ({
           },
         }}
       >
-        {parse(highlightedTitle)}
+        <span className="notranslate">{parse(highlightedTitle)}</span>
       </CardHeading>
       <CardContent>
         <Flex flexDir="column" gap="xs">

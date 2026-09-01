@@ -55,10 +55,12 @@ const renderDateField = (
   if (!value) return null;
   return (
     <Text marginBottom="0">
-      {label}:{" "}
-      <Link hasVisitedState={false} href={href}>
-        {value}
-      </Link>
+      <span className="notranslate">
+        {label}:{" "}
+        <Link hasVisitedState={false} href={href}>
+          {value}
+        </Link>
+      </span>
     </Text>
   );
 };
@@ -83,7 +85,7 @@ const renderTopicLink = (label: string) => {
         hasVisitedState={false}
         href={`/search/index?filters=%5B${subjectType}%3D${text}%5D`}
       >
-        {text}
+        <span className="notranslate">{text}</span>
       </Link>
     </Text>
   );
@@ -108,7 +110,9 @@ const renderLabeledLinks = (
           hasVisitedState={false}
           href={`/search/index?filters=%5B${paramKey}%3D${item}%5D`}
         >
-          {capitalizeItems ? capitalize(item) : item}
+          <span className="notranslate">
+            {capitalizeItems ? capitalize(item) : item}
+          </span>
         </Link>
       ))}
     </Box>
@@ -124,13 +128,15 @@ const renderNamesSection = (names) => {
       </Text>
       {names.map((name, index) => (
         <Text key={index} marginBottom="0">
-          <Link
-            hasVisitedState={false}
-            href={`/search/index?filters=%5Bname%3D${name.name}%5D`}
-          >
-            {name.name}
-          </Link>
-          {name.roles[1] ? `, ${name.roles[1]}` : ``}
+          <span className="notranslate">
+            <Link
+              hasVisitedState={false}
+              href={`/search/index?filters=%5Bname%3D${name.name}%5D`}
+            >
+              {name.name}
+            </Link>
+            {name.roles[1] ? `, ${name.roles[1]}` : ``}
+          </span>
         </Text>
       ))}
     </Box>
@@ -148,50 +154,54 @@ const renderIdentifiers = (
       <Text size="overline1" marginBottom="xs">
         Identifiers
       </Text>
-      {uuid && (
-        <Text marginBottom="0">Universal Unique Identifier (UUID): {uuid}</Text>
-      )}
-      {mssID && (
-        <Text marginBottom="0">
-          Archives ID:{" "}
-          <Link
-            hasVisitedState={false}
-            href={`https://archives.nypl.org/${mssID}`}
-          >
-            {mssID}
-          </Link>
-        </Text>
-      )}
-      {bNumbers &&
-        (bNumbers.length > 1 ? (
-          <>
-            <Text as="span" marginBottom="0">
-              NYPL Catalog IDs (bnumbers):{" "}
-            </Text>
-            {bNumbers.map((bNumber, index) => (
-              <Text key={index} marginBottom="0">
+      <span className="notranslate">
+        {uuid && (
+          <Text marginBottom="0">
+            Universal Unique Identifier (UUID): {uuid}
+          </Text>
+        )}
+        {mssID && (
+          <Text marginBottom="0">
+            Archives ID:{" "}
+            <Link
+              hasVisitedState={false}
+              href={`https://archives.nypl.org/${mssID}`}
+            >
+              {mssID}
+            </Link>
+          </Text>
+        )}
+        {bNumbers &&
+          (bNumbers.length > 1 ? (
+            <>
+              <Text as="span" marginBottom="0">
+                NYPL Catalog IDs (bnumbers):{" "}
+              </Text>
+              {bNumbers.map((bNumber, index) => (
+                <Text key={index} marginBottom="0">
+                  <Link
+                    hasVisitedState={false}
+                    href={`https://www.nypl.org/research/research-catalog/bib/${bNumber}`}
+                  >
+                    {bNumber}
+                  </Link>
+                </Text>
+              ))}
+            </>
+          ) : (
+            <>
+              <Text marginBottom="0">
+                NYPL Catalog ID (bNumber):{" "}
                 <Link
                   hasVisitedState={false}
-                  href={`https://www.nypl.org/research/research-catalog/bib/${bNumber}`}
+                  href={`https://www.nypl.org/research/research-catalog/bib/${bNumbers[0]}`}
                 >
-                  {bNumber}
+                  {bNumbers[0]}
                 </Link>
               </Text>
-            ))}
-          </>
-        ) : (
-          <>
-            <Text marginBottom="0">
-              NYPL Catalog ID (bNumber):{" "}
-              <Link
-                hasVisitedState={false}
-                href={`https://www.nypl.org/research/research-catalog/bib/${bNumbers[0]}`}
-              >
-                {bNumbers[0]}
-              </Link>
-            </Text>
-          </>
-        ))}
+            </>
+          ))}
+      </span>
     </Box>
   );
 };
@@ -291,7 +301,7 @@ const CollectionMetadata = ({ data }: { data: CollectionMetadataProps }) => {
           </Text>
           {abstract.map((text, index) => (
             <Text marginBottom="xs" key={index}>
-              {parse(text)}
+              <span className="notranslate">{parse(text)}</span>
             </Text>
           ))}
         </Box>
@@ -331,29 +341,31 @@ const CollectionMetadata = ({ data }: { data: CollectionMetadataProps }) => {
           <Text size="overline1" marginBottom="xs">
             Library locations
           </Text>
-          <Text marginBottom="0">
-            <Link hasVisitedState={false} href={`/divisions/${divisionSlug}`}>
-              {divisionTitle}
-            </Link>
-          </Text>
-          {shelfLocators &&
-            shelfLocators.length > 0 &&
-            (shelfLocators.length > 1 ? (
-              <>
-                <Text as="span" marginBottom="0">
-                  Shelf locators:{" "}
-                </Text>
-                {shelfLocators.map((locator, index) => (
-                  <Text key={index} marginBottom="0">
-                    {locator}
+          <span className="notranslate">
+            <Text marginBottom="0">
+              <Link hasVisitedState={false} href={`/divisions/${divisionSlug}`}>
+                {divisionTitle}
+              </Link>
+            </Text>
+            {shelfLocators &&
+              shelfLocators.length > 0 &&
+              (shelfLocators.length > 1 ? (
+                <>
+                  <Text as="span" marginBottom="0">
+                    Shelf locators:{" "}
                   </Text>
-                ))}
-              </>
-            ) : (
-              <Text marginBottom="0">
-                {`Shelf locator: ${shelfLocators[0]}`}
-              </Text>
-            ))}
+                  {shelfLocators.map((locator, index) => (
+                    <Text key={index} marginBottom="0">
+                      {locator}
+                    </Text>
+                  ))}
+                </>
+              ) : (
+                <Text marginBottom="0">
+                  {`Shelf locator: ${shelfLocators[0]}`}
+                </Text>
+              ))}
+          </span>
         </Box>
       )}
 
@@ -376,11 +388,13 @@ const CollectionMetadata = ({ data }: { data: CollectionMetadataProps }) => {
               <Text size="overline1" marginBottom="xs">
                 {`Content note${contentNote.length > 1 ? `s` : ""}`}
               </Text>
-              {contentNote.map((note, index) => (
-                <Text marginBottom="xs" key={index}>
-                  {parse(note)}
-                </Text>
-              ))}
+              <span className="notranslate">
+                {contentNote.map((note, index) => (
+                  <Text marginBottom="xs" key={index}>
+                    {parse(note)}
+                  </Text>
+                ))}
+              </span>
             </Box>
           )}
           {tableOfContents && tableOfContents.length > 0 && (
@@ -388,7 +402,9 @@ const CollectionMetadata = ({ data }: { data: CollectionMetadataProps }) => {
               <Text size="overline1" marginBottom="xs">
                 Table of contents
               </Text>
-              <Text marginBottom="0">{tableOfContents}</Text>
+              <Text marginBottom="0">
+                <span className="notranslate">{tableOfContents}</span>
+              </Text>
             </>
           )}
           {(form || extent) && (
@@ -402,7 +418,7 @@ const CollectionMetadata = ({ data }: { data: CollectionMetadataProps }) => {
                   hasVisitedState={false}
                   href={`/search/index?filters=%5Bform%3D${form}%5D`}
                 >
-                  {form}
+                  <span className="notranslate">{form}</span>
                 </Link>
               )}
               {extent && <Text marginBottom="0">{extent}</Text>}

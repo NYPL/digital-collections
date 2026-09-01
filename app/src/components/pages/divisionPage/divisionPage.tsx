@@ -115,7 +115,9 @@ export default function DivisionPage({ data }: any) {
           gap: "m",
         }}
       >
-        <Heading level="h1" text={data.name} subtitle={data.summary} />
+        <span className="notranslate">
+          <Heading level="h1" text={data.name} subtitle={data.summary} />
+        </span>
         <Link
           variant="standalone"
           target="_blank"
@@ -131,6 +133,7 @@ export default function DivisionPage({ data }: any) {
           records={data.items}
           seeMoreLink={`/divisions`}
           laneName={data.name}
+          skipLaneNameTranslation={true}
         />
       ) : (
         <LaneLoading id="unloaded" withTitle={false} />
@@ -194,7 +197,7 @@ export default function DivisionPage({ data }: any) {
       </Flex>
 
       <Heading level="h2" size="heading3" style={{ width: "fit-content" }}>
-        {`Collections in the ${data.name}`}
+        <span className="notranslate">{`Collections in the ${data.name}`}</span>
       </Heading>
 
       {isLoaded ? (

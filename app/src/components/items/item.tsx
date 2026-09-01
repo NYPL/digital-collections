@@ -35,14 +35,16 @@ const Item = ({ item }: ItemProps) => {
           {renderViewer(item) ? (
             <>
               <Heading level="h1" paddingBottom="s">
-                {item.title}
+                <span className="notranslate">{item.title}</span>
               </Heading>
               <ItemMediaViewer item={item} />
             </>
           ) : (
             <>
               <ItemMediaViewerFallback item={item} />
-              <Heading level="h1">{item.title}</Heading>
+              <Heading level="h1">
+                <span className="notranslate">{item.title}</span>
+              </Heading>
             </>
           )}
           {/* TODO: horizontally align Icon with Text with breakpoints */}

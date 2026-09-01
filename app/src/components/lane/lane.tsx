@@ -26,6 +26,7 @@ interface LaneProps {
   records: CollectionDataType[] | ItemDataType[];
   laneName: string;
   laneSlug?: string;
+  skipLaneNameTranslation?: boolean;
 }
 
 export const Lane = ({
@@ -33,6 +34,7 @@ export const Lane = ({
   seeMoreLink,
   laneName,
   laneSlug,
+  skipLaneNameTranslation,
 }: LaneProps) => {
   const { isLargerThanLargeTablet } = useBreakpoints();
   const cardRef = useRef<HTMLDivElement>(null);
@@ -75,7 +77,11 @@ export const Lane = ({
           size="heading3"
           paddingBottom="s"
         >
-          {laneContents.heading}
+          {skipLaneNameTranslation ? (
+            <span className="notranslate">{laneContents.heading}</span>
+          ) : (
+            laneContents.heading
+          )}
         </Heading>
         <Spacer />
         <Link
