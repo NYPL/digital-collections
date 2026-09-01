@@ -11,6 +11,7 @@ import NavMenu from "../navMenu/navMenu";
 import MobileNavMenu from "../navMenu/mobileNavMenu";
 import { headerBreakpoints } from "../../utils/breakpoints";
 import useHeaderState from "@/src/hooks/useHeaderState";
+import GTranslate from "../navMenu/gTranslate";
 
 const Header = () => {
   const { headerRef, headerHeight, isScrollingUp, isFocused, setIsFocused } =
@@ -122,6 +123,7 @@ const Header = () => {
                   },
               }}
             >
+              <GTranslate key="gtranslate" />
               <NavMenu render={1} />
             </Box>
             <Search />
