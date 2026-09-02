@@ -91,7 +91,6 @@ const Header = () => {
           >
             <DCLogo isMobile={true} />
             <MobileNavMenu />
-            <GTranslate key="gtranslate-mobile" />
           </HStack>
           <HorizontalRule
             height="1px"
