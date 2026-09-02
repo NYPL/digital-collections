@@ -1,48 +1,80 @@
 import { useEffect, useRef } from "react";
-import { Box, useStyleConfig } from "@chakra-ui/react";
+import { Box } from "@chakra-ui/react";
 import {
+  GTRANSLATE_CDN_URL,
   GTRANSLATE_CUSTOM_CSS,
   supportedLanguages,
 } from "../../utils/translationUtils";
 
 export interface GTranslateProps {}
 
+let gtranslateInitQueue: Promise<void> = Promise.resolve();
+let gtranslateInstanceCounter = 0;
+
+const enqueueGTranslateInit = (task: () => Promise<void>) => {
+  gtranslateInitQueue = gtranslateInitQueue.then(task).catch((error) => {
+    console.error("GTranslate initialization failed:", error);
+  });
+
+  return gtranslateInitQueue;
+};
+
 const GTranslate = () => {
   const gtranslateRef = useRef<HTMLDivElement>(null);
+  const wrapperIdRef = useRef("");
+
+  if (!wrapperIdRef.current) {
+    gtranslateInstanceCounter += 1;
+    wrapperIdRef.current = `gtranslate-wrapper-${gtranslateInstanceCounter}`;
+  }
 
   useEffect(() => {
-    window.gtranslateSettings = {
-      default_language: "en",
-      languages: supportedLanguages,
-      native_language_names: true,
-      wrapper_selector: ".gtranslate_wrapper",
-      custom_css: GTRANSLATE_CUSTOM_CSS,
-    };
+    const wrapper = gtranslateRef.current;
 
-    const scriptUrl = "https://cdn.gtranslate.net/widgets/latest/dropdown.js";
-    const existingScript = document.querySelector<HTMLScriptElement>(
-      `script[src="${scriptUrl}"]`
-    );
-
-    // If GTranslate already initialized successfully, we're done.
-    // if (document.querySelector(".gt_selector")) {
-    //     console.log("GTranslate already initialized.");
-    //     return;
-    // }
-
-    // Script was added but the widget didn't initialize — likely because
-    // .gtranslate_wrapper wasn't in the DOM yet when the script ran. Remove and
-    // re-add/run the script now that the wrapper exists.
-    if (existingScript) {
-      console.log("Removing existing GTranslate script.");
-      existingScript.remove();
+    if (!wrapper) {
+      return;
     }
 
-    const script = document.createElement("script");
-    script.src = scriptUrl;
-    script.async = true;
+    let isUnmounted = false;
+    const wrapperSelector = `#${wrapperIdRef.current}`;
+    wrapper.id = wrapperIdRef.current;
 
-    document.body.appendChild(script);
+    enqueueGTranslateInit(async () => {
+      if (isUnmounted || wrapper.querySelector(".gt_selector")) {
+        return;
+      }
+
+      window.gtranslateSettings = {
+        default_language: "en",
+        languages: supportedLanguages,
+        native_language_names: true,
+        wrapper_selector: wrapperSelector,
+        custom_css: GTRANSLATE_CUSTOM_CSS,
+      };
+
+      const existingScript = document.querySelector<HTMLScriptElement>(
+        'script[data-gtranslate-widget="true"]'
+      );
+      if (existingScript) {
+        existingScript.remove();
+      }
+
+      await new Promise<void>((resolve, reject) => {
+        const script = document.createElement("script");
+        script.src = GTRANSLATE_CDN_URL;
+        script.async = true;
+        script.dataset.gtranslateWidget = "true";
+        script.onload = () => resolve();
+        script.onerror = () =>
+          reject(new Error("Failed to load GTranslate script."));
+
+        document.body.appendChild(script);
+      });
+    });
+
+    return () => {
+      isUnmounted = true;
+    };
   }, []);
 
   return (
