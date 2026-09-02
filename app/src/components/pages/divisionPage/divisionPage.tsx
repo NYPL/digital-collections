@@ -133,7 +133,6 @@ export default function DivisionPage({ data }: any) {
           records={data.items}
           seeMoreLink={`/divisions`}
           laneName={data.name}
-          skipLaneNameTranslation={true}
         />
       ) : (
         <LaneLoading id="unloaded" withTitle={false} />
