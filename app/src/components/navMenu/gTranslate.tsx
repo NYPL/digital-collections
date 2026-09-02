@@ -10,8 +10,6 @@ export interface GTranslateProps {}
 const GTranslate = () => {
   const gtranslateRef = useRef<HTMLDivElement>(null);
 
-  const styles = useStyleConfig("GTranslate");
-
   useEffect(() => {
     window.gtranslateSettings = {
       default_language: "en",
@@ -48,7 +46,17 @@ const GTranslate = () => {
   }, []);
 
   return (
-    <Box ref={gtranslateRef} className="gtranslate_wrapper" __css={styles} />
+    <Box
+      sx={{
+        marginBottom: "xs",
+        marginLeft: "m",
+        color: "ui.black",
+        fontWeight: "medium", // this isn't working
+        outline: "none", // also doesn't work
+      }}
+      ref={gtranslateRef}
+      className="gtranslate_wrapper"
+    />
   );
 };
 

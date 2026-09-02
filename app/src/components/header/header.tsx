@@ -114,18 +114,18 @@ const Header = () => {
               paddingTop: "xs",
             }}
           >
-            <Box
+            <HStack
               sx={{
                 display: "none",
                 [`@media screen and (min-width: ${headerBreakpoints.lgTablet}px)`]:
                   {
-                    display: isScrollingUp ? "block" : "none",
+                    display: isScrollingUp ? "flex" : "none",
                   },
               }}
             >
-              <GTranslate key="gtranslate" />
               <NavMenu render={1} />
-            </Box>
+              <GTranslate key="gtranslate" />
+            </HStack>
             <Search />
           </VStack>
         </Box>
