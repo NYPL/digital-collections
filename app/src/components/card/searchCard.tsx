@@ -180,8 +180,9 @@ export const SearchCard = ({
             },
           },
         }}
+        className="notranslate"
       >
-        <span className="notranslate">{parse(highlightedTitle)}</span>
+        {parse(highlightedTitle)}
       </CardHeading>
       <CardContent>
         <Flex flexDir="column" gap="xs">

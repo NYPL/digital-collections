@@ -104,8 +104,9 @@ export const Card = forwardRef<HTMLDivElement, DCCardProps>(
               },
             },
           }}
+          className="notranslate"
         >
-          <span className="notranslate">{record.title}</span>
+          {record.title}
         </CardHeading>
         <CardContent sx={{ alignContent: "top" }}>
           {isCollection && (

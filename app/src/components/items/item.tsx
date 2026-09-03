@@ -34,16 +34,16 @@ const Item = ({ item }: ItemProps) => {
         <Box marginTop="-3em">
           {renderViewer(item) ? (
             <>
-              <Heading level="h1" paddingBottom="s">
-                <span className="notranslate">{item.title}</span>
+              <Heading level="h1" paddingBottom="s" className="notranslate">
+                {item.title}
               </Heading>
               <ItemMediaViewer item={item} />
             </>
           ) : (
             <>
               <ItemMediaViewerFallback item={item} />
-              <Heading level="h1">
-                <span className="notranslate">{item.title}</span>
+              <Heading level="h1" className="notranslate">
+                {item.title}
               </Heading>
             </>
           )}

@@ -115,9 +115,12 @@ export default function DivisionPage({ data }: any) {
           gap: "m",
         }}
       >
-        <span className="notranslate">
-          <Heading level="h1" text={data.name} subtitle={data.summary} />
-        </span>
+        <Heading
+          level="h1"
+          text={data.name}
+          subtitle={data.summary}
+          className="notranslate"
+        />
         <Link
           variant="standalone"
           target="_blank"
@@ -195,8 +198,13 @@ export default function DivisionPage({ data }: any) {
         </Box>
       </Flex>
 
-      <Heading level="h2" size="heading3" style={{ width: "fit-content" }}>
-        <span className="notranslate">{`Collections in the ${data.name}`}</span>
+      <Heading
+        level="h2"
+        size="heading3"
+        style={{ width: "fit-content" }}
+        className="notranslate"
+      >
+        {`Collections in the ${data.name}`}
       </Heading>
 
       {isLoaded ? (

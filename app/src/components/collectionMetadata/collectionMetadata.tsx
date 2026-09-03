@@ -109,10 +109,9 @@ const renderLabeledLinks = (
           display="block"
           hasVisitedState={false}
           href={`/search/index?filters=%5B${paramKey}%3D${item}%5D`}
+          className="notranslate"
         >
-          <span className="notranslate">
-            {capitalizeItems ? capitalize(item) : item}
-          </span>
+          {capitalizeItems ? capitalize(item) : item}
         </Link>
       ))}
     </Box>
@@ -127,16 +126,14 @@ const renderNamesSection = (names) => {
         Names
       </Text>
       {names.map((name, index) => (
-        <Text key={index} marginBottom="0">
-          <span className="notranslate">
-            <Link
-              hasVisitedState={false}
-              href={`/search/index?filters=%5Bname%3D${name.name}%5D`}
-            >
-              {name.name}
-            </Link>
-            {name.roles[1] ? `, ${name.roles[1]}` : ``}
-          </span>
+        <Text key={index} marginBottom="0" className="notranslate">
+          <Link
+            hasVisitedState={false}
+            href={`/search/index?filters=%5Bname%3D${name.name}%5D`}
+          >
+            {name.name}
+          </Link>
+          {name.roles[1] ? `, ${name.roles[1]}` : ``}
         </Text>
       ))}
     </Box>
@@ -154,54 +151,52 @@ const renderIdentifiers = (
       <Text size="overline1" marginBottom="xs">
         Identifiers
       </Text>
-      <span className="notranslate">
-        {uuid && (
-          <Text marginBottom="0">
-            Universal Unique Identifier (UUID): {uuid}
-          </Text>
-        )}
-        {mssID && (
-          <Text marginBottom="0">
-            Archives ID:{" "}
-            <Link
-              hasVisitedState={false}
-              href={`https://archives.nypl.org/${mssID}`}
-            >
-              {mssID}
-            </Link>
-          </Text>
-        )}
-        {bNumbers &&
-          (bNumbers.length > 1 ? (
-            <>
-              <Text as="span" marginBottom="0">
-                NYPL Catalog IDs (bnumbers):{" "}
-              </Text>
-              {bNumbers.map((bNumber, index) => (
-                <Text key={index} marginBottom="0">
-                  <Link
-                    hasVisitedState={false}
-                    href={`https://www.nypl.org/research/research-catalog/bib/${bNumber}`}
-                  >
-                    {bNumber}
-                  </Link>
-                </Text>
-              ))}
-            </>
-          ) : (
-            <>
-              <Text marginBottom="0">
-                NYPL Catalog ID (bNumber):{" "}
+      {uuid && (
+        <Text marginBottom="0" className="notranslate">
+          Universal Unique Identifier (UUID): {uuid}
+        </Text>
+      )}
+      {mssID && (
+        <Text marginBottom="0" className="notranslate">
+          Archives ID:{" "}
+          <Link
+            hasVisitedState={false}
+            href={`https://archives.nypl.org/${mssID}`}
+          >
+            {mssID}
+          </Link>
+        </Text>
+      )}
+      {bNumbers &&
+        (bNumbers.length > 1 ? (
+          <>
+            <Text as="span" marginBottom="0" className="notranslate">
+              NYPL Catalog IDs (bnumbers):{" "}
+            </Text>
+            {bNumbers.map((bNumber, index) => (
+              <Text key={index} marginBottom="0" className="notranslate">
                 <Link
                   hasVisitedState={false}
-                  href={`https://www.nypl.org/research/research-catalog/bib/${bNumbers[0]}`}
+                  href={`https://www.nypl.org/research/research-catalog/bib/${bNumber}`}
                 >
-                  {bNumbers[0]}
+                  {bNumber}
                 </Link>
               </Text>
-            </>
-          ))}
-      </span>
+            ))}
+          </>
+        ) : (
+          <>
+            <Text marginBottom="0" className="notranslate">
+              NYPL Catalog ID (bNumber):{" "}
+              <Link
+                hasVisitedState={false}
+                href={`https://www.nypl.org/research/research-catalog/bib/${bNumbers[0]}`}
+              >
+                {bNumbers[0]}
+              </Link>
+            </Text>
+          </>
+        ))}
     </Box>
   );
 };

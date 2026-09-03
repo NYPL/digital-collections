@@ -54,10 +54,8 @@ const MetadataOverview = ({ metadata }: MetadataOverviewProps) => {
                 <Text size="overline1" marginBottom="xs">
                   {metadataFieldToDisplay[field]}
                 </Text>
-                <Text marginBottom="m">
-                  <span className="notranslate">
-                    {StructuredCollectionsList(collections)}
-                  </span>
+                <Text className="notranslate" marginBottom="m">
+                  {StructuredCollectionsList(collections)}
                 </Text>
               </Fragment>
             );
@@ -67,9 +65,9 @@ const MetadataOverview = ({ metadata }: MetadataOverviewProps) => {
               <Text size="overline1" marginBottom="xs">
                 {metadataFieldToDisplay[field]}
               </Text>
-              <span className="notranslate">
-                <Text marginBottom="m">{parse(value)}</Text>
-              </span>
+              <Text className="notranslate" marginBottom="m">
+                {parse(value)}
+              </Text>
             </Fragment>
           );
         })}

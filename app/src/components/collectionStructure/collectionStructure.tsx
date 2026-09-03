@@ -399,15 +399,13 @@ const CollectionStructure = ({
         overflowY="auto"
         borderTop="1px solid var(--ui-gray-medium, #BDBDBD)"
       >
-        <span className="notranslate">
-          <ul>
-            <AccordionTree
-              items={tree}
-              toggle={handleToggle}
-              targetUuid={targetUuid!}
-            />
-          </ul>
-        </span>
+        <ul className="notranslate">
+          <AccordionTree
+            items={tree}
+            toggle={handleToggle}
+            targetUuid={targetUuid!}
+          />
+        </ul>
       </Box>
     </Flex>
   );

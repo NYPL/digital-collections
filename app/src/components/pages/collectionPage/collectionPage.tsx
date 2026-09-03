@@ -202,8 +202,9 @@ const CollectionPage = ({
               maxWidth: "1250px",
               marginBottom: "m",
             }}
+            className="notranslate"
           >
-            <span className="notranslate">{collectionData.title}</span>
+            {collectionData.title}
           </Heading>
           <Filters
             headingText="Refine your results"
