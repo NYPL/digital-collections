@@ -2,9 +2,8 @@ import { NextRequest } from "next/server";
 import { fetchApi } from "@/src/utils/fetchApi/fetchApi";
 import { CARDS_PER_PAGE } from "@/src/config/constants";
 
-export const dynamic = "force-dynamic";
-export const revalidate = 2592000;
 const oneMonth = 60 * 60 * 24 * 30;
+export const revalidate = oneMonth;
 
 const PAGESIZE = 50;
 
@@ -24,9 +23,8 @@ interface CollectionChild {
 
 export async function GET(
   req: NextRequest,
-  context: { params: Promise<{ slug: string }> }
+  { params }: { params: { slug: string } }
 ) {
-  const params = await context.params;
   const uuid = params.slug;
 
   if (!uuid) {

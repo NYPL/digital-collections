@@ -3,9 +3,8 @@ import { CollectionsApi } from "@/src/utils/apiClients/apiClients";
 
 export const GET = async (
   request: NextRequest,
-  context: { params: Promise<{ facet: string }> }
+  { params }: { params: { facet: string } }
 ) => {
-  const params = await context.params;
   const searchParams = request.nextUrl.searchParams;
   const q = searchParams.get("q") || "";
   const filters = searchParams.get("filters") || "";
