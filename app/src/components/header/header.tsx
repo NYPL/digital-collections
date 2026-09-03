@@ -11,11 +11,12 @@ import NavMenu from "../navMenu/navMenu";
 import MobileNavMenu from "../navMenu/mobileNavMenu";
 import { headerBreakpoints } from "../../utils/breakpoints";
 import useHeaderState from "@/src/hooks/useHeaderState";
-import GTranslate from "../navMenu/gTranslate";
+import GTranslateButton from "../navMenu/gTranslateButton";
 import {
   GTRANSLATE_CUSTOM_CSS,
   supportedLanguages,
 } from "../../utils/translationUtils";
+import GTranslateDropdown from "../navMenu/gTranslateDropdown";
 
 const Header = () => {
   const { headerRef, headerHeight, isScrollingUp, isFocused, setIsFocused } =
@@ -137,9 +138,9 @@ const Header = () => {
             }}
           >
             <DCLogo isMobile={false} />
-            <Box
+            <HStack
               sx={{
-                display: "block",
+                display: "flex",
                 [`@media screen and (min-width: ${headerBreakpoints.lgTablet}px)`]:
                   {
                     display: "none",
@@ -147,8 +148,8 @@ const Header = () => {
               }}
             >
               <NavMenu render={0} />
-              <GTranslate key="gtranslate-tablet" />
-            </Box>
+              <GTranslateButton key="gtranslate-tablet" isMobile={false} />
+            </HStack>
           </HStack>
           <HStack
             sx={{
@@ -163,8 +164,10 @@ const Header = () => {
             }}
           >
             <DCLogo isMobile={true} />
-            <MobileNavMenu />
-            <GTranslate key="gtranslate-mobile" />
+            <HStack>
+              <MobileNavMenu />
+              <GTranslateButton key="gtranslate-mobile" isMobile={true} />
+            </HStack>
           </HStack>
           <HorizontalRule
             height="1px"
@@ -198,7 +201,7 @@ const Header = () => {
               }}
             >
               <NavMenu render={1} />
-              <GTranslate key="gtranslate-desktop" />
+              <GTranslateDropdown key="gtranslate-desktop" />
             </HStack>
             <Search />
           </VStack>
