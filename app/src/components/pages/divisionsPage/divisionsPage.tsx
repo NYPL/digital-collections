@@ -52,6 +52,7 @@ export default function DivisionsPage({ summary, divisions }: DivisionsProps) {
                 seeMoreLink={`/divisions`}
                 laneName={division.name}
                 laneSlug={division.slug}
+                skipLaneNameTranslation={true}
               />
             ))
           ) : (

@@ -34,7 +34,7 @@ const Item = ({ item }: ItemProps) => {
         <Box marginTop="-3em">
           {renderViewer(item) ? (
             <>
-              <Heading level="h1" paddingBottom="s">
+              <Heading level="h1" paddingBottom="s" className="notranslate">
                 {item.title}
               </Heading>
               <ItemMediaViewer item={item} />
@@ -42,7 +42,9 @@ const Item = ({ item }: ItemProps) => {
           ) : (
             <>
               <ItemMediaViewerFallback item={item} />
-              <Heading level="h1">{item.title}</Heading>
+              <Heading level="h1" className="notranslate">
+                {item.title}
+              </Heading>
             </>
           )}
           {/* TODO: horizontally align Icon with Text with breakpoints */}

@@ -180,6 +180,7 @@ export const SearchCard = ({
             },
           },
         }}
+        className="notranslate"
       >
         {parse(highlightedTitle)}
       </CardHeading>
