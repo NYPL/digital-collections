@@ -8,8 +8,8 @@ import { revalidatePath } from "next/cache";
 import { CollectionSearchParamsType } from "./[uuid]/page";
 
 export type CollectionsProps = {
-  params: Promise<{ slug: string }>;
-  searchParams: Promise<CollectionSearchParamsType>;
+  params: { slug: string };
+  searchParams: CollectionSearchParamsType;
 };
 
 export const metadata: Metadata = {
@@ -19,10 +19,8 @@ export const metadata: Metadata = {
   },
 };
 
-export default async function Collections(props: CollectionsProps) {
-  //revalidatePath("/collections", "page");
-  const params = await props.params;
-  const searchParams = await props.searchParams;
+export default async function Collections({ searchParams }: CollectionsProps) {
+  revalidatePath("/collections", "page");
 
   const data = await CollectionsApi.getCollectionsData({
     keyword: searchParams.q,
