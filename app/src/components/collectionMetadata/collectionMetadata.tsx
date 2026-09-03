@@ -54,13 +54,11 @@ const renderDateField = (
 ) => {
   if (!value) return null;
   return (
-    <Text marginBottom="0">
-      <span className="notranslate">
-        {label}:{" "}
-        <Link hasVisitedState={false} href={href}>
-          {value}
-        </Link>
-      </span>
+    <Text marginBottom="0" className="notranslate">
+      {label}:{" "}
+      <Link hasVisitedState={false} href={href}>
+        {value}
+      </Link>
     </Text>
   );
 };
@@ -84,8 +82,9 @@ const renderTopicLink = (label: string) => {
       <Link
         hasVisitedState={false}
         href={`/search/index?filters=%5B${subjectType}%3D${text}%5D`}
+        className="notranslate"
       >
-        <span className="notranslate">{text}</span>
+        {text}
       </Link>
     </Text>
   );
@@ -295,8 +294,8 @@ const CollectionMetadata = ({ data }: { data: CollectionMetadataProps }) => {
             Abstract
           </Text>
           {abstract.map((text, index) => (
-            <Text marginBottom="xs" key={index}>
-              <span className="notranslate">{parse(text)}</span>
+            <Text marginBottom="xs" key={index} className="notranslate">
+              {parse(text)}
             </Text>
           ))}
         </Box>
@@ -336,31 +335,33 @@ const CollectionMetadata = ({ data }: { data: CollectionMetadataProps }) => {
           <Text size="overline1" marginBottom="xs">
             Library locations
           </Text>
-          <span className="notranslate">
-            <Text marginBottom="0">
-              <Link hasVisitedState={false} href={`/divisions/${divisionSlug}`}>
-                {divisionTitle}
-              </Link>
-            </Text>
-            {shelfLocators &&
-              shelfLocators.length > 0 &&
-              (shelfLocators.length > 1 ? (
-                <>
-                  <Text as="span" marginBottom="0">
-                    Shelf locators:{" "}
-                  </Text>
-                  {shelfLocators.map((locator, index) => (
-                    <Text key={index} marginBottom="0">
-                      {locator}
-                    </Text>
-                  ))}
-                </>
-              ) : (
-                <Text marginBottom="0">
-                  {`Shelf locator: ${shelfLocators[0]}`}
+          <Text marginBottom="0">
+            <Link
+              hasVisitedState={false}
+              href={`/divisions/${divisionSlug}`}
+              className="notranslate"
+            >
+              {divisionTitle}
+            </Link>
+          </Text>
+          {shelfLocators &&
+            shelfLocators.length > 0 &&
+            (shelfLocators.length > 1 ? (
+              <>
+                <Text as="span" marginBottom="0" className="notranslate">
+                  Shelf locators:{" "}
                 </Text>
-              ))}
-          </span>
+                {shelfLocators.map((locator, index) => (
+                  <Text key={index} marginBottom="0" className="notranslate">
+                    {locator}
+                  </Text>
+                ))}
+              </>
+            ) : (
+              <Text marginBottom="0" className="notranslate">
+                {`Shelf locator: ${shelfLocators[0]}`}
+              </Text>
+            ))}
         </Box>
       )}
 
@@ -383,13 +384,11 @@ const CollectionMetadata = ({ data }: { data: CollectionMetadataProps }) => {
               <Text size="overline1" marginBottom="xs">
                 {`Content note${contentNote.length > 1 ? `s` : ""}`}
               </Text>
-              <span className="notranslate">
-                {contentNote.map((note, index) => (
-                  <Text marginBottom="xs" key={index}>
-                    {parse(note)}
-                  </Text>
-                ))}
-              </span>
+              {contentNote.map((note, index) => (
+                <Text marginBottom="xs" key={index} className="notranslate">
+                  {parse(note)}
+                </Text>
+              ))}
             </Box>
           )}
           {tableOfContents && tableOfContents.length > 0 && (
@@ -397,8 +396,8 @@ const CollectionMetadata = ({ data }: { data: CollectionMetadataProps }) => {
               <Text size="overline1" marginBottom="xs">
                 Table of contents
               </Text>
-              <Text marginBottom="0">
-                <span className="notranslate">{tableOfContents}</span>
+              <Text marginBottom="0" className="notranslate">
+                {tableOfContents}
               </Text>
             </>
           )}
@@ -412,8 +411,9 @@ const CollectionMetadata = ({ data }: { data: CollectionMetadataProps }) => {
                   display="block"
                   hasVisitedState={false}
                   href={`/search/index?filters=%5Bform%3D${form}%5D`}
+                  className="notranslate"
                 >
-                  <span className="notranslate">{form}</span>
+                  {form}
                 </Link>
               )}
               {extent && <Text marginBottom="0">{extent}</Text>}
