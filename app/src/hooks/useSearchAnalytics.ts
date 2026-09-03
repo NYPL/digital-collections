@@ -1,11 +1,13 @@
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 import { SearchManager } from "../utils/searchManager/searchManager";
 import { trackSearchResults } from "../utils/ga4Utils";
 
 const useSearchAnalytics = (
   searchManager: SearchManager,
-  numResults?: number
+  numResults?: number,
+  runOnInitialMount: boolean = false
 ) => {
+  const isInitialMount = useRef(true);
   const filters = searchManager.filters;
   const filterNames = filters.map((f) => f.filter) ?? undefined;
   const keywords = searchManager.keywords ?? undefined;
@@ -21,6 +23,12 @@ const useSearchAnalytics = (
   });
 
   useEffect(() => {
+    if (isInitialMount.current) {
+      isInitialMount.current = false;
+      if (!runOnInitialMount) {
+        return;
+      }
+    }
     trackSearchResults(
       searchManager.viewMode,
       filterNames,
