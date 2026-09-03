@@ -105,9 +105,7 @@ const Player = ({ title, sources, captions, type }: PlyrProps) => {
                   }
                   key={`item-canvas-${index + 1}-button`}
                   id={`item-canvas-${index + 1}-button`}
-                  ref={(el) => {
-                    buttonRefs.current[index] = el;
-                  }}
+                  ref={(el) => (buttonRefs.current[index] = el)}
                   onClick={() => {
                     setCurrentCanvasIndex(index);
                   }}

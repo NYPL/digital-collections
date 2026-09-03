@@ -43,7 +43,7 @@ export const metadata: Metadata = {
 };
 
 export async function generateViewport() {
-  const userAgent = (await headers()).get("user-agent");
+  const userAgent = headers().get("user-agent");
   const isiPhone = /iphone/i.test(userAgent ?? "");
 
   return isiPhone
