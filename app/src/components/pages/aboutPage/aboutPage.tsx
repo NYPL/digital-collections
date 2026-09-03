@@ -2,10 +2,13 @@
 import { Box } from "@nypl/design-system-react-components";
 import aboutPageElements from "../../aboutPageElements/aboutPageElements";
 import PageLayout from "../../pageLayout/pageLayout";
-import React from "react";
 
 export default function AboutPage() {
-  function createSection(heading: React.ReactNode, body: React.ReactNode, key) {
+  function createSection(
+    heading: React.JSX.Element,
+    body: React.JSX.Element,
+    key
+  ) {
     return (
       <div key={key}>
         {heading}

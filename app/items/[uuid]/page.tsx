@@ -11,11 +11,14 @@ import { CollectionsApi } from "@/src/utils/apiClients/apiClients";
 import { extractAllAnchorsFromHTML } from "@/src/utils/metadata/extractAnchorHrefs";
 
 type ItemProps = {
-  params: Promise<{
+  params: {
     uuid: string;
     item: ItemModel;
-  }>;
+  };
+  searchParams: { canvasIndex: number }; //TODO: possibly remove this, since we are using state
 };
+
+let item;
 
 const getItemData = async (uuid: string) => {
   const clientIP = await getClientIP();
@@ -35,8 +38,9 @@ const getClientIP = async () => {
   return clientHeaders.get("x-real-ip");
 };
 
-export async function generateMetadata(props: ItemProps): Promise<Metadata> {
-  const params = await props.params;
+export async function generateMetadata({
+  params,
+}: ItemProps): Promise<Metadata> {
   const itemDetail = await getItemData(params.uuid);
   // If we get no item data, this ends up being a canvas redirect anyway
   if (!itemDetail) {
@@ -83,8 +87,8 @@ function formatItemBreadcrumbs(item: ItemModel) {
   return breadcrumbs;
 }
 
-export default async function ItemViewer(props: ItemProps) {
-  const params = await props.params;
+export default async function ItemViewer({ params, searchParams }: ItemProps) {
+  revalidatePath("/");
   console.log("params are: ", params);
   const [citationsData, itemData] = await Promise.all([
     CollectionsApi.getCitationsData(params.uuid),

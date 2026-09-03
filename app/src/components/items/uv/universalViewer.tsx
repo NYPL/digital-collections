@@ -149,7 +149,7 @@ const UniversalViewer: React.FC<UniversalViewerProps> = React.memo(
     return (
       <>
         <div
-          className="uv"
+          className="uv notranslate"
           onClick={(e) => handleOnClick(e)}
           style={{ height: "100%" }}
           ref={ref}

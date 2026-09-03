@@ -104,6 +104,7 @@ export const Card = forwardRef<HTMLDivElement, DCCardProps>(
               },
             },
           }}
+          className="notranslate"
         >
           {record.title}
         </CardHeading>
