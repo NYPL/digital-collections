@@ -2,13 +2,7 @@ import { useRef } from "react";
 import { Box, Icon } from "@chakra-ui/react";
 import { Button } from "@nypl/design-system-react-components";
 
-export interface GTranslateProps {}
-
-interface GTranslateButtonProps {
-  isMobile: boolean;
-}
-
-const GTranslateButton = ({ isMobile }: GTranslateButtonProps) => {
+const GTranslateButton = () => {
   const gtranslateRef = useRef<HTMLDivElement>(null);
 
   return (
@@ -18,12 +12,6 @@ const GTranslateButton = ({ isMobile }: GTranslateButtonProps) => {
       sx={{
         display: "inline-flex",
         position: "relative",
-        ...(!isMobile
-          ? {
-              marginBottom: "xs",
-              marginLeft: "s",
-            }
-          : {}),
       }}
     >
       <Button

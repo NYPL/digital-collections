@@ -1,12 +1,19 @@
 import { Logo, Link } from "@nypl/design-system-react-components";
 import React from "react";
 import { trackCTA } from "@/src/utils/ga4Utils";
+import useBreakpoints from "@/src/hooks/useBreakpoints";
 
 interface DCLogoProps {
   isMobile?: boolean;
 }
 
 const DCLogo = ({ isMobile = false }: DCLogoProps) => {
+  const {
+    isLargerThanLargeTablet,
+    isLargerThanSmallTablet,
+    isLargerThanLargeMobile,
+  } = useBreakpoints();
+
   return (
     <Link
       isUnderlined={false}
@@ -20,9 +27,11 @@ const DCLogo = ({ isMobile = false }: DCLogoProps) => {
       ) : (
         <Logo
           name="digitalCollectionsBlack"
-          sizeBasedOn="height"
-          height="50px"
           id="nypl-lion-logo"
+          {...(isLargerThanLargeTablet && {
+            sizeBasedOn: "height",
+            height: "50px",
+          })}
         />
       )}
     </Link>
