@@ -1,6 +1,6 @@
 import { useRef } from "react";
 import { Box } from "@chakra-ui/react";
-
+import GTranslateIcon from "./gTranslateIcon";
 export interface GTranslateProps {}
 
 const GTranslateDropdown = () => {
@@ -15,7 +15,9 @@ const GTranslateDropdown = () => {
       }}
       ref={gtranslateRef}
       className="gtranslate_wrapper"
-    />
+    >
+      <GTranslateIcon />
+    </Box>
   );
 };
 

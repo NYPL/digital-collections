@@ -8,7 +8,7 @@ const GTranslateButton = () => {
   return (
     <Box
       ref={gtranslateRef}
-      className="gtranslate_icon_wrapper"
+      className="gtranslate_button_wrapper"
       sx={{
         display: "inline-flex",
         position: "relative",
@@ -31,6 +31,7 @@ const GTranslateButton = () => {
           padding: "8px 16px 8px 16px",
         }}
       >
+        {/* TODO: use GTranslateIcon here */}
         <Icon as="span" aria-hidden="true" height="24px" width="24px">
           <svg viewBox="0 0 16 16">
             <g fill="black">

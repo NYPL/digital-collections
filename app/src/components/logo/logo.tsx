@@ -8,11 +8,7 @@ interface DCLogoProps {
 }
 
 const DCLogo = ({ isMobile = false }: DCLogoProps) => {
-  const {
-    isLargerThanLargeTablet,
-    isLargerThanSmallTablet,
-    isLargerThanLargeMobile,
-  } = useBreakpoints();
+  const { isLargerThanLargeTablet } = useBreakpoints();
 
   return (
     <Link

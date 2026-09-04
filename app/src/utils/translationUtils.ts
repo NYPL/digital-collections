@@ -19,12 +19,18 @@ export const supportedLanguages = [
 ];
 export const GTRANSLATE_CUSTOM_CSS = `
 
-.gtranslate_icon_wrapper {
+.gt_selector {
+  appearance: none;
+  background-color: var(--nypl-colors-ui-bg-default);
+  padding: var(--nypl-space-xxs) var(--nypl-space-xs) var(--nypl-space-xxs) var(--nypl-space-l);
+}
+
+.gtranslate_button_wrapper {
   position: relative;
   display: inline-flex;
 }
 
-.gtranslate_icon_wrapper .gt_selector {
+.gtranslate_button_wrapper .gt_selector {
   position: absolute;
   inset: 0;
   width: 100%;
@@ -39,8 +45,8 @@ export const GTRANSLATE_CUSTOM_CSS = `
   color: transparent;
 }
 
-.gtranslate_icon_wrapper .gt_selector:focus,
-.gtranslate_icon_wrapper .gt_selector:focus-visible {
+.gtranslate_button_wrapper .gt_selector:focus,
+.gtranslate_button_wrapper .gt_selector:focus-visible {
   outline: none;
 }
 `;
