@@ -18,7 +18,6 @@ export const supportedLanguages = [
   "ur",
 ];
 export const GTRANSLATE_CUSTOM_CSS = `
-
 .gt_selector {
   appearance: none;
   background-color: var(--nypl-colors-ui-bg-default);
