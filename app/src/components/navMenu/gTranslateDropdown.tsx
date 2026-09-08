@@ -7,6 +7,9 @@ const GTranslateDropdown = () => {
   const [isSelectRendered, setIsSelectRendered] = useState(false);
 
   useEffect(() => {
+    // This mutation observer logic is necessary to prevent the globe icon
+    // from displaying before the GTranslate dropdown has been loaded onscreen
+
     const gtSelector =
       gtranslateRef.current?.querySelector<HTMLDivElement>(".gt_selector");
     if (gtSelector) {
@@ -45,7 +48,6 @@ const GTranslateDropdown = () => {
       }}
     >
       <GTranslateIcon isVisible={isSelectRendered} />
-
       <div ref={gtranslateRef} className="gtranslate_wrapper" />
     </Box>
   );
