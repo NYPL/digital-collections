@@ -1,15 +1,12 @@
 import { Logo, Link } from "@nypl/design-system-react-components";
 import React from "react";
 import { trackCTA } from "@/src/utils/ga4Utils";
-import useBreakpoints from "@/src/hooks/useBreakpoints";
 
 interface DCLogoProps {
   isMobile?: boolean;
 }
 
 const DCLogo = ({ isMobile = false }: DCLogoProps) => {
-  const { isLargerThanLargeTablet } = useBreakpoints();
-
   return (
     <Link
       isUnderlined={false}
@@ -24,10 +21,12 @@ const DCLogo = ({ isMobile = false }: DCLogoProps) => {
         <Logo
           name="digitalCollectionsBlack"
           id="nypl-lion-logo"
-          {...(isLargerThanLargeTablet && {
-            sizeBasedOn: "height",
-            height: "50px",
-          })}
+          size="large"
+          sx={{
+            "@media screen and (min-width: 1024px)": {
+              height: "50px",
+            },
+          }}
         />
       )}
     </Link>
