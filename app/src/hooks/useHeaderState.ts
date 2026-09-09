@@ -35,11 +35,21 @@ function useHeaderState() {
       }
     };
 
+    // The translation dropdown changes the effective header height depending
+    // on the language selected, we need this observer to keep state fresh
+    const resizeObserver = new ResizeObserver(() => {
+      if (headerRef.current) {
+        setHeaderHeight(headerRef.current.offsetHeight);
+      }
+    });
+    resizeObserver.observe(headerRef.current!);
+
     window.addEventListener("scroll", updateScroll);
     window.addEventListener("resize", updateScroll);
     return () => {
       window.removeEventListener("scroll", updateScroll);
       window.removeEventListener("resize", updateScroll);
+      resizeObserver.disconnect();
     };
   }, [scrollDirection, isFocused]);
 
