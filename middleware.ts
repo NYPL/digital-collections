@@ -230,10 +230,12 @@ export function middleware(req: NextRequest) {
     const newUrl = `${url.origin}${url.pathname}?${searchParams.toString()}`;
     return NextResponse.redirect(newUrl, 301);
   }
+  console.log(`url ${req.url} did not redirect`);
 
   return NextResponse.next();
 }
 
 export const config = {
-  matcher: "/:path*",
+  // Match everything *except* _next/ static assets and the favicon
+  matcher: "/((?!_next/image).*)",
 };
