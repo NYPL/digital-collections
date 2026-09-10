@@ -1,5 +1,5 @@
 import SearchPage from "./search.page";
-import { expect, Locator, Page, Response } from "@playwright/test";
+import { expect, Locator, Page } from "@playwright/test";
 
 export class PaginationPage extends SearchPage {
   static readonly COLLECTION_WITH_200_PLUS_ITEMS_URL: string =
