@@ -20,9 +20,13 @@ const DCLogo = ({ isMobile = false }: DCLogoProps) => {
       ) : (
         <Logo
           name="digitalCollectionsBlack"
-          sizeBasedOn="height"
-          height="50px"
           id="nypl-lion-logo"
+          size="large"
+          sx={{
+            "@media screen and (min-width: 1024px)": {
+              height: "50px",
+            },
+          }}
         />
       )}
     </Link>

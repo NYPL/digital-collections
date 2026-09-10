@@ -23,6 +23,9 @@ const Header = () => {
     useHeaderState();
 
   useEffect(() => {
+    // this callback / event listener logic is necessary to synchronize the state of the
+    // various GTranslate dropdowns on the page (one for each screen size)
+
     const handleGTranslateChange = (event: Event) => {
       const target = event.target;
       if (
@@ -137,7 +140,7 @@ const Header = () => {
               pb: "xs",
             }}
           >
-            <DCLogo isMobile={false} />
+            <DCLogo />
             <HStack
               sx={{
                 display: "flex",
@@ -148,7 +151,7 @@ const Header = () => {
               }}
             >
               <NavMenu render={0} />
-              <GTranslateButton key="gtranslate-tablet" isMobile={false} />
+              <GTranslateDropdown key="gtranslate-tablet" />
             </HStack>
           </HStack>
           <HStack
@@ -165,8 +168,8 @@ const Header = () => {
           >
             <DCLogo isMobile={true} />
             <HStack>
+              <GTranslateButton key="gtranslate-mobile" />
               <MobileNavMenu />
-              <GTranslateButton key="gtranslate-mobile" isMobile={true} />
             </HStack>
           </HStack>
           <HorizontalRule
