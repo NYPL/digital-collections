@@ -89,6 +89,7 @@ export class PaginationPage extends SearchPage {
   async verifyCollectionCardCountLessThanOrEqual(
     maxCount: number
   ): Promise<void> {
+    await this.verifyFirstCardVisible();
     const count = await this.allCollectionCards.count();
     expect(count).toBeLessThanOrEqual(maxCount);
   }
