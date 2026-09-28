@@ -11,6 +11,7 @@ import {
   sendFailedUVImageLoadEvent,
 } from "@/src/utils/ga4Utils";
 import { useAnalyticsDataContext } from "@/src/context/AnalyticsDataProvider";
+import { recordCustomEvent } from "@/src/observability/newrelic";
 
 export type UniversalViewerProps = {
   config?: any;
@@ -132,6 +133,9 @@ const UniversalViewer: React.FC<UniversalViewerProps> = React.memo(
     });
 
     useEvent(uv, IIIFEvents.LOGIN_FAILED, () => {
+      recordCustomEvent("DC:UVImageLoadFailed", {
+        manifestId: manifestId,
+      });
       sendFailedUVImageLoadEvent();
     });
 
