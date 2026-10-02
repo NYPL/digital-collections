@@ -147,9 +147,30 @@ test.describe("Search pagination and per-page options", () => {
   //   );
   // });
 
+  //LAST (non)working version
+  // test("returns cleanly to page 1 when clicking previous page link", async () => {
+  //   await paginationPage.loadPage(
+  //     `${PaginationPage.COLLECTION_WITH_200_PLUS_ITEMS_URL}?page=2&perPage=96`
+  //   );
+
+  //   // Focus the link directly and press Enter
+  //   await paginationPage.previousPageLink.focus();
+  //   await paginationPage.page.keyboard.press("Enter");
+
+  //   await expect(paginationPage.currentPageLink).toHaveText("1");
+  //   await expect(paginationPage.resultsHeadingGeneric.first()).toContainText(
+  //     "Displaying 1-96 of"
+  //   );
+  // });
+
   test.skip("returns cleanly to page 1 when clicking previous page link", async () => {
     await paginationPage.loadPage(
       `${PaginationPage.COLLECTION_WITH_200_PLUS_ITEMS_URL}?page=2&perPage=96`
+    );
+
+    // Gate: Ensure React hydrated Page 2 data before sending keyboard events
+    await expect(paginationPage.resultsHeadingGeneric.first()).toContainText(
+      "Displaying 97-192 of"
     );
 
     // Focus the link directly and press Enter
