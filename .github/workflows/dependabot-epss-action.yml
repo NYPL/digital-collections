@@ -1,0 +1,15 @@
+name: 'Dependabot EPSS Action'
+on:
+  pull_request:
+    branches: [qa]
+
+jobs:
+  dependabot-epss-action:
+    name: 'EPSS Compliance Check'
+    runs-on: ubuntu-latest
+    steps:
+      - name: 'EPSS Policy'
+        uses: advanced-security/dependabot-epss-action@v0
+        with:
+            token: ${{ secrets.DEPENDABOT_EPSS_ACTION_TOKEN }}
+            epss-threshold: "0.01"
