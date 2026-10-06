@@ -13,7 +13,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: 'EPSS Policy'
-        uses: advanced-security/dependabot-epss-action@v0
+        uses: advanced-security/dependabot-epss-action@main
         with:
             token: ${{ secrets.DEPENDABOT_EPSS_ACTION_TOKEN }}
             epss-threshold: "0.01"
