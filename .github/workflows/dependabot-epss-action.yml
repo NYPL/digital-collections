@@ -5,6 +5,7 @@ on:
 
 permissions:
   contents: read
+  security-events: read
 
 jobs:
   dependabot-epss-action:
