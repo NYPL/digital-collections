@@ -10,12 +10,14 @@ export const supportedLanguages = [
   "zh-CN",
   "zh-TW",
   "fr",
+  "it",
   "ht",
   "ko",
   "pl",
   "ru",
   "es",
   "ur",
+  "yi",
 ];
 export const GTRANSLATE_CUSTOM_CSS = `
 .gt_selector {
