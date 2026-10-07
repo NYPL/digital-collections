@@ -56,7 +56,7 @@ jobs:
 
   register_deployment:
     name: Register Deployment
-    uses: ./.github/workflows/register_deployment
+    uses: ./.github/workflows/register_deployment.yml
     with:
       cluster: new-digitalcollections-qa
       service: new-digitalcollections-qa
