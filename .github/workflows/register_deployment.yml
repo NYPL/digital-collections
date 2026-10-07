@@ -1,7 +1,6 @@
 name: Register Deployment
 on:
   workflow_call:
-  workflow_dispatch:
     inputs:
       cluster:
         required: true
@@ -24,14 +23,13 @@ jobs:
   wait-then-mark:
     runs-on: ubuntu-latest
     steps:
-      - name: Configure AWS credentials
-        uses: aws-actions/configure-aws-credentials@v6.1.0
-        with:
-          role-to-assume: arn:aws:iam::685731035297:role/GithubActionsDeployerRole
-          aws-region: us-east-1
-
       - name: Wait for deployment to complete
         uses: nick-fields/retry@v3
+        env:
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          AWS_SESSION_TOKEN: ${{ secrets.AWS_SESSION_TOKEN }}
+          AWS_REGION: ${{ secrets.AWS_REGION }}
         with:
           max_attempts: 3
           timeout_minutes: 10

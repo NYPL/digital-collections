@@ -62,3 +62,8 @@ jobs:
       service: new-digitalcollections-qa
       nr-app-id: 1585934697
       version: $LOCAL_TAG_NAME
+    secrets:
+      AWS_ACCESS_KEY_ID: $AWS_ACCESS_KEY_ID
+      AWS_SECRET_ACCESS_KEY: $AWS_SECRET_ACCESS_KEY
+      AWS_SESSION_TOKEN: $AWS_SESSION_TOKEN
+      AWS_REGION: $AWS_REGION
