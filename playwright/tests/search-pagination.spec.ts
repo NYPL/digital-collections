@@ -133,53 +133,33 @@ test.describe("Search pagination and per-page options", () => {
     );
   });
 
-  // test("returns cleanly to page 1 when clicking previous page link", async () => {
-  //   await paginationPage.loadWithLocalStorage(
-  //     `${PaginationPage.COLLECTION_WITH_200_PLUS_ITEMS_URL}?${SearchPage.QUERY_PARAMS.PAGE}=2`,
-  //     SearchPage.STORAGE_KEYS.PER_PAGE,
-  //     SearchPage.PER_PAGE.EXPANDED_STR
-  //   );
-  //   await paginationPage.goToPreviousPage();
+  test.fixme(
+    "returns cleanly to page 1 when clicking previous page link",
+    async () => {
+      // FIXME: [JIRA-XXXX] Deep-linking collections to ?page=2 leaves pagination state on Page 1 (aria-disabled="true")
 
-  //   await expect(paginationPage.currentPageLink).toHaveText("1");
-  //   await expect(paginationPage.resultsHeadingGeneric).toHaveText(
-  //     /Displaying 1-96 of/
-  //   );
-  // });
+      // 1. Load URL deeplink to Page 2
+      await paginationPage.loadPage(
+        `${PaginationPage.COLLECTION_WITH_200_PLUS_ITEMS_URL}?page=2&perPage=96`
+      );
 
-  //LAST (non)working version
-  // test("returns cleanly to page 1 when clicking previous page link", async () => {
-  //   await paginationPage.loadPage(
-  //     `${PaginationPage.COLLECTION_WITH_200_PLUS_ITEMS_URL}?page=2&perPage=96`
-  //   );
+      // 2. Correct heading should show Page 2 results
+      await expect(paginationPage.resultsHeadingGeneric.first()).toContainText(
+        "Displaying 97-192 of"
+      );
 
-  //   // Focus the link directly and press Enter
-  //   await paginationPage.previousPageLink.focus();
-  //   await paginationPage.page.keyboard.press("Enter");
+      // 3. Pagination control reads query params and enables "Previous"
+      const previousLink = paginationPage.previousPageLink.first();
+      await expect(previousLink).toBeEnabled();
 
-  //   await expect(paginationPage.currentPageLink).toHaveText("1");
-  //   await expect(paginationPage.resultsHeadingGeneric.first()).toContainText(
-  //     "Displaying 1-96 of"
-  //   );
-  // });
+      // 4. User click
+      await previousLink.click();
 
-  test.skip("returns cleanly to page 1 when clicking previous page link", async () => {
-    await paginationPage.loadPage(
-      `${PaginationPage.COLLECTION_WITH_200_PLUS_ITEMS_URL}?page=2&perPage=96`
-    );
-
-    // Gate: Ensure React hydrated Page 2 data before sending keyboard events
-    await expect(paginationPage.resultsHeadingGeneric.first()).toContainText(
-      "Displaying 97-192 of"
-    );
-
-    // Focus the link directly and press Enter
-    await paginationPage.previousPageLink.focus();
-    await paginationPage.page.keyboard.press("Enter");
-
-    await expect(paginationPage.currentPageLink).toHaveText("1");
-    await expect(paginationPage.resultsHeadingGeneric.first()).toContainText(
-      "Displaying 1-96 of"
-    );
-  });
+      // 5. Assert return to Page 1
+      await expect(paginationPage.currentPageLink.first()).toHaveText("1");
+      await expect(paginationPage.resultsHeadingGeneric.first()).toContainText(
+        "Displaying 1-96 of"
+      );
+    }
+  );
 });
