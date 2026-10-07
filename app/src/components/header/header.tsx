@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import {
   Box,
   HStack,
@@ -11,10 +11,87 @@ import NavMenu from "../navMenu/navMenu";
 import MobileNavMenu from "../navMenu/mobileNavMenu";
 import { headerBreakpoints } from "../../utils/breakpoints";
 import useHeaderState from "@/src/hooks/useHeaderState";
+import GTranslateButton from "../navMenu/gTranslateButton";
+import {
+  GTRANSLATE_CUSTOM_CSS,
+  supportedLanguages,
+} from "../../utils/translationUtils";
+import GTranslateDropdown from "../navMenu/gTranslateDropdown";
 
 const Header = () => {
   const { headerRef, headerHeight, isScrollingUp, isFocused, setIsFocused } =
     useHeaderState();
+
+  useEffect(() => {
+    // this callback / event listener logic is necessary to synchronize the state of the
+    // various GTranslate dropdowns on the page (one for each screen size)
+
+    const handleGTranslateChange = (event: Event) => {
+      const target = event.target;
+      if (
+        !(target instanceof HTMLSelectElement) ||
+        !target.classList.contains("gt_selector")
+      ) {
+        return;
+      }
+
+      const selectedOption = target.selectedOptions?.[0];
+      console.log("GTranslate change:", {
+        value: target.value,
+        label: selectedOption?.text,
+      });
+
+      const newLanguage = target.value.split("|").pop();
+      if (!newLanguage) {
+        return;
+      }
+
+      document
+        .querySelectorAll<HTMLSelectElement>(".gt_selector")
+        .forEach((select) => {
+          select.value = `en|${newLanguage}`;
+        });
+    };
+
+    document.addEventListener("change", handleGTranslateChange, true);
+
+    window.gtranslateSettings = {
+      default_language: "en",
+      languages: supportedLanguages,
+      native_language_names: true,
+      wrapper_selector: ".gtranslate_wrapper",
+      custom_css: GTRANSLATE_CUSTOM_CSS,
+    };
+
+    const scriptUrl = "https://cdn.gtranslate.net/widgets/latest/dropdown.js";
+    const existingScript = document.querySelector<HTMLScriptElement>(
+      `script[src="${scriptUrl}"]`
+    );
+
+    // If GTranslate already initialized successfully, we're done.
+    if (document.querySelector(".gt_selector")) {
+      console.log("GTranslate already initialized.");
+      return;
+    }
+
+    // Script was added but the widget didn't initialize — likely because
+    // .gtranslate_wrapper wasn't in the DOM yet when the script ran. Remove and
+    // re-add/run the script now that the wrapper exists.
+    if (existingScript) {
+      console.log("Removing existing GTranslate script.");
+      existingScript.remove();
+    }
+
+    const script = document.createElement("script");
+    script.src = scriptUrl;
+    script.async = true;
+
+    document.body.appendChild(script);
+
+    return () => {
+      document.removeEventListener("change", handleGTranslateChange, true);
+    };
+  }, []);
 
   return (
     <>
@@ -63,10 +140,10 @@ const Header = () => {
               pb: "xs",
             }}
           >
-            <DCLogo isMobile={false} />
-            <Box
+            <DCLogo />
+            <HStack
               sx={{
-                display: "block",
+                display: "flex",
                 [`@media screen and (min-width: ${headerBreakpoints.lgTablet}px)`]:
                   {
                     display: "none",
@@ -74,7 +151,8 @@ const Header = () => {
               }}
             >
               <NavMenu render={0} />
-            </Box>
+              <GTranslateDropdown key="gtranslate-tablet" />
+            </HStack>
           </HStack>
           <HStack
             sx={{
@@ -89,7 +167,10 @@ const Header = () => {
             }}
           >
             <DCLogo isMobile={true} />
-            <MobileNavMenu />
+            <HStack>
+              <GTranslateButton key="gtranslate-mobile" />
+              <MobileNavMenu />
+            </HStack>
           </HStack>
           <HorizontalRule
             height="1px"
@@ -113,17 +194,18 @@ const Header = () => {
               paddingTop: "xs",
             }}
           >
-            <Box
+            <HStack
               sx={{
                 display: "none",
                 [`@media screen and (min-width: ${headerBreakpoints.lgTablet}px)`]:
                   {
-                    display: isScrollingUp ? "block" : "none",
+                    display: isScrollingUp ? "flex" : "none",
                   },
               }}
             >
               <NavMenu render={1} />
-            </Box>
+              <GTranslateDropdown key="gtranslate-desktop" />
+            </HStack>
             <Search />
           </VStack>
         </Box>

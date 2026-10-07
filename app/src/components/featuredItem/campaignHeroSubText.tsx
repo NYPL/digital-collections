@@ -45,11 +45,13 @@ const CampaignHeroSubText = ({ featuredItem }: CampaignHeroSubtextProps) => {
           }}
         >
           Featured Image:{" "}
-          {isLargerThanLargeTablet ? (
-            <Tooltip content={featuredItem.title}>{featuredItemLink}</Tooltip>
-          ) : (
-            featuredItemLink
-          )}
+          <span className="notranslate">
+            {isLargerThanLargeTablet ? (
+              <Tooltip content={featuredItem.title}>{featuredItemLink}</Tooltip>
+            ) : (
+              featuredItemLink
+            )}
+          </span>
         </Text>
       </Box>
     </>

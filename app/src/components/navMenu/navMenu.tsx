@@ -31,6 +31,7 @@ const NavMenu = ({ render }: NavMenuProps) => {
           textDecoration: "none !important",
           color: "unset",
         },
+        textWrap: "nowrap",
       }}
     >
       {text}

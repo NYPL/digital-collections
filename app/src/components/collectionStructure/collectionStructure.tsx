@@ -399,7 +399,7 @@ const CollectionStructure = ({
         overflowY="auto"
         borderTop="1px solid var(--ui-gray-medium, #BDBDBD)"
       >
-        <ul>
+        <ul className="notranslate">
           <AccordionTree
             items={tree}
             toggle={handleToggle}

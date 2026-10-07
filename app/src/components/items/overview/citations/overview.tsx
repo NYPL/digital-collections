@@ -20,7 +20,9 @@ const CitationsOverview = ({ citationData }) => {
                 <Text size="overline1" marginBottom="xs">
                   {field}
                 </Text>
-                <Box marginBottom="m">{parse(value)}</Box>
+                <Box marginBottom="m" className="notranslate">
+                  {parse(value)}
+                </Box>
               </Fragment>
             );
           }

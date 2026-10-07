@@ -54,7 +54,7 @@ const renderDateField = (
 ) => {
   if (!value) return null;
   return (
-    <Text marginBottom="0">
+    <Text marginBottom="0" className="notranslate">
       {label}:{" "}
       <Link hasVisitedState={false} href={href}>
         {value}
@@ -82,6 +82,7 @@ const renderTopicLink = (label: string) => {
       <Link
         hasVisitedState={false}
         href={`/search/index?filters=%5B${subjectType}%3D${text}%5D`}
+        className="notranslate"
       >
         {text}
       </Link>
@@ -107,6 +108,7 @@ const renderLabeledLinks = (
           display="block"
           hasVisitedState={false}
           href={`/search/index?filters=%5B${paramKey}%3D${item}%5D`}
+          className="notranslate"
         >
           {capitalizeItems ? capitalize(item) : item}
         </Link>
@@ -123,7 +125,7 @@ const renderNamesSection = (names) => {
         Names
       </Text>
       {names.map((name, index) => (
-        <Text key={index} marginBottom="0">
+        <Text key={index} marginBottom="0" className="notranslate">
           <Link
             hasVisitedState={false}
             href={`/search/index?filters=%5Bname%3D${name.name}%5D`}
@@ -149,10 +151,12 @@ const renderIdentifiers = (
         Identifiers
       </Text>
       {uuid && (
-        <Text marginBottom="0">Universal Unique Identifier (UUID): {uuid}</Text>
+        <Text marginBottom="0" className="notranslate">
+          Universal Unique Identifier (UUID): {uuid}
+        </Text>
       )}
       {mssID && (
-        <Text marginBottom="0">
+        <Text marginBottom="0" className="notranslate">
           Archives ID:{" "}
           <Link
             hasVisitedState={false}
@@ -165,11 +169,11 @@ const renderIdentifiers = (
       {bNumbers &&
         (bNumbers.length > 1 ? (
           <>
-            <Text as="span" marginBottom="0">
+            <Text as="span" marginBottom="0" className="notranslate">
               NYPL Catalog IDs (bnumbers):{" "}
             </Text>
             {bNumbers.map((bNumber, index) => (
-              <Text key={index} marginBottom="0">
+              <Text key={index} marginBottom="0" className="notranslate">
                 <Link
                   hasVisitedState={false}
                   href={`https://www.nypl.org/research/research-catalog/bib/${bNumber}`}
@@ -181,7 +185,7 @@ const renderIdentifiers = (
           </>
         ) : (
           <>
-            <Text marginBottom="0">
+            <Text marginBottom="0" className="notranslate">
               NYPL Catalog ID (bNumber):{" "}
               <Link
                 hasVisitedState={false}
@@ -290,7 +294,7 @@ const CollectionMetadata = ({ data }: { data: CollectionMetadataProps }) => {
             Abstract
           </Text>
           {abstract.map((text, index) => (
-            <Text marginBottom="xs" key={index}>
+            <Text marginBottom="xs" key={index} className="notranslate">
               {parse(text)}
             </Text>
           ))}
@@ -332,7 +336,11 @@ const CollectionMetadata = ({ data }: { data: CollectionMetadataProps }) => {
             Library locations
           </Text>
           <Text marginBottom="0">
-            <Link hasVisitedState={false} href={`/divisions/${divisionSlug}`}>
+            <Link
+              hasVisitedState={false}
+              href={`/divisions/${divisionSlug}`}
+              className="notranslate"
+            >
               {divisionTitle}
             </Link>
           </Text>
@@ -340,17 +348,17 @@ const CollectionMetadata = ({ data }: { data: CollectionMetadataProps }) => {
             shelfLocators.length > 0 &&
             (shelfLocators.length > 1 ? (
               <>
-                <Text as="span" marginBottom="0">
+                <Text as="span" marginBottom="0" className="notranslate">
                   Shelf locators:{" "}
                 </Text>
                 {shelfLocators.map((locator, index) => (
-                  <Text key={index} marginBottom="0">
+                  <Text key={index} marginBottom="0" className="notranslate">
                     {locator}
                   </Text>
                 ))}
               </>
             ) : (
-              <Text marginBottom="0">
+              <Text marginBottom="0" className="notranslate">
                 {`Shelf locator: ${shelfLocators[0]}`}
               </Text>
             ))}
@@ -377,7 +385,7 @@ const CollectionMetadata = ({ data }: { data: CollectionMetadataProps }) => {
                 {`Content note${contentNote.length > 1 ? `s` : ""}`}
               </Text>
               {contentNote.map((note, index) => (
-                <Text marginBottom="xs" key={index}>
+                <Text marginBottom="xs" key={index} className="notranslate">
                   {parse(note)}
                 </Text>
               ))}
@@ -388,7 +396,9 @@ const CollectionMetadata = ({ data }: { data: CollectionMetadataProps }) => {
               <Text size="overline1" marginBottom="xs">
                 Table of contents
               </Text>
-              <Text marginBottom="0">{tableOfContents}</Text>
+              <Text marginBottom="0" className="notranslate">
+                {tableOfContents}
+              </Text>
             </>
           )}
           {(form || extent) && (
@@ -401,6 +411,7 @@ const CollectionMetadata = ({ data }: { data: CollectionMetadataProps }) => {
                   display="block"
                   hasVisitedState={false}
                   href={`/search/index?filters=%5Bform%3D${form}%5D`}
+                  className="notranslate"
                 >
                   {form}
                 </Link>

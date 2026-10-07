@@ -202,6 +202,7 @@ const CollectionPage = ({
               maxWidth: "1250px",
               marginBottom: "m",
             }}
+            className="notranslate"
           >
             {collectionData.title}
           </Heading>
