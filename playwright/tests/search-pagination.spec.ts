@@ -3,14 +3,14 @@ import { expect } from "@playwright/test";
 import { PaginationPage } from "../pages/search-pagination.page";
 import SearchPage from "../pages/search.page";
 
-test.describe("Search pagination and per-page options", () => {
+test.describe("Pagination and per-page options", () => {
   let paginationPage: PaginationPage;
 
   test.beforeEach(async ({ page }) => {
     paginationPage = new PaginationPage(page);
   });
 
-  test("defaults to 48 per page on initial load", async () => {
+  test("default to 48 per page on initial load", async () => {
     await paginationPage.loadPage(SearchPage.largeResultsUrl);
     await paginationPage.verifyPerPageMenuText(SearchPage.PER_PAGE.DEFAULT);
     await paginationPage.verifyCollectionCardCountLessThanOrEqual(
@@ -70,7 +70,7 @@ test.describe("Search pagination and per-page options", () => {
     await paginationPage.verifyLayout("list");
   });
 
-  test("hides per-page control gracefully on mobile viewports", async ({
+  test("does not render per-page menu on mobile viewports", async ({
     page,
   }) => {
     await page.setViewportSize({ width: 375, height: 667 });
@@ -78,7 +78,7 @@ test.describe("Search pagination and per-page options", () => {
     await paginationPage.verifyPerPageMenuHidden();
   });
 
-  test("handles 96 per-page selection on collections landing page", async () => {
+  test("updates collection display to 96 when per-page is increased to 96", async () => {
     await paginationPage.loadPage(PaginationPage.COLLECTIONS_LANDING_URL);
 
     // Wait for React to hydrate event listeners on the page
@@ -136,7 +136,7 @@ test.describe("Search pagination and per-page options", () => {
   test.fail(
     "returns cleanly to page 1 when clicking previous button from deep-linked page 2 ",
     async () => {
-      // FIXME: [JIRA-XXXX] Deep-linking collections to ?page=2 leaves pagination state on Page 1 (aria-disabled="true")
+      // FIXME: [JIRA-4270] Deep-linking collections to ?page=2 leaves pagination state on Page 1
 
       // 1. Load URL deeplink to Page 2
       await test.step("Load deeplink in URL", async () => {
@@ -152,7 +152,7 @@ test.describe("Search pagination and per-page options", () => {
         ).toContainText("Displaying 97-192 of");
       });
 
-      // 3. Pagination control reads query params and enables "Previous"
+      // 3. Pagination control displays "Previous" link
       const previousLink = paginationPage.previousPageLink.first();
       await test.step("should display previous-button", async () => {
         await expect(previousLink).toBeEnabled();
