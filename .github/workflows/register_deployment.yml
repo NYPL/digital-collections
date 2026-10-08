@@ -1,0 +1,47 @@
+name: Register Deployment
+on:
+  workflow_call:
+    inputs:
+      cluster:
+        required: true
+        type: string
+      service:
+        required: true
+        type: string
+      nr-app-id:
+        required: true
+        type: string
+      version:
+        required: true
+        type: string
+
+permissions:
+  id-token: write
+  contents: read
+
+jobs:
+  wait-then-mark:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Wait for deployment to complete
+        uses: nick-fields/retry@v3
+        env:
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          AWS_SESSION_TOKEN: ${{ secrets.AWS_SESSION_TOKEN }}
+          AWS_REGION: ${{ secrets.AWS_REGION }}
+        with:
+          max_attempts: 3
+          timeout_minutes: 10
+          command: aws ecs wait services-stable --cluster ${{ inputs.cluster }} --services ${{ inputs.service }}
+
+      - name: Mark deployment in New Relic
+        uses: newrelic/deployment-marker-action@v2.6.2
+        with:
+          apiKey: ${{ secrets.NEW_RELIC_API_KEY }}
+          commandType: "changeTrackingCreateEvent"
+          entitySearch: "domainId='${{ inputs.nr-app-id }}'"
+          version: "${{ inputs.version }}"
+          category: "Deployment"
+          type: "Basic"
+          commit: "${{ github.sha }}"
