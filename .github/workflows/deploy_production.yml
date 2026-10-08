@@ -18,9 +18,23 @@ jobs:
     name: Run Tests
     uses: ./.github/workflows/ci.yml
 
-  deploy:
+  epss_compliance_check:
+    name: 'EPSS Compliance Check'
     runs-on: ubuntu-latest
     needs: lint_and_test
+    permissions:
+      contents: read
+      security-events: read
+    steps:
+      - name: 'EPSS Policy'
+        uses: advanced-security/dependabot-epss-action@main
+        with:
+            token: ${{ secrets.DEPENDABOT_EPSS_ACTION_TOKEN }}
+            epss-threshold: "0.01"
+
+  deploy:
+    runs-on: ubuntu-latest
+    needs: epss_compliance_check
     steps:
       - name: Check out code
         uses: actions/checkout@v6
