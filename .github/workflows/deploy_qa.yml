@@ -62,7 +62,9 @@ jobs:
       cluster: new-digitalcollections-qa
       service: new-digitalcollections-qa
       nr-app-id: 1585934697
-      version: ${{ env.LOCAL_TAG_NAME }}
+      # Copied from LOCAL_TAG_NAME env definition. It is weirdly complicated to pass an environment
+      # variable to a reusable workflow, so just replicate for simplicity for now.
+      version: dc-frontend:${{ github.ref_name }}-$${ github.run_rumber }}
     secrets:
       AWS_ACCESS_KEY_ID: $${{ secrets.AWS_ACCESS_KEY_ID }}
       AWS_SECRET_ACCESS_KEY: $${ secrets.AWS_SECRET_ACCESS_KEY }}
