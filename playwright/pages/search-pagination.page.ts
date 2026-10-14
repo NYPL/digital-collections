@@ -14,6 +14,7 @@ export class PaginationPage extends SearchPage {
   readonly currentPageLink: Locator;
   readonly allCollectionCards: Locator;
   readonly collectionStructureHeading: Locator;
+  readonly collectionsContainer: Locator;
 
   constructor(page: Page) {
     super(page);
@@ -32,6 +33,7 @@ export class PaginationPage extends SearchPage {
     this.collectionStructureHeading = this.page.getByRole("heading", {
       name: "Collection structure",
     });
+    this.collectionsContainer = this.page.locator("#collections");
   }
 
   // --- ACTIONS ---
@@ -82,16 +84,8 @@ export class PaginationPage extends SearchPage {
 
   // --- ASSERTIONS & STATE CHECKS ---
 
-  async verifyFirstCardVisible(): Promise<void> {
-    await expect(this.allCollectionCards.first()).toBeVisible();
-  }
-
-  async verifyCollectionCardCountLessThanOrEqual(
-    maxCount: number
-  ): Promise<void> {
-    await this.verifyFirstCardVisible();
-    const count = await this.allCollectionCards.count();
-    expect(count).toBeLessThanOrEqual(maxCount);
+  async verifyCollectionCardCountEqual(maxCount: number): Promise<void> {
+    await expect(this.allCollectionCards).toHaveCount(maxCount);
   }
 
   async verifyPerPageMenuText(value: number): Promise<void> {

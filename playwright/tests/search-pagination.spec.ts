@@ -13,7 +13,7 @@ test.describe("Pagination and per-page options", () => {
   test("default to 48 per page on initial load", async () => {
     await paginationPage.loadPage(SearchPage.largeResultsUrl);
     await paginationPage.verifyPerPageMenuText(SearchPage.PER_PAGE.DEFAULT);
-    await paginationPage.verifyCollectionCardCountLessThanOrEqual(
+    await paginationPage.verifyCollectionCardCountEqual(
       SearchPage.PER_PAGE.DEFAULT
     );
   });
@@ -89,7 +89,7 @@ test.describe("Pagination and per-page options", () => {
       "Displaying 1-96 of"
     );
 
-    await paginationPage.verifyCollectionCardCountLessThanOrEqual(
+    await paginationPage.verifyCollectionCardCountEqual(
       SearchPage.PER_PAGE.EXPANDED
     );
   });
