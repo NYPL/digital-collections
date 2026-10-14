@@ -81,9 +81,7 @@ test.describe("Pagination and per-page options", () => {
   test("updates collection display to 96 when per-page is increased to 96", async () => {
     await paginationPage.loadPage(PaginationPage.COLLECTIONS_LANDING_URL);
 
-    // Wait for React to hydrate event listeners on the page
-    await paginationPage.page.waitForLoadState("networkidle");
-
+    await expect(paginationPage.perPageMenuButton).toBeVisible();
     await paginationPage.selectPerPage(SearchPage.PER_PAGE.EXPANDED);
 
     // Target #collections directly using toContainText to ignore DOM newline breaks
