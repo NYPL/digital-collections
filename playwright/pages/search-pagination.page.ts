@@ -40,7 +40,6 @@ export class PaginationPage extends SearchPage {
 
   async loadPage(gotoPage: string): Promise<void> {
     await this.page.goto(gotoPage);
-    //await this.page.waitForLoadState("domcontentloaded");
   }
 
   async loadWithLocalStorage(

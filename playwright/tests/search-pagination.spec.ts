@@ -136,27 +136,24 @@ test.describe("Pagination and per-page options", () => {
     async () => {
       // FIXME: [JIRA-4270] Deep-linking collections to ?page=2 leaves pagination state on Page 1
 
-      // 1. Load URL deeplink to Page 2
+      // Load URL deeplink to Page 2
       await test.step("Load deeplink in URL", async () => {
         await paginationPage.loadPage(
           `${PaginationPage.COLLECTION_WITH_200_PLUS_ITEMS_URL}?page=2&perPage=96`
         );
       });
 
-      // 2. Correct heading should show Page 2 results
       await test.step("should show correct results heading", async () => {
         await expect(
           paginationPage.resultsHeadingGeneric.first()
         ).toContainText("Displaying 97-192 of");
       });
 
-      // 3. Pagination control displays "Previous" link
       const previousLink = paginationPage.previousPageLink.first();
       await test.step("should display previous-button", async () => {
         await expect(previousLink).toBeEnabled();
       });
 
-      // 4. Assert return to Page 1
       await previousLink.click();
 
       await test.step("clicking previous-button should change state to page 1", async () => {
