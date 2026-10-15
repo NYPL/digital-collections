@@ -58,6 +58,8 @@ jobs:
     name: Register Deployment
     needs: deploy
     uses: ./.github/workflows/register_deployment.yml
+    secrets:
+      NEW_RELIC_API_KEY: ${{ secrets.NEW_RELIC_API_KEY }}
     with:
       cluster: new-digitalcollections-qa
       service: new-digitalcollections-qa
