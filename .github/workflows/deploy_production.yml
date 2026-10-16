@@ -52,3 +52,18 @@ jobs:
       - name: Update ECS service
         run: |
           aws ecs update-service --cluster new-digitalcollections-prod --service new-digitalcollections-prod --force-new-deployment
+
+
+  register_deployment:
+    name: Register Deployment
+    needs: deploy
+    uses: ./.github/workflows/register_deployment.yml
+    secrets:
+      NEW_RELIC_API_KEY: ${{ secrets.NEW_RELIC_API_KEY }}
+    with:
+      cluster: new-digitalcollections-prod
+      service: new-digitalcollections-prod
+      nr-app-id: 1529331213
+      # Copied from LOCAL_TAG_NAME env definition. It is weirdly complicated to pass an environment
+      # variable to a reusable workflow, so just replicate for simplicity for now.
+      version: dc-frontend:${{ github.ref_name }}-$${ github.run_rumber }}
