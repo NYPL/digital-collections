@@ -5,6 +5,27 @@ export default class SearchPage {
   readonly searchKeyword: string;
   readonly searchBar: Locator;
   readonly searchButton: Locator;
+  readonly perPageMenuButton: Locator;
+  readonly resultsHeadingGeneric: Locator;
+  readonly previousPageLink: Locator;
+
+  // pagination constants
+  static readonly PER_PAGE = {
+    DEFAULT: 48,
+    EXPANDED: 96,
+    DEFAULT_STR: "48",
+    EXPANDED_STR: "96",
+  } as const;
+
+  static readonly STORAGE_KEYS = {
+    PER_PAGE: "perPage",
+  } as const;
+
+  static readonly QUERY_PARAMS = {
+    PER_PAGE: "perPage",
+    PAGE: "page",
+    QUERY: "q",
+  } as const;
 
   // search results
   static searchResultsUrl: string = "/search/index?q=map%20of%20scandinavia";
@@ -83,6 +104,10 @@ export default class SearchPage {
     this.searchKeyword = "map of scandinavia";
     this.searchBar = this.page.getByPlaceholder(/search/i);
     this.searchButton = this.page.locator("#searchbar-button-searchbar");
+    this.perPageMenuButton = this.page.locator("#results-per-page-menu");
+    this.previousPageLink = this.page.getByRole("link", {
+      name: "Previous page",
+    });
 
     // search results
     this.resultsHeading = this.page.getByRole("heading", {
@@ -90,6 +115,11 @@ export default class SearchPage {
         `^Displaying \\d+-\\d+ of \\d+ results for "${this.searchKeyword}"$`
       ),
     });
+
+    this.resultsHeadingGeneric = this.page.getByRole("heading", {
+      name: /^Displaying \d+-\d+ of \d+ results/,
+    });
+
     this.firstItemResult = page.locator("a[href*='/items/']").first();
     this.firstKeywordResult = page
       .getByRole("link", { name: this.searchKeyword })
@@ -244,14 +274,8 @@ export default class SearchPage {
       name: "Sort by: Items first",
     });
 
-    // // just using locators
-    // this.gridViewButton = this.page.locator('button:has(#grid-menu-icon)');
-    // this.listViewButton = this.page.locator('button:has(#list-menu-icon)');
-    // this.allCards = this.page.getByTestId("ds-card");
-
-    // more playwright-y
     this.gridViewButton = this.page
-      .getByRole("button", { name: /grid/i }) // Matches "Grid View", "Grid", "Grid images", etc.
+      .getByRole("button", { name: /grid/i })
       .filter({ has: this.page.locator("#grid-menu-icon") });
     this.listViewButton = this.page
       .getByRole("button", { name: /list/i })
