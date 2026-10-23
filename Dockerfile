@@ -1,4 +1,4 @@
-FROM node:22-alpine as production
+FROM node:22.23.4-alpine as production
 
 #RUN apt-get update
 #RUN apt-get upgrade -y
@@ -18,7 +18,7 @@ COPY package-lock.json ./
 RUN npm install
 
 # Copy the app files.
-COPY . .
+COPY . . 
 
 ENV APP_ENV=${APP_ENV}
 ENV NEW_RELIC_LICENSE_KEY=${NEW_RELIC_LICENSE_KEY}
