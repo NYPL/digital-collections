@@ -18,7 +18,7 @@ COPY package-lock.json ./
 RUN npm install
 
 # Copy the app files.
-COPY . . 
+COPY . .
 
 ENV APP_ENV=${APP_ENV}
 ENV NEW_RELIC_LICENSE_KEY=${NEW_RELIC_LICENSE_KEY}
