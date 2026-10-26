@@ -1,4 +1,4 @@
-FROM node:22.23.3-alpine as production
+FROM node:22.23-alpine as production
 
 #RUN apt-get update
 #RUN apt-get upgrade -y
@@ -9,6 +9,7 @@ ARG AUTH_TOKEN
 ARG API_URL
 ARG COLLECTIONS_API_AUTH_TOKEN
 ARG COLLECTIONS_API_URL
+ARG IIIF_URL
 
 WORKDIR /app
 
@@ -27,6 +28,7 @@ ENV API_URL=${API_URL}
 ENV AUTH_TOKEN=${AUTH_TOKEN}
 ENV COLLECTIONS_API_AUTH_TOKEN=${COLLECTIONS_API_AUTH_TOKEN}
 ENV COLLECTIONS_API_URL=${COLLECTIONS_API_URL}
+ENV IIIF_URL=${IIIF_URL}
 
 # Create a `.env.prod` file with the environment variables
 # This is a workaround to use environment variables in the `newrelic.js` file
