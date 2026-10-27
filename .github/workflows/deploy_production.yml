@@ -76,6 +76,7 @@ jobs:
     secrets:
       NEW_RELIC_API_KEY: ${{ secrets.NEW_RELIC_API_KEY }}
     with:
+      deployer-role: arn:aws:iam::557492996044:role/GithubActionsDeployerRole
       cluster: new-digitalcollections-prod
       service: new-digitalcollections-prod
       nr-app-id: 1529331213
