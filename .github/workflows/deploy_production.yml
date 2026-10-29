@@ -57,9 +57,10 @@ jobs:
           AUTH_TOKEN: ${{ secrets.AUTH_TOKEN }}
           COLLECTIONS_API_AUTH_TOKEN: ${{ secrets.COLLECTIONS_API_AUTH_TOKEN }}
           COLLECTIONS_API_URL: ${{ secrets.COLLECTIONS_API_URL }}
+          IIIF_URL: ${{ secrets.IIIF_URL }}
           ECR_URL: 557492996044.dkr.ecr.us-east-1.amazonaws.com/dc-frontend:latest
         run: |
-          docker build --build-arg APP_ENV=$APP_ENV --build-arg NEW_RELIC_LICENSE_KEY=$NEW_RELIC_LICENSE_KEY --build-arg API_URL=$API_URL --build-arg AUTH_TOKEN=$AUTH_TOKEN --build-arg COLLECTIONS_API_AUTH_TOKEN=$COLLECTIONS_API_AUTH_TOKEN --build-arg COLLECTIONS_API_URL=$COLLECTIONS_API_URL --tag $LOCAL_TAG_NAME .
+          docker build --build-arg APP_ENV=$APP_ENV --build-arg NEW_RELIC_LICENSE_KEY=$NEW_RELIC_LICENSE_KEY --build-arg API_URL=$API_URL --build-arg AUTH_TOKEN=$AUTH_TOKEN --build-arg COLLECTIONS_API_AUTH_TOKEN=$COLLECTIONS_API_AUTH_TOKEN --build-arg COLLECTIONS_API_URL=$COLLECTIONS_API_URL --build-arg IIIF_URL=$IIIF_URL --tag $LOCAL_TAG_NAME .
           docker tag $LOCAL_TAG_NAME $ECR_URL
           docker push $ECR_URL
 
@@ -75,6 +76,7 @@ jobs:
     secrets:
       NEW_RELIC_API_KEY: ${{ secrets.NEW_RELIC_API_KEY }}
     with:
+      deployer-role: arn:aws:iam::557492996044:role/GithubActionsDeployerRole
       cluster: new-digitalcollections-prod
       service: new-digitalcollections-prod
       nr-app-id: 1529331213
