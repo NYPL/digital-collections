@@ -131,11 +131,16 @@ test.describe("Pagination and per-page options", () => {
     );
   });
 
-  test.fail(
-    "returns cleanly to page 1 when clicking previous button from deep-linked page 2 ",
+  test.fixme(
+    "returns cleanly to page 1 when clicking previous button from deep-linked page 2",
+    {
+      annotation: {
+        type: "issue",
+        description:
+          "DR-4270: Deep-linking collections to ?page=2 leaves pagination state on Page 1",
+      },
+    },
     async () => {
-      // FIXME: [JIRA-4270] Deep-linking collections to ?page=2 leaves pagination state on Page 1
-
       // Load URL deeplink to Page 2
       await test.step("Load deeplink in URL", async () => {
         await paginationPage.loadPage(
@@ -154,7 +159,9 @@ test.describe("Pagination and per-page options", () => {
         await expect(previousLink).toBeEnabled();
       });
 
-      await previousLink.click();
+      await test.step("click previous-button", async () => {
+        await previousLink.click();
+      });
 
       await test.step("clicking previous-button should change state to page 1", async () => {
         await expect(paginationPage.currentPageLink.first()).toHaveText("1");
