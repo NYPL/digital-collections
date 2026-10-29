@@ -66,7 +66,9 @@ test.describe("Pagination and per-page options", () => {
     await paginationPage.toggleView("list");
 
     await paginationPage.selectPerPage(SearchPage.PER_PAGE.EXPANDED);
-
+    await paginationPage.verifyCollectionCardCountEqual(
+      SearchPage.PER_PAGE.EXPANDED
+    );
     await paginationPage.verifyLayout("list");
   });
 
