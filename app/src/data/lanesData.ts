@@ -49,10 +49,10 @@ const lanesData = {
           imageID: "1952272",
         },
         {
-          uuid: "812e5770-c60c-012f-7167-58d385a7bc34",
-          title: "Changing New York",
-          url: "https://digitalcollections.nypl.org/collections/changing-new-york#/?tab=navigation",
-          imageID: "58447105",
+          uuid: "8fa6f620-5b26-0138-765c-79b26966d098",
+          title: "Radford Bascome collection",
+          url: "https://digitalcollections.nypl.org/collections/radford-bascome-collection#/?tab=navigation",
+          imageID: "58861165",
         },
         {
           uuid: "f7ffc990-c5ae-012f-eb75-58d385a7bc34",
@@ -162,10 +162,11 @@ const lanesData = {
       rank: 5,
       collections: [
         {
-          uuid: "cd0fd890-b0de-0133-ad22-00505686d14e",
-          title: "Century Company records",
-          url: "https://digitalcollections.nypl.org/collections/century-company-records#/?tab=navigation",
-          imageID: "57555753",
+          uuid: "129b9210-9b4e-013f-28d9-0242ac110003",
+          title:
+            "Jonathan Mann collection of materials related to Abraham Lincoln",
+          url: "https://digitalcollections.nypl.org/collections/jonathan-mann-collection-of-materials-related-to-abraham-lincoln#/?tab=navigation",
+          imageID: "59119713",
         },
         {
           uuid: "7b25ca60-9d2e-0133-44f8-00505686a51c",
