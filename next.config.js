@@ -1,3 +1,4 @@
+const path = require("path");
 const CopyPlugin = require("copy-webpack-plugin");
 /** @type {import('next').NextConfig} */
 // This is found in the codebase example but both seem to work and send data
@@ -47,9 +48,20 @@ const nextConfig = {
   // In order for newrelic to effectively instrument a Next.js application,
   // the modules that newrelic supports should not be mangled by webpack. Thus,
   // we need to "externalize" all of the modules that newrelic supports.
-  webpack: (config) => {
+  webpack: (config, { dev }) => {
     if (process.env.NEW_RELIC_APP_NAME) {
       nrExternals(config);
+    }
+    // Dev-only: prevent Chakra's style merge from deep-cloning React 19
+    // elements, which hangs `next dev`. See devShims/safeMergeWith.js.
+    if (dev) {
+      config.resolve.alias = {
+        ...config.resolve.alias,
+        "lodash.mergewith$": path.resolve(
+          __dirname,
+          "devShims/safeMergeWith.js"
+        ),
+      };
     }
     config.plugins.push(
       new CopyPlugin({
