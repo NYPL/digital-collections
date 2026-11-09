@@ -23,7 +23,16 @@ export const GTRANSLATE_CUSTOM_CSS = `
 .gt_selector {
   appearance: none;
   background-color: var(--nypl-colors-ui-bg-default);
-  padding: var(--nypl-space-xxs) var(--nypl-space-xs) var(--nypl-space-xxs) var(--nypl-space-l);
+  padding-block: var(--nypl-space-xxs);
+  padding-inline-start: var(--nypl-space-l);
+  padding-inline-end: var(--nypl-space-xs);
+  text-align: start;
+}
+
+html[dir="rtl"] .gt_selector {
+  direction: rtl;
+  padding-inline-start: var(--nypl-space-xs);
+  padding-inline-end: calc(var(--nypl-space-l) + var(--nypl-space-xxs));
 }
 
 .gtranslate_button_wrapper {

@@ -29,8 +29,8 @@ const ExploreFurther = () => {
           maxWidth: "1280px",
           mx: "auto",
           alignContent: "center",
-          paddingLeft: "s",
-          paddingRight: "s",
+          paddingInlineStart: "s",
+          paddingInlineEnd: "s",
           paddingTop: "xxl",
           paddingBottom: { base: "s", md: "l" },
         }}
@@ -69,7 +69,7 @@ const ExploreFurther = () => {
               paddingBottom: "l",
               [`@media screen and (min-width: ${headerBreakpoints.smTablet}px)`]:
                 {
-                  paddingRight: "m",
+                  paddingInlineEnd: "m",
                 },
             }}
           >

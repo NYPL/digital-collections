@@ -13,9 +13,10 @@ const GTranslateIcon = ({
     <Icon
       viewBox="0 0 16 16"
       boxSize="24px"
-      position="absolute"
-      marginTop={isMobile ? undefined : "xxs"}
-      marginLeft={isMobile ? undefined : "xxs"}
+      position={isMobile ? "relative" : "absolute"}
+      insetInlineStart={isMobile ? undefined : "4px"}
+      top={isMobile ? undefined : "4px"}
+      pointerEvents="none"
       style={{ display: isVisible ? "block" : "none" }}
     >
       <g fill="black">
