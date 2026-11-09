@@ -23,7 +23,7 @@ const NavMenu = ({ render }: NavMenuProps) => {
         marginBottom: "0px",
         fontWeight: "medium",
         color: "ui.black",
-        marginLeft: "m",
+        marginInlineStart: "m",
         _visited: {
           color: "ui.black",
         },

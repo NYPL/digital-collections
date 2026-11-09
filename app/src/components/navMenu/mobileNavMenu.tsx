@@ -20,7 +20,7 @@ const listItems = dcNavLinks.map(({ href, text }) => (
     sx={{
       display: "block",
       paddingBottom: "m",
-      paddingLeft: "16px",
+      paddingInlineStart: "16px",
       width: "100%",
       marginBottom: "unset",
       fontWeight: "medium",
@@ -58,6 +58,7 @@ const MobileNavMenu = () => {
           sx={{
             border: "none",
             color: "ui.black",
+            padding: "0 16px",
             ":hover": {
               color: "ui.black",
               bgColor: "ui.white",
@@ -76,12 +77,12 @@ const MobileNavMenu = () => {
             style={{
               display: "flex",
               flexDirection: "column",
-              alignItems: "left",
+              alignItems: "flex-start",
               position: "absolute",
               width: "100%",
               marginTop: "11px",
               paddingTop: "m",
-              left: 0,
+              insetInlineStart: 0,
               zIndex: 999,
             }}
           >

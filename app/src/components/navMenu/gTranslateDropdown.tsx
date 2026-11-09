@@ -40,7 +40,7 @@ const GTranslateDropdown = () => {
     <Box
       sx={{
         marginBottom: "xs",
-        marginLeft: "m",
+        marginInlineStart: "m",
         color: "ui.black",
         minWidth: "161.5px",
         minHeight: "32px",

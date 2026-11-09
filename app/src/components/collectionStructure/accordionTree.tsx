@@ -23,7 +23,7 @@ const ButtonText = ({
       whiteSpace="nowrap"
       overflow="hidden"
       textOverflow="ellipsis"
-      paddingLeft={hasSubContainers ? "s" : "28px"}
+      paddingInlineStart={hasSubContainers ? "s" : "28px"}
       fontWeight="500"
     >
       {title}
@@ -80,13 +80,6 @@ const AccordionTree = ({
                 borderTop="unset"
                 bg={item.isOpen ? "ui.gray.light-cool" : "ui.white"}
                 _hover={{ bg: "ui.hover.default" }}
-                paddingLeft={
-                  item.level > 0
-                    ? item.level < 12
-                      ? item.level * 8
-                      : "96px"
-                    : "s"
-                }
                 paddingTop="m"
                 paddingRight="s"
                 paddingBottom="m"
@@ -94,7 +87,16 @@ const AccordionTree = ({
                 {...(item.hasSubContainers
                   ? { "aria-expanded": item.isOpen }
                   : {})}
-                sx={{ zIndex: "0 !important" }}
+                sx={{
+                  zIndex: "0 !important",
+                  textAlign: "start",
+                  paddingInlineStart:
+                    item.level > 0
+                      ? item.level < 12
+                        ? `${item.level * 8}px`
+                        : "96px"
+                      : "var(--nypl-space-s)",
+                }}
                 id={item.uuid}
                 aria-current={item.uuid === targetUuid ? "true" : undefined}
               >
@@ -111,7 +113,7 @@ const AccordionTree = ({
                     hasSubContainers={item.hasSubContainers}
                     level={item.level}
                   />
-                  <Box as="span" marginLeft="s" fontWeight="400">
+                  <Box as="span" marginInlineStart="s" fontWeight="400">
                     {item.itemCount}
                   </Box>
                 </Flex>

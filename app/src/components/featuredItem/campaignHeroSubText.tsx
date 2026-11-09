@@ -23,7 +23,7 @@ const CampaignHeroSubText = ({ featuredItem }: CampaignHeroSubtextProps) => {
         featuring prints, photographs, maps, manuscripts, streaming video, and
         more.
       </Text>
-      <Text sx={{ marginRight: "s", paddingTop: "s" }}>
+      <Text sx={{ marginInlineEnd: "s", paddingTop: "s" }}>
         Our collections include some content that may be harmful or difficult
         to&nbsp;view.{" "}
         <DSLink

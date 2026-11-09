@@ -18,6 +18,29 @@ import {
 } from "../../utils/translationUtils";
 import GTranslateDropdown from "../navMenu/gTranslateDropdown";
 
+const RTL_LANGUAGE_CODES = new Set(["ar", "ur", "yi"]);
+
+const tagEnglishRecordContent = () => {
+  document.querySelectorAll<HTMLElement>(".notranslate").forEach((element) => {
+    if (element.classList.contains("uv")) {
+      return;
+    }
+
+    element.setAttribute("lang", "en");
+  });
+};
+
+const applyPageLanguageDirection = (language: string) => {
+  const normalizedLanguage = language.toLowerCase();
+  const languageCode = normalizedLanguage.split("-")[0];
+  const isRTL =
+    RTL_LANGUAGE_CODES.has(normalizedLanguage) ||
+    RTL_LANGUAGE_CODES.has(languageCode);
+
+  document.documentElement.lang = normalizedLanguage;
+  document.documentElement.dir = isRTL ? "rtl" : "ltr";
+};
+
 const Header = () => {
   const { headerRef, headerHeight, isScrollingUp, isFocused, setIsFocused } =
     useHeaderState();
@@ -46,14 +69,21 @@ const Header = () => {
         return;
       }
 
+      applyPageLanguageDirection(newLanguage);
+
       document
         .querySelectorAll<HTMLSelectElement>(".gt_selector")
         .forEach((select) => {
           select.value = `en|${newLanguage}`;
         });
+
+      tagEnglishRecordContent();
     };
 
     document.addEventListener("change", handleGTranslateChange, true);
+
+    applyPageLanguageDirection("en");
+    tagEnglishRecordContent();
 
     window.gtranslateSettings = {
       default_language: "en",
@@ -68,28 +98,37 @@ const Header = () => {
       `script[src="${scriptUrl}"]`
     );
 
+    const recordContentObserver = new MutationObserver(() => {
+      tagEnglishRecordContent();
+    });
+
+    recordContentObserver.observe(document.body, {
+      childList: true,
+      subtree: true,
+    });
+
     // If GTranslate already initialized successfully, we're done.
     if (document.querySelector(".gt_selector")) {
       console.log("GTranslate already initialized.");
-      return;
+    } else {
+      // Script was added but the widget didn't initialize — likely because
+      // .gtranslate_wrapper wasn't in the DOM yet when the script ran. Remove and
+      // re-add/run the script now that the wrapper exists.
+      if (existingScript) {
+        console.log("Removing existing GTranslate script.");
+        existingScript.remove();
+      }
+
+      const script = document.createElement("script");
+      script.src = scriptUrl;
+      script.async = true;
+
+      document.body.appendChild(script);
     }
-
-    // Script was added but the widget didn't initialize — likely because
-    // .gtranslate_wrapper wasn't in the DOM yet when the script ran. Remove and
-    // re-add/run the script now that the wrapper exists.
-    if (existingScript) {
-      console.log("Removing existing GTranslate script.");
-      existingScript.remove();
-    }
-
-    const script = document.createElement("script");
-    script.src = scriptUrl;
-    script.async = true;
-
-    document.body.appendChild(script);
 
     return () => {
       document.removeEventListener("change", handleGTranslateChange, true);
+      recordContentObserver.disconnect();
     };
   }, []);
 

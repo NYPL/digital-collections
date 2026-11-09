@@ -47,3 +47,27 @@ mark {
 .maplibregl-ctrl-bottom-left {
   z-index: 10000 !important;
 }
+
+.notranslate {
+  unicode-bidi: isolate;
+}
+
+.notranslate[lang="en"] {
+  unicode-bidi: isolate;
+}
+
+.notranslate[dir="ltr"] {
+  direction: ltr;
+  unicode-bidi: isolate;
+  text-align: start;
+}
+
+html[dir="rtl"] .uv .headerPanel,
+html[dir="rtl"] .uv .pagingHeaderPanel,
+html[dir="rtl"] .uv .footerPanel {
+  direction: rtl;
+}
+
+html[dir="rtl"] .uv .mobileFooterPanel .options {
+  flex-direction: row-reverse;
+}
