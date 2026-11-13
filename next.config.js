@@ -7,13 +7,6 @@ const nrExternals = require("newrelic/load-externals");
 
 const nextConfig = {
   reactStrictMode: false,
-  env: {
-    APP_ENV: process.env.APP_ENV,
-    COLLECTIONS_API_URL: process.env.COLLECTIONS_API_URL,
-    IIIF_URL: process.env.IIIF_URL,
-    NEW_RELIC_LICENSE_KEY: process.env.NEW_RELIC_LICENSE_KEY,
-    NEW_RELIC_APP_NAME: `${process.env.NEW_RELIC_APP_NAME}`,
-  },
   images: {
     remotePatterns: [
       {
